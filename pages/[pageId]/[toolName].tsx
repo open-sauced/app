@@ -32,7 +32,7 @@ const Filter: WithPageLayout = () => {
 
   const { pageId, toolName } = router.query;
 
-  const title = `Open Sauced Insights ${pageId ? ` - ${changeCapitalization(pageId!.toString(), true)}` : ""} ${
+  const title = `OpenSauced Insights ${pageId ? ` - ${changeCapitalization(pageId!.toString(), true)}` : ""} ${
     toolName ? ` / ${changeCapitalization(toolName.toString(), true)}` : ""
   }`;
 

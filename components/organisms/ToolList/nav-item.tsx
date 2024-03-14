@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
 
@@ -10,27 +9,18 @@ interface NavItemProps {
   tool: { name: string; numOf?: number };
   selectedFilter?: string | string[] | undefined;
   selectedTool: string | string[];
+  navLink: string;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ username, filterName, tool, selectedFilter, selectedTool }) => {
+const NavItem: React.FC<NavItemProps> = ({ tool, selectedTool, navLink }) => {
   const [total, setTotal] = useState<number>();
-  const router = useRouter();
-  const { range } = router.query;
 
   useEffect(() => {
     setTotal(tool.numOf);
   }, [tool.numOf]);
 
   return (
-    <Link
-      href={`/${username ? `pages/${username}/` : ""}${filterName}/${tool.name.toLowerCase()}${
-        selectedFilter
-          ? `/filter/${Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}?range=${
-              range ?? "30"
-            }`
-          : `?range=${range ?? "30"}`
-      }`}
-    >
+    <Link href={navLink}>
       {/* Button component was here and needed to be removed to resolve issue #187. Button component had styling that will eventually need to be replaced. */}
       <div
         className={`flex h-11 px-2 md:px-4 items-center rounded-t-lg ${

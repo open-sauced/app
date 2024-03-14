@@ -33,13 +33,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
   const { profile } = contributor;
 
   const [showPRs, setShowPRs] = useState(false);
-  const { chart, repoList, meta } = useContributorPullRequestsChart(
-    profile.githubName,
-    topic,
-    repositories,
-    range,
-    true
-  );
+  const { repoList, meta } = useContributorPullRequestsChart(profile.githubName, topic, repositories, range, true);
   const languageList = useContributorLanguages(profile.githubName);
   const { data: user } = useFetchUser(profile.githubName, {
     revalidateOnFocus: false,
@@ -58,7 +52,12 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
           </div>
         </div>
         <div className="h-32">
-          <CardLineChart lineChartOption={chart} className="max-h-36" />
+          <CardLineChart
+            contributor={contributor.profile.githubName}
+            repoIds={repositories}
+            range={Number(range ?? 30)}
+            className="max-h-36"
+          />
         </div>
         <CardRepoList repoList={repoList} total={repoList.length} />
 

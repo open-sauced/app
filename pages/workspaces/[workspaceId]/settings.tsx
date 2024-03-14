@@ -1,10 +1,11 @@
+import { FaRegCheckCircle } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
-import { SquareFillIcon } from "@primer/octicons-react";
 import { useEffectOnce } from "react-use";
+import { IoDiamond } from "react-icons/io5";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -16,22 +17,30 @@ import Text from "components/atoms/Typography/text";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import {
-  WORKSPACE_ID_COOKIE_NAME,
-  deleteTrackedContributors,
+  changeWorkspaceVisibility,
   deleteTrackedRepos,
   deleteWorkspace,
   saveWorkspace,
+  upgradeWorkspace,
 } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
-import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
-import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
-import { deleteCookie } from "lib/utils/server/cookies";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
+import WorkspaceVisibilityModal from "components/Workspaces/WorkspaceVisibilityModal";
+import Card from "components/atoms/Card/card";
+import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
+import { getStripe } from "lib/utils/stripe-client";
+import WorkspaceMembersConfig from "components/Workspaces/WorkspaceMembersConfig/workspace-members-config";
+import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface WorkspaceSettingsProps {
   workspace: Workspace;
+  canDeleteWorkspace: boolean;
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -41,31 +50,55 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
   const workspaceId = context.params?.workspaceId as string;
-  const { data, error } = await fetchApiData<Workspace>({
-    path: `workspaces/${workspaceId}`,
-    bearerToken,
-    pathValidator: () => true,
-  });
+  const [{ data, error }, { data: sessionData, error: sessionError }] = await Promise.all([
+    fetchApiData<Workspace>({
+      path: `workspaces/${workspaceId}`,
+      bearerToken,
+      pathValidator: () => true,
+    }),
+    fetchApiData<DbUser>({
+      path: "auth/session",
+      bearerToken,
+      pathValidator: () => true,
+    }),
+  ]);
 
-  if (error) {
-    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+  if (error || sessionError) {
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
-    if (error.status === 404 || error.status === 401) {
+    if (error && (error.status === 404 || error.status === 401)) {
       return { notFound: true };
     }
 
-    throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
+    throw new Error(`Error loading workspaces page with ID ${workspaceId}`, {
+      cause: error || sessionError,
+    });
   }
 
-  return { props: { workspace: data } };
+  if (!data?.members.find((member) => member.user_id === Number(sessionData?.id) && member.role === "owner")) {
+    return { notFound: true };
+  }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
+
+  return {
+    props: {
+      workspace: data,
+      canDeleteWorkspace: sessionData && workspaceId !== sessionData.personal_workspace_id,
+    },
+  };
 };
 
-const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
+const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsProps) => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [workspaceName, setWorkspaceName] = useState(workspace.name);
+
+  const [isPublic, setIsPublic] = useState(workspace.is_public);
+  const [isWorkspaceVisibilityModalOpen, setIsWorkspaceVisibilityModalOpen] = useState(false);
+  const [isWorkspaceUpgradeModalOpen, setIsWorkspaceUpgradeModalOpen] = useState(false);
 
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const {
@@ -78,17 +111,12 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
 
-  const [trackedContributorsModalOpen, setTrackedContributorsModalOpen] = useState(false);
   const {
-    data: contributorData,
-    error: contributorError,
-    mutate: mutateTrackedContributors,
-    isLoading: isContributorsLoading,
-  } = useGetWorkspaceContributors({ workspaceId: workspace.id });
-
-  const initialTrackedContributors: string[] = contributorData?.data?.map(({ contributor }) => contributor.login) ?? [];
-  const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
-  const [trackedContributorsPendingDeletion, setTrackedContributorsPendingDeletion] = useState<Set<string>>(new Set());
+    data: workspaceMembers,
+    addMember,
+    updateMember,
+    deleteMember,
+  } = useWorkspaceMembers({ workspaceId: workspace.id });
 
   useEffectOnce(() => {
     if (window.location.hash === "#load-wizard") {
@@ -108,22 +136,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
     }
   });
 
-  const pendingTrackedContributors = new Map([
-    ...initialTrackedContributors.map((contributor) => [contributor, true] as const),
-    ...trackedContributors.entries(),
-  ]);
-
-  pendingTrackedContributors.forEach((isSelected, contributor) => {
-    if (trackedContributorsPendingDeletion.has(contributor)) {
-      pendingTrackedContributors.delete(contributor);
-    }
-  });
-
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
-    ssr: false,
-  });
-
-  const TrackedContributorsModal = dynamic(() => import("components/Workspaces/TrackedContributorsModal"), {
     ssr: false,
   });
 
@@ -141,7 +154,7 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       description,
       sessionToken: sessionToken!,
       repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
-      contributors: Array.from(trackedContributors, ([contributor]) => ({ login: contributor })),
+      contributors: [],
     });
 
     const workspaceRepoDeletes = await deleteTrackedRepos({
@@ -150,47 +163,63 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
       repos: Array.from(trackedReposPendingDeletion, (repo) => ({ full_name: repo })),
     });
 
-    const workspaceContributorDeletes = await deleteTrackedContributors({
-      workspaceId: workspace.id,
-      sessionToken: sessionToken!,
-      contributors: Array.from(trackedContributorsPendingDeletion, (contributor) => ({ login: contributor })),
-    });
+    const [{ data, error }, { data: deletedRepos, error: reposDeleteError }] = await Promise.all([
+      workspaceUpdate,
+      workspaceRepoDeletes,
+    ]);
 
-    const [
-      { data, error },
-      { data: deletedRepos, error: reposDeleteError },
-      { data: deletedContributors, error: contributorsDeleteError },
-    ] = await Promise.all([workspaceUpdate, workspaceRepoDeletes, workspaceContributorDeletes]);
-
-    if (error || reposDeleteError || contributorsDeleteError) {
+    if (error || reposDeleteError) {
       toast({ description: `Workspace update failed`, variant: "danger" });
     } else {
       setWorkspaceName(name);
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: data }));
       await mutateTrackedRepos();
-      await mutateTrackedContributors();
 
       setTrackedReposPendingDeletion(new Set());
       setTrackedRepos(new Map());
 
-      setTrackedContributorsPendingDeletion(new Set());
-      setTrackedContributors(new Map());
-
+      router.push(`/workspaces/${workspace.id}`);
       toast({ description: `Workspace updated successfully`, variant: "success" });
+    }
+  };
+
+  const upgradeThisWorkspace = async () => {
+    const { data, error } = await upgradeWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
+    if (error) {
+      toast({ description: "There's been an error", variant: "danger" });
+    }
+
+    if (data) {
+      const stripe = await getStripe();
+      stripe?.redirectToCheckout({ sessionId: data.sessionId as string });
+    }
+  };
+
+  const changeVisibility = async () => {
+    const { data, error } = await changeWorkspaceVisibility({
+      workspaceId: workspace.id,
+      sessionToken: sessionToken!,
+      name: workspaceName,
+      description: workspace.description,
+      isPublic: !isPublic,
+    });
+
+    if (data) {
+      toast({ description: "Workspace updated successfully", variant: "success" });
+      setIsPublic(!isPublic);
+    }
+    if (error) {
+      toast({ description: "There's been an error", variant: "danger" });
     }
   };
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
-      <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
-        {/* putting a square icon here as a placeholder until we implement workspace logos */}
-        <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
-        <span>{workspace.name}</span>
-      </h1>
+      <WorkspaceHeader workspace={workspace} />
       <div className="grid gap-6">
         <div>
           <div className="flex justify-between items-center">
-            <WorkspacesTabList workspaceId={workspace.id} selectedTab={"settings"} />
+            <WorkspacesTabList workspaceId={workspace.id} selectedTab={""} />
           </div>
           <form className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
             <TextInput
@@ -208,10 +237,10 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
               placeholder="Workspace description"
               className="w-full md:w-3/4 max-w-lg"
             />
-            <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+            <div className="bg-white sticky-bottom fixed rounded-lg bottom-4 right-0 self-end m-6">
               <Button
                 variant="primary"
-                className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
+                className="z-50 flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
               >
                 Update Workspace
               </Button>
@@ -243,49 +272,89 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           }}
         />
 
-        <TrackedContributorsTable
-          isLoading={isContributorsLoading}
-          contributors={pendingTrackedContributors}
-          onAddContributors={() => {
-            setTrackedContributorsModalOpen(true);
-          }}
-          onRemoveTrackedContributor={(event) => {
-            const { contributor } = event.currentTarget.dataset;
+        <ClientOnly>
+          <WorkspaceMembersConfig
+            onAddMember={async (username) => await addMember(workspace.id, sessionToken, username)}
+            onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
+            onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
+            members={workspaceMembers}
+            className="z-10"
+          />
+        </ClientOnly>
 
-            if (!contributor) {
-              // eslint-disable-next-line no-console
-              console.error("The tracked contributor to remove was not found");
-              return;
-            }
+        <div className="flex flex-col py-8 gap-4">
+          <h2 className="!font-medium">Change Workspace Visibility</h2>
+          <p className="text-sm text-slate-600">
+            This workspace is set to {isPublic ? "public" : "private"}.{" "}
+            {!workspace.payee_user_id && (
+              <span>
+                Setting this to private is a <span className="font-bold">paid</span> feature. Upgrade your Workspace to
+                unlock this feature.
+              </span>
+            )}
+          </p>
 
-            setTrackedContributors((contributors) => {
-              const updates = new Map([...contributors]);
-              updates.delete(contributor);
+          <Button
+            onClick={() => {
+              if (workspace.payee_user_id) {
+                setIsWorkspaceVisibilityModalOpen(true);
+              } else {
+                setIsWorkspaceUpgradeModalOpen(true);
+              }
+            }}
+            variant="primary"
+            className="w-fit"
+          >
+            Set to {isPublic ? "private" : "public"}
+          </Button>
+        </div>
 
-              return updates;
-            });
-            setTrackedContributorsPendingDeletion((contributors) => new Set([...contributors, contributor]));
-          }}
-        />
+        {workspace.payee_user_id ? (
+          <section className="flex flex-col gap-4">
+            <div className="flex gap-4 items-center">
+              <h3 className="font-medium">Manage Subscription</h3>
+              <div className="flex gap-2 items-center text-white px-3 py-2 bg-gradient-to-l from-gradient-orange-one to-gradient-orange-two rounded-full">
+                <p className="text-sm font-medium">PRO</p>
+                <IoDiamond />
+              </div>
+            </div>
+            <p className="text-sm text-slate-600">This Workspace is currently subscribed to the PRO Workspace plan.</p>
+            <Button href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL} variant="primary" className="w-fit">
+              Manage Subscription
+            </Button>
+          </section>
+        ) : (
+          <Card className="flex flex-col gap-4 px-6 pt-5 pb-6">
+            <h2 className="text-md font-medium">Upgrade your workspace</h2>
+            <div id="upgrade" className="flex gap-4">
+              <FaRegCheckCircle className="text-light-grass-8 w-6 h-6" />
+              <div className="flex flex-col gap-2">
+                <h3 className="text-sm font-medium">Make your workspace private</h3>
+                <p className="text-sm text-slate-500">
+                  While our free workspaces are exclusively public, upgrading to a Pro workspace gives you the power to
+                  choose between public or private settings for your projects.
+                </p>
+              </div>
+            </div>
+            <Button variant="primary" className="w-fit mt-2" onClick={upgradeThisWorkspace}>
+              Upgrade Workspace
+            </Button>
+          </Card>
+        )}
 
-        <div className="flex flex-col gap-4">
-          <Title className="!text-1xl !leading-none py-6" level={4}>
-            Danger Zone
-          </Title>
-
+        {canDeleteWorkspace && (
           <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
             <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
               Delete Workspace
             </Title>
-            <Text className="my-4">Once you delete a workspace, you&#39;re past the point of no return.</Text>
+            <Text className="my-4">Once you delete a workspace, you&apos;re past the point of no return.</Text>
 
-            <div>
-              <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive">
-                Delete workspace
-              </Button>
-            </div>
+            <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive" className="w-fit">
+              Delete workspace
+            </Button>
           </div>
-        </div>
+        )}
+
         <TrackedReposModal
           isOpen={trackedReposModalOpen}
           onClose={() => {
@@ -312,45 +381,40 @@ const WorkspaceSettings = ({ workspace }: WorkspaceSettingsProps) => {
           }}
         />
 
-        <TrackedContributorsModal
-          isOpen={trackedContributorsModalOpen}
-          onClose={() => {
-            setTrackedContributorsModalOpen(false);
+        <WorkspaceVisibilityModal
+          isOpen={isWorkspaceVisibilityModalOpen}
+          workspaceName={workspaceName}
+          initialIsPublic={isPublic}
+          confirmChoice={() => {
+            changeVisibility();
+            setIsWorkspaceVisibilityModalOpen(false);
           }}
-          onAddToTrackingList={(contributors) => {
-            setTrackedContributorsModalOpen(false);
-            setTrackedContributors((trackedContributors) => {
-              const updates = new Map(trackedContributors);
-
-              contributors.forEach((isSelected, contributor) => {
-                if (isSelected) {
-                  updates.set(contributor, true);
-                } else {
-                  updates.delete(contributor);
-                }
-              });
-
-              return updates;
-            });
-          }}
-          onCancel={() => {
-            setTrackedContributorsModalOpen(false);
-          }}
+          onClose={() => setIsWorkspaceVisibilityModalOpen(false)}
+          onCancel={() => setIsWorkspaceVisibilityModalOpen(false)}
         />
 
-        <DeleteWorkspaceModal
-          isOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
-          workspaceName={workspaceName}
-          onDelete={async () => {
-            const { error } = await deleteWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
-            if (error) {
-              toast({ description: `Workspace delete failed`, variant: "danger" });
-            } else {
-              toast({ description: `Workspace deleted successfully`, variant: "success" });
-              router.push("/workspaces/new");
-            }
-          }}
+        {canDeleteWorkspace ? (
+          <DeleteWorkspaceModal
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            workspaceName={workspaceName}
+            onDelete={async () => {
+              const { error } = await deleteWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
+              if (error) {
+                toast({ description: `Workspace delete failed`, variant: "danger" });
+              } else {
+                toast({ description: `Workspace deleted successfully`, variant: "success" });
+                router.push("/workspaces/new");
+              }
+            }}
+          />
+        ) : null}
+
+        <InsightUpgradeModal
+          variant="workspace"
+          workspaceId={workspace.id}
+          isOpen={isWorkspaceUpgradeModalOpen}
+          onClose={() => setIsWorkspaceUpgradeModalOpen(false)}
         />
       </div>
     </WorkspaceLayout>

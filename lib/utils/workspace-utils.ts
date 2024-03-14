@@ -1,5 +1,6 @@
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { fetchApiData } from "helpers/fetchApiData";
+import { WORKSPACE_ID_COOKIE_NAME } from "./caching";
 
 export async function createWorkspace({
   name,
@@ -76,6 +77,41 @@ export async function saveWorkspace({
   return { data: { workspace: data, repos: repoData, contributors: contributorsData }, error };
 }
 
+export async function upgradeWorkspace({ workspaceId, sessionToken }: { workspaceId: string; sessionToken: string }) {
+  const { data, error } = await fetchApiData<{ sessionId: string }>({
+    path: `auth/checkout/workspaces/${workspaceId}/session`,
+    method: "POST",
+    body: {},
+    bearerToken: sessionToken,
+  });
+
+  return { data, error };
+}
+
+export async function changeWorkspaceVisibility({
+  workspaceId,
+  sessionToken,
+  name,
+  description,
+  isPublic,
+}: {
+  workspaceId: string;
+  sessionToken: string;
+  name: string;
+  description: string;
+  isPublic: boolean;
+}) {
+  const { data, error } = await fetchApiData<Workspace>({
+    path: `workspaces/${workspaceId}`,
+    method: "PATCH",
+    body: { name, description, is_public: `${isPublic}` },
+    bearerToken: sessionToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
 export async function deleteTrackedRepos({
   workspaceId,
   sessionToken,
@@ -127,8 +163,6 @@ export async function deleteWorkspace({ workspaceId, sessionToken }: { workspace
   return { data, error };
 }
 
-export const WORKSPACE_ID_COOKIE_NAME = "workspace-id";
-
 export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, personalWorkspaceId: string) {
   if (!cookies.has(WORKSPACE_ID_COOKIE_NAME)) {
     cookies.set(WORKSPACE_ID_COOKIE_NAME, personalWorkspaceId);
@@ -137,5 +171,27 @@ export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, person
   // @ts-expect-error the cookie value will be defined
   const workspaceId = cookies.get(WORKSPACE_ID_COOKIE_NAME).value;
 
-  return new URL(`/workspaces/${workspaceId}/repositories`, baseUrl);
+  return new URL(`/workspaces/${workspaceId}`, baseUrl);
+}
+
+export async function getInsightWithWorkspace({ insightId }: { insightId: number }) {
+  const { data, error } = await fetchApiData<DbUserInsight>({
+    path: `insights/${insightId}`,
+    method: "GET",
+    bearerToken: "",
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
+export async function getListWithWorkspace({ listId }: { listId: string }) {
+  const { data, error } = await fetchApiData<DbUserList>({
+    path: `lists/${listId}`,
+    method: "GET",
+    bearerToken: "",
+    pathValidator: () => true,
+  });
+
+  return { data, error };
 }

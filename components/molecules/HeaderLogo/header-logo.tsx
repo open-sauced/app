@@ -16,7 +16,7 @@ const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false, re
       <div className="flex items-center py-2 gap-2 cursor-pointer">
         <Image
           className="rounded"
-          alt="Open Sauced Logo"
+          alt="OpenSauced Logo"
           width={20}
           src={withBg ? openSaucedImgWithBg : openSaucedImg}
         />
