@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
-import { WORKSPACE_ID_COOKIE_NAME, getWorkspaceUrl } from "./workspace-utils";
+import { getWorkspaceUrl } from "./workspace-utils";
+import { WORKSPACE_ID_COOKIE_NAME } from "./caching";
 
 describe("[lib/utils] getWorkspaceUrl()", () => {
   const baseUrl = "http://localhost:3000";
@@ -12,7 +13,7 @@ describe("[lib/utils] getWorkspaceUrl()", () => {
     cookies.set(WORKSPACE_ID_COOKIE_NAME, workspaceId);
 
     expect(getWorkspaceUrl(cookies, baseUrl, personalWorkspaceId)).toEqual(
-      new URL(`/workspaces/${workspaceId}/repositories`, baseUrl)
+      new URL(`/workspaces/${workspaceId}`, baseUrl)
     );
   });
 
@@ -20,7 +21,7 @@ describe("[lib/utils] getWorkspaceUrl()", () => {
     const cookies = new RequestCookies(new Headers());
 
     expect(getWorkspaceUrl(cookies, baseUrl, personalWorkspaceId)).toEqual(
-      new URL(`/workspaces/${personalWorkspaceId}/repositories`, baseUrl)
+      new URL(`/workspaces/${personalWorkspaceId}`, baseUrl)
     );
   });
 });

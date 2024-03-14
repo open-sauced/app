@@ -1,5 +1,7 @@
+import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, MinusSmallIcon } from "@heroicons/react/24/solid";
 import { GitPullRequestIcon, HeartIcon, IssueOpenedIcon } from "@primer/octicons-react";
 import Card from "components/atoms/Card/card";
+import Pill from "components/atoms/Pill/pill";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import humanizeNumber from "lib/utils/humanizeNumber";
 
@@ -17,7 +19,7 @@ type RepositoryStatCardProps = {
     }
   | {
       type: "engagement";
-      stats: { stars: number; forks: number; health: number } | undefined;
+      stats: { stars: number; forks: number; activity_ratio: number } | undefined;
     }
 );
 
@@ -32,11 +34,11 @@ type CardType = RepositoryStatCardProps["type"];
 function getIcon(type: CardType) {
   switch (type) {
     case "pulls":
-      return <GitPullRequestIcon size={18} className="text-sauced-orange bg-orange-100 rounded-full p-0.5" />;
+      return <GitPullRequestIcon size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
     case "issues":
-      return <IssueOpenedIcon size={18} className="text-blue-600 bg-blue-100 rounded-full p-0.5" />;
+      return <IssueOpenedIcon size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
     case "engagement":
-      return <HeartIcon size={18} className="text-pink-600 bg-pink-100 rounded-full p-0.5" />;
+      return <HeartIcon size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
   }
 }
 
@@ -47,11 +49,31 @@ function getStatPropertiesByType(type: CardType) {
     case "issues":
       return ["opened", "closed", "velocity"];
     case "engagement":
-      return ["stars", "forks", "health"];
+      return ["stars", "forks", "activity_ratio"];
     default:
       throw new Error("Invalid repository stat card type");
   }
 }
+
+const getPillChart = (total?: number, loading?: boolean) => {
+  if (total === undefined || loading) {
+    return "-";
+  }
+
+  if (total > 7) {
+    return (
+      <Pill icon={<ArrowTrendingUpIcon color="green" className="w-6 h-6 lg:w-4 lg:h-4" />} text="High" color="green" />
+    );
+  }
+
+  if (total >= 4 && total <= 7) {
+    return (
+      <Pill icon={<MinusSmallIcon color="black" className="w-6 h-6 lg:w-4 lg:h-4" />} text="Medium" color="yellow" />
+    );
+  }
+
+  return <Pill icon={<ArrowTrendingDownIcon color="red" className="w-6 h-6 lg:w-4 lg:h-4" />} text="Low" color="red" />;
+};
 
 const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) => {
   return (
@@ -70,8 +92,8 @@ const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) =
         <tbody className="grid grid-cols-3 items center">
           {getStatPropertiesByType(type).map((stat) => (
             <tr key={stat} className="flex flex-col">
-              <th className="capitalize font-medium text-sm text-light-slate-11 text-left">{stat}</th>
-              <td className="semi-bold text-2xl mt-1">
+              <th className="capitalize font-normal text-sm text-light-slate-11 text-left">{stat}</th>
+              <td className="font-medium text-2xl mt-1">
                 <SkeletonWrapper width={40} height={20} />
               </td>
             </tr>
@@ -86,14 +108,14 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
   const loadEmptyState = isLoading || hasError || !stats;
 
   return (
-    <Card className="w-80 max-w-xs h-32 max-h-32">
+    <Card className="w-full">
       {loadEmptyState ? (
         <EmptyState type={type} hasError={hasError} />
       ) : (
         <table className="grid gap-4 p-2">
-          <caption className="flex items-center gap-1.5 text-xs">
+          <caption className="flex items-center gap-1.5 lg:text-sm font-medium">
             {getIcon(type)}
-            <span>{titles[type]}</span>
+            <span className="text-slate-700">{titles[type]}</span>
           </caption>
           <tbody className="grid grid-cols-3 items center">
             {Object.entries(stats)
@@ -101,16 +123,26 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
               .map(([stat, value]) => {
                 return (
                   <tr key={stat} className="flex flex-col">
-                    <th scope="row" className="capitalize font-medium text-sm text-light-slate-11 text-left">
-                      {stat}
+                    <th scope="row" className="capitalize font-normal text-lg lg:text-sm text-light-slate-12 text-left">
+                      {stat.replace("_", " ")}
+                      <span
+                        className={`w-2 h-2 rounded-full ml-1  ${
+                          stat === "opened"
+                            ? "bg-light-grass-9 inline-block"
+                            : stat === "closed" || stat === "merged"
+                            ? "bg-purple-600 inline-block"
+                            : ""
+                        } `}
+                      >
+                        {" "}
+                      </span>
                     </th>
-                    {stat === "health" ? (
-                      <td className="text-black semi-bold text-2xl">
-                        {Math.round(value)}
-                        <span className="text-xs">/10</span>
+                    {stat === "activity_ratio" ? (
+                      <td className="text-black font-medium text-3xl lg:text-2xl">
+                        {getPillChart(Math.round(value), isLoading)}
                       </td>
                     ) : (
-                      <td className="semi-bold text-2xl" title={`${value}`}>
+                      <td className="font-medium text-3xl lg:text-2xl" title={`${value}`}>
                         {stat === "velocity" ? `${Math.round(value)}d` : humanizeNumber(value, "abbreviation")}
                       </td>
                     )}

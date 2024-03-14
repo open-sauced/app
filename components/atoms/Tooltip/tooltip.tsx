@@ -9,12 +9,13 @@ interface TooltipProps {
   delay?: number;
   className?: string;
   tipClassName?: string;
+  defaultOpen?: boolean;
 }
-const Tooltip = ({ children, content, className, direction }: TooltipProps): JSX.Element => {
+const Tooltip = ({ children, content, className, direction, defaultOpen }: TooltipProps): JSX.Element => {
   const { Portal, Root, Content, Trigger, Arrow } = TooltipPrimitive;
 
   return (
-    <Root delayDuration={300}>
+    <Root delayDuration={300} defaultOpen={defaultOpen}>
       <Trigger asChild>
         <div>{children}</div>
       </Trigger>

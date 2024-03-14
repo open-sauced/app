@@ -32,7 +32,7 @@ const HubPage: WithPageLayout<InsightPageProps> = ({ insight, pageName, ogImage 
     return (
       <>
         <SEO
-          title={`${insight.name} | Open Sauced Insights `}
+          title={`${insight.name} | OpenSauced Insights `}
           description={`${insight.name} Insights on OpenSauced`}
           image={ogImage}
           twitterCard="summary_large_image"
@@ -44,7 +44,7 @@ const HubPage: WithPageLayout<InsightPageProps> = ({ insight, pageName, ogImage 
   return (
     <>
       <SEO
-        title={`${insight.name} | Open Sauced Insights`}
+        title={`${insight.name} | OpenSauced Insights`}
         description={`${insight.name} Insights on OpenSauced`}
         image={ogImage}
         twitterCard="summary_large_image"

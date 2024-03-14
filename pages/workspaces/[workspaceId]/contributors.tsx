@@ -1,21 +1,20 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import { SquareFillIcon } from "@primer/octicons-react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { FaEdit } from "react-icons/fa";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { useGetWorkspaceContributors } from "lib/hooks/api/useGetWorkspaceContributors";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-import { deleteCookie } from "lib/utils/server/cookies";
-import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/workspace-utils";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import { EmptyState } from "components/Workspaces/TrackedContributorsTable";
+import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -31,7 +30,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   });
 
   if (error) {
-    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
     if (error.status === 404 || error.status === 401) {
       return { notFound: true };
@@ -39,6 +38,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     throw new Error(`Error loading workspaces page with ID ${workspaceId}`);
   }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
   return { props: { workspace: data } };
 };
@@ -72,20 +73,8 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
-      <section className="w-full flex justify-between items-center">
-        <h1 className="flex gap-2 items-center uppercase text-3xl font-semibold">
-          {/* putting a square icon here as a placeholder until we implement workspace logos */}
-          <SquareFillIcon className="w-12 h-12 text-sauced-orange" />
-          <span>{workspace.name}</span>
-        </h1>
+      <WorkspaceHeader workspace={workspace} />
 
-        <div className="flex gap-4 w-fit">
-          <Button variant="primary" href={`/workspaces/${workspace.id}/settings`} className="gap-2 items-center">
-            <FaEdit />
-            Edit
-          </Button>
-        </div>
-      </section>
       <div className="flex justify-between items-center">
         <WorkspacesTabList workspaceId={workspace.id} selectedTab={"contributors"} />
         <div className="flex items-center gap-4">

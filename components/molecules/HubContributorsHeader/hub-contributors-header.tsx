@@ -1,13 +1,11 @@
 import { FaPlus } from "react-icons/fa";
 
 import clsx from "clsx";
-import { FiGlobe } from "react-icons/fi";
 
 import { useEffect, useState } from "react";
 import { useToast } from "lib/hooks/useToast";
 
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
-import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import Search from "components/atoms/Search/search";
@@ -65,18 +63,6 @@ const HubContributorsHeader = ({
         </div>
         <div className="flex flex-col items-center justify-center gap-6 md:flex-row header-info max-sm:mt-4">
           <div className="flex items-center order-2 gap-2 md:flex-row md:order-1">
-            <div className="flex items-center gap-10 py-1.5 px-4 rounded-md bg-white mr-3">
-              <span className="flex items-center gap-2 text-sm shrink-0" id="hub-make-public">
-                <FiGlobe /> Make Public
-              </span>
-              <ToggleSwitch
-                ariaLabelledBy="hub-make-public"
-                size="base"
-                checked={isPublic}
-                name="isPublic"
-                handleToggle={handleToggleIsPublic}
-              />
-            </div>
             <span
               className={clsx(
                 "w-max min-w-[1.4rem] h-6  p-3 text-sm items-center flex place-content-center rounded-full",

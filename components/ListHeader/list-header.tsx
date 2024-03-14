@@ -5,12 +5,12 @@ import { usePostHog } from "posthog-js/react";
 
 import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
-import Badge from "components/atoms/InsightBadge/insight-badge";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 
 import { truncateString } from "lib/utils/truncate-string";
 import { useToast } from "lib/hooks/useToast";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import StackedOwners from "components/Workspaces/StackedOwners";
 
 interface ListHeaderProps {
   name: string;
@@ -19,6 +19,7 @@ interface ListHeaderProps {
   isPublic: boolean;
   isOwner: boolean;
   numberOfContributors: number;
+  owners?: string[];
 }
 
 const ListHeader = ({
@@ -28,6 +29,7 @@ const ListHeader = ({
   workspaceId,
   isOwner,
   numberOfContributors,
+  owners,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -56,10 +58,16 @@ const ListHeader = ({
             <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(name && truncateString(name, 30)) || "List"}
             </Title>
-            {<Badge isPublic={isPublic} />}
           </div>
           <div className="flex items-center gap-2 mt-4" id="contributorCount">
-            <ClientOnly>{numberOfContributors} Contributors </ClientOnly>
+            <ClientOnly>
+              {owners && (
+                <div className="flex gap-2 items-center">
+                  <StackedOwners owners={owners} /> |
+                </div>
+              )}
+              <p>{numberOfContributors} Contributors</p>
+            </ClientOnly>
           </div>
         </div>
       </div>

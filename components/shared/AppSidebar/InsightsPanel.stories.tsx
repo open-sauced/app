@@ -16,16 +16,9 @@ export default meta;
 export const RepositoryInsights: Story = {
   args: {
     title: "Repository Insights",
-    username: "bdougie",
     insights: new Array(5).fill("").map((_, i) => {
       return {
-        id: `{i}`,
-        user: {
-          id: 1,
-          name: "bdougie",
-          user_email: "",
-          login: "bdougie",
-        },
+        id: i,
         name: `Repository Insight ${i + 1}`,
         is_public: true,
         is_favorite: false,
@@ -33,8 +26,7 @@ export const RepositoryInsights: Story = {
         short_code: `my-insight-${i}`,
         created_at: "2021-09-14T20:30:14.000Z",
         updated_at: "2021-09-14T20:30:14.000Z",
-        repos: [],
-        members: [],
+        deleted_at: null,
       };
     }),
     type: "repo",
@@ -43,21 +35,17 @@ export const RepositoryInsights: Story = {
 export const ContributorInsights: Story = {
   args: {
     title: "Contributor Insights",
-    username: "bdougie",
     insights: new Array(5).fill("").map((_, i) => {
       return {
-        id: `{i}`,
-        user: {
-          id: 1,
-          name: "bdougie",
-          user_email: "",
-          login: "bdougie",
-        },
+        id: i,
         name: `Contributor Insight ${i + 1}`,
         is_public: true,
         is_favorite: false,
+        is_featured: false,
+        short_code: `my-insight-${i}`,
         created_at: "2021-09-14T20:30:14.000Z",
         updated_at: "2021-09-14T20:30:14.000Z",
+        deleted_at: null,
       };
     }),
     type: "list",
