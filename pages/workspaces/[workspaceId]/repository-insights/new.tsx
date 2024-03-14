@@ -1,15 +1,16 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { ComponentProps, useState } from "react";
-import dynamic from "next/dynamic";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import Button from "components/atoms/Button/button";
-import TextInput from "components/atoms/TextInput/text-input";
-import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
-import { toast } from "lib/hooks/useToast";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { createRepositoryInsight } from "lib/utils/workspace-utils";
+
+import { toast } from "lib/hooks/useToast";
+import Button from "components/atoms/Button/button";
+import TextInput from "components/atoms/TextInput/text-input";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);

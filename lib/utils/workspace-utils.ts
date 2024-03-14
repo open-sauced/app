@@ -181,7 +181,7 @@ type CreateWorkspaceInsightProps = {
   name: string;
   is_public: boolean;
   repos?: { fullName: string }[];
-  contributors?: { id: number; login: string }[];
+  contributors?: { login: string }[];
 };
 
 // repository insights
@@ -215,6 +215,24 @@ export async function getInsightWithWorkspace({ insightId }: { insightId: number
 }
 
 // contributor insights
+export async function createContributorInsight({
+  workspaceId,
+  bearerToken,
+  name,
+  contributors,
+  is_public,
+}: CreateWorkspaceInsightProps) {
+  const { data, error } = await fetchApiData<{ user_list_id: string }>({
+    path: `workspaces/${workspaceId}/userLists`,
+    method: "POST",
+    bearerToken,
+    body: { name, contributors, is_public },
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
 export async function getListWithWorkspace({ listId }: { listId: string }) {
   const { data, error } = await fetchApiData<DbUserList>({
     path: `lists/${listId}`,
