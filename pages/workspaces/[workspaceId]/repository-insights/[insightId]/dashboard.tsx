@@ -57,7 +57,11 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId, owners }: InsightPage
       />
       <WorkspaceLayout
         workspaceId={workspaceId}
-        banner={showBanner ? <WorkspaceBanner openModal={() => setIsInsightUpgradeModalOpen(true)} /> : null}
+        banner={
+          showBanner ? (
+            <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
+          ) : null
+        }
       >
         <HubPageLayout page="dashboard" owners={owners}>
           <Dashboard repositories={repositories} />
