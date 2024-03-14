@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
-import clsx from "clsx";
+import { User } from "@supabase/supabase-js";
 import Text from "components/atoms/Typography/text";
 import { useFetchListContributors } from "lib/hooks/useList";
 import Card from "components/atoms/Card/card";
@@ -11,8 +11,10 @@ import StackedAvatar, { Contributor } from "../StackedAvatar/stacked-avatar";
 interface ListCardProps {
   list: DbUserList;
   handleOnDeleteClick?: (listName: string, listId: string) => void;
+  workspaceId?: string;
+  user: User | null;
 }
-const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
+const ListCard = ({ list, handleOnDeleteClick, workspaceId, user }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
@@ -26,15 +28,15 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
           <div className="flex items-center gap-4 lg:items-center ">
             <div className="w-4 h-4 rounded-full bg-light-orange-10"></div>
             <div className="flex justify-between text-xl text-light-slate-12">
-              <Link href={`/lists/${list.id}/overview`}>{list.name}</Link>
-            </div>
-            <div
-              className={clsx(
-                "px-2 border rounded-2xl text-light-slate-11",
-                !handleOnDeleteClick ? "text-orange-700 bg-orange-50 border-orange-600" : ""
-              )}
-            >
-              {handleOnDeleteClick ? (!!list.is_public ? "public" : "private") : "demo"}
+              <Link
+                href={
+                  workspaceId
+                    ? `/workspaces/${workspaceId}/contributor-insights/${list.id}/overview`
+                    : `/lists/${list.id}/overview`
+                }
+              >
+                {list.name}
+              </Link>
             </div>
           </div>
         </div>
@@ -51,7 +53,7 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
             </div>
             <div className="justify-end flex-1 hidden md:flex">
               {/* Delete button */}
-              {handleOnDeleteClick && (
+              {handleOnDeleteClick && !!user && (
                 <button
                   onClick={() => handleOnDeleteClick(list.name, list.id)}
                   className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
@@ -62,7 +64,11 @@ const ListCard = ({ list, handleOnDeleteClick }: ListCardProps) => {
               )}
               <Link
                 className="inline-block p-3 mr-2 border rounded-lg cursor-pointer bg-light-slate-1"
-                href={`/lists/${list.id}/overview`}
+                href={
+                  workspaceId
+                    ? `/workspaces/${workspaceId}/contributor-insights/${list.id}/overview`
+                    : `/lists/${list.id}/overview`
+                }
               >
                 <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-lg text-light-slate-10" />
               </Link>

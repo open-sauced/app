@@ -4,7 +4,8 @@ import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import Sparkline from "components/atoms/Sparkline/sparkline";
-import { getPullRequestsToDays } from "lib/utils/get-prs-to-days";
+import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
+import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
@@ -83,12 +84,14 @@ const ContributorListTableRow = ({
     repoIds: [],
     range,
     mostRecent: true,
+    limit: 50,
   });
+  const { data: prData } = usePullRequestsHistogram({ contributor: login, range: Number(range ?? "30"), width: 1 });
 
   const repoList = useRepoList(Array.from(new Set(data.map((prData) => prData.repo_name))).join(","));
   const contributorLanguageList = user ? getTopContributorLanguages(user) : [];
-  const days = getPullRequestsToDays(data, Number(range ?? 30));
-  const totalPrs = data.length;
+  const days = getPullRequestsHistogramToDays(prData, Number(range ?? 30));
+  const totalPrs = days.reduce((acc, curr) => acc + curr.y, 0);
   const last30days = [
     {
       id: `last30-${login}`,

@@ -4,6 +4,7 @@ import TabListItem from "./tab-list-item";
 
 type TabItem = {
   name: string;
+  path: string;
   numOf?: number;
 };
 
@@ -20,7 +21,7 @@ const TabList: React.FC<NavProps> = ({ tabList, pageId, selectedTab }) => {
       aria-orientation="horizontal"
       aria-label="Browse the tools"
       tabIndex={0}
-      className="tool-list-nav flex w-full overflow-x-auto overflow-y-hidden gap-2 px-4 pt-3"
+      className="tool-list-nav flex w-full overflow-x-auto overflow-y-hidden gap-2"
     >
       {tabList.map((tab, index) => (
         <div
@@ -35,11 +36,7 @@ const TabList: React.FC<NavProps> = ({ tabList, pageId, selectedTab }) => {
               : "border-transparent hover:border-light-slate-8"
           }`}
         >
-          <TabListItem
-            tab={tab}
-            pageLink={`${pageId ? `${pageId}/` : ""}${tab.name.toLowerCase()}`}
-            selectedTab={selectedTab}
-          />
+          <TabListItem tab={tab} pageLink={`${pageId ? `${pageId}/` : ""}${tab.path}`} selectedTab={selectedTab} />
         </div>
       ))}
     </nav>

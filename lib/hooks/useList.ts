@@ -70,7 +70,7 @@ const useFetchListContributors = (id: string, range = 30) => {
   };
 };
 
-const addListContributor = async (listId: string, contributors: number[]) => {
+const addListContributor = async (listId: string, contributors: { id: number; login?: string }[]) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
 

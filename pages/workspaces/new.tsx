@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { ComponentProps, useState } from "react";
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -10,10 +12,28 @@ import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { createWorkspace } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const supabase = createPagesServerClient(context);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session?.user) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
+
 const NewWorkspace = () => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
+
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
 
@@ -31,6 +51,7 @@ const NewWorkspace = () => {
       members: [],
       sessionToken: sessionToken!,
       repos: Array.from(trackedRepos, ([repo]) => ({ full_name: repo })),
+      contributors: [],
     });
 
     if (error || !workspace) {
@@ -38,7 +59,7 @@ const NewWorkspace = () => {
     } else {
       toast({ description: `Workspace created successfully`, variant: "success" });
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: workspace }));
-      router.push(`/workspaces/${workspace.id}/repositories`);
+      router.push(`/workspaces/${workspace.id}`);
     }
   };
 
@@ -47,7 +68,7 @@ const NewWorkspace = () => {
   });
 
   return (
-    <WorkspaceLayout workspaceId={null}>
+    <WorkspaceLayout workspaceId="new">
       <div className="grid gap-6 max-w-4xl">
         <h1 className="border-b bottom pb-4 text-xl font-medium">Workspace Settings</h1>
         <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateWorkspace}>

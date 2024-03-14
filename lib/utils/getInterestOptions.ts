@@ -3,6 +3,7 @@ const interests = [
   "python",
   "java",
   "typescript",
+  "angular",
   "csharp",
   "cpp",
   "php",
@@ -17,6 +18,8 @@ const interests = [
   "vue",
   "kubernetes",
   "clojure",
+  "kotlin",
+  "android",
 ] as const;
 export type InterestType = (typeof interests)[number];
 

@@ -18,7 +18,7 @@ const ListNameHeader = ({ title, onEditTitle }: ListNameHeaderProps) => {
 
   return (
     <div>
-      <Title className="text-base text-sauced-orange">New List</Title>
+      <Title className="text-base text-sauced-orange">New Contributor Insight</Title>
       <div className="flex items-center gap-3">
         <div className="relative text-3xl w-max">
           <input
@@ -36,7 +36,7 @@ const ListNameHeader = ({ title, onEditTitle }: ListNameHeaderProps) => {
             autoFocus
             value={title}
             type="text"
-            placeholder="List Name"
+            placeholder="Contributor Insight Name"
             className={clsx(
               "text-3xl w-40 bg-transparent text-light-slate-12 focus:outline-none cursor-text",
               !focused && "!text-white"
