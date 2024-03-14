@@ -28,7 +28,8 @@ export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
   const workspaceName = searchParams.get("wname");
   const workspaceId = searchParams.get("wid");
-  const range = searchParams.get("range");
+  const workspaceDescription = searchParams.get("description");
+  const range = searchParams.get("range") ?? "30";
 
   const response = await fetch(new URL(`${baseApiUrl}/workspaces/${workspaceId}/stats?range=${range}`, baseApiUrl));
   const repoStats = (await response.json()) as Record<string, Record<string, number>>;
@@ -37,7 +38,7 @@ export default async function handler(req: Request) {
     return new Response("A workspace name must be specified", { status: 404 });
   }
 
-  const logoImg = getLocalAsset(new URL("/assets/card/logo.png", req.url));
+  const logoImg = getLocalAsset(new URL("/assets/og-images/workspaces/open-sauced-logo.png", req.url));
   const interSemiBoldFont = getLocalAsset(new URL("/assets/card/Inter-SemiBold.ttf", req.url));
   const interBlackFont = getLocalAsset(new URL("/assets/card/Inter-Black.ttf", req.url));
 
@@ -57,85 +58,111 @@ export default async function handler(req: Request) {
           flexDirection: "column",
           fontSize: "1rem",
           fontWeight: 700,
-          position: "relative",
-          border: "2px solid #fff",
-          borderRadius: "32px",
-          background: "#11181C",
+          backgroundImage: `url("${new URL(`/assets/og-images/workspaces/background-1.5.png`, req.url)}")`,
+          backgroundSize: "1200px 630px",
           width: "100%",
           height: "100%",
-          padding: "1rem",
-          paddingLeft: "2rem",
-          gap: "2rem",
+          paddingTop: "62px",
+          paddingLeft: "62px",
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element  */}
+        <img
+          alt="Open Sauced Logo"
+          width="185"
+          height="32"
+          // @ts-ignore
+          src={logoImgData}
+        />
         <div
           style={{
-            display: "flex",
-            gap: "0.5rem",
-            alignItems: "center",
+            marginTop: "119.5px",
+            fontSize: "84px",
+            fontWeight: 700,
+            letterSpacing: "-2px",
+            lineHeight: "101.66px",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element  */}
-          <img
-            alt="Open Sauced Logo"
-            width="48"
-            height="48"
-            // @ts-ignore
-            src={logoImgData}
-          />
-          <p style={{ fontSize: "36px", color: "white" }}>OpenSauced</p>
+          {workspaceName}
         </div>
-        <div style={{ fontSize: "36px", fontWeight: 700 }}>{workspaceName}</div>
-        <ul
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            listStyle: "none",
-            fontSize: "24px",
-          }}
-        >
-          {Object.entries(repoStats).map(([key, value]) => {
-            return (
-              <li
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  // alignItems: "center",
-                  gap: "1rem",
-                  textTransform: "uppercase",
-                }}
-                key={key}
-              >
-                <p style={{ fontWeight: "900", textDecoration: "underline" }}>{key.replace("_", " ")}</p>
-                <ul style={{ display: "flex", gap: "1rem", textTransform: "uppercase" }}>
-                  {Object.entries(value)
-                    .filter(([k]) => k !== "health")
-                    .map(([k, v]) => {
-                      return (
-                        <li key={k} style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
-                          <span>{(k === "repos" ? "repositories" : k).replace("_", " ")}:</span>
-                          <span>
-                            {k === "activity_ratio" ? (
-                              <img
-                                width="273"
-                                height="63"
-                                src={`${new URL(
-                                  `/assets/og-images/workspaces/${getActivityRatio(Math.round(v))}-activity.png`,
-                                  req.url
-                                )}`}
-                              />
-                            ) : (
-                              Math.round(v)
-                            )}
-                          </span>
-                        </li>
-                      );
-                    })}
-                </ul>
-              </li>
-            );
-          })}
-        </ul>
+        <p style={{ marginTop: "11.5px", fontSize: "32px", fontWeight: 400 }}>{workspaceDescription}</p>
+        <p style={{ marginTop: "94px", fontSize: "26px", fontWeight: 500 }}>Past {range} days</p>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <ul
+            style={{
+              display: "flex",
+              listStyle: "none",
+              fontSize: "42px",
+              fontWeight: 700,
+            }}
+          >
+            <li
+              style={{
+                display: "flex",
+                gap: "12px",
+              }}
+            >
+              <img src={`${new URL(`/assets/og-images/workspaces/git-merge.png`, req.url)}`} />
+              <span>
+                {repoStats.pull_requests.merged}{" "}
+                <span
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: 500,
+                  }}
+                >
+                  Merged PRs
+                </span>
+              </span>
+            </li>
+            <li
+              style={{
+                display: "flex",
+                gap: "12px",
+              }}
+            >
+              <img src={`${new URL(`/assets/og-images/workspaces/issue-closed.png`, req.url)}`} />
+              <span>
+                {repoStats.issues.closed}{" "}
+                <span
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: 500,
+                  }}
+                >
+                  Closed Issues
+                </span>
+              </span>
+            </li>
+            <li
+              style={{
+                display: "flex",
+                gap: "12px",
+              }}
+            >
+              <img src={`${new URL(`/assets/og-images/workspaces/star.png`, req.url)}`} />
+              <span>
+                {repoStats.repos.stars}{" "}
+                <span
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: 500,
+                  }}
+                >
+                  Stars
+                </span>
+              </span>
+            </li>
+          </ul>
+          <img
+            src={`${new URL(
+              `/assets/og-images/workspaces/${getActivityRatio(
+                Math.round(repoStats.repos.activity_ratio)
+              )}-activity.png`,
+              req.url
+            )}`}
+          />
+        </div>
       </div>
     ),
     {
