@@ -4,11 +4,9 @@ import { useRouter } from "next/router";
 import { WithPageLayout } from "interfaces/with-page-layout";
 import LoginLayout from "layouts/login";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useSession from "lib/hooks/useSession";
 
 const SignInPage: WithPageLayout = () => {
-  useSession(true);
-  const { signIn } = useSupabaseAuth();
+  const { signIn } = useSupabaseAuth(true);
   const router = useRouter();
   const {
     redirectedFrom = "/hub/insights/new",
