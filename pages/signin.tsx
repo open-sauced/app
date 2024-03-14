@@ -21,9 +21,13 @@ const SignInPage: WithPageLayout = () => {
   const hasAuth = auth === "true";
 
   useEffect(() => {
+    async function redirect(destination: string) {
+      await router.push(destination);
+    }
+
     if (hasParams) {
       if (destination && hasAuth) {
-        router.push(destination);
+        redirect(destination);
       } else if (redirectedFrom) {
         signIn({
           provider: "github",
