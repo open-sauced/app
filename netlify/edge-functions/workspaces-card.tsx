@@ -4,8 +4,14 @@ import type { Config } from "https://edge.netlify.com";
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
+// TODO: truncate name and description
+
 function getLocalAsset(url: URL): Promise<ArrayBuffer> {
   return fetch(url).then((res) => res.arrayBuffer());
+}
+
+function getOrgUsernameAvatar(username: string, size = 25.2) {
+  return `https://www.github.com/${username}.png?size=${size}`;
 }
 
 const getActivityRatio = (total?: number) => {
@@ -31,8 +37,15 @@ export default async function handler(req: Request) {
   const workspaceDescription = searchParams.get("description");
   const range = searchParams.get("range") ?? "30";
 
-  const response = await fetch(new URL(`${baseApiUrl}/workspaces/${workspaceId}/stats?range=${range}`, baseApiUrl));
-  const repoStats = (await response.json()) as Record<string, Record<string, number>>;
+  const [repoStatsResponse, workspaceReposResponse] = await Promise.all([
+    fetch(new URL(`${baseApiUrl}/workspaces/${workspaceId}/stats?range=${range}`, baseApiUrl)),
+    fetch(new URL(`${baseApiUrl}/workspaces/${workspaceId}/repos?range=${range}&limit=3`, baseApiUrl)),
+  ]);
+
+  const repoStats = (await repoStatsResponse.json()) as Record<string, Record<string, number>>;
+  const workspaceRepos = (await workspaceReposResponse.json()) as Record<string, string>[];
+  const restOfReposCount = workspaceRepos.meta.itemCount < 4 ? 0 : workspaceRepos.meta.itemCount - 3;
+  const workspaceReposNames = workspaceRepos.data.slice(0, 3).map(({ repo }) => repo.full_name);
 
   if (!workspaceName) {
     return new Response("A workspace name must be specified", { status: 404 });
@@ -47,6 +60,33 @@ export default async function handler(req: Request) {
     interBlackFont,
     logoImg,
   ]);
+
+  const statContainerStyles = {
+    display: "flex",
+    alignItems: "baseline",
+    gap: "10px",
+  };
+
+  const statIconStyles = {
+    width: 28,
+    height: 28,
+  };
+
+  const statTextContainerStyles = {
+    display: "flex",
+    alignItems: "baseline",
+    gap: "12px",
+  };
+
+  const statValueStyles = {
+    fontSize: "42px",
+    fontWeight: 700,
+  };
+
+  const statSubTextStyles = {
+    fontSize: "24px",
+    fontWeight: 500,
+  };
 
   return new ImageResponse(
     (
@@ -64,16 +104,65 @@ export default async function handler(req: Request) {
           height: "100%",
           paddingTop: "62px",
           paddingLeft: "62px",
+          paddingRight: "62px",
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element  */}
-        <img
-          alt="Open Sauced Logo"
-          width="185"
-          height="32"
-          // @ts-ignore
-          src={logoImgData}
-        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element  */}
+          <img
+            alt="Open Sauced Logo"
+            width="185"
+            height="32"
+            // @ts-ignore
+            src={logoImgData}
+          />
+          <ul
+            style={{
+              display: "flex",
+              alignItems: "center",
+              listStyle: "none",
+              gap: "9.45px",
+              fontSize: "24px",
+              fontWeight: 500,
+            }}
+          >
+            {workspaceReposNames.map((fullRepoName) => {
+              const [orgUsername, repoName] = fullRepoName.split("/");
+
+              return (
+                <li
+                  key={repoName}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "12px",
+                    border: "1px solid #64748B",
+                    borderRadius: "6.3px",
+                    padding: "6px 8px 6px 6px",
+                    color: "#D4D4D4",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: 25.2,
+                      height: 25.2,
+                    }}
+                    src={getOrgUsernameAvatar(orgUsername)}
+                  />
+                  <span>{repoName}</span>
+                </li>
+              );
+            })}
+            <li>{restOfReposCount > 0 ? `+${restOfReposCount}` : ""}</li>
+          </ul>
+        </div>
         <div
           style={{
             marginTop: "119.5px",
@@ -87,74 +176,44 @@ export default async function handler(req: Request) {
         </div>
         <p style={{ marginTop: "11.5px", fontSize: "32px", fontWeight: 400 }}>{workspaceDescription}</p>
         <p style={{ marginTop: "94px", fontSize: "26px", fontWeight: 500 }}>Past {range} days</p>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
           <ul
             style={{
               display: "flex",
               listStyle: "none",
-              fontSize: "42px",
-              fontWeight: 700,
+              alignItems: "baseline",
             }}
           >
-            <li
-              style={{
-                display: "flex",
-                gap: "12px",
-              }}
-            >
-              <img src={`${new URL(`/assets/og-images/workspaces/git-merge.png`, req.url)}`} />
-              <span>
-                {repoStats.pull_requests.merged}{" "}
-                <span
-                  style={{
-                    fontSize: "24px",
-                    fontWeight: 500,
-                  }}
-                >
-                  Merged PRs
-                </span>
+            <li style={statContainerStyles}>
+              <img style={statIconStyles} src={`${new URL(`/assets/og-images/workspaces/git-merge.png`, req.url)}`} />
+              <span style={statTextContainerStyles}>
+                <span style={statValueStyles}>{repoStats.pull_requests.merged}</span>
+                <span style={statSubTextStyles}>Merged PRs</span>
               </span>
             </li>
-            <li
-              style={{
-                display: "flex",
-                gap: "12px",
-              }}
-            >
-              <img src={`${new URL(`/assets/og-images/workspaces/issue-closed.png`, req.url)}`} />
-              <span>
-                {repoStats.issues.closed}{" "}
-                <span
-                  style={{
-                    fontSize: "24px",
-                    fontWeight: 500,
-                  }}
-                >
-                  Closed Issues
-                </span>
+            <li style={statContainerStyles}>
+              <img
+                style={statIconStyles}
+                src={`${new URL(`/assets/og-images/workspaces/issue-closed.png`, req.url)}`}
+              />
+              <span style={statTextContainerStyles}>
+                <span style={statValueStyles}>{repoStats.issues.closed}</span>
+                <span style={statSubTextStyles}>Closed Issues</span>
               </span>
             </li>
-            <li
-              style={{
-                display: "flex",
-                gap: "12px",
-              }}
-            >
-              <img src={`${new URL(`/assets/og-images/workspaces/star.png`, req.url)}`} />
-              <span>
-                {repoStats.repos.stars}{" "}
-                <span
-                  style={{
-                    fontSize: "24px",
-                    fontWeight: 500,
-                  }}
-                >
-                  Stars
-                </span>
+            <li style={statContainerStyles}>
+              <img style={statIconStyles} src={`${new URL(`/assets/og-images/workspaces/star.png`, req.url)}`} />
+              <span style={statTextContainerStyles}>
+                <span style={statValueStyles}>{repoStats.repos.stars}</span>
+                <span style={statSubTextStyles}>Stars</span>
               </span>
             </li>
           </ul>
           <img
+            style={{
+              width: 181,
+              height: 42,
+            }}
             src={`${new URL(
               `/assets/og-images/workspaces/${getActivityRatio(
                 Math.round(repoStats.repos.activity_ratio)
