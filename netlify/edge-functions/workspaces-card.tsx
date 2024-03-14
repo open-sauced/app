@@ -228,8 +228,8 @@ export default async function handler(req: Request) {
       width: "1200px",
       height: "630px",
       headers: {
-        // cache for 1 hour
-        "cache-control": "public, s-maxage=3600",
+        // cache for 2 hours
+        "cache-control": "public, s-maxage=7200",
         "content-type": "image/png",
       },
       fonts: [
