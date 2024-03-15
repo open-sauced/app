@@ -235,19 +235,20 @@ export default async function handler(req: Request) {
               </span>
             </li>
           </ul>
-          <img
-            style={{
-              width: 181,
-              height: 42,
-            }}
-            src={`${new URL(
-              `/assets/og-images/workspaces/${getActivityRatio(
-                Math.round(repoStats.repos.activity_ratio)
-              )}-activity.png`,
-              req.url
-            )}`}
-          />
         </div>
+        <img
+          style={{
+            position: "absolute",
+            bottom: "65px",
+            right: "62px",
+            width: 181,
+            height: 42,
+          }}
+          src={`${new URL(
+            `/assets/og-images/workspaces/${getActivityRatio(Math.round(repoStats.repos.activity_ratio))}-activity.png`,
+            req.url
+          )}`}
+        />
       </div>
     ),
     {
