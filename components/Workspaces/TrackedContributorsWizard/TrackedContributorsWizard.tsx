@@ -26,8 +26,6 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
   const [currentTrackedContributors, setCurrentTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const suggestedContributors: any[] = [];
 
-  const onImportOrg = () => {};
-
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
   const { data, isError, isLoading } = useSearchContributors(searchTerm);
 

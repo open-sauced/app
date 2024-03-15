@@ -18,7 +18,7 @@ export const useFetchGithubFollowing = ({ username }: UseFetchGithubFollowingPro
   );
 
   return {
-    data,
+    data: data?.data,
     error,
     mutate,
     isLoading,
