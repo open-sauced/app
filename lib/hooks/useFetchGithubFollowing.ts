@@ -12,13 +12,13 @@ interface GhFollowing {
 }
 
 export const useFetchGithubFollowing = ({ username }: UseFetchGithubFollowingProps) => {
-  const { data, error, isLoading, mutate } = useSWR<PagedData<GhFollowing>, Error>(
+  const { data, error, isLoading, mutate } = useSWR<GhFollowing[], Error>(
     `users/${username}/following?per_page=30`,
-    githubApiFetcher as Fetcher<PagedData<GhFollowing>, Error>
+    githubApiFetcher as Fetcher<GhFollowing[], Error>
   );
 
   return {
-    data: data?.data,
+    data,
     error,
     mutate,
     isLoading,
