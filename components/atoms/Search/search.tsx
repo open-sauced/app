@@ -152,7 +152,9 @@ const Search = ({
                 }}
               >
                 {typeof suggestion === "string" ? (
-                  <span className="pl-5 text-sm inline-block">{suggestion}</span>
+                  <span className="pl-5 text-sm sm:max-w-[12.3rem] md:max-w-[11rem]md:mw-auto inline-block text-ellipsis truncate tracking-tighter">
+                    {suggestion}
+                  </span>
                 ) : (
                   suggestion.node
                 )}
