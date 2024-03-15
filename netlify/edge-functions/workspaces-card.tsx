@@ -4,8 +4,6 @@ import type { Config } from "https://edge.netlify.com";
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
-// TODO: truncate name and description
-
 function getLocalAsset(url: URL): Promise<ArrayBuffer> {
   return fetch(url).then((res) => res.arrayBuffer());
 }
@@ -63,7 +61,7 @@ export default async function handler(req: Request) {
   const statContainerStyles = {
     display: "flex",
     alignItems: "baseline",
-    gap: "8px",
+    gap: "10px",
   };
 
   const statIconStyles = {
@@ -76,7 +74,7 @@ export default async function handler(req: Request) {
     top: "2px",
     display: "flex",
     alignItems: "baseline",
-    gap: "4px",
+    gap: "6px",
   };
 
   const statValueContainerStyles = {
@@ -180,11 +178,24 @@ export default async function handler(req: Request) {
             fontWeight: 700,
             letterSpacing: "-2px",
             lineHeight: "101.66px",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
           {workspaceName}
         </div>
-        <p style={{ marginTop: "11.5px", fontSize: "32px", fontWeight: 400 }}>{workspaceDescription}</p>
+        <div
+          style={{
+            marginTop: "11.5px",
+            fontSize: "32px",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {workspaceDescription}
+        </div>
         <p style={{ marginTop: "94px", fontSize: "26px", fontWeight: 500 }}>Past {range} days</p>
         <div
           style={{
@@ -197,7 +208,7 @@ export default async function handler(req: Request) {
           <ul
             style={{
               display: "flex",
-              gap: "10px",
+              gap: "20px",
               listStyle: "none",
               alignItems: "baseline",
             }}
