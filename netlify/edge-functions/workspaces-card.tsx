@@ -5,6 +5,7 @@ import type { Config } from "https://edge.netlify.com";
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
 // TODO: truncate name and description
+// TODO: fix caching
 
 function getLocalAsset(url: URL): Promise<ArrayBuffer> {
   return fetch(url).then((res) => res.arrayBuffer());
@@ -31,11 +32,10 @@ const getActivityRatio = (total?: number) => {
 };
 
 export default async function handler(req: Request) {
-  const { searchParams } = new URL(req.url);
+  const { searchParams, pathname } = new URL(req.url);
   const workspaceName = searchParams.get("wname");
-  const workspaceId = searchParams.get("wid");
   const workspaceDescription = searchParams.get("description");
-  const range = searchParams.get("range") ?? "30";
+  const [workspaceId, range = 30] = pathname.split("/").slice(-2);
 
   const [repoStatsResponse, workspaceReposResponse] = await Promise.all([
     fetch(new URL(`${baseApiUrl}/workspaces/${workspaceId}/stats?range=${range}`, baseApiUrl)),
@@ -274,6 +274,6 @@ export default async function handler(req: Request) {
 }
 
 export const config: Config = {
-  path: "/og-images/workspace",
+  path: "/og-images/workspace/:workspaceId/:range",
   cache: "manual",
 };

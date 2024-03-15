@@ -3,12 +3,10 @@ import SEO from "layouts/SEO/SEO";
 function getWorkspaceOgImage(workspace: Workspace, range = 30) {
   const searchParams = new URLSearchParams({
     wname: workspace.name,
-    wid: workspace.id,
     description: workspace.description ?? "",
-    range: `${range}`,
   });
 
-  return `/og-images/workspace?${searchParams}`;
+  return `/og-images/workspace/${workspace.id}/${range}?${searchParams}`;
 }
 
 interface WorkspaceOgImageProps {
