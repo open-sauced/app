@@ -73,17 +73,29 @@ export default async function handler(req: Request) {
   };
 
   const statTextContainerStyles = {
+    position: "relative",
+    top: "2px",
     display: "flex",
     alignItems: "baseline",
     gap: "12px",
   };
 
+  const statValueContainerStyles = {
+    overflow: "hidden",
+    position: "relative",
+    maxHeight: "42px",
+  };
+
   const statValueStyles = {
+    position: "relative",
+    top: "2px",
     fontSize: "42px",
     fontWeight: 700,
   };
 
   const statSubTextStyles = {
+    position: "relative",
+    top: "3px",
     fontSize: "24px",
     fontWeight: 500,
   };
@@ -102,9 +114,7 @@ export default async function handler(req: Request) {
           backgroundSize: "1200px 630px",
           width: "100%",
           height: "100%",
-          paddingTop: "62px",
-          paddingLeft: "62px",
-          paddingRight: "62px",
+          padding: "62px",
         }}
       >
         <div
@@ -165,7 +175,7 @@ export default async function handler(req: Request) {
         </div>
         <div
           style={{
-            marginTop: "119.5px",
+            marginTop: "113.5px",
             fontSize: "84px",
             fontWeight: 700,
             letterSpacing: "-2px",
@@ -176,7 +186,14 @@ export default async function handler(req: Request) {
         </div>
         <p style={{ marginTop: "11.5px", fontSize: "32px", fontWeight: 400 }}>{workspaceDescription}</p>
         <p style={{ marginTop: "94px", fontSize: "26px", fontWeight: 500 }}>Past {range} days</p>
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
+        <div
+          style={{
+            marginTop: "8px",
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "space-between",
+          }}
+        >
           <ul
             style={{
               display: "flex",
@@ -187,7 +204,9 @@ export default async function handler(req: Request) {
             <li style={statContainerStyles}>
               <img style={statIconStyles} src={`${new URL(`/assets/og-images/workspaces/git-merge.png`, req.url)}`} />
               <span style={statTextContainerStyles}>
-                <span style={statValueStyles}>{repoStats.pull_requests.merged}</span>
+                <span style={statValueContainerStyles}>
+                  <span style={statValueStyles}>{repoStats.pull_requests.merged}</span>
+                </span>
                 <span style={statSubTextStyles}>Merged PRs</span>
               </span>
             </li>
@@ -197,14 +216,18 @@ export default async function handler(req: Request) {
                 src={`${new URL(`/assets/og-images/workspaces/issue-closed.png`, req.url)}`}
               />
               <span style={statTextContainerStyles}>
-                <span style={statValueStyles}>{repoStats.issues.closed}</span>
+                <span style={statValueContainerStyles}>
+                  <span style={statValueStyles}>{repoStats.issues.closed}</span>
+                </span>
                 <span style={statSubTextStyles}>Closed Issues</span>
               </span>
             </li>
             <li style={statContainerStyles}>
               <img style={statIconStyles} src={`${new URL(`/assets/og-images/workspaces/star.png`, req.url)}`} />
               <span style={statTextContainerStyles}>
-                <span style={statValueStyles}>{repoStats.repos.stars}</span>
+                <span style={statValueContainerStyles}>
+                  <span style={statValueStyles}>{repoStats.repos.stars}</span>
+                </span>
                 <span style={statSubTextStyles}>Stars</span>
               </span>
             </li>
