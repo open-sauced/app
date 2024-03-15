@@ -21,6 +21,7 @@ import Button from "components/atoms/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 import { OptionKeys } from "components/atoms/Select/multi-select";
+import { WorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
@@ -90,62 +91,65 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
   }, [repositories, filteredRepositories]);
 
   return (
-    <WorkspaceLayout workspaceId={workspace.id}>
-      <WorkspaceHeader workspace={workspace} />
-      <div className="grid sm:flex gap-4 pt-3">
-        <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
-        <div className="flex justify-end items-center gap-4">
-          <Button variant="outline" onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)}>
-            Add repositories
-          </Button>
-          <DayRangePicker />
-          <TrackedRepositoryFilter
-            options={filterOptions}
-            handleSelect={(selected: OptionKeys[]) => setFilteredRepositories(selected)}
-          />
+    <>
+      {workspace.is_public ? <WorkspaceOgImage workspace={workspace} range={range} /> : null}
+      <WorkspaceLayout workspaceId={workspace.id}>
+        <WorkspaceHeader workspace={workspace} />
+        <div className="grid sm:flex gap-4 pt-3">
+          <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
+          <div className="flex justify-end items-center gap-4">
+            <Button variant="outline" onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)}>
+              Add repositories
+            </Button>
+            <DayRangePicker />
+            <TrackedRepositoryFilter
+              options={filterOptions}
+              handleSelect={(selected: OptionKeys[]) => setFilteredRepositories(selected)}
+            />
+          </div>
         </div>
-      </div>
-      <div className="mt-6 grid gap-6">
-        <ClientOnly>
-          {repoIds.length > 0 ? (
-            <>
-              <div className="flex flex-col lg:flex-row gap-6">
-                <RepositoryStatCard
-                  type="pulls"
-                  stats={stats?.data?.pull_requests}
-                  isLoading={isLoadingStats}
-                  hasError={isStatsError}
-                />
-                <RepositoryStatCard
-                  type="issues"
-                  stats={stats?.data?.issues}
-                  isLoading={isLoadingStats}
-                  hasError={isStatsError}
-                />
-                <RepositoryStatCard
-                  type="engagement"
-                  stats={stats?.data?.repos}
-                  isLoading={isLoadingStats}
-                  hasError={isStatsError}
-                />
-              </div>
-              <Repositories repositories={repoIds} showSearch={false} />
-            </>
-          ) : (
-            <Card className="bg-transparent">
-              <EmptyState onAddRepos={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)} />
-            </Card>
-          )}
-        </ClientOnly>
-      </div>
+        <div className="mt-6 grid gap-6">
+          <ClientOnly>
+            {repoIds.length > 0 ? (
+              <>
+                <div className="flex flex-col lg:flex-row gap-6">
+                  <RepositoryStatCard
+                    type="pulls"
+                    stats={stats?.data?.pull_requests}
+                    isLoading={isLoadingStats}
+                    hasError={isStatsError}
+                  />
+                  <RepositoryStatCard
+                    type="issues"
+                    stats={stats?.data?.issues}
+                    isLoading={isLoadingStats}
+                    hasError={isStatsError}
+                  />
+                  <RepositoryStatCard
+                    type="engagement"
+                    stats={stats?.data?.repos}
+                    isLoading={isLoadingStats}
+                    hasError={isStatsError}
+                  />
+                </div>
+                <Repositories repositories={repoIds} showSearch={false} />
+              </>
+            ) : (
+              <Card className="bg-transparent">
+                <EmptyState onAddRepos={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)} />
+              </Card>
+            )}
+          </ClientOnly>
+        </div>
 
-      <WorkspaceWelcomeModal
-        isOpen={showWelcome!}
-        onClose={() => {
-          setShowWelcome(false);
-        }}
-      />
-    </WorkspaceLayout>
+        <WorkspaceWelcomeModal
+          isOpen={showWelcome!}
+          onClose={() => {
+            setShowWelcome(false);
+          }}
+        />
+      </WorkspaceLayout>
+    </>
   );
 };
 
