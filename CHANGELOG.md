@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.2](https://github.com/open-sauced/app/compare/v2.9.0-beta.1...v2.9.0-beta.2) (2024-03-15)
+
+
+### 🍕 Features
+
+* workspace OG image ([#2939](https://github.com/open-sauced/app/issues/2939)) ([b13f8ec](https://github.com/open-sauced/app/commit/b13f8ec6d0945c173a2625e030b491032373815c))
+
 ## [2.9.0-beta.1](https://github.com/open-sauced/app/compare/v2.8.0...v2.9.0-beta.1) (2024-03-15)
 
 
