@@ -4,6 +4,16 @@ import type { Config } from "https://edge.netlify.com";
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
+function humanizeNumber(num: number | string, type: "comma" | "abbreviation" | null = null) {
+  const number = typeof num !== "number" ? parseFloat(num) : num;
+  const abs = Math.abs(number);
+  const sign = Math.sign(number);
+  const commaConverted = abs > 999 ? `${((sign * abs) / 1000).toFixed(3).replace(".", ",")}` : `${sign * abs}`;
+  const abbreviated = abs > 999 ? `${((sign * abs) / 1000).toFixed(1)}k` : `${sign * abs}`;
+
+  return type === "comma" ? commaConverted : abbreviated;
+}
+
 function getLocalAsset(url: URL): Promise<ArrayBuffer> {
   return fetch(url).then((res) => res.arrayBuffer());
 }
@@ -163,7 +173,7 @@ export default async function handler(req: Request) {
                 </li>
               );
             })}
-            <li>{restOfReposCount > 0 ? `+${restOfReposCount}` : ""}</li>
+            <li>{restOfReposCount > 0 ? `+${humanizeNumber(restOfReposCount)}` : ""}</li>
           </ul>
         </div>
         <div
@@ -212,7 +222,7 @@ export default async function handler(req: Request) {
               <img style={statIconStyles} src={`${new URL(`/assets/og-images/workspaces/git-merge.png`, req.url)}`} />
               <span style={statTextContainerStyles}>
                 <span style={statValueContainerStyles}>
-                  <span style={statValueStyles}>{repoStats.pull_requests.merged}</span>
+                  <span style={statValueStyles}>{humanizeNumber(repoStats.pull_requests.merged)}</span>
                 </span>
                 <span style={statSubTextStyles}>Merged PRs</span>
               </span>
@@ -224,7 +234,7 @@ export default async function handler(req: Request) {
               />
               <span style={statTextContainerStyles}>
                 <span style={statValueContainerStyles}>
-                  <span style={statValueStyles}>{repoStats.issues.closed}</span>
+                  <span style={statValueStyles}>{humanizeNumber(repoStats.issues.closed)}</span>
                 </span>
                 <span style={statSubTextStyles}>Closed Issues</span>
               </span>
@@ -236,7 +246,7 @@ export default async function handler(req: Request) {
               />
               <span style={statTextContainerStyles}>
                 <span style={statValueContainerStyles}>
-                  <span style={statValueStyles}>{repoStats.repos.stars}</span>
+                  <span style={statValueStyles}>{humanizeNumber(repoStats.repos.stars)}</span>
                 </span>
                 <span style={statSubTextStyles}>Stars</span>
               </span>
