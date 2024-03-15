@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.3](https://github.com/open-sauced/app/compare/v2.9.0-beta.2...v2.9.0-beta.3) (2024-03-15)
+
+
+### 🐛 Bug Fixes
+
+* workspace OG image renders correctly when a description is not present ([#2956](https://github.com/open-sauced/app/issues/2956)) ([59de3b1](https://github.com/open-sauced/app/commit/59de3b1184d94b51389d5c91cfbb0b128e7ebb36))
+
 ## [2.9.0-beta.2](https://github.com/open-sauced/app/compare/v2.9.0-beta.1...v2.9.0-beta.2) (2024-03-15)
 
 
