@@ -50,13 +50,8 @@ export default async function handler(req: Request) {
 
   const logoImg = getLocalAsset(new URL("/assets/og-images/workspaces/open-sauced-logo.png", req.url));
   const interSemiBoldFont = getLocalAsset(new URL("/assets/card/Inter-SemiBold.ttf", req.url));
-  const interBlackFont = getLocalAsset(new URL("/assets/card/Inter-Black.ttf", req.url));
 
-  const [interSemiBoldFontData, interBlackFontData, logoImgData] = await Promise.all([
-    interSemiBoldFont,
-    interBlackFont,
-    logoImg,
-  ]);
+  const [interSemiBoldFontData, logoImgData] = await Promise.all([interSemiBoldFont, logoImg]);
 
   const statContainerStyles = {
     display: "flex",
@@ -276,12 +271,6 @@ export default async function handler(req: Request) {
           name: "Inter",
           data: interSemiBoldFontData,
           weight: 700,
-          style: "normal",
-        },
-        {
-          name: "Inter",
-          data: interBlackFontData,
-          weight: 900,
           style: "normal",
         },
       ],
