@@ -5,7 +5,6 @@ import type { Config } from "https://edge.netlify.com";
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
 // TODO: truncate name and description
-// TODO: fix caching
 
 function getLocalAsset(url: URL): Promise<ArrayBuffer> {
   return fetch(url).then((res) => res.arrayBuffer());
