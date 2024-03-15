@@ -2,29 +2,21 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { ComponentProps, useState } from "react";
-
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import TextInput from "components/atoms/TextInput/text-input";
 import { fetchApiData } from "helpers/fetchApiData";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
+import { createContributorInsight } from "lib/utils/workspace-utils";
 
 import { toast } from "lib/hooks/useToast";
 import Button from "components/atoms/Button/button";
+import TextInput from "components/atoms/TextInput/text-input";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
-
-import { createContributorInsight } from "lib/utils/workspace-utils";
 
 const TrackedContributorsModal = dynamic(() => import("components/Workspaces/TrackedContributorsModal"), {
   ssr: false,
 });
-
-interface GhFollowing {
-  id: number;
-  login: string;
-  type: string;
-}
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -69,9 +61,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 };
 
 CreateContributorInsightPage.SEO = {
-  title: "Create Repository Insight | OpenSauced Insights",
+  title: "Create Contributor Insight | OpenSauced Insights",
   description:
-    "A repository insight page is a dashboard containing selected repositories that you and your team can get insights from.",
+    "A contributor insight page is a dashboard containing selected contributor that you and your team can get insights from.",
 };
 
 export default function CreateContributorInsightPage({

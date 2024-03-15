@@ -6,6 +6,7 @@ import { PickContributorStep } from "./PickContributorStep";
 import { SearchByContributorsStep } from "./SearchByContributorsStep";
 import { PasteContributorsStep } from "./PasteContributorsStep";
 import { FilterPastedContributorsStep } from "./FilterPastedContributorsStep";
+import { SelectFollowingStep } from "./SelectFollowingStep";
 
 interface TrackedContributorsWizardProps {
   onAddToTrackingList: (contributors: Map<string, boolean>) => void;
@@ -17,7 +18,8 @@ type TrackedContributorsStep =
   | "pickContributors"
   | "pasteContributors"
   | "pickOrg"
-  | "filterPastedContributors";
+  | "filterPastedContributors"
+  | "selectFollowing";
 
 export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: TrackedContributorsWizardProps) => {
   const [step, setStep] = useState<TrackedContributorsStep>("pickOption");
@@ -27,7 +29,6 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
   const onImportOrg = () => {};
 
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
-
   const { data, isError, isLoading } = useSearchContributors(searchTerm);
 
   const onToggleContributor = (contributor: string, isSelected: boolean) => {
@@ -100,6 +101,9 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
             onPasteContributors={() => {
               setStep("pasteContributors");
             }}
+            onSelectFollowingContributors={() => {
+              setStep("selectFollowing");
+            }}
           />
         );
 
@@ -128,6 +132,16 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
           />
         );
 
+      case "selectFollowing": {
+        return (
+          <SelectFollowingStep
+            contributors={trackedContributors}
+            onToggleContributor={onToggleContributor}
+            onToggleAllContributors={onToggleAllContributors}
+          />
+        );
+      }
+
       // TODO: other steps
 
       default:
@@ -136,12 +150,6 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
   };
 
   const trackedContributors = new Map(currentTrackedContributors);
-
-  trackedContributors.forEach((isSelected, contributor, map) => {
-    if (!isSelected) {
-      map.delete(contributor);
-    }
-  });
 
   return (
     <TrackedContributorsWizardLayout
