@@ -68,8 +68,8 @@ export default async function handler(req: Request) {
   };
 
   const statIconStyles = {
-    width: 28,
-    height: 28,
+    width: 32,
+    height: 32,
   };
 
   const statTextContainerStyles = {
@@ -223,7 +223,10 @@ export default async function handler(req: Request) {
               </span>
             </li>
             <li style={statContainerStyles}>
-              <img style={statIconStyles} src={`${new URL(`/assets/og-images/workspaces/star.png`, req.url)}`} />
+              <img
+                style={{ ...statIconStyles, width: 33.3 }}
+                src={`${new URL(`/assets/og-images/workspaces/star.png`, req.url)}`}
+              />
               <span style={statTextContainerStyles}>
                 <span style={statValueContainerStyles}>
                   <span style={statValueStyles}>{repoStats.repos.stars}</span>
