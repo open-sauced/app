@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.1](https://github.com/open-sauced/app/compare/v2.8.0...v2.9.0-beta.1) (2024-03-15)
+
+
+### 🍕 Features
+
+* add create button on repo insight list page ([#2941](https://github.com/open-sauced/app/issues/2941)) ([c6b6668](https://github.com/open-sauced/app/commit/c6b6668b5fecefa2a7939a5e974647f12e9499c3))
+
 ## [2.8.0](https://github.com/open-sauced/app/compare/v2.7.0...v2.8.0) (2024-03-14)
 
 
