@@ -63,7 +63,7 @@ export default async function handler(req: Request) {
   const statContainerStyles = {
     display: "flex",
     alignItems: "baseline",
-    gap: "10px",
+    gap: "8px",
   };
 
   const statIconStyles = {
@@ -76,7 +76,7 @@ export default async function handler(req: Request) {
     top: "2px",
     display: "flex",
     alignItems: "baseline",
-    gap: "12px",
+    gap: "4px",
   };
 
   const statValueContainerStyles = {
@@ -97,6 +97,7 @@ export default async function handler(req: Request) {
     top: "3px",
     fontSize: "24px",
     fontWeight: 500,
+    color: "#C7C7C7",
   };
 
   return new ImageResponse(
@@ -196,6 +197,7 @@ export default async function handler(req: Request) {
           <ul
             style={{
               display: "flex",
+              gap: "10px",
               listStyle: "none",
               alignItems: "baseline",
             }}
