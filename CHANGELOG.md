@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.5](https://github.com/open-sauced/app/compare/v2.9.0-beta.4...v2.9.0-beta.5) (2024-03-18)
+
+
+### 🐛 Bug Fixes
+
+* remove duplicate layout on add-contributor in workspaces ([#2952](https://github.com/open-sauced/app/issues/2952)) ([acd358e](https://github.com/open-sauced/app/commit/acd358eb53715be90d0dcd1de8e815a77be6555a))
+
+
+### 🍕 Features
+
+* update workspace insight creation flow ([#2949](https://github.com/open-sauced/app/issues/2949)) ([973a1b8](https://github.com/open-sauced/app/commit/973a1b832a0d8bf01bc6cf9625bee7d343a2a328))
+
 ## [2.9.0-beta.4](https://github.com/open-sauced/app/compare/v2.9.0-beta.3...v2.9.0-beta.4) (2024-03-18)
 
 
