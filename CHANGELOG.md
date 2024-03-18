@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.4](https://github.com/open-sauced/app/compare/v2.9.0-beta.3...v2.9.0-beta.4) (2024-03-18)
+
+
+### 🐛 Bug Fixes
+
+* now activity ratio is named mid instead of medium so OG image for workspace loads ([#2958](https://github.com/open-sauced/app/issues/2958)) ([652a7a2](https://github.com/open-sauced/app/commit/652a7a2ca30072c058eaa5490c49844ac8ba4c2b))
+
 ## [2.9.0-beta.3](https://github.com/open-sauced/app/compare/v2.9.0-beta.2...v2.9.0-beta.3) (2024-03-15)
 
 
