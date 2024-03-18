@@ -32,7 +32,7 @@ const getActivityRatio = (total?: number) => {
   }
 
   if (total >= 4 && total <= 7) {
-    return "medium";
+    return "mid";
   }
 
   return "low";
