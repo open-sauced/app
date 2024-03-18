@@ -404,7 +404,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
                 toast({ description: `Workspace delete failed`, variant: "danger" });
               } else {
                 toast({ description: `Workspace deleted successfully`, variant: "success" });
-                router.push("/workspaces/new");
+                router.push("/workspaces");
               }
             }}
           />
