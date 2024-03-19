@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.7](https://github.com/open-sauced/app/compare/v2.9.0-beta.6...v2.9.0-beta.7) (2024-03-19)
+
+
+### 🍕 Features
+
+* created the custom 500 page ([#2969](https://github.com/open-sauced/app/issues/2969)) ([5b81f38](https://github.com/open-sauced/app/commit/5b81f38f8143d9c42fe879ca0471fd2bc5e3e4b6))
+
 ## [2.9.0-beta.6](https://github.com/open-sauced/app/compare/v2.9.0-beta.5...v2.9.0-beta.6) (2024-03-19)
 
 
