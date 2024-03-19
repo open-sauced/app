@@ -27,6 +27,13 @@
 * update workspace insight creation flow ([#2949](https://github.com/open-sauced/app/issues/2949)) ([973a1b8](https://github.com/open-sauced/app/commit/973a1b832a0d8bf01bc6cf9625bee7d343a2a328))
 * workspace OG image ([#2939](https://github.com/open-sauced/app/issues/2939)) ([b13f8ec](https://github.com/open-sauced/app/commit/b13f8ec6d0945c173a2625e030b491032373815c))
 
+## [2.9.0-beta.8](https://github.com/open-sauced/app/compare/v2.9.0-beta.7...v2.9.0-beta.8) (2024-03-19)
+
+
+### 🐛 Bug Fixes
+
+* add workspace welcome modal image ([#2971](https://github.com/open-sauced/app/issues/2971)) ([857954f](https://github.com/open-sauced/app/commit/857954f5eb85969755b16645b8b9ce66f7912210))
+
 ## [2.9.0-beta.7](https://github.com/open-sauced/app/compare/v2.9.0-beta.6...v2.9.0-beta.7) (2024-03-19)
 
 
