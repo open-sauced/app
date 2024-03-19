@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import Tool from "components/organisms/ToolsDisplay/tools-display";
 import changeCapitalization from "lib/utils/change-capitalization";
-import FilterLayout from "../../layouts/filter";
-import { WithPageLayout } from "../../interfaces/with-page-layout";
+import FilterLayout from "../../../../layouts/filter";
+import { WithPageLayout } from "../../../../interfaces/with-page-layout";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const pageId = ctx.params!["pageId"] as string;

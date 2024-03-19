@@ -43,7 +43,7 @@ const Nav = ({ className }: { className?: string }) => {
   const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
   const router = useRouter();
 
-  const explorePageUrlPattern = /^\/(?!pages|lists\/.*\/activity).*\/(dashboard|reports|contributors|activity).*/g;
+  const explorePageUrlPattern = /^(\/explore\/topic).*\/(dashboard|reports|contributors|activity).*/g;
 
   return (
     <nav className={className} aria-label="top navigation">
@@ -65,7 +65,7 @@ const Nav = ({ className }: { className?: string }) => {
             className={`tracking-tight font-medium text-slate-700 text-sm hover:text-orange-500 transition-all ${getActiveStyle(
               explorePageUrlPattern.test(router.asPath)
             )}`}
-            href={`/${userInterest}/dashboard/filter/recent`}
+            href={`/explore/topic/${userInterest}/dashboard/filter/recent`}
           >
             Explore
           </Link>
