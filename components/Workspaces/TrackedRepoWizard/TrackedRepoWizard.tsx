@@ -24,10 +24,15 @@ type TrackedReposStep =
   | "filterPastedRepos"
   | "pickOrgRepos";
 
-async function checkOrgExists(orgSearchTerm: string) {
+async function getCaseSensitiveOrgName(orgSearchTerm: string) {
   const response = await fetch(`https://api.github.com/orgs/${orgSearchTerm}`);
 
-  return response.status === 200;
+  if (response.status === 200) {
+    // The organization name is case sensitive even if our search was case insensitive
+    const { login } = await response.json();
+
+    return login;
+  }
 }
 
 export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
@@ -72,12 +77,14 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   useEffect(() => {
     if (rawUserOrgs) {
       const orgs = rawUserOrgs.map((org) => org.organization_user.login);
-      const orgRepos = new Set(orgs.filter((repo) => !orgSearchTerm || repo.includes(orgSearchTerm)));
+      const orgRepos = new Set(
+        orgs.filter((repo) => !orgSearchTerm || repo.toLowerCase().includes(orgSearchTerm.toLowerCase()))
+      );
 
       if (orgSearchTerm && orgRepos.size === 0) {
-        checkOrgExists(orgSearchTerm).then((exists) => {
-          if (exists) {
-            setFilteredOrgs(new Set([orgSearchTerm]));
+        getCaseSensitiveOrgName(orgSearchTerm).then((caseSensitiveOrgName) => {
+          if (caseSensitiveOrgName) {
+            setFilteredOrgs(new Set([caseSensitiveOrgName]));
           } else {
             setFilteredOrgs(orgRepos);
           }
