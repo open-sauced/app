@@ -5,6 +5,73 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.7](https://github.com/open-sauced/app/compare/v2.9.0-beta.6...v2.9.0-beta.7) (2024-03-19)
+
+
+### 🍕 Features
+
+* created the custom 500 page ([#2969](https://github.com/open-sauced/app/issues/2969)) ([5b81f38](https://github.com/open-sauced/app/commit/5b81f38f8143d9c42fe879ca0471fd2bc5e3e4b6))
+
+## [2.9.0-beta.6](https://github.com/open-sauced/app/compare/v2.9.0-beta.5...v2.9.0-beta.6) (2024-03-19)
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove footer from workspaces ([#2964](https://github.com/open-sauced/app/issues/2964)) ([0771699](https://github.com/open-sauced/app/commit/077169931e613dc0f8e7847a354e9cfb25a5af85))
+
+## [2.9.0-beta.5](https://github.com/open-sauced/app/compare/v2.9.0-beta.4...v2.9.0-beta.5) (2024-03-18)
+
+
+### 🐛 Bug Fixes
+
+* remove duplicate layout on add-contributor in workspaces ([#2952](https://github.com/open-sauced/app/issues/2952)) ([acd358e](https://github.com/open-sauced/app/commit/acd358eb53715be90d0dcd1de8e815a77be6555a))
+
+
+### 🍕 Features
+
+* update workspace insight creation flow ([#2949](https://github.com/open-sauced/app/issues/2949)) ([973a1b8](https://github.com/open-sauced/app/commit/973a1b832a0d8bf01bc6cf9625bee7d343a2a328))
+
+## [2.9.0-beta.4](https://github.com/open-sauced/app/compare/v2.9.0-beta.3...v2.9.0-beta.4) (2024-03-18)
+
+
+### 🐛 Bug Fixes
+
+* now activity ratio is named mid instead of medium so OG image for workspace loads ([#2958](https://github.com/open-sauced/app/issues/2958)) ([652a7a2](https://github.com/open-sauced/app/commit/652a7a2ca30072c058eaa5490c49844ac8ba4c2b))
+
+## [2.9.0-beta.3](https://github.com/open-sauced/app/compare/v2.9.0-beta.2...v2.9.0-beta.3) (2024-03-15)
+
+
+### 🐛 Bug Fixes
+
+* workspace OG image renders correctly when a description is not present ([#2956](https://github.com/open-sauced/app/issues/2956)) ([59de3b1](https://github.com/open-sauced/app/commit/59de3b1184d94b51389d5c91cfbb0b128e7ebb36))
+
+## [2.9.0-beta.2](https://github.com/open-sauced/app/compare/v2.9.0-beta.1...v2.9.0-beta.2) (2024-03-15)
+
+
+### 🍕 Features
+
+* workspace OG image ([#2939](https://github.com/open-sauced/app/issues/2939)) ([b13f8ec](https://github.com/open-sauced/app/commit/b13f8ec6d0945c173a2625e030b491032373815c))
+
+## [2.9.0-beta.1](https://github.com/open-sauced/app/compare/v2.8.0...v2.9.0-beta.1) (2024-03-15)
+
+
+### 🍕 Features
+
+* add create button on repo insight list page ([#2941](https://github.com/open-sauced/app/issues/2941)) ([c6b6668](https://github.com/open-sauced/app/commit/c6b6668b5fecefa2a7939a5e974647f12e9499c3))
+
+## [2.8.0](https://github.com/open-sauced/app/compare/v2.7.0...v2.8.0) (2024-03-14)
+
+
+### 🐛 Bug Fixes
+
+* capture PostHog event for workspace upgrade banner shown and modal clicked ([#2927](https://github.com/open-sauced/app/issues/2927)) ([05d168f](https://github.com/open-sauced/app/commit/05d168f22efcedfa255ec456bb58459b4a020a80))
+* updated npm-shrinkwrap.json with new package name ([#2936](https://github.com/open-sauced/app/issues/2936)) ([afcfdc2](https://github.com/open-sauced/app/commit/afcfdc29dcb3c7205e23fb265c003a6e9842075d))
+
+
+### 🍕 Features
+
+* allow URLs when pasting repos ([#2933](https://github.com/open-sauced/app/issues/2933)) ([ede987f](https://github.com/open-sauced/app/commit/ede987f8dee905c3adcbb8a778e35a6d9c665e36))
+
 ## [2.8.0](https://github.com/open-sauced/app/compare/v2.7.0...v2.8.0) (2024-03-14)
 
 
