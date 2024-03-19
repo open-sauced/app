@@ -28,7 +28,8 @@ async function getCaseSensitiveOrgName(orgSearchTerm: string) {
   const response = await fetch(`https://api.github.com/orgs/${orgSearchTerm}`);
 
   if (response.status === 200) {
-    // The organization name is case sensitive even if our search was case insensitive
+    // The organization name is case sensitive even if our search was case insensitive.
+    // Return the case sensitive organization name so we can use it to get the organization's repositories.
     const { login } = await response.json();
 
     return login;
