@@ -222,21 +222,27 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             <WorkspacesTabList workspaceId={workspace.id} selectedTab={""} />
           </div>
           <form className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
-            <TextInput
-              name="name"
-              label="Workspace Name"
-              defaultValue={workspace.name}
-              placeholder="Workspace name"
-              className="w-full md:w-max"
-              required
-            />
-            <TextInput
-              name="description"
-              label="Workspace Description"
-              defaultValue={workspace.description}
-              placeholder="Workspace description"
-              className="w-full md:w-3/4 max-w-lg"
-            />
+            <div>
+              <h3 className="font-medium mb-2">
+                Workspace Name <span className="text-red-600">*</span>
+              </h3>
+              <TextInput
+                name="name"
+                defaultValue={workspace.name}
+                placeholder="Workspace name"
+                className="w-full md:w-max"
+                required
+              />
+            </div>
+            <div>
+              <h3 className="font-medium mb-2">Workspace Description</h3>
+              <TextInput
+                name="description"
+                defaultValue={workspace.description}
+                placeholder="Workspace description"
+                className="w-full md:w-3/4 max-w-lg"
+              />
+            </div>
             <div className="bg-white sticky-bottom fixed rounded-lg bottom-4 right-0 self-end m-6">
               <Button
                 variant="primary"
