@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.6](https://github.com/open-sauced/app/compare/v2.9.0-beta.5...v2.9.0-beta.6) (2024-03-19)
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove footer from workspaces ([#2964](https://github.com/open-sauced/app/issues/2964)) ([0771699](https://github.com/open-sauced/app/commit/077169931e613dc0f8e7847a354e9cfb25a5af85))
+
 ## [2.9.0-beta.5](https://github.com/open-sauced/app/compare/v2.9.0-beta.4...v2.9.0-beta.5) (2024-03-18)
 
 
