@@ -6,7 +6,6 @@ import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-import Footer from "components/organisms/Footer/footer";
 
 interface WorkspaceLayoutProps {
   workspaceId: string;
@@ -64,9 +63,6 @@ export const WorkspaceLayout = ({ workspaceId, banner, children }: WorkspaceLayo
       <div className="relative flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
         {banner}
         <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px]">{children}</div>
-      </div>
-      <div className="flex self-end pt-2">
-        <Footer />
       </div>
     </div>
   );
