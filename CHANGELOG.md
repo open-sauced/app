@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0](https://github.com/open-sauced/app/compare/v2.8.0...v2.9.0) (2024-03-19)
+
+
+### 🐛 Bug Fixes
+
+* now activity ratio is named mid instead of medium so OG image for workspace loads ([#2958](https://github.com/open-sauced/app/issues/2958)) ([652a7a2](https://github.com/open-sauced/app/commit/652a7a2ca30072c058eaa5490c49844ac8ba4c2b))
+* remove duplicate layout on add-contributor in workspaces ([#2952](https://github.com/open-sauced/app/issues/2952)) ([acd358e](https://github.com/open-sauced/app/commit/acd358eb53715be90d0dcd1de8e815a77be6555a))
+* workspace OG image renders correctly when a description is not present ([#2956](https://github.com/open-sauced/app/issues/2956)) ([59de3b1](https://github.com/open-sauced/app/commit/59de3b1184d94b51389d5c91cfbb0b128e7ebb36))
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove footer from workspaces ([#2964](https://github.com/open-sauced/app/issues/2964)) ([0771699](https://github.com/open-sauced/app/commit/077169931e613dc0f8e7847a354e9cfb25a5af85))
+
+
+### 🍕 Features
+
+* add create button on repo insight list page ([#2941](https://github.com/open-sauced/app/issues/2941)) ([c6b6668](https://github.com/open-sauced/app/commit/c6b6668b5fecefa2a7939a5e974647f12e9499c3))
+* created the custom 500 page ([#2969](https://github.com/open-sauced/app/issues/2969)) ([5b81f38](https://github.com/open-sauced/app/commit/5b81f38f8143d9c42fe879ca0471fd2bc5e3e4b6))
+* update workspace insight creation flow ([#2949](https://github.com/open-sauced/app/issues/2949)) ([973a1b8](https://github.com/open-sauced/app/commit/973a1b832a0d8bf01bc6cf9625bee7d343a2a328))
+* workspace OG image ([#2939](https://github.com/open-sauced/app/issues/2939)) ([b13f8ec](https://github.com/open-sauced/app/commit/b13f8ec6d0945c173a2625e030b491032373815c))
+
 ## [2.9.0-beta.7](https://github.com/open-sauced/app/compare/v2.9.0-beta.6...v2.9.0-beta.7) (2024-03-19)
 
 
