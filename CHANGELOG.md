@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.8](https://github.com/open-sauced/app/compare/v2.9.0-beta.7...v2.9.0-beta.8) (2024-03-19)
+
+
+### 🐛 Bug Fixes
+
+* add workspace welcome modal image ([#2971](https://github.com/open-sauced/app/issues/2971)) ([857954f](https://github.com/open-sauced/app/commit/857954f5eb85969755b16645b8b9ce66f7912210))
+
 ## [2.9.0-beta.7](https://github.com/open-sauced/app/compare/v2.9.0-beta.6...v2.9.0-beta.7) (2024-03-19)
 
 
