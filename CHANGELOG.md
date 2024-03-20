@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.11](https://github.com/open-sauced/app/compare/v2.9.0-beta.10...v2.9.0-beta.11) (2024-03-20)
+
+
+### 🍕 Features
+
+* replace outside click to button for tracked modal ([#2980](https://github.com/open-sauced/app/issues/2980)) ([7049199](https://github.com/open-sauced/app/commit/704919981665048da89e7eac5e928cb808358b43))
+
 ## [2.9.0-beta.10](https://github.com/open-sauced/app/compare/v2.9.0-beta.9...v2.9.0-beta.10) (2024-03-20)
 
 
