@@ -36,6 +36,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
+  const workspaceId = router.query.workspaceId as string;
 
   const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
   const { toast } = useToast();
@@ -83,7 +84,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
         };
       });
 
-  const PopOverListContent = () => {
+  const PopOverListContent = ({ workspaceId }: { workspaceId: string }) => {
     const { data } = useFetchAllLists();
     const [loading, setLoading] = useState(false);
 
@@ -157,7 +158,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           <Button
             onClick={() => {
               router.push({
-                pathname: "/hub/lists/find",
+                pathname: `/workspaces/${workspaceId}/contributor-insights/find`,
                 query: { contributors: JSON.stringify(selectedContributors) },
               });
             }}
@@ -216,7 +217,7 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
                 <PopoverTrigger>
                   <Button variant="primary">Add to list</Button>
                 </PopoverTrigger>
-                {popoverOpen && <PopOverListContent />}
+                {popoverOpen && <PopOverListContent workspaceId={workspaceId} />}
               </Popover>
             </div>
           )}
