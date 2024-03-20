@@ -14,6 +14,7 @@ import { SearchOrgStep } from "./SearchOrgStep";
 interface TrackedReposWizardProps {
   onAddToTrackingList: (repos: Map<string, boolean>) => void;
   onCancel: () => void;
+  onCloseModal: () => void;
 }
 
 type TrackedReposStep =
@@ -30,7 +31,7 @@ async function organizationExists(orgSearchTerm: string) {
   return response.status === 200;
 }
 
-export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
+export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal }: TrackedReposWizardProps) => {
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
   const [organization, setOrganization] = useState<string | undefined>();
   const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<Map<string, boolean>>(new Map());
@@ -241,6 +242,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
       onCancel={() => {
         goBack();
       }}
+      onCloseModal={onCloseModal}
     >
       {renderStep(step)}
     </TrackedRepoWizardLayout>
