@@ -25,14 +25,13 @@ type TrackedReposStep =
   | "filterPastedRepos"
   | "pickOrgRepos";
 
-
 async function organizationExists(orgSearchTerm: string) {
   const response = await fetch(`https://api.github.com/orgs/${orgSearchTerm}`);
 
   return response.status === 200;
 }
 
-export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
+export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal }: TrackedReposWizardProps) => {
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
   const [organization, setOrganization] = useState<string | undefined>();
   const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<Map<string, boolean>>(new Map());
