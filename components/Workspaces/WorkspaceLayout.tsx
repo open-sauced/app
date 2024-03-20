@@ -64,7 +64,7 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
         </div>
         <div className="relative flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
           {banner}
-          <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px] pb-32">{children}</div>
+          <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px] pb-20">{children}</div>
         </div>
       </div>
       {footer ? (
