@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.9](https://github.com/open-sauced/app/compare/v2.9.0-beta.8...v2.9.0-beta.9) (2024-03-20)
+
+
+### 🐛 Bug Fixes
+
+* now you can use free text to select an organization for tracking repos ([#2972](https://github.com/open-sauced/app/issues/2972)) ([ab0438a](https://github.com/open-sauced/app/commit/ab0438ab0104cd29bc856b4965fad08fd6aefed6))
+
 ## [2.9.0-beta.8](https://github.com/open-sauced/app/compare/v2.9.0-beta.7...v2.9.0-beta.8) (2024-03-19)
 
 
