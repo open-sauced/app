@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.13](https://github.com/open-sauced/app/compare/v2.9.0-beta.12...v2.9.0-beta.13) (2024-03-20)
+
+
+### 🐛 Bug Fixes
+
+* track bulk add input for Tracked Wizard Modal in localStorage ([#2976](https://github.com/open-sauced/app/issues/2976)) ([77ed601](https://github.com/open-sauced/app/commit/77ed601343489e6e41cba5373a76d4b1796d9f15))
+
 ## [2.9.0-beta.12](https://github.com/open-sauced/app/compare/v2.9.0-beta.11...v2.9.0-beta.12) (2024-03-20)
 
 
