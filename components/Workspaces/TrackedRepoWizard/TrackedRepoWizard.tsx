@@ -1,3 +1,4 @@
+import { useLocalStorage } from "react-use";
 import { useEffect, useState } from "react";
 import { useSearchRepos } from "lib/hooks/useSearchRepos";
 import { useUserOrganizations } from "lib/hooks/useUserOrganizations";
@@ -35,10 +36,14 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
   const [organization, setOrganization] = useState<string | undefined>();
   const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<Map<string, boolean>>(new Map());
+
   const suggestedRepos: any[] = [];
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
   const [orgSearchTerm, setOrgSearchTerm] = useState<string | undefined>();
   const [filteredOrgs, setFilteredOrgs] = useState<Set<string>>(new Set());
+
+  const [pastedInput, setPastedInput, removePastedInput] = useLocalStorage("bulk-add-repos", "");
+
   const { data, isError, isLoading } = useSearchRepos(searchTerm);
   const username: string | null = useStore((state) => state.user?.user_metadata.user_name);
   const { data: rawUserOrgs, isError: orgsError, isLoading: orgsLoading } = useUserOrganizations(username);
@@ -236,6 +241,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal
   return (
     <TrackedRepoWizardLayout
       onAddToTrackingList={() => {
+        removePastedInput();
         onAddToTrackingList(currentTrackedRepositories);
       }}
       trackedReposCount={trackedRepos.size}
