@@ -38,14 +38,16 @@ import { TypeWriterTextArea } from "components/atoms/TypeWriterTextArea/type-wri
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
 import generateIssueHighlightSummary from "lib/utils/generate-issue-highlight-summary";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
-import { getBlogDetails, isValidBlogUrl } from "lib/utils/dev-to";
-import generateBlogHighlightSummary from "lib/utils/generate-blog-highlight-summary";
+import { getDevToBlogDetails, isValidDevToBlogUrl } from "lib/utils/dev-to";
+import generateDevToBlogHighlightSummary from "lib/utils/generate-dev-to-blog-highlight-summary";
 import Search from "components/atoms/Search/search";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { isValidUrl } from "lib/utils/urls";
 import { Calendar } from "../Calendar/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../Popover/popover";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import DevToSocialImg from "../DevToSocialImage/dev-to-social-img";
+import GenericBlogOpenGraphImg from "../GenericBlogOpenGraphImg/generic-blog-open-graph-img";
 import CardRepoList, { RepoList } from "../CardRepoList/card-repo-list";
 import {
   Dialog,
@@ -164,7 +166,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
   const checkIfHighlightLinkIsValid = (link: string) => {
     if (!link) return setError("");
-    if (isValidPullRequestUrl(link) || isValidIssueUrl(link) || isValidBlogUrl(link)) {
+    if (
+      isValidPullRequestUrl(highlightLink) ||
+      isValidIssueUrl(highlightLink) ||
+      isValidDevToBlogUrl(highlightLink) ||
+      isValidUrl(highlightLink)
+    ) {
       setIsHighlightURLValid(true);
       setError("");
     } else {
@@ -172,6 +179,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       setError("Please provide a valid pull request, issue or dev.to blog link!");
     }
   };
+
   useEffect(() => {
     // disable scroll when form is open
     if (isFormOpenMobile) {
@@ -383,14 +391,20 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
   };
 
   const handleGenerateHighlightSummary = async () => {
-    if (
-      !highlightLink ||
-      (!isValidPullRequestUrl(highlightLink) && !isValidIssueUrl(highlightLink) && !isValidBlogUrl(highlightLink))
-    ) {
+    if (!highlightLink) {
       setError("Please provide a valid pull request, issue or dev.to blog link!");
       return;
     }
     setIsHighlightURLValid(true);
+
+    if (highlightLink && (!highlightLink.includes("github.com") || !highlightLink.includes("dev.to"))) {
+      toast({
+        description: "Auto-Summarize not supported for current link!",
+        title: "Oops!",
+        variant: "warning",
+      });
+      return;
+    }
 
     setIsSummaryButtonDisabled(true);
 
@@ -403,8 +417,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       const issueComments = await getGithubIssueComments(highlightLink);
       summary = await generateIssueHighlightSummary(issueTitle, issueBody, issueComments);
     } else {
-      const { title: blogTitle, markdown: blogMarkdown } = await getBlogDetails(highlightLink);
-      summary = await generateBlogHighlightSummary(blogTitle, blogMarkdown);
+      const { title: blogTitle, markdown: blogMarkdown } = await getDevToBlogDetails(highlightLink);
+      summary = await generateDevToBlogHighlightSummary(blogTitle, blogMarkdown);
     }
 
     setIsSummaryButtonDisabled(false);
@@ -432,7 +446,12 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
 
     const highlight = bodyText;
 
-    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
+    if (
+      isValidPullRequestUrl(highlightLink) ||
+      isValidIssueUrl(highlightLink) ||
+      isValidDevToBlogUrl(highlightLink) ||
+      isValidUrl(highlightLink)
+    ) {
       setIsHighlightURLValid(true);
       // generateApiPrUrl will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
@@ -653,12 +672,18 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
               </div>
             </div>
 
-            {highlightLink && isDivFocused && highlightLink.includes("github") && (
+            {highlightLink && isDivFocused && highlightLink.includes("github.com") && (
               <GhOpenGraphImg githubLink={highlightLink} />
             )}
             {highlightLink && isDivFocused && highlightLink.includes("dev.to") && (
               <DevToSocialImg blogLink={highlightLink} />
             )}
+            {highlightLink &&
+              isDivFocused &&
+              !highlightLink.includes("github.com") &&
+              !highlightLink.includes("dev.to") && (
+                <GenericBlogOpenGraphImg className="max-sm:hidden lg:w-[33vw] md:w-[50vw]" blogLink={highlightLink} />
+              )}
 
             <Button
               loading={loading}

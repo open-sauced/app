@@ -18,6 +18,10 @@ export const siteUrl = (path: string = "", params: { [key: string]: any } = {}) 
   return url.toString();
 };
 
+export const isValidUrl = (url: string) => {
+  return /^(http|https):\/\/[A-Za-z0-9.-]+(\/[A-Za-z0-9\/_.-]+)*$/.test(url);
+};
+
 /**
  * -------------------------------------------------------------------------------
  *  DevCard URLs
