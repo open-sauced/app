@@ -24,6 +24,12 @@ type TrackedReposStep =
   | "filterPastedRepos"
   | "pickOrgRepos";
 
+async function organizationExists(orgSearchTerm: string) {
+  const response = await fetch(`https://api.github.com/orgs/${orgSearchTerm}`);
+
+  return response.status === 200;
+}
+
 export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
   const [organization, setOrganization] = useState<string | undefined>();
@@ -35,6 +41,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const { data, isError, isLoading } = useSearchRepos(searchTerm);
   const username: string | null = useStore((state) => state.user?.user_metadata.user_name);
   const { data: rawUserOrgs, isError: orgsError, isLoading: orgsLoading } = useUserOrganizations(username);
+
   const {
     data: rawOrgRepos,
     isError: isOrgReposError,
@@ -66,8 +73,21 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   useEffect(() => {
     if (rawUserOrgs) {
       const orgs = rawUserOrgs.map((org) => org.organization_user.login);
-      const orgRepos = new Set(orgs.filter((repo) => !orgSearchTerm || repo.includes(orgSearchTerm)));
-      setFilteredOrgs(orgRepos);
+      const orgRepos = new Set(
+        orgs.filter((repo) => !orgSearchTerm || repo.toLowerCase().includes(orgSearchTerm.toLowerCase()))
+      );
+
+      if (orgSearchTerm && orgRepos.size === 0) {
+        organizationExists(orgSearchTerm).then((orgExists) => {
+          if (orgExists) {
+            setFilteredOrgs(new Set([orgSearchTerm]));
+          } else {
+            setFilteredOrgs(orgRepos);
+          }
+        });
+      } else {
+        setFilteredOrgs(orgRepos);
+      }
     }
   }, [rawUserOrgs, orgSearchTerm]);
 
