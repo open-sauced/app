@@ -24,16 +24,10 @@ type TrackedReposStep =
   | "filterPastedRepos"
   | "pickOrgRepos";
 
-async function getCaseSensitiveOrgName(orgSearchTerm: string) {
+async function organizationExists(orgSearchTerm: string) {
   const response = await fetch(`https://api.github.com/orgs/${orgSearchTerm}`);
 
-  if (response.status === 200) {
-    // The organization name is case sensitive even if our search was case insensitive.
-    // Return the case sensitive organization name so we can use it to get the organization's repositories.
-    const { login } = await response.json();
-
-    return login;
-  }
+  return response.status === 200;
 }
 
 export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedReposWizardProps) => {
@@ -47,6 +41,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
   const { data, isError, isLoading } = useSearchRepos(searchTerm);
   const username: string | null = useStore((state) => state.user?.user_metadata.user_name);
   const { data: rawUserOrgs, isError: orgsError, isLoading: orgsLoading } = useUserOrganizations(username);
+
   const {
     data: rawOrgRepos,
     isError: isOrgReposError,
@@ -83,9 +78,9 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel }: TrackedRep
       );
 
       if (orgSearchTerm && orgRepos.size === 0) {
-        getCaseSensitiveOrgName(orgSearchTerm).then((caseSensitiveOrgName) => {
-          if (caseSensitiveOrgName) {
-            setFilteredOrgs(new Set([caseSensitiveOrgName]));
+        organizationExists(orgSearchTerm).then((orgExists) => {
+          if (orgExists) {
+            setFilteredOrgs(new Set([orgSearchTerm]));
           } else {
             setFilteredOrgs(orgRepos);
           }
