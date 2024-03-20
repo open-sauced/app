@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.12](https://github.com/open-sauced/app/compare/v2.9.0-beta.11...v2.9.0-beta.12) (2024-03-20)
+
+
+### 🧑‍💻 Code Refactoring
+
+* move [pageId] pages to dedicated /explore/topic route ([#2974](https://github.com/open-sauced/app/issues/2974)) ([bd449a4](https://github.com/open-sauced/app/commit/bd449a4131af569aaac43ed9012a445b7a94f58b))
+
 ## [2.9.0-beta.11](https://github.com/open-sauced/app/compare/v2.9.0-beta.10...v2.9.0-beta.11) (2024-03-20)
 
 
