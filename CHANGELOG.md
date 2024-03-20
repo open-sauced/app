@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.10](https://github.com/open-sauced/app/compare/v2.9.0-beta.9...v2.9.0-beta.10) (2024-03-20)
+
+
+### 🐛 Bug Fixes
+
+* now workspace settings and new page have a fixed footer for CTAs ([#2982](https://github.com/open-sauced/app/issues/2982)) ([7fff9fa](https://github.com/open-sauced/app/commit/7fff9fa2a1711a8f2174bbf262f54b782d213856))
+
 ## [2.9.0-beta.9](https://github.com/open-sauced/app/compare/v2.9.0-beta.8...v2.9.0-beta.9) (2024-03-20)
 
 
