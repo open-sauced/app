@@ -11,6 +11,7 @@ import { truncateString } from "lib/utils/truncate-string";
 import { useToast } from "lib/hooks/useToast";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import StackedOwners from "components/Workspaces/StackedOwners";
+import { shortenUrl } from "lib/utils/shorten-url";
 
 interface ListHeaderProps {
   name: string;
@@ -39,7 +40,8 @@ const ListHeader = ({
     posthog!.capture("clicked: Lists copied");
 
     try {
-      await navigator.clipboard.writeText(url);
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
