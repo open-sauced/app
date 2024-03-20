@@ -1,22 +1,30 @@
 import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { fetchApiData } from "helpers/fetchApiData";
+import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 import SEO from "layouts/SEO/SEO";
 import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
 
-export async function getServerSideProps({ params }: GetServerSidePropsContext) {
-  const { org, repo } = params ?? { org: "", repo: "" };
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { org, repo } = context.params ?? { org: "", repo: "" };
+  const supabase = createPagesServerClient(context);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const userId = Number(session?.user.user_metadata.sub);
+  const featureFlags = await getAllFeatureFlags(userId);
 
   const { data: repoData, error } = await fetchApiData<DbRepo>({
     path: `repos/${org}/${repo}`,
   });
 
-  if (!repoData || error) {
+  if (!featureFlags["repo-page"] || !repoData || error) {
     return { notFound: true };
   }
 
-  // todo: better way to get avatar???
   const response = await fetch(repoData.url);
   const { owner } = await response.json();
 
