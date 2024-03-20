@@ -30,7 +30,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
   const { data, isError, isLoading } = useSearchContributors(searchTerm);
 
-  const [pastedInput, setPastedInput, removePastedInput] = useLocalStorage("bulk-add-contributors", "");
+  const [, , removePastedInput] = useLocalStorage("bulk-add-contributors", "");
 
   const onToggleContributor = (contributor: string, isSelected: boolean) => {
     setSearchTerm(undefined);

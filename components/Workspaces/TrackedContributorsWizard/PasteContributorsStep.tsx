@@ -6,14 +6,13 @@ interface PasteContributorsStepProps {
 }
 
 export const PasteContributorsStep = ({ onBulkAddContributors }: PasteContributorsStepProps) => {
-  const [pastedInput, setPastedInput] = useLocalStorage("bulk-add-contributors", "");
+  const [pastedInput = "", setPastedInput] = useLocalStorage("bulk-add-contributors", "");
 
   const parseInput = () => {
-    // split each line into a trimmed string and filter out any empty lines
-    const contributors = pastedInput!
-      .split(/[,\n ]/g) // split by either comma, new line, or space
-      .map((line) => line.trim()) // remove whitespace
-      .filter((line) => line !== ""); // remove empty strings
+    const contributors = pastedInput
+      .split(/[,\n ]/g)
+      .map((line) => line.trim())
+      .filter((line) => line !== "");
 
     onBulkAddContributors(contributors);
   };
@@ -29,7 +28,7 @@ export const PasteContributorsStep = ({ onBulkAddContributors }: PasteContributo
       <Button
         onClick={parseInput}
         variant="primary"
-        disabled={pastedInput!.trim().length === 0}
+        disabled={pastedInput.trim().length === 0}
         className="w-fit self-end"
       >
         Import
