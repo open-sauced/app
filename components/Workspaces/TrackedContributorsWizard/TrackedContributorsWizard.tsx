@@ -11,6 +11,7 @@ import { SelectFollowingStep } from "./SelectFollowingStep";
 interface TrackedContributorsWizardProps {
   onAddToTrackingList: (contributors: Map<string, boolean>) => void;
   onCancel: () => void;
+  onCloseModal: () => void;
 }
 
 type TrackedContributorsStep =
@@ -21,7 +22,11 @@ type TrackedContributorsStep =
   | "filterPastedContributors"
   | "selectFollowing";
 
-export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: TrackedContributorsWizardProps) => {
+export const TrackedContributorsWizard = ({
+  onAddToTrackingList,
+  onCancel,
+  onCloseModal,
+}: TrackedContributorsWizardProps) => {
   const [step, setStep] = useState<TrackedContributorsStep>("pickOption");
   const [currentTrackedContributors, setCurrentTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const suggestedContributors: any[] = [];
@@ -158,6 +163,7 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
       onCancel={() => {
         goBack();
       }}
+      onCloseModal={onCloseModal}
     >
       {renderStep(step)}
     </TrackedContributorsWizardLayout>
