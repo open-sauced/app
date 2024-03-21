@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.14](https://github.com/open-sauced/app/compare/v2.9.0-beta.13...v2.9.0-beta.14) (2024-03-21)
+
+
+### 🍕 Features
+
+* drawer component ([#2992](https://github.com/open-sauced/app/issues/2992)) ([ea686a8](https://github.com/open-sauced/app/commit/ea686a8c103f8381791e3496b5444ee5ab164981))
+* use URL shortener when Share button is used ([#2990](https://github.com/open-sauced/app/issues/2990)) ([f237b2b](https://github.com/open-sauced/app/commit/f237b2bd40b7c5cf1e8deefede46f337625f4a07))
+
 ## [2.9.0-beta.13](https://github.com/open-sauced/app/compare/v2.9.0-beta.12...v2.9.0-beta.13) (2024-03-20)
 
 
