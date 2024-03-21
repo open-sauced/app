@@ -1,4 +1,3 @@
-import Button from "components/atoms/Button/button";
 import {
   Drawer as InternalDrawer,
   DrawerClose,
@@ -21,7 +20,7 @@ interface DrawerProps {
 export const Drawer = ({ title, description, children, showCloseButton = true, trigger }: DrawerProps) => {
   return (
     <InternalDrawer>
-      <DrawerTrigger>{trigger ?? <Button variant="primary">Open</Button>}</DrawerTrigger>
+      <DrawerTrigger>{trigger}</DrawerTrigger>
       <DrawerContent className="bg-white">
         <DrawerHeader>
           <DrawerTitle>{title}</DrawerTitle>

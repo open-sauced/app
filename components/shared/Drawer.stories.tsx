@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
+import Button from "components/atoms/Button/button";
 import { Drawer } from "./Drawer";
 
 type Story = StoryObj<typeof Drawer>;
@@ -7,6 +8,7 @@ const meta: Meta<typeof Drawer> = {
   title: "Components/Shared/Drawer",
   component: Drawer,
   args: {
+    trigger: <Button variant="primary">Open</Button>,
     title: "Welcome to the drawer",
     description: "The drawer is a wonderful place to store things",
     children: (
