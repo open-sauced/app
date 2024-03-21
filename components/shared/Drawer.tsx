@@ -29,7 +29,7 @@ export const Drawer = ({ title, description, children, showCloseButton = true, t
         <DrawerFooter className="">{children}</DrawerFooter>
         {showCloseButton ? (
           <div className="border-t flex items-center justify-center">
-            <DrawerClose className="p-2 text-light-orange-10 w-full outline-none">Close</DrawerClose>
+            <DrawerClose className="p-2 text-light-orange-11 w-full outline-none">Close</DrawerClose>
           </div>
         ) : null}
       </DrawerContent>
