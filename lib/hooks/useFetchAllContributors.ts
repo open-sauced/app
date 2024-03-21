@@ -10,7 +10,6 @@ interface PaginatedResponse {
 
 type QueryObj = {
   location?: string;
-  pr_velocity?: string;
   timezone?: string;
   initialLimit?: number;
   contributor?: string;
@@ -27,9 +26,6 @@ const useFetchAllContributors = (query: QueryObj, config?: SWRConfiguration, mak
   }
   if (query.location) {
     urlQuery.set("location", `${query.location}`);
-  }
-  if (query.pr_velocity) {
-    urlQuery.set("pr_velocity", `${query.pr_velocity}`);
   }
   if (query.timezone) {
     urlQuery.set("timezone", `${query.timezone}`);
