@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.10.1](https://github.com/open-sauced/app/compare/v2.10.0...v2.10.1) (2024-03-21)
+
+
+### 🐛 Bug Fixes
+
+* fixed a regression with workspaces not updating/creating ([bc7bfaa](https://github.com/open-sauced/app/commit/bc7bfaaf967e509d41999b93ed70da6283b15160))
+* fixed a regression with workspaces not updating/creating ([#3003](https://github.com/open-sauced/app/issues/3003)) ([d3194b9](https://github.com/open-sauced/app/commit/d3194b98730b1a09d4fb50d698b5e330c5002fc4))
+
 ## [2.10.1-beta.1](https://github.com/open-sauced/app/compare/v2.10.0...v2.10.1-beta.1) (2024-03-21)
 
 
