@@ -217,7 +217,11 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
     <WorkspaceLayout
       workspaceId={workspace.id}
       footer={
-        <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end">
+        <Button
+          variant="primary"
+          className="flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
+          form="update-workspace"
+        >
           Update Workspace
         </Button>
       }
@@ -228,7 +232,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           <div className="flex justify-between items-center">
             <WorkspacesTabList workspaceId={workspace.id} selectedTab={""} />
           </div>
-          <form className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
+          <form id="update-workspace" className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
             <TextInput
               name="name"
               label="Workspace Name"
