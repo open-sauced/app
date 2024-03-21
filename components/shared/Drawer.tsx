@@ -15,10 +15,10 @@ interface DrawerProps {
   description: React.ReactNode;
   children: React.ReactNode;
   trigger: React.ReactNode;
-  closeSlot?: React.ReactNode;
+  showCloseButton?: boolean;
 }
 
-export const Drawer = ({ title, description, children, closeSlot, trigger }: DrawerProps) => {
+export const Drawer = ({ title, description, children, showCloseButton = true, trigger }: DrawerProps) => {
   return (
     <InternalDrawer>
       <DrawerTrigger>{trigger ?? <Button variant="primary">Open</Button>}</DrawerTrigger>
@@ -27,12 +27,12 @@ export const Drawer = ({ title, description, children, closeSlot, trigger }: Dra
           <DrawerTitle>{title}</DrawerTitle>
           <DrawerDescription>{description}</DrawerDescription>
         </DrawerHeader>
-        <DrawerFooter className="">
-          {children}
-          <DrawerClose asChild>
-            <div className="flex place-content-center">{closeSlot}</div>
-          </DrawerClose>
-        </DrawerFooter>
+        <DrawerFooter className="">{children}</DrawerFooter>
+        {showCloseButton ? (
+          <div className="border-t flex items-center justify-center">
+            <DrawerClose className="p-2 text-light-orange-10 w-full outline-none">Close</DrawerClose>
+          </div>
+        ) : null}
       </DrawerContent>
     </InternalDrawer>
   );

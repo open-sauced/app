@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from "@storybook/react";
-import Button from "components/atoms/Button/button";
 import { Drawer } from "./Drawer";
 
 type Story = StoryObj<typeof Drawer>;
@@ -25,8 +24,8 @@ const meta: Meta<typeof Drawer> = {
 export default meta;
 
 export const Default: Story = {};
-export const CloseButton: Story = {
+export const NoCloseButton: Story = {
   args: {
-    closeSlot: <Button variant="primary">Close</Button>,
+    showCloseButton: false,
   },
 };
