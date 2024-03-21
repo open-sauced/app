@@ -15,8 +15,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } = await supabase.auth.getSession();
 
   const userId = Number(session?.user.user_metadata.sub);
-  const featureFlags = await getAllFeatureFlags(userId);
+  if (!userId) {
+    return { notFound: true };
+  }
 
+  const featureFlags = await getAllFeatureFlags(userId);
   const { data: repoData, error } = await fetchApiData<DbRepo>({
     path: `repos/${org}/${repo}`,
   });
