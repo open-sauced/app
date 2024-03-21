@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.15](https://github.com/open-sauced/app/compare/v2.9.0-beta.14...v2.9.0-beta.15) (2024-03-21)
+
+
+### 🍕 Features
+
+* bump to 2.10.0 ([#2999](https://github.com/open-sauced/app/issues/2999)) ([0bc4f3e](https://github.com/open-sauced/app/commit/0bc4f3e9921a6d32b95a50629dd80dcbeefcda4a))
+
 ## [2.9.0-beta.14](https://github.com/open-sauced/app/compare/v2.9.0-beta.13...v2.9.0-beta.14) (2024-03-21)
 
 
