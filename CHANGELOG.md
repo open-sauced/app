@@ -5,6 +5,29 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.10.0](https://github.com/open-sauced/app/compare/v2.9.0...v2.10.0) (2024-03-21)
+
+
+### 🧑‍💻 Code Refactoring
+
+* move [pageId] pages to dedicated /explore/topic route ([#2974](https://github.com/open-sauced/app/issues/2974)) ([bd449a4](https://github.com/open-sauced/app/commit/bd449a4131af569aaac43ed9012a445b7a94f58b))
+
+
+### 🐛 Bug Fixes
+
+* add workspace welcome modal image ([#2971](https://github.com/open-sauced/app/issues/2971)) ([857954f](https://github.com/open-sauced/app/commit/857954f5eb85969755b16645b8b9ce66f7912210))
+* now workspace settings and new page have a fixed footer for CTAs ([#2982](https://github.com/open-sauced/app/issues/2982)) ([7fff9fa](https://github.com/open-sauced/app/commit/7fff9fa2a1711a8f2174bbf262f54b782d213856))
+* now you can use free text to select an organization for tracking repos ([#2972](https://github.com/open-sauced/app/issues/2972)) ([ab0438a](https://github.com/open-sauced/app/commit/ab0438ab0104cd29bc856b4965fad08fd6aefed6))
+* track bulk add input for Tracked Wizard Modal in localStorage ([#2976](https://github.com/open-sauced/app/issues/2976)) ([77ed601](https://github.com/open-sauced/app/commit/77ed601343489e6e41cba5373a76d4b1796d9f15))
+
+
+### 🍕 Features
+
+* bump to 2.10.0 ([#2999](https://github.com/open-sauced/app/issues/2999)) ([0bc4f3e](https://github.com/open-sauced/app/commit/0bc4f3e9921a6d32b95a50629dd80dcbeefcda4a))
+* drawer component ([#2992](https://github.com/open-sauced/app/issues/2992)) ([ea686a8](https://github.com/open-sauced/app/commit/ea686a8c103f8381791e3496b5444ee5ab164981))
+* replace outside click to button for tracked modal ([#2980](https://github.com/open-sauced/app/issues/2980)) ([7049199](https://github.com/open-sauced/app/commit/704919981665048da89e7eac5e928cb808358b43))
+* use URL shortener when Share button is used ([#2990](https://github.com/open-sauced/app/issues/2990)) ([f237b2b](https://github.com/open-sauced/app/commit/f237b2bd40b7c5cf1e8deefede46f337625f4a07))
+
 ## [2.10.0-beta.1](https://github.com/open-sauced/app/compare/v2.9.0...v2.10.0-beta.1) (2024-03-21)
 
 
