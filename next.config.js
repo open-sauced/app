@@ -99,8 +99,8 @@ module.exports = {
       },
       ...interests.map((interest) => {
         return {
-          source: `/${interest}/:path*`,
-          destination: `/explore/topic/${interest}/:path*`,
+          source: `/${interest}/:tool(dashboard|reports|contributors|activity)`,
+          destination: `/explore/topic/${interest}/:tool`,
           permanent: true,
         };
       }),
