@@ -220,3 +220,9 @@ svg:has(> #Mail) {
 .workspace-drop-down > [role="combobox"] {
   max-width: 14rem;
 }
+
+/* TODO: Sort out configuring ShadCN as we've only ever brought in components from it,
+but never configured it. */
+.bg-muted {
+  @apply bg-slate-200;
+}

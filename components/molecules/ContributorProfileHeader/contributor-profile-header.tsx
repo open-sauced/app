@@ -31,6 +31,7 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { cardPageUrl } from "lib/utils/urls";
+import { shortenUrl } from "lib/utils/shorten-url";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 const MultiSelect = dynamic(() => import("components/atoms/Select/multi-select"), { ssr: false });
@@ -120,7 +121,8 @@ const ContributorProfileHeader = ({
     });
 
     try {
-      await navigator.clipboard.writeText(url);
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console

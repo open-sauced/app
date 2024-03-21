@@ -5,6 +5,125 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.9.0-beta.14](https://github.com/open-sauced/app/compare/v2.9.0-beta.13...v2.9.0-beta.14) (2024-03-21)
+
+
+### 🍕 Features
+
+* drawer component ([#2992](https://github.com/open-sauced/app/issues/2992)) ([ea686a8](https://github.com/open-sauced/app/commit/ea686a8c103f8381791e3496b5444ee5ab164981))
+* use URL shortener when Share button is used ([#2990](https://github.com/open-sauced/app/issues/2990)) ([f237b2b](https://github.com/open-sauced/app/commit/f237b2bd40b7c5cf1e8deefede46f337625f4a07))
+
+## [2.9.0-beta.13](https://github.com/open-sauced/app/compare/v2.9.0-beta.12...v2.9.0-beta.13) (2024-03-20)
+
+
+### 🐛 Bug Fixes
+
+* track bulk add input for Tracked Wizard Modal in localStorage ([#2976](https://github.com/open-sauced/app/issues/2976)) ([77ed601](https://github.com/open-sauced/app/commit/77ed601343489e6e41cba5373a76d4b1796d9f15))
+
+## [2.9.0-beta.12](https://github.com/open-sauced/app/compare/v2.9.0-beta.11...v2.9.0-beta.12) (2024-03-20)
+
+
+### 🧑‍💻 Code Refactoring
+
+* move [pageId] pages to dedicated /explore/topic route ([#2974](https://github.com/open-sauced/app/issues/2974)) ([bd449a4](https://github.com/open-sauced/app/commit/bd449a4131af569aaac43ed9012a445b7a94f58b))
+
+## [2.9.0-beta.11](https://github.com/open-sauced/app/compare/v2.9.0-beta.10...v2.9.0-beta.11) (2024-03-20)
+
+
+### 🍕 Features
+
+* replace outside click to button for tracked modal ([#2980](https://github.com/open-sauced/app/issues/2980)) ([7049199](https://github.com/open-sauced/app/commit/704919981665048da89e7eac5e928cb808358b43))
+
+## [2.9.0-beta.10](https://github.com/open-sauced/app/compare/v2.9.0-beta.9...v2.9.0-beta.10) (2024-03-20)
+
+
+### 🐛 Bug Fixes
+
+* now workspace settings and new page have a fixed footer for CTAs ([#2982](https://github.com/open-sauced/app/issues/2982)) ([7fff9fa](https://github.com/open-sauced/app/commit/7fff9fa2a1711a8f2174bbf262f54b782d213856))
+
+## [2.9.0-beta.9](https://github.com/open-sauced/app/compare/v2.9.0-beta.8...v2.9.0-beta.9) (2024-03-20)
+
+
+### 🐛 Bug Fixes
+
+* now you can use free text to select an organization for tracking repos ([#2972](https://github.com/open-sauced/app/issues/2972)) ([ab0438a](https://github.com/open-sauced/app/commit/ab0438ab0104cd29bc856b4965fad08fd6aefed6))
+
+## [2.9.0-beta.8](https://github.com/open-sauced/app/compare/v2.9.0-beta.7...v2.9.0-beta.8) (2024-03-19)
+
+
+### 🐛 Bug Fixes
+
+* add workspace welcome modal image ([#2971](https://github.com/open-sauced/app/issues/2971)) ([857954f](https://github.com/open-sauced/app/commit/857954f5eb85969755b16645b8b9ce66f7912210))
+
+## [2.9.0](https://github.com/open-sauced/app/compare/v2.8.0...v2.9.0) (2024-03-19)
+
+
+### 🐛 Bug Fixes
+
+* now activity ratio is named mid instead of medium so OG image for workspace loads ([#2958](https://github.com/open-sauced/app/issues/2958)) ([652a7a2](https://github.com/open-sauced/app/commit/652a7a2ca30072c058eaa5490c49844ac8ba4c2b))
+* remove duplicate layout on add-contributor in workspaces ([#2952](https://github.com/open-sauced/app/issues/2952)) ([acd358e](https://github.com/open-sauced/app/commit/acd358eb53715be90d0dcd1de8e815a77be6555a))
+* workspace OG image renders correctly when a description is not present ([#2956](https://github.com/open-sauced/app/issues/2956)) ([59de3b1](https://github.com/open-sauced/app/commit/59de3b1184d94b51389d5c91cfbb0b128e7ebb36))
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove footer from workspaces ([#2964](https://github.com/open-sauced/app/issues/2964)) ([0771699](https://github.com/open-sauced/app/commit/077169931e613dc0f8e7847a354e9cfb25a5af85))
+
+
+### 🍕 Features
+
+* add create button on repo insight list page ([#2941](https://github.com/open-sauced/app/issues/2941)) ([c6b6668](https://github.com/open-sauced/app/commit/c6b6668b5fecefa2a7939a5e974647f12e9499c3))
+* created the custom 500 page ([#2969](https://github.com/open-sauced/app/issues/2969)) ([5b81f38](https://github.com/open-sauced/app/commit/5b81f38f8143d9c42fe879ca0471fd2bc5e3e4b6))
+* update workspace insight creation flow ([#2949](https://github.com/open-sauced/app/issues/2949)) ([973a1b8](https://github.com/open-sauced/app/commit/973a1b832a0d8bf01bc6cf9625bee7d343a2a328))
+* workspace OG image ([#2939](https://github.com/open-sauced/app/issues/2939)) ([b13f8ec](https://github.com/open-sauced/app/commit/b13f8ec6d0945c173a2625e030b491032373815c))
+
+## [2.9.0-beta.8](https://github.com/open-sauced/app/compare/v2.9.0-beta.7...v2.9.0-beta.8) (2024-03-19)
+
+
+### 🐛 Bug Fixes
+
+* add workspace welcome modal image ([#2971](https://github.com/open-sauced/app/issues/2971)) ([857954f](https://github.com/open-sauced/app/commit/857954f5eb85969755b16645b8b9ce66f7912210))
+
+## [2.9.0-beta.7](https://github.com/open-sauced/app/compare/v2.9.0-beta.6...v2.9.0-beta.7) (2024-03-19)
+
+
+### 🍕 Features
+
+* created the custom 500 page ([#2969](https://github.com/open-sauced/app/issues/2969)) ([5b81f38](https://github.com/open-sauced/app/commit/5b81f38f8143d9c42fe879ca0471fd2bc5e3e4b6))
+
+## [2.9.0-beta.6](https://github.com/open-sauced/app/compare/v2.9.0-beta.5...v2.9.0-beta.6) (2024-03-19)
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove footer from workspaces ([#2964](https://github.com/open-sauced/app/issues/2964)) ([0771699](https://github.com/open-sauced/app/commit/077169931e613dc0f8e7847a354e9cfb25a5af85))
+
+## [2.9.0-beta.5](https://github.com/open-sauced/app/compare/v2.9.0-beta.4...v2.9.0-beta.5) (2024-03-18)
+
+
+### 🐛 Bug Fixes
+
+* remove duplicate layout on add-contributor in workspaces ([#2952](https://github.com/open-sauced/app/issues/2952)) ([acd358e](https://github.com/open-sauced/app/commit/acd358eb53715be90d0dcd1de8e815a77be6555a))
+
+
+### 🍕 Features
+
+* update workspace insight creation flow ([#2949](https://github.com/open-sauced/app/issues/2949)) ([973a1b8](https://github.com/open-sauced/app/commit/973a1b832a0d8bf01bc6cf9625bee7d343a2a328))
+
+## [2.9.0-beta.4](https://github.com/open-sauced/app/compare/v2.9.0-beta.3...v2.9.0-beta.4) (2024-03-18)
+
+
+### 🐛 Bug Fixes
+
+* now activity ratio is named mid instead of medium so OG image for workspace loads ([#2958](https://github.com/open-sauced/app/issues/2958)) ([652a7a2](https://github.com/open-sauced/app/commit/652a7a2ca30072c058eaa5490c49844ac8ba4c2b))
+
+## [2.9.0-beta.3](https://github.com/open-sauced/app/compare/v2.9.0-beta.2...v2.9.0-beta.3) (2024-03-15)
+
+
+### 🐛 Bug Fixes
+
+* workspace OG image renders correctly when a description is not present ([#2956](https://github.com/open-sauced/app/issues/2956)) ([59de3b1](https://github.com/open-sauced/app/commit/59de3b1184d94b51389d5c91cfbb0b128e7ebb36))
+
 ## [2.9.0-beta.2](https://github.com/open-sauced/app/compare/v2.9.0-beta.1...v2.9.0-beta.2) (2024-03-15)
 
 
