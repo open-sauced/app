@@ -7,10 +7,11 @@ type UseFetchMetricStatsProps = {
   range: number;
 };
 
-type DbHistogram = { bucket: string };
-type DbStarsHistogram = DbHistogram & { stars: number };
-type DbForksHistogram = DbHistogram & { forks_count: number };
-type StatsType = DbStarsHistogram | DbForksHistogram;
+type StatsType = {
+  bucket: string;
+  star_count?: number;
+  forks_count?: number;
+};
 
 export function useFetchMetricStats({ repository, variant, range }: UseFetchMetricStatsProps) {
   const query = new URLSearchParams();
@@ -26,13 +27,13 @@ export function useFetchMetricStats({ repository, variant, range }: UseFetchMetr
     }
   };
 
-  const { data, error, isLoading, mutate } = useSWR<{ data: StatsType[] }, Error>(
+  const { data, error, isLoading, mutate } = useSWR<StatsType[], Error>(
     endpoint,
-    publicApiFetcher as Fetcher<{ data: StatsType[] }, Error>
+    publicApiFetcher as Fetcher<StatsType[], Error>
   );
 
   return {
-    data: data as StatsType[] | undefined,
+    data,
     error,
     isLoading,
     mutate,
