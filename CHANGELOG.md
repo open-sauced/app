@@ -5,6 +5,99 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.11.0-beta.1](https://github.com/open-sauced/app/compare/v2.10.2-beta.2...v2.11.0-beta.1) (2024-03-22)
+
+
+### 🍕 Features
+
+* configured Playwright with some initial E2E tests ([#3014](https://github.com/open-sauced/app/issues/3014)) ([7383fcc](https://github.com/open-sauced/app/commit/7383fccbd98e51d4f5bea193fcbfd655bf34d26f))
+
+## [2.10.2-beta.2](https://github.com/open-sauced/app/compare/v2.10.2-beta.1...v2.10.2-beta.2) (2024-03-22)
+
+
+### 🐛 Bug Fixes
+
+* now some divs on main page are aside elements ([#3015](https://github.com/open-sauced/app/issues/3015)) ([4b1a077](https://github.com/open-sauced/app/commit/4b1a077b549477a39571baeeb9f49138da9c2c72))
+* removed unnecessary alt text on logo and cleaned up JSX ([19f4786](https://github.com/open-sauced/app/commit/19f478665300ab11d610cd804bbd0de0da1fc753))
+* removed unnecessary alt text on logo and cleaned up JSX ([#3011](https://github.com/open-sauced/app/issues/3011)) ([728fd32](https://github.com/open-sauced/app/commit/728fd32477d23281a33da6dd90a68c892649812d))
+
+## [2.10.2-beta.1](https://github.com/open-sauced/app/compare/v2.10.1...v2.10.2-beta.1) (2024-03-22)
+
+
+### 🐛 Bug Fixes
+
+* Icon image has a default alt text "Icon" ([108a3cf](https://github.com/open-sauced/app/commit/108a3cf32707e040d81c96d9d4f2fcaebf50f0cc))
+* Icon image has a default alt text "Icon" ([#3013](https://github.com/open-sauced/app/issues/3013)) ([303bf1c](https://github.com/open-sauced/app/commit/303bf1c1cc7435fb14f2c0874e3b2a80d5d5216c))
+
+## [2.10.1](https://github.com/open-sauced/app/compare/v2.10.0...v2.10.1) (2024-03-21)
+
+
+### 🐛 Bug Fixes
+
+* fixed a regression with workspaces not updating/creating ([bc7bfaa](https://github.com/open-sauced/app/commit/bc7bfaaf967e509d41999b93ed70da6283b15160))
+* fixed a regression with workspaces not updating/creating ([#3003](https://github.com/open-sauced/app/issues/3003)) ([d3194b9](https://github.com/open-sauced/app/commit/d3194b98730b1a09d4fb50d698b5e330c5002fc4))
+
+## [2.10.1-beta.1](https://github.com/open-sauced/app/compare/v2.10.0...v2.10.1-beta.1) (2024-03-21)
+
+
+### 🐛 Bug Fixes
+
+* fixed a regression with workspaces not updating/creating ([bc7bfaa](https://github.com/open-sauced/app/commit/bc7bfaaf967e509d41999b93ed70da6283b15160))
+* fixed a regression with workspaces not updating/creating ([#3003](https://github.com/open-sauced/app/issues/3003)) ([d3194b9](https://github.com/open-sauced/app/commit/d3194b98730b1a09d4fb50d698b5e330c5002fc4))
+
+## [2.10.0](https://github.com/open-sauced/app/compare/v2.9.0...v2.10.0) (2024-03-21)
+
+
+### 🧑‍💻 Code Refactoring
+
+* move [pageId] pages to dedicated /explore/topic route ([#2974](https://github.com/open-sauced/app/issues/2974)) ([bd449a4](https://github.com/open-sauced/app/commit/bd449a4131af569aaac43ed9012a445b7a94f58b))
+
+
+### 🐛 Bug Fixes
+
+* add workspace welcome modal image ([#2971](https://github.com/open-sauced/app/issues/2971)) ([857954f](https://github.com/open-sauced/app/commit/857954f5eb85969755b16645b8b9ce66f7912210))
+* now workspace settings and new page have a fixed footer for CTAs ([#2982](https://github.com/open-sauced/app/issues/2982)) ([7fff9fa](https://github.com/open-sauced/app/commit/7fff9fa2a1711a8f2174bbf262f54b782d213856))
+* now you can use free text to select an organization for tracking repos ([#2972](https://github.com/open-sauced/app/issues/2972)) ([ab0438a](https://github.com/open-sauced/app/commit/ab0438ab0104cd29bc856b4965fad08fd6aefed6))
+* track bulk add input for Tracked Wizard Modal in localStorage ([#2976](https://github.com/open-sauced/app/issues/2976)) ([77ed601](https://github.com/open-sauced/app/commit/77ed601343489e6e41cba5373a76d4b1796d9f15))
+
+
+### 🍕 Features
+
+* bump to 2.10.0 ([#2999](https://github.com/open-sauced/app/issues/2999)) ([0bc4f3e](https://github.com/open-sauced/app/commit/0bc4f3e9921a6d32b95a50629dd80dcbeefcda4a))
+* drawer component ([#2992](https://github.com/open-sauced/app/issues/2992)) ([ea686a8](https://github.com/open-sauced/app/commit/ea686a8c103f8381791e3496b5444ee5ab164981))
+* replace outside click to button for tracked modal ([#2980](https://github.com/open-sauced/app/issues/2980)) ([7049199](https://github.com/open-sauced/app/commit/704919981665048da89e7eac5e928cb808358b43))
+* use URL shortener when Share button is used ([#2990](https://github.com/open-sauced/app/issues/2990)) ([f237b2b](https://github.com/open-sauced/app/commit/f237b2bd40b7c5cf1e8deefede46f337625f4a07))
+
+## [2.10.0-beta.1](https://github.com/open-sauced/app/compare/v2.9.0...v2.10.0-beta.1) (2024-03-21)
+
+
+### 🧑‍💻 Code Refactoring
+
+* move [pageId] pages to dedicated /explore/topic route ([#2974](https://github.com/open-sauced/app/issues/2974)) ([bd449a4](https://github.com/open-sauced/app/commit/bd449a4131af569aaac43ed9012a445b7a94f58b))
+
+
+### 🐛 Bug Fixes
+
+* add workspace welcome modal image ([#2971](https://github.com/open-sauced/app/issues/2971)) ([857954f](https://github.com/open-sauced/app/commit/857954f5eb85969755b16645b8b9ce66f7912210))
+* now workspace settings and new page have a fixed footer for CTAs ([#2982](https://github.com/open-sauced/app/issues/2982)) ([7fff9fa](https://github.com/open-sauced/app/commit/7fff9fa2a1711a8f2174bbf262f54b782d213856))
+* now you can use free text to select an organization for tracking repos ([#2972](https://github.com/open-sauced/app/issues/2972)) ([ab0438a](https://github.com/open-sauced/app/commit/ab0438ab0104cd29bc856b4965fad08fd6aefed6))
+* track bulk add input for Tracked Wizard Modal in localStorage ([#2976](https://github.com/open-sauced/app/issues/2976)) ([77ed601](https://github.com/open-sauced/app/commit/77ed601343489e6e41cba5373a76d4b1796d9f15))
+
+
+### 🍕 Features
+
+* bump to 2.10.0 ([#2999](https://github.com/open-sauced/app/issues/2999)) ([0bc4f3e](https://github.com/open-sauced/app/commit/0bc4f3e9921a6d32b95a50629dd80dcbeefcda4a))
+* drawer component ([#2992](https://github.com/open-sauced/app/issues/2992)) ([ea686a8](https://github.com/open-sauced/app/commit/ea686a8c103f8381791e3496b5444ee5ab164981))
+* replace outside click to button for tracked modal ([#2980](https://github.com/open-sauced/app/issues/2980)) ([7049199](https://github.com/open-sauced/app/commit/704919981665048da89e7eac5e928cb808358b43))
+* use URL shortener when Share button is used ([#2990](https://github.com/open-sauced/app/issues/2990)) ([f237b2b](https://github.com/open-sauced/app/commit/f237b2bd40b7c5cf1e8deefede46f337625f4a07))
+
+## [2.9.0-beta.15](https://github.com/open-sauced/app/compare/v2.9.0-beta.14...v2.9.0-beta.15) (2024-03-21)
+
+
+### 🍕 Features
+
+* bump to 2.10.0 ([#2999](https://github.com/open-sauced/app/issues/2999)) ([0bc4f3e](https://github.com/open-sauced/app/commit/0bc4f3e9921a6d32b95a50629dd80dcbeefcda4a))
+
 ## [2.9.0-beta.14](https://github.com/open-sauced/app/compare/v2.9.0-beta.13...v2.9.0-beta.14) (2024-03-21)
 
 
