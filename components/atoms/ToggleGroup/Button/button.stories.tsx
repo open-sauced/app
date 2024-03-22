@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import Button from "./button";
 
 const storyConfig = {
-  title: "Design System/Atoms/Button",
+  title: "Design System/Shared/Button",
   argTypes: {
     disabled: {
       control: { type: "boolean" },
