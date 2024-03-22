@@ -199,7 +199,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               />
             )}
             <AnnouncementCard
-              title="#100DaysOfOSS 🚀 "
+              title="#100DaysOfOSS 🚀"
               description={
                 "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
               }
