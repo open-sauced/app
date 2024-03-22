@@ -21,7 +21,6 @@ import Button from "components/atoms/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 import { OptionKeys } from "components/atoms/Select/multi-select";
-import MetricCard from "components/Graphs/KPI/MetricCard";
 import { WorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
