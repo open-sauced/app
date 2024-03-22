@@ -5,6 +5,31 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.10.2-beta.2](https://github.com/open-sauced/app/compare/v2.10.2-beta.1...v2.10.2-beta.2) (2024-03-22)
+
+
+### 🐛 Bug Fixes
+
+* now some divs on main page are aside elements ([#3015](https://github.com/open-sauced/app/issues/3015)) ([4b1a077](https://github.com/open-sauced/app/commit/4b1a077b549477a39571baeeb9f49138da9c2c72))
+* removed unnecessary alt text on logo and cleaned up JSX ([19f4786](https://github.com/open-sauced/app/commit/19f478665300ab11d610cd804bbd0de0da1fc753))
+* removed unnecessary alt text on logo and cleaned up JSX ([#3011](https://github.com/open-sauced/app/issues/3011)) ([728fd32](https://github.com/open-sauced/app/commit/728fd32477d23281a33da6dd90a68c892649812d))
+
+## [2.10.2-beta.1](https://github.com/open-sauced/app/compare/v2.10.1...v2.10.2-beta.1) (2024-03-22)
+
+
+### 🐛 Bug Fixes
+
+* Icon image has a default alt text "Icon" ([108a3cf](https://github.com/open-sauced/app/commit/108a3cf32707e040d81c96d9d4f2fcaebf50f0cc))
+* Icon image has a default alt text "Icon" ([#3013](https://github.com/open-sauced/app/issues/3013)) ([303bf1c](https://github.com/open-sauced/app/commit/303bf1c1cc7435fb14f2c0874e3b2a80d5d5216c))
+
+## [2.10.1](https://github.com/open-sauced/app/compare/v2.10.0...v2.10.1) (2024-03-21)
+
+
+### 🐛 Bug Fixes
+
+* fixed a regression with workspaces not updating/creating ([bc7bfaa](https://github.com/open-sauced/app/commit/bc7bfaaf967e509d41999b93ed70da6283b15160))
+* fixed a regression with workspaces not updating/creating ([#3003](https://github.com/open-sauced/app/issues/3003)) ([d3194b9](https://github.com/open-sauced/app/commit/d3194b98730b1a09d4fb50d698b5e330c5002fc4))
+
 ## [2.10.1-beta.1](https://github.com/open-sauced/app/compare/v2.10.0...v2.10.1-beta.1) (2024-03-21)
 
 
