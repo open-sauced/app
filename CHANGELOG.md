@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.10.2-beta.1](https://github.com/open-sauced/app/compare/v2.10.1...v2.10.2-beta.1) (2024-03-22)
+
+
+### 🐛 Bug Fixes
+
+* Icon image has a default alt text "Icon" ([108a3cf](https://github.com/open-sauced/app/commit/108a3cf32707e040d81c96d9d4f2fcaebf50f0cc))
+* Icon image has a default alt text "Icon" ([#3013](https://github.com/open-sauced/app/issues/3013)) ([303bf1c](https://github.com/open-sauced/app/commit/303bf1c1cc7435fb14f2c0874e3b2a80d5d5216c))
+
 ## [2.10.1](https://github.com/open-sauced/app/compare/v2.10.0...v2.10.1) (2024-03-21)
 
 
