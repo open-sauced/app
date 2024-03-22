@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.11.0-beta.1](https://github.com/open-sauced/app/compare/v2.10.2-beta.2...v2.11.0-beta.1) (2024-03-22)
+
+
+### 🍕 Features
+
+* configured Playwright with some initial E2E tests ([#3014](https://github.com/open-sauced/app/issues/3014)) ([7383fcc](https://github.com/open-sauced/app/commit/7383fccbd98e51d4f5bea193fcbfd655bf34d26f))
+
 ## [2.10.2-beta.2](https://github.com/open-sauced/app/compare/v2.10.2-beta.1...v2.10.2-beta.2) (2024-03-22)
 
 
