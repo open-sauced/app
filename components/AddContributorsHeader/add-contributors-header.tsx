@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Search from "components/atoms/Search/search";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 

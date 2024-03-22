@@ -15,7 +15,7 @@ import { BiGitMerge } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import { A11y, Pagination } from "swiper/modules";
 import Skeleton from "react-loading-skeleton";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
 import { createHighlights } from "lib/hooks/createHighlights";

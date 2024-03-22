@@ -3,7 +3,7 @@ import { FaEdit } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";
 import { usePostHog } from "posthog-js/react";
 
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 

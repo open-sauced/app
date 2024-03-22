@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import Title from "components/atoms/Typography/title";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
