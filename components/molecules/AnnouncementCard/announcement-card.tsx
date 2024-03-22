@@ -8,8 +8,13 @@ interface AnnouncementCardProps {
   url: string;
 }
 const AnnouncementCard = ({ title, description, bannerSrc, url }: AnnouncementCardProps) => {
+  const announcementId = `announcement-${Date.now()}`;
+
   return (
-    <div className="overflow-hidden border max-w-xs w-full rounded-lg bg-light-slate-1">
+    <aside
+      aria-labelledby={announcementId}
+      className="overflow-hidden border max-w-xs w-full rounded-lg bg-light-slate-1"
+    >
       <div className="w-full">
         <AspectRatio.Root ratio={1.85 / 1}>
           <picture>
@@ -18,7 +23,9 @@ const AnnouncementCard = ({ title, description, bannerSrc, url }: AnnouncementCa
         </AspectRatio.Root>
       </div>
       <div className="flex flex-col gap-3 p-6">
-        <h1 className="text-lg">{title}</h1>
+        <h1 className="text-lg" id={announcementId}>
+          {title}
+        </h1>
         <p className="text-sm font-normal text-light-slate-11 pb-2">{description}</p>
         <a
           href={url}
@@ -29,7 +36,7 @@ const AnnouncementCard = ({ title, description, bannerSrc, url }: AnnouncementCa
           Learn more
         </a>
       </div>
-    </div>
+    </aside>
   );
 };
 
