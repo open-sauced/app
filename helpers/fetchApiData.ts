@@ -29,7 +29,7 @@ export async function fetchApiData<T>({
       ...headers,
       accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${bearerToken}`,
+      ...(bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {}),
     },
   };
 
