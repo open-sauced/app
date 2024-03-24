@@ -564,7 +564,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </span>
               )}
             </p>
-            <div className="flex flex-col gap-2 p-2 text-sm bg-white border rounded-lg">
+            <div className="flex flex-col gap-2 p-2 text-sm bg-white border rounded-lg focus-within:outline-none focus-within:ring  focus-within:border-orange-500 focus-within:ring-orange-100">
               <TypeWriterTextArea
                 className={`resize-y min-h-[80px] max-h-99 font-normal placeholder:text-slate-400 text-light-slate-12 placeholder:font-normal placeholder:text-sm transition focus:outline-none rounded-lg ${
                   !isDivFocused ? "hidden" : ""
@@ -642,7 +642,8 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 </Tooltip>
                 <TextInput
                   id="highlight-link-input"
-                  className={`text-sm shadow-none h-10 flex-none ${!isHighlightURLValid && "border-red-500"}`}
+                  state={isHighlightURLValid ? "valid" : "invalid"}
+                  className={`text-sm shadow-none h-10 flex-none ${errorMsg ? "border-red-500": ""}`}
                   value={highlightLink}
                   handleChange={(value) => {
                     setHighlightLink(value);
