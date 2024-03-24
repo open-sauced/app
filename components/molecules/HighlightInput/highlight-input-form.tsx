@@ -15,6 +15,7 @@ import { BiGitMerge } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import { A11y, Pagination } from "swiper/modules";
 import Skeleton from "react-loading-skeleton";
+import clsx from "clsx";
 import Button from "components/shared/Button/button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
@@ -643,7 +644,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 <TextInput
                   id="highlight-link-input"
                   state={isHighlightURLValid ? "valid" : "invalid"}
-                  className={`text-sm shadow-none h-10 flex-none ${errorMsg ? "border-red-500": ""}`}
+                  className={clsx("text-sm shadow-none h-10 flex-none", errorMsg ? "border-red-500" : "")}
                   value={highlightLink}
                   handleChange={(value) => {
                     setHighlightLink(value);
