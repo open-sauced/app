@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.11.0-beta.2](https://github.com/open-sauced/app/compare/v2.11.0-beta.1...v2.11.0-beta.2) (2024-03-24)
+
+
+### 🐛 Bug Fixes
+
+* moved <Button /> component to shared folder ([#3006](https://github.com/open-sauced/app/issues/3006)) ([a5f87c4](https://github.com/open-sauced/app/commit/a5f87c4afb6c7596ef2f4d177c3ad36765815f9e))
+
 ## [2.11.0-beta.1](https://github.com/open-sauced/app/compare/v2.10.2-beta.2...v2.11.0-beta.1) (2024-03-22)
 
 
