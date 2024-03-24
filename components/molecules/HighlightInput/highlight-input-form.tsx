@@ -643,8 +643,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                 <TextInput
                   id="highlight-link-input"
                   state={isHighlightURLValid ? "valid" : "invalid"}
-                  className={`text-sm shadow-none h-10 flex-none ${errorMsg && "border-red-500"}`}
-                  // className="text-sm shadow-none h-10 flex-none"
+                  className={`text-sm shadow-none h-10 flex-none ${errorMsg ? "border-red-500": ""}`}
                   value={highlightLink}
                   handleChange={(value) => {
                     setHighlightLink(value);
