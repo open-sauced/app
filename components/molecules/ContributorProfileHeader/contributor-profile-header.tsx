@@ -22,7 +22,7 @@ import {
 import Avatar from "components/atoms/Avatar/avatar";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import RainbowBg from "img/rainbow-cover.png";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserConnections } from "lib/hooks/useUserConnections";

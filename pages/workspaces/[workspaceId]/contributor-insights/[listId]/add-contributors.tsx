@@ -15,7 +15,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import { searchUsers } from "lib/hooks/search-users";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 

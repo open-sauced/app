@@ -13,7 +13,7 @@ import HubContributorsPageLayout from "layouts/hub-contributors";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
