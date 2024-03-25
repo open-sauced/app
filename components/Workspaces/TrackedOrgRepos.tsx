@@ -1,5 +1,5 @@
 import { FaPlus } from "react-icons/fa6";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 
 interface TrackedOrgReposProps {
   onAddOrgRepo: () => void;

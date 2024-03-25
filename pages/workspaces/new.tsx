@@ -4,7 +4,7 @@ import { ComponentProps, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
@@ -71,14 +71,18 @@ const NewWorkspace = () => {
     <WorkspaceLayout
       workspaceId="new"
       footer={
-        <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
+        <Button
+          form="new-workspace"
+          variant="primary"
+          className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
+        >
           Create Workspace
         </Button>
       }
     >
       <div className="grid gap-6 max-w-4xl">
         <h1 className="border-b bottom pb-4 text-xl font-medium">Workspace Settings</h1>
-        <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateWorkspace}>
+        <form id="new-workspace" className="flex flex-col gap-6 mb-2" onSubmit={onCreateWorkspace}>
           <div>
             <h3 className="font-medium mb-2">
               Workspace Name <span className="text-red-600">*</span>

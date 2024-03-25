@@ -17,7 +17,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { Command, CommandGroup, CommandInput, CommandItem } from "components/atoms/Cmd/command";
 import { useToast } from "lib/hooks/useToast";

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { BsPlusCircleFill } from "react-icons/bs";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import {
   DropdownMenu,
   DropdownMenuContent,

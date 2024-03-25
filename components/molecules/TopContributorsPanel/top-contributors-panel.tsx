@@ -19,8 +19,13 @@ const TopContributorsPanel = ({
   const top3Contributors = topContributorsWithoutLoggedInUser.slice(0, 3).map((user) => user.login);
 
   return (
-    <div className="flex flex-col w-full max-w-xs gap-5 pt-5 p-6 border rounded-lg bg-light-slate-1">
-      <h2 className="pb-2 text-lg border-b">Top Contributors</h2>
+    <aside
+      aria-labelledby="highlights-top-contributors"
+      className="flex flex-col w-full max-w-xs gap-5 pt-5 p-6 border rounded-lg bg-light-slate-1"
+    >
+      <h2 className="pb-2 text-lg border-b" id="highlights-top-contributors">
+        Top Contributors
+      </h2>
 
       {isLoading &&
         Array.from({ length: 3 }).map((_, i) => (
@@ -31,7 +36,7 @@ const TopContributorsPanel = ({
       {top3Contributors.map((login, i) => (
         <TopContributorCard key={i} login={login} refreshLoggedInUser={refreshLoggedInUser} />
       ))}
-    </div>
+    </aside>
   );
 };
 

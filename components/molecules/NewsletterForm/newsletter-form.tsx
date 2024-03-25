@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { AiFillCloseCircle } from "react-icons/ai";
 import clsx from "clsx";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import SaucedLogo from "img/fallbackImageColor.svg";
 import { validateEmail } from "lib/utils/validate-email";
@@ -66,9 +66,14 @@ const NewsletterForm = () => {
           </div>
         </div>
       ) : (
-        <div className="newsletter-wrap flex flex-col w-full gap-3 p-6 pt-5 border rounded-lg bg-light-slate-1">
+        <aside
+          aria-labelledby="subscribe-to-newsletter"
+          className="newsletter-wrap flex flex-col w-full gap-3 p-6 pt-5 border rounded-lg bg-light-slate-1"
+        >
           <div className="w-64 space-y-1">
-            <h2 className="text-lg">Subscribe to our newsletter</h2>
+            <h2 className="text-lg" id="subscribe-to-newsletter">
+              Subscribe to our newsletter
+            </h2>
             <p className="text-sm font-normal text-light-slate-11">
               Stay up to date with the latest OpenSauced news and trends!
             </p>
@@ -117,7 +122,7 @@ const NewsletterForm = () => {
               </p>
             )}
           </form>
-        </div>
+        </aside>
       )}
     </>
   );

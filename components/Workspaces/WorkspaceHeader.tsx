@@ -1,6 +1,6 @@
 import { SquareFillIcon } from "@primer/octicons-react";
 import { FaEdit } from "react-icons/fa";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 interface WorkspaceHeaderProps {
