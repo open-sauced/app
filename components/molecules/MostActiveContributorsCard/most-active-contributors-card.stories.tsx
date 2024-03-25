@@ -1,6 +1,6 @@
 import { Meta } from "@storybook/react";
 import { useEffect, useState } from "react";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import MostActiveContributorsCard, {
   ContributorStat,
 } from "components/molecules/MostActiveContributorsCard/most-active-contributors-card";
