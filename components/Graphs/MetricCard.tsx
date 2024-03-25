@@ -2,17 +2,14 @@ import EChartsReact from "echarts-for-react";
 import { FaArrowUp, FaEllipsisVertical } from "react-icons/fa6";
 import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
-import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
+import { StatsType } from "lib/hooks/api/useFetchMetricStats";
 
 type MetricCardProps = {
-  repository: string;
+  stats: StatsType[] | undefined;
   variant: "stars" | "forks";
-  range: number;
 };
 
-export default function MetricCard({ repository, variant, range }: MetricCardProps) {
-  const { data: stats, error } = useFetchMetricStats({ repository, variant, range });
-
+export default function MetricCard({ stats, variant }: MetricCardProps) {
   const seriesData = stats?.map((stat) => (variant === "stars" ? stat.star_count : stat.forks_count));
   const bucketData = stats?.map((stat) => new Date(stat.bucket).toDateString());
 

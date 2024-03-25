@@ -7,7 +7,7 @@ type UseFetchMetricStatsProps = {
   range: number;
 };
 
-type StatsType = {
+export type StatsType = {
   bucket: string;
   star_count?: number;
   forks_count?: number;
