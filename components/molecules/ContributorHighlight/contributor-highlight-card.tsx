@@ -16,7 +16,7 @@ import clsx from "clsx";
 import { useDebounce } from "rooks";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import {
   DropdownMenu,
   DropdownMenuContent,

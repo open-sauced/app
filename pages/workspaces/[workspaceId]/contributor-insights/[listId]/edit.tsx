@@ -10,7 +10,7 @@ import { MdOutlineArrowBackIos } from "react-icons/md";
 import { fetchApiData } from "helpers/fetchApiData";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";

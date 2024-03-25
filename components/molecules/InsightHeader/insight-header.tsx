@@ -7,7 +7,7 @@ import { FiCopy } from "react-icons/fi";
 
 import { useRouter } from "next/router";
 import getRepoInsights from "lib/utils/get-repo-insights";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 import { truncateString } from "lib/utils/truncate-string";
