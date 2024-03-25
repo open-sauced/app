@@ -9,7 +9,7 @@ import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import { createContributorInsight } from "lib/utils/workspace-utils";
 
 import { toast } from "lib/hooks/useToast";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";

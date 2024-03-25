@@ -17,7 +17,7 @@ import Card from "components/atoms/Card/card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 import { OptionKeys } from "components/atoms/Select/multi-select";
