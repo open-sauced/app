@@ -1,15 +1,15 @@
-import { useState } from "react";
-import Button from "components/atoms/Button/button";
+import { useLocalStorage } from "react-use";
+import Button from "components/shared/Button/button";
 
 interface PasteReposStepProps {
   onBulkAddRepos: (repos: string[]) => void;
 }
 
 export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
-  const [pastedInput, setPastedInput] = useState("");
+  const [pastedInput, setPastedInput] = useLocalStorage("bulk-add-repos", "");
 
   const parseInput = () => {
-    const repos = pastedInput
+    const repos = pastedInput!
       .split(/[,\n ]/g) // split by either comma, new line, or space
       .map((line) => {
         line.trim(); // trim to remove whitespace
@@ -36,7 +36,7 @@ export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
       <Button
         onClick={() => onBulkAddRepos(parseInput())}
         variant="primary"
-        disabled={pastedInput.trim().length === 0}
+        disabled={pastedInput!.trim().length === 0}
         className="w-fit self-end"
       >
         Import

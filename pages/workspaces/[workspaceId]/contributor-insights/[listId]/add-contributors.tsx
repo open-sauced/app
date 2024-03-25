@@ -8,7 +8,6 @@ import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
-import HubContributorsPageLayout from "layouts/hub-contributors";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
 import Header from "components/organisms/Header/header";
 import AddContributorsHeader from "components/AddContributorsHeader/add-contributors-header";
@@ -16,7 +15,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import { searchUsers } from "lib/hooks/search-users";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
@@ -304,62 +303,60 @@ const AddContributorsToList = ({ list, initialCount, workspaceId, timezoneOption
 
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
-      <HubContributorsPageLayout>
-        <div className="info-container container w-full min-h-[6.25rem] md:px-16">
-          <Header classNames="md:!px-0">
-            <AddContributorsHeader
-              list={list}
-              workspaceId={workspaceId}
-              selectedContributorsIds={selectedContributors.map(({ user_id }) => user_id)}
-              onAddToList={addContributorsToList}
-              onSearch={onSearch}
-              searchSuggestions={suggestions}
-              onSearchSelect={onSearchSelect}
-            />
-          </Header>
-          <ContributorListTableHeaders
-            selected={selectedContributors.length > 0 && selectedContributors.length === contributors.length}
-            handleOnSelectAllContributor={onAllChecked}
-          />
-          {contributors.length > 0 ? (
-            <ContributorTable
-              selectedContributors={selectedContributors}
-              topic={"*"}
-              handleSelectContributors={onChecked}
-              contributors={contributors as DbPRContributor[]}
-            />
-          ) : (
-            <EmptyState />
-          )}
-        </div>
-        {contributorsAdded && (
-          <ContributorsAddedModal
-            list={list}
-            contributorCount={selectedContributors.length}
-            isOpen={contributorsAdded}
-            workspaceId={workspaceId}
-            onClose={() => {
-              setContributorsAdded(false);
-              setContributors([]);
-              setSelectedContributors([]);
-            }}
-          />
-        )}
-        {contributorsAddedError && (
-          <ErrorModal
+      <div className="info-container container w-full min-h-[6.25rem] md:px-16">
+        <Header classNames="md:!px-0">
+          <AddContributorsHeader
             list={list}
             workspaceId={workspaceId}
-            isOpen={true}
-            onRetry={() => {
-              setContributorsAddedError(false);
-              addContributorsToList();
-            }}
-            onClose={() => {
-              setContributorsAddedError(false);
-            }}
+            selectedContributorsIds={selectedContributors.map(({ user_id }) => user_id)}
+            onAddToList={addContributorsToList}
+            onSearch={onSearch}
+            searchSuggestions={suggestions}
+            onSearchSelect={onSearchSelect}
           />
+        </Header>
+        <ContributorListTableHeaders
+          selected={selectedContributors.length > 0 && selectedContributors.length === contributors.length}
+          handleOnSelectAllContributor={onAllChecked}
+        />
+        {contributors.length > 0 ? (
+          <ContributorTable
+            selectedContributors={selectedContributors}
+            topic={"*"}
+            handleSelectContributors={onChecked}
+            contributors={contributors as DbPRContributor[]}
+          />
+        ) : (
+          <EmptyState />
         )}
-      </HubContributorsPageLayout>
+      </div>
+      {contributorsAdded && (
+        <ContributorsAddedModal
+          list={list}
+          contributorCount={selectedContributors.length}
+          isOpen={contributorsAdded}
+          workspaceId={workspaceId}
+          onClose={() => {
+            setContributorsAdded(false);
+            setContributors([]);
+            setSelectedContributors([]);
+          }}
+        />
+      )}
+      {contributorsAddedError && (
+        <ErrorModal
+          list={list}
+          workspaceId={workspaceId}
+          isOpen={true}
+          onRetry={() => {
+            setContributorsAddedError(false);
+            addContributorsToList();
+          }}
+          onClose={() => {
+            setContributorsAddedError(false);
+          }}
+        />
+      )}
     </WorkspaceLayout>
   );
 };

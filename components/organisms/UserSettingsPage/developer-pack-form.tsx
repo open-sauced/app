@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import { useToast } from "lib/hooks/useToast";
 import { supabase } from "lib/utils/supabase";
 

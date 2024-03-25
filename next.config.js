@@ -1,3 +1,27 @@
+const interests = [
+  "javascript",
+  "python",
+  "java",
+  "typescript",
+  "angular",
+  "csharp",
+  "cpp",
+  "php",
+  "c",
+  "ruby",
+  "ai",
+  "ml",
+  "react",
+  "golang",
+  "rust",
+  "svelte",
+  "vue",
+  "kubernetes",
+  "clojure",
+  "kotlin",
+  "android",
+];
+
 /** @type {import('next').NextConfig} */
 module.exports = {
   productionBrowserSourceMaps: true,
@@ -73,6 +97,13 @@ module.exports = {
         destination: "/",
         permanent: true,
       },
+      ...interests.map((interest) => {
+        return {
+          source: `/${interest}/:path*`,
+          destination: `/explore/topic/${interest}/:path*`,
+          permanent: true,
+        };
+      }),
     ];
   },
 };
