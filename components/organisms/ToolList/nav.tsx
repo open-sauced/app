@@ -42,7 +42,9 @@ const Nav: React.FC<NavProps> = ({
       {toolList.map((tool, index) => {
         const pageId = filterName || insightId;
         const workspaceNavLink = `/workspaces/${workspaceId}/repository-insights/${pageId}/${tool.name.toLowerCase()}`;
-        const pageNavLink = `/${username ? `pages/${username}/` : ""}${pageId}/${tool.name.toLowerCase()}${
+        const pageNavLink = `/${
+          username ? `pages/${username}/` : ""
+        }/explore/topic/${pageId}/${tool.name.toLowerCase()}${
           selectedFilter
             ? `/filter/${Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}?range=${
                 range ?? "30"
