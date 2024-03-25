@@ -30,9 +30,10 @@ import ContributorTable from "../ContributorsTable/contributors-table";
 
 interface ContributorProps {
   repositories?: number[];
+  title?: string;
 }
 
-const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
+const Contributors = ({ repositories, title }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
@@ -158,8 +159,13 @@ const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
           <Button
             onClick={() => {
               router.push({
-                pathname: `/workspaces/${workspaceId}/contributor-insights/find`,
-                query: { contributors: JSON.stringify(selectedContributors) },
+                pathname: `/workspaces/${workspaceId}/contributor-insights/new`,
+                query: {
+                  title: title ? `${title} Contributors` : "",
+                  contributors: JSON.stringify(
+                    selectedContributors.map((contributor) => contributor.author_login || contributor.username)
+                  ),
+                },
               });
             }}
             variant="text"

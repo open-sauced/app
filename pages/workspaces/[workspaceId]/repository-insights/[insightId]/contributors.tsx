@@ -63,7 +63,7 @@ const HubPage = ({ insight, ogImage, workspaceId, owners, isOwner }: InsightPage
         }
       >
         <HubPageLayout page="contributors" owners={owners}>
-          <Contributors repositories={repositories} />
+          <Contributors repositories={repositories} title={insight.name} />
         </HubPageLayout>
         <InsightUpgradeModal
           workspaceId={workspaceId}
