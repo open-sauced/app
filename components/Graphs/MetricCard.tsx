@@ -1,6 +1,6 @@
 import EChartsReact from "echarts-for-react";
 import { FaArrowUp, FaEllipsisVertical } from "react-icons/fa6";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Card from "components/atoms/Card/card";
 import { StatsType } from "lib/hooks/api/useFetchMetricStats";
 
