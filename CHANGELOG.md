@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.11.0-beta.4](https://github.com/open-sauced/app/compare/v2.11.0-beta.3...v2.11.0-beta.4) (2024-03-25)
+
+
+### 🐛 Bug Fixes
+
+* change workspace repo fetch limit from 50 to 999 ([#3019](https://github.com/open-sauced/app/issues/3019)) ([bc14c81](https://github.com/open-sauced/app/commit/bc14c81bdf724e20c742dba78e4ba127e3bfe197))
+
 ## [2.11.0-beta.3](https://github.com/open-sauced/app/compare/v2.11.0-beta.2...v2.11.0-beta.3) (2024-03-25)
 
 
