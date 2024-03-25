@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { useEffectOnce } from "react-use";
 import { IoDiamond } from "react-icons/io5";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { fetchApiData } from "helpers/fetchApiData";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
@@ -214,14 +214,25 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   };
 
   return (
-    <WorkspaceLayout workspaceId={workspace.id}>
+    <WorkspaceLayout
+      workspaceId={workspace.id}
+      footer={
+        <Button
+          variant="primary"
+          className="flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
+          form="update-workspace"
+        >
+          Update Workspace
+        </Button>
+      }
+    >
       <WorkspaceHeader workspace={workspace} />
       <div className="grid gap-6">
         <div>
           <div className="flex justify-between items-center">
             <WorkspacesTabList workspaceId={workspace.id} selectedTab={""} />
           </div>
-          <form className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
+          <form id="update-workspace" className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
             <TextInput
               name="name"
               label="Workspace Name"
@@ -237,14 +248,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
               placeholder="Workspace description"
               className="w-full md:w-3/4 max-w-lg"
             />
-            <div className="bg-white sticky-bottom fixed rounded-lg bottom-4 right-0 self-end m-6">
-              <Button
-                variant="primary"
-                className="z-50 flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
-              >
-                Update Workspace
-              </Button>
-            </div>
           </form>
         </div>
         <TrackedReposTable
@@ -278,7 +281,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
             onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
             members={workspaceMembers}
-            className="z-10"
           />
         </ClientOnly>
 

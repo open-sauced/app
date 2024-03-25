@@ -1,5 +1,5 @@
 import { CiMail } from "react-icons/ci";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 
 interface InviteTeamMembersProps {
   onInviteTeamMembers: () => void;

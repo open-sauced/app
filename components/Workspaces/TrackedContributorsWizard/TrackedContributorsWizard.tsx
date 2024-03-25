@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocalStorage } from "react-use";
 import { useSearchContributors } from "lib/hooks/useSearchContributors";
 import { TrackedContributorsWizardLayout } from "./TrackedContributorsWizardLayout";
 
@@ -6,10 +7,12 @@ import { PickContributorStep } from "./PickContributorStep";
 import { SearchByContributorsStep } from "./SearchByContributorsStep";
 import { PasteContributorsStep } from "./PasteContributorsStep";
 import { FilterPastedContributorsStep } from "./FilterPastedContributorsStep";
+import { SelectFollowingStep } from "./SelectFollowingStep";
 
 interface TrackedContributorsWizardProps {
   onAddToTrackingList: (contributors: Map<string, boolean>) => void;
   onCancel: () => void;
+  onCloseModal: () => void;
 }
 
 type TrackedContributorsStep =
@@ -17,18 +20,22 @@ type TrackedContributorsStep =
   | "pickContributors"
   | "pasteContributors"
   | "pickOrg"
-  | "filterPastedContributors";
+  | "filterPastedContributors"
+  | "selectFollowing";
 
-export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: TrackedContributorsWizardProps) => {
+export const TrackedContributorsWizard = ({
+  onAddToTrackingList,
+  onCancel,
+  onCloseModal,
+}: TrackedContributorsWizardProps) => {
   const [step, setStep] = useState<TrackedContributorsStep>("pickOption");
   const [currentTrackedContributors, setCurrentTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const suggestedContributors: any[] = [];
 
-  const onImportOrg = () => {};
-
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
-
   const { data, isError, isLoading } = useSearchContributors(searchTerm);
+
+  const [, , removePastedInput] = useLocalStorage("bulk-add-contributors", "");
 
   const onToggleContributor = (contributor: string, isSelected: boolean) => {
     setSearchTerm(undefined);
@@ -100,6 +107,9 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
             onPasteContributors={() => {
               setStep("pasteContributors");
             }}
+            onSelectFollowingContributors={() => {
+              setStep("selectFollowing");
+            }}
           />
         );
 
@@ -128,6 +138,16 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
           />
         );
 
+      case "selectFollowing": {
+        return (
+          <SelectFollowingStep
+            contributors={trackedContributors}
+            onToggleContributor={onToggleContributor}
+            onToggleAllContributors={onToggleAllContributors}
+          />
+        );
+      }
+
       // TODO: other steps
 
       default:
@@ -137,21 +157,17 @@ export const TrackedContributorsWizard = ({ onAddToTrackingList, onCancel }: Tra
 
   const trackedContributors = new Map(currentTrackedContributors);
 
-  trackedContributors.forEach((isSelected, contributor, map) => {
-    if (!isSelected) {
-      map.delete(contributor);
-    }
-  });
-
   return (
     <TrackedContributorsWizardLayout
       onAddToTrackingList={() => {
+        removePastedInput();
         onAddToTrackingList(currentTrackedContributors);
       }}
       trackedContributorsCount={trackedContributors.size}
       onCancel={() => {
         goBack();
       }}
+      onCloseModal={onCloseModal}
     >
       {renderStep(step)}
     </TrackedContributorsWizardLayout>

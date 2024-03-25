@@ -147,7 +147,9 @@ const ListsOverview = ({
   return (
     <WorkspaceLayout
       workspaceId={workspaceId}
-      banner={showBanner && WorkspaceBanner({ openModal: () => setIsInsightUpgradeModalOpen(true) })}
+      banner={
+        showBanner && WorkspaceBanner({ workspaceId: workspaceId, openModal: () => setIsInsightUpgradeModalOpen(true) })
+      }
     >
       <ListPageLayout
         list={list}

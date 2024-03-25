@@ -13,7 +13,7 @@ import useSession from "lib/hooks/useSession";
 import PersonIcon from "img/icons/person-icon.svg";
 
 import Avatar from "components/atoms/Avatar/avatar";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Text from "components/atoms/Typography/text";
 import GitHubIcon from "img/icons/github-icon.svg";
 import Icon from "components/atoms/Icon/icon";
