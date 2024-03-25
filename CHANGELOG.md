@@ -5,6 +5,25 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.11.0-beta.4](https://github.com/open-sauced/app/compare/v2.11.0-beta.3...v2.11.0-beta.4) (2024-03-25)
+
+
+### 🐛 Bug Fixes
+
+* change workspace repo fetch limit from 50 to 999 ([#3019](https://github.com/open-sauced/app/issues/3019)) ([bc14c81](https://github.com/open-sauced/app/commit/bc14c81bdf724e20c742dba78e4ba127e3bfe197))
+
+## [2.11.0-beta.3](https://github.com/open-sauced/app/compare/v2.11.0-beta.2...v2.11.0-beta.3) (2024-03-25)
+
+
+### 🎨 Styles
+
+* un-fix top-nav on mobile ([#3020](https://github.com/open-sauced/app/issues/3020)) ([c144e8a](https://github.com/open-sauced/app/commit/c144e8adb50a549230dbe4a911d3dca99a19f37c))
+
+
+### 🐛 Bug Fixes
+
+* removed workspaces from FeatureFlag union type as feature flag was removed ([#2998](https://github.com/open-sauced/app/issues/2998)) ([290a214](https://github.com/open-sauced/app/commit/290a21480cc1d70c9835a76f4706551fa5fdc37c))
+
 ## [2.11.0-beta.2](https://github.com/open-sauced/app/compare/v2.11.0-beta.1...v2.11.0-beta.2) (2024-03-24)
 
 
