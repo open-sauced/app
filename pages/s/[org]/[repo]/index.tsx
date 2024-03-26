@@ -6,6 +6,7 @@ import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import SEO from "layouts/SEO/SEO";
 import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
+import StarsChart from "components/Graphs/StarsChart";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -45,6 +46,10 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
           <p className="text-xl">{repoData.description}</p>
         </div>
       </header>
+
+      <section className="flex flex-col gap-8">
+        <StarsChart />
+      </section>
     </ProfileLayout>
   );
 }
