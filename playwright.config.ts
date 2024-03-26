@@ -70,7 +70,8 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "npm run dev",
+    // Longterm this needs to test the actual deployment.
+    command: process.env.CI ? "npm run build && npm run start" : "npm run dev",
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
   },
