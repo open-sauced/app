@@ -32,4 +32,7 @@ test("Loads explore contributors page", async ({ page }) => {
 test("Loads explore activity page", async ({ page }) => {
   await page.goto("/explore/topic/javascript/activity");
   await checkExploreTabs(page, "Activity");
+
+  // a smoke test to ensure the scatterplot is on the page
+  await expect(page.getByRole("heading", { name: "Contributor Distribution", exact: true })).toBeVisible();
 });
