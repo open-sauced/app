@@ -1,8 +1,8 @@
 import EChartsReact from "echarts-for-react";
 import { FaArrowUp, FaEllipsisVertical } from "react-icons/fa6";
+import { StatsType } from "lib/hooks/api/useFetchMetricStats";
 import Card from "components/atoms/Card/card";
 import Button from "components/shared/Button/button";
-import { StatsType } from "lib/hooks/api/useFetchMetricStats";
 
 type MetricCardProps = {
   stats: StatsType[] | undefined;
@@ -10,8 +10,10 @@ type MetricCardProps = {
 };
 
 export default function MetricCard({ stats, variant }: MetricCardProps) {
-  const seriesData = stats?.map((stat) => (variant === "stars" ? stat.star_count : stat.forks_count));
-  const bucketData = stats?.map((stat) => new Date(stat.bucket).toDateString());
+  const seriesData = stats
+    ?.map((stat) => (variant === "stars" ? stat.star_count || 0 : stat.forks_count || 0))
+    .reverse();
+  const bucketData = stats?.map((stat) => new Date(stat.bucket).toDateString()).reverse();
 
   const option = {
     xAxis: {
@@ -61,8 +63,8 @@ export default function MetricCard({ stats, variant }: MetricCardProps) {
 
       <section className="flex items-center gap-2">
         <div className="flex items-center gap-1 px-2 py-0.5 border-green-300 border-2 rounded-full bg-green-200">
-          <FaArrowUp className="text-green-500" />
-          <p className="text-green-700">10%</p>
+          <FaArrowUp className="text-green-800" />
+          <p className="text-green-800">10%</p>
         </div>
         <p>vs. last period</p>
       </section>
