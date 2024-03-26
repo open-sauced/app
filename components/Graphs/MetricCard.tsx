@@ -1,7 +1,7 @@
 import EChartsReact from "echarts-for-react";
 import { FaArrowUp, FaEllipsisVertical } from "react-icons/fa6";
-import Button from "components/shared/Button/button";
 import Card from "components/atoms/Card/card";
+import Button from "components/shared/Button/button";
 import { StatsType } from "lib/hooks/api/useFetchMetricStats";
 
 type MetricCardProps = {
@@ -39,6 +39,8 @@ export default function MetricCard({ stats, variant }: MetricCardProps) {
     color: "hsla(19, 100%, 50%, 1)",
   };
 
+  const total = seriesData?.reduce((stat, currentValue) => (stat || 0) + (currentValue || 0), 0);
+
   return (
     <Card className="w-full max-w-sm h-fit p-5 pl-6">
       <section className="flex justify-between items-center">
@@ -50,7 +52,7 @@ export default function MetricCard({ stats, variant }: MetricCardProps) {
 
       <section className="flex justify-between items-center">
         <div className="basis-1/2 w-full">
-          <p className="text-5xl font-bold">1000</p>
+          <p className="text-5xl font-bold">{total}</p>
         </div>
         <div className="h-fit w-full max-w-[12rem]">
           <EChartsReact option={option} style={{ height: "100%", width: "100%" }} />
