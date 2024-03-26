@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.12.0-beta.1](https://github.com/open-sauced/app/compare/v2.11.0...v2.12.0-beta.1) (2024-03-26)
+
+
+### 🍕 Features
+
+* add share button to workspaces ([#3029](https://github.com/open-sauced/app/issues/3029)) ([b44a7cb](https://github.com/open-sauced/app/commit/b44a7cb711b893895c60c7766c392e944e06bcab))
+
+
+### 🐛 Bug Fixes
+
+* /explore/topic/some-topic is now a server side rewrite ([#3030](https://github.com/open-sauced/app/issues/3030)) ([23efa88](https://github.com/open-sauced/app/commit/23efa88006b59cf061883dbfae44e5cc7ae78401))
+
 ## [2.11.0](https://github.com/open-sauced/app/compare/v2.10.1...v2.11.0) (2024-03-25)
 
 
