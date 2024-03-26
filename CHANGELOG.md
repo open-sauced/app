@@ -5,6 +5,50 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.12.0-beta.2](https://github.com/open-sauced/app/compare/v2.12.0-beta.1...v2.12.0-beta.2) (2024-03-26)
+
+
+### 🐛 Bug Fixes
+
+* remove useEffectOnce and check if upgrade modal is open before logging ([#3036](https://github.com/open-sauced/app/issues/3036)) ([7ccaadf](https://github.com/open-sauced/app/commit/7ccaadfc7a4f876deaa38d29423005a4d28f1d0e))
+
+## [2.12.0-beta.1](https://github.com/open-sauced/app/compare/v2.11.0...v2.12.0-beta.1) (2024-03-26)
+
+
+### 🍕 Features
+
+* add share button to workspaces ([#3029](https://github.com/open-sauced/app/issues/3029)) ([b44a7cb](https://github.com/open-sauced/app/commit/b44a7cb711b893895c60c7766c392e944e06bcab))
+
+
+### 🐛 Bug Fixes
+
+* /explore/topic/some-topic is now a server side rewrite ([#3030](https://github.com/open-sauced/app/issues/3030)) ([23efa88](https://github.com/open-sauced/app/commit/23efa88006b59cf061883dbfae44e5cc7ae78401))
+
+## [2.11.0](https://github.com/open-sauced/app/compare/v2.10.1...v2.11.0) (2024-03-25)
+
+
+### 🎨 Styles
+
+* un-fix top-nav on mobile ([#3020](https://github.com/open-sauced/app/issues/3020)) ([c144e8a](https://github.com/open-sauced/app/commit/c144e8adb50a549230dbe4a911d3dca99a19f37c))
+
+
+### 🐛 Bug Fixes
+
+* change workspace repo fetch limit from 50 to 999 ([#3019](https://github.com/open-sauced/app/issues/3019)) ([bc14c81](https://github.com/open-sauced/app/commit/bc14c81bdf724e20c742dba78e4ba127e3bfe197))
+* Icon image has a default alt text "Icon" ([108a3cf](https://github.com/open-sauced/app/commit/108a3cf32707e040d81c96d9d4f2fcaebf50f0cc))
+* Icon image has a default alt text "Icon" ([#3013](https://github.com/open-sauced/app/issues/3013)) ([303bf1c](https://github.com/open-sauced/app/commit/303bf1c1cc7435fb14f2c0874e3b2a80d5d5216c))
+* moved <Button /> component to shared folder ([#3006](https://github.com/open-sauced/app/issues/3006)) ([a5f87c4](https://github.com/open-sauced/app/commit/a5f87c4afb6c7596ef2f4d177c3ad36765815f9e))
+* now some divs on main page are aside elements ([#3015](https://github.com/open-sauced/app/issues/3015)) ([4b1a077](https://github.com/open-sauced/app/commit/4b1a077b549477a39571baeeb9f49138da9c2c72))
+* removed unnecessary alt text on logo and cleaned up JSX ([19f4786](https://github.com/open-sauced/app/commit/19f478665300ab11d610cd804bbd0de0da1fc753))
+* removed unnecessary alt text on logo and cleaned up JSX ([#3011](https://github.com/open-sauced/app/issues/3011)) ([728fd32](https://github.com/open-sauced/app/commit/728fd32477d23281a33da6dd90a68c892649812d))
+* removed workspaces from FeatureFlag union type as feature flag was removed ([#2998](https://github.com/open-sauced/app/issues/2998)) ([290a214](https://github.com/open-sauced/app/commit/290a21480cc1d70c9835a76f4706551fa5fdc37c))
+
+
+### 🍕 Features
+
+* basic repo page ([#2988](https://github.com/open-sauced/app/issues/2988)) ([14489d4](https://github.com/open-sauced/app/commit/14489d4ba793b795b2df998139a3ea89995399df))
+* configured Playwright with some initial E2E tests ([#3014](https://github.com/open-sauced/app/issues/3014)) ([7383fcc](https://github.com/open-sauced/app/commit/7383fccbd98e51d4f5bea193fcbfd655bf34d26f))
+
 ## [2.11.0-beta.5](https://github.com/open-sauced/app/compare/v2.11.0-beta.4...v2.11.0-beta.5) (2024-03-25)
 
 
