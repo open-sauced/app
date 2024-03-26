@@ -99,11 +99,19 @@ module.exports = {
       },
       ...interests.map((interest) => {
         return {
-          source: `/${interest}/:path*`,
-          destination: `/explore/topic/${interest}/:path*`,
+          source: `/${interest}/:tool(dashboard|reports|contributors|activity)`,
+          destination: `/explore/topic/${interest}/:tool`,
           permanent: true,
         };
       }),
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/explore/topic/:topic",
+        destination: "/explore/topic/:topic/dashboard/filter/recent",
+      },
     ];
   },
 };

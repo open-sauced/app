@@ -1,16 +1,36 @@
 import { SquareFillIcon } from "@primer/octicons-react";
 import { FaEdit } from "react-icons/fa";
+import { FiCopy } from "react-icons/fi";
+import { usePostHog } from "posthog-js/react";
 import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { shortenUrl } from "lib/utils/shorten-url";
+import { useToast } from "lib/hooks/useToast";
 
 interface WorkspaceHeaderProps {
   workspace: Workspace;
 }
 
 export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
+  const { toast } = useToast();
+  const posthog = usePostHog();
   const { userId } = useSupabaseAuth();
   const isOwner =
     userId && workspace.members.find((member) => Number(member.user_id) === Number(userId) && member.role === "owner");
+
+  const copyUrlToClipboard = async () => {
+    const url = new URL(window.location.href).toString();
+    posthog!.capture("clicked: Workspace share");
+
+    try {
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
+      toast({ description: "Copied to clipboard.", variant: "success" });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  };
 
   return (
     <section className="w-full grid lg:grid-cols-[1fr,auto] gap-2">
@@ -21,16 +41,26 @@ export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
           {workspace.name}
         </span>
       </h1>
-      {isOwner && (
+      <div className="flex gap-4">
         <Button
-          variant="primary"
-          href={`/workspaces/${workspace.id}/settings`}
+          variant="outline"
+          onClick={copyUrlToClipboard}
           className="my-auto gap-2 items-center shrink-0 place-self-end"
         >
-          <FaEdit />
-          Edit
+          <FiCopy />
+          Share
         </Button>
-      )}
+        {isOwner && (
+          <Button
+            variant="primary"
+            href={`/workspaces/${workspace.id}/settings`}
+            className="my-auto gap-2 items-center shrink-0 place-self-end"
+          >
+            <FaEdit />
+            Edit
+          </Button>
+        )}
+      </div>
     </section>
   );
 };
