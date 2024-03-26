@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { fetchApiData } from "helpers/fetchApiData";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
@@ -74,8 +74,21 @@ export default function CreateContributorInsightPage({
   bearerToken: string;
 }) {
   const router = useRouter();
+  const contributorIds = router.query.contributors as string;
+  const title = router.query.title as string;
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const [isTrackedContributorsModalOpen, setIsTrackedContributorsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (contributorIds) {
+      const queryContributors = JSON.parse(contributorIds) as string[];
+      const contributorsMap = new Map<string, boolean>();
+      queryContributors.forEach((contributor) => {
+        contributorsMap.set(contributor, true);
+      });
+      setTrackedContributors(contributorsMap);
+    }
+  }, [router.query]);
 
   const onCreateInsight: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
@@ -111,7 +124,13 @@ export default function CreateContributorInsightPage({
             <h3 className="font-medium mb-2">
               Insight Name <span className="text-red-600">*</span>
             </h3>
-            <TextInput name="name" placeholder="Insight name" className="!py-1.5 w-full text-sm" required />
+            <TextInput
+              value={title ?? ""}
+              name="name"
+              placeholder="Insight name"
+              className="!py-1.5 w-full text-sm"
+              required
+            />
           </div>
           <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
             <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
