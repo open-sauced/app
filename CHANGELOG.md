@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.12.0-beta.2](https://github.com/open-sauced/app/compare/v2.12.0-beta.1...v2.12.0-beta.2) (2024-03-26)
+
+
+### 🐛 Bug Fixes
+
+* remove useEffectOnce and check if upgrade modal is open before logging ([#3036](https://github.com/open-sauced/app/issues/3036)) ([7ccaadf](https://github.com/open-sauced/app/commit/7ccaadfc7a4f876deaa38d29423005a4d28f1d0e))
+
 ## [2.12.0-beta.1](https://github.com/open-sauced/app/compare/v2.11.0...v2.12.0-beta.1) (2024-03-26)
 
 
