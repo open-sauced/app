@@ -61,8 +61,6 @@ const Nav: React.FC<NavProps> = ({
           }
         }
 
-        pageNavLink += `?range=${range}`;
-
         const navLink = workspaceId ? workspaceNavLink : pageNavLink;
 
         return (
