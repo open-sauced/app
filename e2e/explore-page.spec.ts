@@ -3,7 +3,7 @@ import { test, expect, Page } from "@playwright/test";
 type TabId = "Dashboard" | "Contributors" | "Activity";
 const TabSelectorNames: Record<TabId, string | RegExp> = {
   Dashboard: "Dashboard",
-  // The contributors tab has a count which is unknown at the time the test runs as it's a realy dynamic value.
+  // The contributors tab has a count which is unknown at the time the test runs as it's a dynamic value.
   Contributors: /Contributors\s+\d+/,
   Activity: "Activity",
 };
