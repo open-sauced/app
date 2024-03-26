@@ -20,18 +20,16 @@ async function checkExploreTabs(page: Page, tabId: TabId) {
 
 test("Loads explore dashboard page", async ({ page }) => {
   await page.goto("/explore/topic/javascript");
-
   await checkExploreTabs(page, "Dashboard");
+  await expect(page.getByRole("complementary", { name: "pull request highlights", exact: true })).toBeVisible();
 });
 
 test("Loads explore contributors page", async ({ page }) => {
   await page.goto("/explore/topic/javascript/contributors");
-
   await checkExploreTabs(page, "Contributors");
 });
 
 test("Loads explore activity page", async ({ page }) => {
   await page.goto("/explore/topic/javascript/activity");
-
   await checkExploreTabs(page, "Activity");
 });
