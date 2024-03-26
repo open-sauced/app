@@ -59,7 +59,9 @@ const NewListCreationPage = () => {
 
   useEffect(() => {
     if (contributorIds) {
-      setSelectedContributors(JSON.parse(contributorIds) as DbPRContributor[]);
+      const queryContributors = JSON.parse(contributorIds) as DbPRContributor[];
+      setSelectedContributors(queryContributors);
+      setContributors(queryContributors);
     }
   }, [router.query]);
 
