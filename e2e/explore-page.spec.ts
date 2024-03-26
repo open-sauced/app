@@ -8,14 +8,11 @@ const TabSelectorNames: Record<TabId, string | RegExp> = {
 };
 
 async function checkExploreTabs(page: Page, tabId: TabId) {
-  await expect(page.getByRole("link", { name: TabSelectorNames["Dashboard"] })).toBeVisible();
+  await expect(page.getByRole("link", { name: TabSelectorNames["Dashboard"], exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: TabSelectorNames["Contributors"] })).toBeVisible();
-  await expect(page.getByRole("link", { name: TabSelectorNames["Activity"] })).toBeVisible();
+  await expect(page.getByRole("link", { name: TabSelectorNames["Activity"], exact: true })).toBeVisible();
 
-  await expect(page.getByRole("tab", { name: TabSelectorNames[tabId], exact: true })).toHaveAttribute(
-    "aria-selected",
-    "true"
-  );
+  await expect(page.getByRole("tab", { name: TabSelectorNames[tabId], exact: true, selected: true })).toBeVisible();
 }
 
 test("Loads explore dashboard page", async ({ page }) => {
@@ -27,6 +24,11 @@ test("Loads explore dashboard page", async ({ page }) => {
 test("Loads explore contributors page", async ({ page }) => {
   await page.goto("/explore/topic/javascript/contributors");
   await checkExploreTabs(page, "Contributors");
+
+  // simple smoke test until we have actual tables.
+  await expect(page.getByRole("button", { name: "7d" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "30d" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "3m" })).toBeVisible();
 });
 
 test("Loads explore activity page", async ({ page }) => {
