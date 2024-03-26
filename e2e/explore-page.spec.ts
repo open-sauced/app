@@ -7,12 +7,14 @@ const TabSelectorNames: Record<TabId, string | RegExp> = {
   Activity: "Activity",
 };
 
-async function checkExploreTabs(page: Page, tabId: TabId) {
+async function checkExploreTabs(page: Page, selectedTabId: TabId) {
   await expect(page.getByRole("link", { name: TabSelectorNames["Dashboard"], exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: TabSelectorNames["Contributors"] })).toBeVisible();
   await expect(page.getByRole("link", { name: TabSelectorNames["Activity"], exact: true })).toBeVisible();
 
-  await expect(page.getByRole("tab", { name: TabSelectorNames[tabId], exact: true, selected: true })).toBeVisible();
+  await expect(
+    page.getByRole("tab", { name: TabSelectorNames[selectedTabId], exact: true, selected: true })
+  ).toBeVisible();
 }
 
 test("Loads explore dashboard page", async ({ page }) => {
