@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.12.0-beta.3](https://github.com/open-sauced/app/compare/v2.12.0-beta.2...v2.12.0-beta.3) (2024-03-26)
+
+
+### 🐛 Bug Fixes
+
+* correct flow for creating a contributor insight from list of contributors ([#2989](https://github.com/open-sauced/app/issues/2989)) ([c6ebe64](https://github.com/open-sauced/app/commit/c6ebe645290532dfa8361ab37e0675dd27b770ee))
+* fixed explore contributors tab and activity tab URLs in explore pages ([#3028](https://github.com/open-sauced/app/issues/3028)) ([a3c3bed](https://github.com/open-sauced/app/commit/a3c3bedc954b76d7b71fed70ed0329dfcb69cbd4))
+
 ## [2.12.0-beta.2](https://github.com/open-sauced/app/compare/v2.12.0-beta.1...v2.12.0-beta.2) (2024-03-26)
 
 
