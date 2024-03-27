@@ -78,6 +78,7 @@ export default function CreateContributorInsightPage({
   const title = router.query.title as string;
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const [isTrackedContributorsModalOpen, setIsTrackedContributorsModalOpen] = useState(false);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     if (contributorIds) {
@@ -87,6 +88,10 @@ export default function CreateContributorInsightPage({
         contributorsMap.set(contributor, true);
       });
       setTrackedContributors(contributorsMap);
+    }
+
+    if (title) {
+      setName(title);
     }
   }, [router.query]);
 
@@ -125,11 +130,12 @@ export default function CreateContributorInsightPage({
               Insight Name <span className="text-red-600">*</span>
             </h3>
             <TextInput
-              value={title ?? ""}
+              value={name}
               name="name"
               placeholder="Insight name"
               className="!py-1.5 w-full text-sm"
               required
+              onChange={(event) => setName(event.target.value)}
             />
           </div>
           <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
