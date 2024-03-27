@@ -10,7 +10,7 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30) => {
+const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30, initialPage?: number) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(intialLimit);
@@ -24,7 +24,7 @@ const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30)
   }
 
   if (page) {
-    query.set("page", `${page}`);
+    query.set("page", `${initialPage ?? page}`);
   }
 
   if (limit) {
