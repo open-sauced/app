@@ -1,5 +1,5 @@
 import { PullRequest, PullRequestRow } from "components/PullRequests/PullRequestRow";
-import { Table } from "components/shared/Table";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import type { Meta, StoryObj } from "@storybook/react";
 
 type MetaData = Meta<typeof PullRequestRow>;
@@ -13,7 +13,23 @@ const meta: MetaData = {
   decorators: [
     (Story) => (
       <Table>
-        <Story />
+        <TableHeader>
+          <TableRow>
+            <TableHead>State</TableHead>
+            <TableHead>Author</TableHead>
+            <TableHead>PR #</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead>Repository</TableHead>
+            <TableHead>Comments</TableHead>
+            <TableHead>Additions</TableHead>
+            <TableHead>Deletions</TableHead>
+            <TableHead>Changed Files</TableHead>
+            <TableHead>Commits</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <Story />
+        </TableBody>
       </Table>
     ),
   ],
