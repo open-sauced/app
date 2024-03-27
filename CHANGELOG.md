@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.12.1](https://github.com/open-sauced/app/compare/v2.12.0...v2.12.1) (2024-03-27)
+
+
+### 🐛 Bug Fixes
+
+* now valid searched org appears all the time for org import for tracked repositories ([#3041](https://github.com/open-sauced/app/issues/3041)) ([f5baad8](https://github.com/open-sauced/app/commit/f5baad84a2ae0f7953663a63d44b8b468885e01c))
+* use controlled input on new contributor insight ([#3044](https://github.com/open-sauced/app/issues/3044)) ([9ff8b41](https://github.com/open-sauced/app/commit/9ff8b41180e9aeef99bd665d1d6619bdce9ae44b))
+
 ## [2.12.1-beta.2](https://github.com/open-sauced/app/compare/v2.12.1-beta.1...v2.12.1-beta.2) (2024-03-27)
 
 
