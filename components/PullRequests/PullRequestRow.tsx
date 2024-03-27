@@ -1,4 +1,4 @@
-import { GitMergeIcon, GitPullRequestIcon } from "@primer/octicons-react";
+import { GitMergeIcon, GitPullRequestClosedIcon, GitPullRequestIcon } from "@primer/octicons-react";
 import Link from "next/link";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 import { TableCell, TableRow } from "components/shared/Table";
@@ -45,7 +45,7 @@ function getPullRequestStateIcon(
     case state === "open" && isDraft:
       return <GitPullRequestIcon size={24} aria-label="draft pull request" className="text-slate-600" />;
     case state === "closed" && !isMerged:
-      return <GitPullRequestIcon size={24} aria-label="closed pull request" className="text-red-600" />;
+      return <GitPullRequestClosedIcon size={24} aria-label="closed pull request" className="text-red-600" />;
     case state === "closed" && isMerged:
       return <GitMergeIcon size={24} aria-label="merged pull request" className="text-purple-600 h-8 w-8" />;
   }
