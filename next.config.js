@@ -97,6 +97,11 @@ module.exports = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/hub/insights/new",
+        destination: "/workspaces/new",
+        permanent: true,
+      },
       ...interests.map((interest) => {
         return {
           source: `/${interest}/:path*`,
