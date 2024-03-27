@@ -41,7 +41,7 @@ export const PullRequestRow = ({ pullRequest, repoId }: PullRequestRowProps) => 
       </TableCell>
       <TableCell>
         {/* TODO pass in repo info to get the repo number ID */}
-        <AvatarHoverCard contributor={pullRequest.pr_author_login} repositories={[repoId]} size="large" />
+        <AvatarHoverCard contributor={pullRequest.pr_author_login} repositories={[repoId]} size="medium" />
       </TableCell>
       <TableCell>{pullRequest.pr_number}</TableCell>
       <TableCell className="truncate max-w-xs">
