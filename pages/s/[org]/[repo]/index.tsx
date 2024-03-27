@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
 import SEO from "layouts/SEO/SEO";
 import ProfileLayout from "layouts/profile";
@@ -32,10 +33,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const response = await fetch(repoData.url);
   const { owner } = await response.json();
 
-  return { props: { repoData, image: owner.avatar_url } };
+  return { props: { repoData, image: owner?.avatar_url || "" } };
 }
 
 export default function RepoPage({ repoData, image }: { repoData: DbRepo; image: string }) {
+  const { data: starsData, error: starsError } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "stars",
+    range: 30,
+  });
   return (
     <ProfileLayout>
       <SEO title={`${repoData.full_name} - OpenSauced Insights`} />
@@ -48,7 +54,7 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
       </header>
 
       <section className="flex flex-col gap-8">
-        <StarsChart />
+        <StarsChart stats={starsData} />
       </section>
     </ProfileLayout>
   );
