@@ -4,40 +4,14 @@ import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 import { TableCell, TableRow } from "components/shared/Table";
 
 interface PullRequestRowProps {
-  pullRequest: PullRequest;
+  pullRequest: DbRepoPREvents;
   repoId: number;
 }
 
-export type PullRequest = {
-  event_id: number;
-  pr_number: number;
-  pr_state: "open" | "closed";
-  pr_is_draft: boolean;
-  pr_is_merged: boolean;
-  pr_mergeable_state: string;
-  pr_is_rebaseable: boolean;
-  pr_title: string;
-  pr_head_label: string;
-  pr_base_label: string;
-  pr_head_ref: string;
-  pr_base_ref: string;
-  pr_author_login: string;
-  pr_created_at: string;
-  pr_closed_at: string;
-  pr_merged_at: string;
-  pr_updated_at: string;
-  pr_comments: number;
-  pr_additions: number;
-  pr_deletions: number;
-  pr_changed_files: number;
-  repo_name: string;
-  pr_commits: number;
-};
-
 function getPullRequestStateIcon(
-  state: PullRequest["pr_state"],
-  isDraft: PullRequest["pr_is_draft"],
-  isMerged: PullRequest["pr_is_merged"]
+  state: DbRepoPREvents["pr_state"],
+  isDraft: DbRepoPREvents["pr_is_draft"],
+  isMerged: DbRepoPREvents["pr_is_merged"]
 ) {
   switch (true) {
     case state === "open" && !isDraft:
