@@ -40,13 +40,13 @@ function getPullRequestStateIcon(
 ) {
   switch (true) {
     case state === "open" && !isDraft:
-      return <GitPullRequestIcon size={24} className="text-green-600" />;
+      return <GitPullRequestIcon aria-label="open pull request" size={24} className="text-green-600" />;
     case state === "open" && isDraft:
-      return <GitPullRequestIcon size={24} className="text-slate-600" />;
+      return <GitPullRequestIcon size={24} aria-label="draft pull request" className="text-slate-600" />;
     case state === "closed" && !isMerged:
-      return <GitPullRequestIcon size={24} className="text-red-600" />;
+      return <GitPullRequestIcon size={24} aria-label="closed pull request" className="text-red-600" />;
     case state === "closed" && isMerged:
-      return <GitMergeIcon size={24} className="text-purple-600 h-8 w-8" />;
+      return <GitMergeIcon size={24} aria-label="merged pull request" className="text-purple-600 h-8 w-8" />;
   }
 }
 
