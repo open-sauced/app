@@ -40,7 +40,7 @@ function getStarsHistogramToDays({ stats }: StarsChartProps) {
         for (let missed = 1; missed < count - previousCount; missed++) {
           const missingDay = new Date(today);
           missingDay.setDate(today.getDate() - (missed + previousCount));
-          days[previousCount + missed + 1] = {
+          days[previousCount + missed] = {
             bucket: missingDay.toLocaleDateString(),
             star_count: 0,
           };
@@ -57,12 +57,17 @@ function getStarsHistogramToDays({ stats }: StarsChartProps) {
 
   // convert to array
   const result: StatsType[] = [];
-
-  for (let i = 0; i <= 30; i++) {
-    allDays && result.push(allDays[i]);
+  for (let i = 0; i < 30; i++) {
+    let temp: StatsType | undefined = allDays && allDays[i];
+    if (!temp) {
+      const today = new Date();
+      temp = { bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(), star_count: 0 };
+    }
+    result.push(temp);
   }
 
-  return result.reverse();
+  result.reverse();
+  return result;
 }
 
 function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
