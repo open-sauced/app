@@ -55,6 +55,10 @@ function getPullRequestUrl(prNumber: number, repoName: string) {
   return `https://github.com/${repoName}/pull/${prNumber}`;
 }
 
+function getRepoUrl(repoName: string) {
+  return `https://github.com/${repoName}`;
+}
+
 export const PullRequestRow = ({ pullRequest, repoId }: PullRequestRowProps) => {
   return (
     <TableRow>
@@ -74,7 +78,12 @@ export const PullRequestRow = ({ pullRequest, repoId }: PullRequestRowProps) => 
           {pullRequest.pr_title}
         </Link>
       </TableCell>
-      <TableCell className="truncate max-w-xs">{pullRequest.repo_name}</TableCell>
+      <TableCell className="truncate max-w-xs">
+        {" "}
+        <Link href={getRepoUrl(pullRequest.repo_name)} className="text-orange-700 underline hover:no-underline">
+          {pullRequest.repo_name}
+        </Link>
+      </TableCell>
       {/* <TableCell>{pullRequest.pr_created_at}</TableCell>
       <TableCell>{pullRequest.pr_closed_at}</TableCell>
       <TableCell>{pullRequest.pr_merged_at}</TableCell>
