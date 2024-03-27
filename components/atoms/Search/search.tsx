@@ -142,10 +142,7 @@ const Search = ({
             {suggestionsLabel && suggestions.length > 0 ? <div className="pl-5 pt-4">{suggestionsLabel}</div> : null}
             {suggestions.map((suggestion, index) => (
               <div
-                className={clsx(
-                  cursor === index && "_cursorActive bg-slate-100",
-                  "px-4 py-2 overflow-hidden break-all hover:bg-light-slate-2"
-                )}
+                className={clsx(cursor === index && "_cursorActive bg-slate-100", "px-4 py-2 hover:bg-light-slate-2")}
                 style={suggestionsStyle}
                 key={index}
                 data-suggestion={typeof suggestion === "string" ? suggestion : suggestion.key}
@@ -154,7 +151,13 @@ const Search = ({
                   suggestion && handleOnSelect(suggestion);
                 }}
               >
-                {typeof suggestion === "string" ? <span className="pl-5 text-sm ">{suggestion}</span> : suggestion.node}
+                {typeof suggestion === "string" ? (
+                  <span className="pl-5 text-sm sm:max-w-[12.3rem] md:max-w-[11rem]md:mw-auto inline-block text-ellipsis truncate tracking-tighter">
+                    {suggestion}
+                  </span>
+                ) : (
+                  suggestion.node
+                )}
               </div>
             ))}
           </ScrollArea>
@@ -164,7 +167,7 @@ const Search = ({
       {search && (
         <>
           {isLoading ? (
-            <Spinner className="w-5 h-5 " />
+            <Spinner className="w-5 h-5" />
           ) : (
             <GrClose className="cursor-pointer text-light-slate-9" fontSize={16} onClick={handleEmpty} />
           )}
