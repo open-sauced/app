@@ -4,13 +4,12 @@ import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { User } from "@supabase/supabase-js";
 
 import { usePostHog } from "posthog-js/react";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import TextInput from "components/atoms/TextInput/text-input";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
-import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
 import { updateUser, UpdateUserPayload } from "lib/hooks/update-user";
 
@@ -24,7 +23,9 @@ import { useToast } from "lib/hooks/useToast";
 import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/molecules/Dialog/dialog";
 import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import CouponForm from "./coupon-form";
+import DeveloperPackForm from "./developer-pack-form";
 
 interface UserSettingsPageProps {
   user: User | null;
@@ -88,7 +89,8 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
     revalidateOnFocus: false,
   });
 
-  const { hasReports, session } = useSession(true);
+  const { session } = useSession(true);
+  const { providerToken } = useSupabaseAuth();
 
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -444,42 +446,25 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
           {userInfo && (
             <>
               <div>
-                {!hasReports && !coupon ? (
+                {!coupon ? (
                   <div className="flex flex-col order-first gap-6 md:order-last">
                     <div className="flex flex-col gap-3">
-                      <label className="text-2xl font-normal">Upgrade Access</label>
+                      <label className="text-2xl font-normal">Developer Pack</label>
                       <div className="w-full sm:max-w-80">
-                        <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
+                        <Text>Verify your developer pack eligibilty to get an upgrade!</Text>
                       </div>
                     </div>
-                    <StripeCheckoutButton variant="primary" />
+                    <DeveloperPackForm
+                      providerToken={providerToken}
+                      refreshUser={() => {
+                        mutate();
+                        setCoupon("verified");
+                      }}
+                    />
 
                     {!coupon && <CouponForm refreshUser={mutate} />}
                   </div>
-                ) : (
-                  <div>
-                    <div className="flex flex-col order-first gap-6 md:order-last">
-                      <div className="flex flex-col gap-3">
-                        <label className="text-2xl font-normal">Manage Subscriptions</label>
-                        <div className="w-full md:w-96">
-                          <Text>
-                            You are currently subscribed to the Pro plan and currently have access to all premium
-                            features.
-                          </Text>
-                        </div>
-                      </div>
-                      <Button
-                        rel="noopener noreferrer"
-                        target="_blank"
-                        href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL}
-                        className="w-max"
-                        variant="primary"
-                      >
-                        Cancel Subscription
-                      </Button>
-                    </div>
-                  </div>
-                )}
+                ) : null}
               </div>
               <form
                 name="delete-account"

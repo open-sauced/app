@@ -40,15 +40,27 @@ const Nav: React.FC<NavProps> = ({
       className="tool-list-nav flex w-full overflow-x-auto overflow-y-hidden gap-2 px-4 md:px-16 border-b pt-3"
     >
       {toolList.map((tool, index) => {
+        // TODO: Too much is going on here in terms of handling URLs. This should be revisited.
         const pageId = filterName || insightId;
         const workspaceNavLink = `/workspaces/${workspaceId}/repository-insights/${pageId}/${tool.name.toLowerCase()}`;
-        const pageNavLink = `/${username ? `pages/${username}/` : ""}${pageId}/${tool.name.toLowerCase()}${
-          selectedFilter
-            ? `/filter/${Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}?range=${
-                range ?? "30"
-              }`
-            : `?range=${range ?? "30"}`
-        }`;
+
+        let pageNavLink = "/";
+
+        if (username) {
+          pageNavLink += `pages/${username}/explore/topic/`;
+        } else {
+          pageNavLink += "explore/topic/";
+        }
+        pageNavLink += `${pageId}/${tool.name.toLowerCase()}`;
+
+        if (selectedFilter) {
+          if (Array.isArray(selectedFilter)) {
+            pageNavLink += `/filter/${selectedFilter.join("/")}?range=${range}`;
+          } else {
+            pageNavLink += `/filter/${selectedFilter}?range=${range}`;
+          }
+        }
+
         const navLink = workspaceId ? workspaceNavLink : pageNavLink;
 
         return (

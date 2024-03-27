@@ -4,6 +4,7 @@ import TabListItem from "./tab-list-item";
 
 type TabItem = {
   name: string;
+  path: string;
   numOf?: number;
 };
 
@@ -35,11 +36,7 @@ const TabList: React.FC<NavProps> = ({ tabList, pageId, selectedTab }) => {
               : "border-transparent hover:border-light-slate-8"
           }`}
         >
-          <TabListItem
-            tab={tab}
-            pageLink={`${pageId ? `${pageId}/` : ""}${tab.name.toLowerCase()}`}
-            selectedTab={selectedTab}
-          />
+          <TabListItem tab={tab} pageLink={`${pageId ? `${pageId}/` : ""}${tab.path}`} selectedTab={selectedTab} />
         </div>
       ))}
     </nav>

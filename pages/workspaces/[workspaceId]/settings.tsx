@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { useEffectOnce } from "react-use";
 import { IoDiamond } from "react-icons/io5";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { fetchApiData } from "helpers/fetchApiData";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
@@ -17,7 +17,6 @@ import Text from "components/atoms/Typography/text";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import {
-  WORKSPACE_ID_COOKIE_NAME,
   changeWorkspaceVisibility,
   deleteTrackedRepos,
   deleteWorkspace,
@@ -26,16 +25,18 @@ import {
 } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
-import { deleteCookie } from "lib/utils/server/cookies";
+import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import WorkspaceVisibilityModal from "components/Workspaces/WorkspaceVisibilityModal";
 import Card from "components/atoms/Card/card";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import { getStripe } from "lib/utils/stripe-client";
-import WorkspaceMembersConfig from "components/molecules/WorkspaceMembersConfig/workspace-members-config";
+import WorkspaceMembersConfig from "components/Workspaces/WorkspaceMembersConfig/workspace-members-config";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface WorkspaceSettingsProps {
   workspace: Workspace;
@@ -63,7 +64,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   ]);
 
   if (error || sessionError) {
-    deleteCookie(context.res, WORKSPACE_ID_COOKIE_NAME);
+    deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
     if (error && (error.status === 404 || error.status === 401)) {
       return { notFound: true };
@@ -77,6 +78,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   if (!data?.members.find((member) => member.user_id === Number(sessionData?.id) && member.role === "owner")) {
     return { notFound: true };
   }
+
+  setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
   return {
     props: {
@@ -95,6 +98,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
 
   const [isPublic, setIsPublic] = useState(workspace.is_public);
   const [isWorkspaceVisibilityModalOpen, setIsWorkspaceVisibilityModalOpen] = useState(false);
+  const [isWorkspaceUpgradeModalOpen, setIsWorkspaceUpgradeModalOpen] = useState(false);
 
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const {
@@ -174,6 +178,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
       setTrackedReposPendingDeletion(new Set());
       setTrackedRepos(new Map());
 
+      router.push(`/workspaces/${workspace.id}`);
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
   };
@@ -209,14 +214,25 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   };
 
   return (
-    <WorkspaceLayout workspaceId={workspace.id}>
+    <WorkspaceLayout
+      workspaceId={workspace.id}
+      footer={
+        <Button
+          variant="primary"
+          className="flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
+          form="update-workspace"
+        >
+          Update Workspace
+        </Button>
+      }
+    >
       <WorkspaceHeader workspace={workspace} />
       <div className="grid gap-6">
         <div>
           <div className="flex justify-between items-center">
             <WorkspacesTabList workspaceId={workspace.id} selectedTab={""} />
           </div>
-          <form className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
+          <form id="update-workspace" className="flex flex-col pt-6 gap-6" onSubmit={updateWorkspace}>
             <TextInput
               name="name"
               label="Workspace Name"
@@ -232,14 +248,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
               placeholder="Workspace description"
               className="w-full md:w-3/4 max-w-lg"
             />
-            <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
-              <Button
-                variant="primary"
-                className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
-              >
-                Update Workspace
-              </Button>
-            </div>
           </form>
         </div>
         <TrackedReposTable
@@ -276,6 +284,33 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           />
         </ClientOnly>
 
+        <div className="flex flex-col py-8 gap-4">
+          <h2 className="!font-medium">Change Workspace Visibility</h2>
+          <p className="text-sm text-slate-600">
+            This workspace is set to {isPublic ? "public" : "private"}.{" "}
+            {!workspace.payee_user_id && (
+              <span>
+                Setting this to private is a <span className="font-bold">paid</span> feature. Upgrade your Workspace to
+                unlock this feature.
+              </span>
+            )}
+          </p>
+
+          <Button
+            onClick={() => {
+              if (workspace.payee_user_id) {
+                setIsWorkspaceVisibilityModalOpen(true);
+              } else {
+                setIsWorkspaceUpgradeModalOpen(true);
+              }
+            }}
+            variant="primary"
+            className="w-fit"
+          >
+            Set to {isPublic ? "private" : "public"}
+          </Button>
+        </div>
+
         {workspace.payee_user_id ? (
           <section className="flex flex-col gap-4">
             <div className="flex gap-4 items-center">
@@ -298,8 +333,8 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
               <div className="flex flex-col gap-2">
                 <h3 className="text-sm font-medium">Make your workspace private</h3>
                 <p className="text-sm text-slate-500">
-                  Free workspaces can only be public, but with a pro workspace you can choose whether your workspace to
-                  be puclic or private!
+                  While our free workspaces are exclusively public, upgrading to a Pro workspace gives you the power to
+                  choose between public or private settings for your projects.
                 </p>
               </div>
             </div>
@@ -308,28 +343,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             </Button>
           </Card>
         )}
-
-        <div className="flex flex-col py-8 gap-4">
-          <h2 className="!font-medium">Change Workspace Visibility</h2>
-          <p className="text-sm text-slate-600">
-            This workspace is set to {isPublic ? "public" : "private"}.{" "}
-            {!workspace.payee_user_id && (
-              <span>
-                Setting this to private is a <span className="font-bold">paid</span> feature. Upgrade your Workspace to
-                unlock this feature.
-              </span>
-            )}
-          </p>
-
-          <Button
-            onClick={() => setIsWorkspaceVisibilityModalOpen(true)}
-            disabled={!workspace.payee_user_id}
-            variant={workspace.payee_user_id ? "primary" : "dark"}
-            className="w-fit"
-          >
-            Set to {isPublic ? "private" : "public"}
-          </Button>
-        </div>
 
         {canDeleteWorkspace && (
           <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
@@ -398,6 +411,13 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
             }}
           />
         ) : null}
+
+        <InsightUpgradeModal
+          variant="workspace"
+          workspaceId={workspace.id}
+          isOpen={isWorkspaceUpgradeModalOpen}
+          onClose={() => setIsWorkspaceUpgradeModalOpen(false)}
+        />
       </div>
     </WorkspaceLayout>
   );

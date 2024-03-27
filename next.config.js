@@ -1,3 +1,27 @@
+const interests = [
+  "javascript",
+  "python",
+  "java",
+  "typescript",
+  "angular",
+  "csharp",
+  "cpp",
+  "php",
+  "c",
+  "ruby",
+  "ai",
+  "ml",
+  "react",
+  "golang",
+  "rust",
+  "svelte",
+  "vue",
+  "kubernetes",
+  "clojure",
+  "kotlin",
+  "android",
+];
+
 /** @type {import('next').NextConfig} */
 module.exports = {
   productionBrowserSourceMaps: true,
@@ -72,6 +96,21 @@ module.exports = {
         source: "/hub/insights",
         destination: "/",
         permanent: true,
+      },
+      ...interests.map((interest) => {
+        return {
+          source: `/${interest}/:tool(dashboard|reports|contributors|activity)`,
+          destination: `/explore/topic/${interest}/:tool`,
+          permanent: true,
+        };
+      }),
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/explore/topic/:topic",
+        destination: "/explore/topic/:topic/dashboard/filter/recent",
       },
     ];
   },

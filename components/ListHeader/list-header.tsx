@@ -3,13 +3,15 @@ import { FaEdit } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";
 import { usePostHog } from "posthog-js/react";
 
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 
 import { truncateString } from "lib/utils/truncate-string";
 import { useToast } from "lib/hooks/useToast";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import StackedOwners from "components/Workspaces/StackedOwners";
+import { shortenUrl } from "lib/utils/shorten-url";
 
 interface ListHeaderProps {
   name: string;
@@ -18,6 +20,7 @@ interface ListHeaderProps {
   isPublic: boolean;
   isOwner: boolean;
   numberOfContributors: number;
+  owners?: string[];
 }
 
 const ListHeader = ({
@@ -27,6 +30,7 @@ const ListHeader = ({
   workspaceId,
   isOwner,
   numberOfContributors,
+  owners,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -36,7 +40,8 @@ const ListHeader = ({
     posthog!.capture("clicked: Lists copied");
 
     try {
-      await navigator.clipboard.writeText(url);
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -57,7 +62,14 @@ const ListHeader = ({
             </Title>
           </div>
           <div className="flex items-center gap-2 mt-4" id="contributorCount">
-            <ClientOnly>{numberOfContributors} Contributors </ClientOnly>
+            <ClientOnly>
+              {owners && (
+                <div className="flex gap-2 items-center">
+                  <StackedOwners owners={owners} /> |
+                </div>
+              )}
+              <p>{numberOfContributors} Contributors</p>
+            </ClientOnly>
           </div>
         </div>
       </div>

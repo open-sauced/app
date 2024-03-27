@@ -20,7 +20,7 @@ import ProgressPie from "components/atoms/ProgressPie/progress-pie";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import Icon from "components/atoms/Icon/icon";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
@@ -347,7 +347,7 @@ const Login: WithPageLayout = () => {
           </div>
           <div className="mb-8">
             <Text className="!text-sm">
-              Open Sauced is a platform to provide insights on open source contributions.{" "}
+              OpenSauced is a platform to provide insights on open source contributions.{" "}
             </Text>
           </div>
           <div className="items-center hidden gap-2 mb-8 lg:flex">

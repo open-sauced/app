@@ -13,7 +13,7 @@ const RepositoryCartItemTemplate: ComponentStory<typeof RepositoryCartItem> = (a
 export const Default = RepositoryCartItemTemplate.bind({});
 
 Default.args = {
-  orgName: "open sauced",
+  orgName: "OpenSauced",
   repoName: "hot",
   totalPrs: 32,
 };

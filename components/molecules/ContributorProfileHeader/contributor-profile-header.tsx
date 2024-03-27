@@ -22,7 +22,7 @@ import {
 import Avatar from "components/atoms/Avatar/avatar";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import RainbowBg from "img/rainbow-cover.png";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserConnections } from "lib/hooks/useUserConnections";
@@ -31,6 +31,7 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { cardPageUrl } from "lib/utils/urls";
+import { shortenUrl } from "lib/utils/shorten-url";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../Dialog/dialog";
 
 const MultiSelect = dynamic(() => import("components/atoms/Select/multi-select"), { ssr: false });
@@ -120,7 +121,8 @@ const ContributorProfileHeader = ({
     });
 
     try {
-      await navigator.clipboard.writeText(url);
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -411,7 +413,7 @@ const AddToListDropdown = ({ username }: { username: string }) => {
   const handleAddToList = async () => {
     if (selectedList.length > 0 && contributor) {
       const listIds = selectedList.map((list) => list.value);
-      const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [contributor.id])));
+      const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [{ id: contributor.id }])));
 
       response
         .then((res) => {

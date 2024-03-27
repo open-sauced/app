@@ -20,7 +20,7 @@ import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-r
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { setQueryParams } from "lib/utils/query-params";
@@ -199,7 +199,7 @@ const ContributorProfileTab = ({
           />
           <div className="flex-1 md:flex-[2.5]">
             <div className="flex items-center gap-2">
-              <Image className="rounded" alt="Open Sauced Logo" width={30} height={30} src={openSaucedImg} />
+              <Image className="rounded" alt="OpenSauced Logo" width={30} height={30} src={openSaucedImg} />
               <Title className="font-semibold text-lg" level={4}>
                 Do you know {login}?
               </Title>

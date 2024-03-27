@@ -7,7 +7,7 @@ import { GiftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import clsx from "clsx";
 import Tilt from "react-parallax-tilt";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Pill, { PillProps } from "components/atoms/Pill/pill";
 import Icon from "components/atoms/Icon/icon";
 import CardSauceBGSVG from "img/card-sauce-bg.svg";
@@ -123,7 +123,7 @@ export default function DevCard(props: DevCardProps) {
               }}
             >
               <div className=" absolute left-[10px] top-[10px] flex items-center gap-1 cursor-pointer">
-                <Image className="rounded" alt="Open Sauced Logo" width={13} height={13} src={openSaucedImg} />
+                <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
                 <p className={"font-semibold text-white"} style={{ fontSize: "8px" }}>
                   OpenSauced
                 </p>
@@ -245,7 +245,7 @@ export default function DevCard(props: DevCardProps) {
                 </Link>
               )}
               <div className="flex justify-center mt-2">
-                <Image className="rounded" alt="Open Sauced Logo" width={13} height={13} src={openSaucedImg} />
+                <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
                 <p className={"font-semibold text-white ml-1"} style={{ fontSize: "8px" }}>
                   OpenSauced
                 </p>

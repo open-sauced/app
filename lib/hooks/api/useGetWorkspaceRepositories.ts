@@ -1,7 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
-type DbWorkspaceRepository = {
+export type DbWorkspaceRepository = {
   id: string;
   repo_id: number;
   workspace_id: string;
@@ -13,7 +13,7 @@ type DbWorkspaceRepository = {
 };
 
 export const useGetWorkspaceRepositories = ({ workspaceId, range = 30 }: { workspaceId: string; range?: number }) => {
-  const searchParams = new URLSearchParams({ range: range.toString() });
+  const searchParams = new URLSearchParams({ range: range.toString(), limit: "999" });
   const endpoint = `workspaces/${workspaceId}/repos?${searchParams}`;
 
   const { data, error, isLoading, mutate } = useSWR<PagedData<DbWorkspaceRepository>, Error>(

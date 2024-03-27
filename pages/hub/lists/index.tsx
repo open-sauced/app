@@ -40,7 +40,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 const DeleteListPageModal = dynamic(() => import("components/organisms/ListPage/DeleteListPageModal"));
 
 const ListsHub: WithPageLayout = () => {
-  const { sessionToken } = useSupabaseAuth();
+  const { sessionToken, user } = useSupabaseAuth();
   const { data, isLoading, meta, setPage, mutate } = useFetchAllLists(30, !!sessionToken);
   const { data: featuredListsData, isLoading: featuredListsLoading } = useFetchFeaturedLists(
     sessionToken ? false : true
@@ -105,6 +105,7 @@ const ListsHub: WithPageLayout = () => {
                 updated_at: "",
                 is_public: is_public,
               }}
+              user={user}
             />
           ))
         ) : (
@@ -129,6 +130,7 @@ const ListsHub: WithPageLayout = () => {
               updated_at: "",
               is_public: list.is_public,
             }}
+            user={user}
           />
         ))}
       </section>
@@ -167,6 +169,6 @@ const ListsHub: WithPageLayout = () => {
 
 ListsHub.PageLayout = HubLayout;
 ListsHub.SEO = {
-  title: "Lists Hub | Open Sauced Lists",
+  title: "Lists Hub | OpenSauced Lists",
 };
 export default ListsHub;

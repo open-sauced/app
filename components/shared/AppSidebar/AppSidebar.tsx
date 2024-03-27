@@ -52,11 +52,12 @@ interface AppSideBarProps {
 }
 
 export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSideBarProps) => {
+  const { user } = useSupabaseAuth();
   const { data: rawRepoInsights, isLoading: repoInsightsLoading } = useWorkspacesRepositoryInsights({ workspaceId });
   const { data: rawContributorInsights, isLoading: contributorInsightsLoading } = useWorkspacesContributorInsights({
     workspaceId,
   });
-  const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ limit: 100 });
+  const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ load: !!user, limit: 100 });
   const router = useRouter();
 
   const repoInsights = rawRepoInsights
@@ -84,7 +85,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
       document.removeEventListener(WORKSPACE_UPDATED_EVENT, mutateHandler);
     };
   });
-  const { user } = useSupabaseAuth();
+
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
   const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
 
@@ -97,7 +98,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
       style={{
         "--top-nav-height": "3.3rem",
         top: "var(--top-nav-height)",
-        height: "calc(100vh - var(--top-nav-height))",
+        height: "calc(100dvh - var(--top-nav-height))",
       }}
     >
       <nav aria-label="sidebar navigation" className="grid gap-4 mt-4 pr-4 pl-2">
@@ -121,7 +122,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                   return;
                 }
 
-                router.push(`/workspaces/${value}/repositories`);
+                router.push(`/workspaces/${value}`);
               }}
             />
           </label>
@@ -131,53 +132,57 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
         </div>
         {workspaceId === "new" ? null : (
           <ul className="grid gap-1 mb-6">
-            <SidebarMenuItem
-              title="Home"
-              url={`/workspaces/${workspaceId}/repositories`}
-              icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />}
-            />
-            <li className="flex flex-row justify-between items-center ">
-              <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Insights</h3>
-              <DropdownMenu modal={false}>
-                <DropdownMenuTrigger title="Select type of new insight">
-                  <PlusIcon
-                    style={{ strokeWidth: "3px" }}
-                    className="w-5 h-5 p-0.5 text-semibold group-hover:bg-orange-100 rounded-md"
-                  />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  side="right"
-                  align="start"
-                  className="sidebar-new-insights-menu flex flex-col gap-1 py-2 rounded-lg shadow-xl"
-                >
-                  <DropdownMenuItem className="rounded-md group">
-                    <Link
-                      title="New Repository Insight"
-                      href={`/workspaces/${workspaceId}/repository-insights/new`}
-                      className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
-                    >
-                      <ChartBarSquareIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
-                      <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                        New Repository Insight
-                      </span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="rounded-md group">
-                    <Link
-                      title="New Contributor Insight"
-                      href={`/workspaces/${workspaceId}/contributor-insights/new`}
-                      className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
-                    >
-                      <UsersIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
-                      <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                        New Contributor Insight
-                      </span>
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </li>
-            <li className="grid gap-2">
+            {!!user && (
+              <SidebarMenuItem
+                title="Home"
+                url={`/workspaces/${workspaceId}`}
+                icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />}
+              />
+            )}
+            {!!user && (
+              <li className="flex flex-row justify-between items-center ">
+                <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Insights</h3>
+                <DropdownMenu modal={false}>
+                  <DropdownMenuTrigger title="Select type of new insight">
+                    <PlusIcon
+                      style={{ strokeWidth: "3px" }}
+                      className="w-5 h-5 p-0.5 text-semibold group-hover:bg-orange-100 rounded-md"
+                    />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    side="right"
+                    align="start"
+                    className="sidebar-new-insights-menu flex flex-col gap-1 py-2 rounded-lg shadow-xl"
+                  >
+                    <DropdownMenuItem className="rounded-md group">
+                      <Link
+                        title="New Repository Insight"
+                        href={`/workspaces/${workspaceId}/repository-insights/new`}
+                        className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
+                      >
+                        <ChartBarSquareIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
+                        <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                          New Repository Insight
+                        </span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="rounded-md group">
+                      <Link
+                        title="New Contributor Insight"
+                        href={`/workspaces/${workspaceId}/contributor-insights/new`}
+                        className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
+                      >
+                        <UsersIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
+                        <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                          New Contributor Insight
+                        </span>
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </li>
+            )}
+            <li className="grid gap-2 overflow-hidden">
               <InsightsPanel
                 title="Repository Insights"
                 insights={repoInsights}

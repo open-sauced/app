@@ -228,7 +228,7 @@ const InsightsHub: WithPageLayout = () => {
 
 InsightsHub.PageLayout = HubLayout;
 InsightsHub.SEO = {
-  title: "Insights Hub | Open Sauced Insights",
+  title: "Insights Hub | OpenSauced Insights",
 };
 
 export default InsightsHub;

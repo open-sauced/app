@@ -12,7 +12,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
 
 import Checkbox from "components/atoms/Checkbox/checkbox";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import LimitSelect from "components/atoms/Select/limit-select";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
@@ -23,7 +23,7 @@ interface RepositoriesProps {
   showSearch?: boolean;
 }
 
-const Repositories = ({ repositories, showSearch = true }: RepositoriesProps): JSX.Element => {
+export default function Repositories({ repositories, showSearch = true }: RepositoriesProps) {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
   const { pageId, toolName, selectedFilter, userOrg, range = 30, limit = 10 } = router.query;
@@ -207,6 +207,4 @@ const Repositories = ({ repositories, showSearch = true }: RepositoriesProps): J
       {filteredRepoNotIndexed && <RepoNotIndexed />}
     </div>
   );
-};
-
-export default Repositories;
+}

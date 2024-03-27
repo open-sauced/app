@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { captureAnalytics } from "lib/utils/analytics";
-import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Contributors from "../Contributors/contributors";
 import Dashboard from "../Dashboard/dashboard";
-import Reports from "../Reports/reports";
 import Activity from "../Activity/activity";
 
 interface ToolProps {
@@ -14,7 +12,6 @@ interface ToolProps {
 }
 
 const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
-  const { hasReports, waitlisted } = useSession();
   const { user } = useSupabaseAuth();
   const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
 
@@ -29,8 +26,6 @@ const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
   switch (tool) {
     case "Dashboard":
       return <Dashboard repositories={repositories} />;
-    case "Reports":
-      return <Reports hasReports={hasReports} waitlisted={waitlisted} repositories={repositories} />;
     case "Contributors":
       return <Contributors repositories={repositories} />;
 

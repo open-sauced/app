@@ -2,12 +2,7 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { pathToRegexp } from "path-to-regexp";
-import {
-  WORKSPACE_ID_COOKIE_NAME,
-  getInsightWithWorkspace,
-  getListWithWorkspace,
-  getWorkspaceUrl,
-} from "lib/utils/workspace-utils";
+import { getInsightWithWorkspace, getListWithWorkspace, getWorkspaceUrl } from "lib/utils/workspace-utils";
 
 // HACK: this is to get around the fact that the normal next.js middleware is not always functioning
 // correctly.
@@ -65,20 +60,22 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
+  if (session?.user && req.nextUrl.pathname === "/workspaces") {
+    const data = await loadSession(req, session?.access_token);
+    const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
+
+    return NextResponse.redirect(`${workspaceUrl}`);
+  }
+
+  if (req.nextUrl.pathname.startsWith("/workspaces")) {
+    // Forward requests to workspace URLs
+    return res;
+  }
+
   if (session?.user && req.nextUrl.pathname === "/account-deleted") {
     // Delete the account from Supabase and log the user out.
     await supabase.auth.admin.deleteUser(session.user.id);
     await supabase.auth.signOut();
-
-    return res;
-  }
-
-  if (req.nextUrl.pathname.startsWith("/workspaces")) {
-    const [, , workspaceId] = req.nextUrl.pathname.split("/");
-
-    if (workspaceId !== "new") {
-      res.cookies.set(WORKSPACE_ID_COOKIE_NAME, workspaceId);
-    }
 
     return res;
   }
@@ -90,7 +87,10 @@ export async function middleware(req: NextRequest) {
 
     if (list && list.data) {
       return NextResponse.redirect(
-        new URL(`/workspaces/${list.data.workspaces?.id}/contributor-insights/${listId}/${rest.join("/")}`, req.url)
+        new URL(
+          `/workspaces/${list.data.workspaces?.workspace_id}/contributor-insights/${listId}/${rest.join("/")}`,
+          req.url
+        )
       );
     }
   } else if (req.nextUrl.pathname.startsWith("/pages")) {
@@ -101,7 +101,7 @@ export async function middleware(req: NextRequest) {
     if (insight && insight.data) {
       return NextResponse.redirect(
         new URL(
-          `/workspaces/${insight.data.workspaces?.id}/repository-insights/${insightId}/${rest.join("/")}`,
+          `/workspaces/${insight.data.workspaces?.workspace_id}/repository-insights/${insightId}/${rest.join("/")}`,
           req.url
         )
       );

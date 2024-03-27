@@ -17,7 +17,7 @@ const TopNav = () => {
   const { onboarded } = useSession();
 
   return (
-    <header className="top-nav-container w-full fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b px-2">
+    <header className="top-nav-container w-full sm:fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b px-2">
       <div className="flex gap-2 justify-between items-center mx-auto px-2">
         <div className="flex gap-3 md:gap-8 items-center">
           <HeaderLogo responsive={true} withBg={false} textIsBlack />
@@ -43,7 +43,7 @@ const Nav = ({ className }: { className?: string }) => {
   const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
   const router = useRouter();
 
-  const explorePageUrlPattern = /^\/(?!pages|lists\/.*\/activity).*\/(dashboard|reports|contributors|activity).*/g;
+  const explorePageUrlPattern = /^(\/explore\/topic).*\/(dashboard|reports|contributors|activity).*/g;
 
   return (
     <nav className={className} aria-label="top navigation">
@@ -54,7 +54,7 @@ const Nav = ({ className }: { className?: string }) => {
               className={`font-medium text-sm text-slate-700 hover:text-orange-500 transition-all ${getActiveStyle(
                 router.asPath.startsWith("/workspaces/") || router.asPath.includes("/pages")
               )}`}
-              href={"/"}
+              href={"/workspaces"}
             >
               Workspace
             </Link>
@@ -65,7 +65,7 @@ const Nav = ({ className }: { className?: string }) => {
             className={`tracking-tight font-medium text-slate-700 text-sm hover:text-orange-500 transition-all ${getActiveStyle(
               explorePageUrlPattern.test(router.asPath)
             )}`}
-            href={`/${userInterest}/dashboard/filter/recent`}
+            href={`/explore/topic/${userInterest}/dashboard/filter/recent`}
           >
             Explore
           </Link>

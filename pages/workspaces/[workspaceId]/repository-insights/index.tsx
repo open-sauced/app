@@ -6,7 +6,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import WorkspaceRepositoryInsightRow from "components/molecules/WorkspaceRepositoryInsightRow/workspace-repository-insight-row";
+import WorkspaceRepositoryInsightRow from "components/Workspaces/WorkspaceRepositoryInsightRow/workspace-repository-insight-row";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useSession from "lib/hooks/useSession";
@@ -14,6 +14,7 @@ import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useWorkspacesRepositoryInsights } from "lib/hooks/api/useWorkspaceRepositoryInsights";
 import Title from "components/atoms/Typography/title";
+import Button from "components/shared/Button/button";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -43,36 +44,42 @@ const RepositoryInsights = () => {
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
       <div>
-        <nav className="items-center justify-between block py-4 sm:flex ">
+        <nav className="justify-between py-4 flex flex-col lg:flex-row lg:items-center gap-4">
           <div className="text-3xl leading-none mx-0">Repository Insights</div>
+          <Button href={`/workspaces/${workspaceId}/repository-insights/new`} variant="primary" className="w-fit">
+            Create Insight
+          </Button>
         </nav>
         <section className="flex flex-col gap-4 pt-4">
-          {user ? (
-            <>
-              {session && isLoading ? (
-                <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
-              ) : isError ? (
-                "Error..."
-              ) : data && data.length > 0 ? (
-                data.map((insight) => {
-                  return (
-                    <WorkspaceRepositoryInsightRow
-                      key={`insights_${insight.id}`}
-                      user={user}
-                      workspaceInsight={insight}
-                      workspaceId={workspaceId}
-                    />
-                  );
-                })
-              ) : (
-                <div className="flex flex-col items-center justify-center w-full gap-4 ">
-                  {!isLoading && sessionToken ? (
+          <>
+            {session && isLoading ? (
+              <SkeletonWrapper count={3} classNames="w-full" height={95} radius={10} />
+            ) : isError ? (
+              "Error..."
+            ) : data && data.length > 0 ? (
+              data.map((insight) => {
+                return (
+                  <WorkspaceRepositoryInsightRow
+                    key={`insights_${insight.id}`}
+                    user={user}
+                    workspaceInsight={insight}
+                    workspaceId={workspaceId}
+                  />
+                );
+              })
+            ) : (
+              <div className="flex flex-col items-center justify-center w-full gap-4 ">
+                {!isLoading && sessionToken ? (
+                  <>
                     <Title className="text-2xl">You currently have no repository insights</Title>
-                  ) : null}
-                </div>
-              )}
-            </>
-          ) : null}
+                    <Button variant="primary" href={`/workspaces/${workspaceId}/repository-insights/new`}>
+                      Create a new repository insight
+                    </Button>
+                  </>
+                ) : null}
+              </div>
+            )}
+          </>
         </section>
 
         <div
@@ -100,7 +107,7 @@ const RepositoryInsights = () => {
 };
 
 RepositoryInsights.SEO = {
-  title: "Repository Insights | Open Sauced Insights",
+  title: "Repository Insights | OpenSauced Insights",
 };
 
 export default RepositoryInsights;

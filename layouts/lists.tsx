@@ -14,6 +14,7 @@ const ListPageLayout = ({
   isOwner = false,
   showRangeFilter = true,
   workspaceId,
+  owners,
 }: {
   children: React.ReactNode;
   list?: DBList;
@@ -21,13 +22,18 @@ const ListPageLayout = ({
   numberOfContributors: number;
   isOwner: boolean;
   showRangeFilter?: boolean;
+  owners?: string[];
 }) => {
   const router = useRouter();
   const { range } = router.query;
   const paths = router.asPath.split("/");
   const selectedTab = paths[3] ?? "overview";
 
-  const tabList = [{ name: "Overview" }, { name: "Activity" }, { name: "Highlights" }];
+  const tabList = [
+    { name: "Overview", path: "overview" },
+    { name: "Activity", path: "activity" },
+    { name: "Highlights", path: "highlights" },
+  ];
 
   return (
     <>
@@ -41,6 +47,7 @@ const ListPageLayout = ({
               listId={list.id}
               workspaceId={workspaceId}
               isOwner={isOwner}
+              owners={owners}
             />
           )}
         </Header>

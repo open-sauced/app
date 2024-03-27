@@ -2,7 +2,7 @@ import { BiBarChartAlt2 } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
 import { FaTrashAlt } from "react-icons/fa";
 import { ComponentProps } from "react";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";

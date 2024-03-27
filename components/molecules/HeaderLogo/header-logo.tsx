@@ -12,22 +12,15 @@ interface HeaderLogoProps {
 
 const HeaderLogo: React.FC<HeaderLogoProps> = ({ textIsBlack, withBg = false, responsive }) => {
   return (
-    <Link href="/">
-      <div className="flex items-center py-2 gap-2 cursor-pointer">
-        <Image
-          className="rounded"
-          alt="Open Sauced Logo"
-          width={20}
-          src={withBg ? openSaucedImgWithBg : openSaucedImg}
-        />
-        <p
-          className={`font-bold text-lg tracking-tight ${textIsBlack ? "!text-black" : "!text-white"} ${
-            responsive ? "hidden sm:block" : ""
-          }`}
-        >
-          OpenSauced
-        </p>
-      </div>
+    <Link href="/" className="flex items-center py-2 gap-2 cursor-pointer">
+      <Image className="rounded" alt="" width={20} src={withBg ? openSaucedImgWithBg : openSaucedImg} />
+      <span
+        className={`font-bold text-lg tracking-tight ${textIsBlack ? "!text-black" : "!text-white"} ${
+          responsive ? "hidden sm:block" : ""
+        }`}
+      >
+        OpenSauced
+      </span>
     </Link>
   );
 };

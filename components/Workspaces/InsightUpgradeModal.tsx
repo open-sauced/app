@@ -1,13 +1,14 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { FaRegCheckCircle } from "react-icons/fa";
+import { usePostHog } from "posthog-js/react";
 import { Dialog, DialogTitle, DialogContent, DialogCloseButton } from "components/molecules/Dialog/dialog";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Card from "components/atoms/Card/card";
 
 type InsightUpgradeModalProps = {
   workspaceId: string;
-  overLimit: number;
-  variant: "repositories" | "contributors";
+  overLimit?: number;
+  variant: "repositories" | "contributors" | "workspace";
   isOpen: boolean;
   onClose: () => void;
 };
@@ -19,6 +20,14 @@ export default function InsightUpgradeModal({
   isOpen,
   onClose,
 }: InsightUpgradeModalProps) {
+  const posthog = usePostHog();
+
+  useEffect(() => {
+    if (isOpen) {
+      posthog.capture("clicked: Upgrade Workspace Modal", { workspaceId });
+    }
+  }, [isOpen]);
+
   return (
     <Dialog open={isOpen}>
       <DialogContent autoStyle={false} onEscapeKeyDown={onClose} onPointerDownOutside={onClose}>
@@ -26,19 +35,30 @@ export default function InsightUpgradeModal({
           <div className="min-w-[712px] flex flex-col gap-8">
             <DialogCloseButton onClick={onClose} />
             <section className="flex flex-col gap-2">
-              <DialogTitle className="text-xl">This Insight page is over the free Workspace limit</DialogTitle>
-              <p className="text-sm text-slate-500">
-                Your Insight page has{" "}
-                <span className="font-bold">
-                  {overLimit} {variant}
-                </span>{" "}
-                but the free Workspace only allows for{" "}
-                <span className="font-bold">
-                  {variant === "repositories" ? 100 : 10} {variant}
-                </span>{" "}
-                tracked. Don&apos;t worry, your insights won&apos;t be deleted, but if you want to continue using
-                OpenSauced you should upgrade your Workspace to a PRO Workspace.
-              </p>
+              <DialogTitle className="text-xl">
+                {variant !== "workspace"
+                  ? "This Insight page is over the free Workspace limit"
+                  : "Upgrade to a PRO Workspace"}
+              </DialogTitle>
+              {variant !== "workspace" ? (
+                <p className="text-sm text-slate-500">
+                  Your Insight page has{" "}
+                  <span className="font-bold">
+                    {overLimit} {variant}
+                  </span>{" "}
+                  but the free Workspace only allows for{" "}
+                  <span className="font-bold">
+                    {variant === "repositories" ? 100 : 10} {variant}
+                  </span>{" "}
+                  tracked. Don&apos;t worry, your insights won&apos;t be deleted. If you want to continue using
+                  OpenSauced you should upgrade your Workspace to a PRO Account.
+                </p>
+              ) : (
+                <p className="text-sm text-slate-500">
+                  Setting your workspace to private is a PRO feature. Upgrade your Workspace and get exclusive access to
+                  your work for you and your team!
+                </p>
+              )}
             </section>
 
             <section className="flex gap-8 justify-between w-full">
@@ -98,7 +118,10 @@ export default function InsightUpgradeModal({
                 </ul>
 
                 <Button
-                  href={`/workspaces/${workspaceId}/settings#upgrade`}
+                  onClick={() => {
+                    if (variant === "workspace") onClose();
+                  }}
+                  href={variant !== "workspace" ? `/workspaces/${workspaceId}/settings#upgrade` : ""}
                   variant="primary"
                   className="py-3 flex justify-center"
                 >

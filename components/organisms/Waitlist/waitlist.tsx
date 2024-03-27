@@ -3,7 +3,7 @@ import { FaGithub } from "react-icons/fa";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import AvatarRoll from "components/molecules/AvatarRoll/avatar-roll";
 import ComponentGradient from "../../molecules/ComponentGradient/component-gradient";
 const WaitlistComponent = () => {
@@ -21,7 +21,7 @@ const WaitlistComponent = () => {
           </div>
           <div className="max-w-2xl mt-7 px-9 font-semibold">
             <Title className="text-center leading-10 !text-light-slate-1" level={1}>
-              You and 32 others are on the Open Sauced waitlist.
+              You and 32 others are on the OpenSauced waitlist.
             </Title>
           </div>
           <div className="flex mt-8 justify-center">

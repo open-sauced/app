@@ -16,7 +16,7 @@ import clsx from "clsx";
 import { useDebounce } from "rooks";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,6 +45,7 @@ import { isValidBlogUrl } from "lib/utils/dev-to";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
+import { shortenUrl } from "lib/utils/shorten-url";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import {
   Dialog,
@@ -243,7 +244,8 @@ const ContributorHighlightCard = ({
     handleCaptureClickDetailsForAnalytics("link");
 
     try {
-      await navigator.clipboard.writeText(url);
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console

@@ -28,15 +28,15 @@ const HeaderFilter = () => {
 
   const filterBtnRouting = (filter: string) => {
     captureAnalytics({ title: "Filters", property: "toolsFilter", value: `${filter} applied`, userInfo });
-    return router.push(`/${pageId}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
+    return router.push(`/explore/topic/${pageId}/${toolName}/filter/${filter.toLocaleLowerCase()}`);
   };
 
   const cancelFilterRouting = () => {
-    return router.push(`/${pageId}/${toolName}`);
+    return router.push(`/explore/topic/${pageId}/${toolName}`);
   };
 
   const topicRouting = (topic: string) => {
-    router.push(`/${topic}/${toolName}${selectedFilter ? `/filter/${selectedFilter}` : ""}`);
+    router.push(`/explore/topic/${topic}/${toolName}${selectedFilter ? `/filter/${selectedFilter}` : ""}`);
   };
 
   return (

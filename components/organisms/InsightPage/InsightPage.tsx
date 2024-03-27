@@ -3,8 +3,7 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
 import { useDebounce } from "rooks";
-import Link from "next/link";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
@@ -15,17 +14,19 @@ import useRepositories from "lib/hooks/api/useRepositories";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { generateRepoParts, getAvatarByUsername } from "lib/utils/github";
-import useStore from "lib/store";
 import Error from "components/atoms/Error/Error";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
 import { useFetchInsightRecommendedRepositories } from "lib/hooks/useFetchOrgRecommendations";
 import { RepoCardProfileProps } from "components/molecules/RepoCardProfile/repo-card-profile";
+import SingleSelect from "components/atoms/Select/single-select";
+import { fetchApiData } from "helpers/fetchApiData";
+import { useGetUserWorkspaces } from "lib/hooks/api/useGetUserWorkspaces";
 import SuggestedRepositoriesList from "../SuggestedRepoList/suggested-repo-list";
 
 // lazy import DeleteInsightPageModal and TeamMembersConfig component to optimize bundle size they don't load on initial render
 const DeleteInsightPageModal = dynamic(() => import("./DeleteInsightPageModal"));
-const TeamMembersConfig = dynamic(() => import("components/molecules/TeamMembersConfig/team-members-config"));
+const TransferInsightModal = dynamic(() => import("components/Workspaces/TransferInsightModal"));
 
 const enum RepoLookupError {
   Initial = 0,
@@ -104,11 +105,30 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const [repoHistory, setRepoHistory] = useState<DbRepo[]>([]);
   const [addRepoError, setAddRepoError] = useState<RepoLookupError>(RepoLookupError.Initial);
   const [syncOrganizationError, setSyncOrganizationError] = useState<OrgLookupError>(OrgLookupError.Initial);
-  const insightRepoLimit = useStore((state) => state.insightRepoLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const [repoSearchTerm, setRepoSearchTerm] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
+
+  const { data: workspacesData, isLoading: workspacesLoading } = useGetUserWorkspaces();
+  const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
+  const [selectedWorkspace, setSelectedWorkspace] = useState<string>(workspaceId!);
+  const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (workspaceId && !workspacesLoading) {
+      const filteredWorkspaces = workspacesData?.data?.filter((workspace) =>
+        workspace.members.find(
+          (member) => member.user_id === Number(user?.user_metadata.sub) && ["owner", "editor"].includes(member.role)
+        )
+      );
+
+      setOptions(
+        Array.from(filteredWorkspaces!, (workspace) => {
+          return { label: workspace.name, value: workspace.id };
+        })
+      );
+    }
+  }, [workspacesData]);
 
   const recommendedReposWithoutSelected =
     recommendedRepos && recommendedRepos.length > 0
@@ -202,9 +222,9 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     );
     setCreateLoading(false);
     if (response.ok) {
-      const { id } = await response.json();
+      const { insight_id } = await response.json();
       toast({ description: "Page created successfully", variant: "success" });
-      router.push(`/workspaces/${workspaceId}/repository-insights/${id}/dashboard`);
+      router.push(`/workspaces/${workspaceId}/repository-insights/${insight_id}/dashboard`);
     }
 
     setSubmitted(false);
@@ -213,23 +233,26 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
   const handleUpdateInsightPage = async () => {
     setSubmitted(true);
     setCreateLoading(true);
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/insights/${insight?.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${sessionToken}`,
-      },
-      body: JSON.stringify({
-        name,
-        repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
-        // eslint-disable-next-line
-        is_public: true,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspaceId}/insights/${insight?.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify({
+          name,
+          repos: repos.map((repo) => ({ id: repo.id, fullName: repo.full_name })),
+          // eslint-disable-next-line
+          is_public: true,
+        }),
+      }
+    );
     setCreateLoading(false);
     if (response && response.ok) {
       toast({ description: "Page updated successfully", variant: "success" });
-      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
+      router.push(`/workspaces/${workspaceId}/repository-insights/${insight?.id}/dashboard`);
     } else {
       toast({ description: "An error occurred!", variant: "danger" });
     }
@@ -399,7 +422,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     if (response.ok) {
       toast({ description: "Page deleted successfully!", variant: "success" });
       setIsModalOpen(false);
-      router.push(workspaceId ? `/workspaces/${workspaceId}/repository-insights` : "/hub/insights");
+      router.push(`/workspaces/${workspaceId}/repository-insights`);
     }
 
     setSubmitted(false);
@@ -478,6 +501,26 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
     }
   };
 
+  const transferWorkspace = async () => {
+    const selectedOption = options.find((opt) => opt.value === selectedWorkspace);
+    const response = await fetchApiData({
+      method: "POST",
+      path: `workspaces/${workspaceId!}/insights/${selectedWorkspace}`,
+      body: {
+        id: insight?.id,
+      },
+      bearerToken: sessionToken!,
+      pathValidator: () => true,
+    });
+    if (response.error) {
+      toast({ description: "An error has occurred. Try again.", variant: "success" });
+      return;
+    }
+
+    toast({ description: `Moved insight to ${selectedOption?.label}`, variant: "success" });
+    router.push(`/workspaces/${selectedWorkspace}/repository-insights/${insight?.id}/dashboard`);
+  };
+
   useEffect(() => {
     setSuggestions([]);
     if (!repoSearchTerm) return;
@@ -519,7 +562,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           </div>
           <div>
             <Button
-              disabled={repos.length >= insightRepoLimit! || organization.trim().length < 3}
+              disabled={organization.trim().length < 3}
               onClick={handleAddOrganizationRepositories}
               variant="outline"
               className="shrink-0 w-max"
@@ -540,6 +583,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
             placeholder="Repository URL or Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra"
             name={"query"}
+            value={repoSearchTerm}
             suggestions={suggestions}
             onChange={(value) => setRepoSearchTerm(value)}
             onSearch={(search) => setRepoSearchTerm(search as string)}
@@ -547,10 +591,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
 
           <div className="w-full flex gap-3 md:items-center flex-col md:flex-row">
             <Button
-              disabled={
-                repos.length >= insightRepoLimit! ||
-                (addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading)
-              }
+              disabled={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
               loading={addRepoLoading.repoName === repoSearchTerm && addRepoLoading.isLoading}
               onClick={handleAddRepository}
               variant="outline"
@@ -558,19 +599,6 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
             >
               Add Repository
             </Button>
-
-            <span role="alert">
-              {repos.length >= insightRepoLimit! && insightRepoLimit! < 50 ? (
-                <p className="text-sm">
-                  Your insight pages are limited to
-                  <strong className="text-sauced-orange"> {insightRepoLimit}</strong> repos,{" "}
-                  <Link href={`/user/settings#upgrade`} className="underline text-sauced-orange">
-                    upgrade
-                  </Link>{" "}
-                  to increase the limit
-                </p>
-              ) : null}
-            </span>
           </div>
 
           <div className="py-4">
@@ -588,10 +616,35 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
         <div>{getRepoLookupError(addRepoError)}</div>
 
         {edit && (
-          <div className="flex flex-col gap-4 py-6 border-t border-b border-light-slate-8">
-            <Title className="!text-1xl !leading-none py-6" level={4}>
+          <div className="flex flex-col gap-8 py-8 border-t border-b border-light-slate-8">
+            <Title className="!text-1xl !leading-none" level={4}>
               Danger Zone
             </Title>
+
+            {workspaceId && (
+              <section className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <Title level={4}>Transfer to other Workspace</Title>
+                  <Text>Move this insight to another workspace where you are an owner or editor.</Text>
+                </div>
+                <SingleSelect
+                  isSearchable
+                  placeholder={options.find((opt) => opt.value === workspaceId)?.label}
+                  options={options}
+                  onValueChange={(value: string) => {
+                    setSelectedWorkspace(value);
+                  }}
+                />
+                <Button
+                  onClick={() => setIsTransferModalOpen(true)}
+                  disabled={selectedWorkspace === workspaceId}
+                  variant="primary"
+                  className="w-fit"
+                >
+                  Transfer
+                </Button>
+              </section>
+            )}
 
             <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
               <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
@@ -643,6 +696,17 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           })}
         </RepositoriesCart>
       </div>
+
+      {workspaceId && (
+        <TransferInsightModal
+          isOpen={isTransferModalOpen}
+          onClose={() => setIsTransferModalOpen(false)}
+          handleTransfer={transferWorkspace}
+          insightName={insight?.name || ""}
+          currentWorkspaceName={options.find((opt) => opt.value === workspaceId)?.label || ""}
+          destinationWorkspaceName={options.find((opt) => opt.value === selectedWorkspace)?.label || ""}
+        />
+      )}
 
       <DeleteInsightPageModal
         isLoading={deleteLoading}

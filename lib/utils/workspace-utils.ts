@@ -1,6 +1,8 @@
 import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { fetchApiData } from "helpers/fetchApiData";
+import { WORKSPACE_ID_COOKIE_NAME } from "./caching";
 
+// workspaces
 export async function createWorkspace({
   name,
   description = "",
@@ -162,8 +164,6 @@ export async function deleteWorkspace({ workspaceId, sessionToken }: { workspace
   return { data, error };
 }
 
-export const WORKSPACE_ID_COOKIE_NAME = "workspace-id";
-
 export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, personalWorkspaceId: string) {
   if (!cookies.has(WORKSPACE_ID_COOKIE_NAME)) {
     cookies.set(WORKSPACE_ID_COOKIE_NAME, personalWorkspaceId);
@@ -172,7 +172,35 @@ export function getWorkspaceUrl(cookies: RequestCookies, baseUrl: string, person
   // @ts-expect-error the cookie value will be defined
   const workspaceId = cookies.get(WORKSPACE_ID_COOKIE_NAME).value;
 
-  return new URL(`/workspaces/${workspaceId}/repositories`, baseUrl);
+  return new URL(`/workspaces/${workspaceId}`, baseUrl);
+}
+
+type CreateWorkspaceInsightProps = {
+  workspaceId: string;
+  bearerToken: string;
+  name: string;
+  is_public: boolean;
+  repos?: { fullName: string }[];
+  contributors?: { login: string }[];
+};
+
+// repository insights
+export async function createRepositoryInsight({
+  workspaceId,
+  bearerToken,
+  name,
+  repos,
+  is_public,
+}: CreateWorkspaceInsightProps) {
+  const { data, error } = await fetchApiData<{ insight_id: number }>({
+    path: `workspaces/${workspaceId}/insights`,
+    method: "POST",
+    bearerToken,
+    body: { name, repos, is_public },
+    pathValidator: () => true,
+  });
+
+  return { data, error };
 }
 
 export async function getInsightWithWorkspace({ insightId }: { insightId: number }) {
@@ -180,6 +208,25 @@ export async function getInsightWithWorkspace({ insightId }: { insightId: number
     path: `insights/${insightId}`,
     method: "GET",
     bearerToken: "",
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
+// contributor insights
+export async function createContributorInsight({
+  workspaceId,
+  bearerToken,
+  name,
+  contributors,
+  is_public,
+}: CreateWorkspaceInsightProps) {
+  const { data, error } = await fetchApiData<{ user_list_id: string }>({
+    path: `workspaces/${workspaceId}/userLists`,
+    method: "POST",
+    bearerToken,
+    body: { name, contributors, is_public },
     pathValidator: () => true,
   });
 

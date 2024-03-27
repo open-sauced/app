@@ -4,6 +4,8 @@ import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import clsx from "clsx";
 import { BsPencilFill } from "react-icons/bs";
+import { User } from "@supabase/supabase-js";
+
 import Text from "components/atoms/Typography/text";
 import { useFetchListContributors } from "lib/hooks/useList";
 import Card from "components/atoms/Card/card";
@@ -13,8 +15,9 @@ interface ListCardProps {
   list: DbUserList;
   handleOnDeleteClick?: (listName: string, listId: string) => void;
   workspaceId?: string;
+  user: User | null;
 }
-const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => {
+const ListCard = ({ list, handleOnDeleteClick, workspaceId, user }: ListCardProps) => {
   const { data: contributors, meta } = useFetchListContributors(list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
@@ -73,7 +76,7 @@ const ListCard = ({ list, handleOnDeleteClick, workspaceId }: ListCardProps) => 
                 </span>
               </Link>
               {/* Delete button */}
-              {handleOnDeleteClick && (
+              {handleOnDeleteClick && !!user && (
                 <button
                   onClick={() => handleOnDeleteClick(list.name, list.id)}
                   className="p-2.5 mb-1.5 border !border-light-slate-4 rounded-lg cursor-pointer bg-light-slate-1"
