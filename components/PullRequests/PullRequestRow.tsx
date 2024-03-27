@@ -1,4 +1,5 @@
 import { GitMergeIcon, GitPullRequestIcon } from "@primer/octicons-react";
+import Link from "next/link";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 import { TableCell, TableRow } from "components/shared/Table";
 
@@ -50,6 +51,10 @@ function getPullRequestStateIcon(
   }
 }
 
+function getPullRequestUrl(prNumber: number, repoName: string) {
+  return `https://github.com/${repoName}/pull/${prNumber}`;
+}
+
 export const PullRequestRow = ({ pullRequest, repoId }: PullRequestRowProps) => {
   return (
     <TableRow>
@@ -61,15 +66,22 @@ export const PullRequestRow = ({ pullRequest, repoId }: PullRequestRowProps) => 
         <AvatarHoverCard contributor={pullRequest.pr_author_login} repositories={[repoId]} size="large" />
       </TableCell>
       <TableCell>{pullRequest.pr_number}</TableCell>
-      <TableCell>{pullRequest.pr_title}</TableCell>
-      <TableCell>{pullRequest.repo_name}</TableCell>
-      <TableCell>{pullRequest.pr_created_at}</TableCell>
+      <TableCell className="truncate max-w-xs">
+        <Link
+          href={getPullRequestUrl(pullRequest.pr_number, pullRequest.repo_name)}
+          className="text-orange-700 underline hover:no-underline"
+        >
+          {pullRequest.pr_title}
+        </Link>
+      </TableCell>
+      <TableCell className="truncate max-w-xs">{pullRequest.repo_name}</TableCell>
+      {/* <TableCell>{pullRequest.pr_created_at}</TableCell>
       <TableCell>{pullRequest.pr_closed_at}</TableCell>
       <TableCell>{pullRequest.pr_merged_at}</TableCell>
-      <TableCell>{pullRequest.pr_updated_at}</TableCell>
+      <TableCell>{pullRequest.pr_updated_at}</TableCell> */}
       <TableCell>{pullRequest.pr_comments}</TableCell>
-      <TableCell>{pullRequest.pr_additions}</TableCell>
-      <TableCell>{pullRequest.pr_deletions}</TableCell>
+      <TableCell className="text-green-800 before:content-['+']">{pullRequest.pr_additions}</TableCell>
+      <TableCell className="text-red-800 before:content-['-']">{pullRequest.pr_deletions}</TableCell>
       <TableCell>{pullRequest.pr_changed_files}</TableCell>
       <TableCell>{pullRequest.pr_commits}</TableCell>
     </TableRow>
