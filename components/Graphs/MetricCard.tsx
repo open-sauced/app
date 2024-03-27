@@ -52,11 +52,9 @@ export default function MetricCard({ stats, variant }: MetricCardProps) {
         </Button>
       </section>
 
-      <section className="flex justify-between items-center">
-        <div className="basis-1/2 w-full">
-          <p className="text-5xl font-bold">{total}</p>
-        </div>
-        <div className="h-fit w-full max-w-[12rem]">
+      <section className="flex justify-between items-center px-2 gap-8">
+        <p className="text-5xl font-bold">{total}</p>
+        <div className="h-fit w-full pl-6">
           <EChartsReact option={option} style={{ height: "100%", width: "100%" }} />
         </div>
       </section>
