@@ -106,6 +106,14 @@ module.exports = {
       }),
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/explore/topic/:topic",
+        destination: "/explore/topic/:topic/dashboard/filter/recent",
+      },
+    ];
+  },
 };
 
 // Injected content via Sentry wizard below
