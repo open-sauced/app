@@ -1,4 +1,4 @@
-import { PullRequest, PullRequestRow } from "components/PullRequests/PullRequestRow";
+import { PullRequestRow } from "components/PullRequests/PullRequestRow";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -63,7 +63,7 @@ function getPullRequestData(partialPullRequest: Partial<PullRequest>) {
       pr_commits: 1,
     },
     partialPullRequest
-  ) satisfies PullRequest;
+  ) satisfies DbRepoPREvents;
 }
 
 export default meta;
