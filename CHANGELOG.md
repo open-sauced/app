@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.12.1-beta.1](https://github.com/open-sauced/app/compare/v2.12.0...v2.12.1-beta.1) (2024-03-27)
+
+
+### 🐛 Bug Fixes
+
+* now valid searched org appears all the time for org import for tracked repositories ([#3041](https://github.com/open-sauced/app/issues/3041)) ([f5baad8](https://github.com/open-sauced/app/commit/f5baad84a2ae0f7953663a63d44b8b468885e01c))
+
 ## [2.12.0](https://github.com/open-sauced/app/compare/v2.11.0...v2.12.0) (2024-03-26)
 
 
