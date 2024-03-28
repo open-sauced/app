@@ -3,6 +3,7 @@ import { FaArrowUp, FaEllipsisVertical } from "react-icons/fa6";
 import { StatsType } from "lib/hooks/api/useFetchMetricStats";
 import Card from "components/atoms/Card/card";
 import Button from "components/shared/Button/button";
+import humanizeNumber from "lib/utils/humanizeNumber";
 
 type MetricCardProps = {
   stats: StatsType[] | undefined;
@@ -53,7 +54,7 @@ export default function MetricCard({ stats, variant }: MetricCardProps) {
       </section>
 
       <section className="flex justify-between items-center px-2 gap-8">
-        <p className="text-5xl font-bold">{total}</p>
+        <p className="text-5xl font-bold">{humanizeNumber(total || 0, "abbreviation")}</p>
         <div className="h-fit w-full pl-6">
           <EChartsReact option={option} style={{ height: "100%", width: "100%" }} />
         </div>
