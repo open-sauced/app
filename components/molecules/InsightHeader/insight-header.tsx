@@ -99,7 +99,7 @@ const InsightHeader = ({
         {canEdit && (
           <Link href={`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`}>
             <Button className="text-xs w-max" variant="primary">
-              <FaEdit className="mr-2" /> Edit Page
+              <FaEdit className="mr-2" /> Edit
             </Button>
           </Link>
         )}
