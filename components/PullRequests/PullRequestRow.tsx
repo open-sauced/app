@@ -43,30 +43,36 @@ export const PullRequestRow = ({ pullRequest, repoId }: PullRequestRowProps) => 
         {/* TODO pass in repo info to get the repo number ID */}
         <AvatarHoverCard contributor={pullRequest.pr_author_login} repositories={[repoId]} size="medium" />
       </TableCell>
-      <TableCell>{pullRequest.pr_number}</TableCell>
-      <TableCell className="truncate max-w-xs">
+      <TableCell>
         <Link
           href={getPullRequestUrl(pullRequest.pr_number, pullRequest.repo_name)}
           className="text-orange-700 underline hover:no-underline"
         >
-          {pullRequest.pr_title}
+          {pullRequest.pr_number}
         </Link>
       </TableCell>
+      <TableCell>
+        <time dateTime={pullRequest.pr_updated_at}>{new Date(pullRequest.pr_updated_at).toLocaleDateString()}</time>
+      </TableCell>
+      <TableCell>
+        <time dateTime={pullRequest.pr_closed_at}>{new Date(pullRequest.pr_closed_at).toLocaleDateString()}</time>
+      </TableCell>
+      <TableCell className="truncate max-w-xs" title={pullRequest.pr_title}>
+        {pullRequest.pr_title}
+      </TableCell>
       <TableCell className="truncate max-w-xs">
-        {" "}
         <Link href={getRepoUrl(pullRequest.repo_name)} className="text-orange-700 underline hover:no-underline">
           {pullRequest.repo_name}
         </Link>
       </TableCell>
-      {/* <TableCell>{pullRequest.pr_created_at}</TableCell>
-      <TableCell>{pullRequest.pr_closed_at}</TableCell>
-      <TableCell>{pullRequest.pr_merged_at}</TableCell>
-      <TableCell>{pullRequest.pr_updated_at}</TableCell> */}
       <TableCell>{pullRequest.pr_comments}</TableCell>
       <TableCell className="text-green-800 before:content-['+']">{pullRequest.pr_additions}</TableCell>
       <TableCell className="text-red-800 before:content-['-']">{pullRequest.pr_deletions}</TableCell>
       <TableCell>{pullRequest.pr_changed_files}</TableCell>
       <TableCell>{pullRequest.pr_commits}</TableCell>
+      <TableCell>
+        <time dateTime={pullRequest.pr_created_at}>{new Date(pullRequest.pr_created_at).toLocaleDateString()}</time>
+      </TableCell>
     </TableRow>
   );
 };
