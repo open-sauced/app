@@ -18,6 +18,8 @@ import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceReposi
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 import { OptionKeys } from "components/atoms/Select/multi-select";
+import { OrderDirection, OrderDirectionPicker } from "components/shared/OrderDirectionPicker";
+import { OrderByPicker } from "components/shared/OrderByPicker";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
@@ -53,9 +55,23 @@ interface WorkspaceDashboardProps {
   workspace: Workspace;
 }
 
+// type according to allowed API payload values
+const orderByOptions = [
+  { label: "Created At", value: "created_at" },
+  { label: "Updated At", value: "updated_at" },
+  { label: "Closed At", value: "closed_at" },
+  { label: "Merged At", value: "merged_at" },
+];
+
 const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
   const router = useRouter();
-  const { limit = 10, range = 30, page = 1 } = router.query as { limit: string; range: string; page: string };
+  const {
+    limit = 10,
+    range = 30,
+    page = 1,
+    orderDirection = "",
+    orderBy = "",
+  } = router.query as { limit: string; range: string; page: string; orderDirection: OrderDirection; orderBy: string };
   const { data: repositories, error: hasRepoErrors } = useGetWorkspaceRepositories({
     workspaceId: workspace.id,
     range: Number(range),
@@ -81,7 +97,7 @@ const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
     data: pullRequests,
     isError,
     isLoading,
-  } = usePullRequests(Number(limit), repoIds, Number(range), Number(page));
+  } = usePullRequests(Number(limit), repoIds, Number(range), Number(page), orderDirection, orderBy);
 
   return (
     <>
@@ -94,17 +110,21 @@ const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
         <div className="mt-6 grid gap-6">
           <div className="flex justify-end items-center gap-4">
             <DayRangePicker />
+            <OrderByPicker options={orderByOptions} defaultValue="created_at" />
+            <OrderDirectionPicker defaultValue="ASC" />
             <TrackedRepositoryFilter
               options={filterOptions}
               handleSelect={(selected: OptionKeys[]) => setFilteredRepositories(selected)}
             />
           </div>
-          <Table>
+          <Table className="border rounded-lg">
             <TableHeader>
-              <TableRow>
+              <TableRow className="bg-light-slate-3">
                 <TableHead>State</TableHead>
                 <TableHead>Author</TableHead>
                 <TableHead>PR #</TableHead>
+                <TableHead>Updated At</TableHead>
+                <TableHead>Closed At</TableHead>
                 <TableHead>Title</TableHead>
                 <TableHead>Repository</TableHead>
                 <TableHead># of Comments</TableHead>
@@ -112,6 +132,7 @@ const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
                 <TableHead>Deletions</TableHead>
                 <TableHead>Changed Files</TableHead>
                 <TableHead>Commits</TableHead>
+                <TableHead>Created At</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
