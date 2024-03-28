@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.13.0-beta.5](https://github.com/open-sauced/app/compare/v2.13.0-beta.4...v2.13.0-beta.5) (2024-03-28)
+
+
+### 🍕 Features
+
+* prototype Stars Chart for Repo pages ([#3040](https://github.com/open-sauced/app/issues/3040)) ([cc74f8d](https://github.com/open-sauced/app/commit/cc74f8da18efcae7e546f731495ba6c90d173dd1))
+
 ## [2.13.0-beta.4](https://github.com/open-sauced/app/compare/v2.13.0-beta.3...v2.13.0-beta.4) (2024-03-28)
 
 
