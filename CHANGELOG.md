@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.13.0-beta.5](https://github.com/open-sauced/app/compare/v2.13.0-beta.4...v2.13.0-beta.5) (2024-03-28)
+
+
+### 🍕 Features
+
+* prototype Stars Chart for Repo pages ([#3040](https://github.com/open-sauced/app/issues/3040)) ([cc74f8d](https://github.com/open-sauced/app/commit/cc74f8da18efcae7e546f731495ba6c90d173dd1))
+
+## [2.13.0-beta.4](https://github.com/open-sauced/app/compare/v2.13.0-beta.3...v2.13.0-beta.4) (2024-03-28)
+
+
+### 🍕 Features
+
+* `MetricCard` prototype ([#2942](https://github.com/open-sauced/app/issues/2942)) ([1a57714](https://github.com/open-sauced/app/commit/1a57714b41e5d11815c7f49ebd7f0e8beda6febe))
+
+## [2.13.0-beta.3](https://github.com/open-sauced/app/compare/v2.13.0-beta.2...v2.13.0-beta.3) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* enable edit and changing of name of contributor insight ([#3055](https://github.com/open-sauced/app/issues/3055)) ([970cd86](https://github.com/open-sauced/app/commit/970cd86c1edac78ef67e2791506de4394df97be4))
+
+## [2.13.0-beta.2](https://github.com/open-sauced/app/compare/v2.13.0-beta.1...v2.13.0-beta.2) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* redirect /hub/insights/new to login if not authenticated ([#2935](https://github.com/open-sauced/app/issues/2935)) ([55a73df](https://github.com/open-sauced/app/commit/55a73df812e7e5406904a6a616e169b6ffbed79a))
+
+## [2.13.0-beta.1](https://github.com/open-sauced/app/compare/v2.12.1...v2.13.0-beta.1) (2024-03-28)
+
+
+### 🍕 Features
+
+* **insights and lists:** unify UX for insights and lists ([#2582](https://github.com/open-sauced/app/issues/2582)) ([cbcfd20](https://github.com/open-sauced/app/commit/cbcfd208a5c7ddb3a4c1b8e756af580f1c3f2ffe))
+
 ## [2.12.1](https://github.com/open-sauced/app/compare/v2.12.0...v2.12.1) (2024-03-27)
 
 

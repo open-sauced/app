@@ -11,9 +11,10 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 interface AuthContentWrapperProps {
   children: React.ReactNode;
+  queryParams?: Record<string, string>;
 }
 
-const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ children }) => {
+const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ children, queryParams }) => {
   const router = useRouter();
   const currentPath = router.asPath;
 
@@ -34,7 +35,10 @@ const AuthContentWrapper: React.FC<AuthContentWrapperProps> = ({ children }) => 
             variant="primary"
             className="z-1 items-center px-2.5 py-1"
             onClick={() => {
-              signIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } });
+              signIn({
+                provider: "github",
+                options: { redirectTo: `${host}${currentPath}?${new URLSearchParams(queryParams)}` },
+              });
             }}
           >
             <Icon IconImage={GitHubIcon} className="mr-2" />
