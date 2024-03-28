@@ -7,16 +7,18 @@ import Card from "components/atoms/Card/card";
 
 type StarsChartProps = {
   stats: StatsType[] | undefined;
+  syncId: string;
+  range: number;
 };
 
-export default function StarsChart({ stats }: StarsChartProps) {
-  const chartData = getStarsHistogramToDays({ stats });
+export default function StarsChart({ stats, syncId, range = 30 }: StarsChartProps) {
+  const chartData = getStarsHistogramToDays({ stats, range });
   return (
     <Card className="flex flex-col gap-8 w-full lg:min-w-[64rem] h-full items-center pt-8">
       <ResponsiveContainer width="80%" height={300}>
-        <BarChart data={chartData}>
-          <XAxis dataKey="bucket" tick={false} />
-          <YAxis />
+        <BarChart data={chartData} syncId={syncId}>
+          <XAxis dataKey="bucket" tick={false} padding={{ left: 12, right: 12 }} />
+          <YAxis interval={1} />
           <Tooltip content={CustomTooltip} filterNull={false} />
           <Bar dataKey="star_count" fill="#FF5100" />
         </BarChart>
@@ -26,7 +28,7 @@ export default function StarsChart({ stats }: StarsChartProps) {
 }
 
 // adds empty days
-function getStarsHistogramToDays({ stats }: StarsChartProps) {
+function getStarsHistogramToDays({ stats, range }: { stats: StatsType[] | undefined; range: number }) {
   let previousCount = 0;
   const allDays = stats?.reverse().reduce((days: { [count: number]: StatsType }, current: StatsType) => {
     const today = new Date();
@@ -57,7 +59,7 @@ function getStarsHistogramToDays({ stats }: StarsChartProps) {
 
   // convert to array
   const result: StatsType[] = [];
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < range; i++) {
     let temp: StatsType | undefined = allDays && allDays[i];
     if (!temp) {
       const today = new Date();

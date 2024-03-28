@@ -37,11 +37,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 export default function RepoPage({ repoData, image }: { repoData: DbRepo; image: string }) {
+  const syncId = repoData.id;
   const { data: starsData, error: starsError } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "stars",
-    range: 30,
+    range: 7,
   });
+
   return (
     <ProfileLayout>
       <SEO title={`${repoData.full_name} - OpenSauced Insights`} />
@@ -54,7 +56,7 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
       </header>
 
       <section className="flex flex-col gap-8">
-        <StarsChart stats={starsData} />
+        <StarsChart stats={starsData} range={7} syncId={syncId} />
       </section>
     </ProfileLayout>
   );
