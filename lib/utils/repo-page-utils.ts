@@ -2,7 +2,7 @@ import differenceInDays from "date-fns/differenceInDays";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 
 // adds empty days in between those given by the histogram API endpoint
-export function getStarsHistogramToDays({ stats, range }: { stats: StatsType[] | undefined; range: number }) {
+export function getDailyStarsHistogramToDays({ stats, range }: { stats: StatsType[] | undefined; range: number }) {
   let previousCount = 0;
   const allDays = stats?.reverse().reduce((days: { [count: number]: StatsType }, current: StatsType) => {
     const today = new Date();
