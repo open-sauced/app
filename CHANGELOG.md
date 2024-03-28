@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.13.0-beta.3](https://github.com/open-sauced/app/compare/v2.13.0-beta.2...v2.13.0-beta.3) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* enable edit and changing of name of contributor insight ([#3055](https://github.com/open-sauced/app/issues/3055)) ([970cd86](https://github.com/open-sauced/app/commit/970cd86c1edac78ef67e2791506de4394df97be4))
+
 ## [2.13.0-beta.2](https://github.com/open-sauced/app/compare/v2.13.0-beta.1...v2.13.0-beta.2) (2024-03-28)
 
 
