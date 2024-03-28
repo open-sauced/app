@@ -1,5 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/router";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
@@ -8,6 +9,7 @@ import SEO from "layouts/SEO/SEO";
 import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
+import { DayRangePicker } from "components/shared/DayRangePicker";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -38,10 +40,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 export default function RepoPage({ repoData, image }: { repoData: DbRepo; image: string }) {
   const syncId = repoData.id;
+  const router = useRouter();
+  const range = router.query.range ? Number(router.query.range as string) : 30;
   const { data: starsData, error: starsError } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "stars",
-    range: 7,
+    range,
   });
 
   return (
@@ -56,7 +60,8 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
       </header>
 
       <section className="flex flex-col gap-8">
-        <StarsChart stats={starsData} range={7} syncId={syncId} />
+        <DayRangePicker />
+        <StarsChart stats={starsData} range={range} syncId={syncId} />
       </section>
     </ProfileLayout>
   );
