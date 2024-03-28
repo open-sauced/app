@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.13.0-beta.2](https://github.com/open-sauced/app/compare/v2.13.0-beta.1...v2.13.0-beta.2) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* redirect /hub/insights/new to login if not authenticated ([#2935](https://github.com/open-sauced/app/issues/2935)) ([55a73df](https://github.com/open-sauced/app/commit/55a73df812e7e5406904a6a616e169b6ffbed79a))
+
+## [2.13.0-beta.1](https://github.com/open-sauced/app/compare/v2.12.1...v2.13.0-beta.1) (2024-03-28)
+
+
+### 🍕 Features
+
+* **insights and lists:** unify UX for insights and lists ([#2582](https://github.com/open-sauced/app/issues/2582)) ([cbcfd20](https://github.com/open-sauced/app/commit/cbcfd208a5c7ddb3a4c1b8e756af580f1c3f2ffe))
+
 ## [2.12.1](https://github.com/open-sauced/app/compare/v2.12.0...v2.12.1) (2024-03-27)
 
 
