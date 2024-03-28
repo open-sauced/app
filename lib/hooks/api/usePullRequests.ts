@@ -10,7 +10,14 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30, initialPage?: number) => {
+const usePullRequests = (
+  intialLimit = 1000,
+  repoIds: number[] = [],
+  range = 30,
+  initialPage?: number,
+  orderDirection?: string,
+  orderBy?: string
+) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(intialLimit);
@@ -29,6 +36,14 @@ const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30,
 
   if (limit) {
     query.set("limit", `${limit}`);
+  }
+
+  if (orderDirection) {
+    query.set("orderDirection", orderDirection);
+  }
+
+  if (orderBy) {
+    query.set("orderBy", orderBy);
   }
 
   if (repoIds?.length > 0) {

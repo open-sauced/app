@@ -18,6 +18,8 @@ const meta: MetaData = {
             <TableHead>State</TableHead>
             <TableHead>Author</TableHead>
             <TableHead>PR #</TableHead>
+            <TableHead>Updated At</TableHead>
+            <TableHead>Closed At</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Repository</TableHead>
             <TableHead>Comments</TableHead>
@@ -25,6 +27,7 @@ const meta: MetaData = {
             <TableHead>Deletions</TableHead>
             <TableHead>Changed Files</TableHead>
             <TableHead>Commits</TableHead>
+            <TableHead>Created At</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
