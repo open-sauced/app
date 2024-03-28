@@ -1,5 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { useRouter } from "next/router";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
@@ -7,7 +8,9 @@ import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 import SEO from "layouts/SEO/SEO";
 import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
+import StarsChart from "components/Graphs/StarsChart";
 import MetricCard from "components/Graphs/MetricCard";
+import { DayRangePicker } from "components/shared/DayRangePicker";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -33,20 +36,23 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const response = await fetch(repoData.url);
   const { owner } = await response.json();
 
-  return { props: { repoData, image: owner.avatar_url } };
+  return { props: { repoData, image: owner?.avatar_url || "" } };
 }
 
 export default function RepoPage({ repoData, image }: { repoData: DbRepo; image: string }) {
-  const { data: starStats, error: starError } = useFetchMetricStats({
+  const syncId = repoData.id;
+  const router = useRouter();
+  const range = router.query.range ? Number(router.query.range as string) : 30;
+  const { data: starsData, error: starsError } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "stars",
-    range: 30,
+    range,
   });
 
   const { data: forkStats, error: forkError } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "forks",
-    range: 30,
+    range,
   });
 
   return (
@@ -60,9 +66,13 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
         </div>
       </header>
 
-      <section className="flex gap-8 w-full justify-center">
-        <MetricCard variant="stars" stats={starStats} />
-        <MetricCard variant="forks" stats={forkStats} />
+      <section className="flex flex-col gap-8">
+        <DayRangePicker />
+        <section className="flex gap-8 w-full justify-center">
+          <MetricCard variant="stars" stats={starsData} />
+          <MetricCard variant="forks" stats={forkStats} />
+        </section>
+        <StarsChart stats={starsData} range={range} syncId={syncId} />
       </section>
     </ProfileLayout>
   );
