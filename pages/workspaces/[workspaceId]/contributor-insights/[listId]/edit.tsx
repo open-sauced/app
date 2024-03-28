@@ -321,7 +321,7 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
             const form = event.target as HTMLFormElement;
             const listUpdates = {
               name: form["list_name"].value,
-              is_public: form["is_public"].checked,
+              is_public: true,
               contributors: [],
             } satisfies UpdateListPayload;
 

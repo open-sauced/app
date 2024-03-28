@@ -5,6 +5,49 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.13.0-beta.3](https://github.com/open-sauced/app/compare/v2.13.0-beta.2...v2.13.0-beta.3) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* enable edit and changing of name of contributor insight ([#3055](https://github.com/open-sauced/app/issues/3055)) ([970cd86](https://github.com/open-sauced/app/commit/970cd86c1edac78ef67e2791506de4394df97be4))
+
+## [2.13.0-beta.2](https://github.com/open-sauced/app/compare/v2.13.0-beta.1...v2.13.0-beta.2) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* redirect /hub/insights/new to login if not authenticated ([#2935](https://github.com/open-sauced/app/issues/2935)) ([55a73df](https://github.com/open-sauced/app/commit/55a73df812e7e5406904a6a616e169b6ffbed79a))
+
+## [2.13.0-beta.1](https://github.com/open-sauced/app/compare/v2.12.1...v2.13.0-beta.1) (2024-03-28)
+
+
+### 🍕 Features
+
+* **insights and lists:** unify UX for insights and lists ([#2582](https://github.com/open-sauced/app/issues/2582)) ([cbcfd20](https://github.com/open-sauced/app/commit/cbcfd208a5c7ddb3a4c1b8e756af580f1c3f2ffe))
+
+## [2.12.1](https://github.com/open-sauced/app/compare/v2.12.0...v2.12.1) (2024-03-27)
+
+
+### 🐛 Bug Fixes
+
+* now valid searched org appears all the time for org import for tracked repositories ([#3041](https://github.com/open-sauced/app/issues/3041)) ([f5baad8](https://github.com/open-sauced/app/commit/f5baad84a2ae0f7953663a63d44b8b468885e01c))
+* use controlled input on new contributor insight ([#3044](https://github.com/open-sauced/app/issues/3044)) ([9ff8b41](https://github.com/open-sauced/app/commit/9ff8b41180e9aeef99bd665d1d6619bdce9ae44b))
+
+## [2.12.1-beta.2](https://github.com/open-sauced/app/compare/v2.12.1-beta.1...v2.12.1-beta.2) (2024-03-27)
+
+
+### 🐛 Bug Fixes
+
+* use controlled input on new contributor insight ([#3044](https://github.com/open-sauced/app/issues/3044)) ([9ff8b41](https://github.com/open-sauced/app/commit/9ff8b41180e9aeef99bd665d1d6619bdce9ae44b))
+
+## [2.12.1-beta.1](https://github.com/open-sauced/app/compare/v2.12.0...v2.12.1-beta.1) (2024-03-27)
+
+
+### 🐛 Bug Fixes
+
+* now valid searched org appears all the time for org import for tracked repositories ([#3041](https://github.com/open-sauced/app/issues/3041)) ([f5baad8](https://github.com/open-sauced/app/commit/f5baad84a2ae0f7953663a63d44b8b468885e01c))
+
 ## [2.12.0](https://github.com/open-sauced/app/compare/v2.11.0...v2.12.0) (2024-03-26)
 
 
