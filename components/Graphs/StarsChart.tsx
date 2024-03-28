@@ -1,9 +1,10 @@
+import { FaStar } from "react-icons/fa6";
 import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar, Tooltip, type TooltipProps } from "recharts";
 import { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
-import { FaStar } from "react-icons/fa6";
-import { differenceInDays } from "date-fns";
-import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 import Card from "components/atoms/Card/card";
+
+import { getStarsHistogramToDays } from "lib/utils/repo-page-utils";
+import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 
 type StarsChartProps = {
   stats: StatsType[] | undefined;
@@ -25,51 +26,6 @@ export default function StarsChart({ stats, syncId, range = 30 }: StarsChartProp
       </ResponsiveContainer>
     </Card>
   );
-}
-
-// adds empty days
-function getStarsHistogramToDays({ stats, range }: { stats: StatsType[] | undefined; range: number }) {
-  let previousCount = 0;
-  const allDays = stats?.reverse().reduce((days: { [count: number]: StatsType }, current: StatsType) => {
-    const today = new Date();
-    const count = differenceInDays(today, new Date(current.bucket));
-
-    if (days[count]) {
-      days[count].star_count! += current.star_count!;
-    } else {
-      const newDay = new Date();
-      if (count - previousCount > 1) {
-        for (let missed = 1; missed < count - previousCount; missed++) {
-          const missingDay = new Date(today);
-          missingDay.setDate(today.getDate() - (missed + previousCount));
-          days[previousCount + missed] = {
-            bucket: missingDay.toLocaleDateString(),
-            star_count: 0,
-          };
-        }
-      }
-
-      newDay.setDate(today.getDate() - count);
-      days[count] = { bucket: newDay.toLocaleDateString(), star_count: current.star_count! };
-    }
-
-    previousCount = count;
-    return days;
-  }, {});
-
-  // convert to array
-  const result: StatsType[] = [];
-  for (let i = 0; i < range; i++) {
-    let temp: StatsType | undefined = allDays && allDays[i];
-    if (!temp) {
-      const today = new Date();
-      temp = { bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(), star_count: 0 };
-    }
-    result.push(temp);
-  }
-
-  result.reverse();
-  return result;
 }
 
 function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
