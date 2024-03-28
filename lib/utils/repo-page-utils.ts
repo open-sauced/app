@@ -34,7 +34,7 @@ export function getStarsHistogramToDays({ stats, range }: { stats: StatsType[] |
   // convert to array
   const result: StatsType[] = [];
   for (let i = 0; i < range; i++) {
-    let temp: StatsType | undefined = allDays && allDays[i];
+    let temp = allDays?.[i];
     if (!temp) {
       const today = new Date();
       temp = { bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(), star_count: 0 };

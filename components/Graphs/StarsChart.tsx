@@ -15,8 +15,11 @@ type StarsChartProps = {
 export default function StarsChart({ stats, syncId, range = 30 }: StarsChartProps) {
   const chartData = getStarsHistogramToDays({ stats, range });
   return (
-    <Card className="flex flex-col gap-8 w-full lg:min-w-[64rem] h-full items-center pt-8">
-      <ResponsiveContainer width="80%" height={300}>
+    <Card className="flex flex-col gap-8 w-full lg:min-w-[64rem] h-full items-center pt-8 px-8">
+      <h3 className="font-semibold text-lg text-slate-800 w-full">
+        Stars <span className="pl-2 text-slate-500 text-sm font-medium"> {range} days</span>
+      </h3>
+      <ResponsiveContainer width="100%" height={300}>
         <BarChart data={chartData} syncId={syncId}>
           <XAxis dataKey="bucket" tick={false} padding={{ left: 12, right: 12 }} />
           <YAxis interval={1} />

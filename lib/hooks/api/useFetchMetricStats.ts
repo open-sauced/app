@@ -1,7 +1,7 @@
 import useSWR, { Fetcher } from "swr";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
-type UseFetchMetricStatsProps = {
+type UseFetchMetricStatsParams = {
   repository: string;
   variant: "stars" | "forks"; // TODO: add other MetricCard types
   range: number;
@@ -13,7 +13,7 @@ export type StatsType = {
   forks_count?: number;
 };
 
-export function useFetchMetricStats({ repository, variant, range }: UseFetchMetricStatsProps) {
+export function useFetchMetricStats({ repository, variant, range }: UseFetchMetricStatsParams) {
   const query = new URLSearchParams();
   query.set("repo", repository);
   query.set("range", range.toString());
@@ -21,9 +21,9 @@ export function useFetchMetricStats({ repository, variant, range }: UseFetchMetr
   const endpoint = () => {
     switch (variant) {
       case "stars":
-        return `histogram/stars?${query.toString()}`;
+        return `histogram/stars?${query}`;
       case "forks":
-        return `histogram/forks?${query.toString()}`;
+        return `histogram/forks?${query}`;
     }
   };
 

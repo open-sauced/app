@@ -12,7 +12,6 @@ import StarsChart from "components/Graphs/StarsChart";
 import MetricCard from "components/Graphs/MetricCard";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 
-
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
   const supabase = createPagesServerClient(context);
@@ -48,11 +47,12 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
     repository: repoData.full_name,
     variant: "stars",
     range,
+  });
 
   const { data: forkStats, error: forkError } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "forks",
-    range: 30,
+    range,
   });
 
   return (
@@ -65,17 +65,15 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
           <p className="text-xl">{repoData.description}</p>
         </div>
       </header>
-                                                                       
 
       <section className="flex flex-col gap-8">
         <DayRangePicker />
         <section className="flex gap-8 w-full justify-center">
-          <MetricCard variant="stars" stats={starStats} />
+          <MetricCard variant="stars" stats={starsData} />
           <MetricCard variant="forks" stats={forkStats} />
         </section>
         <StarsChart stats={starsData} range={range} syncId={syncId} />
-      </section
-    
+      </section>
     </ProfileLayout>
   );
 }
