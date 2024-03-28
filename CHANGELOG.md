@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.13.0-beta.4](https://github.com/open-sauced/app/compare/v2.13.0-beta.3...v2.13.0-beta.4) (2024-03-28)
+
+
+### 🍕 Features
+
+* `MetricCard` prototype ([#2942](https://github.com/open-sauced/app/issues/2942)) ([1a57714](https://github.com/open-sauced/app/commit/1a57714b41e5d11815c7f49ebd7f0e8beda6febe))
+
 ## [2.13.0-beta.3](https://github.com/open-sauced/app/compare/v2.13.0-beta.2...v2.13.0-beta.3) (2024-03-28)
 
 
