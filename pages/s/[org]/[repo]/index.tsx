@@ -2,10 +2,12 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
 import SEO from "layouts/SEO/SEO";
 import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
+import MetricCard from "components/Graphs/MetricCard";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -35,6 +37,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 export default function RepoPage({ repoData, image }: { repoData: DbRepo; image: string }) {
+  const { data: starStats, error: starError } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "stars",
+    range: 30,
+  });
+
+  const { data: forkStats, error: forkError } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "forks",
+    range: 30,
+  });
+
   return (
     <ProfileLayout>
       <SEO title={`${repoData.full_name} - OpenSauced Insights`} />
@@ -45,6 +59,11 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
           <p className="text-xl">{repoData.description}</p>
         </div>
       </header>
+
+      <section className="flex gap-8 w-full justify-center">
+        <MetricCard variant="stars" stats={starStats} />
+        <MetricCard variant="forks" stats={forkStats} />
+      </section>
     </ProfileLayout>
   );
 }
