@@ -38,7 +38,7 @@ const meta: MetaData = {
   ],
 };
 
-function getPullRequestData(partialPullRequest: Partial<PullRequest>) {
+function getPullRequestData(partialPullRequest: Partial<DbRepoPREvents>) {
   return Object.assign(
     {
       event_id: 1,
@@ -64,6 +64,7 @@ function getPullRequestData(partialPullRequest: Partial<PullRequest>) {
       pr_changed_files: 1,
       repo_name: "open-sauced/app",
       pr_commits: 1,
+      linesCount: 34,
     },
     partialPullRequest
   ) satisfies DbRepoPREvents;
