@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.13.1-beta.2](https://github.com/open-sauced/app/compare/v2.13.1-beta.1...v2.13.1-beta.2) (2024-03-29)
+
+
+### 🐛 Bug Fixes
+
+* always show share button on contributor profiles ([#3065](https://github.com/open-sauced/app/issues/3065)) ([3fbf6cc](https://github.com/open-sauced/app/commit/3fbf6cc58ed541c3d627d764094546ad56fcf112))
+* disable create insight button on request ([#3057](https://github.com/open-sauced/app/issues/3057)) ([8ade3e5](https://github.com/open-sauced/app/commit/8ade3e582edc015abdabcab92d142670ebd905af))
+* move the workspace upgrade banner to render only on the client ([#3067](https://github.com/open-sauced/app/issues/3067)) ([4150918](https://github.com/open-sauced/app/commit/4150918cd76842ed7b6167e2251ff98fe4cfa132))
+
 ## [2.13.1-beta.1](https://github.com/open-sauced/app/compare/v2.13.0...v2.13.1-beta.1) (2024-03-29)
 
 
