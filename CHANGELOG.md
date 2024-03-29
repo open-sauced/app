@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.13.1-beta.1](https://github.com/open-sauced/app/compare/v2.13.0...v2.13.1-beta.1) (2024-03-29)
+
+
+### 🐛 Bug Fixes
+
+* Change  edit button text [#3052](https://github.com/open-sauced/app/issues/3052) ([#3054](https://github.com/open-sauced/app/issues/3054)) ([67920fa](https://github.com/open-sauced/app/commit/67920fabae970c8b1fe8761928731a73b8aee3d5))
+
 ## [2.13.0](https://github.com/open-sauced/app/compare/v2.12.1...v2.13.0) (2024-03-28)
 
 
