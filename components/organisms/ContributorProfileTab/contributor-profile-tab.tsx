@@ -117,7 +117,7 @@ const ContributorProfileTab = ({
     );
   };
 
-  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://opensauced.pizza/`;
+  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://oss.fyi/try`;
 
   const handleInviteClick = () => {
     const hasSocials = !!(twitter_username || display_email || linkedin_url);
