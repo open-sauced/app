@@ -249,17 +249,6 @@ const ContributorProfileHeader = ({
                     </>
                   ) : (
                     <>
-                      <DropdownMenuItem className="rounded-md">
-                        <button
-                          onClick={async () => {
-                            handleCopyToClipboard(`${host}/user/${githubName}`);
-                            handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } });
-                          }}
-                          className="flex items-center gap-1 pl-3 pr-7"
-                        >
-                          Share
-                        </button>
-                      </DropdownMenuItem>
                       {isRecievingConnections && (
                         <DropdownMenuItem className="rounded-md">
                           <button
