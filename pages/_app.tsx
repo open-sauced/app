@@ -69,10 +69,6 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
   Component.updateSEO = updateSEO;
   const [supabaseClient] = useState(() => supabase);
 
-  let hostname = "";
-
-  if (typeof window !== "undefined") hostname = window.location.hostname;
-
   useEffect(() => {
     updateSEO(Component.SEO || {});
   }, [Component]);
@@ -98,6 +94,8 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, []);
+
+  const { filterName, toolName } = router.query;
 
   function localStorageProvider() {
     if (typeof window !== "undefined") {
