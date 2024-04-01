@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.14.0-beta.1](https://github.com/open-sauced/app/compare/v2.13.1-beta.2...v2.14.0-beta.1) (2024-04-01)
+
+
+### 🍕 Features
+
+* add oss.fyi links for invites ([#3068](https://github.com/open-sauced/app/issues/3068)) ([4805de8](https://github.com/open-sauced/app/commit/4805de8d9d3605aceb390fbfc9c2c4eee2a92be7))
+
 ## [2.13.1-beta.2](https://github.com/open-sauced/app/compare/v2.13.1-beta.1...v2.13.1-beta.2) (2024-03-29)
 
 
