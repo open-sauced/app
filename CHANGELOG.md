@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.14.0-beta.2](https://github.com/open-sauced/app/compare/v2.14.0-beta.1...v2.14.0-beta.2) (2024-04-01)
+
+
+### 🐛 Bug Fixes
+
+* revert "feat: hide chatbot on non-prod environment and mobile screens ([#1218](https://github.com/open-sauced/app/issues/1218))" ([#3069](https://github.com/open-sauced/app/issues/3069)) ([18c9e4f](https://github.com/open-sauced/app/commit/18c9e4f4a51d2ce371ac57703015908a9dc7daf3))
+
 ## [2.14.0-beta.1](https://github.com/open-sauced/app/compare/v2.13.1-beta.2...v2.14.0-beta.1) (2024-04-01)
 
 
