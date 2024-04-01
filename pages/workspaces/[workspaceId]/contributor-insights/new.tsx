@@ -79,6 +79,7 @@ export default function CreateContributorInsightPage({
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const [isTrackedContributorsModalOpen, setIsTrackedContributorsModalOpen] = useState(false);
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (contributorIds) {
@@ -97,6 +98,7 @@ export default function CreateContributorInsightPage({
 
   const onCreateInsight: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
     const name = formData.get("name") as string;
@@ -113,6 +115,7 @@ export default function CreateContributorInsightPage({
 
     if (error) {
       toast({ description: "An error has occurred. Try again.", variant: "danger" });
+      setLoading(false);
       return;
     }
 
@@ -135,17 +138,23 @@ export default function CreateContributorInsightPage({
               placeholder="Insight name"
               className="!py-1.5 w-full text-sm"
               required
+              disabled={loading}
               onChange={(event) => setName(event.target.value)}
             />
           </div>
           <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
-            <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
+            <Button
+              variant="primary"
+              className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
+              disabled={loading}
+            >
               Create Insight
             </Button>
           </div>
         </form>
 
         <TrackedContributorsTable
+          disabled={loading}
           contributors={trackedContributors}
           onAddContributors={() => setIsTrackedContributorsModalOpen(true)}
           onRemoveTrackedContributor={(event) => {

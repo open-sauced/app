@@ -117,7 +117,7 @@ const ContributorProfileTab = ({
     );
   };
 
-  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://opensauced.pizza/`;
+  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://oss.fyi/try`;
 
   const handleInviteClick = () => {
     const hasSocials = !!(twitter_username || display_email || linkedin_url);
@@ -226,7 +226,7 @@ const ContributorProfileTab = ({
                 {twitter_username && (
                   <a
                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://opensauced.pizza/blog/social-coding-is-back. @${twitter_username}`
+                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://oss.fyi/social-coding. @${twitter_username}`
                     )}&hashtags=opensource,github`}
                     target="_blank"
                     rel="noopener noreferrer"
