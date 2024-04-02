@@ -214,6 +214,30 @@ export async function getInsightWithWorkspace({ insightId }: { insightId: number
   return { data, error };
 }
 
+export async function updateWorkspaceInsight({
+  workspaceId,
+  insightId,
+  bearerToken,
+  name,
+  repos,
+}: {
+  workspaceId: string;
+  insightId: string;
+  bearerToken: string;
+  name: string;
+  repos: { fullName: string }[];
+}) {
+  const { data, error } = await fetchApiData({
+    path: `workspaces/${workspaceId}/insights/${insightId}`,
+    method: "PATCH",
+    bearerToken,
+    body: { name, repos, is_public: true },
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
 // contributor insights
 export async function createContributorInsight({
   workspaceId,
