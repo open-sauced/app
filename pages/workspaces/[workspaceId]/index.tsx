@@ -22,6 +22,7 @@ import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 import { OptionKeys } from "components/atoms/Select/multi-select";
 import { WorkspaceOgImage, getWorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
+import { useHasMounted } from "lib/hooks/useHasMounted";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
@@ -66,6 +67,7 @@ interface WorkspaceDashboardProps {
 
 const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => {
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
+  const hasMounted = useHasMounted();
 
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
@@ -96,6 +98,10 @@ const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => 
         : repositories?.data?.map((repo) => repo.repo_id) || []
     );
   }, [repositories, filteredRepositories]);
+
+  if (workspace.is_public && !hasMounted) {
+    return <WorkspaceOgImage workspace={workspace} ogImage={ogImage} />;
+  }
 
   return (
     <>
