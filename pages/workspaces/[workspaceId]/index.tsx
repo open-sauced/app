@@ -21,7 +21,7 @@ import Button from "components/shared/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 import { OptionKeys } from "components/atoms/Select/multi-select";
-import { WorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
+import { WorkspaceOgImage, getWorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
@@ -32,6 +32,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
   const workspaceId = context.params?.workspaceId as string;
+  const range = context.query.range ? Number(context.query.range as string) : 30;
   const { data, error } = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
     bearerToken,
@@ -50,14 +51,20 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
-  return { props: { workspace: data } };
+  const ogImage = new URL(
+    getWorkspaceOgImage(data as Workspace, range),
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  );
+
+  return { props: { workspace: data, ogImage: `${ogImage.href}` } };
 };
 
 interface WorkspaceDashboardProps {
   workspace: Workspace;
+  ogImage: string;
 }
 
-const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
+const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => {
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
 
   const router = useRouter();
@@ -92,7 +99,7 @@ const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
 
   return (
     <>
-      {workspace.is_public ? <WorkspaceOgImage workspace={workspace} range={range} /> : null}
+      {workspace.is_public ? <WorkspaceOgImage workspace={workspace} ogImage={ogImage} /> : null}
       <WorkspaceLayout workspaceId={workspace.id}>
         <WorkspaceHeader workspace={workspace} />
         <div className="grid sm:flex gap-4 pt-3">
