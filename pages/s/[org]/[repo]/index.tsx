@@ -10,6 +10,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
 import MetricCard from "components/Graphs/MetricCard";
 import { DayRangePicker } from "components/shared/DayRangePicker";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -64,6 +65,10 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
         <section className="flex gap-8 w-full justify-center">
           <MetricCard variant="stars" stats={starsData} />
           <MetricCard variant="forks" stats={forkStats} />
+          <ClientOnly>
+            <MetricCard variant="stars" stats={starsData} />
+            <MetricCard variant="forks" stats={forkStats} />
+          </ClientOnly>
         </section>
         <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
       </section>
