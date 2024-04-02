@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.15.0-beta.3](https://github.com/open-sauced/app/compare/v2.15.0-beta.2...v2.15.0-beta.3) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* fixed responsive issues on repo page ([#3081](https://github.com/open-sauced/app/issues/3081)) ([5967fe8](https://github.com/open-sauced/app/commit/5967fe8715e13b468bc4f36829a66baf71087ac3))
+
 ## [2.15.0-beta.2](https://github.com/open-sauced/app/compare/v2.15.0-beta.1...v2.15.0-beta.2) (2024-04-02)
 
 
