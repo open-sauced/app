@@ -2,7 +2,6 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
 import { fetchApiData } from "helpers/fetchApiData";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
 import SEO from "layouts/SEO/SEO";
@@ -19,17 +18,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const userId = Number(session?.user.user_metadata.sub);
-  if (!userId) {
-    return { notFound: true };
-  }
-
-  const featureFlags = await getAllFeatureFlags(userId);
   const { data: repoData, error } = await fetchApiData<DbRepo>({
     path: `repos/${org}/${repo}`,
   });
 
-  if (!featureFlags["repo-page"] || !repoData || error) {
+  if (!repoData || error) {
     return { notFound: true };
   }
 
