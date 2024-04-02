@@ -31,10 +31,10 @@ export default function StarsChart({ stats, total, syncId, range = 30 }: StarsCh
   const cumulativeData = getCumulativeStarsHistogramToDays({ stats, total, range });
 
   return (
-    <Card className="flex flex-col gap-8 w-full lg:min-w-[64rem] h-full items-center pt-8 px-8">
+    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8 px-8">
       <section className="flex w-full items-center justify-between">
-        <h3 className="font-semibold text-xl text-slate-800 w-full">
-          Stars <span className="pl-2 text-slate-500 text-sm font-medium"> {range} days</span>
+        <h3 className="text-sm font-semibold md:text-xl text-slate-800 w-full">
+          Stars <span className="pl-2 text-slate-500 font-medium"> {range} days</span>
         </h3>
         <div className="flex gap-2 lg:gap-4 items-center">
           <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
