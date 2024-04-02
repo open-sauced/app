@@ -1,5 +1,4 @@
 import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
@@ -10,13 +9,10 @@ import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
 import MetricCard from "components/Graphs/MetricCard";
 import { DayRangePicker } from "components/shared/DayRangePicker";
+import ForksChart from "components/Graphs/ForksChart";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
-  const supabase = createPagesServerClient(context);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
 
   const { data: repoData, error } = await fetchApiData<DbRepo>({
     path: `repos/${org}/${repo}`,
@@ -66,6 +62,7 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
           <MetricCard variant="forks" stats={forkStats} />
         </section>
         <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
+        <ForksChart stats={forkStats} total={repoData.forks} range={range} syncId={syncId} />
       </section>
     </ProfileLayout>
   );
