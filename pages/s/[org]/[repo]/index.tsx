@@ -65,7 +65,7 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
           <MetricCard variant="stars" stats={starsData} />
           <MetricCard variant="forks" stats={forkStats} />
         </section>
-        <StarsChart stats={starsData} range={range} syncId={syncId} />
+        <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
       </section>
     </ProfileLayout>
   );

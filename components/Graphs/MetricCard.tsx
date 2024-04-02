@@ -54,7 +54,7 @@ export default function MetricCard({ stats, variant }: MetricCardProps) {
       </section>
 
       <section className="flex justify-between items-center px-2 gap-8">
-        <p className="text-5xl font-bold">{humanizeNumber(total || 0, "abbreviation")}</p>
+        <p className="text-5xl font-bold">{humanizeNumber(total!, "abbreviation")}</p>
         <div className="h-fit w-full pl-6">
           <EChartsReact option={option} style={{ height: "100%", width: "100%" }} />
         </div>
