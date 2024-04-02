@@ -52,15 +52,14 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
   return (
     <ProfileLayout>
       <SEO title={`${repoData.full_name} - OpenSauced Insights`} />
-      <header className="flex items-center gap-4 self-start px-2 md:px-4 ">
-        <Avatar size={96} avatarURL={image} />
-        <div className="flex flex-col gap-2">
-          <h1 className="text-xl md:text-3xl font-bold">{repoData.full_name}</h1>
-          <p className="md:text-xl">{repoData.description}</p>
-        </div>
-      </header>
-
       <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-8 w-full xl:max-w-6xl">
+        <header className="flex items-center gap-4">
+          <Avatar size={96} avatarURL={image} />
+          <div className="flex flex-col gap-2">
+            <h1 className="text-xl md:text-3xl font-bold">{repoData.full_name}</h1>
+            <p className="md:text-xl">{repoData.description}</p>
+          </div>
+        </header>
         <DayRangePicker />
         <section className="flex flex-col gap-2 lg:flex-row lg:gap-8 w-full justify-between">
           <ClientOnly>
