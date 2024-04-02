@@ -214,7 +214,7 @@ export async function getInsightWithWorkspace({ insightId }: { insightId: number
   return { data, error };
 }
 
-export async function updateWorkspaceInsight({
+export async function updateWorkspaceRepoInsight({
   workspaceId,
   insightId,
   bearerToken,

@@ -9,7 +9,7 @@ import TextInput from "components/atoms/TextInput/text-input";
 import Button from "components/shared/Button/button";
 import { fetchApiData } from "helpers/fetchApiData";
 import { toast } from "lib/hooks/useToast";
-import { updateWorkspaceInsight } from "lib/utils/workspace-utils";
+import { updateWorkspaceRepoInsight } from "lib/utils/workspace-utils";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -96,7 +96,7 @@ export default function RepoInsightEditPage({
     const repos = Array.from(trackedRepos, (trackedRepo) => {
       return { fullName: trackedRepo[0] };
     });
-    const { error: saveError } = await updateWorkspaceInsight({
+    const { error: saveError } = await updateWorkspaceRepoInsight({
       name,
       workspaceId,
       insightId: `${insight.id}`,
