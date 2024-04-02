@@ -1,15 +1,19 @@
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
 import { useState } from "react";
-import TrackedReposModal from "components/Workspaces/TrackedReposModal";
-import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
-import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import TextInput from "components/atoms/TextInput/text-input";
-import Button from "components/shared/Button/button";
-import { fetchApiData } from "helpers/fetchApiData";
+import { useRouter } from "next/router";
+import { GetServerSidePropsContext } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { toast } from "lib/hooks/useToast";
-import { updateWorkspaceRepoInsight } from "lib/utils/workspace-utils";
+import { fetchApiData } from "helpers/fetchApiData";
+import { deleteWorkspaceRepoInsight, updateWorkspaceRepoInsight } from "lib/utils/workspace-utils";
+
+import Button from "components/shared/Button/button";
+import TextInput from "components/atoms/TextInput/text-input";
+import TrackedReposModal from "components/Workspaces/TrackedReposModal";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
+import DeleteInsightPageModal from "components/organisms/InsightPage/DeleteInsightPageModal";
+import Title from "components/atoms/Typography/title";
+import Text from "components/atoms/Typography/text";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -76,20 +80,16 @@ type RepoInsightEditPageProps = {
   bearerToken: string;
 };
 
-export default function RepoInsightEditPage({
-  insight,
-  workspaceId,
-  owners,
-  isOwner,
-  bearerToken,
-}: RepoInsightEditPageProps) {
+export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bearerToken }: RepoInsightEditPageProps) {
   const router = useRouter();
   const initialTrackedRepos = new Map([...insight.repos.map((repo) => [repo.full_name, true] as const)]);
 
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(insight.name);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(initialTrackedRepos);
+
   const onSaveInsight = async () => {
     setLoading(true);
 
@@ -112,6 +112,24 @@ export default function RepoInsightEditPage({
 
     toast({ description: "Insight updated! Redirecting...", variant: "success" });
     router.push(`/workspaces/${workspaceId}/repository-insights/${insight.id}/dashboard`);
+  };
+
+  const deleteInsight = async () => {
+    const { error: deleteError } = await deleteWorkspaceRepoInsight({
+      workspaceId,
+      insightId: `${insight.id}`,
+      bearerToken,
+    });
+    if (deleteError) {
+      toast({ description: "An error has occurred. Try again.", variant: "danger" });
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    setIsDeleteModalOpen(false);
+    toast({ description: "Insight deleted! Redirecting...", variant: "success" });
+    router.push(`/workspaces/${workspaceId}/repository-insights/new`);
   };
 
   return (
@@ -168,7 +186,21 @@ export default function RepoInsightEditPage({
             });
           }}
         />
+
+        {isOwner && (
+          <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
+            <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
+              Delete Insight
+            </Title>
+            <Text className="my-4">Once you delete an insight, you&apos;re past the point of no return.</Text>
+
+            <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive" className="w-fit">
+              Delete insight
+            </Button>
+          </div>
+        )}
       </div>
+
       <TrackedReposModal
         isOpen={trackedReposModalOpen}
         onClose={() => {
@@ -194,6 +226,17 @@ export default function RepoInsightEditPage({
           setTrackedReposModalOpen(false);
         }}
       />
+
+      {isOwner ? (
+        <DeleteInsightPageModal
+          pageName={insight.name}
+          open={isDeleteModalOpen}
+          submitted={false}
+          setOpen={() => setIsDeleteModalOpen(true)}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={deleteInsight}
+        />
+      ) : null}
     </WorkspaceLayout>
   );
 }

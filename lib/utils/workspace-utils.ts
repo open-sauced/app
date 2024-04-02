@@ -238,6 +238,25 @@ export async function updateWorkspaceRepoInsight({
   return { data, error };
 }
 
+export async function deleteWorkspaceRepoInsight({
+  workspaceId,
+  insightId,
+  bearerToken,
+}: {
+  workspaceId: string;
+  insightId: string;
+  bearerToken: string;
+}) {
+  const { data, error } = await fetchApiData({
+    path: `workspaces/${workspaceId}/insights/${insightId}`,
+    method: "DELETE",
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
 // contributor insights
 export async function createContributorInsight({
   workspaceId,
