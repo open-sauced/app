@@ -36,7 +36,7 @@ export default function StarsChart({ stats, total, syncId, range = 30 }: StarsCh
         <h3 className="font-semibold text-xl text-slate-800 w-full">
           Stars <span className="pl-2 text-slate-500 text-sm font-medium"> {range} days</span>
         </h3>
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-2 lg:gap-4 items-center">
           <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
             Daily
           </Button>

@@ -45,7 +45,7 @@ export default function MetricCard({ stats, variant }: MetricCardProps) {
   const total = seriesData?.reduce((stat, currentValue) => (stat || 0) + (currentValue || 0), 0);
 
   return (
-    <Card className="w-full max-w-sm h-fit p-5 pl-6">
+    <Card className="w-full lg:max-w-sm h-fit p-5 pl-6">
       <section className="flex justify-between items-center">
         <p className="text-xl font-semibold capitalize">{variant} per day</p>
         <Button variant="default" className="!p-1 rounded-full">
