@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.15.0-beta.1](https://github.com/open-sauced/app/compare/v2.14.0...v2.15.0-beta.1) (2024-04-02)
+
+
+### 🍕 Features
+
+* cumulative category for Stars Chart ([#3063](https://github.com/open-sauced/app/issues/3063)) ([aa1b508](https://github.com/open-sauced/app/commit/aa1b50801988124f5085ac2bdb438fec701335cd))
+
 ## [2.14.0](https://github.com/open-sauced/app/compare/v2.13.0...v2.14.0) (2024-04-01)
 
 
