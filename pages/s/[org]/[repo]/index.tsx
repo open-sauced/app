@@ -60,9 +60,9 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
         </div>
       </header>
 
-      <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-8 w-full">
+      <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-8 w-full xl:max-w-6xl">
         <DayRangePicker />
-        <section className="flex flex-col gap-2 lg:flex-row lg:gap-8 w-full justify-center">
+        <section className="flex flex-col gap-2 lg:flex-row lg:gap-8 w-full justify-between">
           <ClientOnly>
             <MetricCard variant="stars" stats={starsData} />
             <MetricCard variant="forks" stats={forkStats} />
