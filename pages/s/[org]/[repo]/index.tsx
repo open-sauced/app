@@ -60,7 +60,7 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
         </div>
       </header>
 
-      <section className="flex flex-col gap-8">
+      <section className="md:px-4 flex flex-col gap-8">
         <DayRangePicker />
         <section className="flex flex-col gap-2 lg:flex-row lg:gap-8 w-full justify-center">
           <ClientOnly>
