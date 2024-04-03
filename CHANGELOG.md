@@ -5,6 +5,73 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.15.0-beta.4](https://github.com/open-sauced/app/compare/v2.15.0-beta.3...v2.15.0-beta.4) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* now repository page header aligns with the content of the page ([#3090](https://github.com/open-sauced/app/issues/3090)) ([5c435e2](https://github.com/open-sauced/app/commit/5c435e27ea992332eff4116a8440d83a25602cdf))
+
+## [2.15.0-beta.3](https://github.com/open-sauced/app/compare/v2.15.0-beta.2...v2.15.0-beta.3) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* fixed responsive issues on repo page ([#3081](https://github.com/open-sauced/app/issues/3081)) ([5967fe8](https://github.com/open-sauced/app/commit/5967fe8715e13b468bc4f36829a66baf71087ac3))
+
+## [2.15.0-beta.2](https://github.com/open-sauced/app/compare/v2.15.0-beta.1...v2.15.0-beta.2) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* removed repo-page feature flag from repos page and the project ([#3077](https://github.com/open-sauced/app/issues/3077)) ([62870a6](https://github.com/open-sauced/app/commit/62870a6fd7e98dc3ab8a6c987e8d2882ed7cb381))
+
+## [2.15.0-beta.1](https://github.com/open-sauced/app/compare/v2.14.0...v2.15.0-beta.1) (2024-04-02)
+
+
+### 🍕 Features
+
+* cumulative category for Stars Chart ([#3063](https://github.com/open-sauced/app/issues/3063)) ([aa1b508](https://github.com/open-sauced/app/commit/aa1b50801988124f5085ac2bdb438fec701335cd))
+
+## [2.14.0](https://github.com/open-sauced/app/compare/v2.13.0...v2.14.0) (2024-04-01)
+
+
+### 🍕 Features
+
+* add oss.fyi links for invites ([#3068](https://github.com/open-sauced/app/issues/3068)) ([4805de8](https://github.com/open-sauced/app/commit/4805de8d9d3605aceb390fbfc9c2c4eee2a92be7))
+
+
+### 🐛 Bug Fixes
+
+* always show share button on contributor profiles ([#3065](https://github.com/open-sauced/app/issues/3065)) ([3fbf6cc](https://github.com/open-sauced/app/commit/3fbf6cc58ed541c3d627d764094546ad56fcf112))
+* Change  edit button text [#3052](https://github.com/open-sauced/app/issues/3052) ([#3054](https://github.com/open-sauced/app/issues/3054)) ([67920fa](https://github.com/open-sauced/app/commit/67920fabae970c8b1fe8761928731a73b8aee3d5))
+* disable create insight button on request ([#3057](https://github.com/open-sauced/app/issues/3057)) ([8ade3e5](https://github.com/open-sauced/app/commit/8ade3e582edc015abdabcab92d142670ebd905af))
+* move the workspace upgrade banner to render only on the client ([#3067](https://github.com/open-sauced/app/issues/3067)) ([4150918](https://github.com/open-sauced/app/commit/4150918cd76842ed7b6167e2251ff98fe4cfa132))
+* revert "feat: hide chatbot on non-prod environment and mobile screens ([#1218](https://github.com/open-sauced/app/issues/1218))" ([#3069](https://github.com/open-sauced/app/issues/3069)) ([18c9e4f](https://github.com/open-sauced/app/commit/18c9e4f4a51d2ce371ac57703015908a9dc7daf3))
+
+## [2.14.0-beta.2](https://github.com/open-sauced/app/compare/v2.14.0-beta.1...v2.14.0-beta.2) (2024-04-01)
+
+
+### 🐛 Bug Fixes
+
+* revert "feat: hide chatbot on non-prod environment and mobile screens ([#1218](https://github.com/open-sauced/app/issues/1218))" ([#3069](https://github.com/open-sauced/app/issues/3069)) ([18c9e4f](https://github.com/open-sauced/app/commit/18c9e4f4a51d2ce371ac57703015908a9dc7daf3))
+
+## [2.14.0-beta.1](https://github.com/open-sauced/app/compare/v2.13.1-beta.2...v2.14.0-beta.1) (2024-04-01)
+
+
+### 🍕 Features
+
+* add oss.fyi links for invites ([#3068](https://github.com/open-sauced/app/issues/3068)) ([4805de8](https://github.com/open-sauced/app/commit/4805de8d9d3605aceb390fbfc9c2c4eee2a92be7))
+
+## [2.13.1-beta.2](https://github.com/open-sauced/app/compare/v2.13.1-beta.1...v2.13.1-beta.2) (2024-03-29)
+
+
+### 🐛 Bug Fixes
+
+* always show share button on contributor profiles ([#3065](https://github.com/open-sauced/app/issues/3065)) ([3fbf6cc](https://github.com/open-sauced/app/commit/3fbf6cc58ed541c3d627d764094546ad56fcf112))
+* disable create insight button on request ([#3057](https://github.com/open-sauced/app/issues/3057)) ([8ade3e5](https://github.com/open-sauced/app/commit/8ade3e582edc015abdabcab92d142670ebd905af))
+* move the workspace upgrade banner to render only on the client ([#3067](https://github.com/open-sauced/app/issues/3067)) ([4150918](https://github.com/open-sauced/app/commit/4150918cd76842ed7b6167e2251ff98fe4cfa132))
+
 ## [2.13.1-beta.1](https://github.com/open-sauced/app/compare/v2.13.0...v2.13.1-beta.1) (2024-03-29)
 
 

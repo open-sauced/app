@@ -2,7 +2,6 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
 import { fetchApiData } from "helpers/fetchApiData";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
 import SEO from "layouts/SEO/SEO";
@@ -11,6 +10,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
 import MetricCard from "components/Graphs/MetricCard";
 import { DayRangePicker } from "components/shared/DayRangePicker";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -19,17 +19,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const userId = Number(session?.user.user_metadata.sub);
-  if (!userId) {
-    return { notFound: true };
-  }
-
-  const featureFlags = await getAllFeatureFlags(userId);
   const { data: repoData, error } = await fetchApiData<DbRepo>({
     path: `repos/${org}/${repo}`,
   });
 
-  if (!featureFlags["repo-page"] || !repoData || error) {
+  if (!repoData || error) {
     return { notFound: true };
   }
 
@@ -58,21 +52,22 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
   return (
     <ProfileLayout>
       <SEO title={`${repoData.full_name} - OpenSauced Insights`} />
-      <header className="flex items-center gap-4 self-start p-8">
-        <Avatar size={96} avatarURL={image} />
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold">{repoData.full_name}</h1>
-          <p className="text-xl">{repoData.description}</p>
-        </div>
-      </header>
-
-      <section className="flex flex-col gap-8">
+      <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-8 w-full xl:max-w-6xl">
+        <header className="flex items-center gap-4">
+          <Avatar size={96} avatarURL={image} />
+          <div className="flex flex-col gap-2">
+            <h1 className="text-xl md:text-3xl font-bold">{repoData.full_name}</h1>
+            <p className="md:text-xl">{repoData.description}</p>
+          </div>
+        </header>
         <DayRangePicker />
-        <section className="flex gap-8 w-full justify-center">
-          <MetricCard variant="stars" stats={starsData} />
-          <MetricCard variant="forks" stats={forkStats} />
+        <section className="flex flex-col gap-2 lg:flex-row lg:gap-8 w-full justify-between">
+          <ClientOnly>
+            <MetricCard variant="stars" stats={starsData} />
+            <MetricCard variant="forks" stats={forkStats} />
+          </ClientOnly>
         </section>
-        <StarsChart stats={starsData} range={range} syncId={syncId} />
+        <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
       </section>
     </ProfileLayout>
   );
