@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import SingleSelect from "components/atoms/Select/single-select";
 
-export type DayRange = 7 | 30 | 90;
+export type DayRange = 7 | 30 | 90 | 180 | 360;
 
-const dayRanges: { label: `${DayRange}d`; value: `${DayRange}` }[] = [
+const dayRanges: { label: string; value: `${DayRange}` }[] = [
   {
     label: "7d",
     value: "7",
@@ -15,6 +15,14 @@ const dayRanges: { label: `${DayRange}d`; value: `${DayRange}` }[] = [
   {
     label: "90d",
     value: "90",
+  },
+  {
+    label: "6mo",
+    value: "180",
+  },
+  {
+    label: "1yr",
+    value: "360",
   },
 ];
 
