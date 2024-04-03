@@ -20,8 +20,12 @@ const TrackedContributorsModal = ({
 
   return (
     <Dialog open={isOpen}>
-      <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal} onPointerDownOutside={onCloseModal}>
-        <TrackedContributorsWizard onAddToTrackingList={onAddToTrackingList} onCancel={onCancel} />
+      <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal}>
+        <TrackedContributorsWizard
+          onAddToTrackingList={onAddToTrackingList}
+          onCancel={onCancel}
+          onCloseModal={onCloseModal}
+        />
       </DialogContent>
     </Dialog>
   );

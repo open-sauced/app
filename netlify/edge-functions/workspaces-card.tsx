@@ -32,7 +32,7 @@ const getActivityRatio = (total?: number) => {
   }
 
   if (total >= 4 && total <= 7) {
-    return "medium";
+    return "mid";
   }
 
   return "low";
@@ -41,7 +41,8 @@ const getActivityRatio = (total?: number) => {
 export default async function handler(req: Request) {
   const { searchParams, pathname } = new URL(req.url);
   const workspaceName = searchParams.get("wname");
-  const workspaceDescription = searchParams.get("description");
+  const workspaceDescription =
+    (searchParams.get("description") ?? "").length > 0 ? searchParams.get("description") : "&nbsp;";
   const [workspaceId, range = 30] = pathname.split("/").slice(-2);
 
   const [repoStatsResponse, workspaceReposResponse] = await Promise.all([
@@ -197,6 +198,7 @@ export default async function handler(req: Request) {
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
+            color: workspaceDescription === "&nbsp;" ? "transparent" : undefined,
           }}
         >
           {workspaceDescription}

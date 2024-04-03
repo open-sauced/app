@@ -55,7 +55,11 @@ export const SelectOrgReposStep = ({
   const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(repositories);
 
   useEffect(() => {
-    setFilteredRepositories(new Map([...repositories.entries()].filter(([repo]) => repo.startsWith(organization))));
+    const lowercasedOrg = organization.toLowerCase();
+
+    setFilteredRepositories(
+      new Map([...repositories.entries()].filter(([repo]) => repo.toLowerCase().startsWith(lowercasedOrg)))
+    );
   }, [repositories, organization]);
 
   const onFilterRepos = (search: string) => {
