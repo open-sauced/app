@@ -35,7 +35,7 @@ export const DayRangePicker = ({ onDayRangeChanged }: DayRangePickerProps) => {
     <label className="w-max font-semibold">
       <span className="sr-only">Period:</span>
       <SingleSelect
-        insetLabel="Period:"
+        insetLabel="Range:"
         onValueChange={onDefaultDayRangeChanged}
         value={`${dayRange}`}
         options={dayRanges}
