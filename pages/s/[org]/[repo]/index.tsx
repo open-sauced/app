@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
+import { ComponentProps } from "react";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
@@ -33,10 +34,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return { props: { repoData, image: owner?.avatar_url || "" } };
 }
 
+type Range = ComponentProps<typeof MetricCard>["range"];
+
 export default function RepoPage({ repoData, image }: { repoData: DbRepo; image: string }) {
   const syncId = repoData.id;
   const router = useRouter();
-  const range = router.query.range ? Number(router.query.range as string) : 30;
+  const range = (router.query.range ? Number(router.query.range) : 30) as Range;
   const { data: starsData, error: starsError } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "stars",
