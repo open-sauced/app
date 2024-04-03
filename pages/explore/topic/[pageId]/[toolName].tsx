@@ -3,18 +3,29 @@ import { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import Tool from "components/organisms/ToolsDisplay/tools-display";
 import changeCapitalization from "lib/utils/change-capitalization";
-import FilterLayout from "../../layouts/filter";
-import { WithPageLayout } from "../../interfaces/with-page-layout";
+import FilterLayout from "../../../../layouts/filter";
+import { WithPageLayout } from "../../../../interfaces/with-page-layout";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const pageId = ctx.params!["pageId"] as string;
   const toolName = ctx.params!["toolName"] as string;
   const selectedFilter = ctx.params!["selectedFilter"] as string;
 
+  const toolPattern = /dashboard|reports|contributors|activity/g;
+
   if (toolName === "repositories") {
     return {
       redirect: {
         destination: `/${pageId}/dashboard/${selectedFilter}`,
+        permanent: true,
+      },
+    };
+  } else if (!toolPattern.test(toolName)) {
+    // weird case: 'kubernetes/kubernetes' passes the regex in next.config.js
+    // this will ensure that if the [toolName] isn't valid, redirect to /[org]/[repo]
+    return {
+      redirect: {
+        destination: `/${pageId}/${toolName}`,
         permanent: true,
       },
     };

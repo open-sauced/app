@@ -1,317 +1,22 @@
-import { useState } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-
 import { GetServerSidePropsContext } from "next";
+import { ComponentProps, useEffect, useState } from "react";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import TextInput from "components/atoms/TextInput/text-input";
-import Text from "components/atoms/Typography/text";
-import Title from "components/atoms/Typography/title";
-import TopNav from "components/organisms/TopNav/top-nav";
-import Footer from "components/organisms/Footer/footer";
-import InfoCard from "components/molecules/InfoCard/info-card";
-
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { useToast } from "lib/hooks/useToast";
-import GitHubImportDialog from "components/organisms/GitHubImportDialog/github-import-dialog";
-import GitHubTeamSyncDialog from "components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog";
-import { fetchGithubOrgTeamMembers } from "lib/hooks/fetchGithubTeamMembers";
 import { fetchApiData } from "helpers/fetchApiData";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
+import { createContributorInsight } from "lib/utils/workspace-utils";
+
+import { toast } from "lib/hooks/useToast";
+import Button from "components/shared/Button/button";
+import TextInput from "components/atoms/TextInput/text-input";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
 
-interface CreateListPayload {
-  name: string;
-  is_public: boolean;
-  contributors: { id: number; login: string }[];
-}
-
-interface GhFollowing {
-  id: number;
-  login: string;
-  type: string;
-}
-
-const CreateListPage = ({ workspace }: { workspace: Workspace }) => {
-  const router = useRouter();
-  const { toast } = useToast();
-  const { sessionToken, providerToken, user, username } = useSupabaseAuth();
-
-  const [name, setName] = useState("");
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleOnNameChange = (value: string) => {
-    setName(value);
-  };
-
-  // pick 10 unique random contributors from the GitHub following list
-  const getFollowingRandom = (arr: GhFollowing[], n: number): GhFollowing[] => {
-    const result = new Array(n);
-    let len = arr.length;
-    const taken = new Array(len);
-
-    while (n--) {
-      const x = Math.floor(Math.random() * len);
-      result[n] = arr[x in taken ? taken[x] : x];
-      taken[x] = --len in taken ? taken[len] : len;
-    }
-
-    return result;
-  };
-
-  const createList = async (payload: CreateListPayload) => {
-    if (!payload.name) {
-      return;
-    }
-
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspace.id}/userLists`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionToken}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        return data;
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-      return null;
-    }
-  };
-
-  const handleGitHubImport = async (props: { follow: boolean }) => {
-    if (!user) {
-      toast({ description: "Unable to connect to GitHub! Try logging out and re-connecting.", variant: "warning" });
-      return;
-    }
-
-    setSubmitted(true);
-    const req = await fetch(`https://api.github.com/users/${user?.user_metadata.user_name}/following?per_page=30`, {
-      headers: {
-        "Content-type": "application/json",
-        ...(providerToken ? { Authorization: `Bearer ${providerToken}` } : {}),
-      },
-    });
-
-    if (!req.ok) {
-      toast({ description: "Unable to connect to GitHub", variant: "warning" });
-      setSubmitted(false);
-      return;
-    }
-
-    const followingList: GhFollowing[] = await req.json();
-
-    if (followingList.length === 0) {
-      toast({ description: "You are not following anyone on GitHub", variant: "danger" });
-      setSubmitted(false);
-      return;
-    }
-
-    // Filter out orgs
-    const contributorFollowingList = followingList.filter((contributor) => contributor.type === "User");
-    const following = getFollowingRandom(contributorFollowingList, 10);
-
-    const response = await createList({
-      name,
-      contributors: following.map((user) => ({ id: user.id, login: user.login })),
-      is_public: true,
-    });
-
-    if (response) {
-      if (props.follow) {
-        const followRequests = following.map((user) =>
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user.login}/follow`, {
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${sessionToken}`,
-            },
-          }).catch(() => {})
-        );
-
-        Promise.allSettled(followRequests);
-        toast({ description: "List created successfully", variant: "success" });
-      }
-
-      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.user_list_id}/overview`);
-    } else {
-      toast({ description: "An error occurred!", variant: "danger" });
-      setSubmitted(false);
-    }
-  };
-
-  const handleGitHubTeamSync = async (props: { follow: boolean; organization: string; teamSlug: string }) => {
-    if (!user || !providerToken) {
-      toast({ description: "Unable to connect to GitHub! Try logging out and re-connecting.", variant: "warning" });
-      return;
-    }
-    const { organization, teamSlug } = props;
-
-    setSubmitted(true);
-    const req = await fetchGithubOrgTeamMembers(organization, teamSlug);
-
-    if (req.isError) {
-      toast({ description: "Unable to sync team", variant: "warning" });
-      setSubmitted(false);
-      return;
-    }
-
-    const teamList: GhOrgTeamMember[] = req.data;
-
-    if (teamList.length === 0) {
-      toast({ description: "The selected team is empty", variant: "danger" });
-      setSubmitted(false);
-      return;
-    }
-
-    const response = await createList({
-      name,
-      contributors: teamList.map((user) => ({ id: user.id, login: user.login })),
-      is_public: true,
-    });
-
-    if (response) {
-      if (props.follow) {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${user?.user_metadata.user_name}/follows`, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${sessionToken}`,
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            usernames: teamList.map((member) => member.login),
-          }),
-        }).catch(() => {});
-
-        toast({ description: "List created successfully", variant: "success" });
-      }
-
-      router.push(`/workspaces/${workspace.id}/contributor-insights/${response.user_list_id}/overview`);
-    } else {
-      toast({ description: "An error occurred!", variant: "danger" });
-      setSubmitted(false);
-    }
-  };
-
-  return (
-    <section className="flex flex-col justify-center w-full py-4 xl:flex-row xl:gap-20">
-      <div className="flex flex-col">
-        <div className="flex flex-col gap-4 pb-6 border-b border-light-slate-8">
-          <Title className="text-2xl leading-none" level={1}>
-            Create New Contributor Insight
-          </Title>
-          <Text>
-            A contributor insight is a collection of contributors that you and your team can get insights for.
-          </Text>
-        </div>
-
-        <div className="flex flex-col gap-4 pt-6 pb-16">
-          <Title className="text-1xl leading-none" level={4}>
-            Insight Name
-          </Title>
-
-          <TextInput placeholder="Page Name (ex: My Team)" value={name} handleChange={handleOnNameChange} />
-        </div>
-
-        <div className="flex flex-col gap-4 pb-6">
-          <Title className="text-1xl leading-none" level={4}>
-            Add Contributors
-          </Title>
-
-          <InfoCard
-            title="Explore Contributors"
-            description="Use our explore tool to find Contributors and create your list"
-            icon="globe"
-            handleClick={() => {
-              router.push(`/workspaces/${workspace.id}/contributor-insights/find?name=${name}`);
-            }}
-          />
-
-          <InfoCard
-            title="Sync your GitHub Team"
-            description="Connect to your GitHub to create a list from a team in your organization"
-            icon="github"
-            handleClick={() => {
-              if (!name) {
-                toast({
-                  description: "List name is required",
-                  variant: "danger",
-                });
-
-                return;
-              }
-
-              setIsTeamModalOpen(true);
-            }}
-          />
-
-          <InfoCard
-            title="Import your GitHub Following"
-            description="Connect to your GitHub to create a list with all the Contributors you follow"
-            icon="github"
-            handleClick={() => {
-              if (!name) {
-                toast({
-                  description: "List name is required",
-                  variant: "danger",
-                });
-
-                return;
-              }
-
-              setIsModalOpen(true);
-            }}
-          />
-        </div>
-      </div>
-
-      <div className="top-0 py-4 mt-5 lg:sticky md:mt-0 lg:py-0">
-        <div className="flex flex-col justify-between pt-8 mt-8 border-t"></div>
-      </div>
-
-      <GitHubTeamSyncDialog
-        open={isTeamModalOpen}
-        handleClose={() => setIsTeamModalOpen(false)}
-        handleSync={handleGitHubTeamSync}
-        loading={submitted}
-        username={username}
-      />
-
-      <GitHubImportDialog
-        open={isModalOpen}
-        handleClose={() => setIsModalOpen(false)}
-        handleImport={handleGitHubImport}
-        loading={submitted}
-      />
-    </section>
-  );
-};
-
-const AddListPage = ({ workspace }: { workspace: Workspace }) => {
-  return (
-    <WorkspaceLayout workspaceId={workspace.id}>
-      <div className="flex flex-col min-h-screen">
-        <TopNav />
-        <div className="flex flex-col items-center pt-20 page-container grow md:pt-14">
-          <main className="flex flex-col items-center flex-1 w-full px-3 py-8 md:px-2 bg-light-slate-2">
-            <div className="container px-2 mx-auto md:px-16">
-              <CreateListPage workspace={workspace} />
-            </div>
-          </main>
-        </div>
-        <Footer />
-      </div>
-    </WorkspaceLayout>
-  );
-};
+const TrackedContributorsModal = dynamic(() => import("components/Workspaces/TrackedContributorsModal"), {
+  ssr: false,
+});
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -349,9 +54,149 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   return {
     props: {
+      bearerToken,
       workspace: data,
     },
   };
 };
 
-export default AddListPage;
+CreateContributorInsightPage.SEO = {
+  title: "Create Contributor Insight | OpenSauced Insights",
+  description:
+    "A contributor insight page is a dashboard containing selected contributor that you and your team can get insights from.",
+};
+
+export default function CreateContributorInsightPage({
+  workspace,
+  bearerToken,
+}: {
+  workspace: Workspace;
+  bearerToken: string;
+}) {
+  const router = useRouter();
+  const contributorIds = router.query.contributors as string;
+  const title = router.query.title as string;
+  const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
+  const [isTrackedContributorsModalOpen, setIsTrackedContributorsModalOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (contributorIds) {
+      const queryContributors = JSON.parse(contributorIds) as string[];
+      const contributorsMap = new Map<string, boolean>();
+      queryContributors.forEach((contributor) => {
+        contributorsMap.set(contributor, true);
+      });
+      setTrackedContributors(contributorsMap);
+    }
+
+    if (title) {
+      setName(title);
+    }
+  }, [router.query]);
+
+  const onCreateInsight: ComponentProps<"form">["onSubmit"] = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const name = formData.get("name") as string;
+
+    const { data, error } = await createContributorInsight({
+      workspaceId: workspace.id,
+      bearerToken,
+      name,
+      contributors: Array.from(trackedContributors, ([contributor]) => {
+        return { login: contributor };
+      }),
+      is_public: true,
+    });
+
+    if (error) {
+      toast({ description: "An error has occurred. Try again.", variant: "danger" });
+      setLoading(false);
+      return;
+    }
+
+    toast({ description: "Insight created! Redirecting...", variant: "success" });
+    router.push(`/workspaces/${workspace.id}/contributor-insights/${data?.user_list_id}/overview`);
+  };
+
+  return (
+    <WorkspaceLayout workspaceId={workspace.id}>
+      <div className="grid gap-6 max-w-4xl">
+        <h1 className="border-b bottom pb-4 text-xl font-medium">Create Contributor Insight</h1>
+        <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateInsight}>
+          <div>
+            <h3 className="font-medium mb-2">
+              Insight Name <span className="text-red-600">*</span>
+            </h3>
+            <TextInput
+              value={name}
+              name="name"
+              placeholder="Insight name"
+              className="!py-1.5 w-full text-sm"
+              required
+              disabled={loading}
+              onChange={(event) => setName(event.target.value)}
+            />
+          </div>
+          <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+            <Button
+              variant="primary"
+              className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
+              disabled={loading}
+            >
+              Create Insight
+            </Button>
+          </div>
+        </form>
+
+        <TrackedContributorsTable
+          disabled={loading}
+          contributors={trackedContributors}
+          onAddContributors={() => setIsTrackedContributorsModalOpen(true)}
+          onRemoveTrackedContributor={(event) => {
+            const { contributor } = event.currentTarget.dataset;
+
+            if (!contributor) {
+              // eslint-disable-next-line no-console
+              console.error("The tracked repo to remove was not found");
+              return;
+            }
+
+            setTrackedContributors((trackedContributors) => {
+              const updates = new Map([...trackedContributors]);
+              updates.delete(contributor);
+
+              return updates;
+            });
+          }}
+        />
+      </div>
+
+      <TrackedContributorsModal
+        onAddToTrackingList={(contributors: Map<string, boolean>) => {
+          setIsTrackedContributorsModalOpen(false);
+          setTrackedContributors((trackedContributors) => {
+            const updates = new Map([...trackedContributors]);
+
+            for (const [contributor, checked] of contributors) {
+              if (checked) {
+                updates.set(contributor, true);
+              } else {
+                updates.delete(contributor);
+              }
+            }
+
+            return updates;
+          });
+        }}
+        isOpen={isTrackedContributorsModalOpen}
+        onClose={() => setIsTrackedContributorsModalOpen(false)}
+        onCancel={() => setIsTrackedContributorsModalOpen(false)}
+      />
+    </WorkspaceLayout>
+  );
+}

@@ -16,9 +16,10 @@ import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import TextInput from "components/atoms/TextInput/text-input";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import { searchUsers } from "lib/hooks/search-users";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import { shortenUrl } from "lib/utils/shorten-url";
 
 interface CreateListPayload {
   name: string;
@@ -58,7 +59,9 @@ const NewListCreationPage = () => {
 
   useEffect(() => {
     if (contributorIds) {
-      setSelectedContributors(JSON.parse(contributorIds) as DbPRContributor[]);
+      const queryContributors = JSON.parse(contributorIds) as DbPRContributor[];
+      setSelectedContributors(queryContributors);
+      setContributors(queryContributors);
     }
   }, [router.query]);
 
@@ -134,7 +137,8 @@ const NewListCreationPage = () => {
     posthog!.capture("clicked: List page link copied");
 
     try {
-      await navigator.clipboard.writeText(url);
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console

@@ -1,4 +1,4 @@
-const interests = [
+export const interests = [
   "javascript",
   "python",
   "java",

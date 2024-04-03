@@ -3,7 +3,7 @@ import { FaGithub } from "react-icons/fa";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import AvatarRoll from "components/molecules/AvatarRoll/avatar-roll";
 import ComponentGradient from "../../molecules/ComponentGradient/component-gradient";
 const WaitlistComponent = () => {
