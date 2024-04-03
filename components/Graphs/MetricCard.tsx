@@ -9,7 +9,7 @@ type MetricCardProps = {
   range: 7 | 30 | 90;
 };
 
-export default function MetricCard({ stats, variant }: MetricCardProps) {
+export default function MetricCard({ stats, variant, range }: MetricCardProps) {
   const countProperty = variant === "stars" ? "star_count" : "forks_count";
   const seriesData = stats?.map((stat) => stat[countProperty] ?? 0) ?? [];
   const bucketData = stats?.map((stat) => new Date(stat.bucket).toDateString()) ?? [];
