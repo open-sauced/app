@@ -243,3 +243,47 @@ export async function getListWithWorkspace({ listId }: { listId: string }) {
 
   return { data, error };
 }
+
+export async function updateWorkspaceContributorInsight({
+  workspaceId,
+  listId,
+  bearerToken,
+  name,
+  contributors,
+  is_public = true,
+}: {
+  workspaceId: string;
+  listId: string;
+  bearerToken: string;
+  name: string;
+  contributors: { login: string }[];
+  is_public?: boolean;
+}) {
+  const { data, error } = await fetchApiData({
+    path: `workspaces/${workspaceId}/userLists/${listId}`,
+    method: "PATCH",
+    body: { name, contributors, is_public },
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
+export async function deleteWorkspaceContributorInsight({
+  workspaceId,
+  listId,
+  bearerToken,
+}: {
+  workspaceId: string;
+  listId: string;
+  bearerToken: string;
+}) {
+  const { data, error } = await fetchApiData({
+    path: `workspaces/${workspaceId}/userLists/${listId}`,
+    method: "DELETE",
+    bearerToken,
+  });
+
+  return { data, error };
+}
