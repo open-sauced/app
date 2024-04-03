@@ -5,6 +5,55 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.15.0-beta.7](https://github.com/open-sauced/app/compare/v2.15.0-beta.6...v2.15.0-beta.7) (2024-04-03)
+
+
+### 🐛 Bug Fixes
+
+* fixed issue where stars metric chart was flipping horizontally ([#3091](https://github.com/open-sauced/app/issues/3091)) ([0e18c30](https://github.com/open-sauced/app/commit/0e18c30783f3123930a570d865a818d6fc3e0669))
+
+## [2.15.0-beta.6](https://github.com/open-sauced/app/compare/v2.15.0-beta.5...v2.15.0-beta.6) (2024-04-03)
+
+
+### 🐛 Bug Fixes
+
+* removed unused parts of metric card for now ([#3094](https://github.com/open-sauced/app/issues/3094)) ([79505d8](https://github.com/open-sauced/app/commit/79505d864149c881f322b82fe125af4b5102da70))
+
+## [2.15.0-beta.5](https://github.com/open-sauced/app/compare/v2.15.0-beta.4...v2.15.0-beta.5) (2024-04-03)
+
+
+### 🐛 Bug Fixes
+
+* use full URL for workspace OG image ([#3093](https://github.com/open-sauced/app/issues/3093)) ([b88b4dc](https://github.com/open-sauced/app/commit/b88b4dc6f8a040cb638c6679471407c83752c339))
+
+## [2.15.0-beta.4](https://github.com/open-sauced/app/compare/v2.15.0-beta.3...v2.15.0-beta.4) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* now repository page header aligns with the content of the page ([#3090](https://github.com/open-sauced/app/issues/3090)) ([5c435e2](https://github.com/open-sauced/app/commit/5c435e27ea992332eff4116a8440d83a25602cdf))
+
+## [2.15.0-beta.3](https://github.com/open-sauced/app/compare/v2.15.0-beta.2...v2.15.0-beta.3) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* fixed responsive issues on repo page ([#3081](https://github.com/open-sauced/app/issues/3081)) ([5967fe8](https://github.com/open-sauced/app/commit/5967fe8715e13b468bc4f36829a66baf71087ac3))
+
+## [2.15.0-beta.2](https://github.com/open-sauced/app/compare/v2.15.0-beta.1...v2.15.0-beta.2) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* removed repo-page feature flag from repos page and the project ([#3077](https://github.com/open-sauced/app/issues/3077)) ([62870a6](https://github.com/open-sauced/app/commit/62870a6fd7e98dc3ab8a6c987e8d2882ed7cb381))
+
+## [2.15.0-beta.1](https://github.com/open-sauced/app/compare/v2.14.0...v2.15.0-beta.1) (2024-04-02)
+
+
+### 🍕 Features
+
+* cumulative category for Stars Chart ([#3063](https://github.com/open-sauced/app/issues/3063)) ([aa1b508](https://github.com/open-sauced/app/commit/aa1b50801988124f5085ac2bdb438fec701335cd))
+
 ## [2.14.0](https://github.com/open-sauced/app/compare/v2.13.0...v2.14.0) (2024-04-01)
 
 
