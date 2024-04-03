@@ -11,10 +11,9 @@ type MetricCardProps = {
 };
 
 export default function MetricCard({ stats, variant }: MetricCardProps) {
-  const seriesData = stats
-    ?.map((stat) => (variant === "stars" ? stat.star_count || 0 : stat.forks_count || 0))
-    .reverse();
-  const bucketData = stats?.map((stat) => new Date(stat.bucket).toDateString()).reverse();
+  const countProperty = variant === "stars" ? "star_count" : "forks_count";
+  const seriesData = stats?.map((stat) => stat[countProperty] ?? 0) ?? [];
+  const bucketData = stats?.map((stat) => new Date(stat.bucket).toDateString()) ?? [];
 
   const option = {
     xAxis: {
