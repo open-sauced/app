@@ -6,9 +6,10 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 type MetricCardProps = {
   stats: StatsType[] | undefined;
   variant: "stars" | "forks";
+  range: 7 | 30 | 90;
 };
 
-export default function MetricCard({ stats, variant }: MetricCardProps) {
+export default function MetricCard({ stats, variant, range }: MetricCardProps) {
   const seriesData = stats
     ?.map((stat) => (variant === "stars" ? stat.star_count || 0 : stat.forks_count || 0))
     .reverse();
@@ -44,14 +45,16 @@ export default function MetricCard({ stats, variant }: MetricCardProps) {
 
   return (
     <Card className="w-full xl:max-w-lg h-fit p-5 pl-6">
-      <h2 className="text-xl font-semibold capitalize">{variant} per day</h2>
+      <h2 className="text-xl font-semibold capitalize">
+        {variant} <span className="font-medium text-base text-slate-500">{range} days</span>
+      </h2>
 
-      <section className="flex justify-between items-center px-2 gap-8">
+      <div className="flex justify-between items-center px-2 gap-8">
         <p className="text-5xl font-bold">{humanizeNumber(total!, "abbreviation")}</p>
         <div className="h-fit w-full pl-6">
           <EChartsReact option={option} style={{ height: "100%", width: "100%" }} />
         </div>
-      </section>
+      </div>
     </Card>
   );
 }
