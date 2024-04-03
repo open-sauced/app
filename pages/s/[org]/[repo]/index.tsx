@@ -1,5 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
+import { ComponentProps } from "react";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
@@ -29,10 +30,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return { props: { repoData, image: owner?.avatar_url || "" } };
 }
 
+type Range = ComponentProps<typeof MetricCard>["range"];
+
 export default function RepoPage({ repoData, image }: { repoData: DbRepo; image: string }) {
   const syncId = repoData.id;
   const router = useRouter();
-  const range = router.query.range ? Number(router.query.range as string) : 30;
+  const range = (router.query.range ? Number(router.query.range) : 30) as Range;
   const { data: starsData, error: starsError } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "stars",
@@ -59,8 +62,8 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
         <DayRangePicker />
         <section className="flex flex-col gap-2 lg:flex-row lg:gap-8 w-full justify-between">
           <ClientOnly>
-            <MetricCard variant="stars" stats={starsData} />
-            <MetricCard variant="forks" stats={forkStats} />
+            <MetricCard variant="stars" stats={starsData} range={range} />
+            <MetricCard variant="forks" stats={forkStats} range={range} />
           </ClientOnly>
         </section>
         <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
