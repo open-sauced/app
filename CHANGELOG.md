@@ -5,6 +5,233 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.15.0-beta.5](https://github.com/open-sauced/app/compare/v2.15.0-beta.4...v2.15.0-beta.5) (2024-04-03)
+
+
+### 🐛 Bug Fixes
+
+* use full URL for workspace OG image ([#3093](https://github.com/open-sauced/app/issues/3093)) ([b88b4dc](https://github.com/open-sauced/app/commit/b88b4dc6f8a040cb638c6679471407c83752c339))
+
+## [2.15.0-beta.4](https://github.com/open-sauced/app/compare/v2.15.0-beta.3...v2.15.0-beta.4) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* now repository page header aligns with the content of the page ([#3090](https://github.com/open-sauced/app/issues/3090)) ([5c435e2](https://github.com/open-sauced/app/commit/5c435e27ea992332eff4116a8440d83a25602cdf))
+
+## [2.15.0-beta.3](https://github.com/open-sauced/app/compare/v2.15.0-beta.2...v2.15.0-beta.3) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* fixed responsive issues on repo page ([#3081](https://github.com/open-sauced/app/issues/3081)) ([5967fe8](https://github.com/open-sauced/app/commit/5967fe8715e13b468bc4f36829a66baf71087ac3))
+
+## [2.15.0-beta.2](https://github.com/open-sauced/app/compare/v2.15.0-beta.1...v2.15.0-beta.2) (2024-04-02)
+
+
+### 🐛 Bug Fixes
+
+* removed repo-page feature flag from repos page and the project ([#3077](https://github.com/open-sauced/app/issues/3077)) ([62870a6](https://github.com/open-sauced/app/commit/62870a6fd7e98dc3ab8a6c987e8d2882ed7cb381))
+
+## [2.15.0-beta.1](https://github.com/open-sauced/app/compare/v2.14.0...v2.15.0-beta.1) (2024-04-02)
+
+
+### 🍕 Features
+
+* cumulative category for Stars Chart ([#3063](https://github.com/open-sauced/app/issues/3063)) ([aa1b508](https://github.com/open-sauced/app/commit/aa1b50801988124f5085ac2bdb438fec701335cd))
+
+## [2.14.0](https://github.com/open-sauced/app/compare/v2.13.0...v2.14.0) (2024-04-01)
+
+
+### 🍕 Features
+
+* add oss.fyi links for invites ([#3068](https://github.com/open-sauced/app/issues/3068)) ([4805de8](https://github.com/open-sauced/app/commit/4805de8d9d3605aceb390fbfc9c2c4eee2a92be7))
+
+
+### 🐛 Bug Fixes
+
+* always show share button on contributor profiles ([#3065](https://github.com/open-sauced/app/issues/3065)) ([3fbf6cc](https://github.com/open-sauced/app/commit/3fbf6cc58ed541c3d627d764094546ad56fcf112))
+* Change  edit button text [#3052](https://github.com/open-sauced/app/issues/3052) ([#3054](https://github.com/open-sauced/app/issues/3054)) ([67920fa](https://github.com/open-sauced/app/commit/67920fabae970c8b1fe8761928731a73b8aee3d5))
+* disable create insight button on request ([#3057](https://github.com/open-sauced/app/issues/3057)) ([8ade3e5](https://github.com/open-sauced/app/commit/8ade3e582edc015abdabcab92d142670ebd905af))
+* move the workspace upgrade banner to render only on the client ([#3067](https://github.com/open-sauced/app/issues/3067)) ([4150918](https://github.com/open-sauced/app/commit/4150918cd76842ed7b6167e2251ff98fe4cfa132))
+* revert "feat: hide chatbot on non-prod environment and mobile screens ([#1218](https://github.com/open-sauced/app/issues/1218))" ([#3069](https://github.com/open-sauced/app/issues/3069)) ([18c9e4f](https://github.com/open-sauced/app/commit/18c9e4f4a51d2ce371ac57703015908a9dc7daf3))
+
+## [2.14.0-beta.2](https://github.com/open-sauced/app/compare/v2.14.0-beta.1...v2.14.0-beta.2) (2024-04-01)
+
+
+### 🐛 Bug Fixes
+
+* revert "feat: hide chatbot on non-prod environment and mobile screens ([#1218](https://github.com/open-sauced/app/issues/1218))" ([#3069](https://github.com/open-sauced/app/issues/3069)) ([18c9e4f](https://github.com/open-sauced/app/commit/18c9e4f4a51d2ce371ac57703015908a9dc7daf3))
+
+## [2.14.0-beta.1](https://github.com/open-sauced/app/compare/v2.13.1-beta.2...v2.14.0-beta.1) (2024-04-01)
+
+
+### 🍕 Features
+
+* add oss.fyi links for invites ([#3068](https://github.com/open-sauced/app/issues/3068)) ([4805de8](https://github.com/open-sauced/app/commit/4805de8d9d3605aceb390fbfc9c2c4eee2a92be7))
+
+## [2.13.1-beta.2](https://github.com/open-sauced/app/compare/v2.13.1-beta.1...v2.13.1-beta.2) (2024-03-29)
+
+
+### 🐛 Bug Fixes
+
+* always show share button on contributor profiles ([#3065](https://github.com/open-sauced/app/issues/3065)) ([3fbf6cc](https://github.com/open-sauced/app/commit/3fbf6cc58ed541c3d627d764094546ad56fcf112))
+* disable create insight button on request ([#3057](https://github.com/open-sauced/app/issues/3057)) ([8ade3e5](https://github.com/open-sauced/app/commit/8ade3e582edc015abdabcab92d142670ebd905af))
+* move the workspace upgrade banner to render only on the client ([#3067](https://github.com/open-sauced/app/issues/3067)) ([4150918](https://github.com/open-sauced/app/commit/4150918cd76842ed7b6167e2251ff98fe4cfa132))
+
+## [2.13.1-beta.1](https://github.com/open-sauced/app/compare/v2.13.0...v2.13.1-beta.1) (2024-03-29)
+
+
+### 🐛 Bug Fixes
+
+* Change  edit button text [#3052](https://github.com/open-sauced/app/issues/3052) ([#3054](https://github.com/open-sauced/app/issues/3054)) ([67920fa](https://github.com/open-sauced/app/commit/67920fabae970c8b1fe8761928731a73b8aee3d5))
+
+## [2.13.0](https://github.com/open-sauced/app/compare/v2.12.1...v2.13.0) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* enable edit and changing of name of contributor insight ([#3055](https://github.com/open-sauced/app/issues/3055)) ([970cd86](https://github.com/open-sauced/app/commit/970cd86c1edac78ef67e2791506de4394df97be4))
+* redirect /hub/insights/new to login if not authenticated ([#2935](https://github.com/open-sauced/app/issues/2935)) ([55a73df](https://github.com/open-sauced/app/commit/55a73df812e7e5406904a6a616e169b6ffbed79a))
+
+
+### 🍕 Features
+
+* `MetricCard` prototype ([#2942](https://github.com/open-sauced/app/issues/2942)) ([1a57714](https://github.com/open-sauced/app/commit/1a57714b41e5d11815c7f49ebd7f0e8beda6febe))
+* prototype Stars Chart for Repo pages ([#3040](https://github.com/open-sauced/app/issues/3040)) ([cc74f8d](https://github.com/open-sauced/app/commit/cc74f8da18efcae7e546f731495ba6c90d173dd1))
+* **insights and lists:** unify UX for insights and lists ([#2582](https://github.com/open-sauced/app/issues/2582)) ([cbcfd20](https://github.com/open-sauced/app/commit/cbcfd208a5c7ddb3a4c1b8e756af580f1c3f2ffe))
+
+## [2.13.0-beta.5](https://github.com/open-sauced/app/compare/v2.13.0-beta.4...v2.13.0-beta.5) (2024-03-28)
+
+
+### 🍕 Features
+
+* prototype Stars Chart for Repo pages ([#3040](https://github.com/open-sauced/app/issues/3040)) ([cc74f8d](https://github.com/open-sauced/app/commit/cc74f8da18efcae7e546f731495ba6c90d173dd1))
+
+## [2.13.0-beta.4](https://github.com/open-sauced/app/compare/v2.13.0-beta.3...v2.13.0-beta.4) (2024-03-28)
+
+
+### 🍕 Features
+
+* `MetricCard` prototype ([#2942](https://github.com/open-sauced/app/issues/2942)) ([1a57714](https://github.com/open-sauced/app/commit/1a57714b41e5d11815c7f49ebd7f0e8beda6febe))
+
+## [2.13.0-beta.3](https://github.com/open-sauced/app/compare/v2.13.0-beta.2...v2.13.0-beta.3) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* enable edit and changing of name of contributor insight ([#3055](https://github.com/open-sauced/app/issues/3055)) ([970cd86](https://github.com/open-sauced/app/commit/970cd86c1edac78ef67e2791506de4394df97be4))
+
+## [2.13.0-beta.2](https://github.com/open-sauced/app/compare/v2.13.0-beta.1...v2.13.0-beta.2) (2024-03-28)
+
+
+### 🐛 Bug Fixes
+
+* redirect /hub/insights/new to login if not authenticated ([#2935](https://github.com/open-sauced/app/issues/2935)) ([55a73df](https://github.com/open-sauced/app/commit/55a73df812e7e5406904a6a616e169b6ffbed79a))
+
+## [2.13.0-beta.1](https://github.com/open-sauced/app/compare/v2.12.1...v2.13.0-beta.1) (2024-03-28)
+
+
+### 🍕 Features
+
+* **insights and lists:** unify UX for insights and lists ([#2582](https://github.com/open-sauced/app/issues/2582)) ([cbcfd20](https://github.com/open-sauced/app/commit/cbcfd208a5c7ddb3a4c1b8e756af580f1c3f2ffe))
+
+## [2.12.1](https://github.com/open-sauced/app/compare/v2.12.0...v2.12.1) (2024-03-27)
+
+
+### 🐛 Bug Fixes
+
+* now valid searched org appears all the time for org import for tracked repositories ([#3041](https://github.com/open-sauced/app/issues/3041)) ([f5baad8](https://github.com/open-sauced/app/commit/f5baad84a2ae0f7953663a63d44b8b468885e01c))
+* use controlled input on new contributor insight ([#3044](https://github.com/open-sauced/app/issues/3044)) ([9ff8b41](https://github.com/open-sauced/app/commit/9ff8b41180e9aeef99bd665d1d6619bdce9ae44b))
+
+## [2.12.1-beta.2](https://github.com/open-sauced/app/compare/v2.12.1-beta.1...v2.12.1-beta.2) (2024-03-27)
+
+
+### 🐛 Bug Fixes
+
+* use controlled input on new contributor insight ([#3044](https://github.com/open-sauced/app/issues/3044)) ([9ff8b41](https://github.com/open-sauced/app/commit/9ff8b41180e9aeef99bd665d1d6619bdce9ae44b))
+
+## [2.12.1-beta.1](https://github.com/open-sauced/app/compare/v2.12.0...v2.12.1-beta.1) (2024-03-27)
+
+
+### 🐛 Bug Fixes
+
+* now valid searched org appears all the time for org import for tracked repositories ([#3041](https://github.com/open-sauced/app/issues/3041)) ([f5baad8](https://github.com/open-sauced/app/commit/f5baad84a2ae0f7953663a63d44b8b468885e01c))
+
+## [2.12.0](https://github.com/open-sauced/app/compare/v2.11.0...v2.12.0) (2024-03-26)
+
+
+### 🍕 Features
+
+* add share button to workspaces ([#3029](https://github.com/open-sauced/app/issues/3029)) ([b44a7cb](https://github.com/open-sauced/app/commit/b44a7cb711b893895c60c7766c392e944e06bcab))
+
+
+### 🐛 Bug Fixes
+
+* /explore/topic/some-topic is now a server side rewrite ([#3030](https://github.com/open-sauced/app/issues/3030)) ([23efa88](https://github.com/open-sauced/app/commit/23efa88006b59cf061883dbfae44e5cc7ae78401))
+* correct flow for creating a contributor insight from list of contributors ([#2989](https://github.com/open-sauced/app/issues/2989)) ([c6ebe64](https://github.com/open-sauced/app/commit/c6ebe645290532dfa8361ab37e0675dd27b770ee))
+* fixed explore contributors tab and activity tab URLs in explore pages ([#3028](https://github.com/open-sauced/app/issues/3028)) ([a3c3bed](https://github.com/open-sauced/app/commit/a3c3bedc954b76d7b71fed70ed0329dfcb69cbd4))
+* remove useEffectOnce and check if upgrade modal is open before logging ([#3036](https://github.com/open-sauced/app/issues/3036)) ([7ccaadf](https://github.com/open-sauced/app/commit/7ccaadfc7a4f876deaa38d29423005a4d28f1d0e))
+
+## [2.12.0-beta.3](https://github.com/open-sauced/app/compare/v2.12.0-beta.2...v2.12.0-beta.3) (2024-03-26)
+
+
+### 🐛 Bug Fixes
+
+* correct flow for creating a contributor insight from list of contributors ([#2989](https://github.com/open-sauced/app/issues/2989)) ([c6ebe64](https://github.com/open-sauced/app/commit/c6ebe645290532dfa8361ab37e0675dd27b770ee))
+* fixed explore contributors tab and activity tab URLs in explore pages ([#3028](https://github.com/open-sauced/app/issues/3028)) ([a3c3bed](https://github.com/open-sauced/app/commit/a3c3bedc954b76d7b71fed70ed0329dfcb69cbd4))
+
+## [2.12.0-beta.2](https://github.com/open-sauced/app/compare/v2.12.0-beta.1...v2.12.0-beta.2) (2024-03-26)
+
+
+### 🐛 Bug Fixes
+
+* remove useEffectOnce and check if upgrade modal is open before logging ([#3036](https://github.com/open-sauced/app/issues/3036)) ([7ccaadf](https://github.com/open-sauced/app/commit/7ccaadfc7a4f876deaa38d29423005a4d28f1d0e))
+
+## [2.12.0-beta.1](https://github.com/open-sauced/app/compare/v2.11.0...v2.12.0-beta.1) (2024-03-26)
+
+
+### 🍕 Features
+
+* add share button to workspaces ([#3029](https://github.com/open-sauced/app/issues/3029)) ([b44a7cb](https://github.com/open-sauced/app/commit/b44a7cb711b893895c60c7766c392e944e06bcab))
+
+
+### 🐛 Bug Fixes
+
+* /explore/topic/some-topic is now a server side rewrite ([#3030](https://github.com/open-sauced/app/issues/3030)) ([23efa88](https://github.com/open-sauced/app/commit/23efa88006b59cf061883dbfae44e5cc7ae78401))
+
+## [2.11.0](https://github.com/open-sauced/app/compare/v2.10.1...v2.11.0) (2024-03-25)
+
+
+### 🎨 Styles
+
+* un-fix top-nav on mobile ([#3020](https://github.com/open-sauced/app/issues/3020)) ([c144e8a](https://github.com/open-sauced/app/commit/c144e8adb50a549230dbe4a911d3dca99a19f37c))
+
+
+### 🐛 Bug Fixes
+
+* change workspace repo fetch limit from 50 to 999 ([#3019](https://github.com/open-sauced/app/issues/3019)) ([bc14c81](https://github.com/open-sauced/app/commit/bc14c81bdf724e20c742dba78e4ba127e3bfe197))
+* Icon image has a default alt text "Icon" ([108a3cf](https://github.com/open-sauced/app/commit/108a3cf32707e040d81c96d9d4f2fcaebf50f0cc))
+* Icon image has a default alt text "Icon" ([#3013](https://github.com/open-sauced/app/issues/3013)) ([303bf1c](https://github.com/open-sauced/app/commit/303bf1c1cc7435fb14f2c0874e3b2a80d5d5216c))
+* moved <Button /> component to shared folder ([#3006](https://github.com/open-sauced/app/issues/3006)) ([a5f87c4](https://github.com/open-sauced/app/commit/a5f87c4afb6c7596ef2f4d177c3ad36765815f9e))
+* now some divs on main page are aside elements ([#3015](https://github.com/open-sauced/app/issues/3015)) ([4b1a077](https://github.com/open-sauced/app/commit/4b1a077b549477a39571baeeb9f49138da9c2c72))
+* removed unnecessary alt text on logo and cleaned up JSX ([19f4786](https://github.com/open-sauced/app/commit/19f478665300ab11d610cd804bbd0de0da1fc753))
+* removed unnecessary alt text on logo and cleaned up JSX ([#3011](https://github.com/open-sauced/app/issues/3011)) ([728fd32](https://github.com/open-sauced/app/commit/728fd32477d23281a33da6dd90a68c892649812d))
+* removed workspaces from FeatureFlag union type as feature flag was removed ([#2998](https://github.com/open-sauced/app/issues/2998)) ([290a214](https://github.com/open-sauced/app/commit/290a21480cc1d70c9835a76f4706551fa5fdc37c))
+
+
+### 🍕 Features
+
+* basic repo page ([#2988](https://github.com/open-sauced/app/issues/2988)) ([14489d4](https://github.com/open-sauced/app/commit/14489d4ba793b795b2df998139a3ea89995399df))
+* configured Playwright with some initial E2E tests ([#3014](https://github.com/open-sauced/app/issues/3014)) ([7383fcc](https://github.com/open-sauced/app/commit/7383fccbd98e51d4f5bea193fcbfd655bf34d26f))
+
+## [2.11.0-beta.5](https://github.com/open-sauced/app/compare/v2.11.0-beta.4...v2.11.0-beta.5) (2024-03-25)
+
+
+### 🍕 Features
+
+* basic repo page ([#2988](https://github.com/open-sauced/app/issues/2988)) ([14489d4](https://github.com/open-sauced/app/commit/14489d4ba793b795b2df998139a3ea89995399df))
+
 ## [2.11.0-beta.4](https://github.com/open-sauced/app/compare/v2.11.0-beta.3...v2.11.0-beta.4) (2024-03-25)
 
 
