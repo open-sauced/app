@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.15.0-beta.5](https://github.com/open-sauced/app/compare/v2.15.0-beta.4...v2.15.0-beta.5) (2024-04-03)
+
+
+### 🐛 Bug Fixes
+
+* use full URL for workspace OG image ([#3093](https://github.com/open-sauced/app/issues/3093)) ([b88b4dc](https://github.com/open-sauced/app/commit/b88b4dc6f8a040cb638c6679471407c83752c339))
+
 ## [2.15.0-beta.4](https://github.com/open-sauced/app/compare/v2.15.0-beta.3...v2.15.0-beta.4) (2024-04-02)
 
 
