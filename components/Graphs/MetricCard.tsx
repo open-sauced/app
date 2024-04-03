@@ -1,4 +1,5 @@
 import EChartsReact from "echarts-for-react";
+import { useMemo } from "react";
 import { StatsType } from "lib/hooks/api/useFetchMetricStats";
 import Card from "components/atoms/Card/card";
 import humanizeNumber from "lib/utils/humanizeNumber";
@@ -10,38 +11,42 @@ type MetricCardProps = {
 };
 
 export default function MetricCard({ stats, variant, range }: MetricCardProps) {
-  const seriesData = stats
-    ?.map((stat) => (variant === "stars" ? stat.star_count || 0 : stat.forks_count || 0))
-    .reverse();
-  const bucketData = stats?.map((stat) => new Date(stat.bucket).toDateString()).reverse();
+  const countProperty = variant === "stars" ? "star_count" : "forks_count";
+  const seriesData = useMemo(() => stats?.map((stat) => stat[countProperty] ?? 0) ?? [], [countProperty, stats]);
+  const bucketData = useMemo(() => stats?.map((stat) => new Date(stat.bucket).toDateString()) ?? [], [stats]);
 
-  const option = {
-    xAxis: {
-      type: "category",
-      data: bucketData,
-      show: false,
-    },
-    yAxis: {
-      type: "value",
-      show: false,
-    },
-    tooltip: {
-      trigger: "axis",
-      axisPointer: {
-        type: "shadow",
+  const option = useMemo(() => {
+    return {
+      xAxis: {
+        type: "category",
+        data: bucketData,
+        show: false,
       },
-    },
-    series: [
-      {
-        data: seriesData,
-        symbol: "none",
-        type: variant === "stars" ? "line" : "bar",
+      yAxis: {
+        type: "value",
+        show: false,
       },
-    ],
-    color: "hsla(19, 100%, 50%, 1)",
-  };
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "shadow",
+        },
+      },
+      series: [
+        {
+          data: seriesData,
+          symbol: "none",
+          type: variant === "stars" ? "line" : "bar",
+        },
+      ],
+      color: "hsla(19, 100%, 50%, 1)",
+    };
+  }, [bucketData, seriesData, variant]);
 
-  const total = seriesData?.reduce((stat, currentValue) => (stat || 0) + (currentValue || 0), 0);
+  const total = useMemo(
+    () => seriesData?.reduce((stat, currentValue) => (stat || 0) + (currentValue || 0), 0),
+    [seriesData]
+  );
 
   return (
     <Card className="w-full xl:max-w-lg h-fit p-5 pl-6">

@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.15.0-beta.8](https://github.com/open-sauced/app/compare/v2.15.0-beta.7...v2.15.0-beta.8) (2024-04-03)
+
+
+### 🍕 Features
+
+* extend range picker to 6 months and 1 year ([#3100](https://github.com/open-sauced/app/issues/3100)) ([6998f16](https://github.com/open-sauced/app/commit/6998f16e121c3a8784ddc828144f155820e607b8))
+
+## [2.15.0-beta.7](https://github.com/open-sauced/app/compare/v2.15.0-beta.6...v2.15.0-beta.7) (2024-04-03)
+
+
+### 🐛 Bug Fixes
+
+* fixed issue where stars metric chart was flipping horizontally ([#3091](https://github.com/open-sauced/app/issues/3091)) ([0e18c30](https://github.com/open-sauced/app/commit/0e18c30783f3123930a570d865a818d6fc3e0669))
+
 ## [2.15.0-beta.6](https://github.com/open-sauced/app/compare/v2.15.0-beta.5...v2.15.0-beta.6) (2024-04-03)
 
 
