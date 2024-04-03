@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.15.0-beta.6](https://github.com/open-sauced/app/compare/v2.15.0-beta.5...v2.15.0-beta.6) (2024-04-03)
+
+
+### 🐛 Bug Fixes
+
+* removed unused parts of metric card for now ([#3094](https://github.com/open-sauced/app/issues/3094)) ([79505d8](https://github.com/open-sauced/app/commit/79505d864149c881f322b82fe125af4b5102da70))
+
 ## [2.15.0-beta.5](https://github.com/open-sauced/app/compare/v2.15.0-beta.4...v2.15.0-beta.5) (2024-04-03)
 
 
