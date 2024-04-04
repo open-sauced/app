@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.16.0-beta.3](https://github.com/open-sauced/app/compare/v2.16.0-beta.2...v2.16.0-beta.3) (2024-04-04)
+
+
+### 🐛 Bug Fixes
+
+* use workspace banner component on contributor insights overview ([#3118](https://github.com/open-sauced/app/issues/3118)) ([3ebaf54](https://github.com/open-sauced/app/commit/3ebaf54dd2a62c76539d0f1b83765ac07ccbbd40))
+
+
+### 🍕 Features
+
+* ForksChart for repo pages ([#3088](https://github.com/open-sauced/app/issues/3088)) ([ded181c](https://github.com/open-sauced/app/commit/ded181ce4dca9379d814804e16488a8bcbd70c3f))
+
 ## [2.16.0-beta.2](https://github.com/open-sauced/app/compare/v2.16.0-beta.1...v2.16.0-beta.2) (2024-04-04)
 
 
