@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.16.0-beta.1](https://github.com/open-sauced/app/compare/v2.15.0...v2.16.0-beta.1) (2024-04-04)
+
+
+### 🍕 Features
+
+* link to repo recommendations to a repo page ([#3113](https://github.com/open-sauced/app/issues/3113)) ([a9a722d](https://github.com/open-sauced/app/commit/a9a722d4e2a34c04479ab44c87b94f74893382d6))
+
+
+### 🐛 Bug Fixes
+
+* now repo page charts no longer bleed out of their container ([#3115](https://github.com/open-sauced/app/issues/3115)) ([fdc9bd4](https://github.com/open-sauced/app/commit/fdc9bd4498ef5c0b3b74bc5a079e9dcfbaf6747d))
+
 ## [2.15.0](https://github.com/open-sauced/app/compare/v2.14.0...v2.15.0) (2024-04-03)
 
 
