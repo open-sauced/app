@@ -5,7 +5,6 @@ import { ComponentProps } from "react";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
-import SEO from "layouts/SEO/SEO";
 import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
