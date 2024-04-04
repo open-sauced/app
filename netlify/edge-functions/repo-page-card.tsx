@@ -39,9 +39,8 @@ export default async function handler(req: Request) {
   const repoDescription =
     (searchParams.get("description") ?? "").length > 0 ? searchParams.get("description") : "&nbsp;";
   const [org, repoName, range = 30] = pathname.split("/").slice(-3);
-  const repository = `${org}/${repoName}`;
   const query = new URLSearchParams();
-  query.set("repo", repository);
+  query.set("repo", `{org/repoName}`);
   query.set("range", `${range}`);
   query.set("orderDirection", "ASC");
 
@@ -138,27 +137,22 @@ export default async function handler(req: Request) {
             display: "flex",
             gap: "1rem",
             marginTop: "113.5px",
-            fontSize: "84px",
-            fontWeight: 700,
+            fontSize: "44px",
             letterSpacing: "-2px",
-            lineHeight: "101.66px",
             width: "100%",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
             alignItems: "center",
           }}
         >
           <img style={{ width: 64, height: 64 }} src={getOrgUsernameAvatar(org, 64)} />
-          <div>{repository}</div>
+          <div style={{ display: "flex", flexWrap: "wrap", width: "995px" }}>
+            <span style={{ fontWeight: 400 }}>{org}/</span>
+            <span style={{ fontWeight: 700 }}>{repoName}</span>
+          </div>
         </div>
         <div
           style={{
             marginTop: "11.5px",
-            fontSize: "32px",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            fontSize: "28px",
             color: repoDescription === "&nbsp;" ? "transparent" : undefined,
           }}
         >
