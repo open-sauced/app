@@ -83,7 +83,6 @@ const ContributorListTableRow = ({
     topic,
     repoIds: [],
     range,
-    mostRecent: true,
     limit: 50,
   });
   const { data: prData } = usePullRequestsHistogram({ contributor: login, range: Number(range ?? "30"), width: 1 });
