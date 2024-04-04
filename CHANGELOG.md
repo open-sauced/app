@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.16.0-beta.2](https://github.com/open-sauced/app/compare/v2.16.0-beta.1...v2.16.0-beta.2) (2024-04-04)
+
+
+### 🍕 Features
+
+* add visibility pill to WorkspaceHeader ([#3110](https://github.com/open-sauced/app/issues/3110)) ([5f3da18](https://github.com/open-sauced/app/commit/5f3da18a25697f13bb9654883f87202b57d454f0))
+* make Contributions tab default on user profile pages ([#3112](https://github.com/open-sauced/app/issues/3112)) ([53f2755](https://github.com/open-sauced/app/commit/53f275552056bb8703daf52c0c33fd61fa250b03))
+
 ## [2.16.0-beta.1](https://github.com/open-sauced/app/compare/v2.15.0...v2.16.0-beta.1) (2024-04-04)
 
 
