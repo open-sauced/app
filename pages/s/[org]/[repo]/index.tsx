@@ -55,7 +55,7 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
   return (
     <ProfileLayout>
       <SEO title={`${repoData.full_name} - OpenSauced Insights`} />
-      <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-8 w-full xl:max-w-6xl">
+      <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-6xl">
         <header className="flex items-center gap-4">
           <Avatar size={96} avatarURL={image} />
           <div className="flex flex-col gap-2">
@@ -64,7 +64,7 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
           </div>
         </header>
         <DayRangePicker />
-        <section className="flex flex-col gap-2 lg:flex-row lg:gap-8 w-full justify-between">
+        <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
           <ClientOnly>
             <MetricCard variant="stars" stats={starsData} range={range} />
             <MetricCard variant="forks" stats={forkStats} range={range} />
