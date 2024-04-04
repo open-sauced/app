@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.16.0-beta.6](https://github.com/open-sauced/app/compare/v2.16.0-beta.5...v2.16.0-beta.6) (2024-04-04)
+
+
+### 🍕 Features
+
+* created the OG image for repository pages ([#3117](https://github.com/open-sauced/app/issues/3117)) ([c2bf935](https://github.com/open-sauced/app/commit/c2bf9355cbacc56b0e7bec1f945f5637a12c4b24))
+
 ## [2.16.0-beta.5](https://github.com/open-sauced/app/compare/v2.16.0-beta.4...v2.16.0-beta.5) (2024-04-04)
 
 
