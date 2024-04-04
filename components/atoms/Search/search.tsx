@@ -114,7 +114,7 @@ const Search = ({
     <div
       className={`${
         className && className
-      } flex bg-white py-1 px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg   ring-light-slate-6 items-center relative min-w-[15rem]`}
+      } flex bg-white py-1 px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg ring-light-slate-6 items-center relative min-w-[15rem]`}
     >
       <FaSearch className="text-light-slate-9" fontSize={16} onClick={handleOnSearch} />
       <input
@@ -142,7 +142,11 @@ const Search = ({
             {suggestionsLabel && suggestions.length > 0 ? <div className="pl-5 pt-4">{suggestionsLabel}</div> : null}
             {suggestions.map((suggestion, index) => (
               <div
-                className={clsx(cursor === index && "_cursorActive bg-slate-100", "px-4 py-2 hover:bg-light-slate-2")}
+                className={clsx(
+                  cursor === index && "_cursorActive bg-slate-100",
+                  "px-4 py-2 hover:bg-light-slate-2",
+                  "[&_span]:max-w-[12.3rem]"
+                )}
                 style={suggestionsStyle}
                 key={index}
                 data-suggestion={typeof suggestion === "string" ? suggestion : suggestion.key}
@@ -152,7 +156,7 @@ const Search = ({
                 }}
               >
                 {typeof suggestion === "string" ? (
-                  <span className="pl-5 text-sm sm:max-w-[12.3rem] md:max-w-[11rem]md:mw-auto inline-block text-ellipsis truncate tracking-tighter">
+                  <span className="pl-5 text-sm md:mw-auto inline-block text-ellipsis truncate tracking-tighter">
                     {suggestion}
                   </span>
                 ) : (
