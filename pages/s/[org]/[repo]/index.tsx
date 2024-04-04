@@ -67,7 +67,6 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
       <ProfileLayout>
-        <SEO title={`${repoData.full_name} - OpenSauced Insights`} />
         <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-8 w-full xl:max-w-6xl">
           <header className="flex items-center gap-4">
             <Avatar size={96} avatarURL={image} />
