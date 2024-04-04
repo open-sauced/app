@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.16.0-beta.5](https://github.com/open-sauced/app/compare/v2.16.0-beta.4...v2.16.0-beta.5) (2024-04-04)
+
+
+### 🐛 Bug Fixes
+
+* fixed stars and forks charts flipping issue ([#3126](https://github.com/open-sauced/app/issues/3126)) ([2e0d4eb](https://github.com/open-sauced/app/commit/2e0d4eb483f185208708a130ba129bfb4c10f01f))
+
 ## [2.16.0-beta.4](https://github.com/open-sauced/app/compare/v2.16.0-beta.3...v2.16.0-beta.4) (2024-04-04)
 
 
