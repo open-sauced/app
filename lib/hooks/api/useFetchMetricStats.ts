@@ -5,6 +5,7 @@ type UseFetchMetricStatsParams = {
   repository: string;
   variant: "stars" | "forks"; // TODO: add other MetricCard types
   range: number;
+  orderDirection?: "ASC" | "DESC";
 };
 
 export type StatsType = {
@@ -13,10 +14,11 @@ export type StatsType = {
   forks_count?: number;
 };
 
-export function useFetchMetricStats({ repository, variant, range }: UseFetchMetricStatsParams) {
+export function useFetchMetricStats({ repository, variant, range, orderDirection = "ASC" }: UseFetchMetricStatsParams) {
   const query = new URLSearchParams();
   query.set("repo", repository);
   query.set("range", range.toString());
+  query.set("orderDirection", orderDirection);
 
   const endpoint = () => {
     switch (variant) {
