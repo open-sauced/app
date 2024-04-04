@@ -1,19 +1,19 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/router";
-import { fetchApiData } from "helpers/fetchApiData";
-
 import { toast } from "lib/hooks/useToast";
+import { fetchApiData } from "helpers/fetchApiData";
+import { useContributorsList } from "lib/hooks/api/useContributorList";
+import { deleteWorkspaceContributorInsight, updateWorkspaceContributorInsight } from "lib/utils/workspace-utils";
+
+import Text from "components/atoms/Typography/text";
 import Button from "components/shared/Button/button";
+import Title from "components/atoms/Typography/title";
 import TextInput from "components/atoms/TextInput/text-input";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
-import Title from "components/atoms/Typography/title";
-import Text from "components/atoms/Typography/text";
-import { deleteWorkspaceContributorInsight, updateWorkspaceContributorInsight } from "lib/utils/workspace-utils";
-import { useContributorsList } from "lib/hooks/api/useContributorList";
 
 const TrackedContributorsModal = dynamic(import("components/Workspaces/TrackedContributorsModal"));
 const DeleteListPageModal = dynamic(import("components/organisms/ListPage/DeleteListPageModal"));
@@ -148,7 +148,7 @@ export default function ContributorInsightEditPage({
               onChange={(event) => setName(event.target.value)}
             />
           </div>
-          <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+          <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6 z-50">
             <Button
               variant="primary"
               className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
