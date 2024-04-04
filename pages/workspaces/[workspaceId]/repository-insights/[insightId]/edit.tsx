@@ -1,4 +1,5 @@
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -8,12 +9,13 @@ import { deleteWorkspaceRepoInsight, updateWorkspaceRepoInsight } from "lib/util
 
 import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
-import TrackedReposModal from "components/Workspaces/TrackedReposModal";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
-import DeleteInsightPageModal from "components/organisms/InsightPage/DeleteInsightPageModal";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
+
+const TrackedReposModal = dynamic(import("components/Workspaces/TrackedReposModal"));
+const DeleteInsightPageModal = dynamic(import("components/organisms/InsightPage/DeleteInsightPageModal"));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -90,7 +92,7 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(initialTrackedRepos);
 
-  const onSaveInsight = async () => {
+  const updateInsight = async () => {
     setLoading(true);
 
     const repos = Array.from(trackedRepos, (trackedRepo) => {
@@ -151,11 +153,11 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
               disabled={loading}
             />
           </div>
-          <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+          <div className="z-50 bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
             <Button
               variant="primary"
-              className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
-              onClick={onSaveInsight}
+              className="flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
+              onClick={updateInsight}
               disabled={loading}
             >
               Save Insight
