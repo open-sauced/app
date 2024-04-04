@@ -1,5 +1,4 @@
 import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/router";
 import { ComponentProps } from "react";
 import { fetchApiData } from "helpers/fetchApiData";
@@ -10,15 +9,12 @@ import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
 import MetricCard from "components/Graphs/MetricCard";
 import { DayRangePicker } from "components/shared/DayRangePicker";
+import ForksChart from "components/Graphs/ForksChart";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
-  const supabase = createPagesServerClient(context);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
 
   const { data: repoData, error } = await fetchApiData<DbRepo>({
     path: `repos/${org}/${repo}`,
@@ -46,6 +42,11 @@ interface RepoPageProps {
   ogImageUrl: string;
 }
 
+interface WorkspaceOgImageProps {
+  repository: DbRepo;
+  ogImageUrl: string;
+}
+
 export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps) {
   const syncId = repoData.id;
   const router = useRouter();
@@ -66,7 +67,7 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
       <ProfileLayout>
-        <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-8 w-full xl:max-w-6xl">
+        <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-6xl">
           <header className="flex items-center gap-4">
             <Avatar size={96} avatarURL={image} />
             <div className="flex flex-col gap-2">
@@ -75,13 +76,14 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
             </div>
           </header>
           <DayRangePicker />
-          <section className="flex flex-col gap-2 lg:flex-row lg:gap-8 w-full justify-between">
+          <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
             <ClientOnly>
               <MetricCard variant="stars" stats={starsData} range={range} />
               <MetricCard variant="forks" stats={forkStats} range={range} />
             </ClientOnly>
           </section>
           <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
+          <ForksChart stats={forkStats} total={repoData.forks} range={range} syncId={syncId} />
         </section>
       </ProfileLayout>
     </>
