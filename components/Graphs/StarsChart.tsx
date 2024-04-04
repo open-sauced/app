@@ -11,7 +11,7 @@ import {
   Line,
 } from "recharts";
 import { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Card from "components/atoms/Card/card";
 
 import { getCumulativeStarsHistogramToDays, getDailyStarsHistogramToDays } from "lib/utils/repo-page-utils";
@@ -27,8 +27,11 @@ type StarsChartProps = {
 
 export default function StarsChart({ stats, total, syncId, range = 30 }: StarsChartProps) {
   const [category, setCategory] = useState<"daily" | "cumulative">("daily");
-  const dailyData = getDailyStarsHistogramToDays({ stats, range });
-  const cumulativeData = getCumulativeStarsHistogramToDays({ stats, total, range });
+  const dailyData = useMemo(() => getDailyStarsHistogramToDays({ stats, range }), [stats, range]);
+  const cumulativeData = useMemo(
+    () => getCumulativeStarsHistogramToDays({ stats, total, range }),
+    [stats, total, range]
+  );
 
   return (
     <Card className="flex flex-col gap-8 w-full h-full items-center pt-8 px-8">
