@@ -2,18 +2,23 @@ import dynamic from "next/dynamic";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { PullRequestRow } from "components/PullRequests/PullRequestRow";
+import { CSSProperties, useEffect, useState } from "react";
+import {
+  Column,
+  ColumnPinningState,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "components/shared/Table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import usePullRequests from "lib/hooks/api/usePullRequests";
-import Pagination from "components/molecules/Pagination/pagination";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
@@ -21,6 +26,102 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { OrderDirection, OrderDirectionPicker } from "components/shared/OrderDirectionPicker";
 import { OrderByPicker } from "components/shared/OrderByPicker";
 
+interface PullRequestTableProps {
+  data: DbRepoPREvents[];
+}
+
+const pullRequestTableColumnHelper = createColumnHelper<DbRepoPREvents>();
+const columns = [
+  pullRequestTableColumnHelper.accessor("pr_state", { header: "State" }),
+  pullRequestTableColumnHelper.accessor("pr_author_login", { header: "Author" }),
+  pullRequestTableColumnHelper.accessor("pr_updated_at", { header: "Updated At" }),
+  pullRequestTableColumnHelper.accessor("pr_title", { header: "Title" }),
+  pullRequestTableColumnHelper.accessor("pr_changed_files", { header: "Changed Files" }),
+  pullRequestTableColumnHelper.accessor("pr_additions", { header: "Additions" }),
+  pullRequestTableColumnHelper.accessor("pr_deletions", { header: "Deletions" }),
+  pullRequestTableColumnHelper.accessor("pr_number", { header: "Number" }),
+  pullRequestTableColumnHelper.accessor("repo_name", { header: "Repository" }),
+  pullRequestTableColumnHelper.accessor("pr_created_at", { header: "Created At" }),
+  pullRequestTableColumnHelper.accessor("pr_closed_at", { header: "Closed At" }),
+  pullRequestTableColumnHelper.accessor("pr_merged_at", { header: "Merged At" }),
+];
+//These are the important styles to make sticky column pinning work!
+//Apply styles like this using your CSS strategy of choice with this kind of logic to head cells, data cells, footer cells, etc.
+//View the index.css file for more needed styles such as border-collapse: separate
+const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties => {
+  const isPinned = column.getIsPinned();
+  const isLastLeftPinnedColumn = isPinned === "left" && column.getIsLastColumn("left");
+  const isFirstRightPinnedColumn = isPinned === "right" && column.getIsFirstColumn("right");
+
+  return {
+    left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
+    right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
+    position: isPinned ? "sticky" : "relative",
+    width: column.getSize(),
+    zIndex: isPinned ? 1 : 0,
+  };
+};
+
+const PullRequestTable = ({ data }: PullRequestTableProps) => {
+  const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
+    left: ["pr_author_login", "pr_updated_at"],
+  });
+  const table = useReactTable({
+    columns,
+    data,
+    getCoreRowModel: getCoreRowModel(),
+    state: {
+      columnPinning,
+    },
+  });
+
+  return (
+    <>
+      <Table className="border rounded-lg">
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id} className="bg-light-slate-3">
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id} className="bg-white" style={{ ...getCommonPinningStyles(header.column) }}>
+                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows.map((row) => (
+            <TableRow key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <TableCell
+                  key={cell.id}
+                  className={`${cell.column.getIsPinned() ? "bg-white" : "bg-purple"}`}
+                  style={{ ...getCommonPinningStyles(cell.column) }}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      {/* <ClientOnly>
+        <Pagination
+          pages={[]}
+          onPageChange={(page) => {
+            router.push({
+              query: { ...router.query, page },
+            });
+          }}
+          totalPage={meta.pageCount}
+          page={meta.page}
+          showTotalPages={true}
+          goToPage={true}
+        />
+      </ClientOnly> */}
+    </>
+  );
+};
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -117,47 +218,7 @@ const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
               handleSelect={(selected: OptionKeys[]) => setFilteredRepositories(selected)}
             />
           </div>
-          <Table className="border rounded-lg">
-            <TableHeader>
-              <TableRow className="bg-light-slate-3">
-                <TableHead>State</TableHead>
-                <TableHead>Author</TableHead>
-                <TableHead>PR #</TableHead>
-                <TableHead>Updated At</TableHead>
-                <TableHead>Closed At</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead>Repository</TableHead>
-                <TableHead># of Comments</TableHead>
-                <TableHead>Additions</TableHead>
-                <TableHead>Deletions</TableHead>
-                <TableHead>Changed Files</TableHead>
-                <TableHead>Commits</TableHead>
-                <TableHead>Created At</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {/* TODO: Loading state */}
-              <ClientOnly>
-                {pullRequests.map((pullRequest) => (
-                  <PullRequestRow key={pullRequest.event_id} repoId={1} pullRequest={pullRequest} />
-                ))}
-              </ClientOnly>
-            </TableBody>
-          </Table>
-          <ClientOnly>
-            <Pagination
-              pages={[]}
-              onPageChange={(page) => {
-                router.push({
-                  query: { ...router.query, page },
-                });
-              }}
-              totalPage={meta.pageCount}
-              page={meta.page}
-              showTotalPages={true}
-              goToPage={true}
-            />
-          </ClientOnly>
+          <PullRequestTable data={pullRequests} />
         </div>
       </WorkspaceLayout>
     </>
