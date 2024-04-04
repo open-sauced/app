@@ -40,8 +40,6 @@ export default async function handler(req: Request) {
     (searchParams.get("description") ?? "").length > 0 ? searchParams.get("description") : "&nbsp;";
   const [org, repoName, range = 30] = pathname.split("/").slice(-3);
   const repository = `${org}/${repoName}`;
-
-  // TODO: promise.all fetching `histogram/stars?${query}`, histogram/forks?${query}`;
   const query = new URLSearchParams();
   query.set("repo", repository);
   query.set("range", `${range}`);
