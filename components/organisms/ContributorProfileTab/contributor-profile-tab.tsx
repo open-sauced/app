@@ -94,7 +94,7 @@ const ContributorProfileTab = ({
   const { data: emojis } = useFetchAllEmojis();
 
   const router = useRouter();
-  const { tab = "highlights" } = router.query as { tab: TabKey };
+  const { tab = "contributions" } = router.query as { tab: TabKey };
 
   const hasHighlights = highlights ? highlights.length > 0 : false;
   const [inputVisible, setInputVisible] = useState(false);
