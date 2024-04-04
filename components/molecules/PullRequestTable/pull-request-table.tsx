@@ -36,7 +36,6 @@ const PullRequestTable = ({
     repoIds: repositories,
     limit,
     range,
-    mostRecent: true,
   });
 
   return data.length > 0 ? (

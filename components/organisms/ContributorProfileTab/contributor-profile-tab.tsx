@@ -35,6 +35,7 @@ import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useToast } from "lib/hooks/useToast";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
+import { DayRangePicker } from "components/shared/DayRangePicker";
 import ConnectionRequestsWrapper from "../ConnectionRequestWrapper/connection-requests-wrapper";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
@@ -48,6 +49,7 @@ interface ContributorProfileTabProps {
   prsMergedPercentage: number;
   githubName: string;
   repoList: RepoList[];
+  range?: string;
 }
 
 type TabKey = "highlights" | "contributions" | "connections" | "recommendations";
@@ -72,6 +74,7 @@ const ContributorProfileTab = ({
   githubName,
   recentContributionCount,
   repoList,
+  range,
 }: ContributorProfileTabProps): JSX.Element => {
   const {
     login,
@@ -362,6 +365,9 @@ const ContributorProfileTab = ({
       <TabsContent value={"contributions" satisfies TabKey}>
         <div className="mt-4">
           <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
+            <div className="flex justify-end">
+              <DayRangePicker />
+            </div>
             <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
@@ -401,14 +407,19 @@ const ContributorProfileTab = ({
               </div>
             </div>
             <div className="mt-2 h-36">
-              <CardLineChart contributor={githubName} className="!h-36" />
+              <CardLineChart contributor={githubName} range={Number(range)} className="!h-36" />
             </div>
             <div>
               <CardRepoList limit={7} repoList={repoList} />
             </div>
-
             <div className="mt-6">
-              <PullRequestTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
+              <PullRequestTable
+                limit={15}
+                contributor={githubName}
+                topic={"*"}
+                repositories={undefined}
+                range={range}
+              />
             </div>
             <div className="mt-8 text-sm text-light-slate-9">
               <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
