@@ -54,9 +54,9 @@ export default function MetricCard({ stats, variant, range }: MetricCardProps) {
         {variant} <span className="font-medium text-base text-slate-500">{range} days</span>
       </h2>
 
-      <div className="flex justify-between items-center px-2 gap-8">
+      <div className="flex justify-between items-center px-2 gap-4 md:gap-8">
         <p className="text-5xl font-bold">{humanizeNumber(total!, "abbreviation")}</p>
-        <div className="h-fit w-full pl-6">
+        <div className="h-fit">
           <EChartsReact option={option} style={{ height: "100%", width: "100%" }} />
         </div>
       </div>
