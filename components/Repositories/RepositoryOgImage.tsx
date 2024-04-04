@@ -1,14 +1,13 @@
 import SEO from "layouts/SEO/SEO";
 
-export function getWorkspaceOgImage(repository: DbRepo, range = 30) {
+export function getRepositoryOgImage(repository: DbRepo, range = 30) {
   const searchParams = new URLSearchParams();
-  searchParams.append("wname", repository.name);
 
   if (repository.description.length > 0) {
     searchParams.append("description", repository.description);
   }
 
-  return `/og-images/workspace/${repository.id}/${range}?${searchParams}`;
+  return `/og-images/repository/${repository.full_name}/${range}?${searchParams}`;
 }
 
 interface WorkspaceOgImageProps {
