@@ -50,7 +50,7 @@ const NewInsightPage = () => {
       setName("Repositories");
       setTrackedRepos(reposMap);
     }
-  }, [router.query]);
+  }, [router.query.repos]);
 
   const onCreateInsight: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
