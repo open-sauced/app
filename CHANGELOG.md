@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.16.0-beta.5](https://github.com/open-sauced/app/compare/v2.16.0-beta.4...v2.16.0-beta.5) (2024-04-04)
+
+
+### 🐛 Bug Fixes
+
+* fixed stars and forks charts flipping issue ([#3126](https://github.com/open-sauced/app/issues/3126)) ([2e0d4eb](https://github.com/open-sauced/app/commit/2e0d4eb483f185208708a130ba129bfb4c10f01f))
+
+## [2.16.0-beta.4](https://github.com/open-sauced/app/compare/v2.16.0-beta.3...v2.16.0-beta.4) (2024-04-04)
+
+
+### 🐛 Bug Fixes
+
+* make danger zone more dangerous ([#2944](https://github.com/open-sauced/app/issues/2944)) ([175b67e](https://github.com/open-sauced/app/commit/175b67e61a26a7a597d423ec4f7820ba872abd6d))
+* remove login button from 404 page ([#3119](https://github.com/open-sauced/app/issues/3119)) ([abab4da](https://github.com/open-sauced/app/commit/abab4da737d8e48c91af8d78449992e1c417799c))
+
 ## [2.16.0-beta.3](https://github.com/open-sauced/app/compare/v2.16.0-beta.2...v2.16.0-beta.3) (2024-04-04)
 
 
