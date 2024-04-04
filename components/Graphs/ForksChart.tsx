@@ -12,7 +12,7 @@ import {
 import { BiGitRepoForked } from "react-icons/bi";
 import { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Button from "components/shared/Button/button";
 import Card from "components/atoms/Card/card";
 import { getCumulativeForksHistogramToDays, getDailyForksHistogramToDays } from "lib/utils/repo-page-utils";
@@ -27,8 +27,11 @@ type ForksChartProps = {
 
 export default function ForksChart({ stats, total, syncId, range = 30 }: ForksChartProps) {
   const [category, setCategory] = useState<"daily" | "cumulative">("daily");
-  const dailyData = getDailyForksHistogramToDays({ stats, range });
-  const cumulativeData = getCumulativeForksHistogramToDays({ stats, total, range });
+  const dailyData = useMemo(() => getDailyForksHistogramToDays({ stats, range }), [stats, range]);
+  const cumulativeData = useMemo(
+    () => getCumulativeForksHistogramToDays({ stats, total, range }),
+    [stats, total, range]
+  );
 
   return (
     <Card className="flex flex-col gap-8 w-full lg:min-w-[64rem] h-full items-center pt-8 px-8">
