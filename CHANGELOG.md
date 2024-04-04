@@ -5,6 +5,60 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.16.0-beta.6](https://github.com/open-sauced/app/compare/v2.16.0-beta.5...v2.16.0-beta.6) (2024-04-04)
+
+
+### 🍕 Features
+
+* created the OG image for repository pages ([#3117](https://github.com/open-sauced/app/issues/3117)) ([c2bf935](https://github.com/open-sauced/app/commit/c2bf9355cbacc56b0e7bec1f945f5637a12c4b24))
+
+## [2.16.0-beta.5](https://github.com/open-sauced/app/compare/v2.16.0-beta.4...v2.16.0-beta.5) (2024-04-04)
+
+
+### 🐛 Bug Fixes
+
+* fixed stars and forks charts flipping issue ([#3126](https://github.com/open-sauced/app/issues/3126)) ([2e0d4eb](https://github.com/open-sauced/app/commit/2e0d4eb483f185208708a130ba129bfb4c10f01f))
+
+## [2.16.0-beta.4](https://github.com/open-sauced/app/compare/v2.16.0-beta.3...v2.16.0-beta.4) (2024-04-04)
+
+
+### 🐛 Bug Fixes
+
+* make danger zone more dangerous ([#2944](https://github.com/open-sauced/app/issues/2944)) ([175b67e](https://github.com/open-sauced/app/commit/175b67e61a26a7a597d423ec4f7820ba872abd6d))
+* remove login button from 404 page ([#3119](https://github.com/open-sauced/app/issues/3119)) ([abab4da](https://github.com/open-sauced/app/commit/abab4da737d8e48c91af8d78449992e1c417799c))
+
+## [2.16.0-beta.3](https://github.com/open-sauced/app/compare/v2.16.0-beta.2...v2.16.0-beta.3) (2024-04-04)
+
+
+### 🐛 Bug Fixes
+
+* use workspace banner component on contributor insights overview ([#3118](https://github.com/open-sauced/app/issues/3118)) ([3ebaf54](https://github.com/open-sauced/app/commit/3ebaf54dd2a62c76539d0f1b83765ac07ccbbd40))
+
+
+### 🍕 Features
+
+* ForksChart for repo pages ([#3088](https://github.com/open-sauced/app/issues/3088)) ([ded181c](https://github.com/open-sauced/app/commit/ded181ce4dca9379d814804e16488a8bcbd70c3f))
+
+## [2.16.0-beta.2](https://github.com/open-sauced/app/compare/v2.16.0-beta.1...v2.16.0-beta.2) (2024-04-04)
+
+
+### 🍕 Features
+
+* add visibility pill to WorkspaceHeader ([#3110](https://github.com/open-sauced/app/issues/3110)) ([5f3da18](https://github.com/open-sauced/app/commit/5f3da18a25697f13bb9654883f87202b57d454f0))
+* make Contributions tab default on user profile pages ([#3112](https://github.com/open-sauced/app/issues/3112)) ([53f2755](https://github.com/open-sauced/app/commit/53f275552056bb8703daf52c0c33fd61fa250b03))
+
+## [2.16.0-beta.1](https://github.com/open-sauced/app/compare/v2.15.0...v2.16.0-beta.1) (2024-04-04)
+
+
+### 🍕 Features
+
+* link to repo recommendations to a repo page ([#3113](https://github.com/open-sauced/app/issues/3113)) ([a9a722d](https://github.com/open-sauced/app/commit/a9a722d4e2a34c04479ab44c87b94f74893382d6))
+
+
+### 🐛 Bug Fixes
+
+* now repo page charts no longer bleed out of their container ([#3115](https://github.com/open-sauced/app/issues/3115)) ([fdc9bd4](https://github.com/open-sauced/app/commit/fdc9bd4498ef5c0b3b74bc5a079e9dcfbaf6747d))
+
 ## [2.15.0](https://github.com/open-sauced/app/compare/v2.14.0...v2.15.0) (2024-04-03)
 
 

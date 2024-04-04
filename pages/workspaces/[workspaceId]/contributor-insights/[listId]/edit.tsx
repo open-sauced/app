@@ -418,31 +418,31 @@ export default function EditListPage({ list, workspaceId, initialContributors }:
           </>
         </div>
         <div className="flex flex-col gap-4 py-6 border-t border-b border-light-slate-8">
-          <label className="text-light-slate-12">Danger Zone</label>
-          <section className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Title level={4}>Transfer to other Workspace</Title>
-              <Text>Move this insight to another workspace where you are an owner or editor.</Text>
-            </div>
-            <SingleSelect
-              isSearchable
-              options={options}
-              placeholder={options.find((opt) => opt.value === workspaceId)?.label}
-              onValueChange={(value: string) => {
-                setSelectedWorkspace(value);
-              }}
-            />
-            <Button
-              onClick={() => setIsTransferModalOpen(true)}
-              disabled={selectedWorkspace === workspaceId}
-              variant="primary"
-              className="w-fit"
-            >
-              Transfer
-            </Button>
-          </section>
+          <label className="!text-xl !leading-none !text-red-700 font-semibold">Danger Zone</label>
           <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
-            <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
+            <section className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <Title level={4}>Transfer to other Workspace</Title>
+                <Text>Move this insight to another workspace where you are an owner or editor.</Text>
+              </div>
+              <SingleSelect
+                isSearchable
+                options={options}
+                placeholder={options.find((opt) => opt.value === workspaceId)?.label}
+                onValueChange={(value: string) => {
+                  setSelectedWorkspace(value);
+                }}
+              />
+              <Button
+                onClick={() => setIsTransferModalOpen(true)}
+                disabled={selectedWorkspace === workspaceId}
+                variant="primary"
+                className="w-fit"
+              >
+                Transfer
+              </Button>
+            </section>
+            <Title className="!text-1xl !leading-none pt-6" level={4}>
               Delete List
             </Title>
             <Text className="my-4">Once you delete a list, you&#39;re past the point of no return.</Text>
