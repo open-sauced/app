@@ -3,7 +3,7 @@
 import "../styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
@@ -12,7 +12,7 @@ import NextNProgress from "nextjs-progressbar";
 
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
-import { FaroErrorBoundary, withFaroProfiler } from "@grafana/faro-react";
+import { Faro, FaroErrorBoundary, withFaroProfiler } from "@grafana/faro-react";
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
@@ -64,9 +64,15 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
+  const faroRef = useRef<null | Faro>(null);
+
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_FARO_COLLECTOR_URL && process.env.NEXT_PUBLIC_FARO_APP_ENVIRONMENT != "local") {
-      initGrafanaFaro();
+    if (
+      process.env.NEXT_PUBLIC_FARO_COLLECTOR_URL &&
+      process.env.NEXT_PUBLIC_FARO_APP_ENVIRONMENT != "local" &&
+      !faroRef.current
+    ) {
+      faroRef.current = initGrafanaFaro();
     }
   }, []);
 
@@ -140,26 +146,26 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
 
   return (
     <>
-      <FaroErrorBoundary>
-        <Head>
-          <link rel="icon" href="/favicon.ico" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-        </Head>
-        <SEO {...seo} />
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <SEO {...seo} />
 
-        <SWRConfig
-          value={{
-            revalidateOnFocus: false,
-            shouldRetryOnError: false,
-            fetcher: publicApiFetcher,
-            provider: localStorageProvider,
-          }}
-        >
-          <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
-          <Toaster />
-          <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-            <PostHogProvider client={posthog}>
-              <TipProvider>
+      <SWRConfig
+        value={{
+          revalidateOnFocus: false,
+          shouldRetryOnError: false,
+          fetcher: publicApiFetcher,
+          provider: localStorageProvider,
+        }}
+      >
+        <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
+        <Toaster />
+        <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
+          <PostHogProvider client={posthog}>
+            <TipProvider>
+              <FaroErrorBoundary>
                 {Component.PageLayout ? (
                   <Component.PageLayout>
                     <Component {...pageProps} />
@@ -167,11 +173,11 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
                 ) : (
                   <Component {...pageProps} />
                 )}
-              </TipProvider>
-            </PostHogProvider>
-          </SessionContextProvider>
-        </SWRConfig>
-      </FaroErrorBoundary>
+              </FaroErrorBoundary>
+            </TipProvider>
+          </PostHogProvider>
+        </SessionContextProvider>
+      </SWRConfig>
     </>
   );
 }
