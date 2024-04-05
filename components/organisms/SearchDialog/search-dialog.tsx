@@ -14,9 +14,11 @@ import { searchUsers } from "lib/hooks/search-users";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 import useIsMacOS from "lib/hooks/useIsMacOS";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useSearchRepos } from "lib/hooks/useSearchRepos";
 
 const SearchDialog = () => {
   useLockBody();
+  const isMac = useIsMacOS();
   const router = useRouter();
   const { providerToken } = useSupabaseAuth();
   const [cursor, setCursor] = useState(-1);
@@ -25,8 +27,10 @@ const SearchDialog = () => {
   const [isSearchError, setIsSearchError] = useState(false);
   const setOpenSearch = store((state) => state.setOpenSearch);
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
-  const [searchResult, setSearchResult] = useState<{ data: GhUser[] }>();
-  const isMac = useIsMacOS();
+  const { data: repoData, isLoading: repoDataLoading, isError: repoDataError } = useSearchRepos(debouncedSearchTerm);
+
+  const [userSearchResult, setUserSearchResult] = useState<{ data: GhUser[] }>();
+  const [repoSearchResult, setRepoSearchResult] = useState<GhRepo[]>([]);
 
   useEffect(() => {
     document.addEventListener("keydown", handleCloseSearch);
@@ -40,7 +44,7 @@ const SearchDialog = () => {
   }, []);
 
   const handleKeyboardCtrl: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    const resultsCount = searchResult?.data?.length || 0;
+    const resultsCount = userSearchResult?.data?.length || 0;
     if (resultsCount && e.key === "ArrowUp") {
       e.preventDefault();
       setCursor(cursor === 0 ? Math.min(resultsCount - 1, 9) : cursor - 1);
@@ -63,15 +67,30 @@ const SearchDialog = () => {
     if (searchTerm.length >= 3) startSearch();
     async function startSearch() {
       setIsSearching(true);
-      const data = await searchUsers(debouncedSearchTerm, providerToken);
-      if (data) {
-        setSearchResult(data);
-        setIsSearchError(!data.data.length);
+      const userData = await searchUsers(debouncedSearchTerm, providerToken);
+      if (userData) {
+        setUserSearchResult(userData);
+        setIsSearchError(!userData.data.length);
+      }
+      if (repoData) {
+        setRepoSearchResult(repoData);
       }
       cursor !== -1 && setCursor(-1);
       setIsSearching(false);
     }
   }, [debouncedSearchTerm]);
+
+  const renderSearchState = () => {
+    if (searchTerm.length < 3) {
+      return <SearchInfo />;
+    } else if (!isSearchError && !isSearching && userSearchResult?.data && searchTerm.length >= 3) {
+      return <SearchResult cursor={cursor} result={userSearchResult?.data} />;
+    } else if (!isSearchError && isSearching) {
+      return <SearchLoading />;
+    } else if (isSearchError && !isSearching) {
+      return <SearchError />;
+    }
+  };
 
   return (
     <div className="fixed left-0 top-0 z-auto p-5 w-full h-full flex justify-center bg-white/30">
@@ -100,17 +119,7 @@ const SearchDialog = () => {
             {isMac ? "⌘K" : <span className="text-xs py-2 px-1">CTRL+K</span>}
           </Text>
         </div>
-        <div className="w-full h-full flex items-center">
-          {searchTerm.length < 3 ? (
-            <SearchInfo />
-          ) : !isSearchError && !isSearching && searchResult?.data && searchTerm.length >= 3 ? (
-            <SearchResult cursor={cursor} result={searchResult?.data} />
-          ) : !isSearchError && isSearching ? (
-            <SearchLoading />
-          ) : (
-            isSearchError && !isSearching && <SearchError />
-          )}
-        </div>
+        <div className="w-full h-full flex items-center">{renderSearchState()}</div>
       </div>
     </div>
   );
@@ -139,7 +148,7 @@ const SearchDialogTrigger = () => {
       >
         <div className="flex items-center">
           <FaSearch className="text-light-slate-9" fontSize={16} />
-          <Text className="pl-2 text-sm text-light-slate-9">Search for users</Text>
+          <Text className="pl-2 text-sm text-light-slate-9">Users, Repositories...</Text>
         </div>
         <Text keyboard className="text-gray-600 !border-b !px-1">
           {isMac ? "⌘K" : <span className="text-xs px-1 py-2">CTRL+K</span>}
@@ -171,7 +180,7 @@ const SearchLoading = () => (
 const SearchError = () => (
   <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
     <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
-    We couldn&apos;t find any users with that name
+    We couldn&apos;t find any users or repositories with that name
   </Text>
 );
 

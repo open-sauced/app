@@ -185,7 +185,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal
             onToggleAllRepos={onToggleAllRepos}
             onSearch={onSearchRepos}
             repositories={repositories}
-            searchedRepos={searchedRepos}
+            searchedRepos={searchedRepos.map((repo) => repo.full_name)}
             suggestedRepos={suggestedRepos}
           />
         );

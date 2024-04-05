@@ -78,7 +78,7 @@ export const useSearchRepos = (searchTerm: string | undefined, minimuChars = 3, 
   );
 
   return {
-    data: data?.items.map((item) => item.full_name) ?? [],
+    data: data?.items ?? [],
     isLoading: !error && !data,
     isError: !!error,
     mutate,
