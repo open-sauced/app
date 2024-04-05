@@ -86,12 +86,24 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
           <DayRangePicker />
           <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
             <ClientOnly>
-              <MetricCard variant="stars" stats={starsData} range={range} />
-              <MetricCard variant="forks" stats={forkStats} range={range} />
+              <MetricCard variant="stars" stats={starsData} range={range} isLoading={isStarsDataLoading} />
+              <MetricCard variant="forks" stats={forkStats} range={range} isLoading={isForksDataLoading} />
             </ClientOnly>
           </section>
-          <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
-          <ForksChart stats={forkStats} total={repoData.forks} range={range} syncId={syncId} />
+          <StarsChart
+            stats={starsData}
+            total={repoData.stars}
+            range={range}
+            syncId={syncId}
+            isLoading={isStarsDataLoading}
+          />
+          <ForksChart
+            stats={forkStats}
+            total={repoData.forks}
+            range={range}
+            syncId={syncId}
+            isLoading={isForksDataLoading}
+          />
         </section>
       </ProfileLayout>
     </>
