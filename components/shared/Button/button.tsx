@@ -23,7 +23,7 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
         disabled ? "bg-dark-slate-4 text-dark-slate-9 pointer-events-none" : ""
       }`,
       outline: `bg-orange-50 border-orange-500 text-orange-600 hover:bg-orange-100 ${
-        disabled ? "bg-light-orange-3 pointer-events-none text-light-orange-7 border-light-orange-5" : ""
+        disabled ? "bg-light-orange-3 pointer-events-none text-light-orange-2 border-light-orange-5" : ""
       }`,
       link: `text-orange-600 hover:bg-orange-100 border-none ${disabled ? "text-orange-400 pointer-events-none" : ""}`,
       destructive: "border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7",
