@@ -52,18 +52,16 @@ export default function MetricCard({ stats, variant, range, isLoading }: MetricC
 
   return (
     <Card className="w-full xl:max-w-lg h-fit p-5 pl-6 flex flex-col gap-4">
-      {isLoading ? (
-        <h2 className="flex gap-2 items-center text-xl font-semibold capitalize">
-          {variant}{" "}
+      <h2 className="flex gap-2 items-center text-xl font-semibold capitalize">
+        {variant}{" "}
+        {isLoading ? (
           <span>
             <SkeletonWrapper width={100} height={24} />
           </span>
-        </h2>
-      ) : (
-        <h2 className="text-xl font-semibold capitalize">
-          {variant} <span className="font-medium text-base text-slate-500">{range} days</span>
-        </h2>
-      )}
+        ) : (
+          <span className="font-medium text-base text-slate-500">{range} days</span>
+        )}
+      </h2>
 
       {isLoading ? (
         <SkeletonWrapper width={300} height={95} />
