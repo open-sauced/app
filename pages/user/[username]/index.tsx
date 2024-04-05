@@ -1,5 +1,4 @@
 import { GetServerSidePropsContext } from "next";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import { jsonLdScriptProps } from "react-schemaorg";
 import { Person } from "schema-dts";
@@ -15,14 +14,11 @@ import useRepoList from "lib/hooks/useRepoList";
 import { getAvatarByUsername } from "lib/utils/github";
 import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
+import { useHasMounted } from "lib/hooks/useHasMounted";
+import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
-const ClientOnlyContributorProfilePage = dynamic(
-  () => import("components/organisms/ContributorProfilePage/contributor-profile-page"),
-  { ssr: false }
-);
-
 export type ContributorSSRProps = {
   username: string;
   user?: DbUser;
@@ -31,6 +27,7 @@ export type ContributorSSRProps = {
 
 const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
   const { data: contributor, isError: contributorError } = useFetchUser(username);
+  const hasMounted = useHasMounted();
 
   const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
     contributor: username,
@@ -46,6 +43,17 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
   const contributorLanguageList = useContributorLanguages(username);
   const githubAvatar = getAvatarByUsername(username, 300);
   const prVelocity = getContributorPullRequestVelocity(contributorPRData);
+
+  if (!hasMounted) {
+    return (
+      <SEO
+        title={`${username} | OpenSauced`}
+        description={`${user?.bio || `${username} has connected their GitHub but has not added a bio.`}`}
+        image={ogImage}
+        twitterCard="summary_large_image"
+      />
+    );
+  }
 
   return (
     <>
@@ -75,7 +83,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
         )}
       </Head>
       <div className="w-full">
-        <ClientOnlyContributorProfilePage
+        <ContributorProfilePage
           prMerged={mergedPrs.length}
           error={isError}
           loading={false}
