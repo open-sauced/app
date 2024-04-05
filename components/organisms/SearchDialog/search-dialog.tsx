@@ -27,10 +27,13 @@ const SearchDialog = () => {
   const [isSearchError, setIsSearchError] = useState(false);
   const setOpenSearch = store((state) => state.setOpenSearch);
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
-  const { data: repoData, isLoading: repoDataLoading, isError: repoDataError } = useSearchRepos(debouncedSearchTerm);
+  const {
+    data: repoData,
+    isLoading: repoDataLoading,
+    isError: repoDataError,
+  } = useSearchRepos(debouncedSearchTerm, 3, 5);
 
   const [userSearchResult, setUserSearchResult] = useState<{ data: GhUser[] }>();
-  const [repoSearchResult, setRepoSearchResult] = useState<GhRepo[]>([]);
 
   useEffect(() => {
     document.addEventListener("keydown", handleCloseSearch);
@@ -44,7 +47,7 @@ const SearchDialog = () => {
   }, []);
 
   const handleKeyboardCtrl: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    const resultsCount = userSearchResult?.data?.length || 0;
+    const resultsCount = (userSearchResult?.data?.length || 0) + repoData.length;
     if (resultsCount && e.key === "ArrowUp") {
       e.preventDefault();
       setCursor(cursor === 0 ? Math.min(resultsCount - 1, 9) : cursor - 1);
@@ -72,23 +75,63 @@ const SearchDialog = () => {
         setUserSearchResult(userData);
         setIsSearchError(!userData.data.length);
       }
-      if (repoData) {
-        setRepoSearchResult(repoData);
-      }
       cursor !== -1 && setCursor(-1);
       setIsSearching(false);
     }
   }, [debouncedSearchTerm]);
 
-  const renderSearchState = () => {
+  const renderUserSearchState = () => {
     if (searchTerm.length < 3) {
-      return <SearchInfo />;
+      return null;
     } else if (!isSearchError && !isSearching && userSearchResult?.data && searchTerm.length >= 3) {
       return <SearchResult cursor={cursor} result={userSearchResult?.data} />;
     } else if (!isSearchError && isSearching) {
       return <SearchLoading />;
     } else if (isSearchError && !isSearching) {
       return <SearchError />;
+    }
+  };
+
+  const renderRepoSearchState = () => {
+    if (searchTerm.length < 3) {
+      return null;
+    }
+    if (repoDataLoading) {
+      return <SearchLoading />;
+    }
+    if (repoDataError || repoData.length === 0) {
+      return <SearchError />;
+    }
+    if (repoData.length > 0) {
+      return (
+        <div className="w-full py-1 overflow-hidden text-gray-600">
+          <Text className="block w-full py-1 px-4">Repositories</Text>
+          <div className="w-full h-full">
+            <ScrollArea className="w-full">
+              {repoData.map((repo: GhRepo, i: number) => (
+                <Link
+                  key={i + (userSearchResult?.data.length || 0)}
+                  href={`/s/${repo.full_name}`}
+                  className={clsx(
+                    cursor === i + (userSearchResult?.data.length || 0) && "_cursorActive bg-slate-100",
+                    "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"
+                  )}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(e.currentTarget.href);
+                    setOpenSearch(false);
+                  }}
+                >
+                  <Avatar size="sm" className="!rounded-full flex-none" avatarURL={repo.owner.avatar_url} />
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    <Text className="text-gray-900">{repo.full_name}</Text>
+                  </div>
+                </Link>
+              ))}
+            </ScrollArea>
+          </div>
+        </div>
+      );
     }
   };
 
@@ -119,7 +162,17 @@ const SearchDialog = () => {
             {isMac ? "⌘K" : <span className="text-xs py-2 px-1">CTRL+K</span>}
           </Text>
         </div>
-        <div className="w-full h-full flex items-center">{renderSearchState()}</div>
+        <div className="w-full h-full flex flex-col items-center">
+          {searchTerm.length < 3 ? (
+            <SearchInfo />
+          ) : (
+            <>
+              <section className="flex flex-col w-full">{renderUserSearchState()}</section>
+              <hr />
+              <section className="flex flex-col w-full">{renderRepoSearchState()}</section>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

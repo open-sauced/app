@@ -25,7 +25,7 @@ const githubApiRepoFetcher: Fetcher = async (apiUrl: string) => {
     // Use our API as a fallback
     const searchTerm = new URL(`${baseUrl}/${apiUrl}`).searchParams.get("q") ?? "";
     const fallbackResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/repos/search?limit=10&repo=${encodeURIComponent(searchTerm)}`
+      `${process.env.NEXT_PUBLIC_API_URL}/repos/search?limit=5&repo=${encodeURIComponent(searchTerm)}`
     );
 
     if (fallbackResponse.status === 200) {

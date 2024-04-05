@@ -1,7 +1,7 @@
 const searchUsers = async (username: string, providerToken?: string | null | undefined) => {
   try {
     const res = await fetch(
-      `https://api.github.com/search/users?q=${encodeURIComponent(username)} type:user&sort=followers&per_page=10`,
+      `https://api.github.com/search/users?q=${encodeURIComponent(username)} type:user&sort=followers&per_page=5`,
       {
         ...(providerToken
           ? {
@@ -21,7 +21,7 @@ const searchUsers = async (username: string, providerToken?: string | null | und
       const fallbackResponse = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/search?username=${encodeURIComponent(
           username.replaceAll("user:", "")
-        )}&limit=10`
+        )}&limit=5`
       );
 
       if (fallbackResponse.status === 200) {
