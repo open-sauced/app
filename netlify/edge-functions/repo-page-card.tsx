@@ -1,30 +1,13 @@
 import React from "react";
 import { ImageResponse } from "og_edge";
 import type { Config } from "https://edge.netlify.com";
+import { getLocalAsset, getOrgUsernameAvatar, humanizeNumber } from "../og-image-utils.ts";
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
 type StatsType<T = "stars" | "forks"> = T extends "stars"
   ? { star_count: number; bucket: string }
   : { forks_count: number; bucket: string };
-
-function humanizeNumber(num: number | string, type: "comma" | "abbreviation" | null = null) {
-  const number = typeof num !== "number" ? parseFloat(num) : num;
-  const abs = Math.abs(number);
-  const sign = Math.sign(number);
-  const commaConverted = abs > 999 ? `${((sign * abs) / 1000).toFixed(3).replace(".", ",")}` : `${sign * abs}`;
-  const abbreviated = abs > 999 ? `${((sign * abs) / 1000).toFixed(1)}k` : `${sign * abs}`;
-
-  return type === "comma" ? commaConverted : abbreviated;
-}
-
-function getLocalAsset(url: URL): Promise<ArrayBuffer> {
-  return fetch(url).then((res) => res.arrayBuffer());
-}
-
-function getOrgUsernameAvatar(username: string, size) {
-  return `https://www.github.com/${username}.png?size=${size}`;
-}
 
 function getStatTotal<T extends "stars" | "forks">(stats: StatsType<T>[], variant: T) {
   const countProperty = variant === "stars" ? "star_count" : "forks_count";
