@@ -88,7 +88,7 @@ const SearchDialog = () => {
     } else if (!isSearchError && isSearching) {
       return <SearchLoading />;
     } else if (isSearchError && !isSearching) {
-      return <SearchError />;
+      return <SearchError variant="users" />;
     }
   };
 
@@ -100,7 +100,7 @@ const SearchDialog = () => {
       return <SearchLoading />;
     }
     if (repoDataError || repoData.length === 0) {
-      return <SearchError />;
+      return <SearchError variant="repositories" />;
     }
     if (repoData.length > 0) {
       return (
@@ -122,7 +122,7 @@ const SearchDialog = () => {
                     setOpenSearch(false);
                   }}
                 >
-                  <Avatar size="sm" className="!rounded-full flex-none" avatarURL={repo.owner.avatar_url} />
+                  <Avatar size="sm" className="!rounded-full flex-none" avatarURL={repo.owner?.avatar_url} />
                   <div className="flex items-center gap-2 overflow-hidden">
                     <Text className="text-gray-900">{repo.full_name}</Text>
                   </div>
@@ -230,10 +230,10 @@ const SearchLoading = () => (
   </div>
 );
 
-const SearchError = () => (
+const SearchError = ({ variant }: { variant: "users" | "repositories" }) => (
   <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
     <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
-    We couldn&apos;t find any users or repositories with that name
+    We couldn&apos;t find any {variant} with that name
   </Text>
 );
 
