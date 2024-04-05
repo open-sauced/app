@@ -9,8 +9,11 @@ import {
 import { CSSProperties, useState } from "react";
 import { GitMergeIcon, GitPullRequestClosedIcon, GitPullRequestIcon } from "@primer/octicons-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import Pagination from "components/molecules/Pagination/pagination";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface PullRequestTableProps {
   data: DbRepoPREvents[];
@@ -125,6 +128,7 @@ const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties =
 };
 
 export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps) => {
+  const router = useRouter();
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
     left: ["pr_state", "pr_number", "repo_name", "pr_author_login", "pr_updated_at"],
   });
@@ -161,7 +165,7 @@ export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps)
           ))}
         </TableBody>
       </Table>
-      {/* <ClientOnly>
+      <ClientOnly>
         <Pagination
           pages={[]}
           onPageChange={(page) => {
@@ -174,7 +178,7 @@ export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps)
           showTotalPages={true}
           goToPage={true}
         />
-      </ClientOnly> */}
+      </ClientOnly>
     </>
   );
 };
