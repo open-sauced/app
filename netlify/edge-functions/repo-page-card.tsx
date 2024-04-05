@@ -40,7 +40,7 @@ export default async function handler(req: Request) {
     (searchParams.get("description") ?? "").length > 0 ? searchParams.get("description") : "&nbsp;";
   const [org, repoName, range = 30] = pathname.split("/").slice(-3);
   const query = new URLSearchParams();
-  query.set("repo", `{org/repoName}`);
+  query.set("repo", `${org}/${repoName}`);
   query.set("range", `${range}`);
   query.set("orderDirection", "ASC");
 
