@@ -24,6 +24,9 @@ const interests = [
 
 /** @type {import('next').NextConfig} */
 module.exports = {
+  experimental: {
+    instrumentationHook: true,
+  },
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
   images: {

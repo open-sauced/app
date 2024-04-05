@@ -146,26 +146,26 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
 
   return (
     <>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <SEO {...seo} />
+      <FaroErrorBoundary>
+        <Head>
+          <link rel="icon" href="/favicon.ico" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        <SEO {...seo} />
 
-      <SWRConfig
-        value={{
-          revalidateOnFocus: false,
-          shouldRetryOnError: false,
-          fetcher: publicApiFetcher,
-          provider: localStorageProvider,
-        }}
-      >
-        <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
-        <Toaster />
-        <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-          <PostHogProvider client={posthog}>
-            <TipProvider>
-              <FaroErrorBoundary>
+        <SWRConfig
+          value={{
+            revalidateOnFocus: false,
+            shouldRetryOnError: false,
+            fetcher: publicApiFetcher,
+            provider: localStorageProvider,
+          }}
+        >
+          <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
+          <Toaster />
+          <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
+            <PostHogProvider client={posthog}>
+              <TipProvider>
                 {Component.PageLayout ? (
                   <Component.PageLayout>
                     <Component {...pageProps} />
@@ -173,11 +173,11 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
                 ) : (
                   <Component {...pageProps} />
                 )}
-              </FaroErrorBoundary>
-            </TipProvider>
-          </PostHogProvider>
-        </SessionContextProvider>
-      </SWRConfig>
+              </TipProvider>
+            </PostHogProvider>
+          </SessionContextProvider>
+        </SWRConfig>
+      </FaroErrorBoundary>
     </>
   );
 }

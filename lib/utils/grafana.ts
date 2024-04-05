@@ -16,13 +16,15 @@ export const initGrafanaFaro = () => {
 
     instrumentations: [
       // load the mandatory web instrumentation
-      ...getWebInstrumentations(),
+      ...getWebInstrumentations({
+        captureConsole: true,
+      }),
 
       // add tracing instrumentation which should include the React Profiler
       new TracingInstrumentation(),
 
       new ReactIntegration({
-        // In the future, we may choose to integrate with the router instrumentation to
+        // In the future, we may choose to integrate with React router instrumentation to
         // get deeper metrics on matched routes, navigation types, etc.
         // Next/router doesn't seem to be supported which won't give us route metrics.
         //
