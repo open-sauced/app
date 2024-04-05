@@ -30,7 +30,10 @@ type ForksChartProps = {
 export default function ForksChart({ stats, total, syncId, range = 30, isLoading }: ForksChartProps) {
   const [category, setCategory] = useState<"daily" | "cumulative">("daily");
   const dailyData = useMemo(() => getDailyForksHistogramToDays({ stats, range }), [stats, range]);
-  const cumulativeData = useMemo(() => getCumulativeForksHistogramToDays({ stats, total, range }), [stats, range]);
+  const cumulativeData = useMemo(
+    () => getCumulativeForksHistogramToDays({ stats, total, range }),
+    [stats, total, range]
+  );
 
   const renderChart = () => {
     switch (category) {

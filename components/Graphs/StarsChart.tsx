@@ -30,7 +30,10 @@ type StarsChartProps = {
 export default function StarsChart({ stats, total, syncId, range = 30, isLoading }: StarsChartProps) {
   const [category, setCategory] = useState<"daily" | "cumulative">("daily");
   const dailyData = useMemo(() => getDailyStarsHistogramToDays({ stats, range }), [stats, range]);
-  const cumulativeData = useMemo(() => getCumulativeStarsHistogramToDays({ stats, total, range }), [stats, range]);
+  const cumulativeData = useMemo(
+    () => getCumulativeStarsHistogramToDays({ stats, total, range }),
+    [stats, total, range]
+  );
 
   const renderChart = () => {
     switch (category) {
