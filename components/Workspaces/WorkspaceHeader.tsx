@@ -6,6 +6,7 @@ import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { useToast } from "lib/hooks/useToast";
+import Pill from "components/atoms/Pill/pill";
 
 interface WorkspaceHeaderProps {
   workspace: Workspace;
@@ -40,6 +41,7 @@ export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
         <span title={workspace.name} className="truncate">
           {workspace.name}
         </span>
+        <Pill className="font-medium" text={workspace.is_public ? "Public" : "Private"} />
       </h1>
       <div className="flex gap-4">
         <Button

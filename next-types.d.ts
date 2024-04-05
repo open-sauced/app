@@ -13,6 +13,7 @@ interface DbRepo {
   readonly host_id: string;
   readonly size: number;
   readonly stars: number;
+  readonly forks: number;
   readonly issues: number;
   readonly full_name: string;
   readonly url: string;
