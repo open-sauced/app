@@ -132,7 +132,7 @@ export default function ContributorInsightEditPage({
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
       <div className="grid gap-6 max-w-4xl">
-        <h1 className="border-b bottom pb-4 text-xl font-medium">Create Contributor Insight</h1>
+        <h1 className="border-b bottom pb-4 text-xl font-medium">Edit Contributor Insight</h1>
         <section className="flex flex-col gap-6 mb-2">
           <div>
             <h3 className="font-medium mb-2">
