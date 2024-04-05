@@ -12,8 +12,6 @@ import ForksChart from "components/Graphs/ForksChart";
 import MetricCard from "components/Graphs/MetricCard";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import Card from "components/atoms/Card/card";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -40,7 +38,7 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
   const range = (router.query.range ? Number(router.query.range) : 30) as Range;
   const {
     data: starsData,
-    isLoading: starsDataLoading,
+    isLoading: isStarsDataLoading,
     error: starsError,
   } = useFetchMetricStats({
     repository: repoData.full_name,
@@ -50,7 +48,7 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
 
   const {
     data: forkStats,
-    isLoading: forksDataLoading,
+    isLoading: isForksDataLoading,
     error: forkError,
   } = useFetchMetricStats({
     repository: repoData.full_name,
@@ -72,35 +70,11 @@ export default function RepoPage({ repoData, image }: { repoData: DbRepo; image:
         <DayRangePicker />
         <ClientOnly>
           <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
-            {starsDataLoading ? (
-              <Card className="w-full xl:max-w-lg h-fit p-5 pl-6 flex gap-8">
-                <SkeletonWrapper width={216} height={123.5} count={2} />
-              </Card>
-            ) : (
-              <MetricCard variant="stars" stats={starsData} range={range} />
-            )}
-            {forksDataLoading ? (
-              <Card className="w-full xl:max-w-lg h-fit p-5 pl-6 flex gap-8">
-                <SkeletonWrapper width={216} height={123.5} count={2} />
-              </Card>
-            ) : (
-              <MetricCard variant="forks" stats={forkStats} range={range} />
-            )}
+            <MetricCard variant="stars" stats={starsData} range={range} isLoading={isStarsDataLoading} />
+            <MetricCard variant="forks" stats={forkStats} range={range} isLoading={isForksDataLoading} />
           </section>
-          {starsDataLoading ? (
-            <Card className="flex flex-col gap-8 w-full h-full items-center pt-8 px-8">
-              <SkeletonWrapper width={1000} height={370} />
-            </Card>
-          ) : (
-            <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
-          )}
-          {forksDataLoading ? (
-            <Card className="flex flex-col gap-8 w-full h-full items-center pt-8 px-8">
-              <SkeletonWrapper width={1000} height={370} />
-            </Card>
-          ) : (
-            <ForksChart stats={forkStats} total={repoData.forks} range={range} syncId={syncId} />
-          )}
+          <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
+          <ForksChart stats={forkStats} total={repoData.forks} range={range} syncId={syncId} />
         </ClientOnly>
       </section>
     </ProfileLayout>
