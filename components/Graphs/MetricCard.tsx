@@ -51,9 +51,14 @@ export default function MetricCard({ stats, variant, range, isLoading }: MetricC
   );
 
   return (
-    <Card className="w-full xl:max-w-lg h-fit p-5 pl-6">
+    <Card className="w-full xl:max-w-lg h-fit p-5 pl-6 flex flex-col gap-4">
       {isLoading ? (
-        <SkeletonWrapper width={100} height={24} />
+        <h2 className="flex gap-2 items-center text-xl font-semibold capitalize">
+          {variant}{" "}
+          <span>
+            <SkeletonWrapper width={100} height={24} />
+          </span>
+        </h2>
       ) : (
         <h2 className="text-xl font-semibold capitalize">
           {variant} <span className="font-medium text-base text-slate-500">{range} days</span>
@@ -61,7 +66,7 @@ export default function MetricCard({ stats, variant, range, isLoading }: MetricC
       )}
 
       {isLoading ? (
-        <SkeletonWrapper width={300} height={100} />
+        <SkeletonWrapper width={300} height={95} />
       ) : (
         <div className="flex justify-between items-center px-2 gap-4 md:gap-8">
           <p className="text-5xl font-bold">{humanizeNumber(total!, "abbreviation")}</p>
