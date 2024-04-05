@@ -43,6 +43,9 @@
     "e2e:ui": "npm run e2e -- --ui"
   },
   "dependencies": {
+    "@grafana/faro-react": "^1.5.1",
+    "@grafana/faro-web-sdk": "^1.5.1",
+    "@grafana/faro-web-tracing": "^1.5.1",
     "@headlessui/react": "^1.7.8",
     "@heroicons/react": "^2.0.14",
     "@nivo/bar": "^0.83.0",
