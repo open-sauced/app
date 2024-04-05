@@ -15,7 +15,6 @@ import useRepoList from "lib/hooks/useRepoList";
 import { getAvatarByUsername } from "lib/utils/github";
 import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
-import fetchSocialCard from "lib/utils/fetch-social-card";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -126,11 +125,8 @@ export async function handleUserSSR({ params }: GetServerSidePropsContext<{ user
     }
   }
 
-  // Runs the data fetching in parallel. Decreases the loading time by 50%.
-  const [user, ogData] = await Promise.allSettled([fetchUserData(), fetchSocialCard(`users/${username}`)]);
-
-  const ogImage = ogData.status === "fulfilled" ? ogData.value : "";
-  const userData = user.status === "fulfilled" ? user.value : null;
+  const userData = await fetchUserData();
+  const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/users/${username}`;
 
   return {
     props: { username, user: userData, ogImage },
