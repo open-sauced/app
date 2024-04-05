@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.16.2-beta.1](https://github.com/open-sauced/app/compare/v2.16.1...v2.16.2-beta.1) (2024-04-05)
+
+
+### 🐛 Bug Fixes
+
+* now common OG image functions are in a utility file ([#3132](https://github.com/open-sauced/app/issues/3132)) ([450d874](https://github.com/open-sauced/app/commit/450d874c4f7ca6a614d9c987f880a8c6e21399de))
+* repos with long name partially stack ([#2534](https://github.com/open-sauced/app/issues/2534)) ([1ed303b](https://github.com/open-sauced/app/commit/1ed303b1eb5c8f65d00c15c2de63758551e80fe3))
+
 ## [2.16.1](https://github.com/open-sauced/app/compare/v2.16.0...v2.16.1) (2024-04-05)
 
 
