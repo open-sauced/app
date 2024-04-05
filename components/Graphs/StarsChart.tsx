@@ -57,23 +57,28 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
 
   return (
     <Card className="flex flex-col gap-8 w-full h-full items-center pt-8 px-8">
-      <section className="flex w-full items-center justify-between">
-        <h3 className="text-sm font-semibold md:text-xl text-slate-800 w-full">
-          {"Stars "}
-          {isLoading ? (
-            <SkeletonWrapper width={100} height={24} />
-          ) : (
-            <span className="pl-2 text-slate-500 font-medium">{range} days</span>
-          )}
-        </h3>
-        <div className="flex gap-2 lg:gap-4 items-center">
-          <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
-            Daily
-          </Button>
-          <Button variant={category === "cumulative" ? "outline" : "default"} onClick={() => setCategory("cumulative")}>
-            Cumulative
-          </Button>
-        </div>
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between">
+        {isLoading ? (
+          <SkeletonWrapper width={100} height={24} />
+        ) : (
+          <>
+            <div className="flex gap-1 items-center w-fit">
+              <h3 className="text-sm font-semibold md:text-xl text-slate-800">Stars</h3>
+              <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+            </div>
+            <div className="flex gap-4 items-center">
+              <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
+                Daily
+              </Button>
+              <Button
+                variant={category === "cumulative" ? "outline" : "default"}
+                onClick={() => setCategory("cumulative")}
+              >
+                Cumulative
+              </Button>
+            </div>
+          </>
+        )}
       </section>
       <ResponsiveContainer width="100%" height={300}>
         {isLoading ? <SkeletonWrapper width={100} height={100} /> : renderChart()}
