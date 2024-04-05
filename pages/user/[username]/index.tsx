@@ -9,7 +9,6 @@ import SEO from "layouts/SEO/SEO";
 import { WithPageLayout } from "interfaces/with-page-layout";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
-import { useFetchUser } from "lib/hooks/useFetchUser";
 import useRepoList from "lib/hooks/useRepoList";
 import { getAvatarByUsername } from "lib/utils/github";
 import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
@@ -26,7 +25,6 @@ export type ContributorSSRProps = {
 };
 
 const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
-  const { data: contributor, isError: contributorError } = useFetchUser(username);
   const hasMounted = useHasMounted();
 
   const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
@@ -37,7 +35,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
     range: "30",
     mostRecent: false,
   });
-  const isError = contributorError;
+  const isError = !user;
   const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.repo_name))).join(","));
   const mergedPrs = contributorPRData.filter((prData) => prData.pr_is_merged);
   const contributorLanguageList = useContributorLanguages(username);
@@ -93,7 +91,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           githubAvatar={githubAvatar}
           prTotal={contributorPRMeta.itemCount}
           recentContributionCount={repoList.length}
-          prFirstOpenedDate={contributor?.first_opened_pr_at}
+          prFirstOpenedDate={user?.first_opened_pr_at}
           prVelocity={prVelocity}
         />
       </div>
