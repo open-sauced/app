@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.16.1](https://github.com/open-sauced/app/compare/v2.16.0...v2.16.1) (2024-04-05)
+
+
+### 🐛 Bug Fixes
+
+* now repo page star and fork totals load up instead of returning 0 ([#3133](https://github.com/open-sauced/app/issues/3133)) ([f77ea3c](https://github.com/open-sauced/app/commit/f77ea3c5f06360629a0c4193ae0c505547b14690))
+
 ## [2.16.1-beta.1](https://github.com/open-sauced/app/compare/v2.16.0...v2.16.1-beta.1) (2024-04-05)
 
 
