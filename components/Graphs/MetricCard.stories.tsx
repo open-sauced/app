@@ -9,6 +9,7 @@ const meta: Meta<typeof MetricCard> = {
   component: MetricCard,
   args: {
     range: 30,
+    isLoading: false,
   },
 };
 
@@ -45,5 +46,11 @@ export const ForkMetricCard = {
       { bucket: "2024-03-11T00:00:00.000Z", forks_count: 1 },
       { bucket: "2024-03-07T00:00:00.000Z", forks_count: 1 },
     ],
+  },
+};
+
+export const LoadingMetricCard = {
+  args: {
+    isLoading: true,
   },
 };

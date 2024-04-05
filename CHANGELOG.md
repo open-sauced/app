@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.1](https://github.com/open-sauced/app/compare/v2.16.2-beta.1...v2.17.0-beta.1) (2024-04-05)
+
+
+### 🐛 Bug Fixes
+
+* use OpenGraph image URL and remove server request from user profile ([#3137](https://github.com/open-sauced/app/issues/3137)) ([4e27f55](https://github.com/open-sauced/app/commit/4e27f55a45eb398c155f650e8b9f6dadd0be8a21)), closes [#3066](https://github.com/open-sauced/app/issues/3066)
+
+
+### 🍕 Features
+
+* add Skeleton to Repo Page ([#3124](https://github.com/open-sauced/app/issues/3124)) ([d661ffa](https://github.com/open-sauced/app/commit/d661ffae5ed78d716bc9502a02342e667e01dd8c))
+
 ## [2.16.2-beta.1](https://github.com/open-sauced/app/compare/v2.16.1...v2.16.2-beta.1) (2024-04-05)
 
 

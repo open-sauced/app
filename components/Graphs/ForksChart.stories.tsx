@@ -11,6 +11,7 @@ const meta: Meta<typeof ForksChart> = {
     range: 30,
     total: 228,
     syncId: "repo_id",
+    isLoading: false,
   },
 };
 
@@ -40,6 +41,12 @@ export const Days90: Story = {
     range: 90,
     total: 228,
     syncId: "repo_id",
+  },
+};
+
+export const LoadingState: Story = {
+  args: {
+    isLoading: true,
   },
 };
 
