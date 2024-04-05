@@ -135,7 +135,19 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
   };
 
   return (
-    <WorkspaceLayout workspaceId={workspaceId}>
+    <WorkspaceLayout
+      workspaceId={workspaceId}
+      footer={
+        <Button
+          variant="primary"
+          className="flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
+          onClick={updateInsight}
+          disabled={loading}
+        >
+          Update Insight
+        </Button>
+      }
+    >
       <div className="grid gap-6 max-w-4xl">
         <h1 className="border-b bottom pb-4 text-xl font-medium">Edit Repository Insight</h1>
         <section className="flex flex-col gap-6 mb-2">
@@ -152,16 +164,6 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
               required
               disabled={loading}
             />
-          </div>
-          <div className="z-50 bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
-            <Button
-              variant="primary"
-              className="flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
-              onClick={updateInsight}
-              disabled={loading}
-            >
-              Save Insight
-            </Button>
           </div>
         </section>
 
