@@ -13,6 +13,7 @@ import { OrderDirection, OrderDirectionPicker } from "components/shared/OrderDir
 import { OrderByPicker } from "components/shared/OrderByPicker";
 import { OrderPullRequestsBy, useWorkspacePullRequests } from "lib/hooks/api/useWorkspacePullRequests";
 import { WorkspacePullRequestTable } from "components/Workspaces/WorkspacePullRequestsTable";
+import { LimitPicker } from "components/shared/LimitPicker";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -88,13 +89,14 @@ const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
         </div>
         <div className="mt-6 grid gap-6">
           <div className="flex justify-end items-center gap-4">
-            <DayRangePicker />
-            <OrderByPicker options={orderByOptions} defaultValue="created_at" />
-            <OrderDirectionPicker defaultValue="ASC" />
             {/* <TrackedRepositoryFilter
               options={filterOptions}
               handleSelect={(selected: OptionKeys[]) => setFilteredRepositories(selected)}
             /> */}
+            <OrderByPicker options={orderByOptions} defaultValue="created_at" />
+            <OrderDirectionPicker defaultValue="ASC" />
+            <DayRangePicker />
+            <LimitPicker />
           </div>
           <WorkspacePullRequestTable data={pullRequests} meta={meta} />
         </div>
