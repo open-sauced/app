@@ -20,7 +20,7 @@ import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-r
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { setQueryParams } from "lib/utils/query-params";
@@ -94,7 +94,7 @@ const ContributorProfileTab = ({
   const { data: emojis } = useFetchAllEmojis();
 
   const router = useRouter();
-  const { tab = "highlights" } = router.query as { tab: TabKey };
+  const { tab = "contributions" } = router.query as { tab: TabKey };
 
   const hasHighlights = highlights ? highlights.length > 0 : false;
   const [inputVisible, setInputVisible] = useState(false);
@@ -117,7 +117,7 @@ const ContributorProfileTab = ({
     );
   };
 
-  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://opensauced.pizza/`;
+  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://oss.fyi/try`;
 
   const handleInviteClick = () => {
     const hasSocials = !!(twitter_username || display_email || linkedin_url);
@@ -226,7 +226,7 @@ const ContributorProfileTab = ({
                 {twitter_username && (
                   <a
                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://opensauced.pizza/blog/social-coding-is-back. @${twitter_username}`
+                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://oss.fyi/social-coding. @${twitter_username}`
                     )}&hashtags=opensource,github`}
                     target="_blank"
                     rel="noopener noreferrer"

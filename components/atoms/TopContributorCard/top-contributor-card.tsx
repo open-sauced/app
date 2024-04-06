@@ -7,7 +7,7 @@ import useFollowUser from "lib/hooks/useFollowUser";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 import Avatar from "../Avatar/avatar";
-import Button from "../Button/button";
+import Button from "../../shared/Button/button";
 
 export interface TopContributorCardProps {
   login: string;

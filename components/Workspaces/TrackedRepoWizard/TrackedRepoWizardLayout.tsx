@@ -1,7 +1,7 @@
 import { FaArrowLeft } from "react-icons/fa6";
 import { MdOutlineClose } from "react-icons/md";
 import Card from "components/atoms/Card/card";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 
 interface TrackedRepoWizardLayoutProps {
   onCancel: () => void;
