@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.4](https://github.com/open-sauced/app/compare/v2.17.0-beta.3...v2.17.0-beta.4) (2024-04-06)
+
+
+### 🐛 Bug Fixes
+
+* text area input does not focus when active and add highlight input is always focussed in post a highlight form ([#3008](https://github.com/open-sauced/app/issues/3008)) ([e9b9fed](https://github.com/open-sauced/app/commit/e9b9fedb71f110c2566fde95c4b58728a999d022))
+
 ## [2.17.0-beta.3](https://github.com/open-sauced/app/compare/v2.17.0-beta.2...v2.17.0-beta.3) (2024-04-05)
 
 
