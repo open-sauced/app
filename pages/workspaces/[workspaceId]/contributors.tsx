@@ -11,7 +11,7 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import ContributorsList from "components/organisms/ContributorsList/contributors-list";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import { EmptyState } from "components/Workspaces/TrackedContributorsTable";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";

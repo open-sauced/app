@@ -21,7 +21,7 @@ import SEO from "layouts/SEO/SEO";
 
 import { Dialog, DialogCloseButton, DialogContent } from "components/molecules/Dialog/dialog";
 import Avatar from "components/atoms/Avatar/avatar";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
@@ -199,7 +199,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               />
             )}
             <AnnouncementCard
-              title="#100DaysOfOSS 🚀"
+              title="#100DaysOfOSS 🚀 "
               description={
                 "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
               }

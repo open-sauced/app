@@ -5,7 +5,6 @@ import { MdOutlineArrowForwardIos } from "react-icons/md";
 import { User } from "@supabase/supabase-js";
 
 import clsx from "clsx";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { getRelativeDays } from "lib/utils/date-utils";
 import useRepositories from "lib/hooks/api/useRepositories";
 import getRepoInsights from "lib/utils/get-repo-insights";
@@ -21,10 +20,9 @@ interface InsightRowProps {
   user: User | null;
   isEditable?: boolean;
   workspaceId?: string;
-  handleOnDeleteClick?: (insightName: string, insightId: number) => void;
 }
 
-const InsightRow = ({ insight, user, isEditable = true, workspaceId, handleOnDeleteClick }: InsightRowProps) => {
+const InsightRow = ({ insight, user, isEditable = true, workspaceId }: InsightRowProps) => {
   const repoIds = insight.repos.map((repo) => repo.repo_id);
   const { data: repoData, meta: repoMeta } = useRepositories(repoIds);
   const { open, merged, velocity, total, repoList } = getRepoInsights(repoData);
@@ -103,26 +101,21 @@ const InsightRow = ({ insight, user, isEditable = true, workspaceId, handleOnDel
                 <Pill color="purple" text={`${getPercent(total, merged)}%`} />
               </div>
             </div>
-            <div className="flex-1 hidden md:flex justify-end items-center gap-2">
+            <div className="flex-1 hidden md:flex  justify-end">
               {canEdit ||
                 (!insight.is_featured && (
-                  <Link href={`/hub/insights/${insight.id}/edit`}>
-                    <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
+                  <Link href={`${editLinkPrefix}/${insight.id}/edit`}>
+                    <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border mr-2 cursor-pointer">
                       <BsPencilFill title="Edit Insight Page" className="text-light-slate-10 text-lg" />
                     </span>
                   </Link>
                 ))}
-              {handleOnDeleteClick && (
-                <button
-                  onClick={() => handleOnDeleteClick(insight.name, insight.id)}
-                  className="p-2.5 mb-1.5 border !border-light-slate-4 rounded-lg cursor-pointer bg-light-slate-1"
-                  type="button"
-                >
-                  <RiDeleteBinLine title="Delete Insight" className="text-lg text-light-slate-10" />
-                </button>
-              )}
-              <Link href={`/pages/${user ? user?.user_metadata.user_name : "anonymous"}/${insight.id}/dashboard`}>
-                <span className="bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
+              <Link
+                href={`${publicLinkPrefix}${
+                  !workspaceId ? `/${user ? user?.user_metadata.user_name : "anonymous"}` : ""
+                }/${insight.id}/dashboard`}
+              >
+                <span className=" bg-light-slate-1 inline-block rounded-lg p-2.5 border cursor-pointer">
                   <MdOutlineArrowForwardIos title="Go To Insight Page" className="text-light-slate-10 text-lg" />
                 </span>
               </Link>

@@ -2,7 +2,6 @@ import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import { AiOutlineStar } from "react-icons/ai";
 import clsx from "clsx";
-import Link from "next/link";
 import { getAvatarByUsername } from "lib/utils/github";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import useFetchRecommendedRepoByRepoName from "lib/hooks/fetchRecommendationByRepo";
@@ -51,9 +50,14 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
           </div>
 
           <div className="flex flex-col gap-2 pb-3">
-            <Link className="text-xl font-semibold" href={`/s/${fullName}`} rel="noopener noreferrer">
+            <a
+              className="text-xl font-semibold"
+              href={`https://app.opensauced.pizza/${name}/dashboard/filter/recent`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               {name}
-            </Link>
+            </a>
 
             <p title={data.description} className="w-5/6 text-sm text-gray-500">
               {truncateString(data.description, 100)}

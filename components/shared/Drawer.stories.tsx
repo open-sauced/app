@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import { Drawer } from "./Drawer";
 
 type Story = StoryObj<typeof Drawer>;

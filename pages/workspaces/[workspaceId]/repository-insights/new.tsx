@@ -7,7 +7,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { createRepositoryInsight } from "lib/utils/workspace-utils";
 
 import { toast } from "lib/hooks/useToast";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
@@ -34,13 +34,11 @@ const NewInsightPage = () => {
   const router = useRouter();
   const workspaceId = router.query.workspaceId as string;
 
-  const [loading, setLoading] = useState(false);
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
 
   const onCreateInsight: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
-    setLoading(true);
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
     const name = formData.get("name") as string;
@@ -57,7 +55,6 @@ const NewInsightPage = () => {
 
     if (error) {
       toast({ description: "An error has occurred. Try again.", variant: "danger" });
-      setLoading(false);
       return;
     }
 
@@ -78,27 +75,16 @@ const NewInsightPage = () => {
             <h3 className="font-medium mb-2">
               Insight Name <span className="text-red-600">*</span>
             </h3>
-            <TextInput
-              name="name"
-              placeholder="Insight name"
-              className="!py-1.5 w-full text-sm"
-              required
-              disabled={loading}
-            />
+            <TextInput name="name" placeholder="Insight name" className="!py-1.5 w-full text-sm" required />
           </div>
           <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
-            <Button
-              variant="primary"
-              className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
-              disabled={loading}
-            >
+            <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
               Create Insight
             </Button>
           </div>
         </form>
 
         <TrackedReposTable
-          disabled={loading}
           repositories={trackedRepos}
           onAddRepos={() => {
             setTrackedReposModalOpen(true);

@@ -2,7 +2,7 @@ import { BiBarChartAlt2 } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
 import { FaTrashAlt } from "react-icons/fa";
 import { ComponentProps } from "react";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
@@ -13,10 +13,9 @@ interface TrackedContributorsTableProps {
   onAddContributors: () => void;
   onRemoveTrackedContributor: ComponentProps<"button">["onClick"];
   isLoading?: boolean;
-  disabled?: boolean;
 }
 
-export const EmptyState = ({ onAddContributors, disabled }: { onAddContributors: () => void; disabled?: boolean }) => {
+export const EmptyState = ({ onAddContributors }: { onAddContributors: () => void }) => {
   return (
     <div className="grid place-content-center gap-5 my-8">
       <BiBarChartAlt2 className="border rounded-lg p-2 w-11 h-11 mx-auto fill-slate-600 shadow-xs" />
@@ -26,7 +25,7 @@ export const EmptyState = ({ onAddContributors, disabled }: { onAddContributors:
           Search and select the contributors you want to track and get insights on your entire GitHub ecosystem
         </p>
       </div>
-      <Button variant="primary" className="w-max mx-auto" onClick={onAddContributors} disabled={disabled}>
+      <Button variant="primary" className="w-max mx-auto" onClick={onAddContributors}>
         <FaPlus className="mr-2 text-lg" />
         Add contributors
       </Button>
@@ -53,7 +52,6 @@ export const TrackedContributorsTable = ({
   onAddContributors,
   onRemoveTrackedContributor,
   isLoading = false,
-  disabled = false,
 }: TrackedContributorsTableProps) => {
   return (
     <div className="grid gap-4">
@@ -62,7 +60,7 @@ export const TrackedContributorsTable = ({
           <h2 className="flex gap-1 font-medium mb-2 text-md">Contributors Tracked</h2>
           <p className="text-sm text-slate-600">Select the contributors you want to track</p>
         </div>
-        <Button variant="primary" className="w-max h-max" onClick={onAddContributors} disabled={disabled}>
+        <Button variant="primary" className="w-max h-max" onClick={onAddContributors}>
           <FaPlus className="mr-2 text-lg" />
           Add contributors
         </Button>
@@ -103,11 +101,7 @@ export const TrackedContributorsTable = ({
                               <span>{contributor}</span>
                             </TableCell>
                             <TableCell className="text-right">
-                              <button
-                                onClick={onRemoveTrackedContributor}
-                                data-contributor={contributor}
-                                disabled={disabled}
-                              >
+                              <button onClick={onRemoveTrackedContributor} data-contributor={contributor}>
                                 <FaTrashAlt title="delete" className="text-light-slate-10" />
                               </button>
                             </TableCell>
@@ -120,7 +114,7 @@ export const TrackedContributorsTable = ({
               </Table>
             </div>
           ) : (
-            <EmptyState onAddContributors={onAddContributors} disabled={disabled} />
+            <EmptyState onAddContributors={onAddContributors} />
           )}
         </ClientOnly>
       </div>

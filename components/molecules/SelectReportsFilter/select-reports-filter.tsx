@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";

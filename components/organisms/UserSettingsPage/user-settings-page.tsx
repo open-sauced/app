@@ -4,7 +4,7 @@ import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import { User } from "@supabase/supabase-js";
 
 import { usePostHog } from "posthog-js/react";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import TextInput from "components/atoms/TextInput/text-input";
 import Title from "components/atoms/Typography/title";

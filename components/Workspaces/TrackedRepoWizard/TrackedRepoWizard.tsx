@@ -83,10 +83,10 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal
         orgs.filter((repo) => !orgSearchTerm || repo.toLowerCase().includes(orgSearchTerm.toLowerCase()))
       );
 
-      if (orgSearchTerm) {
+      if (orgSearchTerm && orgRepos.size === 0) {
         organizationExists(orgSearchTerm).then((orgExists) => {
           if (orgExists) {
-            setFilteredOrgs(new Set([...orgRepos, orgSearchTerm]));
+            setFilteredOrgs(new Set([orgSearchTerm]));
           } else {
             setFilteredOrgs(orgRepos);
           }

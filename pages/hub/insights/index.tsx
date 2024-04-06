@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
 import clsx from "clsx";
 
 import { GetServerSidePropsContext } from "next";
@@ -38,68 +37,23 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   };
 };
 
-const DeleteInsightPageModal = dynamic(() => import("components/organisms/InsightPage/DeleteInsightPageModal"));
-
 const InsightsHub: WithPageLayout = () => {
   const router = useRouter();
-  const { user, sessionToken } = useSupabaseAuth();
+  const { user } = useSupabaseAuth();
 
   const { toast } = useToast();
   const { session } = useSession(true);
-  const { data, meta, isError, isLoading, setPage, mutate } = useUserInsights(!!user);
+  const { data, meta, isError, isLoading, setPage } = useUserInsights(!!user);
   const {
     data: featuredInsightsData,
     isError: featuredInsightsError,
     isLoading: featuredInsightsLoading,
   } = useFetchFeaturedInsights(user ? false : true);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
-  const [insightNameToDelete, setInsightNameToDelete] = useState("");
-  const [insightIdToDelete, setInsightIdToDelete] = useState<number>();
 
   function handleView() {
     const insight = data.slice(0, 1).shift();
     router.push(`/pages/${user?.user_metadata.user_name}/${insight!.id}/dashboard`);
   }
-
-  function handleOnDelete(insightName: string, insightId: number) {
-    setIsDeleteOpen(true);
-    setInsightNameToDelete(insightName);
-    setInsightIdToDelete(insightId);
-  }
-
-  const handleOnClose = () => {
-    setIsDeleteOpen(false);
-  };
-
-  const handleOnConfirm = async () => {
-    setSubmitted(true);
-    setDeleteLoading(true);
-
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/insights/${insightIdToDelete}`, {
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${sessionToken}`,
-        },
-      });
-
-      if (res.ok) {
-        setIsDeleteOpen(false);
-        mutate();
-        toast({ description: "Insight deleted successfully", variant: "success" });
-      }
-    } catch (err) {
-      setIsDeleteOpen(false);
-      // eslint-disable-next-line no-console
-      console.log(err);
-      toast({ description: "An error occurred while deleting the insight", variant: "danger" });
-    } finally {
-      setDeleteLoading(false);
-    }
-  };
 
   function openInsightToast() {
     const toaster = toast({
@@ -168,14 +122,7 @@ const InsightsHub: WithPageLayout = () => {
               "Error..."
             ) : (
               data.map((insight) => {
-                return (
-                  <InsightRow
-                    key={`insights_${insight.id}`}
-                    user={user}
-                    insight={insight}
-                    handleOnDeleteClick={(name, id) => handleOnDelete(name, id)}
-                  />
-                );
+                return <InsightRow key={`insights_${insight.id}`} user={user} insight={insight} />;
               })
             )}
           </>
@@ -213,15 +160,6 @@ const InsightsHub: WithPageLayout = () => {
           goToPage
         />
       </div>
-      <DeleteInsightPageModal
-        isLoading={deleteLoading}
-        open={isDeleteOpen}
-        setOpen={setIsDeleteOpen}
-        submitted={submitted}
-        pageName={insightNameToDelete}
-        onConfirm={handleOnConfirm}
-        onClose={handleOnClose}
-      />
     </>
   );
 };

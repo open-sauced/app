@@ -1,6 +1,6 @@
 import SEO from "layouts/SEO/SEO";
 
-export function getWorkspaceOgImage(workspace: Workspace, range = 30) {
+function getWorkspaceOgImage(workspace: Workspace, range = 30) {
   const searchParams = new URLSearchParams();
   searchParams.append("wname", workspace.name);
 
@@ -13,10 +13,11 @@ export function getWorkspaceOgImage(workspace: Workspace, range = 30) {
 
 interface WorkspaceOgImageProps {
   workspace: Workspace;
-  ogImage: string;
+  range: number;
 }
 
-export const WorkspaceOgImage = ({ workspace, ogImage }: WorkspaceOgImageProps) => {
+export const WorkspaceOgImage = ({ workspace, range }: WorkspaceOgImageProps) => {
+  const ogImage = getWorkspaceOgImage(workspace, range);
   return (
     <SEO
       title={`Workspaces | ${workspace.name}`}

@@ -63,7 +63,7 @@ const HubPage = ({ insight, ogImage, workspaceId, owners, isOwner }: InsightPage
         }
       >
         <HubPageLayout page="contributors" owners={owners}>
-          <Contributors repositories={repositories} title={insight.name} />
+          <Contributors repositories={repositories} />
         </HubPageLayout>
         <InsightUpgradeModal
           workspaceId={workspaceId}
@@ -122,7 +122,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }
   ).filter(Boolean);
 
-  const isOwner = !!(workspaceMembers?.data || []).find(
+  const isOwner = (workspaceMembers?.data || []).filter(
     (member) => member.role === "owner" && member.user_id === userId
   );
 

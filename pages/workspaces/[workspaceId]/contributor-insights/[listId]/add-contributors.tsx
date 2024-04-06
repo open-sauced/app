@@ -8,7 +8,6 @@ import useFetchAllContributors from "lib/hooks/useFetchAllContributors";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
-import HubContributorsPageLayout from "layouts/hub-contributors";
 import ContributorTable from "components/organisms/ContributorsTable/contributors-table";
 import Header from "components/organisms/Header/header";
 import AddContributorsHeader from "components/AddContributorsHeader/add-contributors-header";
@@ -18,6 +17,7 @@ import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import Button from "components/atoms/Button/button";
 import { searchUsers } from "lib/hooks/search-users";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
 // TODO: Move to a shared file
 export function isListId(listId: string) {
@@ -28,15 +28,13 @@ export function isListId(listId: string) {
 
 interface AddContributorsPageProps {
   list: DbUserList;
-  initialData: {
-    meta: Meta;
-    data: DbPRContributor[];
-  };
+  workspaceId: string;
+  initialCount: number;
   timezoneOption: { timezone: string }[];
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  const { listId } = ctx.params as { listId: string };
+  const { listId, workspaceId } = ctx.params as { listId: string; workspaceId?: string };
   const supabase = createPagesServerClient(ctx);
 
   const {
@@ -52,28 +50,53 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const { data: list, error: listError } = await fetchApiData<DBList>({
-    path: `lists/${listId}`,
+    path: `workspaces/${workspaceId}/userLists/${listId}`,
     bearerToken,
     // TODO: remove this in another PR for cleaning up fetchApiData
     pathValidator: () => true,
   });
 
   // Only the list owner should be allowed to add contributors
-  if (listError?.status === 404 || (list && list.user_id !== userId)) {
+  if (listError?.status === 404) {
     return {
       notFound: true,
     };
   }
 
+  const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
+    path: `workspaces/${workspaceId}/members`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  const canEdit = !!workspaceMembers?.data?.find(
+    (member) => ["owner", "editor"].includes(member.role) && member.user_id === userId
+  );
+
+  if (!canEdit) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { data: initialData, error: initialError } = await fetchApiData<any>({
+    path: `workspaces/${workspaceId}/userLists/${listId}/contributors`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
   return {
     props: {
       list,
+      workspaceId,
+      initialCount: initialData.meta.itemCount,
     },
   };
 };
 
 interface ContributorsAddedModalProps {
   list: DbUserList;
+  workspaceId?: string;
   contributorCount: number;
   isOpen: boolean;
   onClose: () => void;
@@ -81,12 +104,13 @@ interface ContributorsAddedModalProps {
 
 interface ErrorModalProps {
   list: DbUserList;
+  workspaceId?: string;
   isOpen: boolean;
   onRetry: () => void;
   onClose: () => void;
 }
 
-const ErrorModal = ({ list, isOpen, onRetry, onClose }: ErrorModalProps) => {
+const ErrorModal = ({ list, workspaceId, isOpen, onRetry, onClose }: ErrorModalProps) => {
   return (
     <Dialog open={isOpen}>
       <DialogContent onEscapeKeyDown={(event) => onClose()} className="grid place-content-center">
@@ -107,7 +131,11 @@ const ErrorModal = ({ list, isOpen, onRetry, onClose }: ErrorModalProps) => {
             </Text>
           </div>
           <div className="flex gap-3">
-            <Button href={`/lists/${list.id}/overview`} className="justify-center flex-1" variant="default">
+            <Button
+              href={`/workspaces/${workspaceId}/contributor-insights/${list.id}/overview`}
+              className="justify-center flex-1"
+              variant="default"
+            >
               Go Back to List
             </Button>
             <Button onClick={onRetry} className="justify-center flex-1" variant="primary">
@@ -120,7 +148,13 @@ const ErrorModal = ({ list, isOpen, onRetry, onClose }: ErrorModalProps) => {
   );
 };
 
-const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: ContributorsAddedModalProps) => {
+const ContributorsAddedModal = ({
+  list,
+  workspaceId,
+  contributorCount,
+  isOpen,
+  onClose,
+}: ContributorsAddedModalProps) => {
   return (
     <Dialog open={isOpen}>
       <DialogContent onEscapeKeyDown={(event) => onClose()} className="grid place-content-center">
@@ -144,7 +178,11 @@ const ContributorsAddedModal = ({ list, contributorCount, isOpen, onClose }: Con
             <Button onClick={onClose} className="justify-center flex-1" variant="default">
               Add More
             </Button>
-            <Button href={`/lists/${list.id}/edit`} className="justify-center flex-1" variant="primary">
+            <Button
+              href={`/workspaces/${workspaceId}/contributor-insights/${list.id}/edit`}
+              className="justify-center flex-1"
+              variant="primary"
+            >
               Done
             </Button>
           </div>
@@ -183,7 +221,7 @@ const EmptyState = () => (
   </div>
 );
 
-const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProps) => {
+const AddContributorsToList = ({ list, initialCount, workspaceId, timezoneOption }: AddContributorsPageProps) => {
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
 
   const { sessionToken, providerToken } = useSupabaseAuth();
@@ -195,9 +233,11 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
 
   const addContributorsToList = async () => {
     const { error } = await fetchApiData({
-      path: `lists/${list.id}/contributors`,
+      path: `workspaces/${workspaceId}/userLists/${list.id}/contributors`,
       body: {
-        contributors: selectedContributors.map(({ user_id, author_login }) => ({ id: user_id, login: author_login })),
+        contributors: selectedContributors.map((c) => {
+          return { id: c.user_id };
+        }),
       },
       method: "POST",
       bearerToken: sessionToken!,
@@ -262,11 +302,12 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
   };
 
   return (
-    <HubContributorsPageLayout>
+    <WorkspaceLayout workspaceId={workspaceId}>
       <div className="info-container container w-full min-h-[6.25rem] md:px-16">
         <Header classNames="md:!px-0">
           <AddContributorsHeader
             list={list}
+            workspaceId={workspaceId}
             selectedContributorsIds={selectedContributors.map(({ user_id }) => user_id)}
             onAddToList={addContributorsToList}
             onSearch={onSearch}
@@ -294,6 +335,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
           list={list}
           contributorCount={selectedContributors.length}
           isOpen={contributorsAdded}
+          workspaceId={workspaceId}
           onClose={() => {
             setContributorsAdded(false);
             setContributors([]);
@@ -304,6 +346,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
       {contributorsAddedError && (
         <ErrorModal
           list={list}
+          workspaceId={workspaceId}
           isOpen={true}
           onRetry={() => {
             setContributorsAddedError(false);
@@ -314,7 +357,7 @@ const AddContributorsToList = ({ list, timezoneOption }: AddContributorsPageProp
           }}
         />
       )}
-    </HubContributorsPageLayout>
+    </WorkspaceLayout>
   );
 };
 

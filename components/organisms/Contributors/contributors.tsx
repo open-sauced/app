@@ -17,7 +17,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { Command, CommandGroup, CommandInput, CommandItem } from "components/atoms/Cmd/command";
 import { useToast } from "lib/hooks/useToast";
@@ -30,14 +30,12 @@ import ContributorTable from "../ContributorsTable/contributors-table";
 
 interface ContributorProps {
   repositories?: number[];
-  title?: string;
 }
 
-const Contributors = ({ repositories, title }: ContributorProps): JSX.Element => {
+const Contributors = ({ repositories }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
-  const workspaceId = router.query.workspaceId as string;
 
   const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
   const { toast } = useToast();
@@ -85,7 +83,7 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
         };
       });
 
-  const PopOverListContent = ({ workspaceId }: { workspaceId: string }) => {
+  const PopOverListContent = () => {
     const { data } = useFetchAllLists();
     const [loading, setLoading] = useState(false);
 
@@ -159,13 +157,8 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
           <Button
             onClick={() => {
               router.push({
-                pathname: `/workspaces/${workspaceId}/contributor-insights/new`,
-                query: {
-                  title: title ? `${title} Contributors` : "",
-                  contributors: JSON.stringify(
-                    selectedContributors.map((contributor) => contributor.author_login || contributor.username)
-                  ),
-                },
+                pathname: "/hub/lists/find",
+                query: { contributors: JSON.stringify(selectedContributors) },
               });
             }}
             variant="text"
@@ -223,7 +216,7 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
                 <PopoverTrigger>
                   <Button variant="primary">Add to list</Button>
                 </PopoverTrigger>
-                {popoverOpen && <PopOverListContent workspaceId={workspaceId} />}
+                {popoverOpen && <PopOverListContent />}
               </Popover>
             </div>
           )}

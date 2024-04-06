@@ -117,7 +117,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }
   );
 
-  const isOwner = !!(workspaceMembers?.data || []).find(
+  const isOwner = (workspaceMembers?.data || []).filter(
     (member) => member.role === "owner" && member.user_id === userId
   );
 

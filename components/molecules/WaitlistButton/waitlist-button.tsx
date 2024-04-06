@@ -1,5 +1,5 @@
 import Text from "components/atoms/Typography/text";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 
 interface WaitlistButtonProps {
   waitlisted: boolean | undefined;

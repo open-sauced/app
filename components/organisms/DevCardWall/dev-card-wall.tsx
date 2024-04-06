@@ -4,7 +4,7 @@ import { animated, useSpring, useSprings } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { useOutsideClickRef } from "rooks";
 import DevCard, { DevCardProps } from "components/molecules/DevCard/dev-card";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import ChevronLeft from "../../../img/icons/chevron-left.svg";
 
 const LOADING_TILES_COUNT = 20;

@@ -10,7 +10,7 @@ import GitHubIcon from "img/icons/github-icon.svg";
 
 import Title from "components/atoms/Typography/title";
 import Search from "components/atoms/Search/search";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Icon from "components/atoms/Icon/icon";
 import Footer from "../components/organisms/Footer/footer";
 import TopNav from "../components/organisms/TopNav/top-nav";

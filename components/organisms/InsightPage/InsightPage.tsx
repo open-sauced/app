@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 
 import { useDebounce } from "rooks";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
@@ -616,37 +616,38 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
         <div>{getRepoLookupError(addRepoError)}</div>
 
         {edit && (
-          <div className="flex flex-col gap-8 py-8 px-4">
-            <Title className="!text-xl !leading-none !text-red-700 font-semibold" level={4}>
+          <div className="flex flex-col gap-8 py-8 border-t border-b border-light-slate-8">
+            <Title className="!text-1xl !leading-none" level={4}>
               Danger Zone
             </Title>
 
+            {workspaceId && (
+              <section className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <Title level={4}>Transfer to other Workspace</Title>
+                  <Text>Move this insight to another workspace where you are an owner or editor.</Text>
+                </div>
+                <SingleSelect
+                  isSearchable
+                  placeholder={options.find((opt) => opt.value === workspaceId)?.label}
+                  options={options}
+                  onValueChange={(value: string) => {
+                    setSelectedWorkspace(value);
+                  }}
+                />
+                <Button
+                  onClick={() => setIsTransferModalOpen(true)}
+                  disabled={selectedWorkspace === workspaceId}
+                  variant="primary"
+                  className="w-fit"
+                >
+                  Transfer
+                </Button>
+              </section>
+            )}
+
             <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
-              {workspaceId && (
-                <section className="flex flex-col gap-4">
-                  <div className="flex flex-col gap-2">
-                    <Title level={4}>Transfer to other Workspace</Title>
-                    <Text>Move this insight to another workspace where you are an owner or editor.</Text>
-                  </div>
-                  <SingleSelect
-                    isSearchable
-                    placeholder={options.find((opt) => opt.value === workspaceId)?.label}
-                    options={options}
-                    onValueChange={(value: string) => {
-                      setSelectedWorkspace(value);
-                    }}
-                  />
-                  <Button
-                    onClick={() => setIsTransferModalOpen(true)}
-                    disabled={selectedWorkspace === workspaceId}
-                    variant="primary"
-                    className="w-fit"
-                  >
-                    Transfer
-                  </Button>
-                </section>
-              )}
-              <Title className="!text-1xl !leading-none pt-6" level={4}>
+              <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
                 Delete Page
               </Title>
               <Text className="my-4">Once you delete a page, you&#39;re past the point of no return.</Text>

@@ -4,7 +4,7 @@ import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 import SingleSelect from "components/atoms/Select/single-select";
 

@@ -6,10 +6,11 @@ import { clsx } from "clsx";
 import { usePostHog } from "posthog-js/react";
 
 import { TfiMoreAlt } from "react-icons/tfi";
+import { HiUserAdd } from "react-icons/hi";
+import { SlUserFollowing } from "react-icons/sl";
 import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 
 import dynamic from "next/dynamic";
-import { FiCopy } from "react-icons/fi";
 import PizzaGradient from "img/icons/pizza-gradient.svg";
 
 import {
@@ -21,7 +22,7 @@ import {
 import Avatar from "components/atoms/Avatar/avatar";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import RainbowBg from "img/rainbow-cover.png";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import { Textarea } from "components/atoms/Textarea/text-area";
 import { useUserConnections } from "lib/hooks/useUserConnections";
@@ -186,14 +187,67 @@ const ContributorProfileHeader = ({
         {isConnected ? (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
             <div className="flex flex-wrap items-center justify-center gap-2 mb-10 md:gap-6">
-              <Button
-                onClick={() => handleCopyToClipboard(`${host}/user/${githubName}`)}
-                className="my-auto gap-2 items-center shrink-0 place-self-end"
-                variant="primary"
-              >
-                <FiCopy />
-                <span className="hidden md:block">Share</span>
-              </Button>
+              {user ? (
+                !isOwner && (
+                  <>
+                    {isFollowing ? (
+                      <>
+                        <Button
+                          onClick={handleFollowClick}
+                          variant="primary"
+                          className="group w-[6.25rem] justify-center items-center hidden md:flex"
+                        >
+                          <span className="hidden text-center sm:block group-hover:hidden">Following</span>
+                          <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
+                        </Button>
+                        <button
+                          className="p-2 text-white rounded-lg md:hidden bg-sauced-orange"
+                          onClick={handleFollowClick}
+                        >
+                          <SlUserFollowing className="text-xl" />
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          variant="primary"
+                          className="w-[6.25rem] text-center hidden md:flex"
+                          onClick={handleFollowClick}
+                        >
+                          <HiUserAdd fontSize={20} className="mr-1" /> Follow
+                        </Button>
+                        <button
+                          onClick={handleFollowClick}
+                          className="p-2 text-white rounded-lg md:hidden bg-sauced-orange"
+                        >
+                          <HiUserAdd className="text-xl font-bold" />
+                        </button>
+                      </>
+                    )}
+                  </>
+                )
+              ) : (
+                <>
+                  <Button
+                    className="sm:hidden"
+                    variant="primary"
+                    onClick={async () =>
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
+                    }
+                  >
+                    <HiUserAdd />
+                  </Button>
+                  <Button
+                    className="w-[6.25rem] hidden sm:inline-flex"
+                    variant="primary"
+                    onClick={async () =>
+                      handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } })
+                    }
+                  >
+                    <HiUserAdd fontSize={20} className="mr-1" /> Follow
+                  </Button>
+                </>
+              )}
 
               {user && !isOwner && <AddToListDropdown username={username ?? ""} />}
 
@@ -211,44 +265,39 @@ const ContributorProfileHeader = ({
 
                 <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
                   {user ? (
-                    <>
-                      <DropdownMenuItem className="rounded-md">
-                        {!isOwner && (
-                          <>
-                            {isFollowing ? (
-                              <>
-                                <button onClick={handleFollowClick} className="group flex items-center gap-1 pl-3 pr-7">
-                                  <span className="hidden text-center sm:block group-hover:hidden">Following</span>
-                                  <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
-                                </button>
-                              </>
-                            ) : (
-                              <>
-                                <button className="w-[6.25rem] text-center hidden md:flex" onClick={handleFollowClick}>
-                                  Follow
-                                </button>
-                              </>
-                            )}
-                          </>
+                    !isOwner && (
+                      <>
+                        <DropdownMenuItem className="rounded-md">
+                          <button
+                            onClick={() => handleCopyToClipboard(`${host}/user/${githubName}`)}
+                            className="flex items-center gap-1 pl-3 pr-7"
+                          >
+                            Share
+                          </button>
+                        </DropdownMenuItem>
+
+                        {isPremium && isRecievingConnections && (
+                          <DropdownMenuItem className="rounded-md">
+                            <button onClick={() => setIsDialogOpen(true)} className="flex items-center gap-1 pl-3 pr-7">
+                              Connect
+                            </button>
+                          </DropdownMenuItem>
                         )}
-                      </DropdownMenuItem>
-                      {!isOwner && (
-                        <>
-                          {isPremium && isRecievingConnections && (
-                            <DropdownMenuItem className="rounded-md">
-                              <button
-                                onClick={() => setIsDialogOpen(true)}
-                                className="flex items-center gap-1 pl-3 pr-7"
-                              >
-                                Connect
-                              </button>
-                            </DropdownMenuItem>
-                          )}
-                        </>
-                      )}
-                    </>
+                      </>
+                    )
                   ) : (
                     <>
+                      <DropdownMenuItem className="rounded-md">
+                        <button
+                          onClick={async () => {
+                            handleCopyToClipboard(`${host}/user/${githubName}`);
+                            handleSignIn({ provider: "github", options: { redirectTo: `${host}${currentPath}` } });
+                          }}
+                          className="flex items-center gap-1 pl-3 pr-7"
+                        >
+                          Share
+                        </button>
+                      </DropdownMenuItem>
                       {isRecievingConnections && (
                         <DropdownMenuItem className="rounded-md">
                           <button

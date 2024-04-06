@@ -6,7 +6,7 @@ import clsx from "clsx";
 import Pill from "components/atoms/Pill/pill";
 import FavoriteSelector from "components/atoms/FavoriteSelector/favorite-selector";
 import { classNames } from "components/organisms/RepositoriesTable/repositories-table";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 
 import useRepositories from "lib/hooks/api/useRepositories";
 import { getRelativeDays } from "lib/utils/date-utils";

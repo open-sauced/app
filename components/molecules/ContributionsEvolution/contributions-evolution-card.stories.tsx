@@ -2,7 +2,7 @@ import { Meta } from "@storybook/react";
 import { useState } from "react";
 import eachDayOfInterval from "date-fns/eachDayOfInterval";
 import { subDays } from "date-fns";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import ContributionsEvolutionCard from "components/molecules/ContributionsEvolution/contributions-evolution-card";
 
 const meta = {

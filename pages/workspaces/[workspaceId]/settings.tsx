@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { useEffectOnce } from "react-use";
 import { IoDiamond } from "react-icons/io5";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { fetchApiData } from "helpers/fetchApiData";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";

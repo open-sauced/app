@@ -1,4 +1,4 @@
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import {
   DropdownMenu,
   DropdownMenuContent,

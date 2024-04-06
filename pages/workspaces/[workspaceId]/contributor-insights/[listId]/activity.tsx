@@ -1,6 +1,5 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { NodeMouseEventHandler } from "@nivo/treemap";
@@ -20,10 +19,6 @@ import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { OnToggleResizeEventType } from "components/Graphs/shared/graph-resizer";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
-
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 export interface ContributorListPageProps {
   list?: DBList;
@@ -64,11 +59,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       bearerToken,
       pathValidator: validateListPath,
     }),
-    fetchApiData<{ data?: WorkspaceMember[] }>({
-      path: `workspaces/${workspaceId}/members`,
-      bearerToken,
-      pathValidator: () => true,
-    }),
+    fetchApiData<any>({ path: `workspaces/${workspaceId}/members`, bearerToken, pathValidator: () => true }),
   ]);
 
   if (error?.status === 404 || error?.status === 401) {
@@ -80,15 +71,11 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const userId = Number(session?.user.user_metadata.sub);
   const featureFlags = await getAllFeatureFlags(userId);
 
-  const owners = Array.from(workspaceMembers?.data || [], (member: { role: string; member: Record<string, any> }) => {
+  const owners = Array.from(workspaceMembers.data, (member: { role: string; member: Record<string, any> }) => {
     if (member.role === "owner") {
       return member.member.login;
     }
   });
-
-  const isOwner = !!(workspaceMembers?.data || []).find(
-    (member) => member.role === "owner" && member.user_id === userId
-  );
 
   return {
     props: {
@@ -96,7 +83,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       workspaceId,
       numberOfContributors: data?.meta.itemCount,
       isError: error || contributorListError,
-      isOwner,
+      isOwner: list && list.user_id === userId,
       featureFlags,
       owners,
     },
@@ -232,9 +219,6 @@ const ListActivityPage = ({
   const treemapRef = useRef<HTMLSpanElement>(null);
   const mostActiveRef = useRef<HTMLSpanElement>(null);
   const graphResizerLookup = new Map();
-  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded && numberOfContributors > 10;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   if (treemapRef.current) {
     graphResizerLookup.set(treemapRef.current, true);
@@ -256,14 +240,7 @@ const ListActivityPage = ({
   };
 
   return (
-    <WorkspaceLayout
-      workspaceId={workspaceId}
-      banner={
-        showBanner ? (
-          <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-        ) : null
-      }
-    >
+    <WorkspaceLayout workspaceId={workspaceId}>
       <ListPageLayout
         list={list}
         workspaceId={workspaceId}
@@ -301,13 +278,6 @@ const ListActivityPage = ({
           </div>
         )}
       </ListPageLayout>
-      <InsightUpgradeModal
-        workspaceId={workspaceId}
-        variant="contributors"
-        isOpen={isInsightUpgradeModalOpen}
-        onClose={() => setIsInsightUpgradeModalOpen(false)}
-        overLimit={numberOfContributors}
-      />
     </WorkspaceLayout>
   );
 };

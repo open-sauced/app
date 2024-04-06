@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import cntl from "cntl";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel, { DevCardCarouselProps } from "components/organisms/DevCardCarousel/dev-card-carousel";
 import { getAvatarByUsername } from "lib/utils/github";

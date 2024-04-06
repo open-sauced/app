@@ -16,7 +16,7 @@ import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import TextInput from "components/atoms/TextInput/text-input";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import { searchUsers } from "lib/hooks/search-users";
 
 interface CreateListPayload {

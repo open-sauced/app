@@ -74,7 +74,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }
   ).filter(Boolean);
 
-  const isOwner = !!(workspaceData?.data || []).find((member) => member.role === "owner" && member.user_id === userId);
+  const isOwner = (workspaceData?.data || []).filter((member) => member.role === "owner" && member.user_id === userId);
 
   return {
     props: {
@@ -148,9 +148,7 @@ const ListsOverview = ({
     <WorkspaceLayout
       workspaceId={workspaceId}
       banner={
-        showBanner ? (
-          <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-        ) : null
+        showBanner && WorkspaceBanner({ workspaceId: workspaceId, openModal: () => setIsInsightUpgradeModalOpen(true) })
       }
     >
       <ListPageLayout

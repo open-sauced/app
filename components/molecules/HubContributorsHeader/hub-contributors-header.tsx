@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "lib/hooks/useToast";
 
 import ListNameHeader from "components/atoms/ListNameHeader/list-name-header";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 import Search from "components/atoms/Search/search";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";

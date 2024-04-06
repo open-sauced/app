@@ -3,7 +3,7 @@ import { LinkIcon } from "@primer/octicons-react";
 import { BsFillArrowUpCircleFill } from "react-icons/bs";
 import { User } from "@supabase/supabase-js";
 
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Text from "components/atoms/Typography/text";
 
 import { getRelativeDays } from "lib/utils/date-utils";

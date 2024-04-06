@@ -12,7 +12,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
 
 import Checkbox from "components/atoms/Checkbox/checkbox";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import LimitSelect from "components/atoms/Select/limit-select";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";

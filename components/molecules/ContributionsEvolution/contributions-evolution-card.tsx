@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { format } from "date-fns";
 import { useState } from "react";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 import Icon from "components/atoms/Icon/icon";
 import {

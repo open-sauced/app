@@ -11,21 +11,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const toolName = ctx.params!["toolName"] as string;
   const selectedFilter = ctx.params!["selectedFilter"] as string;
 
-  const toolPattern = /dashboard|reports|contributors|activity/g;
-
   if (toolName === "repositories") {
     return {
       redirect: {
         destination: `/${pageId}/dashboard/${selectedFilter}`,
-        permanent: true,
-      },
-    };
-  } else if (!toolPattern.test(toolName)) {
-    // weird case: 'kubernetes/kubernetes' passes the regex in next.config.js
-    // this will ensure that if the [toolName] isn't valid, redirect to /[org]/[repo]
-    return {
-      redirect: {
-        destination: `/${pageId}/${toolName}`,
         permanent: true,
       },
     };

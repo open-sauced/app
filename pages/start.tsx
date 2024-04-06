@@ -20,7 +20,7 @@ import ProgressPie from "components/atoms/ProgressPie/progress-pie";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import Icon from "components/atoms/Icon/icon";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";

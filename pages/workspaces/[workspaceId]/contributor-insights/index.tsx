@@ -18,7 +18,7 @@ import { fetchApiData } from "helpers/fetchApiData";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { useWorkspacesContributorInsights } from "lib/hooks/api/useWorkspaceContributorInsights";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);

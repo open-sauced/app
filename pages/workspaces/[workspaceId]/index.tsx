@@ -17,12 +17,11 @@ import Card from "components/atoms/Card/card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 import { OptionKeys } from "components/atoms/Select/multi-select";
-import { WorkspaceOgImage, getWorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
-import { useHasMounted } from "lib/hooks/useHasMounted";
+import { WorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
@@ -33,7 +32,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
   const workspaceId = context.params?.workspaceId as string;
-  const range = context.query.range ? Number(context.query.range as string) : 30;
   const { data, error } = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
     bearerToken,
@@ -52,22 +50,15 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
-  const ogImage = new URL(
-    getWorkspaceOgImage(data as Workspace, range),
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
-  );
-
-  return { props: { workspace: data, ogImage: `${ogImage.href}` } };
+  return { props: { workspace: data } };
 };
 
 interface WorkspaceDashboardProps {
   workspace: Workspace;
-  ogImage: string;
 }
 
-const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => {
+const WorkspaceDashboard = ({ workspace }: WorkspaceDashboardProps) => {
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
-  const hasMounted = useHasMounted();
 
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
@@ -99,13 +90,9 @@ const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => 
     );
   }, [repositories, filteredRepositories]);
 
-  if (workspace.is_public && !hasMounted) {
-    return <WorkspaceOgImage workspace={workspace} ogImage={ogImage} />;
-  }
-
   return (
     <>
-      {workspace.is_public ? <WorkspaceOgImage workspace={workspace} ogImage={ogImage} /> : null}
+      {workspace.is_public ? <WorkspaceOgImage workspace={workspace} range={range} /> : null}
       <WorkspaceLayout workspaceId={workspace.id}>
         <WorkspaceHeader workspace={workspace} />
         <div className="grid sm:flex gap-4 pt-3">

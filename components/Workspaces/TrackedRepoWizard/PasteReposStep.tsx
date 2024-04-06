@@ -1,5 +1,5 @@
 import { useLocalStorage } from "react-use";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 
 interface PasteReposStepProps {
   onBulkAddRepos: (repos: string[]) => void;

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import GitHubIcon from "img/icons/github-icon.svg";
 
 import HubLayout from "layouts/hub";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 

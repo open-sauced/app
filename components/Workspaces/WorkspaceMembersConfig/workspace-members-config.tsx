@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Search from "components/atoms/Search/search";
 import { useToast } from "lib/hooks/useToast";
 import { getAvatarByUsername } from "lib/utils/github";

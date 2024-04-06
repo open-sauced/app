@@ -1,4 +1,4 @@
-import Button, { ButtonsProps } from "components/shared/Button/button";
+import Button, { ButtonsProps } from "components/atoms/Button/button";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { getStripe } from "lib/utils/stripe-client";

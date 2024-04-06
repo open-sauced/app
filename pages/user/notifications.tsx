@@ -6,7 +6,7 @@ import Link from "next/link";
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import Title from "components/atoms/Typography/title";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import Pagination from "components/molecules/Pagination/pagination";

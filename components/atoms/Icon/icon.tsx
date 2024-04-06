@@ -15,7 +15,7 @@ const Icon: React.FC<IconProps> = ({ onClick, className, IconImage, alt, size = 
       <Image
         onClick={onClick}
         className="items-center justify-center "
-        alt={alt ?? ""}
+        alt={alt ? alt : "Icon"}
         width={size}
         height={size}
         src={IconImage}

@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import Card from "components/atoms/Card/card";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import { OnToggleResizeEventType, Resizer } from "components/Graphs/shared/graph-resizer";
 import type { NodeMouseEventHandler, NodeProps, TreeMapCommonProps } from "@nivo/treemap";
 import { SpecialNode } from "./special-node";

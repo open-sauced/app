@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import dynamic from "next/dynamic";
 import { formatDistanceToNowStrict } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -29,11 +28,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import Icon from "components/atoms/Icon/icon";
 import repoTofilterList from "lib/utils/repo-to-filter-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { ContributorListPageProps } from "./activity";
-
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface HighlightsPageProps extends ContributorListPageProps {
   highlights: PaginatedListContributorsHighlightsResponse;
@@ -78,11 +73,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       bearerToken,
       pathValidator: validateListPath,
     }),
-    fetchApiData<{ data?: WorkspaceMember[] }>({
-      path: `workspaces/${workspaceId}/members`,
-      bearerToken,
-      pathValidator: () => true,
-    }),
+    fetchApiData<any>({ path: `workspaces/${workspaceId}/members`, bearerToken, pathValidator: () => true }),
   ]);
 
   if (error?.status === 404) {
@@ -92,22 +83,18 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = Number(session?.user.user_metadata.sub);
-  const owners = Array.from(workspaceMembers?.data || [], (member: { role: string; member: Record<string, any> }) => {
+  const owners = Array.from(workspaceMembers.data, (member: { role: string; member: Record<string, any> }) => {
     if (member.role === "owner") {
       return member.member.login;
     }
   });
-
-  const isOwner = !!(workspaceMembers?.data || []).find(
-    (member) => member.role === "owner" && member.user_id === userId
-  );
 
   return {
     props: {
       list,
       workspaceId,
       numberOfContributors: data?.meta.itemCount || 0,
-      isOwner,
+      isOwner: list && list.user_id === userId,
       highlights: {
         data: highlights?.data || [],
         meta: highlights?.meta || {},
@@ -139,9 +126,6 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
 
   const [contributor, setContributor] = useState("");
   const debouncedSearchTerm = useDebounceTerm(contributor, 300);
-  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded && numberOfContributors > 10;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   const { data, isLoading, meta } = useFetchListContributorsHighlights({
     listId: list?.id ?? "",
@@ -163,14 +147,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
   }, [debouncedSearchTerm]);
 
   return (
-    <WorkspaceLayout
-      workspaceId={workspaceId}
-      banner={
-        showBanner ? (
-          <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-        ) : null
-      }
-    >
+    <WorkspaceLayout workspaceId={workspaceId}>
       <ListPageLayout
         showRangeFilter={false}
         list={list}
@@ -304,13 +281,6 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
           </div>
         </div>
       </ListPageLayout>
-      <InsightUpgradeModal
-        workspaceId={workspaceId}
-        variant="contributors"
-        isOpen={isInsightUpgradeModalOpen}
-        onClose={() => setIsInsightUpgradeModalOpen(false)}
-        overLimit={numberOfContributors}
-      />
     </WorkspaceLayout>
   );
 };

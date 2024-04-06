@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChartBarSquareIcon, UsersIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import SidebarMenuItem from "./sidebar-menu-item";
 
 interface InsightsPanelProps {

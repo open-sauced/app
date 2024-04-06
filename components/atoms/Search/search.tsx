@@ -114,7 +114,7 @@ const Search = ({
     <div
       className={`${
         className && className
-      } flex bg-white py-1 px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg ring-light-slate-6 items-center relative min-w-[15rem]`}
+      } flex bg-white py-1 px-3 shadow-input border transition focus-within:ring focus-within:border-orange-500 focus-within:ring-orange-100 rounded-lg   ring-light-slate-6 items-center relative min-w-[15rem]`}
     >
       <FaSearch className="text-light-slate-9" fontSize={16} onClick={handleOnSearch} />
       <input
@@ -144,8 +144,7 @@ const Search = ({
               <div
                 className={clsx(
                   cursor === index && "_cursorActive bg-slate-100",
-                  "px-4 py-2 hover:bg-light-slate-2",
-                  "[&_span]:max-w-[13rem]"
+                  "px-4 py-2 overflow-hidden break-all hover:bg-light-slate-2"
                 )}
                 style={suggestionsStyle}
                 key={index}
@@ -155,13 +154,7 @@ const Search = ({
                   suggestion && handleOnSelect(suggestion);
                 }}
               >
-                {typeof suggestion === "string" ? (
-                  <span className="pl-5 text-sm md:mw-auto inline-block text-ellipsis truncate tracking-tighter">
-                    {suggestion}
-                  </span>
-                ) : (
-                  suggestion.node
-                )}
+                {typeof suggestion === "string" ? <span className="pl-5 text-sm ">{suggestion}</span> : suggestion.node}
               </div>
             ))}
           </ScrollArea>
@@ -171,7 +164,7 @@ const Search = ({
       {search && (
         <>
           {isLoading ? (
-            <Spinner className="w-5 h-5" />
+            <Spinner className="w-5 h-5 " />
           ) : (
             <GrClose className="cursor-pointer text-light-slate-9" fontSize={16} onClick={handleEmpty} />
           )}

@@ -18,7 +18,7 @@ export async function fetchApiData<T>({
   method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   headers?: HeadersInit;
   body?: object;
-  bearerToken?: string;
+  bearerToken: string;
   pathValidator?(path: string): boolean;
 }) {
   const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
@@ -29,7 +29,7 @@ export async function fetchApiData<T>({
       ...headers,
       accept: "application/json",
       "Content-Type": "application/json",
-      ...(bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {}),
+      Authorization: `Bearer ${bearerToken}`,
     },
   };
 

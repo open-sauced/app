@@ -1,5 +1,5 @@
 import { RiExternalLinkLine } from "react-icons/ri";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
 import { Dialog, DialogTitle, DialogContent } from "components/molecules/Dialog/dialog";
 import Card from "components/atoms/Card/card";

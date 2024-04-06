@@ -1,8 +1,9 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { usePostHog } from "posthog-js/react";
+import { useEffectOnce } from "react-use";
 import { Dialog, DialogTitle, DialogContent, DialogCloseButton } from "components/molecules/Dialog/dialog";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Card from "components/atoms/Card/card";
 
 type InsightUpgradeModalProps = {
@@ -22,11 +23,9 @@ export default function InsightUpgradeModal({
 }: InsightUpgradeModalProps) {
   const posthog = usePostHog();
 
-  useEffect(() => {
-    if (isOpen) {
-      posthog.capture("clicked: Upgrade Workspace Modal", { workspaceId });
-    }
-  }, [isOpen]);
+  useEffectOnce(() => {
+    posthog.capture("clicked: Upgrade Workspace Modal", { workspaceId });
+  });
 
   return (
     <Dialog open={isOpen}>

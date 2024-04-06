@@ -7,7 +7,7 @@ import { FiCopy } from "react-icons/fi";
 
 import { useRouter } from "next/router";
 import getRepoInsights from "lib/utils/get-repo-insights";
-import Button from "components/shared/Button/button";
+import Button from "components/atoms/Button/button";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 import { truncateString } from "lib/utils/truncate-string";
@@ -99,7 +99,7 @@ const InsightHeader = ({
         {canEdit && (
           <Link href={`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`}>
             <Button className="text-xs w-max" variant="primary">
-              <FaEdit className="mr-2" /> Edit
+              <FaEdit className="mr-2" /> Edit Page
             </Button>
           </Link>
         )}

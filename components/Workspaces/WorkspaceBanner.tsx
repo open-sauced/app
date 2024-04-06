@@ -1,5 +1,5 @@
 import { usePostHog } from "posthog-js/react";
-import { useEffect } from "react";
+import { useEffectOnce } from "react-use";
 
 type WorkspaceBannerProps = {
   workspaceId: string;
@@ -9,9 +9,9 @@ type WorkspaceBannerProps = {
 export default function WorkspaceBanner({ workspaceId, openModal }: WorkspaceBannerProps) {
   const posthog = usePostHog();
 
-  useEffect(() => {
+  useEffectOnce(() => {
     posthog.capture("shown: Upgrade Workspace Banner", { workspaceId });
-  }, []);
+  });
 
   return (
     <button
