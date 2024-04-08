@@ -48,6 +48,7 @@ interface ContributorProfilePageProps {
   prTotal: number;
   prReviews?: number;
   prVelocity?: number;
+  range: string;
   prMerged: number;
   loading: boolean;
   error: boolean;
@@ -64,6 +65,7 @@ const ContributorProfilePage = ({
   prMerged,
   prVelocity,
   prFirstOpenedDate,
+  range,
 }: ContributorProfilePageProps) => {
   const languageList = (langList || []).map((language) => {
     const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.languageName.toLowerCase());
@@ -75,7 +77,7 @@ const ContributorProfilePage = ({
   });
 
   const { user: loggedInUser, signIn } = useSupabaseAuth();
-  const { repoList } = useContributorPullRequestsChart(githubName, "*", repositories, "30", true);
+  const { repoList } = useContributorPullRequestsChart(githubName, "*", repositories, range);
 
   const prsMergedPercentage = getPercent(prTotal, prMerged || 0);
   const { data: Follower, isError: followError, follow, unFollow } = useFollowUser(user?.login || "");
@@ -97,13 +99,13 @@ const ContributorProfilePage = ({
 
   const { data: histogramData } = usePullRequestsHistogram({
     repoIds: repositories,
-    range: 30,
+    range: Number(range),
     width: 1,
     contributor: githubName,
     direction: "ASC",
   });
 
-  const chartData = getPullRequestsHistogramToDays(histogramData, 30);
+  const chartData = getPullRequestsHistogramToDays(histogramData, Number(range));
 
   const totalPrs = chartData.reduce((total, curr) => total + curr.y, 0);
   const iscConnected = !!user?.is_open_sauced_member;
@@ -175,6 +177,7 @@ const ContributorProfilePage = ({
                   contributor={user}
                   prTotal={prTotal}
                   prsMergedPercentage={prsMergedPercentage}
+                  range={range}
                 />
               ) : (
                 <>
@@ -225,14 +228,25 @@ const ContributorProfilePage = ({
                       </div>
                     </div>
                     <div className="h-32 mt-10">
-                      <CardLineChart repoIds={repositories} contributor={githubName} className="!h-32" />
+                      <CardLineChart
+                        repoIds={repositories}
+                        contributor={githubName}
+                        range={Number(range)}
+                        className="!h-32"
+                      />
                     </div>
                     <div>
                       <CardRepoList limit={7} repoList={repoList} total={repoList.length} />
                     </div>
 
                     <div className="mt-6">
-                      <PullRequestTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
+                      <PullRequestTable
+                        limit={15}
+                        contributor={githubName}
+                        topic={"*"}
+                        repositories={undefined}
+                        range={range}
+                      />
                     </div>
                     <div className="mt-8 text-sm text-light-slate-9">
                       <p>The data for these contributions is from publicly available open source projects on GitHub.</p>

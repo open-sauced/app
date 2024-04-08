@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.5](https://github.com/open-sauced/app/compare/v2.17.0-beta.4...v2.17.0-beta.5) (2024-04-08)
+
+
+### 🍕 Features
+
+* add range selection to contributor profile page ([#3125](https://github.com/open-sauced/app/issues/3125)) ([641f9b2](https://github.com/open-sauced/app/commit/641f9b2331b5dbabebe7ce10f5e32390b416275d))
+
+## [2.17.0-beta.4](https://github.com/open-sauced/app/compare/v2.17.0-beta.3...v2.17.0-beta.4) (2024-04-06)
+
+
+### 🐛 Bug Fixes
+
+* text area input does not focus when active and add highlight input is always focussed in post a highlight form ([#3008](https://github.com/open-sauced/app/issues/3008)) ([e9b9fed](https://github.com/open-sauced/app/commit/e9b9fedb71f110c2566fde95c4b58728a999d022))
+
+## [2.17.0-beta.3](https://github.com/open-sauced/app/compare/v2.17.0-beta.2...v2.17.0-beta.3) (2024-04-05)
+
+
+### 🍕 Features
+
+* matched Contritbutor Insight edit page style to workspace UI ([#3109](https://github.com/open-sauced/app/issues/3109)) ([c9e3872](https://github.com/open-sauced/app/commit/c9e3872b5a4738bce79db4e24ac3eb56d6d5adef))
+
+## [2.17.0-beta.2](https://github.com/open-sauced/app/compare/v2.17.0-beta.1...v2.17.0-beta.2) (2024-04-05)
+
+
+### 🍕 Features
+
+* matched Repository Insight edit page style to workspace UI ([#3092](https://github.com/open-sauced/app/issues/3092)) ([c65b053](https://github.com/open-sauced/app/commit/c65b053473975b74d863860eda88edf123cee2f6))
+
 ## [2.17.0-beta.1](https://github.com/open-sauced/app/compare/v2.16.2-beta.1...v2.17.0-beta.1) (2024-04-05)
 
 
