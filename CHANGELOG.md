@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.5](https://github.com/open-sauced/app/compare/v2.17.0-beta.4...v2.17.0-beta.5) (2024-04-08)
+
+
+### 🍕 Features
+
+* add range selection to contributor profile page ([#3125](https://github.com/open-sauced/app/issues/3125)) ([641f9b2](https://github.com/open-sauced/app/commit/641f9b2331b5dbabebe7ce10f5e32390b416275d))
+
 ## [2.17.0-beta.4](https://github.com/open-sauced/app/compare/v2.17.0-beta.3...v2.17.0-beta.4) (2024-04-06)
 
 
