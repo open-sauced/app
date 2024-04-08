@@ -84,7 +84,7 @@ const ListHeader = ({
             }
           >
             <Button variant="primary">
-              <FaEdit className="mr-2" /> Edit List
+              <FaEdit className="mr-2" /> Edit
             </Button>
           </Link>
         )}
