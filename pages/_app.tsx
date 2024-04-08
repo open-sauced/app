@@ -3,7 +3,7 @@
 import "../styles/globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
@@ -12,6 +12,7 @@ import NextNProgress from "nextjs-progressbar";
 
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
+import { Faro, FaroErrorBoundary, withFaroProfiler } from "@grafana/faro-react";
 import { TipProvider } from "components/atoms/Tooltip/tooltip";
 
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
@@ -25,6 +26,7 @@ import useSession from "lib/hooks/useSession";
 
 import { FeatureFlag } from "lib/utils/server/feature-flags";
 import { APP_CACHE_KEY } from "lib/utils/caching";
+import { initGrafanaFaro } from "lib/utils/grafana";
 import type { AppProps } from "next/app";
 
 // Clear any service workers present
@@ -62,6 +64,18 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
+  const faroRef = useRef<null | Faro>(null);
+
+  useEffect(() => {
+    if (
+      process.env.NEXT_PUBLIC_FARO_COLLECTOR_URL &&
+      process.env.NEXT_PUBLIC_FARO_APP_ENVIRONMENT != "local" &&
+      !faroRef.current
+    ) {
+      faroRef.current = initGrafanaFaro();
+    }
+  }, []);
+
   useSession(true);
   const router = useRouter();
   const [seo, updateSEO] = useState<SEOobject>(Component.SEO || {});
@@ -132,38 +146,40 @@ function MyApp({ Component, pageProps }: ComponentWithPageLayout) {
 
   return (
     <>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <SEO {...seo} />
+      <FaroErrorBoundary>
+        <Head>
+          <link rel="icon" href="/favicon.ico" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        <SEO {...seo} />
 
-      <SWRConfig
-        value={{
-          revalidateOnFocus: false,
-          shouldRetryOnError: false,
-          fetcher: publicApiFetcher,
-          provider: localStorageProvider,
-        }}
-      >
-        <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
-        <Toaster />
-        <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-          <PostHogProvider client={posthog}>
-            <TipProvider>
-              {Component.PageLayout ? (
-                <Component.PageLayout>
+        <SWRConfig
+          value={{
+            revalidateOnFocus: false,
+            shouldRetryOnError: false,
+            fetcher: publicApiFetcher,
+            provider: localStorageProvider,
+          }}
+        >
+          <NextNProgress options={{ showSpinner: false }} color="hsla(19, 100%, 50%, 1)" height={4} />
+          <Toaster />
+          <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
+            <PostHogProvider client={posthog}>
+              <TipProvider>
+                {Component.PageLayout ? (
+                  <Component.PageLayout>
+                    <Component {...pageProps} />
+                  </Component.PageLayout>
+                ) : (
                   <Component {...pageProps} />
-                </Component.PageLayout>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </TipProvider>
-          </PostHogProvider>
-        </SessionContextProvider>
-      </SWRConfig>
+                )}
+              </TipProvider>
+            </PostHogProvider>
+          </SessionContextProvider>
+        </SWRConfig>
+      </FaroErrorBoundary>
     </>
   );
 }
 
-export default MyApp;
+export default withFaroProfiler(MyApp);
