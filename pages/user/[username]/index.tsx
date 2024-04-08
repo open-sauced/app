@@ -3,6 +3,7 @@ import Head from "next/head";
 import { jsonLdScriptProps } from "react-schemaorg";
 import { Person } from "schema-dts";
 
+import { useRouter } from "next/router";
 import ProfileLayout from "layouts/profile";
 import SEO from "layouts/SEO/SEO";
 
@@ -25,6 +26,8 @@ export type ContributorSSRProps = {
 };
 
 const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
+  const router = useRouter();
+  const range = (router.query.range as string) ?? "30";
   const hasMounted = useHasMounted();
 
   const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
@@ -32,8 +35,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
     topic: "*",
     repoIds: [],
     limit: 50,
-    range: "30",
-    mostRecent: false,
+    range: range,
   });
   const isError = !user;
   const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.repo_name))).join(","));
@@ -93,6 +95,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           recentContributionCount={repoList.length}
           prFirstOpenedDate={user?.first_opened_pr_at}
           prVelocity={prVelocity}
+          range={range}
         />
       </div>
     </>
