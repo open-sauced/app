@@ -32,7 +32,7 @@ export default function StarSearchPage() {
       <div className="relative -mt-1.5 flex flex-col p-8 justify-between items-center w-full h-full grow bg-slate-50">
         <Header />
         <StarSearchInput />
-        <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
+        <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-80%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
       </div>
     </ProfileLayout>
   );
@@ -40,14 +40,14 @@ export default function StarSearchPage() {
 
 function Header() {
   return (
-    <section className="flex flex-col items-center gap-4 pt-8 lg:pt-24">
+    <section className="flex flex-col text-center items-center gap-4 lg:pt-24">
       <div className="flex gap-4 items-center">
         <img src="/assets/star-search-logo.svg" alt="Star Search Logo" className="w-10 h-10 mb-1" />
-        <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
+        <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
           StarSearch
         </h1>
       </div>
-      <h2 className="text-4xl font-semibold text-slate-600">Ask questions about contributors</h2>
+      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600">Ask questions about contributors</h2>
       <SuggestionBoxes />
     </section>
   );
