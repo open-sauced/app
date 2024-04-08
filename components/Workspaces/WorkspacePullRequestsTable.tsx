@@ -79,23 +79,26 @@ function SortedColumn({ name, columnInfo }: { name: string; columnInfo: HeaderCo
 const pullRequestTableColumnHelper = createColumnHelper<DbRepoPREvents>();
 const columns = [
   pullRequestTableColumnHelper.accessor("repo_name", {
-    header: (info) => <SortedColumn name="Updated At" columnInfo={info} />,
+    header: "Repository",
     cell: (info) => (
       <Link href={getRepoUrl(info.getValue())} className="text-orange-700 underline hover:no-underline">
         {info.getValue()}
       </Link>
     ),
+    size: 120,
   }),
   pullRequestTableColumnHelper.accessor("pr_number", {
-    header: "Number",
+    header: "PR #",
     cell: (info) => (
       <Link
         href={getPullRequestUrl(info.row.original.pr_number, info.row.original.repo_name)}
         className="text-orange-700 underline hover:no-underline"
+        aria-label={`View pull request #${info.row.original.pr_number} for the repository ${info.row.original.repo_name} repository`}
       >
         {info.row.original.pr_number}
       </Link>
     ),
+    size: 100,
   }),
   pullRequestTableColumnHelper.accessor("pr_state", {
     cell: (info) =>
@@ -105,16 +108,19 @@ const columns = [
         info.row.original.pr_is_merged
       ),
     header: "State",
+    size: 50,
   }),
   pullRequestTableColumnHelper.accessor("pr_author_login", {
     header: "Author",
     cell: (info) => <AvatarHoverCard contributor={info.row.original.pr_author_login} repositories={[]} size="medium" />,
+    size: 70,
   }),
   pullRequestTableColumnHelper.accessor("pr_updated_at", {
-    header: "Updated At",
+    header: (info) => <SortedColumn name="Updated At" columnInfo={info} />,
     cell: (info) => getTime(info.getValue()),
+    minSize: 130,
   }),
-  pullRequestTableColumnHelper.accessor("pr_title", { header: "Title" }),
+  pullRequestTableColumnHelper.accessor("pr_title", { header: "Title", size: 200 }),
   pullRequestTableColumnHelper.accessor("pr_changed_files", { header: "Changed Files" }),
   pullRequestTableColumnHelper.accessor("pr_additions", {
     header: "Additions",
@@ -152,7 +158,7 @@ const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties =
 export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps) => {
   const router = useRouter();
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
-    left: ["pr_state", "pr_number", "repo_name", "pr_author_login", "pr_updated_at"],
+    left: ["pr_state", "pr_number", "repo_name", "pr_author_login"],
   });
   const table = useReactTable({
     columns,
