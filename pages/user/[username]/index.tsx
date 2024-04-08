@@ -26,7 +26,6 @@ export type ContributorSSRProps = {
 };
 
 const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
-  const { data: contributor, isError: contributorError } = useFetchUser(username);
   const router = useRouter();
   const range = (router.query.range as string) ?? "30";
   const hasMounted = useHasMounted();
