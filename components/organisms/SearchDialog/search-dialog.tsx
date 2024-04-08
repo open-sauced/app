@@ -108,7 +108,7 @@ const SearchDialog = () => {
           <Text className="block w-full py-1 px-4">Repositories</Text>
           <div className="w-full h-full">
             <ScrollArea className="w-full">
-              {repoData.map((repo: GhRepo, i: number) => (
+              {repoData.map((repo: DbRepo, i: number) => (
                 <Link
                   key={i + (userSearchResult?.data.length || 0)}
                   href={`/s/${repo.full_name}`}
@@ -122,7 +122,11 @@ const SearchDialog = () => {
                     setOpenSearch(false);
                   }}
                 >
-                  <Avatar size="sm" className="!rounded-full flex-none" avatarURL={repo.owner?.avatar_url} />
+                  <Avatar
+                    size="sm"
+                    className="!rounded-full flex-none"
+                    avatarURL={getAvatarByUsername(repo.full_name.split("/")[0])}
+                  />
                   <div className="flex items-center gap-2 overflow-hidden">
                     <Text className="text-gray-900">{repo.full_name}</Text>
                   </div>
