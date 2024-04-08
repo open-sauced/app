@@ -12,6 +12,7 @@ import { GitMergeIcon, GitPullRequestClosedIcon, GitPullRequestIcon } from "@pri
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
+import clsx from "clsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 import Pagination from "components/molecules/Pagination/pagination";
@@ -136,14 +137,9 @@ const columns = [
     cell: (info) => getTime(info.getValue()),
   }),
 ];
-//These are the important styles to make sticky column pinning work!
-//Apply styles like this using your CSS strategy of choice with this kind of logic to head cells, data cells, footer cells, etc.
-//View the index.css file for more needed styles such as border-collapse: separate
+
 const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties => {
   const isPinned = column.getIsPinned();
-  const isLastLeftPinnedColumn = isPinned === "left" && column.getIsLastColumn("left");
-  const isFirstRightPinnedColumn = isPinned === "right" && column.getIsFirstColumn("right");
-
   return {
     left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
     right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
@@ -176,18 +172,28 @@ export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps)
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="bg-light-slate-3">
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
+                <TableHead
+                  key={header.id}
+                  style={{ ...getCommonPinningStyles(header.column) }}
+                  className={clsx(header.column.getIsPinned(), "bg-light-slate-3")}
+                >
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                 </TableHead>
               ))}
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
+        <TableBody className="bg-white">
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                <TableCell
+                  key={cell.id}
+                  style={{ ...getCommonPinningStyles(cell.column) }}
+                  className={clsx(cell.column.getIsPinned(), "bg-white")}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </TableCell>
               ))}
             </TableRow>
           ))}
