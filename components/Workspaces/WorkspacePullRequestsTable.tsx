@@ -66,6 +66,7 @@ function SortedColumn({ name, columnInfo }: { name: string; columnInfo: HeaderCo
           setIsAscending(!isAscending);
         }}
       >
+        <span className="sr-only">{`Sort ${name} in ${isAscending ? "ascending" : "descending"} order`}</span>
         {isAscending ? (
           <BiSolidUpArrow className="w-6 aspect-square" />
         ) : (
