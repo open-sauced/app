@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.8](https://github.com/open-sauced/app/compare/v2.17.0-beta.7...v2.17.0-beta.8) (2024-04-09)
+
+
+### 🍕 Features
+
+* initial `/starsearch` layout ([#3148](https://github.com/open-sauced/app/issues/3148)) ([5c3d61b](https://github.com/open-sauced/app/commit/5c3d61b524f94d88b01b85fdfde9136eedae110d))
+
 ## [2.17.0-beta.7](https://github.com/open-sauced/app/compare/v2.17.0-beta.6...v2.17.0-beta.7) (2024-04-08)
 
 
