@@ -7,7 +7,7 @@ import { FiCopy } from "react-icons/fi";
 
 import { useRouter } from "next/router";
 import getRepoInsights from "lib/utils/get-repo-insights";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 import { truncateString } from "lib/utils/truncate-string";
@@ -15,6 +15,7 @@ import useRepositories from "lib/hooks/api/useRepositories";
 import { useToast } from "lib/hooks/useToast";
 import { setQueryParams } from "lib/utils/query-params";
 import StackedOwners from "components/Workspaces/StackedOwners";
+import { shortenUrl } from "lib/utils/shorten-url";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
@@ -54,7 +55,8 @@ const InsightHeader = ({
     posthog!.capture("clicked: Insights copied");
 
     try {
-      await navigator.clipboard.writeText(url);
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -97,7 +99,7 @@ const InsightHeader = ({
         {canEdit && (
           <Link href={`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`}>
             <Button className="text-xs w-max" variant="primary">
-              <FaEdit className="mr-2" /> Edit Page
+              <FaEdit className="mr-2" /> Edit
             </Button>
           </Link>
         )}

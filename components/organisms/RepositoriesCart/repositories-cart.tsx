@@ -9,7 +9,7 @@ import CartIllustration from "components/atoms/CartIllustration/cart-illustratio
 import Text from "components/atoms/Typography/text";
 
 import { RepositoryCartItemProps } from "components/molecules/ReposoitoryCartItem/repository-cart-item";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 
 interface RepositoriesCartProps {
   edit?: boolean;

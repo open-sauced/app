@@ -3,7 +3,7 @@ import { FaEdit } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";
 import { usePostHog } from "posthog-js/react";
 
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
 
@@ -11,6 +11,7 @@ import { truncateString } from "lib/utils/truncate-string";
 import { useToast } from "lib/hooks/useToast";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import StackedOwners from "components/Workspaces/StackedOwners";
+import { shortenUrl } from "lib/utils/shorten-url";
 
 interface ListHeaderProps {
   name: string;
@@ -39,7 +40,8 @@ const ListHeader = ({
     posthog!.capture("clicked: Lists copied");
 
     try {
-      await navigator.clipboard.writeText(url);
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -82,7 +84,7 @@ const ListHeader = ({
             }
           >
             <Button variant="primary">
-              <FaEdit className="mr-2" /> Edit List
+              <FaEdit className="mr-2" /> Edit
             </Button>
           </Link>
         )}

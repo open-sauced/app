@@ -214,6 +214,49 @@ export async function getInsightWithWorkspace({ insightId }: { insightId: number
   return { data, error };
 }
 
+export async function updateWorkspaceRepoInsight({
+  workspaceId,
+  insightId,
+  bearerToken,
+  name,
+  repos,
+}: {
+  workspaceId: string;
+  insightId: string;
+  bearerToken: string;
+  name: string;
+  repos: { fullName: string }[];
+}) {
+  const { data, error } = await fetchApiData({
+    path: `workspaces/${workspaceId}/insights/${insightId}`,
+    method: "PATCH",
+    bearerToken,
+    body: { name, repos, is_public: true },
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
+export async function deleteWorkspaceRepoInsight({
+  workspaceId,
+  insightId,
+  bearerToken,
+}: {
+  workspaceId: string;
+  insightId: string;
+  bearerToken: string;
+}) {
+  const { data, error } = await fetchApiData({
+    path: `workspaces/${workspaceId}/insights/${insightId}`,
+    method: "DELETE",
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
 // contributor insights
 export async function createContributorInsight({
   workspaceId,
@@ -239,6 +282,50 @@ export async function getListWithWorkspace({ listId }: { listId: string }) {
     method: "GET",
     bearerToken: "",
     pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
+export async function updateWorkspaceContributorInsight({
+  workspaceId,
+  listId,
+  bearerToken,
+  name,
+  contributors,
+  is_public = true,
+}: {
+  workspaceId: string;
+  listId: string;
+  bearerToken: string;
+  name: string;
+  contributors: { login: string }[];
+  is_public?: boolean;
+}) {
+  const { data, error } = await fetchApiData({
+    path: `workspaces/${workspaceId}/userLists/${listId}`,
+    method: "PATCH",
+    body: { name, contributors, is_public },
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  return { data, error };
+}
+
+export async function deleteWorkspaceContributorInsight({
+  workspaceId,
+  listId,
+  bearerToken,
+}: {
+  workspaceId: string;
+  listId: string;
+  bearerToken: string;
+}) {
+  const { data, error } = await fetchApiData({
+    path: `workspaces/${workspaceId}/userLists/${listId}`,
+    method: "DELETE",
+    bearerToken,
   });
 
   return { data, error };
