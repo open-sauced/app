@@ -1,9 +1,12 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
+import { useState } from "react";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
+import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { getAvatarById } from "lib/utils/github";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -21,18 +24,29 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  return { props: {} };
+  return { props: { userId } };
 }
 
-type StarSearchPageProps = {};
+type StarSearchPageProps = {
+  userId: number;
+};
 
-export default function StarSearchPage() {
+export default function StarSearchPage({ userId }: StarSearchPageProps) {
+  const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
+  const renderState = () => {
+    switch (starSearchState) {
+      case "initial":
+        return <Header />;
+      case "chat":
+        return <ChatHistory userId={userId} />;
+    }
+  };
   return (
     <ProfileLayout>
-      <div className="relative -mt-1.5 flex flex-col p-8 justify-between items-center w-full h-full grow bg-slate-50">
-        <Header />
-        <StarSearchInput />
-        <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-80%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
+      <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
+        {renderState()}
+        <StarSearchInput onSubmit={() => setStarSearchState(starSearchState === "initial" ? "chat" : "initial")} />
+        <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
       </div>
     </ProfileLayout>
   );
@@ -86,9 +100,46 @@ function SuggestionBoxes() {
   );
 }
 
-function StarSearchInput() {
+function ChatHistory({ userId }: { userId: number }) {
   return (
-    <section className="w-full h-fit px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
+    <ScrollArea className="grow items-center w-full p-4 lg:p-8">
+      <Chatbox author="You" userId={userId} content="Who are the biggest contributors for the open-sauced/app repo?" />
+      <Chatbox
+        author="StarSearch"
+        content="The top 3 biggest contributors for open-sauced/app nickytonline, brandonroberts, and jpmcb."
+      />
+    </ScrollArea>
+  );
+}
+
+function Chatbox({ author, content, userId }: { author: "You" | "StarSearch"; content: string; userId?: number }) {
+  const renderAvatar = () => {
+    switch (author) {
+      case "You":
+        return <img src={getAvatarById(`${userId}`)} className="w-8 h-8 lg:w-10 lg:h-10 rounded-full" />;
+      case "StarSearch":
+        return (
+          <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-3 py-1 lg:p-2 rounded-full">
+            <img src="/assets/star-search-logo-white.svg" className="w-6 h-6" />
+          </div>
+        );
+    }
+  };
+
+  return (
+    <li className="flex gap-2 items-start my-4">
+      {renderAvatar()}
+      <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4">
+        <h3 className="font-semibold text-sauced-orange">{author}</h3>
+        <p>{content}</p>
+      </Card>
+    </li>
+  );
+}
+
+function StarSearchInput({ onSubmit }: { onSubmit: () => void }) {
+  return (
+    <section className="w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <div className="w-full h-fit flex justify-between rounded-lg">
         <input
           type="text"
@@ -96,7 +147,7 @@ function StarSearchInput() {
           className="p-4 border focus:outline-none grow rounded-l-lg border-none"
           required
         />
-        <button className="bg-white p-2 rounded-r-lg">
+        <button className="bg-white p-2 rounded-r-lg" onClick={onSubmit}>
           <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
         </button>
       </div>
