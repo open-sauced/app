@@ -167,7 +167,7 @@ export default async function handler(req: Request) {
                 <span style={statValueContainerStyles}>
                   <span style={statValueStyles}>{humanizeNumber(starCount)}</span>
                 </span>
-                <span style={statSubTextStyles}>Forks</span>
+                <span style={statSubTextStyles}>Stars</span>
               </span>
             </li>
             <li style={statContainerStyles}>
@@ -179,7 +179,7 @@ export default async function handler(req: Request) {
                 <span style={statValueContainerStyles}>
                   <span style={statValueStyles}>{humanizeNumber(forkCount)}</span>
                 </span>
-                <span style={statSubTextStyles}>Stars</span>
+                <span style={statSubTextStyles}>Forks</span>
               </span>
             </li>
           </ul>

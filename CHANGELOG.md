@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.7](https://github.com/open-sauced/app/compare/v2.17.0-beta.6...v2.17.0-beta.7) (2024-04-08)
+
+
+### 🍕 Features
+
+* search for repositories ([#3140](https://github.com/open-sauced/app/issues/3140)) ([10ede95](https://github.com/open-sauced/app/commit/10ede95ed1e5495f8a45042d6b4ec61056da30e8))
+
+## [2.17.0-beta.6](https://github.com/open-sauced/app/compare/v2.17.0-beta.5...v2.17.0-beta.6) (2024-04-08)
+
+
+### 🐛 Bug Fixes
+
+* swap text for stars/forks in repo page OG image ([#3145](https://github.com/open-sauced/app/issues/3145)) ([22fa602](https://github.com/open-sauced/app/commit/22fa602cc5f4801e179e39e2fc026d1967220020))
+
 ## [2.17.0-beta.5](https://github.com/open-sauced/app/compare/v2.17.0-beta.4...v2.17.0-beta.5) (2024-04-08)
 
 

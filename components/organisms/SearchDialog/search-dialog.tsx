@@ -14,9 +14,11 @@ import { searchUsers } from "lib/hooks/search-users";
 import useDebounceTerm from "lib/hooks/useDebounceTerm";
 import useIsMacOS from "lib/hooks/useIsMacOS";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useSearchRepos } from "lib/hooks/useSearchRepos";
 
 const SearchDialog = () => {
   useLockBody();
+  const isMac = useIsMacOS();
   const router = useRouter();
   const { providerToken } = useSupabaseAuth();
   const [cursor, setCursor] = useState(-1);
@@ -25,8 +27,13 @@ const SearchDialog = () => {
   const [isSearchError, setIsSearchError] = useState(false);
   const setOpenSearch = store((state) => state.setOpenSearch);
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
-  const [searchResult, setSearchResult] = useState<{ data: GhUser[] }>();
-  const isMac = useIsMacOS();
+  const {
+    data: repoData,
+    isLoading: repoDataLoading,
+    isError: repoDataError,
+  } = useSearchRepos(debouncedSearchTerm, 3, 5);
+
+  const [userSearchResult, setUserSearchResult] = useState<{ data: GhUser[] }>();
 
   useEffect(() => {
     document.addEventListener("keydown", handleCloseSearch);
@@ -40,7 +47,7 @@ const SearchDialog = () => {
   }, []);
 
   const handleKeyboardCtrl: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    const resultsCount = searchResult?.data?.length || 0;
+    const resultsCount = (userSearchResult?.data?.length || 0) + repoData.length;
     if (resultsCount && e.key === "ArrowUp") {
       e.preventDefault();
       setCursor(cursor === 0 ? Math.min(resultsCount - 1, 9) : cursor - 1);
@@ -63,15 +70,74 @@ const SearchDialog = () => {
     if (searchTerm.length >= 3) startSearch();
     async function startSearch() {
       setIsSearching(true);
-      const data = await searchUsers(debouncedSearchTerm, providerToken);
-      if (data) {
-        setSearchResult(data);
-        setIsSearchError(!data.data.length);
+      const userData = await searchUsers(debouncedSearchTerm, providerToken);
+      if (userData) {
+        setUserSearchResult(userData);
+        setIsSearchError(!userData.data.length);
       }
       cursor !== -1 && setCursor(-1);
       setIsSearching(false);
     }
   }, [debouncedSearchTerm]);
+
+  const renderUserSearchState = () => {
+    if (searchTerm.length < 3) {
+      return null;
+    } else if (!isSearchError && !isSearching && userSearchResult?.data && searchTerm.length >= 3) {
+      return <SearchResult cursor={cursor} result={userSearchResult?.data} />;
+    } else if (!isSearchError && isSearching) {
+      return <SearchLoading />;
+    } else if (isSearchError && !isSearching) {
+      return <SearchError variant="users" />;
+    }
+  };
+
+  const renderRepoSearchState = () => {
+    if (searchTerm.length < 3) {
+      return null;
+    }
+    if (repoDataLoading) {
+      return <SearchLoading />;
+    }
+    if (repoDataError || repoData.length === 0) {
+      return <SearchError variant="repositories" />;
+    }
+    if (repoData.length > 0) {
+      return (
+        <div className="w-full py-1 overflow-hidden text-gray-600">
+          <Text className="block w-full py-1 px-4">Repositories</Text>
+          <div className="w-full h-full">
+            <ScrollArea className="w-full">
+              {repoData.map((repo: DbRepo, i: number) => (
+                <Link
+                  key={i + (userSearchResult?.data.length || 0)}
+                  href={`/s/${repo.full_name}`}
+                  className={clsx(
+                    cursor === i + (userSearchResult?.data.length || 0) && "_cursorActive bg-slate-100",
+                    "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"
+                  )}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(e.currentTarget.href);
+                    setOpenSearch(false);
+                  }}
+                >
+                  <Avatar
+                    size="sm"
+                    className="!rounded-full flex-none"
+                    avatarURL={getAvatarByUsername(repo.full_name.split("/")[0])}
+                  />
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    <Text className="text-gray-900">{repo.full_name}</Text>
+                  </div>
+                </Link>
+              ))}
+            </ScrollArea>
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="fixed left-0 top-0 z-auto p-5 w-full h-full flex justify-center bg-white/30">
@@ -100,15 +166,15 @@ const SearchDialog = () => {
             {isMac ? "⌘K" : <span className="text-xs py-2 px-1">CTRL+K</span>}
           </Text>
         </div>
-        <div className="w-full h-full flex items-center">
+        <div className="w-full h-full flex flex-col items-center">
           {searchTerm.length < 3 ? (
             <SearchInfo />
-          ) : !isSearchError && !isSearching && searchResult?.data && searchTerm.length >= 3 ? (
-            <SearchResult cursor={cursor} result={searchResult?.data} />
-          ) : !isSearchError && isSearching ? (
-            <SearchLoading />
           ) : (
-            isSearchError && !isSearching && <SearchError />
+            <>
+              <section className="flex flex-col w-full">{renderUserSearchState()}</section>
+              <hr />
+              <section className="flex flex-col w-full">{renderRepoSearchState()}</section>
+            </>
           )}
         </div>
       </div>
@@ -139,7 +205,7 @@ const SearchDialogTrigger = () => {
       >
         <div className="flex items-center">
           <FaSearch className="text-light-slate-9" fontSize={16} />
-          <Text className="pl-2 text-sm text-light-slate-9">Search for users</Text>
+          <Text className="pl-2 text-sm text-light-slate-9">Users, Repositories...</Text>
         </div>
         <Text keyboard className="text-gray-600 !border-b !px-1">
           {isMac ? "⌘K" : <span className="text-xs px-1 py-2">CTRL+K</span>}
@@ -168,10 +234,10 @@ const SearchLoading = () => (
   </div>
 );
 
-const SearchError = () => (
+const SearchError = ({ variant }: { variant: "users" | "repositories" }) => (
   <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
     <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
-    We couldn&apos;t find any users with that name
+    We couldn&apos;t find any {variant} with that name
   </Text>
 );
 
