@@ -52,7 +52,7 @@ function getPullRequestStateIcon(
     case state === "closed" && !isMerged:
       return <GitPullRequestClosedIcon size={24} aria-label="closed pull request" className="text-red-600" />;
     case state === "closed" && isMerged:
-      return <GitMergeIcon size={24} aria-label="merged pull request" className="text-purple-600 h-8 w-8" />;
+      return <GitMergeIcon size={24} aria-label="merged pull request" className="text-purple-600" />;
   }
 }
 
@@ -76,6 +76,25 @@ function SortedColumn({ name, columnInfo }: { name: string; columnInfo: HeaderCo
     </div>
   );
 }
+
+const PrStateAuthorIcon = ({
+  state,
+  isDraft,
+  isMerged,
+  author,
+}: {
+  state: string;
+  isDraft: boolean;
+  isMerged: boolean;
+  author: string;
+}) => {
+  return (
+    <div className="relative">
+      <AvatarHoverCard contributor={author} repositories={[]} size="medium" />
+      <div className="absolute bottom-0 right-0">{getPullRequestStateIcon(state, isDraft, isMerged)}</div>
+    </div>
+  );
+};
 
 const pullRequestTableColumnHelper = createColumnHelper<DbRepoPREvents>();
 const columns = [
@@ -102,18 +121,15 @@ const columns = [
     size: 100,
   }),
   pullRequestTableColumnHelper.accessor("pr_state", {
-    cell: (info) =>
-      getPullRequestStateIcon(
-        info.row.original.pr_state,
-        info.row.original.pr_is_draft,
-        info.row.original.pr_is_merged
-      ),
+    cell: (info) => (
+      <PrStateAuthorIcon
+        state={info.row.original.pr_state}
+        isDraft={info.row.original.pr_is_draft}
+        isMerged={info.row.original.pr_is_merged}
+        author={info.row.original.pr_author_login}
+      />
+    ),
     header: "State",
-    size: 50,
-  }),
-  pullRequestTableColumnHelper.accessor("pr_author_login", {
-    header: "Author",
-    cell: (info) => <AvatarHoverCard contributor={info.row.original.pr_author_login} repositories={[]} size="medium" />,
     size: 70,
   }),
   pullRequestTableColumnHelper.accessor("pr_updated_at", {
