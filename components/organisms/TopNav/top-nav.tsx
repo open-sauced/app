@@ -47,7 +47,7 @@ const Nav = ({ className }: { className?: string }) => {
 
   return (
     <nav className={className} aria-label="top navigation">
-      <ul className="flex gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
+      <ul className="flex items-center gap-3 md:gap-8 mb-1 ml-2 sm:m-0 w-full sm:w-auto">
         {user ? (
           <li>
             <Link
@@ -78,6 +78,17 @@ const Nav = ({ className }: { className?: string }) => {
             href={"/feed"}
           >
             Highlights
+          </Link>
+        </li>
+        <li className="hidden lg:inline">
+          <Link
+            className={`tracking-tight font-medium text-sm text-slate-700 hover:text-orange-500 flex gap-2 items-center transition-all ${getActiveStyle(
+              router.pathname === "/starsearch"
+            )}`}
+            href={"/starsearch"}
+          >
+            <img src="/assets/star-search-logo.svg" alt="Star Search logo" className="w-5 h-5" />
+            <p className="mt-0.5">StarSearch</p>
           </Link>
         </li>
       </ul>
