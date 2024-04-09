@@ -1,8 +1,45 @@
 import differenceInDays from "date-fns/differenceInDays";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 
+export type HistogramData = {
+  bucket: string;
+  star_count?: number;
+  forks_count?: number;
+};
+
+export function getTicks({ histogram, range }: { histogram: HistogramData[]; range: number }): string[] {
+  // if 30 days, get every 3 days
+  // if 90 days, get every week
+  // if 7 days, get all days
+  const result: string[] = [];
+  switch (range) {
+    case 7:
+      return histogram.map((point) => point.bucket);
+    case 30: {
+      for (let i = 3; i < 30; i += 3) {
+        result.push(histogram[i].bucket);
+      }
+      return result;
+    }
+    case 90: {
+      for (let i = 7; i < 90; i += 7) {
+        result.push(histogram[i].bucket);
+      }
+      return result;
+    }
+    default:
+      return [];
+  }
+}
+
 // adds empty days in between those given by the histogram API endpoint
-export function getDailyStarsHistogramToDays({ stats, range }: { stats: StatsType[] | undefined; range: number }) {
+export function getDailyStarsHistogramToDays({
+  stats,
+  range,
+}: {
+  stats: StatsType[] | undefined;
+  range: number;
+}): HistogramData[] {
   let previousCount = 0;
   const allDays = stats?.reverse().reduce((days: { [count: number]: StatsType }, current: StatsType) => {
     const today = new Date();
@@ -17,14 +54,17 @@ export function getDailyStarsHistogramToDays({ stats, range }: { stats: StatsTyp
           const missingDay = new Date(today);
           missingDay.setDate(today.getDate() - (missed + previousCount));
           days[previousCount + missed] = {
-            bucket: missingDay.toLocaleDateString(),
+            bucket: missingDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
             star_count: 0,
           };
         }
       }
 
       newDay.setDate(today.getDate() - count);
-      days[count] = { bucket: newDay.toLocaleDateString(), star_count: current.star_count! };
+      days[count] = {
+        bucket: newDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+        star_count: current.star_count!,
+      };
     }
 
     previousCount = count;
@@ -37,7 +77,13 @@ export function getDailyStarsHistogramToDays({ stats, range }: { stats: StatsTyp
     let temp = allDays?.[i];
     if (!temp) {
       const today = new Date();
-      temp = { bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(), star_count: 0 };
+      temp = {
+        bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(undefined, {
+          month: "numeric",
+          day: "numeric",
+        }),
+        star_count: 0,
+      };
     }
     result.push(temp);
   }
@@ -54,7 +100,7 @@ export function getCumulativeStarsHistogramToDays({
   stats: StatsType[] | undefined;
   range: number;
   total: number;
-}) {
+}): HistogramData[] {
   let currentTotal = total;
   let previousCount = 0;
 
@@ -70,14 +116,17 @@ export function getCumulativeStarsHistogramToDays({
           const missingDay = new Date();
           missingDay.setDate(today.getDate() - (previousCount + missed));
           days[previousCount + missed] = {
-            bucket: missingDay.toLocaleDateString(),
+            bucket: missingDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
             star_count: currentTotal,
           };
         }
       }
       const newDay = new Date();
       newDay.setDate(today.getDate() - count);
-      days[count] = { bucket: newDay.toLocaleDateString(), star_count: currentTotal - current.star_count! };
+      days[count] = {
+        bucket: newDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+        star_count: currentTotal - current.star_count!,
+      };
     }
 
     previousCount = count;
@@ -92,7 +141,13 @@ export function getCumulativeStarsHistogramToDays({
     let temp = allDays?.[i];
     if (!temp) {
       const today = new Date();
-      temp = { bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(), star_count: currentTotal };
+      temp = {
+        bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(undefined, {
+          month: "numeric",
+          day: "numeric",
+        }),
+        star_count: currentTotal,
+      };
     }
     result.push(temp);
     currentTotal = temp.star_count!;
@@ -102,7 +157,13 @@ export function getCumulativeStarsHistogramToDays({
   return result;
 }
 
-export function getDailyForksHistogramToDays({ stats, range }: { stats: StatsType[] | undefined; range: number }) {
+export function getDailyForksHistogramToDays({
+  stats,
+  range,
+}: {
+  stats: StatsType[] | undefined;
+  range: number;
+}): HistogramData[] {
   let previousCount = 0;
   const allDays = stats?.reverse().reduce((days: { [count: number]: StatsType }, current: StatsType) => {
     const today = new Date();
@@ -117,14 +178,17 @@ export function getDailyForksHistogramToDays({ stats, range }: { stats: StatsTyp
           const missingDay = new Date(today);
           missingDay.setDate(today.getDate() - (missed + previousCount));
           days[previousCount + missed] = {
-            bucket: missingDay.toLocaleDateString(),
+            bucket: missingDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
             forks_count: 0,
           };
         }
       }
 
       newDay.setDate(today.getDate() - count);
-      days[count] = { bucket: newDay.toLocaleDateString(), forks_count: current.forks_count! };
+      days[count] = {
+        bucket: newDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+        forks_count: current.forks_count!,
+      };
     }
 
     previousCount = count;
@@ -137,7 +201,13 @@ export function getDailyForksHistogramToDays({ stats, range }: { stats: StatsTyp
     let temp = allDays?.[i];
     if (!temp) {
       const today = new Date();
-      temp = { bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(), forks_count: 0 };
+      temp = {
+        bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(undefined, {
+          month: "numeric",
+          day: "numeric",
+        }),
+        forks_count: 0,
+      };
     }
     result.push(temp);
   }
@@ -154,7 +224,7 @@ export function getCumulativeForksHistogramToDays({
   stats: StatsType[] | undefined;
   range: number;
   total: number;
-}) {
+}): HistogramData[] {
   let currentTotal = total;
   let previousCount = 0;
 
@@ -170,14 +240,17 @@ export function getCumulativeForksHistogramToDays({
           const missingDay = new Date();
           missingDay.setDate(today.getDate() - (previousCount + missed));
           days[previousCount + missed] = {
-            bucket: missingDay.toLocaleDateString(),
+            bucket: missingDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
             forks_count: currentTotal,
           };
         }
       }
       const newDay = new Date();
       newDay.setDate(today.getDate() - count);
-      days[count] = { bucket: newDay.toLocaleDateString(), forks_count: currentTotal - current.forks_count! };
+      days[count] = {
+        bucket: newDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+        forks_count: currentTotal - current.forks_count!,
+      };
     }
 
     previousCount = count;
@@ -192,7 +265,13 @@ export function getCumulativeForksHistogramToDays({
     let temp = allDays?.[i];
     if (!temp) {
       const today = new Date();
-      temp = { bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(), forks_count: currentTotal };
+      temp = {
+        bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(undefined, {
+          month: "numeric",
+          day: "numeric",
+        }),
+        forks_count: currentTotal,
+      };
     }
     result.push(temp);
     currentTotal = temp.forks_count!;
