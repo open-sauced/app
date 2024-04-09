@@ -1,4 +1,3 @@
-import { FaStar } from "react-icons/fa6";
 import {
   ResponsiveContainer,
   BarChart,
@@ -10,16 +9,17 @@ import {
   type TooltipProps,
   Line,
 } from "recharts";
+import { BiGitRepoForked } from "react-icons/bi";
 import { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
-import { useMemo, useState } from "react";
-import Card from "components/atoms/Card/card";
 
-import { getCumulativeStarsHistogramToDays, getDailyStarsHistogramToDays } from "lib/utils/repo-page-utils";
-import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
+import { useMemo, useState } from "react";
 import Button from "components/shared/Button/button";
+import Card from "components/atoms/Card/card";
+import { getCumulativeForksHistogramToDays, getDailyForksHistogramToDays } from "lib/utils/repo-page-utils";
+import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
-type StarsChartProps = {
+type ForksChartProps = {
   stats: StatsType[] | undefined;
   total: number;
   syncId: string;
@@ -27,11 +27,11 @@ type StarsChartProps = {
   isLoading: boolean;
 };
 
-export default function StarsChart({ stats, total, syncId, range = 30, isLoading }: StarsChartProps) {
+export default function ForksChart({ stats, total, syncId, range = 30, isLoading }: ForksChartProps) {
   const [category, setCategory] = useState<"daily" | "cumulative">("daily");
-  const dailyData = useMemo(() => getDailyStarsHistogramToDays({ stats, range }), [stats, range]);
+  const dailyData = useMemo(() => getDailyForksHistogramToDays({ stats, range }), [stats, range]);
   const cumulativeData = useMemo(
-    () => getCumulativeStarsHistogramToDays({ stats, total, range }),
+    () => getCumulativeForksHistogramToDays({ stats, total, range }),
     [stats, total, range]
   );
 
@@ -43,7 +43,7 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
             <XAxis dataKey="bucket" tick={false} />
             <YAxis interval={1} />
             <Tooltip content={CustomTooltip} filterNull={false} />
-            <Bar dataKey="star_count" fill="#FF5100" />
+            <Bar dataKey="forks_count" fill="#FF5100" />
           </BarChart>
         );
       case "cumulative":
@@ -52,7 +52,7 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
             <XAxis dataKey="bucket" tick={false} />
             <YAxis domain={["auto", "auto"]} />
             <Tooltip content={CustomTooltip} filterNull={false} />
-            <Line dataKey="star_count" stroke="#FF5100" />
+            <Line dataKey="forks_count" stroke="#FF5100" />
           </LineChart>
         );
     }
@@ -66,7 +66,7 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
         ) : (
           <>
             <div className="flex gap-1 items-center w-fit">
-              <h3 className="text-sm font-semibold md:text-xl text-slate-800">Stars</h3>
+              <h3 className="text-sm font-semibold md:text-xl text-slate-800">Forks</h3>
               <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
             </div>
             <div className="flex gap-4 items-center">
@@ -95,8 +95,8 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
     return (
       <figcaption className="flex flex-col gap-1 bg-white px-4 py-2 rounded-lg border">
         <section className="flex gap-2 items-center">
-          <FaStar className="fill-sauced-orange" />
-          <p>Stars: {payload[0]?.value}</p>
+          <BiGitRepoForked className="fill-sauced-orange" />
+          <p>Forks: {payload[0]?.value}</p>
         </section>
 
         <p className="text-light-slate-9 text-sm">{payload[0]?.payload.bucket}</p>
