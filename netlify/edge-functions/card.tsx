@@ -278,7 +278,7 @@ const getAvatarByUsername = (username: string | null, size = 460) =>
   `https://www.github.com/${username ?? "github"}.png?size=${size}`;
 
 async function fetchContributorPRs(username: string) {
-  const url = new URL(`${Deno.env.get("NEXT_PUBLIC_V2_API_URL")}/users/${username}/prs`);
+  const url = new URL(`${Deno.env.get("NEXT_PUBLIC_API_URL")}/users/${username}/prs`);
 
   url.searchParams.set("topic", "*");
   url.searchParams.set("limit", "100");
