@@ -1,4 +1,5 @@
 import { GitMergeIcon, GitPullRequestClosedIcon, GitPullRequestIcon } from "@primer/octicons-react";
+import Link from "next/link";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 
 function getPullRequestStateIcon(
@@ -51,7 +52,9 @@ export const PrStateAuthorIcon = ({
 
   return (
     <div className="relative w-max">
-      <Avatar contributor={author} size="medium" />
+      <Link href={`/user/${author}`} title={`User profile for ${author}`}>
+        <Avatar contributor={author} size="medium" />
+      </Link>
       <div
         className={`absolute -bottom-[10px] -right-[12px] p-1 border-[2px] border-white  rounded-full [&_svg]:absolute [&_svg]:top-[3.5px] [&_svg]:left-[3.5px] ${backgroundColor}`}
         style={{ width: "25px", height: "25px" }}
