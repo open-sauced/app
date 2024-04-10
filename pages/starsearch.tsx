@@ -24,11 +24,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  return { props: { userId } };
+  return { props: { userId, bearerToken: session?.access_token } };
 }
 
 type StarSearchPageProps = {
   userId: number;
+  bearerToken: string;
 };
 
 type StarSearchChat = {
@@ -36,13 +37,73 @@ type StarSearchChat = {
   content: string;
 };
 
-export default function StarSearchPage({ userId }: StarSearchPageProps) {
+export default function StarSearchPage({ userId, bearerToken }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
+  const [isRunning, setIsRunning] = useState(false);
 
   const submitPrompt = async (prompt: string) => {
-    // eslint-disable-next-line no-console
-    console.log({ prompt });
+    if (isRunning) {
+      return;
+    }
+    if (starSearchState === "initial") {
+      setStarSearchState("chat");
+    }
+    setIsRunning(true); // disables input
+
+    // add user prompt to history
+    setChat((history) => {
+      const temp = history;
+      temp.push({ author: "You", content: prompt });
+      return temp;
+    });
+
+    // get ReadableStream from API
+    const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
+    const response = await fetch(`${baseUrl}/star-search/stream`, {
+      method: "POST",
+      body: JSON.stringify({
+        query_text: prompt,
+      }),
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      setChat((history) => {
+        const temp = history;
+        temp.push({ author: "StarSearch", content: "There's been an error. Try again." });
+        return temp;
+      });
+      setIsRunning(false); // enables input
+      return;
+    }
+
+    const reader = response.body?.getReader();
+    setChat((history) => {
+      const temp = history;
+      temp.push({ author: "StarSearch", content: "" });
+      return temp;
+    });
+    const aiChatIndex = chat.length - 1;
+
+    const decoder = new TextDecoder();
+    while (true) {
+      const { done, value } = await reader!.read();
+      if (done) {
+        setIsRunning(false); // enables input
+        return;
+      }
+
+      setChat((history) => {
+        const temp = history;
+        temp[aiChatIndex].content += decoder.decode(value);
+        return temp;
+      });
+    }
   };
 
   const renderState = () => {
@@ -58,7 +119,7 @@ export default function StarSearchPage({ userId }: StarSearchPageProps) {
     <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
         {renderState()}
-        <StarSearchInput onSubmitPrompt={(prompt) => submitPrompt(prompt)} />
+        <StarSearchInput isRunning={isRunning} onSubmitPrompt={(prompt) => submitPrompt(prompt)} />
         <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
       </div>
     </ProfileLayout>
@@ -115,7 +176,7 @@ function SuggestionBoxes() {
 
 function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] }) {
   return (
-    <ScrollArea className="grow items-center w-full p-4 lg:p-8">
+    <ScrollArea className="grow items-center w-full p-4 lg:p-8 flex flex-col">
       {chat.map((message, i) => (
         <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
       ))}
@@ -140,7 +201,7 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   return (
     <li className="flex gap-2 items-start my-4">
       {renderAvatar()}
-      <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4">
+      <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4 lg:max-w-5xl">
         <h3 className="font-semibold text-sauced-orange">{author}</h3>
         <p>{content}</p>
       </Card>
@@ -148,20 +209,27 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   );
 }
 
-function StarSearchInput({ onSubmitPrompt }: { onSubmitPrompt: (prompt: string) => void }) {
+function StarSearchInput({
+  isRunning,
+  onSubmitPrompt,
+}: {
+  isRunning: boolean;
+  onSubmitPrompt: (prompt: string) => void;
+}) {
   const [promptInput, setPromptInput] = useState<string>("");
   return (
     <section className="w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <div className="w-full h-fit flex justify-between rounded-lg">
         <input
+          required
           type="text"
+          disabled={isRunning}
+          placeholder="Ask a question"
           onChange={(e) => setPromptInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && onSubmitPrompt(promptInput)}
-          placeholder="Ask a question"
           className="p-4 border focus:outline-none grow rounded-l-lg border-none"
-          required
         />
-        <button className="bg-white p-2 rounded-r-lg" onClick={() => onSubmitPrompt(promptInput)}>
+        <button disabled={isRunning} onClick={() => onSubmitPrompt(promptInput)} className="bg-white p-2 rounded-r-lg">
           <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
         </button>
       </div>
