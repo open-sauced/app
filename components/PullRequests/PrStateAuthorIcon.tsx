@@ -53,7 +53,7 @@ export const PrStateAuthorIcon = ({
     <div className="relative w-max">
       <Avatar contributor={author} size="medium" />
       <div
-        className={`absolute -bottom-2 -right-2 p-1 rounded-full border [&_svg]:absolute [&_svg]:top-[2px] [&_svg]:left-[2px] ${backgroundColor}`}
+        className={`absolute -bottom-2 -right-2 p-1 rounded-full [&_svg]:absolute [&_svg]:top-[3.5px] [&_svg]:left-[3.5px] ${backgroundColor}`}
         style={{ width: "23px", height: "23px" }}
       >
         {getPullRequestStateIcon(state, isDraft, isMerged)}
