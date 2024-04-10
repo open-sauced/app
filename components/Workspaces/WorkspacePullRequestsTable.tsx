@@ -8,16 +8,16 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { CSSProperties, useState } from "react";
-import { GitMergeIcon, GitPullRequestClosedIcon, GitPullRequestIcon } from "@primer/octicons-react";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import clsx from "clsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
-import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 import Pagination from "components/molecules/Pagination/pagination";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import "@github/relative-time-element";
+import { PrStateAuthorIcon } from "components/PullRequests/PrStateAuthorIcon";
 
 interface PullRequestTableProps {
   data: DbRepoPREvents[];
@@ -35,26 +35,9 @@ function getRepoUrl(repoName: string) {
 function getTime(utcTime: string) {
   return (
     <div className="flex gap-2">
-      <relative-time datetime={utcTime}>{new Date(utcTime).toLocaleDateString()}</relative-time>
+      <relative-time datetime={utcTime}></relative-time>
     </div>
   );
-}
-
-function getPullRequestStateIcon(
-  state: DbRepoPREvents["pr_state"],
-  isDraft: DbRepoPREvents["pr_is_draft"],
-  isMerged: DbRepoPREvents["pr_is_merged"]
-) {
-  switch (true) {
-    case state === "open" && !isDraft:
-      return <GitPullRequestIcon aria-label="open pull request" size={24} className="text-green-600" />;
-    case state === "open" && isDraft:
-      return <GitPullRequestIcon size={24} aria-label="draft pull request" className="text-slate-600" />;
-    case state === "closed" && !isMerged:
-      return <GitPullRequestClosedIcon size={24} aria-label="closed pull request" className="text-red-600" />;
-    case state === "closed" && isMerged:
-      return <GitMergeIcon size={24} aria-label="merged pull request" className="text-purple-600" />;
-  }
 }
 
 function SortedColumn({ name, columnInfo }: { name: string; columnInfo: HeaderContext<DbRepoPREvents, string> }) {
@@ -77,25 +60,6 @@ function SortedColumn({ name, columnInfo }: { name: string; columnInfo: HeaderCo
     </div>
   );
 }
-
-const PrStateAuthorIcon = ({
-  state,
-  isDraft,
-  isMerged,
-  author,
-}: {
-  state: string;
-  isDraft: boolean;
-  isMerged: boolean;
-  author: string;
-}) => {
-  return (
-    <div className="relative">
-      <AvatarHoverCard contributor={author} repositories={[]} size="medium" />
-      <div className="absolute bottom-0 right-0">{getPullRequestStateIcon(state, isDraft, isMerged)}</div>
-    </div>
-  );
-};
 
 const pullRequestTableColumnHelper = createColumnHelper<DbRepoPREvents>();
 const columns = [
@@ -136,7 +100,6 @@ const columns = [
   pullRequestTableColumnHelper.accessor("pr_updated_at", {
     header: (info) => <SortedColumn name="Updated At" columnInfo={info} />,
     cell: (info) => getTime(info.getValue()),
-    minSize: 130,
   }),
   pullRequestTableColumnHelper.accessor("pr_title", { header: "Title", size: 200 }),
   pullRequestTableColumnHelper.accessor("pr_changed_files", { header: "Changed Files" }),
