@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.10](https://github.com/open-sauced/app/compare/v2.17.0-beta.9...v2.17.0-beta.10) (2024-04-10)
+
+
+### 🍕 Features
+
+* repo charts style fixes ([#3151](https://github.com/open-sauced/app/issues/3151)) ([9b7197b](https://github.com/open-sauced/app/commit/9b7197b4e5388c4333783168b8dc07f8bb2677a5))
+
 ## [2.17.0-beta.9](https://github.com/open-sauced/app/compare/v2.17.0-beta.8...v2.17.0-beta.9) (2024-04-10)
 
 
