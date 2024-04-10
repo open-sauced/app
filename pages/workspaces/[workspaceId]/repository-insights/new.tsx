@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
@@ -33,10 +33,24 @@ const NewInsightPage = () => {
   const { sessionToken } = useSupabaseAuth();
   const router = useRouter();
   const workspaceId = router.query.workspaceId as string;
+  const repos = router.query.repos as string;
+  const [name, setName] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
+
+  useEffect(() => {
+    if (repos) {
+      const queryRepos = JSON.parse(repos) as string[];
+      const reposMap = new Map<string, boolean>();
+      queryRepos.forEach((repo) => {
+        reposMap.set(repo, true);
+      });
+      setName("Repositories");
+      setTrackedRepos(reposMap);
+    }
+  }, [router.query.repos]);
 
   const onCreateInsight: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
@@ -84,6 +98,8 @@ const NewInsightPage = () => {
               className="!py-1.5 w-full text-sm"
               required
               disabled={loading}
+              value={name}
+              onChange={(event) => setName(event.target.value)}
             />
           </div>
           <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
