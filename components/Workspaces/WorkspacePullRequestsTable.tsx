@@ -63,27 +63,24 @@ function SortedColumn({ name, columnInfo }: { name: string; columnInfo: HeaderCo
 
 const pullRequestTableColumnHelper = createColumnHelper<DbRepoPREvents>();
 const columns = [
-  pullRequestTableColumnHelper.accessor("repo_name", {
-    header: "Repository",
-    cell: (info) => (
-      <Link href={getRepoUrl(info.getValue())} className="text-orange-700 underline hover:no-underline">
-        {info.getValue()}
-      </Link>
-    ),
-    size: 120,
-  }),
   pullRequestTableColumnHelper.accessor("pr_number", {
-    header: "PR #",
+    header: "Pull Request",
     cell: (info) => (
-      <Link
-        href={getPullRequestUrl(info.row.original.pr_number, info.row.original.repo_name)}
-        className="text-orange-700 underline hover:no-underline"
-        aria-label={`View pull request #${info.row.original.pr_number} for the repository ${info.row.original.repo_name} repository`}
-      >
-        {info.row.original.pr_number}
-      </Link>
+      <div className="flex flex-col gap-2">
+        <div>{info.row.original.pr_title}</div>
+        <Link href={getRepoUrl(info.row.original.repo_name)} className="text-orange-700 underline hover:no-underline">
+          {info.row.original.repo_name}
+        </Link>
+        <Link
+          href={getPullRequestUrl(info.row.original.pr_number, info.row.original.repo_name)}
+          className="text-orange-700 underline hover:no-underline"
+          aria-label={`View pull request #${info.row.original.pr_number} for the repository ${info.row.original.repo_name} repository`}
+        >
+          #{info.row.original.pr_number}
+        </Link>
+      </div>
     ),
-    size: 100,
+    size: 250,
   }),
   pullRequestTableColumnHelper.accessor("pr_state", {
     cell: (info) => (
@@ -95,13 +92,13 @@ const columns = [
       />
     ),
     header: "State",
-    size: 70,
+    size: 60,
   }),
   pullRequestTableColumnHelper.accessor("pr_updated_at", {
     header: (info) => <SortedColumn name="Updated At" columnInfo={info} />,
     cell: (info) => getTime(info.getValue()),
   }),
-  pullRequestTableColumnHelper.accessor("pr_title", { header: "Title", size: 200 }),
+  // pullRequestTableColumnHelper.accessor("pr_title", { header: "Title", size: 200 }),
   pullRequestTableColumnHelper.accessor("pr_changed_files", { header: "Changed Files" }),
   pullRequestTableColumnHelper.accessor("pr_additions", {
     header: "Additions",
@@ -117,11 +114,11 @@ const columns = [
   }),
   pullRequestTableColumnHelper.accessor("pr_closed_at", {
     header: "Closed At",
-    cell: (info) => getTime(info.getValue()),
+    cell: (info) => (info.row.original.pr_state === "closed" ? getTime(info.getValue()) : "-"),
   }),
   pullRequestTableColumnHelper.accessor("pr_merged_at", {
     header: "Merged At",
-    cell: (info) => getTime(info.getValue()),
+    cell: (info) => (info.row.original.pr_is_merged ? getTime(info.getValue()) : "-"),
   }),
 ];
 
@@ -161,7 +158,7 @@ export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps)
               {headerGroup.headers.map((header) => (
                 <TableHead
                   key={header.id}
-                  style={{ ...getCommonPinningStyles(header.column) }}
+                  style={{ ...getCommonPinningStyles(header.column), width: header.column.getSize() }}
                   className={clsx(header.column.getIsPinned(), "bg-light-slate-3")}
                 >
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
@@ -176,7 +173,7 @@ export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps)
               {row.getVisibleCells().map((cell) => (
                 <TableCell
                   key={cell.id}
-                  style={{ ...getCommonPinningStyles(cell.column) }}
+                  style={{ ...getCommonPinningStyles(cell.column), width: cell.column.getSize() }}
                   className={clsx(cell.column.getIsPinned(), "bg-white")}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
