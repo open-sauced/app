@@ -6,7 +6,7 @@ function getPullRequestStateIcon(
   isDraft: DbRepoPREvents["pr_is_draft"],
   isMerged: DbRepoPREvents["pr_is_merged"]
 ) {
-  const size = 16;
+  const size = 14;
 
   switch (true) {
     case state === "open" && !isDraft:
@@ -53,8 +53,8 @@ export const PrStateAuthorIcon = ({
     <div className="relative w-max">
       <Avatar contributor={author} size="medium" />
       <div
-        className={`absolute -bottom-2 -right-2 p-1 rounded-full [&_svg]:absolute [&_svg]:top-[3.5px] [&_svg]:left-[3.5px] ${backgroundColor}`}
-        style={{ width: "23px", height: "23px" }}
+        className={`absolute -bottom-[10px] -right-[12px] p-1 border-[2px] border-white  rounded-full [&_svg]:absolute [&_svg]:top-[3.5px] [&_svg]:left-[3.5px] ${backgroundColor}`}
+        style={{ width: "25px", height: "25px" }}
       >
         {getPullRequestStateIcon(state, isDraft, isMerged)}
       </div>
