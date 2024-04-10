@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/nextjs";
 
-export type FeatureFlag = "contributions_evolution_by_type";
+export type FeatureFlag = "contributions_evolution_by_type" | "star_search";
 
 export async function getAllFeatureFlags(userId: number) {
   const requestOptions = {

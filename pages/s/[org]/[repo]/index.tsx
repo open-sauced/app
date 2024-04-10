@@ -7,10 +7,10 @@ import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
-import MetricCard from "components/Graphs/MetricCard";
-import { DayRangePicker } from "components/shared/DayRangePicker";
 import ForksChart from "components/Graphs/ForksChart";
+import MetricCard from "components/Graphs/MetricCard";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import { DayRangePicker } from "components/shared/DayRangePicker";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -51,13 +51,21 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
   const syncId = repoData.id;
   const router = useRouter();
   const range = (router.query.range ? Number(router.query.range) : 30) as Range;
-  const { data: starsData, error: starsError } = useFetchMetricStats({
+  const {
+    data: starsData,
+    isLoading: isStarsDataLoading,
+    error: starsError,
+  } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "stars",
     range,
   });
 
-  const { data: forkStats, error: forkError } = useFetchMetricStats({
+  const {
+    data: forkStats,
+    isLoading: isForksDataLoading,
+    error: forkError,
+  } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "forks",
     range,
@@ -78,12 +86,24 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
           <DayRangePicker />
           <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
             <ClientOnly>
-              <MetricCard variant="stars" stats={starsData} range={range} />
-              <MetricCard variant="forks" stats={forkStats} range={range} />
+              <MetricCard variant="stars" stats={starsData} range={range} isLoading={isStarsDataLoading} />
+              <MetricCard variant="forks" stats={forkStats} range={range} isLoading={isForksDataLoading} />
             </ClientOnly>
           </section>
-          <StarsChart stats={starsData} total={repoData.stars} range={range} syncId={syncId} />
-          <ForksChart stats={forkStats} total={repoData.forks} range={range} syncId={syncId} />
+          <StarsChart
+            stats={starsData}
+            total={repoData.stars}
+            range={range}
+            syncId={syncId}
+            isLoading={isStarsDataLoading}
+          />
+          <ForksChart
+            stats={forkStats}
+            total={repoData.forks}
+            range={range}
+            syncId={syncId}
+            isLoading={isForksDataLoading}
+          />
         </section>
       </ProfileLayout>
     </>
