@@ -93,6 +93,7 @@ const ContributorProfileTab = ({
   const [showSocialLinks, setShowSocialLinks] = useState(false);
   const { toast } = useToast();
   const posthog = usePostHog();
+  const [selectedRepo, setSelectedRepo] = useState("");
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
@@ -410,7 +411,7 @@ const ContributorProfileTab = ({
               <CardLineChart contributor={githubName} range={Number(range)} className="!h-36" />
             </div>
             <div>
-              <CardRepoList limit={7} repoList={repoList} />
+              <CardRepoList limit={7} repoList={repoList} onSelect={(repo) => setSelectedRepo(repo)} />
             </div>
             <div className="mt-6 flex flex-col">
               <div className="pb-2">
@@ -424,24 +425,30 @@ const ContributorProfileTab = ({
               </div>
 
               {showPRs && (
-                <div className="pt-2">
+                <div className="pt-2 min-h-[550px]">
                   <PullRequestTable
                     limit={15}
                     contributor={githubName}
                     topic={"*"}
                     repositories={undefined}
                     range={range}
+                    repo={selectedRepo}
                   />
                 </div>
               )}
               {showIssueComments && (
-                <div className="pt-2">
-                  <IssueCommentsTable contributor={githubName} limit={15} range={Number(range ?? 30)} />
+                <div className="pt-2 min-h-[550px]">
+                  <IssueCommentsTable
+                    contributor={githubName}
+                    limit={15}
+                    range={Number(range ?? 30)}
+                    repoFilter={selectedRepo}
+                  />
                 </div>
               )}
-            </div>
-            <div className="mt-8 text-sm text-light-slate-9">
-              <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
+              <div className="mt-8 text-sm text-light-slate-9">
+                <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
+              </div>
             </div>
           </div>
         </div>
