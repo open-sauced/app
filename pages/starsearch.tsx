@@ -31,21 +31,34 @@ type StarSearchPageProps = {
   userId: number;
 };
 
+type StarSearchChat = {
+  author: "You" | "StarSearch";
+  content: string;
+};
+
 export default function StarSearchPage({ userId }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
+  const [chat, setChat] = useState<StarSearchChat[]>([]);
+
+  const submitPrompt = async (prompt: string) => {
+    // eslint-disable-next-line no-console
+    console.log({ prompt });
+  };
+
   const renderState = () => {
     switch (starSearchState) {
       case "initial":
         return <Header />;
       case "chat":
-        return <ChatHistory userId={userId} />;
+        return <ChatHistory userId={userId} chat={chat} />;
     }
   };
+
   return (
     <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
         {renderState()}
-        <StarSearchInput onSubmit={() => setStarSearchState(starSearchState === "initial" ? "chat" : "initial")} />
+        <StarSearchInput onSubmitPrompt={(prompt) => submitPrompt(prompt)} />
         <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
       </div>
     </ProfileLayout>
@@ -100,19 +113,17 @@ function SuggestionBoxes() {
   );
 }
 
-function ChatHistory({ userId }: { userId: number }) {
+function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] }) {
   return (
     <ScrollArea className="grow items-center w-full p-4 lg:p-8">
-      <Chatbox author="You" userId={userId} content="Who are the biggest contributors for the open-sauced/app repo?" />
-      <Chatbox
-        author="StarSearch"
-        content="The top 3 biggest contributors for open-sauced/app nickytonline, brandonroberts, and jpmcb."
-      />
+      {chat.map((message, i) => (
+        <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
+      ))}
     </ScrollArea>
   );
 }
 
-function Chatbox({ author, content, userId }: { author: "You" | "StarSearch"; content: string; userId?: number }) {
+function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number }) {
   const renderAvatar = () => {
     switch (author) {
       case "You":
@@ -137,17 +148,20 @@ function Chatbox({ author, content, userId }: { author: "You" | "StarSearch"; co
   );
 }
 
-function StarSearchInput({ onSubmit }: { onSubmit: () => void }) {
+function StarSearchInput({ onSubmitPrompt }: { onSubmitPrompt: (prompt: string) => void }) {
+  const [promptInput, setPromptInput] = useState<string>("");
   return (
     <section className="w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <div className="w-full h-fit flex justify-between rounded-lg">
         <input
           type="text"
+          onChange={(e) => setPromptInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && onSubmitPrompt(promptInput)}
           placeholder="Ask a question"
           className="p-4 border focus:outline-none grow rounded-l-lg border-none"
           required
         />
-        <button className="bg-white p-2 rounded-r-lg" onClick={onSubmit}>
+        <button className="bg-white p-2 rounded-r-lg" onClick={() => onSubmitPrompt(promptInput)}>
           <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
         </button>
       </div>
