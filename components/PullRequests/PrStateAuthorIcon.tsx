@@ -6,17 +6,17 @@ function getPullRequestStateIcon(
   isDraft: DbRepoPREvents["pr_is_draft"],
   isMerged: DbRepoPREvents["pr_is_merged"]
 ) {
-  const size = 18;
+  const size = 16;
 
   switch (true) {
     case state === "open" && !isDraft:
-      return <GitPullRequestIcon aria-label="open pull request" size={size} className="text-green-600" />;
+      return <GitPullRequestIcon aria-label="open pull request" size={size} className="text-white" />;
     case state === "open" && isDraft:
-      return <GitPullRequestIcon size={size} aria-label="draft pull request" className="text-slate-600" />;
+      return <GitPullRequestIcon size={size} aria-label="draft pull request" className="text-white" />;
     case state === "closed" && !isMerged:
-      return <GitPullRequestClosedIcon size={size} aria-label="closed pull request" className="text-red-600" />;
+      return <GitPullRequestClosedIcon size={size} aria-label="closed pull request" className="text-white" />;
     case state === "closed" && isMerged:
-      return <GitMergeIcon size={size} aria-label="merged pull request" className="text-purple-600" />;
+      return <GitMergeIcon size={size} aria-label="merged pull request" className="text-white" />;
   }
 }
 
@@ -31,11 +31,29 @@ export const PrStateAuthorIcon = ({
   isMerged: boolean;
   author: string;
 }) => {
+  let backgroundColor = "";
+
+  switch (true) {
+    case state === "open" && !isDraft:
+      backgroundColor = "bg-green-600";
+      break;
+
+    case state === "open" && isDraft:
+      backgroundColor = "bg-slate-600";
+      break;
+    case state === "closed" && !isMerged:
+      backgroundColor = "bg-red-600";
+      break;
+    case state === "closed" && isMerged:
+      backgroundColor = "bg-purple-600";
+      break;
+  }
+
   return (
     <div className="relative w-max">
       <Avatar contributor={author} size="medium" />
       <div
-        className="absolute -bottom-2 -right-2 p-1 bg-white rounded-full border [&_svg]:absolute [&_svg]:top-[1.5px] [&_svg]:left-[1px]"
+        className={`absolute -bottom-2 -right-2 p-1 rounded-full border [&_svg]:absolute [&_svg]:top-[2px] [&_svg]:left-[2px] ${backgroundColor}`}
         style={{ width: "23px", height: "23px" }}
       >
         {getPullRequestStateIcon(state, isDraft, isMerged)}
