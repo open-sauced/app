@@ -80,7 +80,7 @@ const columns = [
         </Link>
       </div>
     ),
-    size: 250,
+    size: 300,
   }),
   pullRequestTableColumnHelper.accessor("pr_state", {
     cell: (info) => (
