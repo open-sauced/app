@@ -10,6 +10,7 @@
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
+        "@github/relative-time-element": "^4.4.0",
         "@headlessui/react": "^1.7.8",
         "@heroicons/react": "^2.0.14",
         "@nivo/bar": "^0.83.0",
@@ -3161,6 +3162,11 @@
       "version": "0.1.1",
       "resolved": "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.1.1.tgz",
       "integrity": "sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw=="
+    },
+    "node_modules/@github/relative-time-element": {
+      "version": "4.4.0",
+      "resolved": "https://registry.npmjs.org/@github/relative-time-element/-/relative-time-element-4.4.0.tgz",
+      "integrity": "sha512-CrI6oAecoahG7PF5dsgjdvlF5kCtusVMjg810EULD81TvnDsP+k/FRi/ClFubWLgBo4EGpr2EfvmumtqQFo7ow=="
     },
     "node_modules/@headlessui/react": {
       "version": "1.7.8",

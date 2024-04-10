@@ -17,6 +17,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "c
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 import Pagination from "components/molecules/Pagination/pagination";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
+import "@github/relative-time-element";
 
 interface PullRequestTableProps {
   data: DbRepoPREvents[];
@@ -34,7 +35,7 @@ function getRepoUrl(repoName: string) {
 function getTime(utcTime: string) {
   return (
     <div className="flex gap-2">
-      <time dateTime={utcTime}>{new Date(utcTime).toLocaleDateString()}</time>
+      <relative-time datetime={utcTime}>{new Date(utcTime).toLocaleDateString()}</relative-time>
     </div>
   );
 }

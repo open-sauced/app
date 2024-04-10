@@ -43,6 +43,7 @@
     "e2e:ui": "npm run e2e -- --ui"
   },
   "dependencies": {
+    "@github/relative-time-element": "^4.4.0",
     "@headlessui/react": "^1.7.8",
     "@heroicons/react": "^2.0.14",
     "@nivo/bar": "^0.83.0",
