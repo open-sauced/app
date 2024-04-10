@@ -1,3 +1,5 @@
+import { useMemo, useState } from "react";
+import { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
 import {
   ResponsiveContainer,
   BarChart,
@@ -8,22 +10,22 @@ import {
   Tooltip,
   type TooltipProps,
   Line,
+  CartesianGrid,
 } from "recharts";
 import { BiGitRepoForked } from "react-icons/bi";
-import { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent";
-
-import { useMemo, useState } from "react";
-import Button from "components/shared/Button/button";
-import Card from "components/atoms/Card/card";
-import { getCumulativeForksHistogramToDays, getDailyForksHistogramToDays } from "lib/utils/repo-page-utils";
+import { type DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
+import { getCumulativeForksHistogramToDays, getDailyForksHistogramToDays, getTicks } from "lib/utils/repo-page-utils";
+
+import Card from "components/atoms/Card/card";
+import Button from "components/shared/Button/button";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 type ForksChartProps = {
   stats: StatsType[] | undefined;
   total: number;
   syncId: string;
-  range: number;
+  range: DayRange;
   isLoading: boolean;
 };
 
@@ -34,15 +36,17 @@ export default function ForksChart({ stats, total, syncId, range = 30, isLoading
     () => getCumulativeForksHistogramToDays({ stats, total, range }),
     [stats, total, range]
   );
+  const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
 
   const renderChart = () => {
     switch (category) {
       case "daily":
         return (
           <BarChart data={dailyData} syncId={syncId}>
-            <XAxis dataKey="bucket" tick={false} />
+            <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
             <YAxis interval={1} />
             <Tooltip content={CustomTooltip} filterNull={false} />
+            <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
             <Bar dataKey="forks_count" fill="#FF5100" />
           </BarChart>
         );
@@ -52,6 +56,7 @@ export default function ForksChart({ stats, total, syncId, range = 30, isLoading
             <XAxis dataKey="bucket" tick={false} />
             <YAxis domain={["auto", "auto"]} />
             <Tooltip content={CustomTooltip} filterNull={false} />
+            <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
             <Line dataKey="forks_count" stroke="#FF5100" />
           </LineChart>
         );
@@ -103,4 +108,14 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
       </figcaption>
     );
   }
+}
+
+function CustomTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8">
+        {payload.value}
+      </text>
+    </g>
+  );
 }
