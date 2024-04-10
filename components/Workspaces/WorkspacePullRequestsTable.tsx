@@ -18,6 +18,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import "@github/relative-time-element";
 import { PrStateAuthorIcon } from "components/PullRequests/PrStateAuthorIcon";
+import { setQueryParams } from "lib/utils/query-params";
 
 interface PullRequestTableProps {
   data: DbRepoPREvents[];
@@ -48,6 +49,10 @@ function SortedColumn({ name, columnInfo }: { name: string; columnInfo: HeaderCo
       <button
         onClick={() => {
           setIsAscending(!isAscending);
+          setQueryParams({
+            orderBy: columnInfo.column.id.replace("pr_", ""),
+            orderDirection: isAscending ? "DESC" : "ASC",
+          });
         }}
       >
         <span className="sr-only">{`Sort ${name} in ${isAscending ? "ascending" : "descending"} order`}</span>
@@ -109,15 +114,15 @@ const columns = [
     cell: (info) => getTime(info.getValue()),
   }),
   pullRequestTableColumnHelper.accessor("pr_created_at", {
-    header: "Created At",
+    header: (info) => <SortedColumn name="Created At" columnInfo={info} />,
     cell: (info) => getTime(info.getValue()),
   }),
   pullRequestTableColumnHelper.accessor("pr_closed_at", {
-    header: "Closed At",
+    header: (info) => <SortedColumn name="Closed At" columnInfo={info} />,
     cell: (info) => (info.row.original.pr_state === "closed" ? getTime(info.getValue()) : "-"),
   }),
   pullRequestTableColumnHelper.accessor("pr_merged_at", {
-    header: "Merged At",
+    header: (info) => <SortedColumn name="Merged At" columnInfo={info} />,
     cell: (info) => (info.row.original.pr_is_merged ? getTime(info.getValue()) : "-"),
   }),
 ];
