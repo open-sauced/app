@@ -1,4 +1,5 @@
 import differenceInDays from "date-fns/differenceInDays";
+import { DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 
 export type HistogramData = {
@@ -7,7 +8,7 @@ export type HistogramData = {
   forks_count?: number;
 };
 
-export function getTicks({ histogram, range }: { histogram: HistogramData[]; range: number }): string[] {
+export function getTicks({ histogram, range }: { histogram: HistogramData[]; range: DayRange }): string[] {
   // if 30 days, get every 3 days
   // if 90 days, get every week
   // if 7 days, get all days
@@ -23,6 +24,18 @@ export function getTicks({ histogram, range }: { histogram: HistogramData[]; ran
     }
     case 90: {
       for (let i = 7; i < 90; i += 7) {
+        result.push(histogram[i].bucket);
+      }
+      return result;
+    }
+    case 180: {
+      for (let i = 30; i < 180; i += 30) {
+        result.push(histogram[i].bucket);
+      }
+      return result;
+    }
+    case 360: {
+      for (let i = 60; i < 360; i += 60) {
         result.push(histogram[i].bucket);
       }
       return result;
