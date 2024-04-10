@@ -15,6 +15,7 @@ import {
 } from "recharts";
 import { FaStar } from "react-icons/fa6";
 import { getCumulativeStarsHistogramToDays, getDailyStarsHistogramToDays, getTicks } from "lib/utils/repo-page-utils";
+import { type DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 import Card from "components/atoms/Card/card";
 import Button from "components/shared/Button/button";
@@ -24,7 +25,7 @@ type StarsChartProps = {
   stats: StatsType[] | undefined;
   total: number;
   syncId: string;
-  range: number;
+  range: DayRange;
   isLoading: boolean;
 };
 

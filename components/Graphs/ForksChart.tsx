@@ -13,9 +13,9 @@ import {
   CartesianGrid,
 } from "recharts";
 import { BiGitRepoForked } from "react-icons/bi";
+import { type DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 import { getCumulativeForksHistogramToDays, getDailyForksHistogramToDays, getTicks } from "lib/utils/repo-page-utils";
-
 
 import Card from "components/atoms/Card/card";
 import Button from "components/shared/Button/button";
@@ -25,7 +25,7 @@ type ForksChartProps = {
   stats: StatsType[] | undefined;
   total: number;
   syncId: string;
-  range: number;
+  range: DayRange;
   isLoading: boolean;
 };
 
