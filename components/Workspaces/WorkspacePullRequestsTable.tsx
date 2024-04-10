@@ -146,8 +146,9 @@ export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps)
   const table = useReactTable({
     columns,
     data,
-    // we're manually sorting becuase the API handles the sorting server-side.
+    // we're manually sorting and paging becuase the API handles the sorting server-side.
     manualSorting: true,
+    manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
     state: {
       columnPinning,
