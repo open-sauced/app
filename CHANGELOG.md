@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.12](https://github.com/open-sauced/app/compare/v2.17.0-beta.11...v2.17.0-beta.12) (2024-04-10)
+
+
+### 🐛 Bug Fixes
+
+* pass selected repositories to new repository insight creation ([#3107](https://github.com/open-sauced/app/issues/3107)) ([3c57f94](https://github.com/open-sauced/app/commit/3c57f94734d3b40fbfb1db0ea9e208a51f4112ee))
+* update API URL in contributor card edge function for pull requests ([#3157](https://github.com/open-sauced/app/issues/3157)) ([668a26b](https://github.com/open-sauced/app/commit/668a26b030492a5744e197f80efcbdaa5aaf7d95))
+
 ## [2.17.0-beta.11](https://github.com/open-sauced/app/compare/v2.17.0-beta.10...v2.17.0-beta.11) (2024-04-10)
 
 
