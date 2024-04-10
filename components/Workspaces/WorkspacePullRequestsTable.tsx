@@ -94,19 +94,19 @@ const columns = [
     header: "State",
     size: 60,
   }),
+  pullRequestTableColumnHelper.accessor("pr_changed_files", { header: "Changed Files" }),
+  pullRequestTableColumnHelper.accessor("pr_additions", {
+    header: "Changes",
+    cell: (info) => (
+      <span className="flex gap-1">
+        <span className="text-green-800 before:content-['+']">{info.row.original.pr_additions}</span>
+        <span className="text-red-800 before:content-['-']">{info.row.original.pr_deletions}</span>
+      </span>
+    ),
+  }),
   pullRequestTableColumnHelper.accessor("pr_updated_at", {
     header: (info) => <SortedColumn name="Updated At" columnInfo={info} />,
     cell: (info) => getTime(info.getValue()),
-  }),
-  // pullRequestTableColumnHelper.accessor("pr_title", { header: "Title", size: 200 }),
-  pullRequestTableColumnHelper.accessor("pr_changed_files", { header: "Changed Files" }),
-  pullRequestTableColumnHelper.accessor("pr_additions", {
-    header: "Additions",
-    cell: (info) => <span className="text-green-800 before:content-['+']">{info.getValue()}</span>,
-  }),
-  pullRequestTableColumnHelper.accessor("pr_deletions", {
-    header: "Deletions",
-    cell: (info) => <span className="text-red-800 before:content-['-']">{info.getValue()}</span>,
   }),
   pullRequestTableColumnHelper.accessor("pr_created_at", {
     header: "Created At",
