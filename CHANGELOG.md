@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.9](https://github.com/open-sauced/app/compare/v2.17.0-beta.8...v2.17.0-beta.9) (2024-04-10)
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove `/hub` and `/pages` subfolder routing ([#2963](https://github.com/open-sauced/app/issues/2963)) ([5c090f3](https://github.com/open-sauced/app/commit/5c090f37c3345c3425dba1b29b5f7f6ec3af2da7))
+
 ## [2.17.0-beta.8](https://github.com/open-sauced/app/compare/v2.17.0-beta.7...v2.17.0-beta.8) (2024-04-09)
 
 
