@@ -26,7 +26,7 @@ export const PrStateAuthorIcon = ({
   isMerged,
   author,
 }: {
-  state: string;
+  state: "open" | "closed";
   isDraft: boolean;
   isMerged: boolean;
   author: string;
