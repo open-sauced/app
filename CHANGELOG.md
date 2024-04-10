@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.17.0-beta.11](https://github.com/open-sauced/app/compare/v2.17.0-beta.10...v2.17.0-beta.11) (2024-04-10)
+
+
+### 🤖 Build System
+
+* update to Next.js 13.5.6 ([#3149](https://github.com/open-sauced/app/issues/3149)) ([b65b84c](https://github.com/open-sauced/app/commit/b65b84ca10116ff26c21f40c1631ac1f97a46b9a))
+
 ## [2.17.0-beta.10](https://github.com/open-sauced/app/compare/v2.17.0-beta.9...v2.17.0-beta.10) (2024-04-10)
 
 
