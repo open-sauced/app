@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.18.0-beta.1](https://github.com/open-sauced/app/compare/v2.17.0...v2.18.0-beta.1) (2024-04-10)
+
+
+### 🍕 Features
+
+* created the Author/PR State Icon component ([#3155](https://github.com/open-sauced/app/issues/3155)) ([dd843be](https://github.com/open-sauced/app/commit/dd843bef8aa06dcaa4e8e67fc05b9a0eddc1524a))
+
 ## [2.17.0](https://github.com/open-sauced/app/compare/v2.16.1...v2.17.0) (2024-04-10)
 
 
