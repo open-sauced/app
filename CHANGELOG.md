@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.1](https://github.com/open-sauced/app/compare/v2.18.0...v2.19.0-beta.1) (2024-04-11)
+
+
+### 🍕 Features
+
+* basic implementation of StarSearch ([#3162](https://github.com/open-sauced/app/issues/3162)) ([0086134](https://github.com/open-sauced/app/commit/008613421a6f4fe4a415558c779850d443ba7568))
+
 ## [2.18.0](https://github.com/open-sauced/app/compare/v2.17.0...v2.18.0) (2024-04-11)
 
 
