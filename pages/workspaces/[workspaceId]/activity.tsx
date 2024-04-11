@@ -88,7 +88,7 @@ const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
             <DayRangePicker />
             <LimitPicker />
           </div>
-          <WorkspacePullRequestTable data={pullRequests} meta={meta} />
+          <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />
         </div>
       </WorkspaceLayout>
     </>

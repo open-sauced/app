@@ -12,6 +12,7 @@ import { CSSProperties, useState } from "react";
 import Link from "next/link";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import clsx from "clsx";
+import Skeleton from "react-loading-skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import Pagination from "components/molecules/Pagination/pagination";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
@@ -20,9 +21,10 @@ import { PrStateAuthorIcon } from "components/PullRequests/PrStateAuthorIcon";
 import { setQueryParams } from "lib/utils/query-params";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
-interface PullRequestTableProps {
+interface WorkspacePullRequestTableProps {
   data: DbRepoPREvents[];
   meta: Meta;
+  isLoading: boolean;
 }
 
 function getPullRequestUrl(prNumber: number, repoName: string) {
@@ -138,13 +140,13 @@ const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties =
   };
 };
 
-export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps) => {
+export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePullRequestTableProps) => {
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
     left: ["pr_state", "pr_number", "repo_name", "pr_author_login"],
   });
   const table = useReactTable({
     columns,
-    data,
+    data: isLoading ? new Array(10).fill({}) : data,
     // we're manually sorting and paging becuase the API handles the sorting server-side.
     manualSorting: true,
     manualPagination: true,
@@ -176,15 +178,23 @@ export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps)
         <TableBody className="bg-white">
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <TableCell
-                  key={cell.id}
-                  style={{ ...getCommonPinningStyles(cell.column), width: cell.column.getSize() }}
-                  className={clsx(cell.column.getIsPinned(), "bg-white")}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              {isLoading ? (
+                <TableCell colSpan={row.getVisibleCells().length}>
+                  <Skeleton count={1} height={100} />
                 </TableCell>
-              ))}
+              ) : (
+                <>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      style={{ ...getCommonPinningStyles(cell.column), width: cell.column.getSize() }}
+                      className={clsx(cell.column.getIsPinned(), "bg-white")}
+                    >
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </>
+              )}
             </TableRow>
           ))}
         </TableBody>
