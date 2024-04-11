@@ -24,7 +24,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  const response = await fetch(repoData.url);
+  const response = await fetch(repoData.url || `https://api.github.com/repos/${org}/${repo}`);
   const { owner } = await response.json();
 
   const range = (context.query.range ? Number(context.query.range) : 30) as Range;
