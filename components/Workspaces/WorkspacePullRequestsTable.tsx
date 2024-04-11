@@ -80,6 +80,8 @@ const columns = [
         </Link>
         <Link
           href={getPullRequestUrl(info.row.original.pr_number, info.row.original.repo_name)}
+          target="_blank"
+          rel="noopener noreferrer"
           className="text-orange-700 underline hover:no-underline"
           aria-label={`View pull request #${info.row.original.pr_number} for the repository ${info.row.original.repo_name} repository`}
         >
@@ -101,7 +103,20 @@ const columns = [
     header: "State",
     size: 60,
   }),
-  pullRequestTableColumnHelper.accessor("pr_changed_files", { header: "Changed Files" }),
+  pullRequestTableColumnHelper.accessor("pr_changed_files", {
+    header: "Changed Files",
+    cell: (info) => (
+      <Link
+        href={`${getPullRequestUrl(info.row.original.pr_number, info.row.original.repo_name)}/files`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-orange-700 underline hover:no-underline"
+        aria-label={`View file changes for pull request #${info.row.original.pr_number} for the repository ${info.row.original.repo_name} repository`}
+      >
+        {info.row.original.pr_changed_files}
+      </Link>
+    ),
+  }),
   pullRequestTableColumnHelper.accessor("pr_additions", {
     header: "Changes",
     cell: (info) => (
