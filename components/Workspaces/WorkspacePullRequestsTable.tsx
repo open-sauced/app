@@ -10,7 +10,6 @@ import {
 import { CSSProperties, useState } from "react";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import clsx from "clsx";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
@@ -19,6 +18,7 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import "@github/relative-time-element";
 import { PrStateAuthorIcon } from "components/PullRequests/PrStateAuthorIcon";
 import { setQueryParams } from "lib/utils/query-params";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 interface PullRequestTableProps {
   data: DbRepoPREvents[];
@@ -139,7 +139,6 @@ const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties =
 };
 
 export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps) => {
-  const router = useRouter();
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
     left: ["pr_state", "pr_number", "repo_name", "pr_author_login"],
   });
@@ -154,6 +153,7 @@ export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps)
       columnPinning,
     },
   });
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
@@ -191,15 +191,15 @@ export const WorkspacePullRequestTable = ({ data, meta }: PullRequestTableProps)
       </Table>
       <ClientOnly>
         <Pagination
-          pages={[]}
+          showPages={!isMobile}
+          showTotalPages={true}
           onPageChange={(page) => {
-            router.push({
-              query: { ...router.query, page },
-            });
+            setQueryParams({ page: `${page}` });
           }}
+          hasNextPage={meta.hasNextPage}
+          hasPreviousPage={meta.hasPreviousPage}
           totalPage={meta.pageCount}
           page={meta.page}
-          showTotalPages={true}
           goToPage={true}
         />
       </ClientOnly>
