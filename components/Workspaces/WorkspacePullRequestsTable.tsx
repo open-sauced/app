@@ -93,7 +93,7 @@ const columns = [
         state={info.row.original.pr_state}
         isDraft={info.row.original.pr_is_draft}
         isMerged={info.row.original.pr_is_merged}
-        author={info.row.original.pr_author_login}
+        author={info.row.original.pr_author_login.replace("[bot]", "")}
       />
     ),
     header: "State",
