@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.18.0-beta.2](https://github.com/open-sauced/app/compare/v2.18.0-beta.1...v2.18.0-beta.2) (2024-04-10)
+
+
+### 🐛 Bug Fixes
+
+* show TopNav `/starsearch` selectively ([#3161](https://github.com/open-sauced/app/issues/3161)) ([b3b9f3f](https://github.com/open-sauced/app/commit/b3b9f3fcf7b7e1053f78ac5ea424dd8acdaf2834))
+
 ## [2.18.0-beta.1](https://github.com/open-sauced/app/compare/v2.17.0...v2.18.0-beta.1) (2024-04-10)
 
 
