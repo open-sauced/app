@@ -20,7 +20,7 @@ export const LimitPicker = ({ onLimitChanged }: LimitPickerProps) => {
   const limit = (Number(router.query.limit) || 10) as LimitOptions;
 
   const onDefaultLimitChanged = (value: string) => {
-    router.push({ query: { ...router.query, limit: value } });
+    router.push({ query: { ...router.query, page: 1, limit: value } });
     onLimitChanged?.(value);
   };
 
