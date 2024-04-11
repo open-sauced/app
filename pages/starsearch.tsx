@@ -98,11 +98,21 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
         return;
       }
 
-      setChat((history) => {
-        const temp = history;
-        temp[aiChatIndex].content += decoder.decode(value);
-        return temp;
-      });
+      const content = decoder.decode(value);
+      const values = content.split("\n");
+      values
+        .filter((v) => v.startsWith("data:"))
+        .forEach((v) => {
+          let { data } = v.match(/data:\s+(?<data>.+)/ms)?.groups || { data: "" };
+          const result = /\.$/g.test(data) ? data : data + " ";
+          setTimeout(() => {
+            setChat((history) => {
+              const temp = history;
+              temp[aiChatIndex].content += result;
+              return temp;
+            });
+          }, 200);
+        });
     }
   };
 
