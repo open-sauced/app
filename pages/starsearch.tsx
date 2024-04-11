@@ -124,7 +124,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
     <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
         {renderState()}
-        <StarSearchInput isRunning={isRunning} onSubmitPrompt={(prompt) => submitPrompt(prompt)} />
+        <StarSearchInput isRunning={isRunning} onSubmitPrompt={submitPrompt} />
         <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
       </div>
     </ProfileLayout>
@@ -221,23 +221,30 @@ function StarSearchInput({
   isRunning: boolean;
   onSubmitPrompt: (prompt: string) => void;
 }) {
-  const [promptInput, setPromptInput] = useState<string>("");
   return (
     <section className="w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
-      <div className="w-full h-fit flex justify-between rounded-lg">
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          const form = event.currentTarget;
+          const formData = new FormData(form);
+          onSubmitPrompt(formData.get("prompt") as string);
+          form.reset();
+        }}
+        className="w-full bg-white h-fit flex justify-between rounded-lg"
+      >
         <input
           required
           type="text"
+          name="prompt"
           disabled={isRunning}
           placeholder="Ask a question"
-          onChange={(e) => setPromptInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && onSubmitPrompt(promptInput)}
-          className="p-4 border focus:outline-none grow rounded-l-lg border-none"
+          className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
         />
-        <button disabled={isRunning} onClick={() => onSubmitPrompt(promptInput)} className="bg-white p-2 rounded-r-lg">
+        <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
           <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
         </button>
-      </div>
+      </form>
     </section>
   );
 }
