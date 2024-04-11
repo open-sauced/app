@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { useState } from "react";
+import Image from "next/image";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -135,7 +136,7 @@ function Header() {
   return (
     <section className="flex flex-col text-center items-center gap-4 lg:pt-24">
       <div className="flex gap-4 items-center">
-        <img src="/assets/star-search-logo.svg" alt="Star Search Logo" className="w-10 h-10 mb-1" />
+        <Image src="/assets/star-search-logo.svg" alt="Star Search Logo" width={40} height={40} />
         <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
           StarSearch
         </h1>
@@ -193,11 +194,25 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   const renderAvatar = () => {
     switch (author) {
       case "You":
-        return <img src={getAvatarById(`${userId}`)} className="w-8 h-8 lg:w-10 lg:h-10 rounded-full" />;
+        return (
+          <Image
+            src={getAvatarById(`${userId}`)}
+            alt="Your profile picture"
+            width={32}
+            height={32}
+            className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
+          />
+        );
       case "StarSearch":
         return (
-          <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-3 py-1 lg:p-2 rounded-full">
-            <img src="/assets/star-search-logo-white.svg" className="w-6 h-6" />
+          <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full">
+            <Image
+              src="/assets/star-search-logo-white.svg"
+              alt="StarSearch logo"
+              width={24}
+              height={24}
+              className="w-6 h-6"
+            />
           </div>
         );
     }
@@ -206,7 +221,7 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   return (
     <li className="flex gap-2 items-start my-4">
       {renderAvatar()}
-      <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4 lg:max-w-5xl">
+      <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl">
         <h3 className="font-semibold text-sauced-orange">{author}</h3>
         <p>{content}</p>
       </Card>
