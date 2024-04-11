@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.18.0-beta.3](https://github.com/open-sauced/app/compare/v2.18.0-beta.2...v2.18.0-beta.3) (2024-04-11)
+
+
+### 🐛 Bug Fixes
+
+* add fallback for GitHub repository URL if none returned ([#3169](https://github.com/open-sauced/app/issues/3169)) ([ea07ac3](https://github.com/open-sauced/app/commit/ea07ac3fcf6e519f84165fd6f2c22e27a494e0ce))
+* remove /hub/* pages from middleware ([#3163](https://github.com/open-sauced/app/issues/3163)) ([11d4713](https://github.com/open-sauced/app/commit/11d471363e21624c27035afd1c97f9b22f6398c6))
+
 ## [2.18.0-beta.2](https://github.com/open-sauced/app/compare/v2.18.0-beta.1...v2.18.0-beta.2) (2024-04-10)
 
 
