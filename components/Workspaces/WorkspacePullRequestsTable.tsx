@@ -7,7 +7,7 @@ import {
   HeaderContext,
   useReactTable,
 } from "@tanstack/react-table";
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useMemo, useState } from "react";
 
 import Link from "next/link";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
@@ -144,6 +144,69 @@ const columns = [
   }),
 ];
 
+const mobileColumns = [
+  pullRequestTableColumnHelper.accessor("pr_number", {
+    header: "Pull Requests",
+    cell: (info) => {
+      const author = info.row.original.pr_author_login.replace("[bot]", "");
+
+      return (
+        <div className="flex gap-4">
+          <div>
+            <PrStateAuthorIcon
+              state={info.row.original.pr_state}
+              isDraft={info.row.original.pr_is_draft}
+              isMerged={info.row.original.pr_is_merged}
+              author={info.row.original.pr_author_login.replace("[bot]", "")}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div>{info.row.original.pr_title}</div>
+            <Link
+              href={getRepoUrl(info.row.original.repo_name)}
+              className="text-orange-700 underline hover:no-underline"
+            >
+              {info.row.original.repo_name}
+            </Link>
+            <p>
+              <Link
+                href={getPullRequestUrl(info.row.original.pr_number, info.row.original.repo_name)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-700 underline hover:no-underline"
+                aria-label={`View pull request #${info.row.original.pr_number} for the repository ${info.row.original.repo_name} repository`}
+              >
+                #{info.row.original.pr_number}
+              </Link>{" "}
+              <span>opened</span> <relative-time datetime={info.row.original.pr_created_at}></relative-time> by{" "}
+              <Link
+                href={`/user/${author}`}
+                title={`User profile for ${author}`}
+                className="text-orange-700 underline hover:no-underline"
+                aria-hidden="true"
+              >
+                {author}
+              </Link>
+              {/* add the updated at field */}
+            </p>
+            <span>
+              {info.row.original.pr_state === "closed" ? (
+                <>
+                  Closed <relative-time datetime={info.row.original.pr_closed_at}></relative-time>
+                </>
+              ) : (
+                <>
+                  Updated <relative-time datetime={info.row.original.pr_updated_at}></relative-time>
+                </>
+              )}
+            </span>
+          </div>
+        </div>
+      );
+    },
+  }),
+];
+
 const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties => {
   const isPinned = column.getIsPinned();
   return {
@@ -159,8 +222,10 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
     left: ["pr_state", "pr_number", "repo_name", "pr_author_login"],
   });
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   const table = useReactTable({
-    columns,
+    columns: useMemo(() => (isMobile ? mobileColumns : columns), [isMobile]),
     data: isLoading ? new Array(10).fill({}) : data,
     // we're manually sorting and paging becuase the API handles the sorting server-side.
     manualSorting: true,
@@ -170,7 +235,6 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
       columnPinning,
     },
   });
-  const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
