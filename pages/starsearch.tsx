@@ -88,7 +88,6 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
       temp.push({ author: "StarSearch", content: "" });
       return temp;
     });
-    const aiChatIndex = chat.length - 1;
 
     const decoder = new TextDecoder();
     while (true) {
@@ -103,15 +102,12 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
       values
         .filter((v) => v.startsWith("data:"))
         .forEach((v) => {
-          let { data } = v.match(/data:\s+(?<data>.+)/ms)?.groups || { data: "" };
-          const result = /\.$/g.test(data) ? data : data + " ";
-          setTimeout(() => {
-            setChat((history) => {
-              const temp = history;
-              temp[aiChatIndex].content += result;
-              return temp;
-            });
-          }, 200);
+          let { data } = v.match(/data:(?<data>.*)/ms)?.groups || { data: "" };
+          const result = /\W+$/g.test(data) ? data.trim() : data;
+          const temp = [...chat];
+          const changed = temp.at(temp.length - 1);
+          changed!.content += result;
+          setChat(temp);
         });
     }
   };
