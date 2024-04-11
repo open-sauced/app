@@ -160,8 +160,8 @@ const mobileColumns = [
               author={info.row.original.pr_author_login.replace("[bot]", "")}
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <div>{info.row.original.pr_title}</div>
+          <div className="flex flex-col gap-2 text-sm">
+            <div className="text-base">{info.row.original.pr_title}</div>
             <Link
               href={getRepoUrl(info.row.original.repo_name)}
               className="text-orange-700 underline hover:no-underline"
@@ -222,7 +222,8 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
   const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
     left: ["pr_state", "pr_number", "repo_name", "pr_author_login"],
   });
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 640px)");
+  const skeletonHeight = isMobile ? 150 : 100;
 
   const table = useReactTable({
     columns: useMemo(() => (isMobile ? mobileColumns : columns), [isMobile]),
@@ -259,7 +260,7 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
             <TableRow key={row.id}>
               {isLoading ? (
                 <TableCell colSpan={row.getVisibleCells().length}>
-                  <Skeleton count={1} height={100} />
+                  <Skeleton count={1} height={skeletonHeight} />
                 </TableCell>
               ) : (
                 <>
