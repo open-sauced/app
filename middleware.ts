@@ -10,7 +10,6 @@ import { getInsightWithWorkspace, getListWithWorkspace, getWorkspaceUrl } from "
 // prettier-ignore
 const pathsToMatch = [
   "/",
-  "/hub/:path*",
   "/feed/",
   "/user/notifications",
   "/user/settings",
@@ -116,12 +115,6 @@ export async function middleware(req: NextRequest) {
       const workspaceUrl = getWorkspaceUrl(req.cookies, req.url, data.personal_workspace_id);
 
       return NextResponse.redirect(`${workspaceUrl}`);
-    } else if (session?.user && req.nextUrl.pathname === "/hub/insights/new") {
-      const data = await loadSession(req, session?.access_token);
-
-      return NextResponse.redirect(
-        new URL(`/workspaces/${data.personal_workspace_id}/repository-insights/new`, req.url)
-      );
     } else {
       return res;
     }
