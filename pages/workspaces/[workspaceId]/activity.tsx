@@ -44,13 +44,6 @@ interface WorkspaceDashboardProps {
   workspace: Workspace;
 }
 
-const orderByOptions: { label: string; value: OrderPullRequestsBy }[] = [
-  { label: "Created At", value: "created_at" },
-  { label: "Updated At", value: "updated_at" },
-  { label: "Closed At", value: "closed_at" },
-  { label: "Merged At", value: "merged_at" },
-];
-
 type OrderDirection = "ASC" | "DESC";
 
 const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
