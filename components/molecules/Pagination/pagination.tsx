@@ -19,6 +19,7 @@ interface PaginationProps {
   showTotalPages?: boolean;
   generatePageLinks?: boolean;
   showPages?: boolean;
+  numberOfPagesToDisplay?: number;
 }
 
 const Pagination = ({
@@ -33,6 +34,7 @@ const Pagination = ({
   onPageChange,
   showTotalPages = true,
   showPages = false,
+  numberOfPagesToDisplay = 5,
 }: PaginationProps): JSX.Element => {
   const handleSelected = (pageNumber: number) => {
     onPageChange(pageNumber);
@@ -50,13 +52,12 @@ const Pagination = ({
   // These numbers change as you navigate the paging.
   // It might start off as 1,2,3,4,5 but as you move forward it becomes
   // 2,3,4,5,6 and so on.
-
-  const middlePages = Array.from({ length: Math.min(totalPage, pageSize) }, (_, index) =>
-    page <= Math.floor(pageSize / 2)
+  const middlePages = Array.from({ length: Math.min(totalPage, numberOfPagesToDisplay) }, (_, index) =>
+    page <= Math.floor(numberOfPagesToDisplay / 2)
       ? index + 1
-      : page >= totalPage - Math.floor(pageSize / 2)
-      ? totalPage - pageSize + index + 1
-      : page - Math.floor(pageSize / 2) + index
+      : page >= totalPage - Math.floor(numberOfPagesToDisplay / 2)
+      ? totalPage - numberOfPagesToDisplay + index + 1
+      : page - Math.floor(numberOfPagesToDisplay / 2) + index
   ).filter((page) => page >= 1 && page <= totalPage);
 
   return (
