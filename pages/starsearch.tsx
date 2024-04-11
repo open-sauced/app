@@ -82,14 +82,14 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
       return;
     }
 
-    const reader = response.body?.getReader();
     setChat((history) => {
       const temp = history;
       temp.push({ author: "StarSearch", content: "" });
       return temp;
     });
 
-    const decoder = new TextDecoder();
+    const decoder = new TextDecoderStream();
+    const reader = response.body?.pipeThrough(decoder).getReader();
     while (true) {
       const { done, value } = await reader!.read();
       if (done) {
@@ -97,13 +97,12 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
         return;
       }
 
-      const content = decoder.decode(value);
-      const values = content.split("\n");
+      const values = value.split("\n");
       values
         .filter((v) => v.startsWith("data:"))
         .forEach((v) => {
           let { data } = v.match(/data:(?<data>.*)/ms)?.groups || { data: "" };
-          const result = /\W+$/g.test(data) ? data.trim() : data;
+          const result = /(\s{1}[!"#$%&'()*+,\-./:;<=>?@[\]^_`{|}~])(\w*)/g.test(data) ? data.trimStart() : data;
           const temp = [...chat];
           const changed = temp.at(temp.length - 1);
           changed!.content += result;
