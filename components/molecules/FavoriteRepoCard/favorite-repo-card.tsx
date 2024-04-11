@@ -16,7 +16,7 @@ const FavoriteRepoCard = ({ avatarURL, name, owner, topic, userPage }: FavoriteR
     <div className="p-3 bg-white border-2 rounded-xl">
       <div className="flex items-center gap-2.5 h-10">
         {/* Avatar */}
-        <a href={`https://www.github.com/${owner}/${name}`} target="_blank" rel="noreferrer" className="h-10">
+        <a href={`https://www.github.com/${owner}/${name}`} target="_blank" className="h-10">
           <Avatar className="shrink-0 min-w-10 min-h-10" size={40} avatarURL={avatarURL} isCircle={false} />
         </a>
 
