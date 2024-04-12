@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.4](https://github.com/open-sauced/app/compare/v2.19.0-beta.3...v2.19.0-beta.4) (2024-04-12)
+
+
+### 🍕 Features
+
+* created the workspace activity page with a pull requests table ([#3147](https://github.com/open-sauced/app/issues/3147)) ([9f65b9c](https://github.com/open-sauced/app/commit/9f65b9c5b3c9fbf95aa8e984e952938cd195072b))
+
 ## [2.19.0-beta.3](https://github.com/open-sauced/app/compare/v2.19.0-beta.2...v2.19.0-beta.3) (2024-04-12)
 
 
