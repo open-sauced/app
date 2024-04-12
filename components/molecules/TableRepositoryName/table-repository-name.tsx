@@ -15,7 +15,7 @@ const TableRepositoryName = ({ avatarURL, fullName }: TableRepositoryNameProps):
   return (
     <div className="flex items-center gap-2.5">
       {/* Avatar */}
-      <Link href={`/s/${fullName}`} target="_blank">
+      <Link href={`/s/${fullName}`}>
         <Avatar
           isCached={false}
           className="shrink-0 min-w-10 min-h-10"
@@ -30,15 +30,13 @@ const TableRepositoryName = ({ avatarURL, fullName }: TableRepositoryNameProps):
       <div className="flex flex-col justify-center">
         <Tooltip content={name}>
           <div className="  text-base text-light-slate-12 tracking-tight max-w-[5.5rem] sm:max-w-[9.3rem] md:max-w-[7rem] whitespace-nowrap overflow-hidden overflow-ellipsis">
-            <Link href={`/s/${fullName}`} target="_blank">
-              {name}
-            </Link>
+            <Link href={`/s/${fullName}`}>{name}</Link>
           </div>
         </Tooltip>
         <div className="  text-sm text-light-slate-11 truncate max-w-[85px] md:max-w-[110px]">
-          <Link href={`https://www.github.com/${handle}`} target="_blank">
+          <a href={`https://www.github.com/${handle}`} target="_blank">
             {handle ? `@${handle}` : "handle1234"}
-          </Link>
+          </a>
         </div>
       </div>
     </div>
