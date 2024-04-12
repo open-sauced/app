@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.5](https://github.com/open-sauced/app/compare/v2.19.0-beta.4...v2.19.0-beta.5) (2024-04-12)
+
+
+### 🍕 Features
+
+* change repo links from github to repo pages ([#3178](https://github.com/open-sauced/app/issues/3178)) ([506dde2](https://github.com/open-sauced/app/commit/506dde2c0326be1eb67692cdc568b007bc2c2fbe))
+
 ## [2.19.0-beta.4](https://github.com/open-sauced/app/compare/v2.19.0-beta.3...v2.19.0-beta.4) (2024-04-12)
 
 
