@@ -1,15 +1,16 @@
 {
   "name": "@open-sauced/app",
-  "version": "2.19.0-beta.2",
+  "version": "2.19.0-beta.4",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/app",
-      "version": "2.19.0-beta.2",
+      "version": "2.19.0-beta.4",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
+        "@github/relative-time-element": "^4.4.0",
         "@headlessui/react": "^1.7.8",
         "@heroicons/react": "^2.0.14",
         "@nivo/bar": "^0.83.0",
@@ -44,6 +45,7 @@
         "@supabase/gotrue-js": "^1.22.22",
         "@supabase/supabase-js": "^2.26.0",
         "@supabase/ui": "^0.36.5",
+        "@tanstack/react-table": "^8.15.3",
         "@use-gesture/react": "^10.2.27",
         "@vercel/og": "^0.5.8",
         "clsx": "^1.2.1",
@@ -3160,6 +3162,11 @@
       "version": "0.1.1",
       "resolved": "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.1.1.tgz",
       "integrity": "sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw=="
+    },
+    "node_modules/@github/relative-time-element": {
+      "version": "4.4.0",
+      "resolved": "https://registry.npmjs.org/@github/relative-time-element/-/relative-time-element-4.4.0.tgz",
+      "integrity": "sha512-CrI6oAecoahG7PF5dsgjdvlF5kCtusVMjg810EULD81TvnDsP+k/FRi/ClFubWLgBo4EGpr2EfvmumtqQFo7ow=="
     },
     "node_modules/@headlessui/react": {
       "version": "1.7.8",
@@ -12567,6 +12574,37 @@
       },
       "peerDependencies": {
         "tailwindcss": ">=3.0.0 || insiders"
+      }
+    },
+    "node_modules/@tanstack/react-table": {
+      "version": "8.15.3",
+      "resolved": "https://registry.npmjs.org/@tanstack/react-table/-/react-table-8.15.3.tgz",
+      "integrity": "sha512-aocQ4WpWiAh7R+yxNp+DGQYXeVACh5lv2kk96DjYgFiHDCB0cOFoYMT/pM6eDOzeMXR9AvPoLeumTgq8/0qX+w==",
+      "dependencies": {
+        "@tanstack/table-core": "8.15.3"
+      },
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/tannerlinsley"
+      },
+      "peerDependencies": {
+        "react": ">=16.8",
+        "react-dom": ">=16.8"
+      }
+    },
+    "node_modules/@tanstack/table-core": {
+      "version": "8.15.3",
+      "resolved": "https://registry.npmjs.org/@tanstack/table-core/-/table-core-8.15.3.tgz",
+      "integrity": "sha512-wOgV0HfEvuMOv8RlqdR9MdNNqq0uyvQtP39QOvGlggHvIObOE4exS+D5LGO8LZ3LUXxId2IlUKcHDHaGujWhUg==",
+      "engines": {
+        "node": ">=12"
+      },
+      "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/tannerlinsley"
       }
     },
     "node_modules/@testing-library/dom": {
