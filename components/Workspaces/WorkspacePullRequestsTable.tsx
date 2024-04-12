@@ -223,6 +223,7 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
   return (
     <>
       <Table className="border rounded-lg text-base">
+        <caption className="sr-only">Pull Requests</caption>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="bg-light-slate-3">

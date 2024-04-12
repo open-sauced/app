@@ -26,7 +26,7 @@ export const LimitPicker = ({ onLimitChanged }: LimitPickerProps) => {
 
   return (
     <label className="w-max font-semibold">
-      <span className="sr-only">Period:</span>
+      <span className="sr-only">Limit:</span>
       <SingleSelect
         insetLabel="Showing:"
         onValueChange={onDefaultLimitChanged}
