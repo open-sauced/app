@@ -14,7 +14,6 @@ import clsx from "clsx";
 import Skeleton from "react-loading-skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import Pagination from "components/molecules/Pagination/pagination";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
 import "@github/relative-time-element";
 import { PrStateAuthorIcon } from "components/PullRequests/PrStateAuthorIcon";
 import { setQueryParams } from "lib/utils/query-params";
@@ -303,20 +302,18 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
         </TableBody>
       </Table>
       {meta ? (
-        <ClientOnly>
-          <Pagination
-            showPages={!isMobile}
-            showTotalPages={true}
-            onPageChange={(page) => {
-              setQueryParams({ page: `${page}` });
-            }}
-            hasNextPage={meta.hasNextPage}
-            hasPreviousPage={meta.hasPreviousPage}
-            totalPage={meta.pageCount}
-            page={meta.page}
-            goToPage={true}
-          />
-        </ClientOnly>
+        <Pagination
+          showPages={!isMobile}
+          showTotalPages={true}
+          onPageChange={(page) => {
+            setQueryParams({ page: `${page}` });
+          }}
+          hasNextPage={meta.hasNextPage}
+          hasPreviousPage={meta.hasPreviousPage}
+          totalPage={meta.pageCount}
+          page={meta.page}
+          goToPage={true}
+        />
       ) : null}
     </>
   );

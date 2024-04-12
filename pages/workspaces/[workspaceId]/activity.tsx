@@ -16,6 +16,7 @@ import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilt
 import { OptionKeys } from "components/atoms/Select/multi-select";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import { setQueryParams } from "lib/utils/query-params";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -103,7 +104,9 @@ const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
             <DayRangePicker />
             <LimitPicker />
           </div>
-          <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />
+          <ClientOnly>
+            <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />
+          </ClientOnly>
         </div>
       </WorkspaceLayout>
     </>
