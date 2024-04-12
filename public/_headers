@@ -9,3 +9,9 @@ https://beta.app.opensauced.pizza/*
 
 http://beta.app.opensauced.pizza/*
    X-Robots-Tag: noindex
+
+https://alpha.app.opensauced.pizza/*
+   X-Robots-Tag: noindex
+
+http://alpha.app.opensauced.pizza/*
+   X-Robots-Tag: noindex
