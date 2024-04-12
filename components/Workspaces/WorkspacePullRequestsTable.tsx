@@ -255,6 +255,7 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
                               ...state,
                               {
                                 id: header.id,
+                                // If it was ascending, we want to set it to descending
                                 desc: isAscending,
                               },
                             ];
