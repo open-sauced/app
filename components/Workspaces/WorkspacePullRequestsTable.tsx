@@ -1,10 +1,9 @@
 import {
   Column,
-  ColumnPinningState,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
-  HeaderContext,
+  TableState,
   useReactTable,
 } from "@tanstack/react-table";
 import { CSSProperties, useMemo, useState } from "react";
@@ -39,31 +38,6 @@ function getTime(utcTime: string) {
   return (
     <div className="flex gap-2">
       <relative-time datetime={utcTime}></relative-time>
-    </div>
-  );
-}
-
-function SortedColumn({ name, columnInfo }: { name: string; columnInfo: HeaderContext<DbRepoPREvents, string> }) {
-  const [isAscending, setIsAscending] = useState(true);
-  return (
-    <div className="flex gap-2 items-center">
-      <span>{name}</span>
-      <button
-        onClick={() => {
-          setIsAscending(!isAscending);
-          setQueryParams({
-            orderBy: columnInfo.column.id.replace("pr_", ""),
-            orderDirection: isAscending ? "DESC" : "ASC",
-          });
-        }}
-      >
-        <span className="sr-only">{`Sort ${name} in ${isAscending ? "ascending" : "descending"} order`}</span>
-        {isAscending ? (
-          <BiSolidUpArrow className="w-6 aspect-square" />
-        ) : (
-          <BiSolidDownArrow className="w-6 aspect-square" />
-        )}
-      </button>
     </div>
   );
 }
@@ -127,20 +101,24 @@ const columns = [
     ),
   }),
   pullRequestTableColumnHelper.accessor("pr_updated_at", {
-    header: (info) => <SortedColumn name="Updated At" columnInfo={info} />,
+    header: "Updated At",
     cell: (info) => getTime(info.getValue()),
+    enableSorting: true,
   }),
   pullRequestTableColumnHelper.accessor("pr_created_at", {
-    header: (info) => <SortedColumn name="Created At" columnInfo={info} />,
+    header: "Created At",
     cell: (info) => getTime(info.getValue()),
+    enableSorting: true,
   }),
   pullRequestTableColumnHelper.accessor("pr_closed_at", {
-    header: (info) => <SortedColumn name="Closed At" columnInfo={info} />,
+    header: "Closed At",
     cell: (info) => (info.row.original.pr_state === "closed" ? getTime(info.getValue()) : "-"),
+    enableSorting: true,
   }),
   pullRequestTableColumnHelper.accessor("pr_merged_at", {
-    header: (info) => <SortedColumn name="Merged At" columnInfo={info} />,
+    header: "Merged At",
     cell: (info) => (info.row.original.pr_is_merged ? getTime(info.getValue()) : "-"),
+    enableSorting: true,
   }),
 ];
 
@@ -219,11 +197,12 @@ const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties =
 };
 
 export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePullRequestTableProps) => {
-  // setting column pinning is not enabled at the moment.
-  // this would tie in to future work for page personalization.
-  const [columnPinning] = useState<ColumnPinningState>({
-    left: ["pr_state", "pr_number", "repo_name", "pr_author_login"],
-  });
+  const [sorting, setSorting] = useState<TableState["sorting"]>([
+    { id: "pr_updated_at", desc: false },
+    { id: "pr_created_at", desc: false },
+    { id: "pr_closed_at", desc: false },
+    { id: "pr_merged_at", desc: false },
+  ]);
   const isMobile = useMediaQuery("(max-width: 640px)");
   const skeletonHeight = isMobile ? 150 : 100;
 
@@ -238,7 +217,7 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
       columnPinning: {
         left: ["pr_state", "pr_number"],
       },
-      sorting: [],
+      sorting,
     },
   });
 
@@ -248,15 +227,53 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="bg-light-slate-3">
-              {headerGroup.headers.map((header) => (
-                <TableHead
-                  key={header.id}
-                  style={{ ...getCommonPinningStyles(header.column), width: header.column.getSize() }}
-                  className={clsx(header.column.getIsPinned(), "bg-light-slate-3")}
-                >
-                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                </TableHead>
-              ))}
+              {headerGroup.headers.map((header) => {
+                const { enableSorting } = header.column.columnDef;
+                const isAscending = Boolean(sorting.find((item) => item.id === header.id && !item.desc));
+
+                return (
+                  <TableHead
+                    key={header.id}
+                    style={{ ...getCommonPinningStyles(header.column), width: header.column.getSize() }}
+                    className={clsx(header.column.getIsPinned(), "bg-light-slate-3")}
+                  >
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    {enableSorting ? (
+                      <button
+                        onClick={(event) => {
+                          setQueryParams({
+                            orderBy: header.id.replace("pr_", ""),
+                            orderDirection: isAscending ? "DESC" : "ASC",
+                          });
+
+                          setSorting((currentState) => {
+                            const state = currentState
+                              .filter((item) => item.id !== header.id)
+                              .map(({ id }) => ({ id, desc: false }));
+
+                            return [
+                              ...state,
+                              {
+                                id: header.id,
+                                desc: isAscending,
+                              },
+                            ];
+                          });
+                        }}
+                      >
+                        <span className="sr-only">{`Sort ${header.column.columnDef.header} in ${
+                          isAscending ? "ascending" : "descending"
+                        } order`}</span>
+                        {isAscending ? (
+                          <BiSolidUpArrow className="w-6 aspect-square" />
+                        ) : (
+                          <BiSolidDownArrow className="w-6 aspect-square" />
+                        )}
+                      </button>
+                    ) : null}
+                  </TableHead>
+                );
+              })}
             </TableRow>
           ))}
         </TableHeader>
