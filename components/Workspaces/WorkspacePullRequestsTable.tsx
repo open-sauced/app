@@ -219,7 +219,9 @@ const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties =
 };
 
 export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePullRequestTableProps) => {
-  const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
+  // setting column pinning is not enabled at the moment.
+  // this would tie in to future work for page personalization.
+  const [columnPinning] = useState<ColumnPinningState>({
     left: ["pr_state", "pr_number", "repo_name", "pr_author_login"],
   });
   const isMobile = useMediaQuery("(max-width: 640px)");
@@ -233,7 +235,10 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
     manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
     state: {
-      columnPinning,
+      columnPinning: {
+        left: ["pr_state", "pr_number"],
+      },
+      sorting: [],
     },
   });
 
