@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.2](https://github.com/open-sauced/app/compare/v2.19.0-beta.1...v2.19.0-beta.2) (2024-04-12)
+
+
+### 🐛 Bug Fixes
+
+* updated styles of create insights links in sidebar ([#3173](https://github.com/open-sauced/app/issues/3173)) ([6c0c5ce](https://github.com/open-sauced/app/commit/6c0c5ce80a581669d1f8c0fbd7111c737b5fed6b))
+
 ## [2.19.0-beta.1](https://github.com/open-sauced/app/compare/v2.18.0...v2.19.0-beta.1) (2024-04-11)
 
 
