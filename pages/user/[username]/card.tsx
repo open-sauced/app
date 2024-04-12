@@ -286,7 +286,6 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
             className={linkStyle}
             style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
-            rel="noreferrer"
           >
             <Image src={icon.src} alt={icon.name} width={24} height={24} />
           </a>

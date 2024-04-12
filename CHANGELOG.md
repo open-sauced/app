@@ -5,6 +5,43 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.1](https://github.com/open-sauced/app/compare/v2.18.0...v2.19.0-beta.1) (2024-04-11)
+
+
+### 🍕 Features
+
+* basic implementation of StarSearch ([#3162](https://github.com/open-sauced/app/issues/3162)) ([0086134](https://github.com/open-sauced/app/commit/008613421a6f4fe4a415558c779850d443ba7568))
+
+## [2.18.0](https://github.com/open-sauced/app/compare/v2.17.0...v2.18.0) (2024-04-11)
+
+
+### 🍕 Features
+
+* created the Author/PR State Icon component ([#3155](https://github.com/open-sauced/app/issues/3155)) ([dd843be](https://github.com/open-sauced/app/commit/dd843bef8aa06dcaa4e8e67fc05b9a0eddc1524a))
+
+
+### 🐛 Bug Fixes
+
+* add fallback for GitHub repository URL if none returned ([#3169](https://github.com/open-sauced/app/issues/3169)) ([ea07ac3](https://github.com/open-sauced/app/commit/ea07ac3fcf6e519f84165fd6f2c22e27a494e0ce))
+* remove /hub/* pages from middleware ([#3163](https://github.com/open-sauced/app/issues/3163)) ([11d4713](https://github.com/open-sauced/app/commit/11d471363e21624c27035afd1c97f9b22f6398c6))
+* remove occurrences of rel="noreferrer" for SEO ([#3170](https://github.com/open-sauced/app/issues/3170)) ([d1dc6b8](https://github.com/open-sauced/app/commit/d1dc6b843668eca03d290372e428efddd987cf6f))
+* show TopNav `/starsearch` selectively ([#3161](https://github.com/open-sauced/app/issues/3161)) ([b3b9f3f](https://github.com/open-sauced/app/commit/b3b9f3fcf7b7e1053f78ac5ea424dd8acdaf2834))
+
+## [2.18.0-beta.4](https://github.com/open-sauced/app/compare/v2.18.0-beta.3...v2.18.0-beta.4) (2024-04-11)
+
+
+### 🐛 Bug Fixes
+
+* remove occurrences of rel="noreferrer" for SEO ([#3170](https://github.com/open-sauced/app/issues/3170)) ([d1dc6b8](https://github.com/open-sauced/app/commit/d1dc6b843668eca03d290372e428efddd987cf6f))
+
+## [2.18.0-beta.3](https://github.com/open-sauced/app/compare/v2.18.0-beta.2...v2.18.0-beta.3) (2024-04-11)
+
+
+### 🐛 Bug Fixes
+
+* add fallback for GitHub repository URL if none returned ([#3169](https://github.com/open-sauced/app/issues/3169)) ([ea07ac3](https://github.com/open-sauced/app/commit/ea07ac3fcf6e519f84165fd6f2c22e27a494e0ce))
+* remove /hub/* pages from middleware ([#3163](https://github.com/open-sauced/app/issues/3163)) ([11d4713](https://github.com/open-sauced/app/commit/11d471363e21624c27035afd1c97f9b22f6398c6))
+
 ## [2.18.0-beta.2](https://github.com/open-sauced/app/compare/v2.18.0-beta.1...v2.18.0-beta.2) (2024-04-10)
 
 

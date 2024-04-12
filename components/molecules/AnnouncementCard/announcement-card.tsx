@@ -30,7 +30,6 @@ const AnnouncementCard = ({ title, description, bannerSrc, url }: AnnouncementCa
         <a
           href={url}
           target="_blank"
-          rel="noreferrer"
           className="flex justify-center py-1.5 border rounded-lg border-light-orange-7 text-light-orange-10 hover:border-light-orange-9 hover:border-2 hover:text-light-orange-10"
         >
           Learn more

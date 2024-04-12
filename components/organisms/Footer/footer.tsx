@@ -102,7 +102,6 @@ const Footer = (): JSX.Element => {
               className="px-2 hover:text-light-slate-12"
               href={footerContext[0].terms?.url}
               target="_blank"
-              rel="noreferrer"
               aria-label={`Visit the ${footerContext[0].terms?.text} page`}
             >
               {footerContext[0].terms?.text}
@@ -111,7 +110,6 @@ const Footer = (): JSX.Element => {
               className="px-2 hover:text-light-slate-12"
               href={footerContext[0].privacy?.url}
               target="_blank"
-              rel="noreferrer"
               aria-label={`Visit the ${footerContext[0].privacy?.text} page`}
             >
               {footerContext[0].privacy?.text}
@@ -120,7 +118,6 @@ const Footer = (): JSX.Element => {
               className="px-2 hover:text-light-slate-12"
               href={footerContext[0].status?.url}
               target="_blank"
-              rel="noreferrer"
               aria-label={`Visit the ${footerContext[0].status?.text} page`}
             >
               {footerContext[0].status?.text}
@@ -141,7 +138,6 @@ const Footer = (): JSX.Element => {
               className="px-2"
               href={footerContext[0].terms?.url}
               target="_blank"
-              rel="noreferrer"
               aria-label={`Visit the ${footerContext[0].terms?.text} page`}
             >
               {footerContext[0].terms?.text}
@@ -150,7 +146,6 @@ const Footer = (): JSX.Element => {
               className="px-2"
               href={footerContext[0].privacy?.url}
               target="_blank"
-              rel="noreferrer"
               aria-label={`Visit the ${footerContext[0].privacy?.text} page`}
             >
               {footerContext[0].privacy?.text}
@@ -159,7 +154,6 @@ const Footer = (): JSX.Element => {
               className="px-2"
               href={footerContext[0].status?.url}
               target="_blank"
-              rel="noreferrer"
               aria-label={`Visit the ${footerContext[0].status?.text} page`}
             >
               {footerContext[0].status?.text}
