@@ -1,0 +1,17 @@
+https://oss-insights.netlify.app/*
+   X-Robots-Tag: noindex
+
+http://oss-insights.netlify.app/*
+   X-Robots-Tag: noindex
+
+https://beta.app.opensauced.pizza/*
+   X-Robots-Tag: noindex
+
+http://beta.app.opensauced.pizza/*
+   X-Robots-Tag: noindex
+
+https://alpha.app.opensauced.pizza/*
+   X-Robots-Tag: noindex
+
+http://alpha.app.opensauced.pizza/*
+   X-Robots-Tag: noindex
