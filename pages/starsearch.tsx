@@ -123,7 +123,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
         );
       case "chat":
         return (
-          <section className="flex flex-col items-start gap-4 z-10">
+          <section className="flex flex-col items-start gap-4 z-10 w-full min-w-max">
             <Button variant="primary" onClick={() => setStarSearchState("initial")}>
               Back to Start
             </Button>
