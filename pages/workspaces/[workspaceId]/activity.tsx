@@ -1,6 +1,7 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
@@ -11,6 +12,10 @@ import { DayRangePicker } from "components/shared/DayRangePicker";
 import { OrderPullRequestsBy, useWorkspacePullRequests } from "lib/hooks/api/useWorkspacePullRequests";
 import { WorkspacePullRequestTable } from "components/Workspaces/WorkspacePullRequestsTable";
 import { LimitPicker } from "components/shared/LimitPicker";
+import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
+import { OptionKeys } from "components/atoms/Select/multi-select";
+import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
+import { setQueryParams } from "lib/utils/query-params";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -47,16 +52,23 @@ interface WorkspaceDashboardProps {
 type OrderDirection = "ASC" | "DESC";
 
 const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
-  const repoIds: number[] = [];
   const router = useRouter();
   const {
     limit = 10,
-    range = 30,
+    range: rawRange = 30,
     page = 1,
     orderDirection = "",
     orderBy = "",
   } = router.query as { limit: string; range: string; page: string; orderDirection: OrderDirection; orderBy: string };
-
+  const range = Number(rawRange);
+  const { data: repositories, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
+  const [filteredRepositories, setFilteredRepositories] = useState<OptionKeys[]>([]);
+  const filterOptions = repositories
+    ? Array.from(repositories?.data!, (repo) => {
+        return { label: repo.repo.full_name, value: `${repo.repo_id}` };
+      })
+    : [];
+  const repoIds = filteredRepositories.map((option) => Number(option.value));
   const {
     meta,
     data: pullRequests,
@@ -68,7 +80,7 @@ const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
     limit: Number(limit),
     orderDirection: orderDirection as OrderDirection,
     orderBy: orderBy as OrderPullRequestsBy,
-    range: Number(range),
+    range,
     repoIds,
   });
 
@@ -81,10 +93,13 @@ const WorkspaceActivityPage = ({ workspace }: WorkspaceDashboardProps) => {
         </div>
         <div className="mt-6 grid gap-6">
           <div className="flex justify-end items-center gap-4">
-            {/* <TrackedRepositoryFilter
+            <TrackedRepositoryFilter
               options={filterOptions}
-              handleSelect={(selected: OptionKeys[]) => setFilteredRepositories(selected)}
-            /> */}
+              handleSelect={(selected: OptionKeys[]) => {
+                setFilteredRepositories(selected);
+                setQueryParams({ page: "1" });
+              }}
+            />
             <DayRangePicker />
             <LimitPicker />
           </div>
