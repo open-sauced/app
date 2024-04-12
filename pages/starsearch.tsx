@@ -6,8 +6,8 @@ import Image from "next/image";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
-import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { getAvatarById } from "lib/utils/github";
+import Button from "components/shared/Button/button";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -115,9 +115,21 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
   const renderState = () => {
     switch (starSearchState) {
       case "initial":
-        return <Header />;
+        return (
+          <section className="flex flex-col text-center items-center gap-4 lg:pt-24 z-10">
+            <Header />
+            <SuggestionBoxes onSubmitPrompt={submitPrompt} />
+          </section>
+        );
       case "chat":
-        return <ChatHistory userId={userId} chat={chat} />;
+        return (
+          <section className="flex flex-col items-start gap-4 z-10">
+            <Button variant="primary" onClick={() => setStarSearchState("initial")}>
+              Back to Start
+            </Button>
+            <ChatHistory userId={userId} chat={chat} />
+          </section>
+        );
     }
   };
 
@@ -134,7 +146,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
 
 function Header() {
   return (
-    <section className="flex flex-col text-center items-center gap-4 lg:pt-24">
+    <>
       <div className="flex gap-4 items-center">
         <Image src="/assets/star-search-logo.svg" alt="Star Search Logo" width={40} height={40} />
         <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
@@ -142,12 +154,11 @@ function Header() {
         </h1>
       </div>
       <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600">Ask questions about contributors</h2>
-      <SuggestionBoxes />
-    </section>
+    </>
   );
 }
 
-function SuggestionBoxes() {
+function SuggestionBoxes({ onSubmitPrompt }: { onSubmitPrompt: (prompt: string) => void }) {
   const suggestions = [
     {
       title: "Get information on contributor activity",
@@ -169,7 +180,7 @@ function SuggestionBoxes() {
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full py-8 max-w-3xl">
       {suggestions.map((suggestion, i) => (
-        <button key={i}>
+        <button key={i} onClick={() => onSubmitPrompt(suggestion.prompt)}>
           <Card className="shadow-md border-none text-start !p-6 text-slate-600">
             <h3 className="font-semibold">{suggestion.title}</h3>
             <p className="text-sm">{suggestion.prompt}</p>
@@ -182,11 +193,11 @@ function SuggestionBoxes() {
 
 function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] }) {
   return (
-    <ScrollArea className="grow items-center w-full p-4 lg:p-8 flex flex-col">
+    <ul className="grow w-full p-4 lg:p-8 flex flex-col items-center">
       {chat.map((message, i) => (
         <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
       ))}
-    </ScrollArea>
+    </ul>
   );
 }
 
@@ -219,7 +230,7 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   };
 
   return (
-    <li className="flex gap-2 items-start my-4">
+    <li className="flex gap-2 justify-center items-start my-4 w-full">
       {renderAvatar()}
       <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl">
         <h3 className="font-semibold text-sauced-orange">{author}</h3>
