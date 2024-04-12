@@ -43,6 +43,7 @@
     "e2e:ui": "npm run e2e -- --ui"
   },
   "dependencies": {
+    "@github/relative-time-element": "^4.4.0",
     "@headlessui/react": "^1.7.8",
     "@heroicons/react": "^2.0.14",
     "@nivo/bar": "^0.83.0",
@@ -77,6 +78,7 @@
     "@supabase/gotrue-js": "^1.22.22",
     "@supabase/supabase-js": "^2.26.0",
     "@supabase/ui": "^0.36.5",
+    "@tanstack/react-table": "^8.15.3",
     "@use-gesture/react": "^10.2.27",
     "@vercel/og": "^0.5.8",
     "clsx": "^1.2.1",
