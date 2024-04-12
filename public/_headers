@@ -4,12 +4,6 @@ https://oss-insights.netlify.app/*
 http://oss-insights.netlify.app/*
    X-Robots-Tag: noindex
 
-https://*oss-insights.netlify.app/*
-   X-Robots-Tag: noindex
-
-http://*oss-insights.netlify.app/*
-   X-Robots-Tag: noindex
-
 https://beta.app.opensauced.pizza/*
    X-Robots-Tag: noindex
 
