@@ -35,6 +35,7 @@ const NewWorkspace = () => {
   const reposQuery = router.query.repos as string;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
 
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
@@ -60,6 +61,7 @@ const NewWorkspace = () => {
 
   const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
+    setIsSaving(true);
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
     const name = formData.get("name") as string;
@@ -82,6 +84,7 @@ const NewWorkspace = () => {
       document.dispatchEvent(new CustomEvent(WORKSPACE_UPDATED_EVENT, { detail: workspace }));
       router.push(`/workspaces/${workspace.id}`);
     }
+    setIsSaving(false);
   };
 
   const TrackedReposModal = dynamic(() => import("components/Workspaces/TrackedReposModal"), {
@@ -103,6 +106,8 @@ const NewWorkspace = () => {
             form="new-workspace"
             variant="primary"
             className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
+            loading={isSaving}
+            loadingText={"Creating Workspace..."}
           >
             Create Workspace
           </Button>
