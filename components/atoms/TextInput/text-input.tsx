@@ -32,8 +32,10 @@ const TextInput = ({
 
   const handleResetInput = () => {
     handleChange?.("");
-    if (fieldRef) {
-      fieldRef.current!.value = "";
+    if (fieldRef && fieldRef.current) {
+      fieldRef.current.value = "";
+    } else if (inputRef.current) {
+      inputRef.current.value = "";
     }
   };
 
