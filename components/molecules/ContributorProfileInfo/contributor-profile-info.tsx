@@ -102,7 +102,7 @@ const ContributorProfileInfo = ({
               {url && (
                 <span className="flex gap-2 items-center">
                   <FaGlobe />
-                  <Link href={url} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
+                  <Link href={url} target="_blank" className="w-max hover:text-orange-500 ">
                     {url}
                   </Link>
                 </span>
@@ -120,7 +120,6 @@ const ContributorProfileInfo = ({
                 <Link
                   href={`https://github.com/${githubName}`}
                   target="_blank"
-                  rel="noreferrer"
                   className="w-max hover:text-orange-500 "
                 >
                   {githubName}
@@ -133,7 +132,6 @@ const ContributorProfileInfo = ({
                   <Link
                     href={`https://twitter.com/${twitterUsername}`}
                     target="_blank"
-                    rel="noreferrer"
                     className="w-max hover:text-orange-500 "
                   >
                     {twitterUsername}
@@ -144,7 +142,7 @@ const ContributorProfileInfo = ({
               {linkedInUrl && (
                 <span className="flex gap-2 items-center">
                   <FiLinkedin />
-                  <Link href={linkedInUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500 ">
+                  <Link href={linkedInUrl} target="_blank" className="w-max hover:text-orange-500 ">
                     {linkedInUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile|company)/, "in")}
                   </Link>
                 </span>
@@ -153,7 +151,7 @@ const ContributorProfileInfo = ({
               {discordUrl && (
                 <span className="flex gap-2 items-center">
                   <BsDiscord />
-                  <Link href={discordUrl} target="_blank" rel="noreferrer" className="w-max hover:text-orange-500">
+                  <Link href={discordUrl} target="_blank" className="w-max hover:text-orange-500">
                     {`discord/#${discordUserId}`}
                   </Link>
                 </span>
@@ -162,12 +160,7 @@ const ContributorProfileInfo = ({
               {githubSponsorsUrl && (
                 <span className="flex gap-2 items-center">
                   <FiGithub />
-                  <Link
-                    href={githubSponsorsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-max hover:text-orange-500 "
-                  >
+                  <Link href={githubSponsorsUrl} target="_blank" className="w-max hover:text-orange-500 ">
                     {githubSponsorsUrl?.replace(/^(http(s)?:\/\/)?([\w]+\.)?github\.com\//, "")}
                   </Link>
                 </span>

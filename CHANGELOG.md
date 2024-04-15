@@ -5,6 +5,148 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.7](https://github.com/open-sauced/app/compare/v2.19.0-beta.6...v2.19.0-beta.7) (2024-04-15)
+
+
+### 🍕 Features
+
+* Create robots.txt ([#3183](https://github.com/open-sauced/app/issues/3183)) ([751c561](https://github.com/open-sauced/app/commit/751c561a71b0b9f3e6c134f1a2a87288f3be488c))
+
+## [2.19.0-beta.6](https://github.com/open-sauced/app/compare/v2.19.0-beta.5...v2.19.0-beta.6) (2024-04-15)
+
+
+### 🐛 Bug Fixes
+
+* remove console.info call from mutateHandler in AppSidebar component ([#3185](https://github.com/open-sauced/app/issues/3185)) ([96b63d7](https://github.com/open-sauced/app/commit/96b63d72f7936c3177a9679c9765cfa4d06fe224))
+
+## [2.19.0-beta.5](https://github.com/open-sauced/app/compare/v2.19.0-beta.4...v2.19.0-beta.5) (2024-04-12)
+
+
+### 🍕 Features
+
+* change repo links from github to repo pages ([#3178](https://github.com/open-sauced/app/issues/3178)) ([506dde2](https://github.com/open-sauced/app/commit/506dde2c0326be1eb67692cdc568b007bc2c2fbe))
+
+## [2.19.0-beta.4](https://github.com/open-sauced/app/compare/v2.19.0-beta.3...v2.19.0-beta.4) (2024-04-12)
+
+
+### 🍕 Features
+
+* created the workspace activity page with a pull requests table ([#3147](https://github.com/open-sauced/app/issues/3147)) ([9f65b9c](https://github.com/open-sauced/app/commit/9f65b9c5b3c9fbf95aa8e984e952938cd195072b))
+
+## [2.19.0-beta.3](https://github.com/open-sauced/app/compare/v2.19.0-beta.2...v2.19.0-beta.3) (2024-04-12)
+
+
+### 🍕 Features
+
+* add link from Repo pages to GitHub ([#3177](https://github.com/open-sauced/app/issues/3177)) ([f4e1de4](https://github.com/open-sauced/app/commit/f4e1de4f687cc1f5793a9819944f3c924496afbb))
+
+## [2.19.0-beta.2](https://github.com/open-sauced/app/compare/v2.19.0-beta.1...v2.19.0-beta.2) (2024-04-12)
+
+
+### 🐛 Bug Fixes
+
+* updated styles of create insights links in sidebar ([#3173](https://github.com/open-sauced/app/issues/3173)) ([6c0c5ce](https://github.com/open-sauced/app/commit/6c0c5ce80a581669d1f8c0fbd7111c737b5fed6b))
+
+## [2.19.0-beta.1](https://github.com/open-sauced/app/compare/v2.18.0...v2.19.0-beta.1) (2024-04-11)
+
+
+### 🍕 Features
+
+* basic implementation of StarSearch ([#3162](https://github.com/open-sauced/app/issues/3162)) ([0086134](https://github.com/open-sauced/app/commit/008613421a6f4fe4a415558c779850d443ba7568))
+
+## [2.18.0](https://github.com/open-sauced/app/compare/v2.17.0...v2.18.0) (2024-04-11)
+
+
+### 🍕 Features
+
+* created the Author/PR State Icon component ([#3155](https://github.com/open-sauced/app/issues/3155)) ([dd843be](https://github.com/open-sauced/app/commit/dd843bef8aa06dcaa4e8e67fc05b9a0eddc1524a))
+
+
+### 🐛 Bug Fixes
+
+* add fallback for GitHub repository URL if none returned ([#3169](https://github.com/open-sauced/app/issues/3169)) ([ea07ac3](https://github.com/open-sauced/app/commit/ea07ac3fcf6e519f84165fd6f2c22e27a494e0ce))
+* remove /hub/* pages from middleware ([#3163](https://github.com/open-sauced/app/issues/3163)) ([11d4713](https://github.com/open-sauced/app/commit/11d471363e21624c27035afd1c97f9b22f6398c6))
+* remove occurrences of rel="noreferrer" for SEO ([#3170](https://github.com/open-sauced/app/issues/3170)) ([d1dc6b8](https://github.com/open-sauced/app/commit/d1dc6b843668eca03d290372e428efddd987cf6f))
+* show TopNav `/starsearch` selectively ([#3161](https://github.com/open-sauced/app/issues/3161)) ([b3b9f3f](https://github.com/open-sauced/app/commit/b3b9f3fcf7b7e1053f78ac5ea424dd8acdaf2834))
+
+## [2.18.0-beta.4](https://github.com/open-sauced/app/compare/v2.18.0-beta.3...v2.18.0-beta.4) (2024-04-11)
+
+
+### 🐛 Bug Fixes
+
+* remove occurrences of rel="noreferrer" for SEO ([#3170](https://github.com/open-sauced/app/issues/3170)) ([d1dc6b8](https://github.com/open-sauced/app/commit/d1dc6b843668eca03d290372e428efddd987cf6f))
+
+## [2.18.0-beta.3](https://github.com/open-sauced/app/compare/v2.18.0-beta.2...v2.18.0-beta.3) (2024-04-11)
+
+
+### 🐛 Bug Fixes
+
+* add fallback for GitHub repository URL if none returned ([#3169](https://github.com/open-sauced/app/issues/3169)) ([ea07ac3](https://github.com/open-sauced/app/commit/ea07ac3fcf6e519f84165fd6f2c22e27a494e0ce))
+* remove /hub/* pages from middleware ([#3163](https://github.com/open-sauced/app/issues/3163)) ([11d4713](https://github.com/open-sauced/app/commit/11d471363e21624c27035afd1c97f9b22f6398c6))
+
+## [2.18.0-beta.2](https://github.com/open-sauced/app/compare/v2.18.0-beta.1...v2.18.0-beta.2) (2024-04-10)
+
+
+### 🐛 Bug Fixes
+
+* show TopNav `/starsearch` selectively ([#3161](https://github.com/open-sauced/app/issues/3161)) ([b3b9f3f](https://github.com/open-sauced/app/commit/b3b9f3fcf7b7e1053f78ac5ea424dd8acdaf2834))
+
+## [2.18.0-beta.1](https://github.com/open-sauced/app/compare/v2.17.0...v2.18.0-beta.1) (2024-04-10)
+
+
+### 🍕 Features
+
+* created the Author/PR State Icon component ([#3155](https://github.com/open-sauced/app/issues/3155)) ([dd843be](https://github.com/open-sauced/app/commit/dd843bef8aa06dcaa4e8e67fc05b9a0eddc1524a))
+
+## [2.17.0](https://github.com/open-sauced/app/compare/v2.16.1...v2.17.0) (2024-04-10)
+
+
+### 🧑‍💻 Code Refactoring
+
+* remove `/hub` and `/pages` subfolder routing ([#2963](https://github.com/open-sauced/app/issues/2963)) ([5c090f3](https://github.com/open-sauced/app/commit/5c090f37c3345c3425dba1b29b5f7f6ec3af2da7))
+
+
+### 🍕 Features
+
+* add range selection to contributor profile page ([#3125](https://github.com/open-sauced/app/issues/3125)) ([641f9b2](https://github.com/open-sauced/app/commit/641f9b2331b5dbabebe7ce10f5e32390b416275d))
+* add Skeleton to Repo Page ([#3124](https://github.com/open-sauced/app/issues/3124)) ([d661ffa](https://github.com/open-sauced/app/commit/d661ffae5ed78d716bc9502a02342e667e01dd8c))
+* initial `/starsearch` layout ([#3148](https://github.com/open-sauced/app/issues/3148)) ([5c3d61b](https://github.com/open-sauced/app/commit/5c3d61b524f94d88b01b85fdfde9136eedae110d))
+* matched Contritbutor Insight edit page style to workspace UI ([#3109](https://github.com/open-sauced/app/issues/3109)) ([c9e3872](https://github.com/open-sauced/app/commit/c9e3872b5a4738bce79db4e24ac3eb56d6d5adef))
+* matched Repository Insight edit page style to workspace UI ([#3092](https://github.com/open-sauced/app/issues/3092)) ([c65b053](https://github.com/open-sauced/app/commit/c65b053473975b74d863860eda88edf123cee2f6))
+* repo charts style fixes ([#3151](https://github.com/open-sauced/app/issues/3151)) ([9b7197b](https://github.com/open-sauced/app/commit/9b7197b4e5388c4333783168b8dc07f8bb2677a5))
+* search for repositories ([#3140](https://github.com/open-sauced/app/issues/3140)) ([10ede95](https://github.com/open-sauced/app/commit/10ede95ed1e5495f8a45042d6b4ec61056da30e8))
+
+
+### 🤖 Build System
+
+* update to Next.js 13.5.6 ([#3149](https://github.com/open-sauced/app/issues/3149)) ([b65b84c](https://github.com/open-sauced/app/commit/b65b84ca10116ff26c21f40c1631ac1f97a46b9a))
+
+
+### 🐛 Bug Fixes
+
+* now common OG image functions are in a utility file ([#3132](https://github.com/open-sauced/app/issues/3132)) ([450d874](https://github.com/open-sauced/app/commit/450d874c4f7ca6a614d9c987f880a8c6e21399de))
+* pass selected repositories to new repository insight creation ([#3107](https://github.com/open-sauced/app/issues/3107)) ([3c57f94](https://github.com/open-sauced/app/commit/3c57f94734d3b40fbfb1db0ea9e208a51f4112ee))
+* repos with long name partially stack ([#2534](https://github.com/open-sauced/app/issues/2534)) ([1ed303b](https://github.com/open-sauced/app/commit/1ed303b1eb5c8f65d00c15c2de63758551e80fe3))
+* swap text for stars/forks in repo page OG image ([#3145](https://github.com/open-sauced/app/issues/3145)) ([22fa602](https://github.com/open-sauced/app/commit/22fa602cc5f4801e179e39e2fc026d1967220020))
+* text area input does not focus when active and add highlight input is always focussed in post a highlight form ([#3008](https://github.com/open-sauced/app/issues/3008)) ([e9b9fed](https://github.com/open-sauced/app/commit/e9b9fedb71f110c2566fde95c4b58728a999d022))
+* update API URL in contributor card edge function for pull requests ([#3157](https://github.com/open-sauced/app/issues/3157)) ([668a26b](https://github.com/open-sauced/app/commit/668a26b030492a5744e197f80efcbdaa5aaf7d95))
+* use OpenGraph image URL and remove server request from user profile ([#3137](https://github.com/open-sauced/app/issues/3137)) ([4e27f55](https://github.com/open-sauced/app/commit/4e27f55a45eb398c155f650e8b9f6dadd0be8a21)), closes [#3066](https://github.com/open-sauced/app/issues/3066)
+
+## [2.17.0-beta.12](https://github.com/open-sauced/app/compare/v2.17.0-beta.11...v2.17.0-beta.12) (2024-04-10)
+
+
+### 🐛 Bug Fixes
+
+* pass selected repositories to new repository insight creation ([#3107](https://github.com/open-sauced/app/issues/3107)) ([3c57f94](https://github.com/open-sauced/app/commit/3c57f94734d3b40fbfb1db0ea9e208a51f4112ee))
+* update API URL in contributor card edge function for pull requests ([#3157](https://github.com/open-sauced/app/issues/3157)) ([668a26b](https://github.com/open-sauced/app/commit/668a26b030492a5744e197f80efcbdaa5aaf7d95))
+
+## [2.17.0-beta.11](https://github.com/open-sauced/app/compare/v2.17.0-beta.10...v2.17.0-beta.11) (2024-04-10)
+
+
+### 🤖 Build System
+
+* update to Next.js 13.5.6 ([#3149](https://github.com/open-sauced/app/issues/3149)) ([b65b84c](https://github.com/open-sauced/app/commit/b65b84ca10116ff26c21f40c1631ac1f97a46b9a))
+
 ## [2.17.0-beta.10](https://github.com/open-sauced/app/compare/v2.17.0-beta.9...v2.17.0-beta.10) (2024-04-10)
 
 

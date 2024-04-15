@@ -93,7 +93,7 @@ interface DBListContributor {
 interface DbRepoPREvents {
   readonly event_id: number;
   readonly pr_number: number;
-  readonly pr_state: string;
+  readonly pr_state: "open" | "closed";
   readonly pr_is_draft: bool;
   readonly pr_is_merged: bool;
   readonly pr_mergeable_state: string;

@@ -495,7 +495,6 @@ const ContributorHighlightCard = ({
                       handleCaptureClickDetailsForAnalytics("twitter");
                     }}
                     target="_blank"
-                    rel="noreferrer"
                     href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=${host}/feed/${id}`}
                     className="flex items-center p-3 transition rounded-full hover:bg-light-orange-5"
                   >
@@ -517,7 +516,6 @@ const ContributorHighlightCard = ({
                       handleCaptureClickDetailsForAnalytics("linkedin");
                     }}
                     target="_blank"
-                    rel="noreferrer"
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${host}/feed/${id}`}
                     className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                   >
@@ -614,7 +612,6 @@ const ContributorHighlightCard = ({
           <a
             href={highlightLink}
             target="_blank"
-            rel="noreferrer"
             className="flex-1 inline-block underline truncate cursor-pointer text-sauced-orange"
           >
             {highlightLink}
@@ -623,7 +620,7 @@ const ContributorHighlightCard = ({
       </div>
 
       {/* Generated OG card section */}
-      <a href={highlightLink} target="_blank" rel="noreferrer" aria-hidden="true">
+      <a href={highlightLink} target="_blank" aria-hidden="true">
         {type === "pull_request" || type === "issue" ? (
           <GhOpenGraphImg githubLink={highlightLink} />
         ) : highlightLink.includes("dev.to") ? (
