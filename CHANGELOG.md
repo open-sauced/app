@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.6](https://github.com/open-sauced/app/compare/v2.19.0-beta.5...v2.19.0-beta.6) (2024-04-15)
+
+
+### 🐛 Bug Fixes
+
+* remove console.info call from mutateHandler in AppSidebar component ([#3185](https://github.com/open-sauced/app/issues/3185)) ([96b63d7](https://github.com/open-sauced/app/commit/96b63d72f7936c3177a9679c9765cfa4d06fe224))
+
 ## [2.19.0-beta.5](https://github.com/open-sauced/app/compare/v2.19.0-beta.4...v2.19.0-beta.5) (2024-04-12)
 
 
