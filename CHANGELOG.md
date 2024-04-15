@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.7](https://github.com/open-sauced/app/compare/v2.19.0-beta.6...v2.19.0-beta.7) (2024-04-15)
+
+
+### 🍕 Features
+
+* Create robots.txt ([#3183](https://github.com/open-sauced/app/issues/3183)) ([751c561](https://github.com/open-sauced/app/commit/751c561a71b0b9f3e6c134f1a2a87288f3be488c))
+
 ## [2.19.0-beta.6](https://github.com/open-sauced/app/compare/v2.19.0-beta.5...v2.19.0-beta.6) (2024-04-15)
 
 
