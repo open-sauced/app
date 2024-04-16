@@ -15,7 +15,7 @@ import {
 import { BiGitRepoForked } from "react-icons/bi";
 import { type DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
-import { getCumulativeForksHistogramToDays, getDailyForksHistogramToDays, getTicks } from "lib/utils/repo-page-utils";
+import { getHistoryForksHistogramToDays, getDailyForksHistogramToDays, getTicks } from "lib/utils/repo-page-utils";
 
 import Card from "components/atoms/Card/card";
 import Button from "components/shared/Button/button";
@@ -30,12 +30,9 @@ type ForksChartProps = {
 };
 
 export default function ForksChart({ stats, total, syncId, range = 30, isLoading }: ForksChartProps) {
-  const [category, setCategory] = useState<"daily" | "cumulative">("daily");
+  const [category, setCategory] = useState<"daily" | "history">("daily");
   const dailyData = useMemo(() => getDailyForksHistogramToDays({ stats, range }), [stats, range]);
-  const cumulativeData = useMemo(
-    () => getCumulativeForksHistogramToDays({ stats, total, range }),
-    [stats, total, range]
-  );
+  const historyData = useMemo(() => getHistoryForksHistogramToDays({ stats, total, range }), [stats, total, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
 
   const renderChart = () => {
@@ -50,9 +47,9 @@ export default function ForksChart({ stats, total, syncId, range = 30, isLoading
             <Bar dataKey="forks_count" fill="#FF5100" />
           </BarChart>
         );
-      case "cumulative":
+      case "history":
         return (
-          <LineChart data={cumulativeData} syncId={syncId}>
+          <LineChart data={historyData} syncId={syncId}>
             <XAxis dataKey="bucket" tick={false} />
             <YAxis domain={["auto", "auto"]} />
             <Tooltip content={CustomTooltip} filterNull={false} />
@@ -78,11 +75,8 @@ export default function ForksChart({ stats, total, syncId, range = 30, isLoading
               <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
                 Daily
               </Button>
-              <Button
-                variant={category === "cumulative" ? "outline" : "default"}
-                onClick={() => setCategory("cumulative")}
-              >
-                Cumulative
+              <Button variant={category === "history" ? "outline" : "default"} onClick={() => setCategory("history")}>
+                History
               </Button>
             </div>
           </>
