@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import Image from "next/image";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
@@ -41,6 +41,8 @@ type StarSearchChat = {
 export default function StarSearchPage({ userId, bearerToken }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
+  const [input, setInput] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
 
   const submitPrompt = async (prompt: string) => {
@@ -118,7 +120,12 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
         return (
           <div className="flex flex-col text-center items-center gap-4 lg:pt-24 z-10">
             <Header />
-            <SuggestionBoxes onSubmitPrompt={submitPrompt} />
+            <SuggestionBoxes
+              addPromptInput={(prompt) => {
+                setInput(prompt);
+                inputRef.current?.focus();
+              }}
+            />
           </div>
         );
       case "chat":
@@ -137,7 +144,13 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
     <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
         {renderState()}
-        <StarSearchInput isRunning={isRunning} onSubmitPrompt={submitPrompt} />
+        <StarSearchInput
+          ref={inputRef}
+          input={input}
+          setInput={setInput}
+          isRunning={isRunning}
+          onSubmitPrompt={submitPrompt}
+        />
         <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
       </div>
     </ProfileLayout>
@@ -158,7 +171,7 @@ function Header() {
   );
 }
 
-function SuggestionBoxes({ onSubmitPrompt }: { onSubmitPrompt: (prompt: string) => void }) {
+function SuggestionBoxes({ addPromptInput }: { addPromptInput: (prompt: string) => void }) {
   const suggestions = [
     {
       title: "Get information on contributor activity",
@@ -180,7 +193,7 @@ function SuggestionBoxes({ onSubmitPrompt }: { onSubmitPrompt: (prompt: string) 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full py-8 max-w-3xl">
       {suggestions.map((suggestion, i) => (
-        <button key={i} onClick={() => onSubmitPrompt(suggestion.prompt)}>
+        <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
           <Card className="shadow-md border-none text-start !p-6 text-slate-600">
             <h3 className="font-semibold">{suggestion.title}</h3>
             <p className="text-sm">{suggestion.prompt}</p>
@@ -240,13 +253,15 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   );
 }
 
-function StarSearchInput({
-  isRunning,
-  onSubmitPrompt,
-}: {
-  isRunning: boolean;
-  onSubmitPrompt: (prompt: string) => void;
-}) {
+const StarSearchInput = forwardRef<
+  HTMLInputElement,
+  {
+    input: string;
+    setInput: (prompt: string) => void;
+    isRunning: boolean;
+    onSubmitPrompt: (prompt: string) => void;
+  }
+>(function StarSearchInput({ input, setInput, isRunning, onSubmitPrompt }, ref) {
   return (
     <section className="w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <form
@@ -263,6 +278,9 @@ function StarSearchInput({
           required
           type="text"
           name="prompt"
+          ref={ref}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           disabled={isRunning}
           placeholder="Ask a question"
           className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
@@ -273,4 +291,4 @@ function StarSearchInput({
       </form>
     </section>
   );
-}
+});
