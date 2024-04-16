@@ -116,10 +116,10 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
     switch (starSearchState) {
       case "initial":
         return (
-          <section className="flex flex-col text-center items-center gap-4 lg:pt-24 z-10">
+          <div className="flex flex-col text-center items-center gap-4 lg:pt-24 z-10">
             <Header />
             <SuggestionBoxes onSubmitPrompt={submitPrompt} />
-          </section>
+          </div>
         );
       case "chat":
         return (
