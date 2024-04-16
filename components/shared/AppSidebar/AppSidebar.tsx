@@ -73,9 +73,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
   }
 
   useEffectOnce(() => {
-    const mutateHandler = (event: Event) => {
-      // eslint-disable-next-line no-console
-      event instanceof CustomEvent && console.info(WORKSPACE_UPDATED_EVENT, event.detail);
+    const mutateHandler = () => {
       mutate();
     };
 
