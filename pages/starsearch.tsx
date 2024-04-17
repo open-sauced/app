@@ -125,7 +125,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
   return (
     <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
-        <main className="w-full h-full max-h-99 z-10">
+        <main className="mx-auto px-auto w-full h-full max-h-99 z-10">
           {renderState()}
           <StarSearchInput isRunning={isRunning} onSubmitPrompt={submitPrompt} />
         </main>
@@ -170,15 +170,17 @@ function SuggestionBoxes() {
     },
   ];
   return (
-    <ScrollArea className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full pt-0 pb-8 lg:py-8 max-w-3xl">
-      {suggestions.map((suggestion, i) => (
-        <button key={i}>
-          <Card className="shadow-md border-none text-start !p-6 text-slate-600">
-            <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
-            <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
-          </Card>
-        </button>
-      ))}
+    <ScrollArea className="w-full pt-0 pb-8 lg:py-8 max-w-3xl h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-0 lg:gap-4">
+        {suggestions.map((suggestion, i) => (
+          <button key={i}>
+            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
+              <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
+              <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
+            </Card>
+          </button>
+        ))}
+      </div>
     </ScrollArea>
   );
 }
@@ -189,7 +191,7 @@ function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] 
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
   return (
-    <ScrollArea className="relative grow items-center w-full max-w-xl lg:max-w-5xl lg:p-8 flex flex-col h-full max-h-[34rem] px-auto">
+    <ScrollArea className="relative grow items-center w-full max-w-xl lg:max-w-5xl lg:p-8 flex flex-col h-full max-h-[34rem] lg:max-h-[52rem] mx-auto">
       {chat.map((message, i) => (
         <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
       ))}
