@@ -12,5 +12,7 @@ test("Loads home page (logged out user)", async ({ page }) => {
   await expect(page.getByRole("complementary", { name: "Repositories", exact: true })).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Featured Highlights", exact: true })).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Subscribe to our newsletter", exact: true })).toBeVisible();
-  await expect(page.getByRole("complementary", { name: "#100DaysOfOSS 🚀", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("complementary", { name: "Track your project with Workspaces!", exact: true })
+  ).toBeVisible();
 });
