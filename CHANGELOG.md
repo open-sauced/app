@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.15](https://github.com/open-sauced/app/compare/v2.19.0-beta.14...v2.19.0-beta.15) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* fixed star search URL for SEO ([#3218](https://github.com/open-sauced/app/issues/3218)) ([69f8d67](https://github.com/open-sauced/app/commit/69f8d67cfff5c77a95b3cf84b7ecf75e56c4683f))
+
 ## [2.19.0-beta.14](https://github.com/open-sauced/app/compare/v2.19.0-beta.13...v2.19.0-beta.14) (2024-04-17)
 
 
