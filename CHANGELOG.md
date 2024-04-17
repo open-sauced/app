@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.9](https://github.com/open-sauced/app/compare/v2.19.0-beta.8...v2.19.0-beta.9) (2024-04-17)
+
+
+### 🍕 Features
+
+* rename cumulative to history in Repo pages ([#3195](https://github.com/open-sauced/app/issues/3195)) ([8a33e24](https://github.com/open-sauced/app/commit/8a33e24802da851a314571b05d97fdbcacda7adb))
+
 ## [2.19.0-beta.8](https://github.com/open-sauced/app/compare/v2.19.0-beta.7...v2.19.0-beta.8) (2024-04-16)
 
 
