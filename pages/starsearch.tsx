@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
@@ -182,11 +182,16 @@ function SuggestionBoxes() {
 }
 
 function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
   return (
-    <ScrollArea className="grow items-center w-full p-4 lg:p-8 flex flex-col">
+    <ScrollArea className="grow items-center w-full max-w-xl lg:max-w-5xl p-4 lg:p-8 flex flex-col h-full max-h-99 px-auto">
       {chat.map((message, i) => (
         <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
       ))}
+      <div ref={scrollRef} />
     </ScrollArea>
   );
 }
@@ -238,7 +243,7 @@ function StarSearchInput({
   onSubmitPrompt: (prompt: string) => void;
 }) {
   return (
-    <section className="w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
+    <section className="absolute inset-x-0 bottom-2 mx-auto px-auto w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <form
         onSubmit={(event) => {
           event.preventDefault();
