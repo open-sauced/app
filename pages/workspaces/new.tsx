@@ -13,6 +13,8 @@ import { createWorkspace } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import AuthContentWrapper from "components/molecules/AuthContentWrapper/auth-content-wrapper";
 
+const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
+
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
   const {
@@ -33,9 +35,11 @@ const NewWorkspace = () => {
   const nameQuery = router.query.name as string;
   const descriptionQuery = router.query.description as string;
   const reposQuery = router.query.repos as string;
+  const welcome = router.query.welcome as string;
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
 
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
@@ -58,6 +62,12 @@ const NewWorkspace = () => {
       setDescription(descriptionQuery);
     }
   }, [router.query]);
+
+  useEffect(() => {
+    if (welcome) {
+      setIsWelcomeModalOpen(true);
+    }
+  }, [welcome]);
 
   const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
@@ -190,6 +200,7 @@ const NewWorkspace = () => {
           setTrackedReposModalOpen(false);
         }}
       />
+      <WorkspaceWelcomeModal isOpen={isWelcomeModalOpen} onClose={() => setIsWelcomeModalOpen(false)} />
     </WorkspaceLayout>
   );
 };
