@@ -5,6 +5,30 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.10](https://github.com/open-sauced/app/compare/v2.19.0-beta.9...v2.19.0-beta.10) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* now links in collapsed sidebar no longer receive focus ([#3187](https://github.com/open-sauced/app/issues/3187)) ([5b05ace](https://github.com/open-sauced/app/commit/5b05acee0e54626167e230f6bee75f79ca5bec57))
+* now there is feedback when saving or updating workspace settings ([#3184](https://github.com/open-sauced/app/issues/3184)) ([43784b2](https://github.com/open-sauced/app/commit/43784b21d828dba3233f41f4c10189b8bf9a755b))
+* quick fix StarSearch response ([#3194](https://github.com/open-sauced/app/issues/3194)) ([0c2847e](https://github.com/open-sauced/app/commit/0c2847e5c1a0b889edfdc76b1ffde7e49e357124))
+* removed deprecated list pages ([#3197](https://github.com/open-sauced/app/issues/3197)) ([fa14557](https://github.com/open-sauced/app/commit/fa14557de1004c7f394563d807160a0d7130036f))
+
+## [2.19.0-beta.9](https://github.com/open-sauced/app/compare/v2.19.0-beta.8...v2.19.0-beta.9) (2024-04-17)
+
+
+### 🍕 Features
+
+* rename cumulative to history in Repo pages ([#3195](https://github.com/open-sauced/app/issues/3195)) ([8a33e24](https://github.com/open-sauced/app/commit/8a33e24802da851a314571b05d97fdbcacda7adb))
+
+## [2.19.0-beta.8](https://github.com/open-sauced/app/compare/v2.19.0-beta.7...v2.19.0-beta.8) (2024-04-16)
+
+
+### 🐛 Bug Fixes
+
+* now repo page OG images are corrext for production ([#3179](https://github.com/open-sauced/app/issues/3179)) ([772c7b5](https://github.com/open-sauced/app/commit/772c7b532178fc97d803d4f21de8783136c70066))
+
 ## [2.19.0-beta.7](https://github.com/open-sauced/app/compare/v2.19.0-beta.6...v2.19.0-beta.7) (2024-04-15)
 
 

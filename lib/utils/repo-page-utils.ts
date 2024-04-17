@@ -105,7 +105,7 @@ export function getDailyStarsHistogramToDays({
   return result;
 }
 
-export function getCumulativeStarsHistogramToDays({
+export function getHistoryStarsHistogramToDays({
   stats,
   range,
   total,
@@ -229,7 +229,7 @@ export function getDailyForksHistogramToDays({
   return result;
 }
 
-export function getCumulativeForksHistogramToDays({
+export function getHistoryForksHistogramToDays({
   stats,
   range,
   total,

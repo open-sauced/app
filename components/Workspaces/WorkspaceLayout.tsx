@@ -50,7 +50,7 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
           <TopNav />
           <ClientOnly>
             <span ref={sidebarRef}>
-              <AppSideBar workspaceId={workspaceId} hideSidebar={hideSidebar} sidebarCollapsed={showingSidebar} />
+              <AppSideBar workspaceId={workspaceId} hideSidebar={hideSidebar} sidebarCollapsed={!showingSidebar} />
             </span>
             {!showingSidebar && (
               <button
