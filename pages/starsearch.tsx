@@ -11,6 +11,8 @@ import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { getAvatarById } from "lib/utils/github";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { Drawer } from "components/shared/Drawer";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -47,6 +49,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 576px)");
 
   const submitPrompt = async (prompt: string) => {
     if (isRunning) {
@@ -145,13 +148,29 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
     <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
         {renderState()}
-        <div className="flex flex-col gap-4 items-center w-full">
-          {!isRunning && starSearchState === "chat" && (
-            <button className="flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
-              Need suggestions?
-              <BsArrowUpShort className="text-2xl" />
-            </button>
-          )}
+        <div className="absolute inset-x-0 bottom-2 flex flex-col gap-4 items-center w-full">
+          {!isRunning &&
+            starSearchState === "chat" &&
+            (isMobile ? (
+              <Drawer
+                title="YO"
+                description="YAY"
+                showCloseButton
+                trigger={
+                  <button className="z-30 flex gap-1 shadow-xs items-center text-slate-700 text-sm font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
+                    Need suggestions?
+                    <BsArrowUpShort className="text-2xl" />
+                  </button>
+                }
+              >
+                <p>Hello</p>
+              </Drawer>
+            ) : (
+              <button className="z-30 flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
+                Need suggestions?
+                <BsArrowUpShort className="text-2xl" />
+              </button>
+            ))}
           <StarSearchInput
             ref={inputRef}
             input={input}
@@ -221,7 +240,7 @@ function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] 
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
   return (
-    <ScrollArea className="relative grow items-center w-full max-w-xl lg:max-w-5xl lg:p-8 flex flex-col h-full max-h-[34rem] lg:max-h-[52rem] mx-auto">
+    <ScrollArea className="relative grow items-center w-full max-w-xs lg:max-w-5xl lg:p-8 flex flex-col h-full xs:max-h-[20rem] max-h-[34rem] lg:max-h-[52rem] mx-auto">
       {chat.map((message, i) => (
         <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
       ))}
@@ -279,7 +298,7 @@ const StarSearchInput = forwardRef<
   }
 >(function StarSearchInput({ input, setInput, isRunning, onSubmitPrompt }, ref) {
   return (
-    <section className="absolute inset-x-0 bottom-2 mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
+    <section className="mx-0.5 lg:mx-auto w-full lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <form
         onSubmit={(event) => {
           event.preventDefault();
