@@ -247,7 +247,7 @@ function StarSearchInput({
   onSubmitPrompt: (prompt: string) => void;
 }) {
   return (
-    <section className="absolute inset-x-0 bottom-2 mx-auto w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
+    <section className="absolute inset-x-0 bottom-2 mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <form
         onSubmit={(event) => {
           event.preventDefault();
