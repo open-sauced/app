@@ -50,6 +50,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 576px)");
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const submitPrompt = async (prompt: string) => {
     if (isRunning) {
@@ -166,10 +167,24 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
                 <p>Hello</p>
               </Drawer>
             ) : (
-              <button className="z-30 flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
-                Need suggestions?
-                <BsArrowUpShort className="text-2xl" />
-              </button>
+              <div className="z-40 w-full max-w-3xl justify-center">
+                {showSuggestions ? (
+                  <div className="flex flex-col gap-2 justify-center items-center w-full self-center h-fit">
+                    <button onClick={() => setShowSuggestions(false)} className="self-end">
+                      Close
+                    </button>
+                    <SuggestionBoxes addPromptInput={submitPrompt} isHorizontal />
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setShowSuggestions(true)}
+                    className="z-30 mx-auto flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full"
+                  >
+                    Need suggestions?
+                    <BsArrowUpShort className="text-2xl" />
+                  </button>
+                )}
+              </div>
             ))}
           <StarSearchInput
             ref={inputRef}
@@ -199,7 +214,13 @@ function Header() {
   );
 }
 
-function SuggestionBoxes({ addPromptInput }: { addPromptInput: (prompt: string) => void }) {
+function SuggestionBoxes({
+  addPromptInput,
+  isHorizontal,
+}: {
+  addPromptInput: (prompt: string) => void;
+  isHorizontal?: boolean;
+}) {
   const suggestions = [
     {
       title: "Get information on contributor activity",
@@ -219,11 +240,15 @@ function SuggestionBoxes({ addPromptInput }: { addPromptInput: (prompt: string) 
     },
   ];
   return (
-    <ScrollArea className="w-full pt-0 pb-8 lg:py-8 max-w-3xl h-full">
-      <div className="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-0 lg:gap-4">
+    <ScrollArea dir="ltr" className="w-full pt-0 pb-8 lg:py-8 max-w-3xl h-fit">
+      <div
+        className={`${
+          isHorizontal ? "flex flex-row items-stretch" : "grid grid-cols-1 lg:grid-cols-2"
+        } grid-flow-row gap-0 lg:gap-4`}
+      >
         {suggestions.map((suggestion, i) => (
           <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
-            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
+            <Card className="shadow-md border-none text-start h-fit !p-6 text-slate-600">
               <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
               <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
             </Card>
