@@ -194,10 +194,6 @@ const ContributorListTableRow = ({
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
           <DevProfile username={login} hasBorder={!contributor.author_login} />
         </div>
-        {/* Column: Act */}
-        <div className={clsx("flex-1 flex lg:max-w-[6.25rem] w-fit justify-center")}>
-          {contributor.author_login ? getActivity(totalPrs, false) : "-"}
-        </div>
 
         {/* Column Repositories */}
         <div className={clsx("flex-1 lg:max-w-[6.25rem]  flex justify-center ")}>

@@ -2,6 +2,8 @@ import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
+
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { BsArrowUpShort } from "react-icons/bs";
@@ -166,7 +168,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
 
 function Header() {
   return (
-    <>
+    <section className="flex flex-col text-center items-center gap-2 lg:gap-4 pt-4 lg:pt-24">
       <div className="flex gap-4 items-center">
         <Image src="/assets/star-search-logo.svg" alt="Star Search Logo" width={40} height={40} />
         <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
@@ -174,7 +176,7 @@ function Header() {
         </h1>
       </div>
       <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600">Ask questions about contributors</h2>
-    </>
+    </section>
   );
 }
 
@@ -198,26 +200,33 @@ function SuggestionBoxes({ addPromptInput }: { addPromptInput: (prompt: string) 
     },
   ];
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full py-8 max-w-3xl">
-      {suggestions.map((suggestion, i) => (
-        <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
-          <Card className="shadow-md border-none text-start !p-6 text-slate-600">
-            <h3 className="font-semibold">{suggestion.title}</h3>
-            <p className="text-sm">{suggestion.prompt}</p>
-          </Card>
-        </button>
-      ))}
-    </section>
+    <ScrollArea className="w-full pt-0 pb-8 lg:py-8 max-w-3xl h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-0 lg:gap-4">
+        {suggestions.map((suggestion, i) => (
+          <button key={i}>
+            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
+              <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
+              <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
+            </Card>
+          </button>
+        ))}
+      </div>
+    </ScrollArea>
   );
 }
 
 function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
   return (
-    <ul className="grow w-full p-4 lg:p-8 flex flex-col items-center">
+    <ScrollArea className="relative grow items-center w-full max-w-xl lg:max-w-5xl lg:p-8 flex flex-col h-full max-h-[34rem] lg:max-h-[52rem] mx-auto">
       {chat.map((message, i) => (
         <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
       ))}
-    </ul>
+      <div ref={scrollRef} />
+    </ScrollArea>
   );
 }
 
@@ -270,7 +279,7 @@ const StarSearchInput = forwardRef<
   }
 >(function StarSearchInput({ input, setInput, isRunning, onSubmitPrompt }, ref) {
   return (
-    <section className="w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
+    <section className="absolute inset-x-0 bottom-2 mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <form
         onSubmit={(event) => {
           event.preventDefault();
