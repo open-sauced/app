@@ -14,7 +14,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { FaStar } from "react-icons/fa6";
-import { getCumulativeStarsHistogramToDays, getDailyStarsHistogramToDays, getTicks } from "lib/utils/repo-page-utils";
+import { getHistoryStarsHistogramToDays, getDailyStarsHistogramToDays, getTicks } from "lib/utils/repo-page-utils";
 import { type DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 import Card from "components/atoms/Card/card";
@@ -30,12 +30,9 @@ type StarsChartProps = {
 };
 
 export default function StarsChart({ stats, total, syncId, range = 30, isLoading }: StarsChartProps) {
-  const [category, setCategory] = useState<"daily" | "cumulative">("daily");
+  const [category, setCategory] = useState<"daily" | "history">("daily");
   const dailyData = useMemo(() => getDailyStarsHistogramToDays({ stats, range }), [stats, range]);
-  const cumulativeData = useMemo(
-    () => getCumulativeStarsHistogramToDays({ stats, total, range }),
-    [stats, total, range]
-  );
+  const historyData = useMemo(() => getHistoryStarsHistogramToDays({ stats, total, range }), [stats, total, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
 
   const renderChart = () => {
@@ -50,9 +47,9 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
             <Bar dataKey="star_count" fill="#FF5100" />
           </BarChart>
         );
-      case "cumulative":
+      case "history":
         return (
-          <LineChart data={cumulativeData} syncId={syncId}>
+          <LineChart data={historyData} syncId={syncId}>
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
             <YAxis domain={["auto", "auto"]} />
             <Tooltip content={CustomTooltip} filterNull={false} />
@@ -78,11 +75,8 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
               <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
                 Daily
               </Button>
-              <Button
-                variant={category === "cumulative" ? "outline" : "default"}
-                onClick={() => setCategory("cumulative")}
-              >
-                Cumulative
+              <Button variant={category === "history" ? "outline" : "default"} onClick={() => setCategory("history")}>
+                History
               </Button>
             </div>
           </>
