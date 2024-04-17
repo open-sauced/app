@@ -4,6 +4,7 @@ import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Markdown from "react-markdown";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -119,7 +120,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
       case "initial":
         return <Header />;
       case "chat":
-        return <ChatHistory userId={userId} chat={chat} />;
+        return <ChatHistory userId={userId} chat={chat} resetChat={() => setStarSearchState("initial")} />;
     }
   };
 
@@ -186,18 +187,26 @@ function SuggestionBoxes() {
   );
 }
 
-function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] }) {
+function ChatHistory({ userId, chat, resetChat }: { userId: number; chat: StarSearchChat[]; resetChat: () => void }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
   return (
-    <ScrollArea className="relative grow items-center w-full max-w-xl lg:max-w-5xl lg:p-8 flex flex-col h-full max-h-[34rem] lg:max-h-[52rem] mx-auto">
-      {chat.map((message, i) => (
-        <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
-      ))}
-      <div ref={scrollRef} />
-    </ScrollArea>
+    <>
+      <ScrollArea className="relative grow items-center w-full max-w-xl lg:max-w-5xl lg:p-8 flex flex-col h-full max-h-[34rem] lg:max-h-[52rem] mx-auto">
+        {chat.map((message, i) => (
+          <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
+        ))}
+        <div ref={scrollRef} />
+        <div className="flex justify-end gap-1 text-light-slate-10 text-sm items-center pb-8">
+          <button type="button" className="flex gap-2 hover:text-sauced-orange" onClick={() => resetChat()}>
+            Clear chat history
+            <TrashIcon width={16} height={16} />
+          </button>
+        </div>
+      </ScrollArea>
+    </>
   );
 }
 
