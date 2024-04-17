@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.12](https://github.com/open-sauced/app/compare/v2.19.0-beta.11...v2.19.0-beta.12) (2024-04-17)
+
+
+### 🍕 Features
+
+* render markdown for `/starsearch` responses ([#3204](https://github.com/open-sauced/app/issues/3204)) ([49ce317](https://github.com/open-sauced/app/commit/49ce317c57ee0ba2a4ea53cbb9dc71f1f5e4e3be))
+
 ## [2.19.0-beta.11](https://github.com/open-sauced/app/compare/v2.19.0-beta.10...v2.19.0-beta.11) (2024-04-17)
 
 
