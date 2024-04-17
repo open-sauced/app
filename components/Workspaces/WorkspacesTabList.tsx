@@ -8,7 +8,10 @@ type TabName = "repositories" | "contributors" | "activity" | "highlights" | "";
 const tabList: {
   name: CapitalizeFirstLetter<TabName>;
   path: string;
-}[] = [{ name: "Repositories", path: "" }];
+}[] = [
+  { name: "Repositories", path: "" },
+  { name: "Activity", path: "activity" },
+];
 
 interface WorkspacesTabListProps {
   selectedTab: TabName;

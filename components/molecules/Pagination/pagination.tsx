@@ -1,12 +1,13 @@
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 
+import clsx from "clsx";
 import PaginationGotoPage from "components/molecules/PaginationGotoPage/pagination-goto-page";
 import humanizeNumber from "lib/utils/humanizeNumber";
 
 interface PaginationProps {
   // TODO: Passing in pages as a prop should be removed and lean on the meta data plus a new view
   // for the paging component.
-  pages: number[];
+  pages?: number[];
   totalPage: number; // represents the total number of pages available from the source
   page: number; // represents the current active page
   pageSize?: number; // represents the maximum number of pages button that  are visible in a single page
@@ -16,10 +17,13 @@ interface PaginationProps {
   hasNextPage?: boolean;
   hasPreviousPage?: boolean;
   showTotalPages?: boolean;
+  generatePageLinks?: boolean;
+  showPages?: boolean;
+  numberOfPagesToDisplay?: number;
 }
 
 const Pagination = ({
-  pages,
+  pages = [],
   totalPage,
   page,
   divisor = true,
@@ -29,6 +33,8 @@ const Pagination = ({
   hasNextPage = true,
   onPageChange,
   showTotalPages = true,
+  showPages = false,
+  numberOfPagesToDisplay = 5,
 }: PaginationProps): JSX.Element => {
   const handleSelected = (pageNumber: number) => {
     onPageChange(pageNumber);
@@ -46,22 +52,20 @@ const Pagination = ({
   // These numbers change as you navigate the paging.
   // It might start off as 1,2,3,4,5 but as you move forward it becomes
   // 2,3,4,5,6 and so on.
-
-  const middlePages = Array.from({ length: Math.min(pages.length, pageSize) }, (_, index) =>
-    page <= Math.floor(pageSize / 2)
+  const middlePages = Array.from({ length: Math.min(totalPage, numberOfPagesToDisplay) }, (_, index) =>
+    page <= Math.floor(numberOfPagesToDisplay / 2)
       ? index + 1
-      : page >= pages.length - Math.floor(pageSize / 2)
-      ? pages.length - pageSize + index + 1
-      : page - Math.floor(pageSize / 2) + index
-  ).filter((page) => page >= 1 && page <= pages.length);
+      : page >= totalPage - Math.floor(numberOfPagesToDisplay / 2)
+      ? totalPage - numberOfPagesToDisplay + index + 1
+      : page - Math.floor(numberOfPagesToDisplay / 2) + index
+  ).filter((page) => page >= 1 && page <= totalPage);
 
   return (
     <>
-      <div className="w-max flex gap-x-4 items-center">
+      <div className="w-max flex gap-x-4 items-center text-light-slate-11 [&_button]:rounded [&_button]:p-2">
         <div className="flex items-center gap-x-4">
           <button
-            className="text-light-slate-9 disabled:text-light-slate-7"
-            disabled={!hasPreviousPage}
+            aria-disabled={!hasPreviousPage}
             onClick={() => {
               if (!hasPreviousPage) {
                 return;
@@ -72,26 +76,39 @@ const Pagination = ({
           >
             <RiArrowLeftSLine className="text-2xl md:text-lg" />
           </button>
-          {middlePages.map((pageNumber) => {
-            return (
+          {showPages && middlePages.length > 0 ? (
+            <>
               <button
-                key={pageNumber}
                 onClick={() => {
-                  handleSelected(pageNumber);
+                  handleSelected(1);
                 }}
-                className={`${
-                  // this check  will be updated from page to page when the implemetation of logic is ready
-                  pageNumber === page &&
-                  "border !text-light-slate-12 shadow-paginate border-light-orange-10 bg-light-orange-2 shadow-search"
-                } cursor-pointer text-light-slate-11 transition text-sm rounded-lg w-8 h-8 hover:bg-light-orange-2 hover:text-light-orange-10`}
               >
-                {pageNumber}
+                First
               </button>
-            );
-          })}
+              {middlePages.map((pageNumber) => {
+                return (
+                  <button
+                    key={pageNumber}
+                    className={clsx(page === pageNumber && " text-orange-600")}
+                    onClick={() => {
+                      handleSelected(pageNumber);
+                    }}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              })}
+              <button
+                onClick={() => {
+                  handleSelected(totalPage);
+                }}
+              >
+                Last
+              </button>
+            </>
+          ) : null}
 
           <button
-            className="text-light-slate-9 disabled:text-light-slate-7"
             disabled={!hasNextPage ? true : false}
             onClick={() => {
               if (!hasNextPage) {
@@ -105,11 +122,7 @@ const Pagination = ({
           </button>
         </div>
         {showTotalPages && (
-          <div
-            className={`${
-              divisor && "md:border-r-2 border-r-light-slate-6"
-            } text-sm text-light-slate-9    py-1 md:pr-4`}
-          >
+          <div className={`${divisor && "md:border-r-2 border-r-light-slate-6"} text-sm py-1 md:pr-4`}>
             Total {totalPage > 999 ? humanizeNumber(totalPage, null) : totalPage}
             <span className="md:invisible lg:visible"> pages </span>
           </div>

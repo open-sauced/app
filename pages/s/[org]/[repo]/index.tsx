@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { ComponentProps } from "react";
+import { HiOutlineExternalLink } from "react-icons/hi";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
@@ -28,8 +29,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { owner } = await response.json();
 
   const range = (context.query.range ? Number(context.query.range) : 30) as Range;
-  const { NEXT_PUBLIC_BASE_URL = "http://localhost:3000" } = process.env;
-  const { href: ogImageUrl } = new URL(getRepositoryOgImage(repoData, range), NEXT_PUBLIC_BASE_URL);
+  const { href: ogImageUrl } = new URL(
+    getRepositoryOgImage(repoData, range),
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  );
 
   return { props: { repoData, image: owner?.avatar_url || "", ogImageUrl } };
 }
@@ -79,7 +82,14 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
           <header className="flex items-center gap-4">
             <Avatar size={96} avatarURL={image} />
             <div className="flex flex-col gap-2">
-              <h1 className="text-xl md:text-3xl font-bold">{repoData.full_name}</h1>
+              <a
+                href={`https://github.com/${repoData.full_name}`}
+                target="_blank"
+                className="group hover:underline underline-offset-2 text-xl md:text-3xl font-bold flex gap-2 items-center"
+              >
+                <h1>{repoData.full_name}</h1>
+                <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
+              </a>
               <p className="md:text-xl">{repoData.description}</p>
             </div>
           </header>

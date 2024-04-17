@@ -13,9 +13,9 @@ interface DevProfileProps {
 }
 const DevProfile = ({ username, hasBorder }: DevProfileProps) => {
   return (
-    <Link href={`/user/${username}`} className="flex items-center gap-2 text-light-slate-11">
+    <section className="flex items-center gap-2 text-light-slate-11">
       {/* Mobile */}
-      <div className="rounded-full md:hidden">
+      <Link href={`/user/${username}`} className="rounded-full md:hidden">
         <Avatar
           className={hasBorder ? "ring-2 ring-orange-500" : ""}
           size={45}
@@ -23,7 +23,7 @@ const DevProfile = ({ username, hasBorder }: DevProfileProps) => {
           hasBorder={hasBorder}
           avatarURL={getAvatarByUsername(username)}
         />
-      </div>
+      </Link>
       {/* Desktop */}
       <div className="hidden rounded-full md:flex">
         <AvatarHoverCard contributor={username} repositories={[]} size="small" />
@@ -33,7 +33,7 @@ const DevProfile = ({ username, hasBorder }: DevProfileProps) => {
           {username && username.length > 10 ? truncateString(username, 11) : username}
         </h1>
       </div>
-    </Link>
+    </section>
   );
 };
 
