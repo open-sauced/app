@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
@@ -126,8 +126,10 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
   return (
     <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
-        {renderState()}
-        <StarSearchInput isRunning={isRunning} onSubmitPrompt={submitPrompt} />
+        <main className="mx-auto px-auto w-full h-full max-h-99 z-10">
+          {renderState()}
+          <StarSearchInput isRunning={isRunning} onSubmitPrompt={submitPrompt} />
+        </main>
         <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
       </div>
     </ProfileLayout>
@@ -136,7 +138,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
 
 function Header() {
   return (
-    <section className="flex flex-col text-center items-center gap-4 lg:pt-24">
+    <section className="flex flex-col text-center items-center gap-2 lg:gap-4 pt-4 lg:pt-24">
       <div className="flex gap-4 items-center">
         <Image src="/assets/star-search-logo.svg" alt="Star Search Logo" width={40} height={40} />
         <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
@@ -169,25 +171,32 @@ function SuggestionBoxes() {
     },
   ];
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full py-8 max-w-3xl">
-      {suggestions.map((suggestion, i) => (
-        <button key={i}>
-          <Card className="shadow-md border-none text-start !p-6 text-slate-600">
-            <h3 className="font-semibold">{suggestion.title}</h3>
-            <p className="text-sm">{suggestion.prompt}</p>
-          </Card>
-        </button>
-      ))}
-    </section>
+    <ScrollArea className="w-full pt-0 pb-8 lg:py-8 max-w-3xl h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-0 lg:gap-4">
+        {suggestions.map((suggestion, i) => (
+          <button key={i}>
+            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
+              <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
+              <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
+            </Card>
+          </button>
+        ))}
+      </div>
+    </ScrollArea>
   );
 }
 
 function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
   return (
-    <ScrollArea className="grow items-center w-full p-4 lg:p-8 flex flex-col">
+    <ScrollArea className="relative grow items-center w-full max-w-xl lg:max-w-5xl lg:p-8 flex flex-col h-full max-h-[34rem] lg:max-h-[52rem] mx-auto">
       {chat.map((message, i) => (
         <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
       ))}
+      <div ref={scrollRef} />
     </ScrollArea>
   );
 }
@@ -239,7 +248,7 @@ function StarSearchInput({
   onSubmitPrompt: (prompt: string) => void;
 }) {
   return (
-    <section className="w-full h-fit max-w-4xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
+    <section className="absolute inset-x-0 bottom-2 mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <form
         onSubmit={(event) => {
           event.preventDefault();
