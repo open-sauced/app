@@ -1,7 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { forwardRef, useRef, useState } from "react";
 import { forwardRef, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
@@ -11,6 +10,7 @@ import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { getAvatarById } from "lib/utils/github";
+import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -203,7 +203,7 @@ function SuggestionBoxes({ addPromptInput }: { addPromptInput: (prompt: string) 
     <ScrollArea className="w-full pt-0 pb-8 lg:py-8 max-w-3xl h-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-0 lg:gap-4">
         {suggestions.map((suggestion, i) => (
-          <button key={i}>
+          <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
             <Card className="shadow-md border-none text-start !p-6 text-slate-600">
               <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
               <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
