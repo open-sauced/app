@@ -42,9 +42,7 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
         <div className={clsx("flex-1 lg:min-w-[12.5rem]  flex justify-center")}>
           <TableTitle>Contributor</TableTitle>
         </div>
-        <div className={clsx(" flex-1 lg:max-w-[6.25rem]   flex justify-center ")}>
-          <TableTitle>Act</TableTitle>
-        </div>
+
         <div className={clsx("flex-1 lg:max-w-[6.25rem]  ")}>
           <TableTitle>Repositories</TableTitle>
         </div>
