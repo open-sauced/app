@@ -5,6 +5,16 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.10](https://github.com/open-sauced/app/compare/v2.19.0-beta.9...v2.19.0-beta.10) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* now links in collapsed sidebar no longer receive focus ([#3187](https://github.com/open-sauced/app/issues/3187)) ([5b05ace](https://github.com/open-sauced/app/commit/5b05acee0e54626167e230f6bee75f79ca5bec57))
+* now there is feedback when saving or updating workspace settings ([#3184](https://github.com/open-sauced/app/issues/3184)) ([43784b2](https://github.com/open-sauced/app/commit/43784b21d828dba3233f41f4c10189b8bf9a755b))
+* quick fix StarSearch response ([#3194](https://github.com/open-sauced/app/issues/3194)) ([0c2847e](https://github.com/open-sauced/app/commit/0c2847e5c1a0b889edfdc76b1ffde7e49e357124))
+* removed deprecated list pages ([#3197](https://github.com/open-sauced/app/issues/3197)) ([fa14557](https://github.com/open-sauced/app/commit/fa14557de1004c7f394563d807160a0d7130036f))
+
 ## [2.19.0-beta.9](https://github.com/open-sauced/app/compare/v2.19.0-beta.8...v2.19.0-beta.9) (2024-04-17)
 
 
