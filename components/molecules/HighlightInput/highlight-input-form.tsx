@@ -165,22 +165,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
     }
   };
 
-  const checkIfHighlightLinkIsValid = (link: string) => {
-    if (!link) return setError("");
-    if (
-      isValidPullRequestUrl(highlightLink) ||
-      isValidIssueUrl(highlightLink) ||
-      isValidDevToBlogUrl(highlightLink) ||
-      isValidUrl(highlightLink)
-    ) {
-      setIsHighlightURLValid(true);
-      setError("");
-    } else {
-      setIsHighlightURLValid(false);
-      setError("Please provide a valid pull request, issue or dev.to blog link!");
-    }
-  };
-
   useEffect(() => {
     // disable scroll when form is open
     if (isFormOpenMobile) {
@@ -350,6 +334,22 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       const newTaggedRepoList = [...taggedRepoList, newRepo];
       setTaggedRepoList(newTaggedRepoList);
     }
+
+    (() => {
+      if (!highlightLink) return setError("");
+      if (
+        isValidPullRequestUrl(highlightLink) ||
+        isValidIssueUrl(highlightLink) ||
+        isValidDevToBlogUrl(highlightLink) ||
+        isValidUrl(highlightLink)
+      ) {
+        setIsHighlightURLValid(true);
+        setError("");
+      } else {
+        setIsHighlightURLValid(false);
+        setError("Please provide a valid pull request, issue or dev.to blog link!");
+      }
+    })();
   }, [highlightLink]);
 
   const handleTaggedRepoAdd = async (repoFullName: string) => {
@@ -667,7 +667,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   value={highlightLink}
                   handleChange={(value) => {
                     setHighlightLink(value);
-                    checkIfHighlightLinkIsValid(value);
                   }}
                   placeholder="Paste the URL to your PR, Issue, or Dev.to blog post."
                 />
@@ -922,7 +921,6 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                   value={highlightLink}
                   handleChange={(value) => {
                     setHighlightLink(value);
-                    checkIfHighlightLinkIsValid(value);
                   }}
                   placeholder="Paste your PR URL and get it auto-summarized!"
                 />
