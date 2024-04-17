@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.11](https://github.com/open-sauced/app/compare/v2.19.0-beta.10...v2.19.0-beta.11) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* update logic for most used languages to match contributor profile ([#3205](https://github.com/open-sauced/app/issues/3205)) ([e8f8a75](https://github.com/open-sauced/app/commit/e8f8a75319372a8f9aef548085f38e1b1f52f300))
+
 ## [2.19.0-beta.10](https://github.com/open-sauced/app/compare/v2.19.0-beta.9...v2.19.0-beta.10) (2024-04-17)
 
 
