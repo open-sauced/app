@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.16](https://github.com/open-sauced/app/compare/v2.19.0-beta.15...v2.19.0-beta.16) (2024-04-17)
+
+
+### 🍕 Features
+
+* switch [#100](https://github.com/open-sauced/app/issues/100)DaysOfOSS banner with Workspaces banner on feed page ([#3216](https://github.com/open-sauced/app/issues/3216)) ([417e98b](https://github.com/open-sauced/app/commit/417e98bf416370bb842bba6ada28b627cc0df6ab))
+
 ## [2.19.0-beta.15](https://github.com/open-sauced/app/compare/v2.19.0-beta.14...v2.19.0-beta.15) (2024-04-17)
 
 
