@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { ComponentProps } from "react";
 import { HiOutlineExternalLink } from "react-icons/hi";
+import MetricCard from "components/Graphs/MetricCard";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
@@ -9,7 +10,6 @@ import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
-import MetricCard from "components/Graphs/MetricCard";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
@@ -94,26 +94,23 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
             </div>
           </header>
           <DayRangePicker />
-          <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
-            <ClientOnly>
-              <MetricCard variant="stars" stats={starsData} range={range} isLoading={isStarsDataLoading} />
-              <MetricCard variant="forks" stats={forkStats} range={range} isLoading={isForksDataLoading} />
-            </ClientOnly>
-          </section>
-          <StarsChart
-            stats={starsData}
-            total={repoData.stars}
-            range={range}
-            syncId={syncId}
-            isLoading={isStarsDataLoading}
-          />
-          <ForksChart
-            stats={forkStats}
-            total={repoData.forks}
-            range={range}
-            syncId={syncId}
-            isLoading={isForksDataLoading}
-          />
+          <ClientOnly>
+            <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between"></section>
+            <StarsChart
+              stats={starsData}
+              total={repoData.stars}
+              range={range}
+              syncId={syncId}
+              isLoading={isStarsDataLoading}
+            />
+            <ForksChart
+              stats={forkStats}
+              total={repoData.forks}
+              range={range}
+              syncId={syncId}
+              isLoading={isForksDataLoading}
+            />
+          </ClientOnly>
         </section>
       </ProfileLayout>
     </>
