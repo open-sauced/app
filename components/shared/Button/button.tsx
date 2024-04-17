@@ -8,10 +8,25 @@ export interface ButtonsProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   rel?: string;
   target?: string;
   showLoadingText?: boolean;
+  loadingText?: string;
 }
 
 const Button = React.forwardRef<HTMLElement, ButtonsProps>(
-  ({ className, children, loading, disabled, variant, showLoadingText = true, onClick, href, ...props }, ref) => {
+  (
+    {
+      className,
+      children,
+      loading,
+      disabled,
+      variant,
+      showLoadingText = true,
+      loadingText = "Loading...",
+      onClick,
+      href,
+      ...props
+    },
+    ref
+  ) => {
     const styles: Record<ButtonsProps["variant"], string> = {
       primary: `bg-light-orange-9 text-light-orange-2 border-light-orange-9 hover:bg-light-orange-10 ${
         disabled ? "bg-light-orange-7 hover:bg-light-orange-7 pointer-events-none" : ""
@@ -57,7 +72,7 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
             fill="currentColor"
           ></path>
         </svg>
-        {showLoadingText && <span className="text-white">Loading...</span>}
+        {showLoadingText && <span className="text-white">{loadingText}</span>}
       </div>
     ) : (
       children

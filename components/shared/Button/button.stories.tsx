@@ -2,7 +2,7 @@ import { ComponentStory } from "@storybook/react";
 import Button from "./button";
 
 const storyConfig = {
-  title: "Design System/Atoms/Button",
+  title: "Design System/Buttons/Button",
   argTypes: {
     disabled: {
       control: { type: "boolean" },
@@ -45,6 +45,12 @@ Link.args = { variant: "link" };
 
 export const Destructive = ButtonTemplate.bind({});
 Destructive.args = { variant: "destructive" };
+
+export const IsLoading = ButtonTemplate.bind({});
+IsLoading.args = { variant: "primary", loading: true };
+
+export const IsLoadingCustomText = ButtonTemplate.bind({});
+IsLoadingCustomText.args = { variant: "primary", loading: true, loadingText: "Custom Loading Text..." };
 
 export const HasIcons: ComponentStory<typeof Button> = (args) => (
   <div className="flex flex-wrap gap-2">

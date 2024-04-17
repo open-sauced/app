@@ -110,7 +110,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   const initialTrackedRepos: string[] = data?.data?.map(({ repo }) => repo.full_name) ?? [];
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
   const [trackedReposPendingDeletion, setTrackedReposPendingDeletion] = useState<Set<string>>(new Set());
-
+  const [isSaving, setIsSaving] = useState(false);
   const {
     data: workspaceMembers,
     addMember,
@@ -141,6 +141,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
   });
 
   const updateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
+    setIsSaving(true);
     event.preventDefault();
 
     const form = event.target as HTMLFormElement;
@@ -181,6 +182,8 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
       router.push(`/workspaces/${workspace.id}`);
       toast({ description: `Workspace updated successfully`, variant: "success" });
     }
+
+    setIsSaving(false);
   };
 
   const upgradeThisWorkspace = async () => {
@@ -221,6 +224,8 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           variant="primary"
           className="flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
           form="update-workspace"
+          loading={isSaving}
+          loadingText={"Updating Workspace..."}
         >
           Update Workspace
         </Button>
