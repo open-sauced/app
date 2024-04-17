@@ -3,6 +3,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Markdown from "react-markdown";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -233,7 +234,7 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
       {renderAvatar()}
       <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl">
         <h3 className="font-semibold text-sauced-orange">{author}</h3>
-        <p>{content}</p>
+        <Markdown>{content}</Markdown>
       </Card>
     </li>
   );

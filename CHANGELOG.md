@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.13](https://github.com/open-sauced/app/compare/v2.19.0-beta.12...v2.19.0-beta.13) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* removed activity column from contributor grid ([#3206](https://github.com/open-sauced/app/issues/3206)) ([4b11168](https://github.com/open-sauced/app/commit/4b11168278a2a07a8ed7736ab276baae474eed36))
+
+## [2.19.0-beta.12](https://github.com/open-sauced/app/compare/v2.19.0-beta.11...v2.19.0-beta.12) (2024-04-17)
+
+
+### 🍕 Features
+
+* render markdown for `/starsearch` responses ([#3204](https://github.com/open-sauced/app/issues/3204)) ([49ce317](https://github.com/open-sauced/app/commit/49ce317c57ee0ba2a4ea53cbb9dc71f1f5e4e3be))
+
+## [2.19.0-beta.11](https://github.com/open-sauced/app/compare/v2.19.0-beta.10...v2.19.0-beta.11) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* update logic for most used languages to match contributor profile ([#3205](https://github.com/open-sauced/app/issues/3205)) ([e8f8a75](https://github.com/open-sauced/app/commit/e8f8a75319372a8f9aef548085f38e1b1f52f300))
+
 ## [2.19.0-beta.10](https://github.com/open-sauced/app/compare/v2.19.0-beta.9...v2.19.0-beta.10) (2024-04-17)
 
 
