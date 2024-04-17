@@ -93,7 +93,7 @@ interface DBListContributor {
 interface DbRepoPREvents {
   readonly event_id: number;
   readonly pr_number: number;
-  readonly pr_state: string;
+  readonly pr_state: "open" | "closed";
   readonly pr_is_draft: bool;
   readonly pr_is_merged: bool;
   readonly pr_mergeable_state: string;
@@ -275,7 +275,7 @@ interface DbUser {
   readonly discord_url: string;
   readonly notification_count: number;
   readonly insights_count: number;
-  readonly languages: { [lang]: number };
+  readonly languages: { [lang: string]: number };
   readonly first_opened_pr_at: string;
   readonly followers_count: number;
   readonly following_count: number;

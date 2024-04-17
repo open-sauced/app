@@ -3,6 +3,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { forwardRef, useRef, useState } from "react";
 import Image from "next/image";
+import Markdown from "react-markdown";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -99,16 +100,17 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
         setIsRunning(false); // enables input
         return;
       }
-
       const values = value.split("\n");
       values
         .filter((v) => v.startsWith("data:"))
         .forEach((v) => {
-          let { data } = v.match(/data:(?<data>.*)/ms)?.groups || { data: "" };
-          const result = /(\s{1}[!"#$%&'()*+,\-./:;<=>?@[\]^_`{|}~])(\w*)/g.test(data) ? data.trimStart() : data;
+          const matched = v.match(/data:\s(?<result>.+)/);
+          if (!matched || !matched.groups) {
+            return;
+          }
           const temp = [...chat];
           const changed = temp.at(temp.length - 1);
-          changed!.content += result;
+          changed!.content += matched.groups.result;
           setChat(temp);
         });
     }
@@ -247,7 +249,7 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
       {renderAvatar()}
       <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl">
         <h3 className="font-semibold text-sauced-orange">{author}</h3>
-        <p>{content}</p>
+        <Markdown>{content}</Markdown>
       </Card>
     </li>
   );

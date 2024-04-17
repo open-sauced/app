@@ -5,6 +5,79 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.12](https://github.com/open-sauced/app/compare/v2.19.0-beta.11...v2.19.0-beta.12) (2024-04-17)
+
+
+### 🍕 Features
+
+* render markdown for `/starsearch` responses ([#3204](https://github.com/open-sauced/app/issues/3204)) ([49ce317](https://github.com/open-sauced/app/commit/49ce317c57ee0ba2a4ea53cbb9dc71f1f5e4e3be))
+
+## [2.19.0-beta.11](https://github.com/open-sauced/app/compare/v2.19.0-beta.10...v2.19.0-beta.11) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* update logic for most used languages to match contributor profile ([#3205](https://github.com/open-sauced/app/issues/3205)) ([e8f8a75](https://github.com/open-sauced/app/commit/e8f8a75319372a8f9aef548085f38e1b1f52f300))
+
+## [2.19.0-beta.10](https://github.com/open-sauced/app/compare/v2.19.0-beta.9...v2.19.0-beta.10) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* now links in collapsed sidebar no longer receive focus ([#3187](https://github.com/open-sauced/app/issues/3187)) ([5b05ace](https://github.com/open-sauced/app/commit/5b05acee0e54626167e230f6bee75f79ca5bec57))
+* now there is feedback when saving or updating workspace settings ([#3184](https://github.com/open-sauced/app/issues/3184)) ([43784b2](https://github.com/open-sauced/app/commit/43784b21d828dba3233f41f4c10189b8bf9a755b))
+* quick fix StarSearch response ([#3194](https://github.com/open-sauced/app/issues/3194)) ([0c2847e](https://github.com/open-sauced/app/commit/0c2847e5c1a0b889edfdc76b1ffde7e49e357124))
+* removed deprecated list pages ([#3197](https://github.com/open-sauced/app/issues/3197)) ([fa14557](https://github.com/open-sauced/app/commit/fa14557de1004c7f394563d807160a0d7130036f))
+
+## [2.19.0-beta.9](https://github.com/open-sauced/app/compare/v2.19.0-beta.8...v2.19.0-beta.9) (2024-04-17)
+
+
+### 🍕 Features
+
+* rename cumulative to history in Repo pages ([#3195](https://github.com/open-sauced/app/issues/3195)) ([8a33e24](https://github.com/open-sauced/app/commit/8a33e24802da851a314571b05d97fdbcacda7adb))
+
+## [2.19.0-beta.8](https://github.com/open-sauced/app/compare/v2.19.0-beta.7...v2.19.0-beta.8) (2024-04-16)
+
+
+### 🐛 Bug Fixes
+
+* now repo page OG images are corrext for production ([#3179](https://github.com/open-sauced/app/issues/3179)) ([772c7b5](https://github.com/open-sauced/app/commit/772c7b532178fc97d803d4f21de8783136c70066))
+
+## [2.19.0-beta.7](https://github.com/open-sauced/app/compare/v2.19.0-beta.6...v2.19.0-beta.7) (2024-04-15)
+
+
+### 🍕 Features
+
+* Create robots.txt ([#3183](https://github.com/open-sauced/app/issues/3183)) ([751c561](https://github.com/open-sauced/app/commit/751c561a71b0b9f3e6c134f1a2a87288f3be488c))
+
+## [2.19.0-beta.6](https://github.com/open-sauced/app/compare/v2.19.0-beta.5...v2.19.0-beta.6) (2024-04-15)
+
+
+### 🐛 Bug Fixes
+
+* remove console.info call from mutateHandler in AppSidebar component ([#3185](https://github.com/open-sauced/app/issues/3185)) ([96b63d7](https://github.com/open-sauced/app/commit/96b63d72f7936c3177a9679c9765cfa4d06fe224))
+
+## [2.19.0-beta.5](https://github.com/open-sauced/app/compare/v2.19.0-beta.4...v2.19.0-beta.5) (2024-04-12)
+
+
+### 🍕 Features
+
+* change repo links from github to repo pages ([#3178](https://github.com/open-sauced/app/issues/3178)) ([506dde2](https://github.com/open-sauced/app/commit/506dde2c0326be1eb67692cdc568b007bc2c2fbe))
+
+## [2.19.0-beta.4](https://github.com/open-sauced/app/compare/v2.19.0-beta.3...v2.19.0-beta.4) (2024-04-12)
+
+
+### 🍕 Features
+
+* created the workspace activity page with a pull requests table ([#3147](https://github.com/open-sauced/app/issues/3147)) ([9f65b9c](https://github.com/open-sauced/app/commit/9f65b9c5b3c9fbf95aa8e984e952938cd195072b))
+
+## [2.19.0-beta.3](https://github.com/open-sauced/app/compare/v2.19.0-beta.2...v2.19.0-beta.3) (2024-04-12)
+
+
+### 🍕 Features
+
+* add link from Repo pages to GitHub ([#3177](https://github.com/open-sauced/app/issues/3177)) ([f4e1de4](https://github.com/open-sauced/app/commit/f4e1de4f687cc1f5793a9819944f3c924496afbb))
+
 ## [2.19.0-beta.2](https://github.com/open-sauced/app/compare/v2.19.0-beta.1...v2.19.0-beta.2) (2024-04-12)
 
 
