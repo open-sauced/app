@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.8](https://github.com/open-sauced/app/compare/v2.19.0-beta.7...v2.19.0-beta.8) (2024-04-16)
+
+
+### 🐛 Bug Fixes
+
+* now repo page OG images are corrext for production ([#3179](https://github.com/open-sauced/app/issues/3179)) ([772c7b5](https://github.com/open-sauced/app/commit/772c7b532178fc97d803d4f21de8783136c70066))
+
 ## [2.19.0-beta.7](https://github.com/open-sauced/app/compare/v2.19.0-beta.6...v2.19.0-beta.7) (2024-04-15)
 
 
