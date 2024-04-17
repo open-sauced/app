@@ -4,11 +4,11 @@ import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { forwardRef, useRef, useState } from "react";
 import Image from "next/image";
 import Markdown from "react-markdown";
+import { BsArrowUpShort } from "react-icons/bs";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { getAvatarById } from "lib/utils/github";
-import Button from "components/shared/Button/button";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -133,9 +133,6 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
       case "chat":
         return (
           <section className="flex flex-col items-start gap-4 z-10 w-full min-w-max">
-            <Button variant="primary" onClick={() => setStarSearchState("initial")}>
-              Back to Start
-            </Button>
             <ChatHistory userId={userId} chat={chat} />
           </section>
         );
@@ -146,13 +143,21 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
     <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
         {renderState()}
-        <StarSearchInput
-          ref={inputRef}
-          input={input}
-          setInput={setInput}
-          isRunning={isRunning}
-          onSubmitPrompt={submitPrompt}
-        />
+        <div className="flex flex-col gap-4 items-center w-full">
+          {!isRunning && starSearchState === "chat" && (
+            <button className="flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
+              Need suggestions?
+              <BsArrowUpShort className="text-2xl" />
+            </button>
+          )}
+          <StarSearchInput
+            ref={inputRef}
+            input={input}
+            setInput={setInput}
+            isRunning={isRunning}
+            onSubmitPrompt={submitPrompt}
+          />
+        </div>
         <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
       </div>
     </ProfileLayout>
