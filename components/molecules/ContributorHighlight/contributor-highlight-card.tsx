@@ -41,12 +41,14 @@ import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import useFollowUser from "lib/hooks/useFollowUser";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
-import { isValidBlogUrl } from "lib/utils/dev-to";
+import { isValidUrl } from "lib/utils/urls";
+import { isValidDevToBlogUrl } from "lib/utils/dev-to";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 import { shortenUrl } from "lib/utils/shorten-url";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
+import GenericBlogOpenGraphImg from "../GenericBlogOpenGraphImg/generic-blog-open-graph-img";
 import {
   Dialog,
   DialogContent,
@@ -260,7 +262,7 @@ const ContributorHighlightCard = ({
 
   let repos: RepoList[] = [];
 
-  if (!taggedRepos || taggedRepos.length === 0) {
+  if (!taggedRepos || (taggedRepos.length === 0 && highlightLink.includes("github.com"))) {
     const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(highlightLink);
     const repoIcon = getAvatarByUsername(repoOwner, 60);
 
@@ -279,7 +281,7 @@ const ContributorHighlightCard = ({
         return { text: "Pull request", icon: <BiGitPullRequest className="text-md md:text-lg" /> };
       case "blog_post":
         return {
-          text: "Blog post",
+          text: highlightLink.includes("dev.to") ? "DevTo post" : "Blog post",
           icon: (
             // Used svg as i could not find the exact icon in react-icons
             <svg
@@ -318,7 +320,12 @@ const ContributorHighlightCard = ({
       return;
     }
 
-    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
+    if (
+      isValidPullRequestUrl(highlightLink) ||
+      isValidIssueUrl(highlightLink) ||
+      isValidDevToBlogUrl(highlightLink) ||
+      isValidUrl(highlightLink)
+    ) {
       const { apiPaths } = generateRepoParts(highlight.highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
@@ -340,7 +347,7 @@ const ContributorHighlightCard = ({
 
       if (res.isError) {
         setLoading(false);
-        setError("A valid Pull request, Issue or dev.to Blog Link is required");
+        setError("A valid Pull request, Issue or Blogpost Link is required");
         return;
       } else {
         const res = await updateHighlights(
@@ -616,8 +623,10 @@ const ContributorHighlightCard = ({
       <a href={highlightLink} target="_blank" aria-hidden="true">
         {type === "pull_request" || type === "issue" ? (
           <GhOpenGraphImg githubLink={highlightLink} />
-        ) : (
+        ) : highlightLink.includes("dev.to") ? (
           <DevToSocialImg blogLink={highlightLink} />
+        ) : (
+          <GenericBlogOpenGraphImg blogLink={highlightLink} />
         )}
       </a>
 

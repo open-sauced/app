@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.19.0-beta.14](https://github.com/open-sauced/app/compare/v2.19.0-beta.13...v2.19.0-beta.14) (2024-04-17)
+
+
+### 🍕 Features
+
+* add support for blogpost from generic platforms  ([#2555](https://github.com/open-sauced/app/issues/2555)) ([8ca6f25](https://github.com/open-sauced/app/commit/8ca6f25a24c1563e317ddf5e315ef75bc9c534a6))
+* styling `/starsearch` ([#3211](https://github.com/open-sauced/app/issues/3211)) ([5e4c037](https://github.com/open-sauced/app/commit/5e4c0370163b34036bde715c2be442fb3a9019ae))
+
+## [2.19.0-beta.13](https://github.com/open-sauced/app/compare/v2.19.0-beta.12...v2.19.0-beta.13) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* removed activity column from contributor grid ([#3206](https://github.com/open-sauced/app/issues/3206)) ([4b11168](https://github.com/open-sauced/app/commit/4b11168278a2a07a8ed7736ab276baae474eed36))
+
 ## [2.19.0-beta.12](https://github.com/open-sauced/app/compare/v2.19.0-beta.11...v2.19.0-beta.12) (2024-04-17)
 
 

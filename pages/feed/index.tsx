@@ -201,7 +201,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
             <AnnouncementCard
               title="Track your project with Workspaces!"
               description={
-                "Setup your Workspace to get you and your team access to information about PRs, Issues and contributors for all your repositories."
+                "Set up your Workspace to get you and your team access to information about pull requests, issues, and contributors for all your repositories."
               }
               bannerSrc={"/try-workspaces.png"}
               url={"/workspaces/new?welcome=true"}
