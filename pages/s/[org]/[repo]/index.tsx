@@ -29,8 +29,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { owner } = await response.json();
 
   const range = (context.query.range ? Number(context.query.range) : 30) as Range;
-  const { NEXT_PUBLIC_BASE_URL = "http://localhost:3000" } = process.env;
-  const { href: ogImageUrl } = new URL(getRepositoryOgImage(repoData, range), NEXT_PUBLIC_BASE_URL);
+  const { href: ogImageUrl } = new URL(
+    getRepositoryOgImage(repoData, range),
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  );
 
   return { props: { repoData, image: owner?.avatar_url || "", ogImageUrl } };
 }
