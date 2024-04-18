@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.20.0-beta.1](https://github.com/open-sauced/app/compare/v2.19.0...v2.20.0-beta.1) (2024-04-18)
+
+
+### 🍕 Features
+
+* now you can clear chat history ([#3221](https://github.com/open-sauced/app/issues/3221)) ([446e7c3](https://github.com/open-sauced/app/commit/446e7c31ba7eaf6710ec485e483a4e00c4615f82))
+
 ## [2.19.0](https://github.com/open-sauced/app/compare/v2.18.0...v2.19.0) (2024-04-17)
 
 
