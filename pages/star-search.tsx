@@ -143,7 +143,10 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
           <ChatHistory
             userId={userId}
             chat={chat}
-            resetChat={() => setStarSearchState("initial")}
+            resetChat={() => {
+              setChat([]);
+              setStarSearchState("initial");
+            }}
             isRunning={isRunning}
           />
         );
@@ -194,7 +197,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
                 ) : (
                   <button
                     onClick={() => setShowSuggestions(true)}
-                    className="z-30 mx-auto flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full"
+                    className="z-30 mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full"
                   >
                     Need suggestions?
                     <BsArrowUpShort className="text-2xl" />
