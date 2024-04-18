@@ -150,13 +150,13 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
     <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
         {renderState()}
-        <div className="absolute inset-x-0 bottom-2 flex flex-col gap-4 items-center w-full">
+        <div className="absolute inset-x-0 bottom-2 flex flex-col gap-4 items-center w-full px-2">
           {!isRunning &&
             starSearchState === "chat" &&
             (isMobile ? (
               <Drawer
-                title="YO"
-                description="YAY"
+                title="Choose a suggestion"
+                description="You can customize the prompt after selection"
                 showCloseButton
                 trigger={
                   <button className="z-30 flex gap-1 shadow-xs items-center text-slate-700 text-sm font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
@@ -165,7 +165,12 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
                   </button>
                 }
               >
-                <p>Hello</p>
+                <SuggestionBoxes
+                  addPromptInput={(prompt) => {
+                    setInput(prompt);
+                    inputRef.current?.focus();
+                  }}
+                />
               </Drawer>
             ) : (
               <div className="z-40 w-full max-w-3xl justify-center">
