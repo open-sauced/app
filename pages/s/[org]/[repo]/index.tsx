@@ -1,8 +1,6 @@
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { ComponentProps } from "react";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import MetricCard from "components/Graphs/MetricCard";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
@@ -37,7 +35,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return { props: { repoData, image: owner?.avatar_url || "", ogImageUrl } };
 }
 
-type Range = ComponentProps<typeof MetricCard>["range"];
+type Range = 30 | 7 | 90 | 180 | 360;
 
 interface RepoPageProps {
   repoData: DbRepo;
