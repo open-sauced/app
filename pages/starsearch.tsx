@@ -240,22 +240,22 @@ function SuggestionBoxes({
     },
   ];
   return (
-    <ScrollArea dir="ltr" className="w-full pt-0 pb-8 lg:py-8 max-w-3xl h-fit">
-      <div
-        className={`${
-          isHorizontal ? "flex flex-row items-stretch" : "grid grid-cols-1 lg:grid-cols-2"
-        } grid-flow-row gap-0 lg:gap-4`}
-      >
-        {suggestions.map((suggestion, i) => (
-          <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
-            <Card className="shadow-md border-none text-start h-fit !p-6 text-slate-600">
-              <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
-              <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
-            </Card>
-          </button>
-        ))}
-      </div>
-    </ScrollArea>
+    <div
+      className={`${
+        isHorizontal ? "flex flex-row overflow-x-scroll justify-stretch" : "grid grid-cols-1 lg:grid-cols-2"
+      } lg:gap-4 w-full pt-0 pb-8 lg:py-8 max-w-3xl h-fit`}
+    >
+      {suggestions.map((suggestion, i) => (
+        <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
+          <Card
+            className={`${isHorizontal ? "w-80" : "w-full"} shadow-md border-none text-start h-fit !p-6 text-slate-600`}
+          >
+            <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
+            <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
+          </Card>
+        </button>
+      ))}
+    </div>
   );
 }
 
