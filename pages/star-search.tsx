@@ -4,6 +4,7 @@ import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Markdown from "react-markdown";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -119,7 +120,14 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
       case "initial":
         return <Header />;
       case "chat":
-        return <ChatHistory userId={userId} chat={chat} />;
+        return (
+          <ChatHistory
+            userId={userId}
+            chat={chat}
+            resetChat={() => setStarSearchState("initial")}
+            isRunning={isRunning}
+          />
+        );
     }
   };
 
@@ -186,18 +194,42 @@ function SuggestionBoxes() {
   );
 }
 
-function ChatHistory({ userId, chat }: { userId: number; chat: StarSearchChat[] }) {
+function ChatHistory({
+  userId,
+  chat,
+  resetChat,
+  isRunning,
+}: {
+  userId: number;
+  chat: StarSearchChat[];
+  resetChat: () => void;
+  isRunning: boolean;
+}) {
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
   return (
-    <ScrollArea className="relative grow items-center w-full max-w-xl lg:max-w-5xl lg:p-8 flex flex-col h-full max-h-[34rem] lg:max-h-[52rem] mx-auto">
-      {chat.map((message, i) => (
-        <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
-      ))}
-      <div ref={scrollRef} />
-    </ScrollArea>
+    <div aria-live="polite" className="w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto">
+      <ScrollArea className="relative grow items-center flex flex-col h-full max-h-[34rem] lg:max-h-[52rem]">
+        {chat.map((message, i) => (
+          <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
+        ))}
+        <div ref={scrollRef} />
+      </ScrollArea>
+      {!isRunning ? (
+        <div className="flex justify-end mb-4">
+          <button
+            type="button"
+            className="flex gap-2 items-center hover:text-sauced-orange"
+            onClick={() => resetChat()}
+          >
+            Clear chat history
+            <TrashIcon width={16} height={16} />
+          </button>
+        </div>
+      ) : null}
+    </div>
   );
 }
 
