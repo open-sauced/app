@@ -199,14 +199,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               />
             )}
             <AnnouncementCard
-              title="#100DaysOfOSS 🚀"
+              title="Track your project with Workspaces!"
               description={
-                "Join us for 100 days of supporting, sharing knowledge, and exploring the open source ecosystem together."
+                "Set up your Workspace to get you and your team access to information about pull requests, issues, and contributors for all your repositories."
               }
-              bannerSrc={
-                "https://user-images.githubusercontent.com/5713670/254358937-8e9aa76d-4ed3-4616-a58a-2283796b10e1.png"
-              }
-              url={"https://dev.to/opensauced/100daysofoss-growing-skills-and-real-world-experience-3o5k"}
+              bannerSrc={"/try-workspaces.png"}
+              url={"/workspaces/new?welcome=true"}
+              cta={"Try it"}
             />
           </div>
         </div>

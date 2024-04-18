@@ -50,7 +50,7 @@ describe("contributor utilities", () => {
         },
       }) satisfies DbUser;
 
-      expect(getTopContributorLanguages(user)).toEqual(["go", "javascript"]);
+      expect(getTopContributorLanguages(user)).toEqual(["go", "rust"]);
     });
 
     it("should get no languages when there are no languages", () => {
