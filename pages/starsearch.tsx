@@ -13,6 +13,7 @@ import { getAvatarById } from "lib/utils/github";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { Drawer } from "components/shared/Drawer";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import Button from "components/shared/Button/button";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -170,10 +171,16 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
               <div className="z-40 w-full max-w-3xl justify-center">
                 {showSuggestions ? (
                   <div className="flex flex-col gap-2 justify-center items-center w-full self-center h-fit">
-                    <button onClick={() => setShowSuggestions(false)} className="self-end">
+                    <Button variant="primary" onClick={() => setShowSuggestions(false)} className="self-end shadow-xl">
                       Close
-                    </button>
-                    <SuggestionBoxes addPromptInput={submitPrompt} isHorizontal />
+                    </Button>
+                    <SuggestionBoxes
+                      isHorizontal
+                      addPromptInput={(prompt) => {
+                        setInput(prompt);
+                        inputRef.current?.focus();
+                      }}
+                    />
                   </div>
                 ) : (
                   <button
@@ -242,13 +249,17 @@ function SuggestionBoxes({
   return (
     <div
       className={`${
-        isHorizontal ? "flex flex-row overflow-x-scroll justify-stretch" : "grid grid-cols-1 lg:grid-cols-2"
+        isHorizontal
+          ? "flex flex-row overflow-x-scroll justify-stretch items-stretch snap-x"
+          : "grid grid-cols-1 lg:grid-cols-2"
       } lg:gap-4 w-full pt-0 pb-8 lg:py-8 max-w-3xl h-fit`}
     >
       {suggestions.map((suggestion, i) => (
         <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
           <Card
-            className={`${isHorizontal ? "w-80" : "w-full"} shadow-md border-none text-start h-fit !p-6 text-slate-600`}
+            className={`${
+              isHorizontal ? "w-[30rem] h-full snap-start" : "w-full h-fit"
+            } shadow-md border-none text-start !p-6 text-slate-600`}
           >
             <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
             <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
