@@ -208,7 +208,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
                 showCloseButton
                 trigger={
                   <button className="z-30 flex gap-1 shadow-xs items-center text-slate-700 text-sm font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
-                    Need suggestions?
+                    Need inspiration?
                     <BsArrowUpShort className="text-2xl" />
                   </button>
                 }
@@ -227,7 +227,7 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
                     onClick={() => setShowSuggestions(!showSuggestions)}
                     className="z-30 mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full"
                   >
-                    Need suggestions?
+                    Need inspiration?
                     <BsArrowUpShort className="text-2xl" />
                   </button>
                 )}
