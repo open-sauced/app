@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useEffect, useState } from "react";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { fetchApiData } from "helpers/fetchApiData";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
@@ -9,7 +9,7 @@ import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import { createContributorInsight } from "lib/utils/workspace-utils";
 
 import { toast } from "lib/hooks/useToast";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
@@ -74,11 +74,31 @@ export default function CreateContributorInsightPage({
   bearerToken: string;
 }) {
   const router = useRouter();
+  const contributorIds = router.query.contributors as string;
+  const title = router.query.title as string;
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(new Map());
   const [isTrackedContributorsModalOpen, setIsTrackedContributorsModalOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (contributorIds) {
+      const queryContributors = JSON.parse(contributorIds) as string[];
+      const contributorsMap = new Map<string, boolean>();
+      queryContributors.forEach((contributor) => {
+        contributorsMap.set(contributor, true);
+      });
+      setTrackedContributors(contributorsMap);
+    }
+
+    if (title) {
+      setName(title);
+    }
+  }, [router.query]);
 
   const onCreateInsight: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
     const name = formData.get("name") as string;
@@ -95,6 +115,7 @@ export default function CreateContributorInsightPage({
 
     if (error) {
       toast({ description: "An error has occurred. Try again.", variant: "danger" });
+      setLoading(false);
       return;
     }
 
@@ -111,16 +132,29 @@ export default function CreateContributorInsightPage({
             <h3 className="font-medium mb-2">
               Insight Name <span className="text-red-600">*</span>
             </h3>
-            <TextInput name="name" placeholder="Insight name" className="!py-1.5 w-full text-sm" required />
+            <TextInput
+              value={name}
+              name="name"
+              placeholder="Insight name"
+              className="!py-1.5 w-full text-sm"
+              required
+              disabled={loading}
+              onChange={(event) => setName(event.target.value)}
+            />
           </div>
           <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
-            <Button variant="primary" className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end">
+            <Button
+              variant="primary"
+              className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
+              disabled={loading}
+            >
               Create Insight
             </Button>
           </div>
         </form>
 
         <TrackedContributorsTable
+          disabled={loading}
           contributors={trackedContributors}
           onAddContributors={() => setIsTrackedContributorsModalOpen(true)}
           onRemoveTrackedContributor={(event) => {

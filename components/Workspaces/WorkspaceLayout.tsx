@@ -50,7 +50,7 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
           <TopNav />
           <ClientOnly>
             <span ref={sidebarRef}>
-              <AppSideBar workspaceId={workspaceId} hideSidebar={hideSidebar} sidebarCollapsed={showingSidebar} />
+              <AppSideBar workspaceId={workspaceId} hideSidebar={hideSidebar} sidebarCollapsed={!showingSidebar} />
             </span>
             {!showingSidebar && (
               <button
@@ -63,7 +63,7 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
           </ClientOnly>
         </div>
         <div className="relative flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
-          {banner}
+          <ClientOnly>{banner}</ClientOnly>
           <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px] pb-20">{children}</div>
         </div>
       </div>

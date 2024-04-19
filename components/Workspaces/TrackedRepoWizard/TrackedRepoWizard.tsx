@@ -83,10 +83,10 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal
         orgs.filter((repo) => !orgSearchTerm || repo.toLowerCase().includes(orgSearchTerm.toLowerCase()))
       );
 
-      if (orgSearchTerm && orgRepos.size === 0) {
+      if (orgSearchTerm) {
         organizationExists(orgSearchTerm).then((orgExists) => {
           if (orgExists) {
-            setFilteredOrgs(new Set([orgSearchTerm]));
+            setFilteredOrgs(new Set([...orgRepos, orgSearchTerm]));
           } else {
             setFilteredOrgs(orgRepos);
           }
@@ -185,7 +185,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal
             onToggleAllRepos={onToggleAllRepos}
             onSearch={onSearchRepos}
             repositories={repositories}
-            searchedRepos={searchedRepos}
+            searchedRepos={searchedRepos.map((repo) => repo.full_name)}
             suggestedRepos={suggestedRepos}
           />
         );

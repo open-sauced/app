@@ -1,5 +1,5 @@
 import { useLocalStorage } from "react-use";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 
 interface PasteContributorsStepProps {
   onBulkAddContributors: (contributors: string[]) => void;

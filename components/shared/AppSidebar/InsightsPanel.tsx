@@ -2,7 +2,6 @@ import { useState } from "react";
 import { ChartBarSquareIcon, UsersIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import Button from "components/atoms/Button/button";
 import SidebarMenuItem from "./sidebar-menu-item";
 
 interface InsightsPanelProps {
@@ -73,16 +72,16 @@ export const InsightsPanel = ({ title, insights, type, isLoading, workspaceId }:
               })
             ) : (
               <li className="py-1 px-3 text-sm flex flex-col w-full justify-between gap-2">
-                <p>You don&apos;t have any Insights yet!</p>
-                <Button
+                <p>You don&apos;t have any Insights yet</p>
+                <Link
                   href={`/workspaces/${workspaceId}/${
                     type === "list" ? "contributor-insights" : "repository-insights"
                   }/new`}
-                  variant="outline"
-                  className="!text-xs"
+                  className="text-orange-700 underline hover:no-underline"
+                  aria-label={`Create a ${type === "list" ? "contributorinsight" : "repository insight"}`}
                 >
                   Create
-                </Button>
+                </Link>
               </li>
             )}
             {insights.length > 3 ? (

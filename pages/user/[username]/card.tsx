@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import cntl from "cntl";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel, { DevCardCarouselProps } from "components/organisms/DevCardCarousel/dev-card-carousel";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -286,7 +286,6 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
             className={linkStyle}
             style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
-            rel="noreferrer"
           >
             <Image src={icon.src} alt={icon.name} width={24} height={24} />
           </a>

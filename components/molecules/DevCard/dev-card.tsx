@@ -7,7 +7,7 @@ import { GiftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import clsx from "clsx";
 import Tilt from "react-parallax-tilt";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import Pill, { PillProps } from "components/atoms/Pill/pill";
 import Icon from "components/atoms/Icon/icon";
 import CardSauceBGSVG from "img/card-sauce-bg.svg";

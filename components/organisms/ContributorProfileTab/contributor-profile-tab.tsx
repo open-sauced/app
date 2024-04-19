@@ -20,7 +20,7 @@ import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-r
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 import ContributorHighlightCard from "components/molecules/ContributorHighlight/contributor-highlight-card";
 import { useFetchUserHighlights } from "lib/hooks/useFetchUserHighlights";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useFetchAllEmojis from "lib/hooks/useFetchAllEmojis";
 import { setQueryParams } from "lib/utils/query-params";
@@ -35,6 +35,7 @@ import DashContainer from "components/atoms/DashedContainer/DashContainer";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useToast } from "lib/hooks/useToast";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
+import { DayRangePicker } from "components/shared/DayRangePicker";
 import ConnectionRequestsWrapper from "../ConnectionRequestWrapper/connection-requests-wrapper";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
@@ -48,6 +49,7 @@ interface ContributorProfileTabProps {
   prsMergedPercentage: number;
   githubName: string;
   repoList: RepoList[];
+  range?: string;
 }
 
 type TabKey = "highlights" | "contributions" | "connections" | "recommendations";
@@ -72,6 +74,7 @@ const ContributorProfileTab = ({
   githubName,
   recentContributionCount,
   repoList,
+  range,
 }: ContributorProfileTabProps): JSX.Element => {
   const {
     login,
@@ -94,7 +97,7 @@ const ContributorProfileTab = ({
   const { data: emojis } = useFetchAllEmojis();
 
   const router = useRouter();
-  const { tab = "highlights" } = router.query as { tab: TabKey };
+  const { tab = "contributions" } = router.query as { tab: TabKey };
 
   const hasHighlights = highlights ? highlights.length > 0 : false;
   const [inputVisible, setInputVisible] = useState(false);
@@ -117,7 +120,7 @@ const ContributorProfileTab = ({
     );
   };
 
-  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://opensauced.pizza/`;
+  const emailBody = `Hey ${login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://oss.fyi/try`;
 
   const handleInviteClick = () => {
     const hasSocials = !!(twitter_username || display_email || linkedin_url);
@@ -226,7 +229,7 @@ const ContributorProfileTab = ({
                 {twitter_username && (
                   <a
                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://opensauced.pizza/blog/social-coding-is-back. @${twitter_username}`
+                      `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://oss.fyi/social-coding. @${twitter_username}`
                     )}&hashtags=opensource,github`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -362,6 +365,9 @@ const ContributorProfileTab = ({
       <TabsContent value={"contributions" satisfies TabKey}>
         <div className="mt-4">
           <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
+            <div className="flex justify-end">
+              <DayRangePicker />
+            </div>
             <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
@@ -401,14 +407,19 @@ const ContributorProfileTab = ({
               </div>
             </div>
             <div className="mt-2 h-36">
-              <CardLineChart contributor={githubName} className="!h-36" />
+              <CardLineChart contributor={githubName} range={Number(range)} className="!h-36" />
             </div>
             <div>
               <CardRepoList limit={7} repoList={repoList} />
             </div>
-
             <div className="mt-6">
-              <PullRequestTable limit={15} contributor={githubName} topic={"*"} repositories={undefined} />
+              <PullRequestTable
+                limit={15}
+                contributor={githubName}
+                topic={"*"}
+                repositories={undefined}
+                range={range}
+              />
             </div>
             <div className="mt-8 text-sm text-light-slate-9">
               <p>The data for these contributions is from publicly available open source projects on GitHub.</p>

@@ -83,7 +83,6 @@ const ContributorListTableRow = ({
     topic,
     repoIds: [],
     range,
-    mostRecent: true,
     limit: 50,
   });
   const { data: prData } = usePullRequestsHistogram({ contributor: login, range: Number(range ?? "30"), width: 1 });
@@ -194,10 +193,6 @@ const ContributorListTableRow = ({
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
           <DevProfile username={login} hasBorder={!contributor.author_login} />
-        </div>
-        {/* Column: Act */}
-        <div className={clsx("flex-1 flex lg:max-w-[6.25rem] w-fit justify-center")}>
-          {contributor.author_login ? getActivity(totalPrs, false) : "-"}
         </div>
 
         {/* Column Repositories */}

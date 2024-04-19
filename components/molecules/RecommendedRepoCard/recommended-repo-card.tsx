@@ -2,6 +2,7 @@ import { BiGitPullRequest } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import { AiOutlineStar } from "react-icons/ai";
 import clsx from "clsx";
+import Link from "next/link";
 import { getAvatarByUsername } from "lib/utils/github";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import useFetchRecommendedRepoByRepoName from "lib/hooks/fetchRecommendationByRepo";
@@ -32,12 +33,7 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
       {data && (
         <>
           <div className="flex justify-between w-full">
-            <a
-              target="_blank"
-              href={`https://github.com/${fullName}`}
-              className="flex items-center gap-1.5"
-              rel="noreferrer"
-            >
+            <Link href={`/s/${fullName}`} className="flex items-center gap-1.5">
               <picture>
                 <img
                   alt="Hot Repo Icon"
@@ -46,18 +42,13 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
                 />
               </picture>
               <span className="text-sm text-light-slate-11">{owner}</span>
-            </a>
+            </Link>
           </div>
 
           <div className="flex flex-col gap-2 pb-3">
-            <a
-              className="text-xl font-semibold"
-              href={`https://app.opensauced.pizza/${name}/dashboard/filter/recent`}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <Link className="text-xl font-semibold" href={`/s/${fullName}`} rel="noopener noreferrer">
               {name}
-            </a>
+            </Link>
 
             <p title={data.description} className="w-5/6 text-sm text-gray-500">
               {truncateString(data.description, 100)}

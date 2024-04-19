@@ -16,7 +16,7 @@ import clsx from "clsx";
 import { useDebounce } from "rooks";
 
 import { Textarea } from "components/atoms/Textarea/text-area";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,12 +41,14 @@ import useUserHighlightReactions from "lib/hooks/useUserHighlightReactions";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import useFollowUser from "lib/hooks/useFollowUser";
 import { fetchGithubIssueInfo } from "lib/hooks/fetchGithubIssueInfo";
-import { isValidBlogUrl } from "lib/utils/dev-to";
+import { isValidUrl } from "lib/utils/urls";
+import { isValidDevToBlogUrl } from "lib/utils/dev-to";
 import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 import { shortenUrl } from "lib/utils/shorten-url";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
+import GenericBlogOpenGraphImg from "../GenericBlogOpenGraphImg/generic-blog-open-graph-img";
 import {
   Dialog,
   DialogContent,
@@ -260,7 +262,7 @@ const ContributorHighlightCard = ({
 
   let repos: RepoList[] = [];
 
-  if (!taggedRepos || taggedRepos.length === 0) {
+  if (!taggedRepos || (taggedRepos.length === 0 && highlightLink.includes("github.com"))) {
     const { owner: repoOwner, repoName } = getOwnerAndRepoNameFromUrl(highlightLink);
     const repoIcon = getAvatarByUsername(repoOwner, 60);
 
@@ -279,7 +281,7 @@ const ContributorHighlightCard = ({
         return { text: "Pull request", icon: <BiGitPullRequest className="text-md md:text-lg" /> };
       case "blog_post":
         return {
-          text: "Blog post",
+          text: highlightLink.includes("dev.to") ? "DevTo post" : "Blog post",
           icon: (
             // Used svg as i could not find the exact icon in react-icons
             <svg
@@ -318,7 +320,12 @@ const ContributorHighlightCard = ({
       return;
     }
 
-    if (isValidPullRequestUrl(highlightLink) || isValidIssueUrl(highlightLink) || isValidBlogUrl(highlightLink)) {
+    if (
+      isValidPullRequestUrl(highlightLink) ||
+      isValidIssueUrl(highlightLink) ||
+      isValidDevToBlogUrl(highlightLink) ||
+      isValidUrl(highlightLink)
+    ) {
       const { apiPaths } = generateRepoParts(highlight.highlightLink);
       const { repoName, orgName, issueId } = apiPaths;
       setLoading(true);
@@ -340,7 +347,7 @@ const ContributorHighlightCard = ({
 
       if (res.isError) {
         setLoading(false);
-        setError("A valid Pull request, Issue or dev.to Blog Link is required");
+        setError("A valid Pull request, Issue or Blogpost Link is required");
         return;
       } else {
         const res = await updateHighlights(
@@ -488,7 +495,6 @@ const ContributorHighlightCard = ({
                       handleCaptureClickDetailsForAnalytics("twitter");
                     }}
                     target="_blank"
-                    rel="noreferrer"
                     href={`https://twitter.com/intent/tweet?text=${twitterTweet}&url=${host}/feed/${id}`}
                     className="flex items-center p-3 transition rounded-full hover:bg-light-orange-5"
                   >
@@ -510,7 +516,6 @@ const ContributorHighlightCard = ({
                       handleCaptureClickDetailsForAnalytics("linkedin");
                     }}
                     target="_blank"
-                    rel="noreferrer"
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${host}/feed/${id}`}
                     className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                   >
@@ -607,7 +612,6 @@ const ContributorHighlightCard = ({
           <a
             href={highlightLink}
             target="_blank"
-            rel="noreferrer"
             className="flex-1 inline-block underline truncate cursor-pointer text-sauced-orange"
           >
             {highlightLink}
@@ -616,11 +620,13 @@ const ContributorHighlightCard = ({
       </div>
 
       {/* Generated OG card section */}
-      <a href={highlightLink} target="_blank" rel="noreferrer" aria-hidden="true">
+      <a href={highlightLink} target="_blank" aria-hidden="true">
         {type === "pull_request" || type === "issue" ? (
           <GhOpenGraphImg githubLink={highlightLink} />
-        ) : (
+        ) : highlightLink.includes("dev.to") ? (
           <DevToSocialImg blogLink={highlightLink} />
+        ) : (
+          <GenericBlogOpenGraphImg blogLink={highlightLink} />
         )}
       </a>
 

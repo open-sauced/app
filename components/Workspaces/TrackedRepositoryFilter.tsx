@@ -18,7 +18,7 @@ export default function TrackedRepositoryFilter({ options, handleSelect }: Track
     <MultiSelect
       placeholder="Filter"
       inputPlaceholder="Search repositories"
-      className="px-3"
+      className="px-3 text-sm"
       options={options}
       open={isMultiSelectOpen}
       setOpen={setIsMultiSelectOpen}

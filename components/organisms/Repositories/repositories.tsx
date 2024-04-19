@@ -12,7 +12,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
 
 import Checkbox from "components/atoms/Checkbox/checkbox";
-import Button from "components/atoms/Button/button";
+import Button from "components/shared/Button/button";
 import LimitSelect from "components/atoms/Select/limit-select";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
@@ -26,6 +26,7 @@ interface RepositoriesProps {
 export default function Repositories({ repositories, showSearch = true }: RepositoriesProps) {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
+  const workspaceId = router.query.workspaceId as string;
   const { pageId, toolName, selectedFilter, userOrg, range = 30, limit = 10 } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
   const topic = pageId as string;
@@ -52,17 +53,18 @@ export default function Repositories({ repositories, showSearch = true }: Reposi
 
   const handleOnAddtoInsights = () => {
     if (user) {
-      router.push(
-        { pathname: "/hub/insights/new", query: { selectedRepos: JSON.stringify(selectedRepos) } },
-        "/hub/insights/new"
-      );
+      router.push({
+        pathname: `/workspaces/${workspaceId}/repository-insights/new`,
+        query: { repos: JSON.stringify(selectedRepos.map((repo) => repo.full_name)) },
+      });
     } else {
-      const reposIds = selectedRepos.map((repo) => repo.id);
       signIn({
         provider: "github",
         options: {
-          redirectTo: `${window.location.origin}/hub/insights/new?selectedReposIDs=${JSON.stringify(
-            reposIds
+          redirectTo: `${
+            window.location.origin
+          }/workspaces/${workspaceId}/repository-insights/new?repos=${JSON.stringify(
+            selectedRepos.map((repo) => repo.full_name)
           )}&login=true&`,
         },
       });

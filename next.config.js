@@ -97,13 +97,26 @@ module.exports = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/hub/insights/new",
+        destination: "/workspaces/new",
+        permanent: true,
+      },
       ...interests.map((interest) => {
         return {
-          source: `/${interest}/:path*`,
-          destination: `/explore/topic/${interest}/:path*`,
+          source: `/${interest}/:tool(dashboard|reports|contributors|activity)`,
+          destination: `/explore/topic/${interest}/:tool`,
           permanent: true,
         };
       }),
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/explore/topic/:topic",
+        destination: "/explore/topic/:topic/dashboard/filter/recent",
+      },
     ];
   },
 };
@@ -122,7 +135,7 @@ module.exports = withSentryConfig(
     silent: true,
 
     org: "opensauced",
-    project: "insights",
+    project: process.env.NODE_ENV === "production" ? "app-opensauced" : "beta-app-opensauced",
   },
   {
     // For all available options, see:
@@ -132,7 +145,7 @@ module.exports = withSentryConfig(
     widenClientFileUpload: true,
 
     // Transpiles SDK to be compatible with IE11 (increases bundle size)
-    transpileClientSDK: true,
+    transpileClientSDK: false,
 
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
     tunnelRoute: "/monitoring",

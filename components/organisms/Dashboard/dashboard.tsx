@@ -25,7 +25,10 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
 
   return (
     <div className="flex flex-col w-full gap-4">
-      <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
+      <aside
+        aria-label="pull request highlights"
+        className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap"
+      >
         <HighlightCard
           label="Contributors"
           tooltip={`People who have made pull requests to the selected repositories over the last ${range} days.`}
@@ -79,7 +82,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
           percentageLabel={`of ${humanizeNumber(todaysInsights.allPrsTotal, "comma")}`}
           isLoading={isLoading}
         />
-      </section>
+      </aside>
 
       <section className="flex flex-col max-w-full gap-4 my-6">
         <Repositories repositories={repositories} />
