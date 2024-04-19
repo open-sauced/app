@@ -15,6 +15,7 @@ import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { Drawer } from "components/shared/Drawer";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import Button from "components/shared/Button/button";
+import SEO from "layouts/SEO/SEO";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -32,12 +33,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  return { props: { userId, bearerToken: session?.access_token } };
+  const ogImageUrl = `${new URL(
+    "/assets/og-images/star-search-og-image.png",
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  )}`;
+
+  return { props: { userId, bearerToken: session?.access_token, ogImageUrl } };
 }
 
 type StarSearchPageProps = {
   userId: number;
   bearerToken: string;
+  ogImageUrl: string;
 };
 
 type StarSearchChat = {
@@ -45,7 +52,7 @@ type StarSearchChat = {
   content: string;
 };
 
-export default function StarSearchPage({ userId, bearerToken }: StarSearchPageProps) {
+export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const [input, setInput] = useState("");
@@ -195,7 +202,14 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
   };
 
   return (
-    <ProfileLayout>
+    <>
+      <SEO
+        title="OpenSauced Insights - StarSearch"
+        description="Copilot, but for your git history"
+        image={ogImageUrl}
+        twitterCard="summary_large_image"
+      />
+      <ProfileLayout>
       <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
         {renderState()}
         <div className="absolute inset-x-0 bottom-2 flex flex-col gap-4 items-center w-full px-2">
@@ -243,7 +257,8 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
         </div>
         <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
       </div>
-    </ProfileLayout>
+      </ProfileLayout>
+    </>
   );
 }
 
