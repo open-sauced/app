@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.20.0-beta.3](https://github.com/open-sauced/app/compare/v2.20.0-beta.2...v2.20.0-beta.3) (2024-04-19)
+
+
+### 🐛 Bug Fixes
+
+* fixed StarSearch logo spacing ([#3222](https://github.com/open-sauced/app/issues/3222)) ([92eec49](https://github.com/open-sauced/app/commit/92eec49ce6a824d346cc6b80be8d884cd662cb33))
+
 ## [2.20.0-beta.2](https://github.com/open-sauced/app/compare/v2.20.0-beta.1...v2.20.0-beta.2) (2024-04-18)
 
 
