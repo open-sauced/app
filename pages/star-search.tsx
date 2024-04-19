@@ -53,6 +53,11 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 576px)");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat, showSuggestions]);
 
   const submitPrompt = async (prompt: string) => {
     if (isRunning) {
@@ -140,15 +145,51 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
         );
       case "chat":
         return (
-          <ChatHistory
-            userId={userId}
-            chat={chat}
-            resetChat={() => {
-              setChat([]);
-              setStarSearchState("initial");
-            }}
-            isRunning={isRunning}
-          />
+          <div aria-live="polite" className="w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto">
+            <ScrollArea className="relative grow items-center flex flex-col h-full max-h-[34rem] lg:max-h-[52rem]">
+              {chat.map((message, i) => (
+                <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
+              ))}
+              {!isRunning ? (
+                <div className="flex justify-end mb-4">
+                  <button
+                    type="button"
+                    className="flex gap-2 items-center hover:text-sauced-orange"
+                    onClick={() => {
+                      setStarSearchState("initial");
+                      setChat([]);
+                    }}
+                  >
+                    Clear chat history
+                    <TrashIcon width={16} height={16} />
+                  </button>
+                </div>
+              ) : null}
+              {!isMobile && showSuggestions && (
+                <div className="flex flex-col gap-2">
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      setShowSuggestions(false);
+                      inputRef.current?.focus();
+                    }}
+                    className="flex gap-2 w-fit self-end"
+                  >
+                    Close
+                  </Button>
+                  <SuggestionBoxes
+                    isHorizontal
+                    addPromptInput={(prompt) => {
+                      setInput(prompt);
+                      setShowSuggestions(false);
+                      inputRef.current?.focus();
+                    }}
+                  />
+                </div>
+              )}
+              <div ref={scrollRef} />
+            </ScrollArea>
+          </div>
         );
     }
   };
@@ -180,30 +221,17 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
                 />
               </Drawer>
             ) : (
-              <div className="z-40 w-full max-w-3xl justify-center">
-                {showSuggestions ? (
-                  <div className="flex flex-col gap-2 justify-center items-center w-full self-center h-fit">
-                    <Button variant="primary" onClick={() => setShowSuggestions(false)} className="self-end shadow-xl">
-                      Close
-                    </Button>
-                    <SuggestionBoxes
-                      isHorizontal
-                      addPromptInput={(prompt) => {
-                        setInput(prompt);
-                        inputRef.current?.focus();
-                      }}
-                    />
-                  </div>
-                ) : (
+              <>
+                {!showSuggestions && (
                   <button
-                    onClick={() => setShowSuggestions(true)}
+                    onClick={() => setShowSuggestions(!showSuggestions)}
                     className="z-30 mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full"
                   >
                     Need suggestions?
                     <BsArrowUpShort className="text-2xl" />
                   </button>
                 )}
-              </div>
+              </>
             ))}
           <StarSearchInput
             ref={inputRef}
@@ -264,7 +292,7 @@ function SuggestionBoxes({
         isHorizontal
           ? "flex flex-row overflow-x-scroll justify-stretch items-stretch snap-x"
           : "grid grid-cols-1 lg:grid-cols-2"
-      } lg:gap-4 w-full pt-0 pb-8 lg:py-8 max-w-3xl h-fit`}
+      } lg:gap-4 w-full pt-0 pb-8 lg:py-8 max-w-3xl h-fit mx-auto px-auto`}
     >
       {suggestions.map((suggestion, i) => (
         <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
@@ -278,45 +306,6 @@ function SuggestionBoxes({
           </Card>
         </button>
       ))}
-    </div>
-  );
-}
-
-function ChatHistory({
-  userId,
-  chat,
-  resetChat,
-  isRunning,
-}: {
-  userId: number;
-  chat: StarSearchChat[];
-  resetChat: () => void;
-  isRunning: boolean;
-}) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat]);
-  return (
-    <div aria-live="polite" className="w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto">
-      <ScrollArea className="relative grow items-center flex flex-col h-full max-h-[34rem] lg:max-h-[52rem]">
-        {chat.map((message, i) => (
-          <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
-        ))}
-        <div ref={scrollRef} />
-      </ScrollArea>
-      {!isRunning ? (
-        <div className="flex justify-end mb-4">
-          <button
-            type="button"
-            className="flex gap-2 items-center hover:text-sauced-orange"
-            onClick={() => resetChat()}
-          >
-            Clear chat history
-            <TrashIcon width={16} height={16} />
-          </button>
-        </div>
-      ) : null}
     </div>
   );
 }
