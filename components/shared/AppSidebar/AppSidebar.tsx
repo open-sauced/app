@@ -73,9 +73,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
   }
 
   useEffectOnce(() => {
-    const mutateHandler = (event: Event) => {
-      // eslint-disable-next-line no-console
-      event instanceof CustomEvent && console.info(WORKSPACE_UPDATED_EVENT, event.detail);
+    const mutateHandler = () => {
       mutate();
     };
 
@@ -92,8 +90,9 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
   return (
     // TODO: get rid of the z-index. There is grid content like the avatars and paged data text that bleed through the sidebar atm.
     <div
-      className={`fixed left-0 w-72 bg-white shadow-lg transform  transition-transform duration-300 ease-in-out border-r ${
-        sidebarCollapsed ? "" : "-translate-x-full"
+      aria-hidden={sidebarCollapsed}
+      className={`fixed left-0 w-72 bg-white shadow-lg transform transition-transform duration-300 ease-in-out border-r ${
+        sidebarCollapsed ? "-translate-x-full" : ""
       } bg-white flex flex-col gap-8 justify-between max-w-xs  border-r border-slate-200 z-50`}
       style={{
         "--top-nav-height": "3.3rem",
@@ -101,195 +100,199 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
         height: "calc(100dvh - var(--top-nav-height))",
       }}
     >
-      <nav aria-label="sidebar navigation" className="grid gap-4 mt-4 pr-4 pl-2">
-        <div className="flex gap-2">
-          <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
-            <span className="sr-only">Workspace</span>
-            <SingleSelect
-              options={[
-                { label: "Create new workspace...", value: "new" },
-                ...workspaces.map(({ id, name }) => ({
-                  label: name,
-                  value: id,
-                })),
-              ]}
-              position="popper"
-              value={workspaceId ?? "new"}
-              placeholder="Select a workspace"
-              onValueChange={(value) => {
-                if (value === "new") {
-                  router.push("/workspaces/new");
-                  return;
-                }
+      {sidebarCollapsed ? null : (
+        <>
+          <nav aria-label="sidebar navigation" className="grid gap-4 mt-4 pr-4 pl-2">
+            <div className="flex gap-2">
+              <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
+                <span className="sr-only">Workspace</span>
+                <SingleSelect
+                  options={[
+                    { label: "Create new workspace...", value: "new" },
+                    ...workspaces.map(({ id, name }) => ({
+                      label: name,
+                      value: id,
+                    })),
+                  ]}
+                  position="popper"
+                  value={workspaceId ?? "new"}
+                  placeholder="Select a workspace"
+                  onValueChange={(value) => {
+                    if (value === "new") {
+                      router.push("/workspaces/new");
+                      return;
+                    }
 
-                router.push(`/workspaces/${value}`);
-              }}
-            />
-          </label>
-          <button onClick={hideSidebar} className="hover:bg-slate-50 p-2 rounded-md">
-            <LuArrowLeftToLine className="w-4 h-4 text-gray-500" />
-          </button>
-        </div>
-        {workspaceId === "new" ? null : (
-          <ul className="grid gap-1 mb-6">
-            {!!user && (
-              <SidebarMenuItem
-                title="Home"
-                url={`/workspaces/${workspaceId}`}
-                icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />}
-              />
+                    router.push(`/workspaces/${value}`);
+                  }}
+                />
+              </label>
+              <button onClick={hideSidebar} className="hover:bg-slate-50 p-2 rounded-md">
+                <LuArrowLeftToLine className="w-4 h-4 text-gray-500" />
+              </button>
+            </div>
+            {workspaceId === "new" ? null : (
+              <ul className="grid gap-1 mb-6">
+                {!!user && (
+                  <SidebarMenuItem
+                    title="Home"
+                    url={`/workspaces/${workspaceId}`}
+                    icon={<BiHomeAlt className="w-5 h-5 text-slate-400" />}
+                  />
+                )}
+                {!!user && (
+                  <li className="flex flex-row justify-between items-center ">
+                    <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Insights</h3>
+                    <DropdownMenu modal={false}>
+                      <DropdownMenuTrigger title="Select type of new insight">
+                        <PlusIcon
+                          style={{ strokeWidth: "3px" }}
+                          className="w-5 h-5 p-0.5 text-semibold group-hover:bg-orange-100 rounded-md"
+                        />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        side="right"
+                        align="start"
+                        className="sidebar-new-insights-menu flex flex-col gap-1 py-2 rounded-lg shadow-xl"
+                      >
+                        <DropdownMenuItem className="rounded-md group">
+                          <Link
+                            title="New Repository Insight"
+                            href={`/workspaces/${workspaceId}/repository-insights/new`}
+                            className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
+                          >
+                            <ChartBarSquareIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
+                            <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                              New Repository Insight
+                            </span>
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="rounded-md group">
+                          <Link
+                            title="New Contributor Insight"
+                            href={`/workspaces/${workspaceId}/contributor-insights/new`}
+                            className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
+                          >
+                            <UsersIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
+                            <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                              New Contributor Insight
+                            </span>
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </li>
+                )}
+                <li className="grid gap-2 overflow-hidden">
+                  <InsightsPanel
+                    title="Repository Insights"
+                    insights={repoInsights}
+                    type="repo"
+                    isLoading={repoInsightsLoading}
+                    workspaceId={workspaceId}
+                  />
+                  <InsightsPanel
+                    title="Contributor Insights"
+                    insights={contributorInsights}
+                    type="list"
+                    isLoading={contributorInsightsLoading}
+                    workspaceId={workspaceId}
+                  />
+                </li>
+              </ul>
             )}
-            {!!user && (
-              <li className="flex flex-row justify-between items-center ">
-                <h3 className="uppercase text-gray-500 text-xs font-medium tracking-wide px-2">Insights</h3>
+          </nav>
+          <nav aria-label="bottom sidebar navigation" className="grid gap-2">
+            <ul className="list-none px-2 lg:hidden">
+              <SidebarMenuItem
+                title="Highlights"
+                url="/feed"
+                icon={<ChatBubbleLeftRightIcon className="w-5 h-5 text-slate-400" />}
+              />
+              <SidebarMenuItem
+                title="Explore"
+                url={`/${userInterest}/dashboard/filter/recent`}
+                icon={<Squares2X2Icon className="w-5 h-5 text-slate-400" />}
+              />
+            </ul>
+            <ul className="border-t-1 pt-1 mb-2 px-2">
+              <li>
                 <DropdownMenu modal={false}>
-                  <DropdownMenuTrigger title="Select type of new insight">
-                    <PlusIcon
-                      style={{ strokeWidth: "3px" }}
-                      className="w-5 h-5 p-0.5 text-semibold group-hover:bg-orange-100 rounded-md"
-                    />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent
-                    side="right"
-                    align="start"
-                    className="sidebar-new-insights-menu flex flex-col gap-1 py-2 rounded-lg shadow-xl"
+                  <DropdownMenuTrigger
+                    title="Support options"
+                    className="w-full text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight"
                   >
+                    <LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex" />
+                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex text-slate-800">
+                      Support
+                    </span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
                     <DropdownMenuItem className="rounded-md group">
                       <Link
-                        title="New Repository Insight"
-                        href={`/workspaces/${workspaceId}/repository-insights/new`}
+                        title="Give feedback"
+                        href="https://github.com/orgs/open-sauced/discussions"
                         className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
                       >
-                        <ChartBarSquareIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
+                        <ChatBubbleLeftEllipsisIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                         <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                          New Repository Insight
+                          Give feedback
                         </span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="rounded-md group">
                       <Link
-                        title="New Contributor Insight"
-                        href={`/workspaces/${workspaceId}/contributor-insights/new`}
+                        title="Report a bug on our GitHub repository"
+                        href="https://github.com/open-sauced/app/issues/new?assignees=&labels=%F0%9F%91%80+needs+triage%2C%F0%9F%90%9B+bug&projects=&template=bug_report.yml&title=Bug%3A+"
                         className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
                       >
-                        <UsersIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:stroke-orange-500" />
+                        <ExclamationCircleIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
                         <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                          New Contributor Insight
+                          Report a bug
+                        </span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="rounded-md group">
+                      <Link
+                        title="Checkout our blog on dev.to"
+                        href="https://dev.to/opensauced"
+                        className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
+                      >
+                        <NewspaperIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
+                        <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                          Checkout our blog
+                        </span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="rounded-md group">
+                      <Link
+                        title="Join our community on Discord"
+                        href="https://discord.com/invite/opensauced"
+                        className="text-sm font-medium flex gap-1 items-center transition-colors cursor-pointer tracking-tight p-1"
+                      >
+                        <UserGroupIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
+                        <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
+                          Join our community
                         </span>
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </li>
-            )}
-            <li className="grid gap-2 overflow-hidden">
-              <InsightsPanel
-                title="Repository Insights"
-                insights={repoInsights}
-                type="repo"
-                isLoading={repoInsightsLoading}
-                workspaceId={workspaceId}
+              <SidebarMenuItem
+                title="Settings"
+                url={`/user/settings`}
+                icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
               />
-              <InsightsPanel
-                title="Contributor Insights"
-                insights={contributorInsights}
-                type="list"
-                isLoading={contributorInsightsLoading}
-                workspaceId={workspaceId}
+              <SidebarMenuItem
+                title="Read the docs"
+                url="https://docs.opensauced.pizza/"
+                icon={<BookOpenIcon className="w-5 h-5 text-slate-400" />}
               />
-            </li>
-          </ul>
-        )}
-      </nav>
-      <nav aria-label="bottom sidebar navigation" className="grid gap-2">
-        <ul className="list-none px-2 lg:hidden">
-          <SidebarMenuItem
-            title="Highlights"
-            url="/feed"
-            icon={<ChatBubbleLeftRightIcon className="w-5 h-5 text-slate-400" />}
-          />
-          <SidebarMenuItem
-            title="Explore"
-            url={`/${userInterest}/dashboard/filter/recent`}
-            icon={<Squares2X2Icon className="w-5 h-5 text-slate-400" />}
-          />
-        </ul>
-        <ul className="border-t-1 pt-1 mb-2 px-2">
-          <li>
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger
-                title="Support options"
-                className="w-full text-sm font-medium flex gap-1 items-center py-2 px-2 hover:bg-slate-100 rounded-md transition-colors cursor-pointer tracking-tight"
-              >
-                <LifebuoyIcon className="w-5 h-5 text-slate-400 inline-flex" />
-                <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex text-slate-800">
-                  Support
-                </span>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="flex flex-col gap-1 py-2 rounded-lg">
-                <DropdownMenuItem className="rounded-md group">
-                  <Link
-                    title="Give feedback"
-                    href="https://github.com/orgs/open-sauced/discussions"
-                    className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
-                  >
-                    <ChatBubbleLeftEllipsisIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
-                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                      Give feedback
-                    </span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md group">
-                  <Link
-                    title="Report a bug on our GitHub repository"
-                    href="https://github.com/open-sauced/app/issues/new?assignees=&labels=%F0%9F%91%80+needs+triage%2C%F0%9F%90%9B+bug&projects=&template=bug_report.yml&title=Bug%3A+"
-                    className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
-                  >
-                    <ExclamationCircleIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
-                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                      Report a bug
-                    </span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md group">
-                  <Link
-                    title="Checkout our blog on dev.to"
-                    href="https://dev.to/opensauced"
-                    className="text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight p-1"
-                  >
-                    <NewspaperIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
-                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                      Checkout our blog
-                    </span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md group">
-                  <Link
-                    title="Join our community on Discord"
-                    href="https://discord.com/invite/opensauced"
-                    className="text-sm font-medium flex gap-1 items-center transition-colors cursor-pointer tracking-tight p-1"
-                  >
-                    <UserGroupIcon className="w-5 h-5 text-slate-400 inline-flex mr-1 group-hover:text-orange-500" />
-                    <span className="whitespace-nowrap overflow-hidden overflow-ellipsis inline-flex">
-                      Join our community
-                    </span>
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </li>
-          <SidebarMenuItem
-            title="Settings"
-            url={`/user/settings`}
-            icon={<Cog8ToothIcon className="w-5 h-5 text-slate-400" />}
-          />
-          <SidebarMenuItem
-            title="Read the docs"
-            url="https://docs.opensauced.pizza/"
-            icon={<BookOpenIcon className="w-5 h-5 text-slate-400" />}
-          />
-        </ul>
-      </nav>
+            </ul>
+          </nav>
+        </>
+      )}
     </div>
   );
 };

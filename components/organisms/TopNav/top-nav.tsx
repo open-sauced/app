@@ -88,10 +88,10 @@ const Nav = ({ className }: { className?: string }) => {
         {state.value && (
           <li className="hidden lg:inline">
             <Link
-              className={`tracking-tight font-medium text-sm text-slate-700 hover:text-orange-500 flex gap-2 items-center transition-all ${getActiveStyle(
-                router.pathname === "/starsearch"
+              className={`tracking-tight font-medium text-sm text-slate-700 hover:text-orange-500 flex gap-1 items-center transition-all ${getActiveStyle(
+                router.pathname === "/star-search"
               )}`}
-              href={"/starsearch"}
+              href={"/star-search"}
             >
               <img src="/assets/star-search-logo.svg" alt="Star Search logo" className="w-5 h-5" />
               <p className="mt-0.5">StarSearch</p>

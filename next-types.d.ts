@@ -275,7 +275,7 @@ interface DbUser {
   readonly discord_url: string;
   readonly notification_count: number;
   readonly insights_count: number;
-  readonly languages: { [lang]: number };
+  readonly languages: { [lang: string]: number };
   readonly first_opened_pr_at: string;
   readonly followers_count: number;
   readonly following_count: number;

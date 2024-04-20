@@ -5,6 +5,138 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.20.0-beta.3](https://github.com/open-sauced/app/compare/v2.20.0-beta.2...v2.20.0-beta.3) (2024-04-19)
+
+
+### 🐛 Bug Fixes
+
+* fixed StarSearch logo spacing ([#3222](https://github.com/open-sauced/app/issues/3222)) ([92eec49](https://github.com/open-sauced/app/commit/92eec49ce6a824d346cc6b80be8d884cd662cb33))
+
+## [2.20.0-beta.2](https://github.com/open-sauced/app/compare/v2.20.0-beta.1...v2.20.0-beta.2) (2024-04-18)
+
+
+### 🍕 Features
+
+* added the StarSearch OG image ([#3224](https://github.com/open-sauced/app/issues/3224)) ([24fb24c](https://github.com/open-sauced/app/commit/24fb24c9df2f128292ce9cd51d8909933a53dd79))
+
+## [2.20.0-beta.1](https://github.com/open-sauced/app/compare/v2.19.0...v2.20.0-beta.1) (2024-04-18)
+
+
+### 🍕 Features
+
+* now you can clear chat history ([#3221](https://github.com/open-sauced/app/issues/3221)) ([446e7c3](https://github.com/open-sauced/app/commit/446e7c31ba7eaf6710ec485e483a4e00c4615f82))
+
+## [2.19.0](https://github.com/open-sauced/app/compare/v2.18.0...v2.19.0) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* fixed star search URL for SEO ([#3218](https://github.com/open-sauced/app/issues/3218)) ([69f8d67](https://github.com/open-sauced/app/commit/69f8d67cfff5c77a95b3cf84b7ecf75e56c4683f))
+* now links in collapsed sidebar no longer receive focus ([#3187](https://github.com/open-sauced/app/issues/3187)) ([5b05ace](https://github.com/open-sauced/app/commit/5b05acee0e54626167e230f6bee75f79ca5bec57))
+* now repo page OG images are corrext for production ([#3179](https://github.com/open-sauced/app/issues/3179)) ([772c7b5](https://github.com/open-sauced/app/commit/772c7b532178fc97d803d4f21de8783136c70066))
+* now there is feedback when saving or updating workspace settings ([#3184](https://github.com/open-sauced/app/issues/3184)) ([43784b2](https://github.com/open-sauced/app/commit/43784b21d828dba3233f41f4c10189b8bf9a755b))
+* quick fix StarSearch response ([#3194](https://github.com/open-sauced/app/issues/3194)) ([0c2847e](https://github.com/open-sauced/app/commit/0c2847e5c1a0b889edfdc76b1ffde7e49e357124))
+* remove console.info call from mutateHandler in AppSidebar component ([#3185](https://github.com/open-sauced/app/issues/3185)) ([96b63d7](https://github.com/open-sauced/app/commit/96b63d72f7936c3177a9679c9765cfa4d06fe224))
+* removed activity column from contributor grid ([#3206](https://github.com/open-sauced/app/issues/3206)) ([4b11168](https://github.com/open-sauced/app/commit/4b11168278a2a07a8ed7736ab276baae474eed36))
+* removed deprecated list pages ([#3197](https://github.com/open-sauced/app/issues/3197)) ([fa14557](https://github.com/open-sauced/app/commit/fa14557de1004c7f394563d807160a0d7130036f))
+* update logic for most used languages to match contributor profile ([#3205](https://github.com/open-sauced/app/issues/3205)) ([e8f8a75](https://github.com/open-sauced/app/commit/e8f8a75319372a8f9aef548085f38e1b1f52f300))
+* updated styles of create insights links in sidebar ([#3173](https://github.com/open-sauced/app/issues/3173)) ([6c0c5ce](https://github.com/open-sauced/app/commit/6c0c5ce80a581669d1f8c0fbd7111c737b5fed6b))
+
+
+### 🍕 Features
+
+* add link from Repo pages to GitHub ([#3177](https://github.com/open-sauced/app/issues/3177)) ([f4e1de4](https://github.com/open-sauced/app/commit/f4e1de4f687cc1f5793a9819944f3c924496afbb))
+* add support for blogpost from generic platforms  ([#2555](https://github.com/open-sauced/app/issues/2555)) ([8ca6f25](https://github.com/open-sauced/app/commit/8ca6f25a24c1563e317ddf5e315ef75bc9c534a6))
+* basic implementation of StarSearch ([#3162](https://github.com/open-sauced/app/issues/3162)) ([0086134](https://github.com/open-sauced/app/commit/008613421a6f4fe4a415558c779850d443ba7568))
+* change repo links from github to repo pages ([#3178](https://github.com/open-sauced/app/issues/3178)) ([506dde2](https://github.com/open-sauced/app/commit/506dde2c0326be1eb67692cdc568b007bc2c2fbe))
+* Create robots.txt ([#3183](https://github.com/open-sauced/app/issues/3183)) ([751c561](https://github.com/open-sauced/app/commit/751c561a71b0b9f3e6c134f1a2a87288f3be488c))
+* created the workspace activity page with a pull requests table ([#3147](https://github.com/open-sauced/app/issues/3147)) ([9f65b9c](https://github.com/open-sauced/app/commit/9f65b9c5b3c9fbf95aa8e984e952938cd195072b))
+* rename cumulative to history in Repo pages ([#3195](https://github.com/open-sauced/app/issues/3195)) ([8a33e24](https://github.com/open-sauced/app/commit/8a33e24802da851a314571b05d97fdbcacda7adb))
+* render markdown for `/starsearch` responses ([#3204](https://github.com/open-sauced/app/issues/3204)) ([49ce317](https://github.com/open-sauced/app/commit/49ce317c57ee0ba2a4ea53cbb9dc71f1f5e4e3be))
+* styling `/starsearch` ([#3211](https://github.com/open-sauced/app/issues/3211)) ([5e4c037](https://github.com/open-sauced/app/commit/5e4c0370163b34036bde715c2be442fb3a9019ae))
+* switch [#100](https://github.com/open-sauced/app/issues/100)DaysOfOSS banner with Workspaces banner on feed page ([#3216](https://github.com/open-sauced/app/issues/3216)) ([417e98b](https://github.com/open-sauced/app/commit/417e98bf416370bb842bba6ada28b627cc0df6ab))
+
+## [2.19.0-beta.16](https://github.com/open-sauced/app/compare/v2.19.0-beta.15...v2.19.0-beta.16) (2024-04-17)
+
+
+### 🍕 Features
+
+* switch [#100](https://github.com/open-sauced/app/issues/100)DaysOfOSS banner with Workspaces banner on feed page ([#3216](https://github.com/open-sauced/app/issues/3216)) ([417e98b](https://github.com/open-sauced/app/commit/417e98bf416370bb842bba6ada28b627cc0df6ab))
+
+## [2.19.0-beta.15](https://github.com/open-sauced/app/compare/v2.19.0-beta.14...v2.19.0-beta.15) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* fixed star search URL for SEO ([#3218](https://github.com/open-sauced/app/issues/3218)) ([69f8d67](https://github.com/open-sauced/app/commit/69f8d67cfff5c77a95b3cf84b7ecf75e56c4683f))
+
+## [2.19.0-beta.14](https://github.com/open-sauced/app/compare/v2.19.0-beta.13...v2.19.0-beta.14) (2024-04-17)
+
+
+### 🍕 Features
+
+* add support for blogpost from generic platforms  ([#2555](https://github.com/open-sauced/app/issues/2555)) ([8ca6f25](https://github.com/open-sauced/app/commit/8ca6f25a24c1563e317ddf5e315ef75bc9c534a6))
+* styling `/starsearch` ([#3211](https://github.com/open-sauced/app/issues/3211)) ([5e4c037](https://github.com/open-sauced/app/commit/5e4c0370163b34036bde715c2be442fb3a9019ae))
+
+## [2.19.0-beta.13](https://github.com/open-sauced/app/compare/v2.19.0-beta.12...v2.19.0-beta.13) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* removed activity column from contributor grid ([#3206](https://github.com/open-sauced/app/issues/3206)) ([4b11168](https://github.com/open-sauced/app/commit/4b11168278a2a07a8ed7736ab276baae474eed36))
+
+## [2.19.0-beta.12](https://github.com/open-sauced/app/compare/v2.19.0-beta.11...v2.19.0-beta.12) (2024-04-17)
+
+
+### 🍕 Features
+
+* render markdown for `/starsearch` responses ([#3204](https://github.com/open-sauced/app/issues/3204)) ([49ce317](https://github.com/open-sauced/app/commit/49ce317c57ee0ba2a4ea53cbb9dc71f1f5e4e3be))
+
+## [2.19.0-beta.11](https://github.com/open-sauced/app/compare/v2.19.0-beta.10...v2.19.0-beta.11) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* update logic for most used languages to match contributor profile ([#3205](https://github.com/open-sauced/app/issues/3205)) ([e8f8a75](https://github.com/open-sauced/app/commit/e8f8a75319372a8f9aef548085f38e1b1f52f300))
+
+## [2.19.0-beta.10](https://github.com/open-sauced/app/compare/v2.19.0-beta.9...v2.19.0-beta.10) (2024-04-17)
+
+
+### 🐛 Bug Fixes
+
+* now links in collapsed sidebar no longer receive focus ([#3187](https://github.com/open-sauced/app/issues/3187)) ([5b05ace](https://github.com/open-sauced/app/commit/5b05acee0e54626167e230f6bee75f79ca5bec57))
+* now there is feedback when saving or updating workspace settings ([#3184](https://github.com/open-sauced/app/issues/3184)) ([43784b2](https://github.com/open-sauced/app/commit/43784b21d828dba3233f41f4c10189b8bf9a755b))
+* quick fix StarSearch response ([#3194](https://github.com/open-sauced/app/issues/3194)) ([0c2847e](https://github.com/open-sauced/app/commit/0c2847e5c1a0b889edfdc76b1ffde7e49e357124))
+* removed deprecated list pages ([#3197](https://github.com/open-sauced/app/issues/3197)) ([fa14557](https://github.com/open-sauced/app/commit/fa14557de1004c7f394563d807160a0d7130036f))
+
+## [2.19.0-beta.9](https://github.com/open-sauced/app/compare/v2.19.0-beta.8...v2.19.0-beta.9) (2024-04-17)
+
+
+### 🍕 Features
+
+* rename cumulative to history in Repo pages ([#3195](https://github.com/open-sauced/app/issues/3195)) ([8a33e24](https://github.com/open-sauced/app/commit/8a33e24802da851a314571b05d97fdbcacda7adb))
+
+## [2.19.0-beta.8](https://github.com/open-sauced/app/compare/v2.19.0-beta.7...v2.19.0-beta.8) (2024-04-16)
+
+
+### 🐛 Bug Fixes
+
+* now repo page OG images are corrext for production ([#3179](https://github.com/open-sauced/app/issues/3179)) ([772c7b5](https://github.com/open-sauced/app/commit/772c7b532178fc97d803d4f21de8783136c70066))
+
+## [2.19.0-beta.7](https://github.com/open-sauced/app/compare/v2.19.0-beta.6...v2.19.0-beta.7) (2024-04-15)
+
+
+### 🍕 Features
+
+* Create robots.txt ([#3183](https://github.com/open-sauced/app/issues/3183)) ([751c561](https://github.com/open-sauced/app/commit/751c561a71b0b9f3e6c134f1a2a87288f3be488c))
+
+## [2.19.0-beta.6](https://github.com/open-sauced/app/compare/v2.19.0-beta.5...v2.19.0-beta.6) (2024-04-15)
+
+
+### 🐛 Bug Fixes
+
+* remove console.info call from mutateHandler in AppSidebar component ([#3185](https://github.com/open-sauced/app/issues/3185)) ([96b63d7](https://github.com/open-sauced/app/commit/96b63d72f7936c3177a9679c9765cfa4d06fe224))
+
 ## [2.19.0-beta.5](https://github.com/open-sauced/app/compare/v2.19.0-beta.4...v2.19.0-beta.5) (2024-04-12)
 
 
