@@ -194,9 +194,9 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
         {isOwner && (
           <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
             <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
-              Delete Insight
+              Delete Repository Insight
             </Title>
-            <Text className="my-4">Once you delete an insight, you&apos;re past the point of no return.</Text>
+            <Text className="my-4">Once you delete a Repository Insight, you&apos;re past the point of no return.</Text>
 
             <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive" className="w-fit">
               Delete insight

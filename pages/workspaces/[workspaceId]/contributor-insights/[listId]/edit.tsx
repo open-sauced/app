@@ -187,9 +187,11 @@ export default function ContributorInsightEditPage({
         {isOwner && (
           <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
             <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
-              Delete Workspace
+              Delete Contributor Insight
             </Title>
-            <Text className="my-4">Once you delete a workspace, you&apos;re past the point of no return.</Text>
+            <Text className="my-4">
+              Once you delete a Contributor Insight, you&apos;re past the point of no return.
+            </Text>
 
             <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive" className="w-fit">
               Delete workspace
