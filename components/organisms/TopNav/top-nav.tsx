@@ -88,7 +88,7 @@ const Nav = ({ className }: { className?: string }) => {
         {state.value && (
           <li className="hidden lg:inline">
             <Link
-              className={`tracking-tight font-medium text-sm text-slate-700 hover:text-orange-500 flex gap-2 items-center transition-all ${getActiveStyle(
+              className={`tracking-tight font-medium text-sm text-slate-700 hover:text-orange-500 flex gap-1 items-center transition-all ${getActiveStyle(
                 router.pathname === "/star-search"
               )}`}
               href={"/star-search"}
