@@ -194,7 +194,7 @@ export default function ContributorInsightEditPage({
             </Text>
 
             <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive" className="w-fit">
-              Delete workspace
+              Delete Insight
             </Button>
           </div>
         )}
