@@ -199,7 +199,7 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
             <Text className="my-4">Once you delete a Repository Insight, you&apos;re past the point of no return.</Text>
 
             <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive" className="w-fit">
-              Delete insight
+              Delete Insight
             </Button>
           </div>
         )}
