@@ -47,7 +47,7 @@ To start a local copy of the app on port `3000`:
 npm run dev
 ```
 
-Interested in helping with potential performance problems? Run the dev server with [Million Lint](https://million.dev/lint). Note that Million Lint is currently only supported for VS Code.
+Interested in helping with potential performance problems? Run the dev server with [Million Lint](https://million.dev/lint). Note that Million Lint is currently only supported for VS Code and it requires the [Million Lint extension](https://marketplace.visualstudio.com/items?itemName=million.million-lint).
 
 ```shell
 USE_MILLION_LINT=1 npm run dev
