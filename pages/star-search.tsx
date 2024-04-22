@@ -210,53 +210,53 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         twitterCard="summary_large_image"
       />
       <ProfileLayout>
-      <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
-        {renderState()}
-        <div className="absolute inset-x-0 bottom-2 flex flex-col gap-4 items-center w-full px-2">
-          {!isRunning &&
-            starSearchState === "chat" &&
-            (isMobile ? (
-              <Drawer
-                title="Choose a suggestion"
-                description="You can customize the prompt after selection"
-                showCloseButton
-                trigger={
-                  <button className="z-30 flex gap-1 shadow-xs items-center text-slate-700 text-sm font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
-                    Need inspiration?
-                    <BsArrowUpShort className="text-2xl" />
-                  </button>
-                }
-              >
-                <SuggestionBoxes
-                  addPromptInput={(prompt) => {
-                    setInput(prompt);
-                    inputRef.current?.focus();
-                  }}
-                />
-              </Drawer>
-            ) : (
-              <>
-                {!showSuggestions && (
-                  <button
-                    onClick={() => setShowSuggestions(!showSuggestions)}
-                    className="z-30 mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full"
-                  >
-                    Need inspiration?
-                    <BsArrowUpShort className="text-2xl" />
-                  </button>
-                )}
-              </>
-            ))}
-          <StarSearchInput
-            ref={inputRef}
-            input={input}
-            setInput={setInput}
-            isRunning={isRunning}
-            onSubmitPrompt={submitPrompt}
-          />
+        <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
+          {renderState()}
+          <div className="absolute inset-x-0 bottom-2 flex flex-col gap-4 items-center w-full px-2">
+            {!isRunning &&
+              starSearchState === "chat" &&
+              (isMobile ? (
+                <Drawer
+                  title="Choose a suggestion"
+                  description="You can customize the prompt after selection"
+                  showCloseButton
+                  trigger={
+                    <button className="z-30 flex gap-1 shadow-xs items-center text-slate-700 text-sm font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  }
+                >
+                  <SuggestionBoxes
+                    addPromptInput={(prompt) => {
+                      setInput(prompt);
+                      inputRef.current?.focus();
+                    }}
+                  />
+                </Drawer>
+              ) : (
+                <>
+                  {!showSuggestions && (
+                    <button
+                      onClick={() => setShowSuggestions(!showSuggestions)}
+                      className="z-30 mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full"
+                    >
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  )}
+                </>
+              ))}
+            <StarSearchInput
+              ref={inputRef}
+              input={input}
+              setInput={setInput}
+              isRunning={isRunning}
+              onSubmitPrompt={submitPrompt}
+            />
+          </div>
+          <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
         </div>
-        <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
-      </div>
       </ProfileLayout>
     </>
   );
@@ -272,7 +272,6 @@ function Header() {
         </h1>
       </div>
       <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Ask questions about contributors</h2>
-      <SuggestionBoxes />
     </section>
   );
 }
