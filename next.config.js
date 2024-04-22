@@ -1,5 +1,5 @@
 const MillionLint = require("@million/lint");
-const millionLint = process.env.USE_MILLION_LINT ? MillionLint.next() : (config) => config;
+const millionLint = process.env.USE_MILLION_LINT ? require("@million/lint").next() : (config) => config;
 
 const interests = [
   "javascript",
