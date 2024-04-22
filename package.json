@@ -46,6 +46,7 @@
     "@github/relative-time-element": "^4.4.0",
     "@headlessui/react": "^1.7.8",
     "@heroicons/react": "^2.0.14",
+    "@million/lint": "^0.0.73",
     "@nivo/bar": "^0.83.0",
     "@nivo/core": "^0.80.0",
     "@nivo/line": "^0.80.0",

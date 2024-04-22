@@ -47,6 +47,12 @@ To start a local copy of the app on port `3000`:
 npm run dev
 ```
 
+Interested in helping with potential performance problems? Run the dev server with [Million Lint](https://million.dev/lint). Note that Million Lint is currently only supported for VS Code and it requires the [Million Lint extension](https://marketplace.visualstudio.com/items?itemName=million.million-lint).
+
+```shell
+USE_MILLION_LINT=1 npm run dev
+```
+
 ### ☁️️ Netlify Edge Functions
 
 **Note**: For the best local development experience, it is recommended to have the `Netlify CLI` installed globally. Follow the [installation guide](https://docs.netlify.com/cli/get-started/) to set up Netlify CLI on your machine.
@@ -103,5 +109,5 @@ npx -y @open-sauced/conventional-commit
 
 ## 🍕 Community
 
-Got Questions? Join the conversation in our [Discord](https://discord.gg/U2peSNf23P).  
+Got Questions? Join the conversation in our [Discord](https://discord.gg/U2peSNf23P).
 Find OpenSauced videos and release overviews on our [YouTube Channel](https://www.youtube.com/channel/UCklWxKrTti61ZCROE1e5-MQ), and check out the resources on our [Dev.to org](https://dev.to/opensauced).
