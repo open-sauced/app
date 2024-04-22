@@ -10,6 +10,7 @@ import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { getAvatarById } from "lib/utils/github";
+import SEO from "layouts/SEO/SEO";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -27,12 +28,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  return { props: { userId, bearerToken: session?.access_token } };
+  const ogImageUrl = `${new URL(
+    "/assets/og-images/star-search-og-image.png",
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  )}`;
+
+  return { props: { userId, bearerToken: session?.access_token, ogImageUrl } };
 }
 
 type StarSearchPageProps = {
   userId: number;
   bearerToken: string;
+  ogImageUrl: string;
 };
 
 type StarSearchChat = {
@@ -40,7 +47,7 @@ type StarSearchChat = {
   content: string;
 };
 
-export default function StarSearchPage({ userId, bearerToken }: StarSearchPageProps) {
+export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const [isRunning, setIsRunning] = useState(false);
@@ -132,28 +139,36 @@ export default function StarSearchPage({ userId, bearerToken }: StarSearchPagePr
   };
 
   return (
-    <ProfileLayout>
-      <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
-        <main className="mx-auto px-auto w-full h-full max-h-99 z-10">
-          {renderState()}
-          <StarSearchInput isRunning={isRunning} onSubmitPrompt={submitPrompt} />
-        </main>
-        <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
-      </div>
-    </ProfileLayout>
+    <>
+      <SEO
+        title="OpenSauced Insights - StarSearch"
+        description="Copilot, but for your git history"
+        image={ogImageUrl}
+        twitterCard="summary_large_image"
+      />
+      <ProfileLayout>
+        <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
+          <main className="mx-auto px-auto w-full h-full max-h-99 z-10">
+            {renderState()}
+            <StarSearchInput isRunning={isRunning} onSubmitPrompt={submitPrompt} />
+          </main>
+          <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
+        </div>
+      </ProfileLayout>
+    </>
   );
 }
 
 function Header() {
   return (
     <section className="flex flex-col text-center items-center gap-2 lg:gap-4 pt-4 lg:pt-24">
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-2 items-center">
         <Image src="/assets/star-search-logo.svg" alt="Star Search Logo" width={40} height={40} />
         <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
           StarSearch
         </h1>
       </div>
-      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600">Ask questions about contributors</h2>
+      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Ask questions about contributors</h2>
       <SuggestionBoxes />
     </section>
   );
