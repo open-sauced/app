@@ -1,4 +1,6 @@
 const MillionLint = require("@million/lint");
+const millionLint = process.env.USE_MILLION_LINT ? MillionLint.next() : (config) => config;
+
 const interests = [
   "javascript",
   "python",
@@ -24,7 +26,7 @@ const interests = [
 ];
 
 /** @type {import('next').NextConfig} */
-module.exports = MillionLint.next()({
+module.exports = millionLint({
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
   images: {
@@ -125,7 +127,7 @@ module.exports = MillionLint.next()({
 // Injected content via Sentry wizard below
 
 const { withSentryConfig } = require("@sentry/nextjs");
-module.exports = MillionLint.next()(
+module.exports = millionLint(
   withSentryConfig(
     module.exports,
     {
