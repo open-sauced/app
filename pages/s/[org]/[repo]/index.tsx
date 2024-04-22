@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext } from "next";
+import { useMemo } from "react";
 import { useRouter } from "next/router";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { fetchApiData } from "helpers/fetchApiData";
@@ -10,6 +11,7 @@ import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
+import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -72,6 +74,9 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
     range,
   });
 
+  const starsRangedTotal = useMemo(() => starsData?.reduce((prev, curr) => prev + curr.star_count!, 0), starsData);
+  const forksRangedTotal = useMemo(() => forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0), forkStats);
+
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
@@ -93,7 +98,28 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
           </header>
           <DayRangePicker />
           <ClientOnly>
-            <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between"></section>
+            <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
+              <RepositoryStatCard
+                type="stars"
+                isLoading={isStarsDataLoading}
+                hasError={starsError !== undefined}
+                stats={{
+                  total: repoData.stars,
+                  over_range: starsRangedTotal!,
+                  range,
+                }}
+              />
+              <RepositoryStatCard
+                type="forks"
+                isLoading={isForksDataLoading}
+                hasError={forkError !== undefined}
+                stats={{
+                  total: repoData.forks,
+                  over_range: forksRangedTotal!,
+                  range,
+                }}
+              />
+            </section>
             <StarsChart
               stats={starsData}
               total={repoData.stars}
