@@ -19,6 +19,7 @@ import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { useWorkspacesContributorInsights } from "lib/hooks/api/useWorkspaceContributorInsights";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import Button from "components/shared/Button/button";
+import { deleteWorkspaceContributorInsight } from "lib/utils/workspace-utils";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -60,49 +61,29 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
   const { data, isLoading, meta, setPage, mutate } = useWorkspacesContributorInsights({ workspaceId: workspace.id });
   const { toast } = useToast();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [listNameToDelete, setListNameToDelete] = useState("");
   const [listIdToDelete, setListIdToDelete] = useState("");
 
-  const handleOnDelete = (name: string, id: string) => {
-    setIsDeleteOpen(true);
-    setListNameToDelete(name);
-    setListIdToDelete(id);
-  };
-
-  const handleOnClose = () => {
-    setIsDeleteOpen(false);
-  };
-
-  const handleOnConfirm = async () => {
-    setSubmitted(true);
+  const deleteInsight = async () => {
     setDeleteLoading(true);
 
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/workspaces/${workspace.id}/userLists/${listIdToDelete}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${sessionToken}`,
-          },
-        }
-      );
+    const { error: deleteError } = await deleteWorkspaceContributorInsight({
+      workspaceId: workspace.id,
+      bearerToken: sessionToken!,
+      listId: listIdToDelete,
+    });
 
-      if (res.ok) {
-        setIsDeleteOpen(false);
-        mutate();
-        toast({ description: "List deleted successfully", variant: "success" });
-      }
-    } catch (err) {
-      setIsDeleteOpen(false);
-      // eslint-disable-next-line no-console
-      console.log(err);
-      toast({ description: "An error occurred while deleting the list", variant: "danger" });
-    } finally {
+    if (deleteError) {
+      toast({ description: "An error has occurred. Try again.", variant: "danger" });
       setDeleteLoading(false);
+      return;
     }
+
+    toast({ description: "Insight deleted!", variant: "success" });
+    mutate();
+    setDeleteLoading(false);
+    setIsDeleteOpen(false);
   };
 
   return (
@@ -116,7 +97,11 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
           {data && data.length > 0 ? (
             data.map(({ id, is_public, name }, index) => (
               <ListCard
-                handleOnDeleteClick={(name, id) => handleOnDelete(name, id)}
+                handleOnDeleteClick={(name, id) => {
+                  setListIdToDelete(id);
+                  setListNameToDelete(name);
+                  setIsDeleteOpen(true);
+                }}
                 key={`list_${id}_${index}`}
                 list={{
                   id: id,
@@ -169,10 +154,10 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
           isLoading={deleteLoading}
           open={isDeleteOpen}
           setOpen={setIsDeleteOpen}
-          submitted={submitted}
+          submitted={false}
           listName={listNameToDelete}
-          onConfirm={handleOnConfirm}
-          onClose={handleOnClose}
+          onConfirm={deleteInsight}
+          onClose={() => setIsDeleteOpen(false)}
         />
       </div>
     </WorkspaceLayout>
