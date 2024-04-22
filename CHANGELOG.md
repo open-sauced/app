@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.20.0-beta.4](https://github.com/open-sauced/app/compare/v2.20.0-beta.3...v2.20.0-beta.4) (2024-04-22)
+
+
+### 🍕 Features
+
+* added million lint to the project ([#3108](https://github.com/open-sauced/app/issues/3108)) ([80c1dfb](https://github.com/open-sauced/app/commit/80c1dfbada5041116a0a7d49ea69a617588ecdcd))
+
 ## [2.20.0-beta.3](https://github.com/open-sauced/app/compare/v2.20.0-beta.2...v2.20.0-beta.3) (2024-04-19)
 
 
