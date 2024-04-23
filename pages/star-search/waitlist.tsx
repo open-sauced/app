@@ -1,10 +1,61 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
+import Image from "next/image";
+import { Card } from "@supabase/ui";
+import Markdown from "react-markdown";
+import { ArrowRightIcon } from "@primer/octicons-react";
 import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import humanizeNumber from "lib/utils/humanizeNumber";
-import GitHubIcon from "img/icons/github-icon.svg";
-import Icon from "components/atoms/Icon/icon";
+import { getAvatarById } from "lib/utils/github";
+import ProfileLayout from "layouts/profile";
+
+interface ChatboxProps {
+  author: string;
+  content: string;
+}
+
+function Chatbox({ author, content }: ChatboxProps) {
+  const renderAvatar = () => {
+    switch (author) {
+      case "You":
+        return (
+          <Image
+            src={getAvatarById("27322879")}
+            alt="Your profile picture"
+            width={32}
+            height={32}
+            className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
+          />
+        );
+      case "StarSearch":
+        return (
+          <div
+            className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full"
+            style={{ maxHeight: "40px" }}
+          >
+            <Image
+              src="/assets/star-search-logo-white.svg"
+              alt="StarSearch logo"
+              width={24}
+              height={24}
+              className="w-6 h-6"
+            />
+          </div>
+        );
+    }
+  };
+
+  return (
+    <>
+      {author === "You" ? renderAvatar() : null}
+      <Card className="bg-white w-max">
+        <Markdown className="[&_ol]:list-decimal grid gap-2 max-w-lg">{content}</Markdown>
+      </Card>
+      {author === "StarSearch" ? renderAvatar() : null}
+    </>
+  );
+}
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -62,35 +113,63 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 space-y-4">
-      <h1 className="text-2xl font-bold text-center">Star Search Waitlist</h1>
-      {isWaitlisted ? (
-        <p>You&apos;re one of the {humanizeNumber(waitlistCount)} people on the Star Search waitlist!</p>
-      ) : (
-        <>
-          <p>Star Search is currently in private beta. Please join the waitlist to get early access.</p>
-          {sessionToken ? (
-            <form onSubmit={joinWaitlist}>
-              <Button variant="primary">Join Waitlist</Button>
-            </form>
-          ) : (
-            <Button
-              variant="primary"
-              onClick={async () => {
-                const params = new URLSearchParams();
-                params.set("redirectedFrom", "/star-search");
+    <ProfileLayout>
+      <div className="flex flex-col items-center gap-4 mb-8">
+        <div className="flex gap-2 items-center">
+          <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
+          <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
+            StarSearch
+          </h1>
+        </div>
+        <p className="font-semibold text-5xl">Copilot, but for your git history</p>
+        <p>Ask anything, get AI powered insights on based contributor data</p>
+        {isWaitlisted ? (
+          <p>You&apos;re one of the {humanizeNumber(waitlistCount)} people on the Star Search waitlist!</p>
+        ) : (
+          <>
+            {sessionToken ? (
+              <form onSubmit={joinWaitlist}>
+                <Button variant="primary" className="flex gap-2">
+                  <span>Join the Waitlist</span>
+                  <ArrowRightIcon />
+                </Button>
+              </form>
+            ) : (
+              <Button
+                variant="primary"
+                onClick={async () => {
+                  const params = new URLSearchParams();
+                  params.set("redirectedFrom", "/star-search");
 
-                await signIn({
-                  provider: "github",
-                  options: { redirectTo: `/?${params}` },
-                });
-              }}
-            >
-              Connect with GitHub <Icon IconImage={GitHubIcon} className="ml-2" />
-            </Button>
-          )}
-        </>
-      )}
-    </div>
+                  await signIn({
+                    provider: "github",
+                    options: { redirectTo: `${new URL(`/?{params}`, window.location.href)}` },
+                  });
+                }}
+                className="flex gap-2"
+              >
+                <span>Sign up to Join the Waitlist</span>
+                <ArrowRightIcon />
+              </Button>
+            )}
+          </>
+        )}
+        <ul className="grid gap-8 w-99 max-w-4xl">
+          <li className="flex gap-4 text-slate-600">
+            <Chatbox author="You" content="Who worked on React Server Components recently?" />
+          </li>
+          <li className="flex gap-4 text-slate-600 place-self-end" style={{ width: "655px" }}>
+            <Chatbox
+              author="StarSearch"
+              content={`Based on the provided GitHub activities and contributions data, the following users have recently worked on React Server Components:
+
+1. @brunnolou: Submitted a pull request titled "Feature/react server components" to the danswer-ai/danswer repository, including changes related to adding react server components with the aim of enhancing the functionality of the project.
+1. @sebmarkbage: Implemented the concept of a DEV-only "owner" for Server Components in the React repository through a pull request titled "Track Owner for Server Components". The owner concept is added for parity with DevTools and could be used to wire up future owner-based stacks.
+1. @EvanBacon: Submitted a pull request to the facebook/react-native repository titled "mark all of react-native as client boundary for React Server Components". The pull request marks all of react-native as a client boundary for React Server Components, allowing for importing react-native in a react-server environment for React Server Components support.`}
+            />
+          </li>
+        </ul>
+      </div>
+    </ProfileLayout>
   );
 }
