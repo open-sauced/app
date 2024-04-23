@@ -45,13 +45,14 @@ function Chatbox({ author, content }: ChatboxProps) {
     }
   };
 
-  const extraClasses = author === "You" ? "p-[14px] rounded-[12px]" : "py-[34px] px-[30px] rounded-[22px]";
+  const extraClasses =
+    author === "You" ? "p-[14px] rounded-[12px]" : "py-[34px] px-[30px] rounded-[22px] md:!w-[655px]";
 
   return (
     <>
       {author === "You" ? renderAvatar() : null}
-      <div className={`waitlist-chatbox bg-white w-max border-[2px] border-gradient-orange-one ${extraClasses}`}>
-        <Markdown className="grid gap-4 [&_ol]:grid [&_ol]:gap-4 max-w-lg">{content}</Markdown>
+      <div className={`waitlist-chatbox bg-white border-[2px] border-gradient-orange-one w-max ${extraClasses}`}>
+        <Markdown className="grid gap-4 [&_ol]:grid [&_ol]:gap-4">{content}</Markdown>
       </div>
       {author === "StarSearch" ? renderAvatar() : null}
     </>
@@ -155,7 +156,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
             )}
           </>
         )}
-        <ul className="mt-16 grid gap-8 w-99 max-w-4xl">
+        <ul className="mt-16 grid gap-8 lg:w-99 lg:max-w-4xl">
           <li className="flex gap-4 text-slate-600">
             <Chatbox author="You" content="Who worked on React Server Components recently?" />
           </li>
