@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.20.0-beta.5](https://github.com/open-sauced/app/compare/v2.20.0-beta.4...v2.20.0-beta.5) (2024-04-23)
+
+
+### 🐛 Bug Fixes
+
+* delete multiple workspace contributor insights ([#3229](https://github.com/open-sauced/app/issues/3229)) ([2e7f6a6](https://github.com/open-sauced/app/commit/2e7f6a6ea510142437ff3fd8cbe170fdb4eebe71))
+
 ## [2.20.0-beta.4](https://github.com/open-sauced/app/compare/v2.20.0-beta.3...v2.20.0-beta.4) (2024-04-22)
 
 
