@@ -70,7 +70,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
-  return { props: { workspace: data, isOwner, overLimit: data?.exceeds_upgrade_limits, ogImage: `${ogImage.href}` } };
+  return { props: { workspace: data, isOwner, overLimit: !!data?.exceeds_upgrade_limits, ogImage: `${ogImage.href}` } };
 };
 
 interface WorkspaceDashboardProps {
