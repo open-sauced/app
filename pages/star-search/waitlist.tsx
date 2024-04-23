@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { ArrowRightIcon } from "@primer/octicons-react";
+import { useState } from "react";
 import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import humanizeNumber from "lib/utils/humanizeNumber";
@@ -96,8 +97,12 @@ interface StarSearchWaitListPageProps {
   waitlistCount: number;
 }
 
-export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: StarSearchWaitListPageProps) {
+export default function StarSearchWaitListPage({
+  isWaitlisted: initialIsWaitlisted,
+  waitlistCount,
+}: StarSearchWaitListPageProps) {
   const { sessionToken, signIn, user } = useSupabaseAuth();
+  const [isWaitlisted, setIsWaitlisted] = useState<boolean>(initialIsWaitlisted);
 
   async function joinWaitlist(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -110,7 +115,9 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
       },
     });
 
-    return response.status === 201;
+    if (response.status === 201) {
+      setIsWaitlisted(true);
+    }
   }
 
   return (
@@ -124,37 +131,41 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
         </div>
         <p className="font-semibold text-5xl text-center tracking-tight text-balance">Copilot, but for git history</p>
         <p className="text-center">Ask anything, get AI powered insights on based contributor data</p>
-        {isWaitlisted ? (
-          <p>You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!</p>
-        ) : (
-          <>
-            {sessionToken ? (
-              <form onSubmit={joinWaitlist}>
-                <Button variant="primary" className="flex gap-2 md:mt-6">
-                  <span>Join the Waitlist</span>
+        <div className="grid place-content-center h-16">
+          {isWaitlisted ? (
+            <p className="grid place-content-center">
+              You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!
+            </p>
+          ) : (
+            <>
+              {sessionToken ? (
+                <form onSubmit={joinWaitlist}>
+                  <Button variant="primary" className="flex gap-2 md:mt-6">
+                    <span>Join the Waitlist</span>
+                    <ArrowRightIcon />
+                  </Button>
+                </form>
+              ) : (
+                <Button
+                  variant="primary"
+                  onClick={async () => {
+                    const params = new URLSearchParams();
+                    params.set("redirectedFrom", "/star-search");
+
+                    await signIn({
+                      provider: "github",
+                      options: { redirectTo: `${new URL(`/?{params}`, window.location.href)}` },
+                    });
+                  }}
+                  className="flex gap-2 md:mt-6"
+                >
+                  <span>Sign up to Join the Waitlist</span>
                   <ArrowRightIcon />
                 </Button>
-              </form>
-            ) : (
-              <Button
-                variant="primary"
-                onClick={async () => {
-                  const params = new URLSearchParams();
-                  params.set("redirectedFrom", "/star-search");
-
-                  await signIn({
-                    provider: "github",
-                    options: { redirectTo: `${new URL(`/?{params}`, window.location.href)}` },
-                  });
-                }}
-                className="flex gap-2 md:mt-6"
-              >
-                <span>Sign up to Join the Waitlist</span>
-                <ArrowRightIcon />
-              </Button>
-            )}
-          </>
-        )}
+              )}
+            </>
+          )}
+        </div>
         <ul className="place-content-center px-2 lg:bg-[url(/assets/images/waitlist-background.png)] lg:bg-no-repeat lg:bg-center lg:bg-cover mt-4 md:mt-8 flex flex-col gap-8 w-full">
           <li className="flex gap-4 text-slate-600">
             <Chatbox author="You" content="Who worked on React Server Components recently?" />
