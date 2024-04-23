@@ -122,7 +122,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
             StarSearch
           </h1>
         </div>
-        <p className="font-semibold text-5xl">Copilot, but for your git history</p>
+        <p className="font-semibold text-5xl">Copilot, but for git history</p>
         <p>Ask anything, get AI powered insights on based contributor data</p>
         {isWaitlisted ? (
           <p>You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!</p>
