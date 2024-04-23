@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.20.0-beta.6](https://github.com/open-sauced/app/compare/v2.20.0-beta.5...v2.20.0-beta.6) (2024-04-23)
+
+
+### 🍕 Features
+
+* implement suggestion boxes for `StarSearch` ([#3176](https://github.com/open-sauced/app/issues/3176)) ([d6690ef](https://github.com/open-sauced/app/commit/d6690ef3f1d73d32263c2e0bc54d095eed6a43e8))
+
 ## [2.20.0-beta.5](https://github.com/open-sauced/app/compare/v2.20.0-beta.4...v2.20.0-beta.5) (2024-04-23)
 
 
