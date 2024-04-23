@@ -233,7 +233,7 @@ const ListActivityPage = ({
   const mostActiveRef = useRef<HTMLSpanElement>(null);
   const graphResizerLookup = new Map();
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded && numberOfContributors > 10;
+  const showBanner = isOwner && !isWorkspaceUpgraded;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   if (treemapRef.current) {

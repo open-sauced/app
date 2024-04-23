@@ -27,7 +27,7 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId, owners }: InsightPage
   const [hydrated, setHydrated] = useState(false);
 
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded && repositories.length > 100;
+  const showBanner = isOwner && !isWorkspaceUpgraded;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   useEffect(() => {

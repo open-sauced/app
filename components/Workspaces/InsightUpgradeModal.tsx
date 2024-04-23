@@ -36,22 +36,13 @@ export default function InsightUpgradeModal({
             <DialogCloseButton onClick={onClose} />
             <section className="flex flex-col gap-2">
               <DialogTitle className="text-xl">
-                {variant !== "workspace"
-                  ? "This Insight page is over the free Workspace limit"
-                  : "Upgrade to a PRO Workspace"}
+                {variant !== "workspace" ? "This Workspace is over the free limit" : "Upgrade to a PRO Workspace"}
               </DialogTitle>
               {variant !== "workspace" ? (
                 <p className="text-sm text-slate-500">
-                  Your Insight page has{" "}
-                  <span className="font-bold">
-                    {overLimit} {variant}
-                  </span>{" "}
-                  but the free Workspace only allows for{" "}
-                  <span className="font-bold">
-                    {variant === "repositories" ? 100 : 10} {variant}
-                  </span>{" "}
-                  tracked. Don&apos;t worry, your insights won&apos;t be deleted. If you want to continue using
-                  OpenSauced you should upgrade your Workspace to a PRO Account.
+                  Your workspace has exceeded the limit for free usage. Free Workspaces only allow for 100 repositories
+                  and 10 contributors tracked. Don&apos;t worry, your insights won&apos;t be deleted. If you want to
+                  continue using OpenSauced you should upgrade your Workspace to a PRO Account.
                 </p>
               ) : (
                 <p className="text-sm text-slate-500">
