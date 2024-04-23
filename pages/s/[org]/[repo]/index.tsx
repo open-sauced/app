@@ -97,26 +97,16 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
           </header>
           <DayRangePicker />
           <ClientOnly>
-            <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
+            <section className="w-full h-fit grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-2">
               <RepositoryStatCard
-                type="stars"
-                isLoading={isStarsDataLoading}
-                hasError={starsError !== undefined}
+                type="engagement"
                 stats={{
-                  total: repoData.stars,
-                  over_range: starsRangedTotal!,
-                  range,
+                  stars: repoData.stars,
+                  forks: repoData.forks,
+                  activity_ratio: repoData.activity_ratio!,
                 }}
-              />
-              <RepositoryStatCard
-                type="forks"
-                isLoading={isForksDataLoading}
-                hasError={forkError !== undefined}
-                stats={{
-                  total: repoData.forks,
-                  over_range: forksRangedTotal!,
-                  range,
-                }}
+                isLoading={false}
+                hasError={false}
               />
               <RepositoryStatCard
                 type="pulls"
@@ -127,6 +117,28 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
                 }}
                 isLoading={false}
                 hasError={false}
+              />
+              <RepositoryStatCard
+                type="stars"
+                isLoading={isStarsDataLoading}
+                hasError={starsError !== undefined}
+                stats={{
+                  total: repoData.stars,
+                  over_range: starsRangedTotal!,
+                  range,
+                  average_over_range: Math.round(starsRangedTotal! / range),
+                }}
+              />
+              <RepositoryStatCard
+                type="forks"
+                isLoading={isForksDataLoading}
+                hasError={forkError !== undefined}
+                stats={{
+                  total: repoData.forks,
+                  over_range: forksRangedTotal!,
+                  range,
+                  average_over_range: Math.round(forksRangedTotal! / range),
+                }}
               />
             </section>
             <StarsChart

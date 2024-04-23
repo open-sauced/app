@@ -26,11 +26,11 @@ type RepositoryStatCardProps = {
     }
   | {
       type: "stars";
-      stats: { total: number; range: number; over_range: number } | undefined;
+      stats: { total: number; range: number; over_range: number; average_over_range: number } | undefined;
     }
   | {
       type: "forks";
-      stats: { total: number; range: number; over_range: number } | undefined;
+      stats: { total: number; range: number; over_range: number; average_over_range: number } | undefined;
     }
 );
 
@@ -69,7 +69,7 @@ function getStatPropertiesByType(type: CardType) {
       return ["stars", "forks", "activity_ratio"];
     case "forks":
     case "stars":
-      return ["total", "over_range"];
+      return ["total", "over_range", "average_over_range"];
     default:
       throw new Error("Invalid repository stat card type");
   }
@@ -144,8 +144,12 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
                 return (
                   <tr key={stat} className="flex flex-col">
                     <th scope="row" className="capitalize font-normal text-lg lg:text-sm text-light-slate-12 text-left">
-                      {(type === "stars" || type === "forks") && stat === "over_range"
-                        ? `Over ${stats.range!} Days`
+                      {type === "stars" || type === "forks"
+                        ? stat === "over_range"
+                          ? `Over ${stats.range} Days`
+                          : stat === "average_over_range"
+                          ? `Avg. Over ${stats.range} Days`
+                          : stat.replace("_", " ")
                         : stat.replace("_", " ")}
                       <span
                         className={`w-2 h-2 rounded-full ml-1  ${
