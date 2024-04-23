@@ -1,5 +1,4 @@
 import { GetServerSidePropsContext } from "next";
-import { useMemo } from "react";
 import { useRouter } from "next/router";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { fetchApiData } from "helpers/fetchApiData";
@@ -74,8 +73,8 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
     range,
   });
 
-  const starsRangedTotal = useMemo(() => starsData?.reduce((prev, curr) => prev + curr.star_count!, 0), starsData);
-  const forksRangedTotal = useMemo(() => forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0), forkStats);
+  const starsRangedTotal = starsData?.reduce((prev, curr) => prev + curr.star_count!, 0);
+  const forksRangedTotal = forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0);
 
   return (
     <>
@@ -118,6 +117,16 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
                   over_range: forksRangedTotal!,
                   range,
                 }}
+              />
+              <RepositoryStatCard
+                type="pulls"
+                stats={{
+                  opened: repoData.open_prs_count!,
+                  merged: repoData.merged_prs_count!,
+                  velocity: repoData.pr_velocity_count!,
+                }}
+                isLoading={false}
+                hasError={false}
               />
             </section>
             <StarsChart
