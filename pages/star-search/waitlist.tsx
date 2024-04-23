@@ -124,7 +124,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
         <p className="font-semibold text-5xl">Copilot, but for your git history</p>
         <p>Ask anything, get AI powered insights on based contributor data</p>
         {isWaitlisted ? (
-          <p>You&apos;re one of the {humanizeNumber(waitlistCount)} people on the Star Search waitlist!</p>
+          <p>You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!</p>
         ) : (
           <>
             {sessionToken ? (
