@@ -5,6 +5,22 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.20.0](https://github.com/open-sauced/app/compare/v2.19.0...v2.20.0) (2024-04-23)
+
+
+### 🐛 Bug Fixes
+
+* delete multiple workspace contributor insights ([#3229](https://github.com/open-sauced/app/issues/3229)) ([2e7f6a6](https://github.com/open-sauced/app/commit/2e7f6a6ea510142437ff3fd8cbe170fdb4eebe71))
+* fixed StarSearch logo spacing ([#3222](https://github.com/open-sauced/app/issues/3222)) ([92eec49](https://github.com/open-sauced/app/commit/92eec49ce6a824d346cc6b80be8d884cd662cb33))
+
+
+### 🍕 Features
+
+* added million lint to the project ([#3108](https://github.com/open-sauced/app/issues/3108)) ([80c1dfb](https://github.com/open-sauced/app/commit/80c1dfbada5041116a0a7d49ea69a617588ecdcd))
+* added the StarSearch OG image ([#3224](https://github.com/open-sauced/app/issues/3224)) ([24fb24c](https://github.com/open-sauced/app/commit/24fb24c9df2f128292ce9cd51d8909933a53dd79))
+* implement suggestion boxes for `StarSearch` ([#3176](https://github.com/open-sauced/app/issues/3176)) ([d6690ef](https://github.com/open-sauced/app/commit/d6690ef3f1d73d32263c2e0bc54d095eed6a43e8))
+* now you can clear chat history ([#3221](https://github.com/open-sauced/app/issues/3221)) ([446e7c3](https://github.com/open-sauced/app/commit/446e7c31ba7eaf6710ec485e483a4e00c4615f82))
+
 ## [2.20.0-beta.6](https://github.com/open-sauced/app/compare/v2.20.0-beta.5...v2.20.0-beta.6) (2024-04-23)
 
 
