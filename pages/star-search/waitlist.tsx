@@ -116,7 +116,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
 
   return (
     <ProfileLayout>
-      <div className="flex flex-col items-center gap-4 mb-16">
+      <div className="flex flex-col items-center gap-4 mb-16 w-full">
         <div className="flex gap-2 items-center">
           <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
           <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
@@ -156,21 +156,23 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
             )}
           </>
         )}
-        <ul className="mt-16 grid gap-8 lg:w-99 lg:max-w-4xl">
-          <li className="flex gap-4 text-slate-600">
-            <Chatbox author="You" content="Who worked on React Server Components recently?" />
-          </li>
-          <li className="flex gap-4 text-slate-600 place-self-end" style={{ width: "655px" }}>
-            <Chatbox
-              author="StarSearch"
-              content={`Based on the provided GitHub activities and contributions data, the following users have recently worked on React Server Components:
+        <div className="grid place-content-center w-full md:bg-[url(/assets/images/waitlist-background.png)] md:bg-no-repeat md:bg-center">
+          <ul className="mt-16 grid gap-8 lg:w-99 lg:max-w-4xl">
+            <li className="flex gap-4 text-slate-600">
+              <Chatbox author="You" content="Who worked on React Server Components recently?" />
+            </li>
+            <li className="flex gap-4 text-slate-600 place-self-end" style={{ width: "655px" }}>
+              <Chatbox
+                author="StarSearch"
+                content={`Based on the provided GitHub activities and contributions data, the following users have recently worked on React Server Components:
 
 1. **@brunnolou:** Submitted a pull request titled "Feature/react server components" to the danswer-ai/danswer repository, including changes related to adding react server components with the aim of enhancing the functionality of the project.
 1. **@sebmarkbage:** Implemented the concept of a DEV-only "owner" for Server Components in the React repository through a pull request titled "Track Owner for Server Components". The owner concept is added for parity with DevTools and could be used to wire up future owner-based stacks.
 1. **@EvanBacon:** Submitted a pull request to the facebook/react-native repository titled "mark all of react-native as client boundary for React Server Components". The pull request marks all of react-native as a client boundary for React Server Components, allowing for importing react-native in a react-server environment for React Server Components support.`}
-            />
-          </li>
-        </ul>
+              />
+            </li>
+          </ul>
+        </div>
       </div>
     </ProfileLayout>
   );
