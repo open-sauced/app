@@ -124,8 +124,9 @@ export default function StarSearchWaitListPage({
 
   const router = useRouter();
   const { add } = router.query;
+  const autoAdd = add === "true";
 
-  if (add === "true") {
+  if (autoAdd) {
     joinWaitlist();
   }
 
@@ -147,35 +148,39 @@ export default function StarSearchWaitListPage({
             </p>
           ) : (
             <>
-              {sessionToken ? (
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    joinWaitlist();
-                  }}
-                >
-                  <Button variant="primary" className="flex gap-2 md:mt-6">
-                    <span>Join the Waitlist</span>
-                    <ArrowRightIcon />
-                  </Button>
-                </form>
-              ) : (
-                <Button
-                  variant="primary"
-                  onClick={async () => {
-                    const params = new URLSearchParams();
-                    params.set("redirectedFrom", "/star-search");
+              {autoAdd ? null : (
+                <>
+                  {sessionToken ? (
+                    <form
+                      onSubmit={(event) => {
+                        event.preventDefault();
+                        joinWaitlist();
+                      }}
+                    >
+                      <Button variant="primary" className="flex gap-2 md:mt-6">
+                        <span>Join the Waitlist</span>
+                        <ArrowRightIcon />
+                      </Button>
+                    </form>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      onClick={async () => {
+                        const params = new URLSearchParams();
+                        params.set("redirectedFrom", "/star-search");
 
-                    await signIn({
-                      provider: "github",
-                      options: { redirectTo: `${new URL("/star-search?add=true", window.location.href)}` },
-                    });
-                  }}
-                  className="flex gap-2 md:mt-6"
-                >
-                  <span>Sign up to Join the Waitlist</span>
-                  <ArrowRightIcon />
-                </Button>
+                        await signIn({
+                          provider: "github",
+                          options: { redirectTo: `${new URL("/star-search/waitlist?add=true", window.location.href)}` },
+                        });
+                      }}
+                      className="flex gap-2 md:mt-6"
+                    >
+                      <span>Sign up to Join the Waitlist</span>
+                      <ArrowRightIcon />
+                    </Button>
+                  )}
+                </>
               )}
             </>
           )}
