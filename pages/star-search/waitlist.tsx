@@ -31,8 +31,8 @@ function Chatbox({ author, content }: ChatboxProps) {
       case "StarSearch":
         return (
           <div
-            className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full"
-            style={{ maxHeight: "40px" }}
+            className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full aspect-square"
+            style={{ height: "40px" }}
           >
             <Image
               src="/assets/star-search-logo-white.svg"
@@ -49,7 +49,7 @@ function Chatbox({ author, content }: ChatboxProps) {
   return (
     <>
       {author === "You" ? renderAvatar() : null}
-      <Card className="bg-white w-max">
+      <Card className="bg-white w-max !border-gradient-orange-one">
         <Markdown className="[&_ol]:list-decimal grid gap-2 max-w-lg">{content}</Markdown>
       </Card>
       {author === "StarSearch" ? renderAvatar() : null}
@@ -114,7 +114,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
 
   return (
     <ProfileLayout>
-      <div className="flex flex-col items-center gap-4 mb-8">
+      <div className="flex flex-col items-center gap-4 mb-16">
         <div className="flex gap-2 items-center">
           <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
           <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
@@ -129,7 +129,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
           <>
             {sessionToken ? (
               <form onSubmit={joinWaitlist}>
-                <Button variant="primary" className="flex gap-2">
+                <Button variant="primary" className="flex gap-2 mt-6">
                   <span>Join the Waitlist</span>
                   <ArrowRightIcon />
                 </Button>
@@ -146,7 +146,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
                     options: { redirectTo: `${new URL(`/?{params}`, window.location.href)}` },
                   });
                 }}
-                className="flex gap-2"
+                className="flex gap-2  mt-6"
               >
                 <span>Sign up to Join the Waitlist</span>
                 <ArrowRightIcon />
@@ -154,7 +154,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
             )}
           </>
         )}
-        <ul className="grid gap-8 w-99 max-w-4xl">
+        <ul className="mt-16 grid gap-8 w-99 max-w-4xl">
           <li className="flex gap-4 text-slate-600">
             <Chatbox author="You" content="Who worked on React Server Components recently?" />
           </li>
