@@ -1,7 +1,6 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import Image from "next/image";
-import { Card } from "@supabase/ui";
 import Markdown from "react-markdown";
 import { ArrowRightIcon } from "@primer/octicons-react";
 import Button from "components/shared/Button/button";
@@ -46,12 +45,14 @@ function Chatbox({ author, content }: ChatboxProps) {
     }
   };
 
+  const extraClasses = author === "You" ? "p-[14px] rounded-[12px]" : "py-[34px] px-[30px] rounded-[22px]";
+
   return (
     <>
       {author === "You" ? renderAvatar() : null}
-      <Card className="bg-white w-max !border-gradient-orange-one">
-        <Markdown className="[&_ol]:list-decimal grid gap-2 max-w-lg">{content}</Markdown>
-      </Card>
+      <div className={`waitlist-chatbox bg-white w-max border-[2px] border-gradient-orange-one ${extraClasses}`}>
+        <Markdown className="grid gap-4 [&_ol]:grid [&_ol]:gap-4 max-w-lg">{content}</Markdown>
+      </div>
       {author === "StarSearch" ? renderAvatar() : null}
     </>
   );
@@ -163,9 +164,9 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
               author="StarSearch"
               content={`Based on the provided GitHub activities and contributions data, the following users have recently worked on React Server Components:
 
-1. @brunnolou: Submitted a pull request titled "Feature/react server components" to the danswer-ai/danswer repository, including changes related to adding react server components with the aim of enhancing the functionality of the project.
-1. @sebmarkbage: Implemented the concept of a DEV-only "owner" for Server Components in the React repository through a pull request titled "Track Owner for Server Components". The owner concept is added for parity with DevTools and could be used to wire up future owner-based stacks.
-1. @EvanBacon: Submitted a pull request to the facebook/react-native repository titled "mark all of react-native as client boundary for React Server Components". The pull request marks all of react-native as a client boundary for React Server Components, allowing for importing react-native in a react-server environment for React Server Components support.`}
+1. **@brunnolou:** Submitted a pull request titled "Feature/react server components" to the danswer-ai/danswer repository, including changes related to adding react server components with the aim of enhancing the functionality of the project.
+1. **@sebmarkbage:** Implemented the concept of a DEV-only "owner" for Server Components in the React repository through a pull request titled "Track Owner for Server Components". The owner concept is added for parity with DevTools and could be used to wire up future owner-based stacks.
+1. **@EvanBacon:** Submitted a pull request to the facebook/react-native repository titled "mark all of react-native as client boundary for React Server Components". The pull request marks all of react-native as a client boundary for React Server Components, allowing for importing react-native in a react-server environment for React Server Components support.`}
             />
           </li>
         </ul>
