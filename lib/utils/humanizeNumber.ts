@@ -1,4 +1,4 @@
-const humanizeNumber = (num: number | string, type?: "comma" | "abbreviation" = "abbreviation") => {
+const humanizeNumber = (num: number | string, type: "comma" | "abbreviation" | null = "abbreviation") => {
   const number = typeof num !== "number" ? parseFloat(num) : num;
   const abs = Math.abs(number);
   const sign = Math.sign(number);
