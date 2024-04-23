@@ -21,6 +21,7 @@ h4,
 h5,
 h6 {
   @apply tracking-tight;
+  text-wrap: balance;
 }
 button:not([role]) {
   @apply border;
@@ -240,4 +241,8 @@ but never configured it. */
   @apply pr-1;
   @apply font-semibold;
   content: counter(item) ".";
+}
+
+.text-balance {
+  text-wrap: balance;
 }

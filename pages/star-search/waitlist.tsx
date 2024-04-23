@@ -116,15 +116,15 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
 
   return (
     <ProfileLayout>
-      <div className="flex flex-col items-center gap-4 mb-16 w-full">
+      <div className="flex flex-col items-center gap-4 px-2 mb-16 w-full">
         <div className="flex gap-2 items-center">
           <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
           <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
             StarSearch
           </h1>
         </div>
-        <p className="font-semibold text-5xl">Copilot, but for git history</p>
-        <p>Ask anything, get AI powered insights on based contributor data</p>
+        <p className="font-semibold text-5xl text-center tracking-tight text-balance">Copilot, but for git history</p>
+        <p className="text-center">Ask anything, get AI powered insights on based contributor data</p>
         {isWaitlisted ? (
           <p>You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!</p>
         ) : (
@@ -156,7 +156,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
             )}
           </>
         )}
-        <div className="grid place-content-center w-full md:bg-[url(/assets/images/waitlist-background.png)] md:bg-no-repeat md:bg-center">
+        <div className="grid place-content-center p-2 w-full lg:bg-[url(/assets/images/waitlist-background.png)] md:bg-no-repeat md:bg-center">
           <ul className="mt-16 grid gap-8 lg:w-99 lg:max-w-4xl">
             <li className="flex gap-4 text-slate-600">
               <Chatbox author="You" content="Who worked on React Server Components recently?" />
