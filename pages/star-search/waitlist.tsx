@@ -30,7 +30,7 @@ function Chatbox({ author, content }: ChatboxProps) {
       case "StarSearch":
         return (
           <div
-            className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full aspect-square"
+            className="flex items-center justify-center bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full aspect-square"
             style={{ height: "40px" }}
           >
             <Image
