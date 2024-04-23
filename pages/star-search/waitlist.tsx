@@ -51,7 +51,7 @@ function Chatbox({ author, content }: ChatboxProps) {
   return (
     <>
       {author === "You" ? renderAvatar() : null}
-      <div className={`waitlist-chatbox bg-white border-[2px] border-gradient-orange-one w-max ${extraClasses}`}>
+      <div className={`waitlist-chatbox bg-white border-[2px] border-gradient-orange-one ${extraClasses}`}>
         <Markdown className="grid gap-4 [&_ol]:grid [&_ol]:gap-4">{content}</Markdown>
       </div>
       {author === "StarSearch" ? renderAvatar() : null}
@@ -116,7 +116,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
 
   return (
     <ProfileLayout>
-      <div className="flex flex-col items-center gap-4 px-2 mb-16 w-full">
+      <div className="flex flex-col items-center gap-4 px-2 mb-8 sm:pt-8 md:pt-0">
         <div className="flex gap-2 items-center">
           <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
           <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
@@ -131,7 +131,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
           <>
             {sessionToken ? (
               <form onSubmit={joinWaitlist}>
-                <Button variant="primary" className="flex gap-2 mt-6">
+                <Button variant="primary" className="flex gap-2 md:mt-6">
                   <span>Join the Waitlist</span>
                   <ArrowRightIcon />
                 </Button>
@@ -148,7 +148,7 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
                     options: { redirectTo: `${new URL(`/?{params}`, window.location.href)}` },
                   });
                 }}
-                className="flex gap-2  mt-6"
+                className="flex gap-2 md:mt-6"
               >
                 <span>Sign up to Join the Waitlist</span>
                 <ArrowRightIcon />
@@ -156,12 +156,12 @@ export default function StarSearchWaitListPage({ isWaitlisted, waitlistCount }: 
             )}
           </>
         )}
-        <div className="grid place-content-center p-2 w-full lg:bg-[url(/assets/images/waitlist-background.png)] md:bg-no-repeat md:bg-center">
-          <ul className="mt-16 grid gap-8 lg:w-99 lg:max-w-4xl">
+        <div className="grid place-content-center px-2 w-full /*lg:bg-[url(/assets/images/waitlist-background.png)] md:bg-no-repeat md:bg-center*/">
+          <ul className="mt-4 md:mt-8 grid gap-8">
             <li className="flex gap-4 text-slate-600">
               <Chatbox author="You" content="Who worked on React Server Components recently?" />
             </li>
-            <li className="flex gap-4 text-slate-600 place-self-end" style={{ width: "655px" }}>
+            <li className="flex gap-4 text-slate-600 place-self-end">
               <Chatbox
                 author="StarSearch"
                 content={`Based on the provided GitHub activities and contributions data, the following users have recently worked on React Server Components:
