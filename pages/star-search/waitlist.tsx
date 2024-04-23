@@ -4,11 +4,13 @@ import Image from "next/image";
 import Markdown from "react-markdown";
 import { ArrowRightIcon } from "@primer/octicons-react";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { getAvatarById } from "lib/utils/github";
 import ProfileLayout from "layouts/profile";
+import { useWaitlistCount } from "lib/hooks/api/useWaitlistCount";
 
 interface ChatboxProps {
   author: string;
@@ -66,7 +68,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   } = await supabase.auth.getSession();
 
   let isWaitlisted = false;
-  let waitlistCount = 0;
+  let initialWaitlistCount = 0;
 
   if (session) {
     const [waitlistCountResponse, userResponse] = await Promise.all([
@@ -81,31 +83,31 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     const [waitlistPayload, user] = await Promise.all([waitlistCountResponse.json(), userResponse.json()]);
 
     isWaitlisted = user.is_waitlisted;
-    waitlistCount = waitlistPayload.waitlisted_users;
+    initialWaitlistCount = waitlistPayload.waitlisted_users;
   }
 
   return {
     props: {
       isWaitlisted,
-      waitlistCount,
+      initialWaitlistCount,
     },
   };
 };
 
 interface StarSearchWaitListPageProps {
   isWaitlisted: boolean;
-  waitlistCount: number;
+  initialWaitlistCount: number;
 }
 
 export default function StarSearchWaitListPage({
   isWaitlisted: initialIsWaitlisted,
-  waitlistCount,
+  initialWaitlistCount,
 }: StarSearchWaitListPageProps) {
   const { sessionToken, signIn, user } = useSupabaseAuth();
   const [isWaitlisted, setIsWaitlisted] = useState<boolean>(initialIsWaitlisted);
+  const { data: waitlistCount } = useWaitlistCount(initialWaitlistCount);
 
-  async function joinWaitlist(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function joinWaitlist() {
     const bearerToken = sessionToken ? sessionToken : undefined;
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/waitlist`, {
       method: "POST",
@@ -120,6 +122,13 @@ export default function StarSearchWaitListPage({
     }
   }
 
+  const router = useRouter();
+  const { add } = router.query;
+
+  if (add === "true") {
+    joinWaitlist();
+  }
+
   return (
     <ProfileLayout>
       <div className="flex flex-col items-center gap-4 px-2 mb-8 sm:pt-8 md:pt-0 lg:w-99">
@@ -132,14 +141,19 @@ export default function StarSearchWaitListPage({
         <p className="font-semibold text-5xl text-center tracking-tight text-balance">Copilot, but for git history</p>
         <p className="text-center">Ask anything, get AI powered insights on based contributor data</p>
         <div className="grid place-content-center h-16">
-          {isWaitlisted ? (
+          {isWaitlisted && waitlistCount ? (
             <p className="grid place-content-center">
               You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!
             </p>
           ) : (
             <>
               {sessionToken ? (
-                <form onSubmit={joinWaitlist}>
+                <form
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    joinWaitlist();
+                  }}
+                >
                   <Button variant="primary" className="flex gap-2 md:mt-6">
                     <span>Join the Waitlist</span>
                     <ArrowRightIcon />
@@ -154,7 +168,7 @@ export default function StarSearchWaitListPage({
 
                     await signIn({
                       provider: "github",
-                      options: { redirectTo: `${new URL(`/?{params}`, window.location.href)}` },
+                      options: { redirectTo: `${new URL("/star-search?add=true", window.location.href)}` },
                     });
                   }}
                   className="flex gap-2 md:mt-6"
