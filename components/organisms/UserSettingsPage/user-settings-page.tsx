@@ -291,7 +291,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
 
               {bio?.length > 255 ? (
                 <p aria-live="assertive" className="text-light-red-10 text-xs">
-                  255/255 <br>
+                  255/255 <br />
                   Bio Max Length
                 </p>
               ) : (
