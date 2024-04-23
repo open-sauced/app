@@ -227,19 +227,17 @@ but never configured it. */
   @apply bg-slate-200;
 }
 
-.waitlist-chatbox {
-  & ol {
-    @apply ml-5;
+.waitlist-chatbox ol {
+  @apply ml-5;
+}
 
-    & > li {
-      counter-increment: item;
-      @apply -indent-5;
+.waitlist-chatbox ol > li {
+  counter-increment: item;
+  @apply -indent-5;
+}
 
-      &::before {
-        @apply pr-1;
-        @apply font-semibold;
-        content: counter(item) ".";
-      }
-    }
-  }
+.waitlist-chatbox ol > li::before {
+  @apply pr-1;
+  @apply font-semibold;
+  content: counter(item) ".";
 }
