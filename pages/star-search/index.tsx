@@ -59,6 +59,21 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   const [showSuggestions, setShowSuggestions] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  function addPromptInput(prompt: string) {
+    if (!inputRef.current?.form) {
+      return;
+    }
+
+    inputRef.current.value = prompt;
+    const { form } = inputRef.current;
+
+    if (typeof form.requestSubmit === "function") {
+      form.requestSubmit();
+    } else {
+      form.dispatchEvent(new Event("submit", { cancelable: true }));
+    }
+  }
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat, showSuggestions]);
@@ -139,12 +154,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         return (
           <div className="flex flex-col text-center items-center gap-4 lg:pt-12 z-10">
             <Header />
-            <SuggestionBoxes
-              addPromptInput={(prompt) => {
-                setInput(prompt);
-                inputRef.current?.focus();
-              }}
-            />
+            <SuggestionBoxes addPromptInput={addPromptInput} />
           </div>
         );
       case "chat":
@@ -184,9 +194,8 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   <SuggestionBoxes
                     isHorizontal
                     addPromptInput={(prompt) => {
-                      setInput(prompt);
+                      addPromptInput(prompt);
                       setShowSuggestions(false);
-                      inputRef.current?.focus();
                     }}
                   />
                 </div>
@@ -224,12 +233,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                     </button>
                   }
                 >
-                  <SuggestionBoxes
-                    addPromptInput={(prompt) => {
-                      setInput(prompt);
-                      inputRef.current?.focus();
-                    }}
-                  />
+                  <SuggestionBoxes addPromptInput={addPromptInput} />
                 </Drawer>
               ) : (
                 <>
