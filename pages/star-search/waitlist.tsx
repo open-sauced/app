@@ -193,7 +193,7 @@ export default function StarSearchWaitListPage({
             </>
           )}
         </div>
-        <ul className="place-content-center px-2 lg:bg-[url(/assets/images/waitlist-background.png)] lg:bg-no-repeat lg:bg-center lg:bg-cover mt-4 md:mt-8 flex flex-col gap-8 w-full">
+        <ul className="place-content-center px-2 lg:bg-[url(../public/assets/images/waitlist-background.png)] lg:bg-no-repeat lg:bg-center lg:bg-cover mt-4 md:mt-8 flex flex-col gap-8 w-full">
           <li className="flex gap-4 text-slate-600">
             <Chatbox author="You" content="Who worked on React Server Components recently?" />
           </li>
