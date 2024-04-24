@@ -2,6 +2,8 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { ComponentProps } from "react";
 import { HiOutlineExternalLink } from "react-icons/hi";
+import { usePostHog } from "posthog-js/react";
+import { FiCopy } from "react-icons/fi";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
@@ -13,6 +15,9 @@ import MetricCard from "components/Graphs/MetricCard";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
+import { useToast } from "lib/hooks/useToast";
+import { shortenUrl } from "lib/utils/shorten-url";
+import Button from "components/shared/Button/button";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -51,6 +56,9 @@ interface WorkspaceOgImageProps {
 }
 
 export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps) {
+  const { toast } = useToast();
+  const posthog = usePostHog();
+
   const syncId = repoData.id;
   const router = useRouter();
   const range = (router.query.range ? Number(router.query.range) : 30) as Range;
@@ -74,26 +82,52 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
     range,
   });
 
+  const copyUrlToClipboard = async () => {
+    const url = new URL(window.location.href).toString();
+    posthog!.capture(`clicked: ${repoData.full_name} repo page share`);
+
+    try {
+      const shortUrl = await shortenUrl(url);
+      await navigator.clipboard.writeText(shortUrl);
+      toast({ description: "Copied to clipboard.", variant: "success" });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
       <ProfileLayout>
         <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-6xl">
-          <header className="flex items-center gap-4">
-            <Avatar size={96} avatarURL={image} />
-            <div className="flex flex-col gap-2">
-              <a
-                href={`https://github.com/${repoData.full_name}`}
-                target="_blank"
-                className="group hover:underline underline-offset-2 text-xl md:text-3xl font-bold flex gap-2 items-center"
+          <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
+            <header className="flex items-center gap-4">
+              <Avatar size={96} avatarURL={image} />
+              <div className="flex flex-col gap-2">
+                <a
+                  href={`https://github.com/${repoData.full_name}`}
+                  target="_blank"
+                  className="group hover:underline underline-offset-2 text-xl md:text-3xl font-bold flex gap-2 items-center"
+                >
+                  <h1>{repoData.full_name}</h1>
+                  <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
+                </a>
+                <p className="md:text-xl">{repoData.description}</p>
+              </div>
+            </header>
+            <div className="self-end flex gap-2 items-center">
+              <DayRangePicker />
+              <Button
+                variant="outline"
+                onClick={copyUrlToClipboard}
+                className="my-auto gap-2 items-center shrink-0 place-self-end"
               >
-                <h1>{repoData.full_name}</h1>
-                <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
-              </a>
-              <p className="md:text-xl">{repoData.description}</p>
+                <FiCopy />
+                Share
+              </Button>
             </div>
-          </header>
-          <DayRangePicker />
+          </div>
           <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
             <ClientOnly>
               <MetricCard variant="stars" stats={starsData} range={range} isLoading={isStarsDataLoading} />
