@@ -124,7 +124,7 @@ export default function StarSearchWaitListPage({
 
   const router = useRouter();
   const { add } = router.query;
-  const autoAdd = add === "true" && !isWaitlisted;
+  const autoAdd = add === "true" && !isWaitlisted && sessionToken;
 
   if (autoAdd) {
     joinWaitlist();
@@ -142,7 +142,7 @@ export default function StarSearchWaitListPage({
         <p className="font-semibold text-5xl text-center tracking-tight text-balance">Copilot, but for git history</p>
         <p className="text-center">Ask anything, get AI powered insights on based contributor data</p>
         <div className="grid place-content-center h-16">
-          {isWaitlisted && waitlistCount ? (
+          {sessionToken && isWaitlisted && waitlistCount ? (
             <>
               {alreadyOnWaitlist ? (
                 <p className="grid place-content-center">
@@ -156,7 +156,7 @@ export default function StarSearchWaitListPage({
             </>
           ) : (
             <>
-              {autoAdd && sessionToken ? null : (
+              {autoAdd ? null : (
                 <>
                   {sessionToken ? (
                     <form
