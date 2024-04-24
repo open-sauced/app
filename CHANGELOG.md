@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.21.0-beta.2](https://github.com/open-sauced/app/compare/v2.21.0-beta.1...v2.21.0-beta.2) (2024-04-24)
+
+
+### 🍕 Features
+
+* add share button to repo pages ([#3235](https://github.com/open-sauced/app/issues/3235)) ([cde9d62](https://github.com/open-sauced/app/commit/cde9d62266f14fc04374f515e154ec1fa460d3f0))
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch responses with links have styled links ([#3236](https://github.com/open-sauced/app/issues/3236)) ([99e622e](https://github.com/open-sauced/app/commit/99e622ea1d30013dfdb4812d059d442d6a42a6c0))
+
 ## [2.21.0-beta.1](https://github.com/open-sauced/app/compare/v2.20.0...v2.21.0-beta.1) (2024-04-24)
 
 
