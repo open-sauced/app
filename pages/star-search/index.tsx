@@ -24,13 +24,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } = await supabase.auth.getSession();
 
   const userId = Number(session?.user.user_metadata.sub);
-  if (!userId) {
-    return { notFound: true };
-  }
+  const featureFlags = userId ? await getAllFeatureFlags(userId) : null;
 
-  const featureFlags = await getAllFeatureFlags(userId);
-  if (!featureFlags["star_search"]) {
-    return { notFound: true };
+  if (!userId || featureFlags == null || !featureFlags["star_search"]) {
+    return { redirect: { destination: `/star-search/waitlist`, permanent: false } };
   }
 
   const ogImageUrl = `${new URL(
