@@ -67,7 +67,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     data: { session },
   } = await supabase.auth.getSession();
 
-  let isWaitlisted = false;
+  let alreadyOnWaitlist = false;
   let initialWaitlistCount = 0;
 
   if (session) {
@@ -82,29 +82,29 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     const [waitlistPayload, user] = await Promise.all([waitlistCountResponse.json(), userResponse.json()]);
 
-    isWaitlisted = user.is_waitlisted;
+    alreadyOnWaitlist = user.is_waitlisted;
     initialWaitlistCount = waitlistPayload.waitlisted_users;
   }
 
   return {
     props: {
-      isWaitlisted,
+      alreadyOnWaitlist,
       initialWaitlistCount,
     },
   };
 };
 
 interface StarSearchWaitListPageProps {
-  isWaitlisted: boolean;
+  alreadyOnWaitlist: boolean;
   initialWaitlistCount: number;
 }
 
 export default function StarSearchWaitListPage({
-  isWaitlisted: initialIsWaitlisted,
+  alreadyOnWaitlist,
   initialWaitlistCount,
 }: StarSearchWaitListPageProps) {
-  const { sessionToken, signIn, user } = useSupabaseAuth();
-  const [isWaitlisted, setIsWaitlisted] = useState<boolean>(initialIsWaitlisted);
+  const { sessionToken, signIn } = useSupabaseAuth();
+  const [isWaitlisted, setIsWaitlisted] = useState<boolean>(alreadyOnWaitlist);
   const { data: waitlistCount } = useWaitlistCount(initialWaitlistCount);
 
   async function joinWaitlist() {
@@ -124,7 +124,7 @@ export default function StarSearchWaitListPage({
 
   const router = useRouter();
   const { add } = router.query;
-  const autoAdd = add === "true";
+  const autoAdd = add === "true" && !isWaitlisted;
 
   if (autoAdd) {
     joinWaitlist();
@@ -143,12 +143,20 @@ export default function StarSearchWaitListPage({
         <p className="text-center">Ask anything, get AI powered insights on based contributor data</p>
         <div className="grid place-content-center h-16">
           {isWaitlisted && waitlistCount ? (
-            <p className="grid place-content-center">
-              You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!
-            </p>
+            <>
+              {alreadyOnWaitlist ? (
+                <p className="grid place-content-center">
+                  You&apos;re already on the waitlist along with {humanizeNumber(waitlistCount)} other people.
+                </p>
+              ) : (
+                <p className="grid place-content-center">
+                  You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!
+                </p>
+              )}
+            </>
           ) : (
             <>
-              {autoAdd ? null : (
+              {autoAdd && sessionToken ? null : (
                 <>
                   {sessionToken ? (
                     <form
