@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.21.0-beta.1](https://github.com/open-sauced/app/compare/v2.20.0...v2.21.0-beta.1) (2024-04-24)
+
+
+### 🍕 Features
+
+* implemented StarSearch waitlist ([#3231](https://github.com/open-sauced/app/issues/3231)) ([654d525](https://github.com/open-sauced/app/commit/654d52550a805f59ae9c50770316e84367adf9f9))
+
 ## [2.20.0](https://github.com/open-sauced/app/compare/v2.19.0...v2.20.0) (2024-04-23)
 
 
