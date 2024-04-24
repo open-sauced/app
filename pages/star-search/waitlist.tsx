@@ -140,7 +140,7 @@ export default function StarSearchWaitListPage({
           </h1>
         </div>
         <p className="font-semibold text-5xl text-center tracking-tight text-balance">Copilot, but for git history</p>
-        <p className="text-center">Ask anything, get AI powered insights on based contributor data</p>
+        <p className="text-center">Ask anything, get AI powered insights based on contributor data</p>
         <div className="grid place-content-center h-16">
           {sessionToken && isWaitlisted && waitlistCount ? (
             <>
