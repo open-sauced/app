@@ -99,26 +99,6 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
           <ClientOnly>
             <section className="w-full h-fit grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-2">
               <RepositoryStatCard
-                type="engagement"
-                stats={{
-                  stars: repoData.stars,
-                  forks: repoData.forks,
-                  activity_ratio: repoData.activity_ratio!,
-                }}
-                isLoading={false}
-                hasError={false}
-              />
-              <RepositoryStatCard
-                type="pulls"
-                stats={{
-                  opened: repoData.open_prs_count!,
-                  merged: repoData.merged_prs_count!,
-                  velocity: repoData.pr_velocity_count!,
-                }}
-                isLoading={false}
-                hasError={false}
-              />
-              <RepositoryStatCard
                 type="stars"
                 isLoading={isStarsDataLoading}
                 hasError={starsError !== undefined}
