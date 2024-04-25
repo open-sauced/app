@@ -14,10 +14,7 @@ export default function WorkspaceBanner({ workspaceId, openModal }: WorkspaceBan
   }, []);
 
   return (
-    <button
-      onClick={openModal}
-      className="absolute top-0 inset-x-0 w-full h-fit px-4 py-2 bg-light-orange-10 text-white"
-    >
+    <button onClick={openModal} className="inset-x-0 w-full h-fit px-4 py-2 bg-light-orange-10 text-white">
       This workspace is over the free limit. <span className="font-bold underline">Upgrade to a PRO Workspace.</span>
     </button>
   );
