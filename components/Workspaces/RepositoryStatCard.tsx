@@ -148,7 +148,7 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
                         ? stat === "over_range"
                           ? `Over ${stats.range} Days`
                           : stat === "average_over_range"
-                          ? `Avg. Over ${stats.range} Days`
+                          ? `Avg. per day`
                           : stat.replace("_", " ")
                         : stat.replace("_", " ")}
                       <span
