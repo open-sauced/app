@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.21.0-beta.5](https://github.com/open-sauced/app/compare/v2.21.0-beta.4...v2.21.0-beta.5) (2024-04-25)
+
+
+### 🍕 Features
+
+* update stars and forks stats on repo pages ([#3199](https://github.com/open-sauced/app/issues/3199)) ([43ffce4](https://github.com/open-sauced/app/commit/43ffce4ac78bf9a6711526715bda5d7eea4f6ae5))
+
 ## [2.21.0-beta.4](https://github.com/open-sauced/app/compare/v2.21.0-beta.3...v2.21.0-beta.4) (2024-04-25)
 
 
