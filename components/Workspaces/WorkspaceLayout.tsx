@@ -3,9 +3,11 @@ import { LuArrowRightToLine } from "react-icons/lu";
 import { useOutsideClick } from "rooks";
 import { useRef } from "react";
 import clsx from "clsx";
+import Link from "next/link";
 import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface WorkspaceLayoutProps {
@@ -20,6 +22,8 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
   const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", isLargeScreen);
   const hideSidebar = () => setShowingSidebar(false);
   const sidebarRef = useRef<HTMLSpanElement | null>(null);
+  const { user } = useSupabaseAuth();
+
   useOutsideClick(
     sidebarRef,
     (event) => {
@@ -75,6 +79,16 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
       {footer ? (
         <div className="sticky bottom-0 bg-light-slate-2 border-t h-16 pr-3 flex flex-col justify-center items-end">
           <div className="border-t flex">{footer}</div>
+        </div>
+      ) : null}
+      {!user ? (
+        <div className="sticky bottom-0 bg-light-slate-2 border-t h-16 pr-3 flex flex-col justify-center items-end">
+          <p className="w-full px-4">
+            <Link href="/start" className="text-sauced-orange hover:underline">
+              Sign up
+            </Link>{" "}
+            to start tracking your projects!
+          </p>
         </div>
       ) : null}
     </>
