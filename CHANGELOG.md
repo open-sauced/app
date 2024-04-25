@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.2](https://github.com/open-sauced/app/compare/v2.22.0-beta.1...v2.22.0-beta.2) (2024-04-25)
+
+
+### 🐛 Bug Fixes
+
+* use direct OpenGraph Image URLs on repository insight pages ([#3256](https://github.com/open-sauced/app/issues/3256)) ([0578019](https://github.com/open-sauced/app/commit/0578019257797573cb6c7583399a8eda6e054372))
+
 ## [2.22.0-beta.1](https://github.com/open-sauced/app/compare/v2.21.0...v2.22.0-beta.1) (2024-04-25)
 
 
