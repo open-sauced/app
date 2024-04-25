@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.21.0-beta.4](https://github.com/open-sauced/app/compare/v2.21.0-beta.3...v2.21.0-beta.4) (2024-04-25)
+
+
+### 🍕 Features
+
+* add OG image to StarSearch waitlist ([#3245](https://github.com/open-sauced/app/issues/3245)) ([8563264](https://github.com/open-sauced/app/commit/8563264dd477969d569e7936e096b30182aa3e2d))
+
 ## [2.21.0-beta.3](https://github.com/open-sauced/app/compare/v2.21.0-beta.2...v2.21.0-beta.3) (2024-04-25)
 
 
