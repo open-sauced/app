@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-  <img alt="OpenSauced" src="https://i.ibb.co/7jPXt0Z/logo1-92f1a87f.png" width="300px">
+  <img alt="OpenSauced" src="https://github.com/open-sauced/assets/blob/main/logos/logo-on-dark.png" width="300px">
   <h1>🍕 app.opensauced.pizza 🍕</h1>
   <strong>The site provides insights to Open Source projects.</strong>
 </div>
