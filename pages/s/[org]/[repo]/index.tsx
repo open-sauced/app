@@ -98,7 +98,6 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
     }
   };
 
-
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
@@ -131,7 +130,6 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
               </Button>
             </div>
           </div>
-          <DayRangePicker />
           <ClientOnly>
             <section className="w-full h-fit grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-2">
               <RepositoryStatCard
