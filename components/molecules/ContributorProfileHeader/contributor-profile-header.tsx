@@ -218,13 +218,13 @@ const ContributorProfileHeader = ({
                             {isFollowing ? (
                               <>
                                 <button onClick={handleFollowClick} className="group flex items-center gap-1 pl-3 pr-7">
-                                  <span className="hidden text-center sm:block group-hover:hidden">Following</span>
-                                  <span className="block text-center sm:hidden group-hover:block">Unfollow</span>
+                                  <span className="hidden text-center group-hover:hidden">Following</span>
+                                  <span className="block text-center group-hover:block">Unfollow</span>
                                 </button>
                               </>
                             ) : (
                               <>
-                                <button className="w-[6.25rem] text-center hidden md:flex" onClick={handleFollowClick}>
+                                <button className="w-[6.25rem] text-center flex" onClick={handleFollowClick}>
                                   Follow
                                 </button>
                               </>
