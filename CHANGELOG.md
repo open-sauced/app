@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.21.0-beta.3](https://github.com/open-sauced/app/compare/v2.21.0-beta.2...v2.21.0-beta.3) (2024-04-25)
+
+
+### 🐛 Bug Fixes
+
+* now suggestion prompts run immediately ([#3242](https://github.com/open-sauced/app/issues/3242)) ([662d0b5](https://github.com/open-sauced/app/commit/662d0b50855db11cf472431b39483249004a9f1d))
+
 ## [2.21.0-beta.2](https://github.com/open-sauced/app/compare/v2.21.0-beta.1...v2.21.0-beta.2) (2024-04-24)
 
 
