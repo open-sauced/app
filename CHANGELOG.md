@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.21.0](https://github.com/open-sauced/app/compare/v2.20.0...v2.21.0) (2024-04-25)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch responses with links have styled links ([#3236](https://github.com/open-sauced/app/issues/3236)) ([99e622e](https://github.com/open-sauced/app/commit/99e622ea1d30013dfdb4812d059d442d6a42a6c0))
+* now suggestion prompts run immediately ([#3242](https://github.com/open-sauced/app/issues/3242)) ([662d0b5](https://github.com/open-sauced/app/commit/662d0b50855db11cf472431b39483249004a9f1d))
+
+
+### 🍕 Features
+
+* add OG image to StarSearch waitlist ([#3245](https://github.com/open-sauced/app/issues/3245)) ([8563264](https://github.com/open-sauced/app/commit/8563264dd477969d569e7936e096b30182aa3e2d))
+* add share button to repo pages ([#3235](https://github.com/open-sauced/app/issues/3235)) ([cde9d62](https://github.com/open-sauced/app/commit/cde9d62266f14fc04374f515e154ec1fa460d3f0))
+* implemented StarSearch waitlist ([#3231](https://github.com/open-sauced/app/issues/3231)) ([654d525](https://github.com/open-sauced/app/commit/654d52550a805f59ae9c50770316e84367adf9f9))
+* update stars and forks stats on repo pages ([#3199](https://github.com/open-sauced/app/issues/3199)) ([43ffce4](https://github.com/open-sauced/app/commit/43ffce4ac78bf9a6711526715bda5d7eea4f6ae5))
+
+
+### 🧑‍💻 Code Refactoring
+
+* show banner across workspace when limits are exceeded ([#3233](https://github.com/open-sauced/app/issues/3233)) ([f0d1dac](https://github.com/open-sauced/app/commit/f0d1dac5e434324fee0573714f760403aec04a02))
+
 ## [2.21.0-beta.6](https://github.com/open-sauced/app/compare/v2.21.0-beta.5...v2.21.0-beta.6) (2024-04-25)
 
 
