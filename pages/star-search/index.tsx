@@ -210,7 +210,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
     <>
       <SEO
         title="OpenSauced Insights - StarSearch"
-        description="Copilot, but for your git history"
+        description="Copilot, but for git history"
         image={ogImageUrl}
         twitterCard="summary_large_image"
       />
