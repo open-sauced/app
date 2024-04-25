@@ -143,7 +143,7 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
               .map(([stat, value]) => {
                 return (
                   <tr key={stat} className="flex flex-col">
-                    <th scope="row" className="capitalize font-normal text-lg lg:text-sm text-light-slate-12 text-left">
+                    <th scope="row" className="capitalize font-normal text-xs lg:text-sm text-light-slate-12 text-left">
                       {type === "stars" || type === "forks"
                         ? stat === "over_range"
                           ? `Over ${stats.range} Days`
