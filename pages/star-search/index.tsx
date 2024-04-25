@@ -1,15 +1,20 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
+
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { BsArrowUpShort } from "react-icons/bs";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
-import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { getAvatarById } from "lib/utils/github";
+import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { Drawer } from "components/shared/Drawer";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import Button from "components/shared/Button/button";
 import SEO from "layouts/SEO/SEO";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -19,13 +24,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } = await supabase.auth.getSession();
 
   const userId = Number(session?.user.user_metadata.sub);
-  if (!userId) {
-    return { notFound: true };
-  }
+  const featureFlags = userId ? await getAllFeatureFlags(userId) : null;
 
-  const featureFlags = await getAllFeatureFlags(userId);
-  if (!featureFlags["star_search"]) {
-    return { notFound: true };
+  if (!userId || featureFlags == null || !featureFlags["star_search"]) {
+    return { redirect: { destination: `/star-search/waitlist`, permanent: false } };
   }
 
   const ogImageUrl = `${new URL(
@@ -50,7 +52,30 @@ type StarSearchChat = {
 export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 576px)");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  function addPromptInput(prompt: string) {
+    if (!inputRef.current?.form) {
+      return;
+    }
+
+    inputRef.current.value = prompt;
+    const { form } = inputRef.current;
+
+    if (typeof form.requestSubmit === "function") {
+      form.requestSubmit();
+    } else {
+      form.dispatchEvent(new Event("submit", { cancelable: true }));
+    }
+  }
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat, showSuggestions]);
 
   const submitPrompt = async (prompt: string) => {
     if (isRunning) {
@@ -125,15 +150,58 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   const renderState = () => {
     switch (starSearchState) {
       case "initial":
-        return <Header />;
+        return (
+          <div className="flex flex-col text-center items-center gap-4 lg:pt-12 z-10">
+            <Header />
+            <SuggestionBoxes addPromptInput={addPromptInput} />
+          </div>
+        );
       case "chat":
         return (
-          <ChatHistory
-            userId={userId}
-            chat={chat}
-            resetChat={() => setStarSearchState("initial")}
-            isRunning={isRunning}
-          />
+          <div aria-live="polite" className="w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto">
+            <ScrollArea className="relative grow items-center flex flex-col h-full max-h-[34rem] lg:max-h-[52rem]">
+              {chat.map((message, i) => (
+                <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
+              ))}
+              {!isRunning ? (
+                <div className="flex justify-end mb-4">
+                  <button
+                    type="button"
+                    className="flex gap-2 items-center hover:text-sauced-orange"
+                    onClick={() => {
+                      setStarSearchState("initial");
+                      setChat([]);
+                    }}
+                  >
+                    Clear chat history
+                    <TrashIcon width={16} height={16} />
+                  </button>
+                </div>
+              ) : null}
+              {!isMobile && showSuggestions && (
+                <div className="flex flex-col gap-2">
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      setShowSuggestions(false);
+                      inputRef.current?.focus();
+                    }}
+                    className="flex gap-2 w-fit self-end"
+                  >
+                    Close
+                  </Button>
+                  <SuggestionBoxes
+                    isHorizontal
+                    addPromptInput={(prompt) => {
+                      addPromptInput(prompt);
+                      setShowSuggestions(false);
+                    }}
+                  />
+                </div>
+              )}
+              <div ref={scrollRef} />
+            </ScrollArea>
+          </div>
         );
     }
   };
@@ -142,16 +210,45 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
     <>
       <SEO
         title="OpenSauced Insights - StarSearch"
-        description="Copilot, but for your git history"
+        description="Copilot, but for git history"
         image={ogImageUrl}
         twitterCard="summary_large_image"
       />
       <ProfileLayout>
         <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
-          <main className="mx-auto px-auto w-full h-full max-h-99 z-10">
-            {renderState()}
-            <StarSearchInput isRunning={isRunning} onSubmitPrompt={submitPrompt} />
-          </main>
+          {renderState()}
+          <div className="absolute inset-x-0 bottom-2 flex flex-col gap-4 items-center w-full px-2">
+            {!isRunning &&
+              starSearchState === "chat" &&
+              (isMobile ? (
+                <Drawer
+                  title="Choose a suggestion"
+                  description="You can customize the prompt after selection"
+                  showCloseButton
+                  trigger={
+                    <button className="z-30 flex gap-1 shadow-xs items-center text-slate-700 text-sm font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  }
+                >
+                  <SuggestionBoxes addPromptInput={addPromptInput} />
+                </Drawer>
+              ) : (
+                <>
+                  {!showSuggestions && (
+                    <button
+                      onClick={() => setShowSuggestions(!showSuggestions)}
+                      className="z-30 mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full"
+                    >
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  )}
+                </>
+              ))}
+            <StarSearchInput ref={inputRef} isRunning={isRunning} onSubmitPrompt={submitPrompt} />
+          </div>
           <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
         </div>
       </ProfileLayout>
@@ -169,12 +266,17 @@ function Header() {
         </h1>
       </div>
       <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Ask questions about contributors</h2>
-      <SuggestionBoxes />
     </section>
   );
 }
 
-function SuggestionBoxes() {
+function SuggestionBoxes({
+  addPromptInput,
+  isHorizontal,
+}: {
+  addPromptInput: (prompt: string) => void;
+  isHorizontal?: boolean;
+}) {
   const suggestions = [
     {
       title: "Get information on contributor activity",
@@ -194,56 +296,25 @@ function SuggestionBoxes() {
     },
   ];
   return (
-    <ScrollArea className="w-full pt-0 pb-8 lg:py-8 max-w-3xl h-full">
-      <div className="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-0 lg:gap-4">
-        {suggestions.map((suggestion, i) => (
-          <button key={i}>
-            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
-              <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
-              <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
-            </Card>
-          </button>
-        ))}
-      </div>
-    </ScrollArea>
-  );
-}
-
-function ChatHistory({
-  userId,
-  chat,
-  resetChat,
-  isRunning,
-}: {
-  userId: number;
-  chat: StarSearchChat[];
-  resetChat: () => void;
-  isRunning: boolean;
-}) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat]);
-  return (
-    <div aria-live="polite" className="w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto">
-      <ScrollArea className="relative grow items-center flex flex-col h-full max-h-[34rem] lg:max-h-[52rem]">
-        {chat.map((message, i) => (
-          <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
-        ))}
-        <div ref={scrollRef} />
-      </ScrollArea>
-      {!isRunning ? (
-        <div className="flex justify-end mb-4">
-          <button
-            type="button"
-            className="flex gap-2 items-center hover:text-sauced-orange"
-            onClick={() => resetChat()}
+    <div
+      className={`${
+        isHorizontal
+          ? "flex flex-row overflow-x-scroll justify-stretch items-stretch snap-x"
+          : "grid grid-cols-1 lg:grid-cols-2"
+      } lg:gap-4 w-full pt-0 pb-8 lg:py-8 max-w-3xl h-fit mx-auto px-auto`}
+    >
+      {suggestions.map((suggestion, i) => (
+        <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
+          <Card
+            className={`${
+              isHorizontal ? "w-[30rem] h-full snap-start" : "w-full h-fit"
+            } shadow-md border-none text-start !p-6 text-slate-600`}
           >
-            Clear chat history
-            <TrashIcon width={16} height={16} />
-          </button>
-        </div>
-      ) : null}
+            <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
+            <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
+          </Card>
+        </button>
+      ))}
     </div>
   );
 }
@@ -277,9 +348,9 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   };
 
   return (
-    <li className="flex gap-2 items-start my-4">
+    <li className="flex gap-2 justify-center items-start my-4 w-full">
       {renderAvatar()}
-      <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl">
+      <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
         <h3 className="font-semibold text-sauced-orange">{author}</h3>
         <Markdown>{content}</Markdown>
       </Card>
@@ -287,15 +358,15 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   );
 }
 
-function StarSearchInput({
-  isRunning,
-  onSubmitPrompt,
-}: {
-  isRunning: boolean;
-  onSubmitPrompt: (prompt: string) => void;
-}) {
+const StarSearchInput = forwardRef<
+  HTMLInputElement,
+  {
+    isRunning: boolean;
+    onSubmitPrompt: (prompt: string) => void;
+  }
+>(function StarSearchInput({ isRunning, onSubmitPrompt }, ref) {
   return (
-    <section className="absolute inset-x-0 bottom-2 mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
+    <section className="mx-0.5 lg:mx-auto w-full lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -310,6 +381,7 @@ function StarSearchInput({
           required
           type="text"
           name="prompt"
+          ref={ref}
           disabled={isRunning}
           placeholder="Ask a question"
           className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
@@ -320,4 +392,4 @@ function StarSearchInput({
       </form>
     </section>
   );
-}
+});

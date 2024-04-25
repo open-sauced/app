@@ -5,6 +5,83 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.21.0-beta.5](https://github.com/open-sauced/app/compare/v2.21.0-beta.4...v2.21.0-beta.5) (2024-04-25)
+
+
+### 🍕 Features
+
+* update stars and forks stats on repo pages ([#3199](https://github.com/open-sauced/app/issues/3199)) ([43ffce4](https://github.com/open-sauced/app/commit/43ffce4ac78bf9a6711526715bda5d7eea4f6ae5))
+
+## [2.21.0-beta.4](https://github.com/open-sauced/app/compare/v2.21.0-beta.3...v2.21.0-beta.4) (2024-04-25)
+
+
+### 🍕 Features
+
+* add OG image to StarSearch waitlist ([#3245](https://github.com/open-sauced/app/issues/3245)) ([8563264](https://github.com/open-sauced/app/commit/8563264dd477969d569e7936e096b30182aa3e2d))
+
+## [2.21.0-beta.3](https://github.com/open-sauced/app/compare/v2.21.0-beta.2...v2.21.0-beta.3) (2024-04-25)
+
+
+### 🐛 Bug Fixes
+
+* now suggestion prompts run immediately ([#3242](https://github.com/open-sauced/app/issues/3242)) ([662d0b5](https://github.com/open-sauced/app/commit/662d0b50855db11cf472431b39483249004a9f1d))
+
+## [2.21.0-beta.2](https://github.com/open-sauced/app/compare/v2.21.0-beta.1...v2.21.0-beta.2) (2024-04-24)
+
+
+### 🍕 Features
+
+* add share button to repo pages ([#3235](https://github.com/open-sauced/app/issues/3235)) ([cde9d62](https://github.com/open-sauced/app/commit/cde9d62266f14fc04374f515e154ec1fa460d3f0))
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch responses with links have styled links ([#3236](https://github.com/open-sauced/app/issues/3236)) ([99e622e](https://github.com/open-sauced/app/commit/99e622ea1d30013dfdb4812d059d442d6a42a6c0))
+
+## [2.21.0-beta.1](https://github.com/open-sauced/app/compare/v2.20.0...v2.21.0-beta.1) (2024-04-24)
+
+
+### 🍕 Features
+
+* implemented StarSearch waitlist ([#3231](https://github.com/open-sauced/app/issues/3231)) ([654d525](https://github.com/open-sauced/app/commit/654d52550a805f59ae9c50770316e84367adf9f9))
+
+## [2.20.0](https://github.com/open-sauced/app/compare/v2.19.0...v2.20.0) (2024-04-23)
+
+
+### 🐛 Bug Fixes
+
+* delete multiple workspace contributor insights ([#3229](https://github.com/open-sauced/app/issues/3229)) ([2e7f6a6](https://github.com/open-sauced/app/commit/2e7f6a6ea510142437ff3fd8cbe170fdb4eebe71))
+* fixed StarSearch logo spacing ([#3222](https://github.com/open-sauced/app/issues/3222)) ([92eec49](https://github.com/open-sauced/app/commit/92eec49ce6a824d346cc6b80be8d884cd662cb33))
+
+
+### 🍕 Features
+
+* added million lint to the project ([#3108](https://github.com/open-sauced/app/issues/3108)) ([80c1dfb](https://github.com/open-sauced/app/commit/80c1dfbada5041116a0a7d49ea69a617588ecdcd))
+* added the StarSearch OG image ([#3224](https://github.com/open-sauced/app/issues/3224)) ([24fb24c](https://github.com/open-sauced/app/commit/24fb24c9df2f128292ce9cd51d8909933a53dd79))
+* implement suggestion boxes for `StarSearch` ([#3176](https://github.com/open-sauced/app/issues/3176)) ([d6690ef](https://github.com/open-sauced/app/commit/d6690ef3f1d73d32263c2e0bc54d095eed6a43e8))
+* now you can clear chat history ([#3221](https://github.com/open-sauced/app/issues/3221)) ([446e7c3](https://github.com/open-sauced/app/commit/446e7c31ba7eaf6710ec485e483a4e00c4615f82))
+
+## [2.20.0-beta.6](https://github.com/open-sauced/app/compare/v2.20.0-beta.5...v2.20.0-beta.6) (2024-04-23)
+
+
+### 🍕 Features
+
+* implement suggestion boxes for `StarSearch` ([#3176](https://github.com/open-sauced/app/issues/3176)) ([d6690ef](https://github.com/open-sauced/app/commit/d6690ef3f1d73d32263c2e0bc54d095eed6a43e8))
+
+## [2.20.0-beta.5](https://github.com/open-sauced/app/compare/v2.20.0-beta.4...v2.20.0-beta.5) (2024-04-23)
+
+
+### 🐛 Bug Fixes
+
+* delete multiple workspace contributor insights ([#3229](https://github.com/open-sauced/app/issues/3229)) ([2e7f6a6](https://github.com/open-sauced/app/commit/2e7f6a6ea510142437ff3fd8cbe170fdb4eebe71))
+
+## [2.20.0-beta.4](https://github.com/open-sauced/app/compare/v2.20.0-beta.3...v2.20.0-beta.4) (2024-04-22)
+
+
+### 🍕 Features
+
+* added million lint to the project ([#3108](https://github.com/open-sauced/app/issues/3108)) ([80c1dfb](https://github.com/open-sauced/app/commit/80c1dfbada5041116a0a7d49ea69a617588ecdcd))
+
 ## [2.20.0-beta.3](https://github.com/open-sauced/app/compare/v2.20.0-beta.2...v2.20.0-beta.3) (2024-04-19)
 
 
