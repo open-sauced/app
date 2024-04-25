@@ -1,5 +1,8 @@
+import { FaStar } from "react-icons/fa6";
+import { BiGitRepoForked } from "react-icons/bi";
 import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, MinusSmallIcon } from "@heroicons/react/24/solid";
 import { GitPullRequestIcon, HeartIcon, IssueOpenedIcon } from "@primer/octicons-react";
+
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
@@ -21,12 +24,22 @@ type RepositoryStatCardProps = {
       type: "engagement";
       stats: { stars: number; forks: number; activity_ratio: number } | undefined;
     }
+  | {
+      type: "stars";
+      stats: { total: number; range: number; over_range: number; average_over_range: number } | undefined;
+    }
+  | {
+      type: "forks";
+      stats: { total: number; range: number; over_range: number; average_over_range: number } | undefined;
+    }
 );
 
 const titles = {
   pulls: "Pull Requests",
   issues: "Issues",
   engagement: "Engagement",
+  stars: "Stars",
+  forks: "Forks",
 } as const;
 
 type CardType = RepositoryStatCardProps["type"];
@@ -39,6 +52,10 @@ function getIcon(type: CardType) {
       return <IssueOpenedIcon size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
     case "engagement":
       return <HeartIcon size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
+    case "stars":
+      return <FaStar size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
+    case "forks":
+      return <BiGitRepoForked size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
   }
 }
 
@@ -50,6 +67,9 @@ function getStatPropertiesByType(type: CardType) {
       return ["opened", "closed", "velocity"];
     case "engagement":
       return ["stars", "forks", "activity_ratio"];
+    case "forks":
+    case "stars":
+      return ["total", "over_range", "average_over_range"];
     default:
       throw new Error("Invalid repository stat card type");
   }
@@ -123,8 +143,14 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
               .map(([stat, value]) => {
                 return (
                   <tr key={stat} className="flex flex-col">
-                    <th scope="row" className="capitalize font-normal text-lg lg:text-sm text-light-slate-12 text-left">
-                      {stat.replace("_", " ")}
+                    <th scope="row" className="capitalize font-normal text-xs lg:text-sm text-light-slate-12 text-left">
+                      {type === "stars" || type === "forks"
+                        ? stat === "over_range"
+                          ? `Over ${stats.range} Days`
+                          : stat === "average_over_range"
+                          ? `Avg. per day`
+                          : stat.replace("_", " ")
+                        : stat.replace("_", " ")}
                       <span
                         className={`w-2 h-2 rounded-full ml-1  ${
                           stat === "opened"

@@ -1,6 +1,5 @@
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { ComponentProps } from "react";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { usePostHog } from "posthog-js/react";
 import { FiCopy } from "react-icons/fi";
@@ -11,9 +10,9 @@ import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
-import MetricCard from "components/Graphs/MetricCard";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
+import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
@@ -42,7 +41,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return { props: { repoData, image: owner?.avatar_url || "", ogImageUrl } };
 }
 
-type Range = ComponentProps<typeof MetricCard>["range"];
+type Range = 30 | 7 | 90 | 180 | 360;
 
 interface RepoPageProps {
   repoData: DbRepo;
@@ -81,6 +80,9 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
     variant: "forks",
     range,
   });
+
+  const starsRangedTotal = starsData?.reduce((prev, curr) => prev + curr.star_count!, 0);
+  const forksRangedTotal = forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0);
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
@@ -128,26 +130,46 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
               </Button>
             </div>
           </div>
-          <section className="flex flex-col gap-2 md:gap-4 lg:gap-8 lg:flex-row w-full justify-between">
-            <ClientOnly>
-              <MetricCard variant="stars" stats={starsData} range={range} isLoading={isStarsDataLoading} />
-              <MetricCard variant="forks" stats={forkStats} range={range} isLoading={isForksDataLoading} />
-            </ClientOnly>
-          </section>
-          <StarsChart
-            stats={starsData}
-            total={repoData.stars}
-            range={range}
-            syncId={syncId}
-            isLoading={isStarsDataLoading}
-          />
-          <ForksChart
-            stats={forkStats}
-            total={repoData.forks}
-            range={range}
-            syncId={syncId}
-            isLoading={isForksDataLoading}
-          />
+          <ClientOnly>
+            <section className="w-full h-fit grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-2">
+              <RepositoryStatCard
+                type="stars"
+                isLoading={isStarsDataLoading}
+                hasError={starsError !== undefined}
+                stats={{
+                  total: repoData.stars,
+                  over_range: starsRangedTotal!,
+                  range,
+                  average_over_range: Math.round(starsRangedTotal! / range),
+                }}
+              />
+              <RepositoryStatCard
+                type="forks"
+                isLoading={isForksDataLoading}
+                hasError={forkError !== undefined}
+                stats={{
+                  total: repoData.forks,
+                  over_range: forksRangedTotal!,
+                  range,
+                  average_over_range: Math.round(forksRangedTotal! / range),
+                }}
+              />
+            </section>
+            <StarsChart
+              stats={starsData}
+              total={repoData.stars}
+              range={range}
+              syncId={syncId}
+              isLoading={isStarsDataLoading}
+            />
+            <ForksChart
+              stats={forkStats}
+              total={repoData.forks}
+              range={range}
+              syncId={syncId}
+              isLoading={isForksDataLoading}
+            />
+          </ClientOnly>
         </section>
       </ProfileLayout>
     </>
