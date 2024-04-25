@@ -23,8 +23,10 @@ import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilt
 import { OptionKeys } from "components/atoms/Select/multi-select";
 import { WorkspaceOgImage, getWorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
 import { useHasMounted } from "lib/hooks/useHasMounted";
+import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -39,6 +41,17 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     bearerToken,
     pathValidator: () => true,
   });
+  const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
+    path: `workspaces/${workspaceId}/members`,
+    bearerToken,
+    pathValidator: () => true,
+  });
+
+  const userId = Number(session?.user.user_metadata.sub);
+
+  const isOwner = !!(workspaceMembers?.data || []).find(
+    (member) => member.role === "owner" && member.user_id === userId
+  );
 
   if (error) {
     deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
@@ -57,15 +70,17 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
-  return { props: { workspace: data, ogImage: `${ogImage.href}` } };
+  return { props: { workspace: data, isOwner, overLimit: !!data?.exceeds_upgrade_limits, ogImage: `${ogImage.href}` } };
 };
 
 interface WorkspaceDashboardProps {
   workspace: Workspace;
   ogImage: string;
+  isOwner: boolean;
+  overLimit: boolean;
 }
 
-const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => {
+const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: WorkspaceDashboardProps) => {
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
   const hasMounted = useHasMounted();
 
@@ -91,6 +106,9 @@ const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => 
     filteredRepositories.length > 0 ? filteredRepositories.map((repo) => repo.label) : []
   );
 
+  const showBanner = isOwner && overLimit;
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+
   useEffect(() => {
     setRepoIds(
       filteredRepositories.length > 0
@@ -106,7 +124,14 @@ const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => 
   return (
     <>
       {workspace.is_public ? <WorkspaceOgImage workspace={workspace} ogImage={ogImage} /> : null}
-      <WorkspaceLayout workspaceId={workspace.id}>
+      <WorkspaceLayout
+        workspaceId={workspace.id}
+        banner={
+          showBanner ? (
+            <WorkspaceBanner workspaceId={workspace.id} openModal={() => setIsInsightUpgradeModalOpen(true)} />
+          ) : null
+        }
+      >
         <WorkspaceHeader workspace={workspace} />
         <div className="grid sm:flex gap-4 pt-3">
           <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
@@ -160,6 +185,13 @@ const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => 
           onClose={() => {
             setShowWelcome(false);
           }}
+        />
+        <InsightUpgradeModal
+          workspaceId={workspace.id}
+          variant="contributors"
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          overLimit={10}
         />
       </WorkspaceLayout>
     </>

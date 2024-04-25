@@ -26,7 +26,7 @@ interface InsightPageProps {
 const HubPage = ({ insight, ogImage, workspaceId, owners, isOwner }: InsightPageProps) => {
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded && repositories.length > 100;
+  const showBanner = isOwner && !isWorkspaceUpgraded;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const hasMounted = useHasMounted();
 

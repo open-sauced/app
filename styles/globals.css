@@ -21,6 +21,7 @@ h4,
 h5,
 h6 {
   @apply tracking-tight;
+  text-wrap: balance;
 }
 button:not([role]) {
   @apply border;
@@ -225,4 +226,23 @@ svg:has(> #Mail) {
 but never configured it. */
 .bg-muted {
   @apply bg-slate-200;
+}
+
+.waitlist-chatbox ol {
+  @apply ml-5;
+}
+
+.waitlist-chatbox ol > li {
+  counter-increment: item;
+  @apply -indent-5;
+}
+
+.waitlist-chatbox ol > li::before {
+  @apply pr-1;
+  @apply font-semibold;
+  content: counter(item) ".";
+}
+
+.text-balance {
+  text-wrap: balance;
 }
