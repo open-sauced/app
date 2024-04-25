@@ -4,7 +4,6 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import SEO from "layouts/SEO/SEO";
-import fetchSocialCard from "lib/utils/fetch-social-card";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import HubPageLayout from "layouts/hub-page";
 import Activity from "components/organisms/Activity/activity";
@@ -98,7 +97,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   // Keeping this here so we are sure the page is not private before we fetch the social card.
-  const ogImage = await fetchSocialCard(`insights/${insightId}`);
+  const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/insights/${insightId}`;
 
   const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
     path: `workspaces/${workspaceId}/members`,
