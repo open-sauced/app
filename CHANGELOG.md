@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.21.0-beta.6](https://github.com/open-sauced/app/compare/v2.21.0-beta.5...v2.21.0-beta.6) (2024-04-25)
+
+
+### 🧑‍💻 Code Refactoring
+
+* show banner across workspace when limits are exceeded ([#3233](https://github.com/open-sauced/app/issues/3233)) ([f0d1dac](https://github.com/open-sauced/app/commit/f0d1dac5e434324fee0573714f760403aec04a02))
+
 ## [2.21.0-beta.5](https://github.com/open-sauced/app/compare/v2.21.0-beta.4...v2.21.0-beta.5) (2024-04-25)
 
 
