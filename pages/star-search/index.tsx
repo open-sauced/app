@@ -17,6 +17,8 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import Button from "components/shared/Button/button";
 import SEO from "layouts/SEO/SEO";
 
+const HEIGHT_TO_TAKE_OFF_SCROLL_AREA = 340;
+
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
   const {
@@ -158,8 +160,12 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         );
       case "chat":
         return (
-          <div aria-live="polite" className="w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto">
-            <ScrollArea className="relative grow items-center flex flex-col h-full max-h-[34rem] lg:max-h-[52rem]">
+          <>
+            <ScrollArea
+              aria-live="polite"
+              className="grow items-center flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto pb-4"
+              style={{ maxHeight: `calc(100vh - ${HEIGHT_TO_TAKE_OFF_SCROLL_AREA}px)` }}
+            >
               {chat.map((message, i) => (
                 <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
               ))}
@@ -178,30 +184,30 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   </button>
                 </div>
               ) : null}
-              {!isMobile && showSuggestions && (
-                <div className="flex flex-col gap-2">
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      setShowSuggestions(false);
-                      inputRef.current?.focus();
-                    }}
-                    className="flex gap-2 w-fit self-end"
-                  >
-                    Close
-                  </Button>
-                  <SuggestionBoxes
-                    isHorizontal
-                    addPromptInput={(prompt) => {
-                      addPromptInput(prompt);
-                      setShowSuggestions(false);
-                    }}
-                  />
-                </div>
-              )}
               <div ref={scrollRef} />
             </ScrollArea>
-          </div>
+            {!isMobile && showSuggestions && (
+              <div className="flex flex-col gap-2">
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    setShowSuggestions(false);
+                    inputRef.current?.focus();
+                  }}
+                  className="flex gap-2 w-fit self-end"
+                >
+                  Close
+                </Button>
+                <SuggestionBoxes
+                  isHorizontal
+                  addPromptInput={(prompt) => {
+                    addPromptInput(prompt);
+                    setShowSuggestions(false);
+                  }}
+                />
+              </div>
+            )}
+          </>
         );
     }
   };
