@@ -113,7 +113,7 @@ const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) =
           {getStatPropertiesByType(type).map((stat) => (
             <tr key={stat} className="flex flex-col">
               <th className="capitalize font-normal text-sm text-light-slate-11 text-left">{stat}</th>
-              <td className="font-medium text-2xl mt-1">
+              <td className="font-medium text-3xl lg:text-2xl">
                 <SkeletonWrapper width={40} height={20} />
               </td>
             </tr>
