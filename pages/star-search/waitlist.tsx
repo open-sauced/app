@@ -166,7 +166,7 @@ export default function StarSearchWaitListPage({
                   </p>
                 ) : (
                   <p className="grid place-content-center">
-                    You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!
+                    You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the StarSearch waitlist!
                   </p>
                 )}
               </>
