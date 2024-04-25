@@ -162,6 +162,7 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
                   opened: repoData.open_prs_count!,
                   merged: repoData.merged_prs_count!,
                   velocity: repoData.pr_velocity_count!,
+                  range,
                 }}
               />
               <RepositoryStatCard
@@ -172,6 +173,7 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
                   opened: repoData.opened_issues_count!,
                   closed: repoData.closed_issues_count!,
                   velocity: repoData.issues_velocity_count!,
+                  range,
                 }}
               />
             </section>
