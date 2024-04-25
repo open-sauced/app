@@ -512,6 +512,7 @@ interface Workspace {
   is_public: boolean;
   payee_user_id: string | null;
   members: WorkspaceMember[];
+  exceeds_upgrade_limits: boolean;
 }
 
 interface WorkspaceMember {
