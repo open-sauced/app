@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.4](https://github.com/open-sauced/app/compare/v2.22.0-beta.3...v2.22.0-beta.4) (2024-04-26)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch link is in sidebar for smaller screens ([#3263](https://github.com/open-sauced/app/issues/3263)) ([71cd5b9](https://github.com/open-sauced/app/commit/71cd5b96c41be3ed26280a76e29969f023015e84))
+
+## [2.22.0-beta.3](https://github.com/open-sauced/app/compare/v2.22.0-beta.2...v2.22.0-beta.3) (2024-04-25)
+
+
+### 🐛 Bug Fixes
+
+* fixed layout issues in StarSearch ([#3257](https://github.com/open-sauced/app/issues/3257)) ([ce07b8c](https://github.com/open-sauced/app/commit/ce07b8c11daf04b55056f459b72d93ab67f633f9))
+
+## [2.22.0-beta.2](https://github.com/open-sauced/app/compare/v2.22.0-beta.1...v2.22.0-beta.2) (2024-04-25)
+
+
+### 🐛 Bug Fixes
+
+* use direct OpenGraph Image URLs on repository insight pages ([#3256](https://github.com/open-sauced/app/issues/3256)) ([0578019](https://github.com/open-sauced/app/commit/0578019257797573cb6c7583399a8eda6e054372))
+
+## [2.22.0-beta.1](https://github.com/open-sauced/app/compare/v2.21.0...v2.22.0-beta.1) (2024-04-25)
+
+
+### 🍕 Features
+
+* implement PR and issue devstats to repo pages ([#3253](https://github.com/open-sauced/app/issues/3253)) ([caa7eea](https://github.com/open-sauced/app/commit/caa7eea4d764aee96c8d90c6ad4ffb62895312dd))
+
 ## [2.21.0](https://github.com/open-sauced/app/compare/v2.20.0...v2.21.0) (2024-04-25)
 
 

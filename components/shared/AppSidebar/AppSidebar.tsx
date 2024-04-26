@@ -214,6 +214,11 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                 url={`/${userInterest}/dashboard/filter/recent`}
                 icon={<Squares2X2Icon className="w-5 h-5 text-slate-400" />}
               />
+              <SidebarMenuItem
+                title="StarSearch"
+                url={"/star-search"}
+                icon={<img src="/assets/star-search-logo.svg" alt="" className="w-5 h-5" />}
+              />
             </ul>
             <ul className="border-t-1 pt-1 mb-2 px-2">
               <li>

@@ -7,6 +7,7 @@ import Image from "next/image";
 import Markdown from "react-markdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { BsArrowUpShort } from "react-icons/bs";
+import { XCircleIcon } from "@primer/octicons-react";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -14,8 +15,29 @@ import { getAvatarById } from "lib/utils/github";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { Drawer } from "components/shared/Drawer";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import Button from "components/shared/Button/button";
 import SEO from "layouts/SEO/SEO";
+
+const HEIGHT_TO_TAKE_OFF_SCROLL_AREA = 340;
+const SUGGESTIONS = [
+  {
+    title: "Get information on contributor activity",
+    prompt: "What type of pull requests has brandonroberts worked on?",
+  },
+  {
+    title: "Identify key contributors",
+    prompt: "Who are the most prevalent contributors to the Typescript ecosystem?",
+  },
+  {
+    title: "Find contributors based on their work",
+    prompt: "Who are people making pull requests in vercel/turbo about css modules?",
+  },
+  {
+    title: "Find experts",
+    prompt: "Who are the best developers that know Tailwind and are interested in Rust?",
+  },
+];
+
+type SuggesionTypes = (typeof SUGGESTIONS)[number];
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -153,13 +175,17 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         return (
           <div className="flex flex-col text-center items-center gap-4 lg:pt-12 z-10">
             <Header />
-            <SuggestionBoxes addPromptInput={addPromptInput} />
+            <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
           </div>
         );
       case "chat":
         return (
-          <div aria-live="polite" className="w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto">
-            <ScrollArea className="relative grow items-center flex flex-col h-full max-h-[34rem] lg:max-h-[52rem]">
+          <>
+            <ScrollArea
+              aria-live="polite"
+              className="grow items-center flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto pb-4"
+              style={{ maxHeight: `calc(100vh - ${HEIGHT_TO_TAKE_OFF_SCROLL_AREA}px)` }}
+            >
               {chat.map((message, i) => (
                 <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
               ))}
@@ -178,30 +204,30 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   </button>
                 </div>
               ) : null}
-              {!isMobile && showSuggestions && (
-                <div className="flex flex-col gap-2">
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      setShowSuggestions(false);
-                      inputRef.current?.focus();
-                    }}
-                    className="flex gap-2 w-fit self-end"
-                  >
-                    Close
-                  </Button>
-                  <SuggestionBoxes
-                    isHorizontal
-                    addPromptInput={(prompt) => {
-                      addPromptInput(prompt);
-                      setShowSuggestions(false);
-                    }}
-                  />
-                </div>
-              )}
               <div ref={scrollRef} />
             </ScrollArea>
-          </div>
+            {!isMobile && showSuggestions && (
+              <div className="flex flex-col gap-2 mb-14">
+                <button
+                  onClick={() => {
+                    setShowSuggestions(false);
+                    inputRef.current?.focus();
+                  }}
+                  className="flex gap-2 w-fit self-end hover:text-sauced-orange focus-visible:text-sauced-orange focus-visible:ring focus-visible:border-orange-500 focus-visible:ring-orange-100"
+                >
+                  <XCircleIcon className="w-6 h-6" aria-label="Close suggestions" />
+                </button>
+                <SuggestionBoxes
+                  isHorizontal
+                  addPromptInput={(prompt) => {
+                    addPromptInput(prompt);
+                    setShowSuggestions(false);
+                  }}
+                  suggestions={SUGGESTIONS}
+                />
+              </div>
+            )}
+          </>
         );
     }
   };
@@ -232,7 +258,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                     </button>
                   }
                 >
-                  <SuggestionBoxes addPromptInput={addPromptInput} />
+                  <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
                 </Drawer>
               ) : (
                 <>
@@ -273,41 +299,23 @@ function Header() {
 function SuggestionBoxes({
   addPromptInput,
   isHorizontal,
+  suggestions,
 }: {
   addPromptInput: (prompt: string) => void;
   isHorizontal?: boolean;
+  suggestions: SuggesionTypes[];
 }) {
-  const suggestions = [
-    {
-      title: "Get information on contributor activity",
-      prompt: "What type of pull requests has brandonroberts worked on?",
-    },
-    {
-      title: "Identify key contributors",
-      prompt: "Who are the most prevalent contributors to the Typescript ecosystem?",
-    },
-    {
-      title: "Find contributors based on their work",
-      prompt: "Who are people making pull requests in vercel/turbo about css modules?",
-    },
-    {
-      title: "Find experts",
-      prompt: "Who are the best developers that know Tailwind and are interested in Rust?",
-    },
-  ];
   return (
     <div
       className={`${
-        isHorizontal
-          ? "flex flex-row overflow-x-scroll justify-stretch items-stretch snap-x"
-          : "grid grid-cols-1 lg:grid-cols-2"
-      } lg:gap-4 w-full pt-0 pb-8 lg:py-8 max-w-3xl h-fit mx-auto px-auto`}
+        isHorizontal ? "flex overflow-x-scroll snap-x" : "grid grid-cols-1 lg:grid-cols-2 place-content-center"
+      } gap-2 lg:gap-4 w-full max-w-3xl`}
     >
       {suggestions.map((suggestion, i) => (
         <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
           <Card
             className={`${
-              isHorizontal ? "w-[30rem] h-full snap-start" : "w-full h-fit"
+              isHorizontal ? "w-[30rem] snap-start" : "w-full h-fit"
             } shadow-md border-none text-start !p-6 text-slate-600`}
           >
             <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>

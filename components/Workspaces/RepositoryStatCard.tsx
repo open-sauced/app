@@ -14,11 +14,11 @@ type RepositoryStatCardProps = {
 } & (
   | {
       type: "pulls";
-      stats: { opened: number; merged: number; velocity: number } | undefined;
+      stats: { opened: number; merged: number; velocity: number; range?: number } | undefined;
     }
   | {
       type: "issues";
-      stats: { opened: number; closed: number; velocity: number } | undefined;
+      stats: { opened: number; closed: number; velocity: number; range?: number } | undefined;
     }
   | {
       type: "engagement";
@@ -113,7 +113,7 @@ const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) =
           {getStatPropertiesByType(type).map((stat) => (
             <tr key={stat} className="flex flex-col">
               <th className="capitalize font-normal text-sm text-light-slate-11 text-left">{stat}</th>
-              <td className="font-medium text-2xl mt-1">
+              <td className="font-medium text-3xl lg:text-2xl">
                 <SkeletonWrapper width={40} height={20} />
               </td>
             </tr>
@@ -127,6 +127,7 @@ const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) =
 export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: RepositoryStatCardProps) => {
   const loadEmptyState = isLoading || hasError || !stats;
 
+  const rangeText = (type === "pulls" || type === "issues") && stats?.range ? `(${stats?.range} days)` : "";
   return (
     <Card className="w-full">
       {loadEmptyState ? (
@@ -135,7 +136,10 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
         <table className="grid gap-4 p-2">
           <caption className="flex items-center gap-1.5 lg:text-sm font-medium">
             {getIcon(type)}
-            <span className="text-slate-700">{titles[type]}</span>
+            <span className="flex gap-1 items-center text-slate-700">
+              {titles[type]}
+              {rangeText && <span className="text-slate-500">{rangeText}</span>}
+            </span>
           </caption>
           <tbody className="grid grid-cols-3 items center">
             {Object.entries(stats)
