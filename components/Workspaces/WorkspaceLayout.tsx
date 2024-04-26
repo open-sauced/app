@@ -82,13 +82,13 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
         </div>
       ) : null}
       {!user ? (
-        <div className="sticky bottom-0 bg-light-slate-2 border-t h-16 pr-3 flex flex-col justify-center items-end">
-          <p className="w-full px-4">
+        <div className="sticky bottom-0 bg-light-slate-2 border-t h-16 pr-3 grid place-content-center px-4 md:hidden">
+          <span>
             <Link href="/start" className="text-sauced-orange hover:underline">
               Sign up
             </Link>{" "}
             to start tracking your projects!
-          </p>
+          </span>
         </div>
       ) : null}
     </>
