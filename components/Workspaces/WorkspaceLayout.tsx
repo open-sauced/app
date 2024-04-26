@@ -1,9 +1,10 @@
 import { useLocalStorage } from "react-use";
 import { LuArrowRightToLine } from "react-icons/lu";
 import { useOutsideClick } from "rooks";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
+import { IoClose } from "react-icons/io5";
 import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
@@ -23,6 +24,7 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
   const hideSidebar = () => setShowingSidebar(false);
   const sidebarRef = useRef<HTMLSpanElement | null>(null);
   const { user } = useSupabaseAuth();
+  const [showingSignupNudge, setShowingSignupNudge] = useState(true);
 
   useOutsideClick(
     sidebarRef,
@@ -81,14 +83,17 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
           <div className="border-t flex">{footer}</div>
         </div>
       ) : null}
-      {!user ? (
-        <div className="sticky bottom-0 bg-light-slate-2 border-t h-16 pr-3 grid place-content-center px-4 md:hidden">
+      {!user && showingSignupNudge ? (
+        <div className="sticky w-full min-w-screen bottom-0 bg-light-slate-2 border-t h-16 pr-3 grid place-content-center grid-flow-col gap-4 px-4 md:hidden">
           <span>
             <Link href="/start" className="text-sauced-orange hover:underline">
               Sign up
             </Link>{" "}
             to start tracking your projects!
           </span>
+          <button onClick={() => setShowingSignupNudge(false)}>
+            <IoClose className="w-4 h-4" />
+          </button>
         </div>
       ) : null}
     </>
