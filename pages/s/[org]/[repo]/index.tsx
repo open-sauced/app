@@ -17,6 +17,7 @@ import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
 import Button from "components/shared/Button/button";
+import { getAvatarByUsername } from "lib/utils/github";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -30,22 +31,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { notFound: true };
   }
 
-  const response = await fetch(repoData.url || `https://api.github.com/repos/${org}/${repo}`);
-  const { owner } = await response.json();
-
   const { href: ogImageUrl } = new URL(
     getRepositoryOgImage(repoData, range),
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
-  return { props: { repoData, image: owner?.avatar_url || "", ogImageUrl } };
+  return { props: { repoData, image: ogImageUrl } };
 }
 
 type Range = 30 | 7 | 90 | 180 | 360;
 
 interface RepoPageProps {
-  repoData: DbRepo;
-  image: string;
+  repoData: DbRepoInfo;
   ogImageUrl: string;
 }
 
@@ -54,7 +51,8 @@ interface WorkspaceOgImageProps {
   ogImageUrl: string;
 }
 
-export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps) {
+export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
+  const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const { toast } = useToast();
   const posthog = usePostHog();
 
@@ -107,7 +105,7 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
         <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-6xl">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
             <header className="flex items-center gap-4">
-              <Avatar size={96} avatarURL={image} />
+              <Avatar size={96} avatarURL={avatarUrl} />
               <div className="flex flex-col gap-2">
                 <a
                   href={`https://github.com/${repoData.full_name}`}
