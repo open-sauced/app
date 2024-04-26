@@ -18,6 +18,8 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import SEO from "layouts/SEO/SEO";
 
 const HEIGHT_TO_TAKE_OFF_SCROLL_AREA = 340;
+const HEIGHT_TO_TAKE_OFF_SUGGESTIONS = 600;
+
 const SUGGESTIONS = [
   {
     title: "Get information on contributor activity",
@@ -173,7 +175,10 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
     switch (starSearchState) {
       case "initial":
         return (
-          <div className="flex flex-col text-center items-center gap-4 lg:pt-12 z-10">
+          <div
+            className="flex flex-col text-center items-center gap-4 lg:pt-12 mb-16"
+            // style={{ maxHeight: `calc(100vh - ${HEIGHT_TO_TAKE_OFF_SUGGESTIONS}px)` }}
+          >
             <Header />
             <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
           </div>

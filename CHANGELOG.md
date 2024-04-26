@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.6](https://github.com/open-sauced/app/compare/v2.22.0-beta.5...v2.22.0-beta.6) (2024-04-26)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch input is not covered by vertical suggestions on small screens ([#3265](https://github.com/open-sauced/app/issues/3265)) ([1624ea8](https://github.com/open-sauced/app/commit/1624ea8a6bf63a167d80e4295e619d1ec93f2924))
+
+## [2.22.0-beta.5](https://github.com/open-sauced/app/compare/v2.22.0-beta.4...v2.22.0-beta.5) (2024-04-26)
+
+
+### 🐛 Bug Fixes
+
+* Update README with current OpenSauced logo ([#3255](https://github.com/open-sauced/app/issues/3255)) ([2252900](https://github.com/open-sauced/app/commit/22529008272f33cb38431314e72cd71f47104a2b))
+
+## [2.22.0-beta.4](https://github.com/open-sauced/app/compare/v2.22.0-beta.3...v2.22.0-beta.4) (2024-04-26)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch link is in sidebar for smaller screens ([#3263](https://github.com/open-sauced/app/issues/3263)) ([71cd5b9](https://github.com/open-sauced/app/commit/71cd5b96c41be3ed26280a76e29969f023015e84))
+
 ## [2.22.0-beta.3](https://github.com/open-sauced/app/compare/v2.22.0-beta.2...v2.22.0-beta.3) (2024-04-25)
 
 
