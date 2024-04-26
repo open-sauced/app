@@ -32,7 +32,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   const { href: ogImageUrl } = new URL(
-    getRepositoryOgImage(repoData, range),
+    getRepositoryOgImage({
+      description: repoData.description,
+      fullRepoName: repoData.full_name,
+      range,
+    }),
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
