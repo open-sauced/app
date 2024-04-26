@@ -3,7 +3,7 @@ import SEO from "layouts/SEO/SEO";
 export function getRepositoryOgImage(repository: DbRepo, range = 30) {
   const searchParams = new URLSearchParams();
 
-  if (repository.description.length > 0) {
+  if (repository.description?.length > 0) {
     searchParams.append("description", repository.description);
   }
 
