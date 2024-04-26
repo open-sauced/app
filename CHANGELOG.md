@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.5](https://github.com/open-sauced/app/compare/v2.22.0-beta.4...v2.22.0-beta.5) (2024-04-26)
+
+
+### 🐛 Bug Fixes
+
+* Update README with current OpenSauced logo ([#3255](https://github.com/open-sauced/app/issues/3255)) ([2252900](https://github.com/open-sauced/app/commit/22529008272f33cb38431314e72cd71f47104a2b))
+
 ## [2.22.0-beta.4](https://github.com/open-sauced/app/compare/v2.22.0-beta.3...v2.22.0-beta.4) (2024-04-26)
 
 
