@@ -8,8 +8,15 @@ describe("[lib] validateEmail()", () => {
     expect(result).toBeTruthy();
   });
 
-  it("(regression #3271) Should return true if string is a valid email", () => {
+  it("(regression #3271) #1 Should return true if string is a valid email", () => {
     const testString = "self@bjoern-buettner.me";
+    const result = validateEmail(testString);
+
+    expect(result).toBeTruthy();
+  });
+
+  it("(regression #3271) #2 Should return true if string is a valid email", () => {
+    const testString = "self@bjoern-buettner.site";
     const result = validateEmail(testString);
 
     expect(result).toBeTruthy();
