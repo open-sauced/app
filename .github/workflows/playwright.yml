@@ -4,6 +4,8 @@ on:
     branches: [main, beta]
   pull_request:
     branches: [main, beta]
+env:
+  NEXT_PUBLIC_BASE_URL: http://localhost:3000
 jobs:
   test:
     timeout-minutes: 60
