@@ -18,14 +18,13 @@ import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
 import Button from "components/shared/Button/button";
 import { getAvatarByUsername } from "lib/utils/github";
-import { useRepoStats } from "lib/hooks/api/useRepoStats";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
   const range = (context.query.range ? Number(context.query.range) : 30) as Range;
 
   const { data: repoData, error } = await fetchApiData<DbRepo>({
-    path: `repos/${org}/${repo}/info`,
+    path: `repos/${org}/${repo}?range=${range}`,
   });
 
   if (!repoData || error) {
@@ -81,15 +80,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "forks",
-    range,
-  });
-
-  const {
-    data: repoStats,
-    isError,
-    isLoading,
-  } = useRepoStats({
-    fullRepoName: repoData.full_name,
     range,
   });
 
@@ -170,23 +160,23 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               />
               <RepositoryStatCard
                 type="pulls"
-                isLoading={isLoading}
-                hasError={isError}
+                isLoading={false}
+                hasError={false}
                 stats={{
-                  opened: repoStats?.open_prs_count!,
-                  merged: repoStats?.merged_prs_count!,
-                  velocity: repoStats?.pr_velocity_count!,
+                  opened: repoData.open_prs_count!,
+                  merged: repoData.merged_prs_count!,
+                  velocity: repoData.pr_velocity_count!,
                   range,
                 }}
               />
               <RepositoryStatCard
                 type="issues"
-                isLoading={isLoading}
-                hasError={isError}
+                isLoading={false}
+                hasError={false}
                 stats={{
-                  opened: repoStats?.opened_issues_count!,
-                  closed: repoStats?.closed_issues_count!,
-                  velocity: repoStats?.issues_velocity_count!,
+                  opened: repoData.opened_issues_count!,
+                  closed: repoData.closed_issues_count!,
+                  velocity: repoData.issues_velocity_count!,
                   range,
                 }}
               />
