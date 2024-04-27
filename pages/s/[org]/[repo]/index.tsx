@@ -40,6 +40,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
+  // Cache for two hours
+  context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=0, stale-while-revalidate=7200");
+
   return { props: { repoData, image: ogImageUrl } };
 }
 
