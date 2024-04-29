@@ -36,7 +36,6 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useToast } from "lib/hooks/useToast";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { DayRangePicker } from "components/shared/DayRangePicker";
-import ConnectionRequestsWrapper from "../ConnectionRequestWrapper/connection-requests-wrapper";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
@@ -52,7 +51,7 @@ interface ContributorProfileTabProps {
   range?: string;
 }
 
-type TabKey = "highlights" | "contributions" | "connections" | "recommendations";
+type TabKey = "highlights" | "contributions" | "recommendations";
 
 // Query Params type for this page
 interface QueryParams {
@@ -62,7 +61,6 @@ interface QueryParams {
 const tabs: Record<TabKey, string> = {
   highlights: "Highlights",
   contributions: "Contributions",
-  connections: "Connections",
   recommendations: "Recommendations",
 };
 
@@ -430,11 +428,6 @@ const ContributorProfileTab = ({
 
       {user && user.user_metadata.user_name === login && (
         <>
-          {/* Connection requests tab details */}
-          <TabsContent value={"connections" satisfies TabKey}>
-            <ConnectionRequestsWrapper />
-          </TabsContent>
-
           {/* Recommendation tab details */}
           <TabsContent value={"recommendations" satisfies TabKey}>
             <UserRepositoryRecommendations contributor={contributor} userInterests={userInterests} />
