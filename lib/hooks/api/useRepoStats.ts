@@ -6,7 +6,7 @@ export const useRepoStats = ({ repoFullName, range }: { repoFullName: string; ra
   query.set("range", range.toString());
 
   const { data, error, isLoading, mutate } = useSWR<DbRepo, Error>(
-    typeof window === "undefined" ? null : `repos/${repoFullName}?${query.toString()}`,
+    typeof window === "undefined" ? null : `repos/${repoFullName}?${query}`,
     publicApiFetcher as Fetcher<DbRepo, Error>
   );
 
