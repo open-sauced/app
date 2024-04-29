@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.7](https://github.com/open-sauced/app/compare/v2.22.0-beta.6...v2.22.0-beta.7) (2024-04-29)
+
+
+### 🐛 Bug Fixes
+
+* now small screens show follow/unfollow on user profile ([#3260](https://github.com/open-sauced/app/issues/3260)) ([6a8a421](https://github.com/open-sauced/app/commit/6a8a4212d22fa649eba4587aa3f69f879763652c))
+
 ## [2.22.0-beta.6](https://github.com/open-sauced/app/compare/v2.22.0-beta.5...v2.22.0-beta.6) (2024-04-26)
 
 
