@@ -111,10 +111,7 @@ const ContributorProfileTab = ({
       tab === "recommendations" &&
         "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
       user && user_name !== login && tab === "recommendations" && "hidden",
-      user && user_name !== login && tab === "connections" && "hidden",
-      !user && tab === "recommendations" && "hidden",
-      !user && tab === "connections" && "hidden",
-      !receive_collaboration && tab === "connections" && "hidden"
+      !user && tab === "recommendations" && "hidden"
     );
   };
 
