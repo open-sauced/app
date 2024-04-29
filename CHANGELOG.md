@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.9](https://github.com/open-sauced/app/compare/v2.22.0-beta.8...v2.22.0-beta.9) (2024-04-29)
+
+
+### 🐛 Bug Fixes
+
+* removed connection tab on user profile page ([#3275](https://github.com/open-sauced/app/issues/3275)) ([cbd1382](https://github.com/open-sauced/app/commit/cbd13824b41e585d7f7e537abf7713fe4ab4781d))
+
 ## [2.22.0-beta.8](https://github.com/open-sauced/app/compare/v2.22.0-beta.7...v2.22.0-beta.8) (2024-04-29)
 
 
