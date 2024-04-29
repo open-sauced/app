@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.8](https://github.com/open-sauced/app/compare/v2.22.0-beta.7...v2.22.0-beta.8) (2024-04-29)
+
+
+### ✅ Tests
+
+* speed up server for playwright tests on CI ([#3274](https://github.com/open-sauced/app/issues/3274)) ([dd62ef4](https://github.com/open-sauced/app/commit/dd62ef4e8c574c0e3a8fdd1fc02bb51e8ca2903e))
+
+
+### 🐛 Bug Fixes
+
+* remove filter prefetch and additional filters when searching by repository ([#3247](https://github.com/open-sauced/app/issues/3247)) ([59eb8cc](https://github.com/open-sauced/app/commit/59eb8ccd8fe54843c5a51cc93f667dd953b1b42a))
+
 ## [2.22.0-beta.7](https://github.com/open-sauced/app/compare/v2.22.0-beta.6...v2.22.0-beta.7) (2024-04-29)
 
 
