@@ -25,7 +25,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const range = (context.query.range ? Number(context.query.range) : 30) as Range;
 
   const { data: repoData, error } = await fetchApiData<DbRepo>({
-    path: `repos/${org}/${repo}?range=${range}`,
+    path: `repos/${org}/${repo}/info`,
   });
 
   if (!repoData || error) {
