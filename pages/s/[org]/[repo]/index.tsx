@@ -18,6 +18,7 @@ import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
 import Button from "components/shared/Button/button";
 import { getAvatarByUsername } from "lib/utils/github";
+import { useRepoStats } from "lib/hooks/api/useRepoStats";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -85,6 +86,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     variant: "forks",
     range,
   });
+
+  const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
 
   const starsRangedTotal = starsData?.reduce((prev, curr) => prev + curr.star_count!, 0);
   const forksRangedTotal = forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0);
@@ -163,25 +166,33 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               />
               <RepositoryStatCard
                 type="pulls"
-                isLoading={false}
-                hasError={false}
-                stats={{
-                  opened: repoData.open_prs_count!,
-                  merged: repoData.merged_prs_count!,
-                  velocity: repoData.pr_velocity_count!,
-                  range,
-                }}
+                isLoading={isLoading}
+                hasError={isError}
+                stats={
+                  repoStats
+                    ? {
+                        opened: repoStats.open_prs_count ?? 0,
+                        merged: repoStats.merged_prs_count ?? 0,
+                        velocity: repoStats.pr_velocity_count ?? 0,
+                        range,
+                      }
+                    : undefined
+                }
               />
               <RepositoryStatCard
                 type="issues"
-                isLoading={false}
-                hasError={false}
-                stats={{
-                  opened: repoData.opened_issues_count!,
-                  closed: repoData.closed_issues_count!,
-                  velocity: repoData.issues_velocity_count!,
-                  range,
-                }}
+                isLoading={isLoading}
+                hasError={isError}
+                stats={
+                  repoStats
+                    ? {
+                        opened: repoStats.opened_issues_count ?? 0,
+                        closed: repoStats.closed_issues_count ?? 0,
+                        velocity: repoStats.issues_velocity_count ?? 0,
+                        range,
+                      }
+                    : undefined
+                }
               />
             </section>
             <StarsChart
