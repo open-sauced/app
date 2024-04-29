@@ -2,6 +2,7 @@ import { useLocalStorage } from "react-use";
 import { LuArrowRightToLine } from "react-icons/lu";
 import { useOutsideClick } from "rooks";
 import { useRef } from "react";
+import clsx from "clsx";
 import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
@@ -62,9 +63,13 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
             )}
           </ClientOnly>
         </div>
-        <div className="relative flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
+        <div className={clsx("flex-col items-center grow", !banner && "pt-8 md:pt-14 lg:pt-20")}>
           <ClientOnly>{banner}</ClientOnly>
-          <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px] pb-20">{children}</div>
+          <div
+            className={clsx("px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px] pb-20", banner && "md:mt-9")}
+          >
+            {children}
+          </div>
         </div>
       </div>
       {footer ? (
