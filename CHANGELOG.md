@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.10](https://github.com/open-sauced/app/compare/v2.22.0-beta.9...v2.22.0-beta.10) (2024-04-30)
+
+
+### 🐛 Bug Fixes
+
+* capture repo page share as unique event with repo name as metadata ([#3284](https://github.com/open-sauced/app/issues/3284)) ([83cb0de](https://github.com/open-sauced/app/commit/83cb0debc45f5fbbbe2524741bbbfe42b9c729a0))
+
 ## [2.22.0-beta.9](https://github.com/open-sauced/app/compare/v2.22.0-beta.8...v2.22.0-beta.9) (2024-04-29)
 
 
