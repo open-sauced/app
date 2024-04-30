@@ -105,15 +105,14 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
         <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-6xl">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
             <header className="flex items-center gap-4">
-              <Avatar size={96} avatarURL={image} className="hidden sm:block"/>
-              <div className="flex flex-col gap-2 flex-1">
+              <Avatar size={96} avatarURL={image} />
+              <div className="flex flex-col gap-2">
                 <a
                   href={`https://github.com/${repoData.full_name}`}
                   target="_blank"
                   className="group hover:underline underline-offset-2 text-xl md:text-3xl font-bold flex gap-2 items-center"
                 >
-                  <Avatar size={48} avatarURL={image} className="sm:hidden"/>
-                  <h1 className="flex-1">{repoData.full_name}</h1>
+                  <h1>{repoData.full_name}</h1>
                   <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
                 </a>
                 <p className="md:text-xl">{repoData.description}</p>
