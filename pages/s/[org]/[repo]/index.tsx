@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { usePostHog } from "posthog-js/react";
 import { FiCopy } from "react-icons/fi";
+import { MdWorkspaces } from "react-icons/md";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
@@ -118,16 +119,22 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
                 <p className="md:text-xl">{repoData.description}</p>
               </div>
             </header>
-            <div className="self-end flex gap-2 items-center">
-              <DayRangePicker />
-              <Button
-                variant="outline"
-                onClick={copyUrlToClipboard}
-                className="my-auto gap-2 items-center shrink-0 place-self-end"
-              >
-                <FiCopy />
-                Share
+            <div className="self-end flex flex-col gap-2 items-end">
+              <Button variant="primary" className="shrink-0 items-center gap-3 w-fit">
+                <MdWorkspaces />
+                Add to Workspace
               </Button>
+              <div className="flex gap-2 items-center">
+                <Button
+                  variant="outline"
+                  onClick={copyUrlToClipboard}
+                  className="my-auto gap-2 items-center shrink-0 place-self-end"
+                >
+                  <FiCopy />
+                  Share
+                </Button>
+                <DayRangePicker />
+              </div>
             </div>
           </div>
           <ClientOnly>
