@@ -148,7 +148,7 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
         </Button>
       }
     >
-      <div className="grid gap-6 max-w-4xl">
+      <div className="grid gap-6 max-w-4xl mx-auto">
         <h1 className="border-b bottom pb-4 text-xl font-medium">Edit Repository Insight</h1>
         <section className="flex flex-col gap-6 mb-2">
           <div>

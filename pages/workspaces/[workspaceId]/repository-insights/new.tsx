@@ -85,7 +85,7 @@ const NewInsightPage = () => {
 
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
-      <div className="grid gap-6 max-w-4xl">
+      <div className="grid gap-6 max-w-4xl mx-auto">
         <h1 className="border-b bottom pb-4 text-xl font-medium">Create Repository Insight</h1>
         <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateInsight}>
           <div>
