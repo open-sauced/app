@@ -197,7 +197,7 @@ export default function StarSearchWaitListPage({
           <p className="text-center">
             {isWaitlisted
               ? "Share with others to get early access sooner"
-              : "Ask anything, get AI powered insights based on contributor data"}
+              : "Ask anything, get AI-powered insights based on contributor data"}
           </p>
           <div className="grid place-content-center h-16">
             {sessionToken && isWaitlisted && waitlistCount ? (
