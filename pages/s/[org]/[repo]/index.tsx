@@ -54,11 +54,6 @@ interface RepoPageProps {
   ogImageUrl: string;
 }
 
-interface WorkspaceOgImageProps {
-  repository: DbRepo;
-  ogImageUrl: string;
-}
-
 export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const { toast } = useToast();
