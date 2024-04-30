@@ -116,11 +116,11 @@ function getTitle({
 }: {
   sessionToken: string | null | undefined;
   isWaitlisted: boolean;
-  waitlistCount: number | undefined;
+  waitlistCount: number;
   alreadyOnWaitlist: boolean;
 }) {
   switch (true) {
-    case sessionToken && isWaitlisted && waitlistCount !== undefined:
+    case sessionToken && isWaitlisted:
       return alreadyOnWaitlist
         ? `You're already on the waitlist along with ${humanizeNumber(waitlistCount)} other people.`
         : `You're in along with ${humanizeNumber(waitlistCount)} other people on the waitlist!`;
@@ -137,7 +137,7 @@ export default function StarSearchWaitListPage({
 }: StarSearchWaitListPageProps) {
   const { sessionToken, signIn } = useSupabaseAuth();
   const [isWaitlisted, setIsWaitlisted] = useState<boolean>(alreadyOnWaitlist);
-  const { data: waitlistCount } = useWaitlistCount(initialWaitlistCount);
+  const { data: waitlistCount = 1 } = useWaitlistCount(initialWaitlistCount);
 
   async function joinWaitlist() {
     const bearerToken = sessionToken ? sessionToken : undefined;
