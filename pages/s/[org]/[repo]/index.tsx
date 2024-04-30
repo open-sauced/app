@@ -86,7 +86,9 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
-    posthog!.capture(`clicked: ${repoData.full_name} repo page share`);
+    posthog!.capture("clicked: repo page share button", {
+      repo_name: repoData.full_name,
+    });
 
     try {
       const shortUrl = await shortenUrl(url);
