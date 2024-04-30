@@ -1,10 +1,14 @@
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import { HiOutlineExternalLink } from "react-icons/hi";
 import { usePostHog } from "posthog-js/react";
 import { FiCopy } from "react-icons/fi";
 import { MdWorkspaces } from "react-icons/md";
+import { HiOutlineExternalLink } from "react-icons/hi";
+import dynamic from "next/dynamic";
+import { useState } from "react";
 import { fetchApiData } from "helpers/fetchApiData";
+import { useToast } from "lib/hooks/useToast";
+import { shortenUrl } from "lib/utils/shorten-url";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
 import ProfileLayout from "layouts/profile";
@@ -15,9 +19,11 @@ import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
-import { useToast } from "lib/hooks/useToast";
-import { shortenUrl } from "lib/utils/shorten-url";
 import Button from "components/shared/Button/button";
+
+const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
+  ssr: false,
+});
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -85,6 +91,8 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
   const starsRangedTotal = starsData?.reduce((prev, curr) => prev + curr.star_count!, 0);
   const forksRangedTotal = forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0);
 
+  const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
+
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
     posthog!.capture(`clicked: ${repoData.full_name} repo page share`);
@@ -120,7 +128,11 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
               </div>
             </header>
             <div className="self-end flex flex-col gap-2 items-end">
-              <Button variant="primary" className="shrink-0 items-center gap-3 w-fit">
+              <Button
+                variant="primary"
+                onClick={() => setIsAddToWorkspaceModalOpen(true)}
+                className="shrink-0 items-center gap-3 w-fit"
+              >
                 <MdWorkspaces />
                 Add to Workspace
               </Button>
@@ -201,6 +213,11 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
           </ClientOnly>
         </section>
       </ProfileLayout>
+
+      <AddToWorkspaceModal
+        isOpen={isAddToWorkspaceModalOpen}
+        onCloseModal={() => setIsAddToWorkspaceModalOpen(false)}
+      />
     </>
   );
 }
