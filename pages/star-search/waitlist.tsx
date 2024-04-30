@@ -184,7 +184,7 @@ export default function StarSearchWaitListPage({
         twitterCard="summary_large_image"
       />
       <ProfileLayout>
-        <div className="flex flex-col items-center gap-4 px-2 mb-8 sm:pt-8 md:pt-0 lg:w-99">
+        <div className="flex flex-col items-center gap-4 px-2 mb-8 sm:pt-8 md:pt-0 lg:w-99" aria-live="polite">
           <div className="flex gap-2 items-center">
             <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
             <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
