@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import ContextFilterButton from "components/atoms/ContextFilterButton/context-filter-button";
 import cancelIcon from "img/x-circle.svg";
 import Radio from "components/atoms/Radio/radio";
-import humanizeNumber from "lib/utils/humanizeNumber";
 import getFilterKey from "lib/utils/get-filter-key";
 import Icon from "../../atoms/Icon/icon";
 
@@ -75,11 +74,9 @@ const SuperativeSelector: React.FC<SuperlativeSelectorProps> = ({
           {filterOptions.length > 0 &&
             filterOptions.map((option, index) => {
               const filterKey = getFilterKey(option);
-              const filterValue = filterValues[filterKey];
 
               return (
                 <Radio
-                  withLabel={filterValue ? humanizeNumber(filterValue, "abbreviation") : "-"}
                   key={index}
                   onClick={() => {
                     handleFilterClick(filterKey);

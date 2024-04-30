@@ -5,6 +5,7 @@ import Markdown from "react-markdown";
 import { ArrowRightIcon } from "@primer/octicons-react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { BsLinkedin, BsTwitterX } from "react-icons/bs";
 import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import humanizeNumber from "lib/utils/humanizeNumber";
@@ -107,6 +108,28 @@ interface StarSearchWaitListPageProps {
   ogImageUrl: string;
 }
 
+function getTitle({
+  sessionToken,
+  isWaitlisted,
+  waitlistCount,
+  alreadyOnWaitlist,
+}: {
+  sessionToken: string | null | undefined;
+  isWaitlisted: boolean;
+  waitlistCount: number;
+  alreadyOnWaitlist: boolean;
+}) {
+  switch (true) {
+    case sessionToken && isWaitlisted:
+      return alreadyOnWaitlist
+        ? `You're already on the waitlist along with ${humanizeNumber(waitlistCount)} other people.`
+        : `You're in along with ${humanizeNumber(waitlistCount)} other people on the waitlist!`;
+    case !sessionToken:
+    default:
+      return "Copilot, but for git history";
+  }
+}
+
 export default function StarSearchWaitListPage({
   alreadyOnWaitlist,
   initialWaitlistCount,
@@ -114,7 +137,7 @@ export default function StarSearchWaitListPage({
 }: StarSearchWaitListPageProps) {
   const { sessionToken, signIn } = useSupabaseAuth();
   const [isWaitlisted, setIsWaitlisted] = useState<boolean>(alreadyOnWaitlist);
-  const { data: waitlistCount } = useWaitlistCount(initialWaitlistCount);
+  const { data: waitlistCount = 1 } = useWaitlistCount(initialWaitlistCount);
 
   async function joinWaitlist() {
     const bearerToken = sessionToken ? sessionToken : undefined;
@@ -139,6 +162,19 @@ export default function StarSearchWaitListPage({
     joinWaitlist();
   }
 
+  const tweetQueryParams = new URLSearchParams();
+  const linkedInQueryParams = new URLSearchParams();
+
+  if (isWaitlisted) {
+    const url = new URL("/star-search/waitlist", process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
+    tweetQueryParams.set(
+      "text",
+      `I just joined the waitlist for @saucedopen's StarSearch, Copilot for git history. Join me! ${url}`
+    );
+
+    linkedInQueryParams.set("url", `${url}`);
+  }
+
   return (
     <>
       <SEO
@@ -148,28 +184,43 @@ export default function StarSearchWaitListPage({
         twitterCard="summary_large_image"
       />
       <ProfileLayout>
-        <div className="flex flex-col items-center gap-4 px-2 mb-8 sm:pt-8 md:pt-0 lg:w-99">
+        <div className="flex flex-col items-center gap-4 px-2 mb-8 sm:pt-8 md:pt-0 lg:w-99" aria-live="polite">
           <div className="flex gap-2 items-center">
             <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
             <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
               StarSearch
             </h1>
           </div>
-          <p className="font-semibold text-5xl text-center tracking-tight text-balance">Copilot, but for git history</p>
-          <p className="text-center">Ask anything, get AI powered insights based on contributor data</p>
+          <p className="font-semibold text-5xl text-center tracking-tight text-balance">
+            {getTitle({ sessionToken, isWaitlisted, waitlistCount, alreadyOnWaitlist })}
+          </p>
+          <p className="text-center">
+            {isWaitlisted
+              ? "Share with others to get early access sooner"
+              : "Ask anything, get AI-powered insights based on contributor data"}
+          </p>
           <div className="grid place-content-center h-16">
             {sessionToken && isWaitlisted && waitlistCount ? (
-              <>
-                {alreadyOnWaitlist ? (
-                  <p className="grid place-content-center">
-                    You&apos;re already on the waitlist along with {humanizeNumber(waitlistCount)} other people.
-                  </p>
-                ) : (
-                  <p className="grid place-content-center">
-                    You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the StarSearch waitlist!
-                  </p>
-                )}
-              </>
+              <div className="flex gap-4">
+                <Button
+                  variant="primary"
+                  className="flex gap-2 w-max"
+                  href={`http://twitter.com/intent/tweet?${tweetQueryParams}`}
+                  target="_blank"
+                >
+                  Share on <span className="sr-only">X/Twitter</span>
+                  <BsTwitterX />
+                </Button>
+                <Button
+                  variant="primary"
+                  className="flex gap-2 w-max"
+                  href={`https://www.linkedin.com/sharing/share-offsite/?${linkedInQueryParams}`}
+                  target="_blank"
+                >
+                  Share on <span className="sr-only">LinkedIn</span>
+                  <BsLinkedin />
+                </Button>
+              </div>
             ) : (
               <>
                 {autoAdd ? null : (
