@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.11](https://github.com/open-sauced/app/compare/v2.22.0-beta.10...v2.22.0-beta.11) (2024-04-30)
+
+
+### 🍕 Features
+
+* now you can share the StarSearch waitlist on socials ([#3285](https://github.com/open-sauced/app/issues/3285)) ([6732853](https://github.com/open-sauced/app/commit/6732853d918d79a3e6d968c4303bba956eebfa84))
+
 ## [2.22.0-beta.10](https://github.com/open-sauced/app/compare/v2.22.0-beta.9...v2.22.0-beta.10) (2024-04-30)
 
 
