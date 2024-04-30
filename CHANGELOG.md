@@ -5,6 +5,88 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.0-beta.11](https://github.com/open-sauced/app/compare/v2.22.0-beta.10...v2.22.0-beta.11) (2024-04-30)
+
+
+### 🍕 Features
+
+* now you can share the StarSearch waitlist on socials ([#3285](https://github.com/open-sauced/app/issues/3285)) ([6732853](https://github.com/open-sauced/app/commit/6732853d918d79a3e6d968c4303bba956eebfa84))
+
+## [2.22.0-beta.10](https://github.com/open-sauced/app/compare/v2.22.0-beta.9...v2.22.0-beta.10) (2024-04-30)
+
+
+### 🐛 Bug Fixes
+
+* capture repo page share as unique event with repo name as metadata ([#3284](https://github.com/open-sauced/app/issues/3284)) ([83cb0de](https://github.com/open-sauced/app/commit/83cb0debc45f5fbbbe2524741bbbfe42b9c729a0))
+
+## [2.22.0-beta.9](https://github.com/open-sauced/app/compare/v2.22.0-beta.8...v2.22.0-beta.9) (2024-04-29)
+
+
+### 🐛 Bug Fixes
+
+* removed connection tab on user profile page ([#3275](https://github.com/open-sauced/app/issues/3275)) ([cbd1382](https://github.com/open-sauced/app/commit/cbd13824b41e585d7f7e537abf7713fe4ab4781d))
+
+## [2.22.0-beta.8](https://github.com/open-sauced/app/compare/v2.22.0-beta.7...v2.22.0-beta.8) (2024-04-29)
+
+
+### ✅ Tests
+
+* speed up server for playwright tests on CI ([#3274](https://github.com/open-sauced/app/issues/3274)) ([dd62ef4](https://github.com/open-sauced/app/commit/dd62ef4e8c574c0e3a8fdd1fc02bb51e8ca2903e))
+
+
+### 🐛 Bug Fixes
+
+* remove filter prefetch and additional filters when searching by repository ([#3247](https://github.com/open-sauced/app/issues/3247)) ([59eb8cc](https://github.com/open-sauced/app/commit/59eb8ccd8fe54843c5a51cc93f667dd953b1b42a))
+
+## [2.22.0-beta.7](https://github.com/open-sauced/app/compare/v2.22.0-beta.6...v2.22.0-beta.7) (2024-04-29)
+
+
+### 🐛 Bug Fixes
+
+* now small screens show follow/unfollow on user profile ([#3260](https://github.com/open-sauced/app/issues/3260)) ([6a8a421](https://github.com/open-sauced/app/commit/6a8a4212d22fa649eba4587aa3f69f879763652c))
+
+## [2.22.0-beta.6](https://github.com/open-sauced/app/compare/v2.22.0-beta.5...v2.22.0-beta.6) (2024-04-26)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch input is not covered by vertical suggestions on small screens ([#3265](https://github.com/open-sauced/app/issues/3265)) ([1624ea8](https://github.com/open-sauced/app/commit/1624ea8a6bf63a167d80e4295e619d1ec93f2924))
+
+## [2.22.0-beta.5](https://github.com/open-sauced/app/compare/v2.22.0-beta.4...v2.22.0-beta.5) (2024-04-26)
+
+
+### 🐛 Bug Fixes
+
+* Update README with current OpenSauced logo ([#3255](https://github.com/open-sauced/app/issues/3255)) ([2252900](https://github.com/open-sauced/app/commit/22529008272f33cb38431314e72cd71f47104a2b))
+
+## [2.22.0-beta.4](https://github.com/open-sauced/app/compare/v2.22.0-beta.3...v2.22.0-beta.4) (2024-04-26)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch link is in sidebar for smaller screens ([#3263](https://github.com/open-sauced/app/issues/3263)) ([71cd5b9](https://github.com/open-sauced/app/commit/71cd5b96c41be3ed26280a76e29969f023015e84))
+
+## [2.22.0-beta.3](https://github.com/open-sauced/app/compare/v2.22.0-beta.2...v2.22.0-beta.3) (2024-04-25)
+
+
+### 🐛 Bug Fixes
+
+* fixed layout issues in StarSearch ([#3257](https://github.com/open-sauced/app/issues/3257)) ([ce07b8c](https://github.com/open-sauced/app/commit/ce07b8c11daf04b55056f459b72d93ab67f633f9))
+
+## [2.22.0-beta.2](https://github.com/open-sauced/app/compare/v2.22.0-beta.1...v2.22.0-beta.2) (2024-04-25)
+
+
+### 🐛 Bug Fixes
+
+* use direct OpenGraph Image URLs on repository insight pages ([#3256](https://github.com/open-sauced/app/issues/3256)) ([0578019](https://github.com/open-sauced/app/commit/0578019257797573cb6c7583399a8eda6e054372))
+
+## [2.22.0-beta.1](https://github.com/open-sauced/app/compare/v2.21.0...v2.22.0-beta.1) (2024-04-25)
+
+
+### 🍕 Features
+
+* implement PR and issue devstats to repo pages ([#3253](https://github.com/open-sauced/app/issues/3253)) ([caa7eea](https://github.com/open-sauced/app/commit/caa7eea4d764aee96c8d90c6ad4ffb62895312dd))
+
 ## [2.21.0](https://github.com/open-sauced/app/compare/v2.20.0...v2.21.0) (2024-04-25)
 
 

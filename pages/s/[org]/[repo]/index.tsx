@@ -20,9 +20,10 @@ import Button from "components/shared/Button/button";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
+  const range = (context.query.range ? Number(context.query.range) : 30) as Range;
 
   const { data: repoData, error } = await fetchApiData<DbRepo>({
-    path: `repos/${org}/${repo}`,
+    path: `repos/${org}/${repo}?range=${range}`,
   });
 
   if (!repoData || error) {
@@ -32,7 +33,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const response = await fetch(repoData.url || `https://api.github.com/repos/${org}/${repo}`);
   const { owner } = await response.json();
 
-  const range = (context.query.range ? Number(context.query.range) : 30) as Range;
   const { href: ogImageUrl } = new URL(
     getRepositoryOgImage(repoData, range),
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
@@ -86,7 +86,9 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
-    posthog!.capture(`clicked: ${repoData.full_name} repo page share`);
+    posthog!.capture("clicked: repo page share button", {
+      repo_name: repoData.full_name,
+    });
 
     try {
       const shortUrl = await shortenUrl(url);
@@ -152,6 +154,28 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
                   over_range: forksRangedTotal!,
                   range,
                   average_over_range: Math.round(forksRangedTotal! / range),
+                }}
+              />
+              <RepositoryStatCard
+                type="pulls"
+                isLoading={false}
+                hasError={false}
+                stats={{
+                  opened: repoData.open_prs_count!,
+                  merged: repoData.merged_prs_count!,
+                  velocity: repoData.pr_velocity_count!,
+                  range,
+                }}
+              />
+              <RepositoryStatCard
+                type="issues"
+                isLoading={false}
+                hasError={false}
+                stats={{
+                  opened: repoData.opened_issues_count!,
+                  closed: repoData.closed_issues_count!,
+                  velocity: repoData.issues_velocity_count!,
+                  range,
                 }}
               />
             </section>

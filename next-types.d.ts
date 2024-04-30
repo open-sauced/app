@@ -24,6 +24,9 @@ interface DbRepo {
   readonly draft_prs_count?: number;
   readonly spam_prs_count?: number;
   readonly pr_velocity_count?: number;
+  readonly opened_issues_count?: number;
+  readonly closed_issues_count?: number;
+  readonly issues_velocity_count?: number;
   readonly churnTotalCount?: number;
   readonly activity_ratio?: number;
   readonly language: string;
