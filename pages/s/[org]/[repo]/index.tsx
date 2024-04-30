@@ -20,8 +20,12 @@ import { DayRangePicker } from "components/shared/DayRangePicker";
 import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import Button from "components/shared/Button/button";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
+  ssr: false,
+});
+const AddToWorkspaceDrawer = dynamic(() => import("components/Repositories/AddToWorkspaceDrawer"), {
   ssr: false,
 });
 
@@ -64,6 +68,7 @@ interface WorkspaceOgImageProps {
 export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps) {
   const { toast } = useToast();
   const posthog = usePostHog();
+  const isMobile = useMediaQuery("(max-width: 576px)");
 
   const syncId = repoData.id;
   const router = useRouter();
@@ -128,14 +133,18 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
               </div>
             </header>
             <div className="self-end flex flex-col gap-2 items-end">
-              <Button
-                variant="primary"
-                onClick={() => setIsAddToWorkspaceModalOpen(true)}
-                className="shrink-0 items-center gap-3 w-fit"
-              >
-                <MdWorkspaces />
-                Add to Workspace
-              </Button>
+              {isMobile ? (
+                <AddToWorkspaceDrawer />
+              ) : (
+                <Button
+                  variant="primary"
+                  onClick={() => setIsAddToWorkspaceModalOpen(true)}
+                  className="shrink-0 items-center gap-3 w-fit"
+                >
+                  <MdWorkspaces />
+                  Add to Workspace
+                </Button>
+              )}
               <div className="flex gap-2 items-center">
                 <Button
                   variant="outline"
