@@ -169,7 +169,7 @@ export default function StarSearchWaitListPage({
     const url = new URL("/star-search/waitlist", process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
     tweetQueryParams.set(
       "text",
-      `I just joined the waitlist for @saucedopen's StarSearch, a tool that provides AI-powered insights based on contributor data. Join me! ${url}`
+      `I just joined the waitlist for @saucedopen's StarSearch, Copilot for git history. Join me! ${url}`
     );
 
     linkedInQueryParams.set("url", `${url}`);
