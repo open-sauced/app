@@ -60,11 +60,6 @@ interface RepoPageProps {
   ogImageUrl: string;
 }
 
-interface WorkspaceOgImageProps {
-  repository: DbRepo;
-  ogImageUrl: string;
-}
-
 export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps) {
   const { toast } = useToast();
   const posthog = usePostHog();
