@@ -219,6 +219,7 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
       </ProfileLayout>
 
       <AddToWorkspaceModal
+        repository={repoData.full_name}
         isOpen={isAddToWorkspaceModalOpen}
         onCloseModal={() => setIsAddToWorkspaceModalOpen(false)}
       />
