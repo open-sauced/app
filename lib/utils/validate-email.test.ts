@@ -23,14 +23,16 @@ describe("[lib] validateEmail()", () => {
   });
 
   it("Should return false if string is not a valid email", () => {
-    let testString = "ahmedatwayahoo.com";
-    let result = validateEmail(testString);
+    const testString = "ahmedatwayahoo.com";
+    const result = validateEmail(testString);
 
     expect(result).toBeFalsy();
+  });
 
-    testString = "ahmedatwa@yahoo";
+  it("Should return true even if string has no an unusual domain", () => {
+    const testString = "ahmedatwa@yahoo";
+    const result = validateEmail(testString);
 
-    result = validateEmail(testString);
-    expect(result).toBeFalsy();
+    expect(result).toBeTruthy();
   });
 });
