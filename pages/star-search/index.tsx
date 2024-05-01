@@ -16,7 +16,8 @@ import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { Drawer } from "components/shared/Drawer";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import SEO from "layouts/SEO/SEO";
-import { useStarSearchFeedback } from "lib/hooks/useStarSearchFeedback";
+import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/useStarSearchFeedback";
+import { useToast } from "lib/hooks/useToast";
 
 const HEIGHT_TO_TAKE_OFF_SCROLL_AREA = 340;
 const HEIGHT_TO_TAKE_OFF_SUGGESTIONS = 600;
@@ -83,21 +84,15 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   const [showSuggestions, setShowSuggestions] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback } = useStarSearchFeedback();
+  const { toast } = useToast();
 
-  function registerPositiveFeedback() {
+  function registerFeedback(feedbackType: StarSearchFeedbackAnalytic["feedback"]) {
     feedback({
-      feedback: "positive",
+      feedback: feedbackType,
       promptContent: chat.filter(({ author }) => author === "You").map(({ content }) => content),
       promptResponse: chat.filter(({ author }) => author === "StarSearch").map(({ content }) => content),
     });
-  }
-
-  function registerNegativeFeedback() {
-    feedback({
-      feedback: "negative",
-      promptContent: chat.filter(({ author }) => author === "You").map(({ content }) => content),
-      promptResponse: chat.filter(({ author }) => author === "StarSearch").map(({ content }) => content),
-    });
+    toast({ description: "Thank you for your feedback!", variant: "success" });
   }
 
   function addPromptInput(prompt: string) {
@@ -233,7 +228,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                       type="button"
                       className="flex gap-2 items-center hover:text-sauced-orange"
                       onClick={() => {
-                        registerPositiveFeedback();
+                        registerFeedback("positive");
                       }}
                     >
                       <span className="sr-only">Thumbs up</span>
@@ -243,7 +238,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                       type="button"
                       className="flex gap-2 items-center hover:text-sauced-orange"
                       onClick={() => {
-                        registerNegativeFeedback();
+                        registerFeedback("negative");
                       }}
                     >
                       <span className="sr-only">Thumbs down</span>

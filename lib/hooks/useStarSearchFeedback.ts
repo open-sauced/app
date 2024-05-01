@@ -1,6 +1,6 @@
 import { usePostHog } from "posthog-js/react";
 
-interface StarSearchFeedbackAnalytic {
+export interface StarSearchFeedbackAnalytic {
   feedback: "positive" | "negative";
   promptContent: string[];
   promptResponse: string[];
