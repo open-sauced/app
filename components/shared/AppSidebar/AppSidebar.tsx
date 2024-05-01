@@ -211,7 +211,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
               />
               <SidebarMenuItem
                 title="Explore"
-                url={`/${userInterest}/dashboard/filter/recent`}
+                url={`/explore/topic/${userInterest}/dashboard/filter/recent`}
                 icon={<Squares2X2Icon className="w-5 h-5 text-slate-400" />}
               />
               <SidebarMenuItem
