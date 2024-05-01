@@ -19,6 +19,7 @@ import { shortenUrl } from "lib/utils/shorten-url";
 import Button from "components/shared/Button/button";
 import { getAvatarByUsername } from "lib/utils/github";
 import { useRepoStats } from "lib/hooks/api/useRepoStats";
+import ContributorsChart from "components/Graphs/ContributorsChart";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -82,10 +83,21 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     range,
   });
 
+  const {
+    data: contributorStats,
+    isLoading: isContributorDataLoading,
+    error: contributorError,
+  } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "contributors",
+    range,
+  });
+
   const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
 
   const starsRangedTotal = starsData?.reduce((prev, curr) => prev + curr.star_count!, 0);
   const forksRangedTotal = forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0);
+  const contributorRangedTotal = contributorStats?.reduce((prev, curr) => prev + curr.contributor_count!, 0);
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
@@ -203,6 +215,13 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               range={range}
               syncId={syncId}
               isLoading={isForksDataLoading}
+            />
+            <ContributorsChart
+              stats={contributorStats}
+              range={range}
+              rangedTotal={contributorRangedTotal!}
+              syncId={syncId}
+              isLoading={isContributorDataLoading}
             />
           </ClientOnly>
         </section>
