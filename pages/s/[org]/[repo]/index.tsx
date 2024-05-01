@@ -129,7 +129,7 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
             </header>
             <div className="self-end flex flex-col gap-2 items-end">
               {isMobile ? (
-                <AddToWorkspaceDrawer />
+                <AddToWorkspaceDrawer repository={repoData.full_name} />
               ) : (
                 <Button
                   variant="primary"

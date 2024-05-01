@@ -17,7 +17,7 @@ type AddToWorkspaceModalProps = {
 export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }: AddToWorkspaceModalProps) {
   const { toast } = useToast();
   const { user, sessionToken } = useSupabaseAuth();
-  const [workspaceId, setWorkspaceId] = useState("");
+  const [workspaceId, setWorkspaceId] = useState("new");
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ load: !!user, limit: 100 });
 
   const addRepositoryToWorkspace = async () => {
