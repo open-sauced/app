@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.23.0](https://github.com/open-sauced/app/compare/v2.22.0...v2.23.0) (2024-05-01)
+
+
+### 🐛 Bug Fixes
+
+* repository page speed improvements ([#3269](https://github.com/open-sauced/app/issues/3269)) ([fcbf89d](https://github.com/open-sauced/app/commit/fcbf89d54f098fbaa8487fede28ab15f954fc29b))
+
+
+### 🍕 Features
+
+* add nudge bottom banner for non logged in users ([#3259](https://github.com/open-sauced/app/issues/3259)) ([ea88536](https://github.com/open-sauced/app/commit/ea8853636d24d462edd4e57e640ef3974dfc00b9))
+* implement 'Add to workspace' in repo pages ([#3282](https://github.com/open-sauced/app/issues/3282)) ([b1efc46](https://github.com/open-sauced/app/commit/b1efc46c20fbe9316c0125b1bddc713ca6d923e2))
+
 ## [2.23.0-beta.2](https://github.com/open-sauced/app/compare/v2.23.0-beta.1...v2.23.0-beta.2) (2024-05-01)
 
 
