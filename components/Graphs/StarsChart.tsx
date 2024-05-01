@@ -24,7 +24,7 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 type StarsChartProps = {
   stats: StatsType[] | undefined;
   total: number;
-  syncId: string;
+  syncId: number;
   range: DayRange;
   isLoading: boolean;
 };
