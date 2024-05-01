@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.23.0-beta.2](https://github.com/open-sauced/app/compare/v2.23.0-beta.1...v2.23.0-beta.2) (2024-05-01)
+
+
+### 🍕 Features
+
+* implement 'Add to workspace' in repo pages ([#3282](https://github.com/open-sauced/app/issues/3282)) ([b1efc46](https://github.com/open-sauced/app/commit/b1efc46c20fbe9316c0125b1bddc713ca6d923e2))
+
 ## [2.23.0-beta.1](https://github.com/open-sauced/app/compare/v2.22.1-beta.1...v2.23.0-beta.1) (2024-05-01)
 
 

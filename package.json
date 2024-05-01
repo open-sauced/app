@@ -2,7 +2,7 @@
   "name": "@open-sauced/app",
   "description": "🍕The dashboard for open source discovery.",
   "keywords": [],
-  "version": "2.23.0-beta.1",
+  "version": "2.23.0-beta.2",
   "author": "Brian Douglas <brian@opensauced.pizza>",
   "private": true,
   "license": "Apache 2.0",
