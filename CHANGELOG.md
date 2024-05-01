@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.24.0-beta.1](https://github.com/open-sauced/app/compare/v2.23.1-beta.1...v2.24.0-beta.1) (2024-05-01)
+
+
+### 🍕 Features
+
+* implement `ContributorsChart` for repo pages ([#3302](https://github.com/open-sauced/app/issues/3302)) ([b52b0e6](https://github.com/open-sauced/app/commit/b52b0e6ba566ed937456e77d4af1d69e36d6b76e))
+
 ## [2.23.1-beta.1](https://github.com/open-sauced/app/compare/v2.23.0...v2.23.1-beta.1) (2024-05-01)
 
 
