@@ -25,6 +25,7 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }
   const addRepositoryToWorkspace = async () => {
     if (workspaceId === "new") {
       router.push(`/workspaces/new?repos=${JSON.stringify([repository])}`);
+      return;
     }
 
     const { data, error } = await fetchApiData<Workspace>({

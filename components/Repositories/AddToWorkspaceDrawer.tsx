@@ -1,5 +1,6 @@
 import { MdWorkspaces } from "react-icons/md";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Button from "components/shared/Button/button";
 import { Drawer } from "components/shared/Drawer";
 import { useToast } from "lib/hooks/useToast";
@@ -9,12 +10,18 @@ import { fetchApiData } from "helpers/fetchApiData";
 import SingleSelect from "components/atoms/Select/single-select";
 
 export default function AddToWorkspaceDrawer({ repository }: { repository: string }) {
+  const router = useRouter();
   const { toast } = useToast();
   const { user, sessionToken } = useSupabaseAuth();
   const [workspaceId, setWorkspaceId] = useState("new");
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ load: !!user, limit: 100 });
 
   const addRepositoryToWorkspace = async () => {
+    if (workspaceId === "new") {
+      router.push(`/workspaces/new?repos=${JSON.stringify([repository])}`);
+      return;
+    }
+
     const { data, error } = await fetchApiData<Workspace>({
       method: "POST",
       path: `workspaces/${workspaceId}/repos/${repository}`,
