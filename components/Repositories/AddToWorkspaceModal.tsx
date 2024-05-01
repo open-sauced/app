@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { BsGithub } from "react-icons/bs";
 import Card from "components/atoms/Card/card";
 import SingleSelect from "components/atoms/Select/single-select";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
@@ -8,6 +9,7 @@ import { fetchApiData } from "helpers/fetchApiData";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useToast } from "lib/hooks/useToast";
+import Text from "components/atoms/Typography/text";
 
 type AddToWorkspaceModalProps = {
   repository: string;
@@ -48,13 +50,27 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }
     <Dialog open={isOpen}>
       <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal} onInteractOutside={onCloseModal}>
         <Card heading={<h1 className="text-xl font-semibold">Add to workspace</h1>}>
-          <div className="flex flex-col gap-4 w-full min-w-[32rem] h-full max-h-96 px-8 py-4">
+          <div className="flex flex-col gap-4 w-[32rem] h-full px-8 py-4">
             {!user ? (
-              <>
-                <Button variant="primary" href="/start">
-                  Get started with Github
+              <div className="flex flex-col gap-4 text-center">
+                <img
+                  src="/assets/workspace_overview.png"
+                  alt="Workspace screenshot from documentation"
+                  className="border-2 border-light-orange-9 shadow-md rounded-lg"
+                />
+                <Text>
+                  Keep track of repositories and contributors easily with our new feature
+                  <span className="font-semibold"> Workspaces!</span> If you&apos;ve used OpenSauced before, your
+                  insights and lists are now part of your personal workspace.
+                </Text>
+                <p className="font-medium text-light-orange-10">
+                  Create a new workspace and explore open source like never before!
+                </p>
+                <Button variant="primary" href="/start" className="w-fit gap-2 self-center">
+                  <BsGithub className="w-5 h-5" />
+                  Connect with GitHub
                 </Button>
-              </>
+              </div>
             ) : (
               <>
                 <p>Select workspace to add {repository}</p>
