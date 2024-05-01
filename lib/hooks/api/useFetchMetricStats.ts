@@ -21,6 +21,10 @@ export function useFetchMetricStats({ repository, variant, range, orderDirection
   query.set("orderDirection", orderDirection);
 
   const endpoint = () => {
+    if (typeof window === "undefined") {
+      return null;
+    }
+
     switch (variant) {
       case "stars":
         return `histogram/stars?${query}`;
