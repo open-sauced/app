@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.23.1-beta.1](https://github.com/open-sauced/app/compare/v2.23.0...v2.23.1-beta.1) (2024-05-01)
+
+
+### 🐛 Bug Fixes
+
+* explore links 404 ([#3297](https://github.com/open-sauced/app/issues/3297)) ([ba05a16](https://github.com/open-sauced/app/commit/ba05a16f55f73b518eb6b62ed388d92ebfe8f70e))
+
 ## [2.23.0](https://github.com/open-sauced/app/compare/v2.22.0...v2.23.0) (2024-05-01)
 
 
