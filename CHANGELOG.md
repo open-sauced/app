@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.23.0-beta.1](https://github.com/open-sauced/app/compare/v2.22.1-beta.1...v2.23.0-beta.1) (2024-05-01)
+
+
+### 🍕 Features
+
+* add nudge bottom banner for non logged in users ([#3259](https://github.com/open-sauced/app/issues/3259)) ([ea88536](https://github.com/open-sauced/app/commit/ea8853636d24d462edd4e57e640ef3974dfc00b9))
+
 ## [2.22.1-beta.1](https://github.com/open-sauced/app/compare/v2.22.0...v2.22.1-beta.1) (2024-05-01)
 
 
