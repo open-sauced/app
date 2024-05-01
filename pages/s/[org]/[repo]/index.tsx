@@ -20,6 +20,8 @@ import { DayRangePicker } from "components/shared/DayRangePicker";
 import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import Button from "components/shared/Button/button";
+import { getAvatarByUsername } from "lib/utils/github";
+import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
@@ -34,33 +36,37 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const range = (context.query.range ? Number(context.query.range) : 30) as Range;
 
   const { data: repoData, error } = await fetchApiData<DbRepo>({
-    path: `repos/${org}/${repo}?range=${range}`,
+    path: `repos/${org}/${repo}/info`,
   });
 
   if (!repoData || error) {
     return { notFound: true };
   }
 
-  const response = await fetch(repoData.url || `https://api.github.com/repos/${org}/${repo}`);
-  const { owner } = await response.json();
-
   const { href: ogImageUrl } = new URL(
-    getRepositoryOgImage(repoData, range),
+    getRepositoryOgImage({
+      description: repoData.description,
+      fullRepoName: repoData.full_name,
+      range,
+    }),
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
-  return { props: { repoData, image: owner?.avatar_url || "", ogImageUrl } };
+  // Cache for two hours
+  context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=0, stale-while-revalidate=7200");
+
+  return { props: { repoData, ogImageUrl } };
 }
 
 type Range = 30 | 7 | 90 | 180 | 360;
 
 interface RepoPageProps {
-  repoData: DbRepo;
-  image: string;
+  repoData: DbRepoInfo;
   ogImageUrl: string;
 }
 
-export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps) {
+export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
+  const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const { toast } = useToast();
   const posthog = usePostHog();
   const isMobile = useMediaQuery("(max-width: 576px)");
@@ -88,6 +94,8 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
     range,
   });
 
+  const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
+
   const starsRangedTotal = starsData?.reduce((prev, curr) => prev + curr.star_count!, 0);
   const forksRangedTotal = forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0);
 
@@ -95,7 +103,9 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
-    posthog!.capture(`clicked: ${repoData.full_name} repo page share`);
+    posthog!.capture("clicked: repo page share button", {
+      repo_name: repoData.full_name,
+    });
 
     try {
       const shortUrl = await shortenUrl(url);
@@ -114,7 +124,7 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
         <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-6xl">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
             <header className="flex items-center gap-4">
-              <Avatar size={96} avatarURL={image} />
+              <Avatar size={96} avatarURL={avatarUrl} />
               <div className="flex flex-col gap-2">
                 <a
                   href={`https://github.com/${repoData.full_name}`}
@@ -179,25 +189,33 @@ export default function RepoPage({ repoData, image, ogImageUrl }: RepoPageProps)
               />
               <RepositoryStatCard
                 type="pulls"
-                isLoading={false}
-                hasError={false}
-                stats={{
-                  opened: repoData.open_prs_count!,
-                  merged: repoData.merged_prs_count!,
-                  velocity: repoData.pr_velocity_count!,
-                  range,
-                }}
+                isLoading={isLoading}
+                hasError={isError}
+                stats={
+                  repoStats
+                    ? {
+                        opened: repoStats.open_prs_count ?? 0,
+                        merged: repoStats.merged_prs_count ?? 0,
+                        velocity: repoStats.pr_velocity_count ?? 0,
+                        range,
+                      }
+                    : undefined
+                }
               />
               <RepositoryStatCard
                 type="issues"
-                isLoading={false}
-                hasError={false}
-                stats={{
-                  opened: repoData.opened_issues_count!,
-                  closed: repoData.closed_issues_count!,
-                  velocity: repoData.issues_velocity_count!,
-                  range,
-                }}
+                isLoading={isLoading}
+                hasError={isError}
+                stats={
+                  repoStats
+                    ? {
+                        opened: repoStats.opened_issues_count ?? 0,
+                        closed: repoStats.closed_issues_count ?? 0,
+                        velocity: repoStats.issues_velocity_count ?? 0,
+                        range,
+                      }
+                    : undefined
+                }
               />
             </section>
             <StarsChart

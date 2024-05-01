@@ -5,6 +5,53 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.1-beta.1](https://github.com/open-sauced/app/compare/v2.22.0...v2.22.1-beta.1) (2024-05-01)
+
+
+### 🐛 Bug Fixes
+
+* repository page speed improvements ([#3269](https://github.com/open-sauced/app/issues/3269)) ([fcbf89d](https://github.com/open-sauced/app/commit/fcbf89d54f098fbaa8487fede28ab15f954fc29b))
+
+## [2.22.0](https://github.com/open-sauced/app/compare/v2.21.0...v2.22.0) (2024-04-30)
+
+
+### ✅ Tests
+
+* speed up server for playwright tests on CI ([#3274](https://github.com/open-sauced/app/issues/3274)) ([dd62ef4](https://github.com/open-sauced/app/commit/dd62ef4e8c574c0e3a8fdd1fc02bb51e8ca2903e))
+
+
+### 🐛 Bug Fixes
+
+* capture repo page share as unique event with repo name as metadata ([#3284](https://github.com/open-sauced/app/issues/3284)) ([83cb0de](https://github.com/open-sauced/app/commit/83cb0debc45f5fbbbe2524741bbbfe42b9c729a0))
+* fixed layout issues in StarSearch ([#3257](https://github.com/open-sauced/app/issues/3257)) ([ce07b8c](https://github.com/open-sauced/app/commit/ce07b8c11daf04b55056f459b72d93ab67f633f9))
+* now small screens show follow/unfollow on user profile ([#3260](https://github.com/open-sauced/app/issues/3260)) ([6a8a421](https://github.com/open-sauced/app/commit/6a8a4212d22fa649eba4587aa3f69f879763652c))
+* now StarSearch input is not covered by vertical suggestions on small screens ([#3265](https://github.com/open-sauced/app/issues/3265)) ([1624ea8](https://github.com/open-sauced/app/commit/1624ea8a6bf63a167d80e4295e619d1ec93f2924))
+* now StarSearch link is in sidebar for smaller screens ([#3263](https://github.com/open-sauced/app/issues/3263)) ([71cd5b9](https://github.com/open-sauced/app/commit/71cd5b96c41be3ed26280a76e29969f023015e84))
+* remove filter prefetch and additional filters when searching by repository ([#3247](https://github.com/open-sauced/app/issues/3247)) ([59eb8cc](https://github.com/open-sauced/app/commit/59eb8ccd8fe54843c5a51cc93f667dd953b1b42a))
+* removed connection tab on user profile page ([#3275](https://github.com/open-sauced/app/issues/3275)) ([cbd1382](https://github.com/open-sauced/app/commit/cbd13824b41e585d7f7e537abf7713fe4ab4781d))
+* Update README with current OpenSauced logo ([#3255](https://github.com/open-sauced/app/issues/3255)) ([2252900](https://github.com/open-sauced/app/commit/22529008272f33cb38431314e72cd71f47104a2b))
+* use direct OpenGraph Image URLs on repository insight pages ([#3256](https://github.com/open-sauced/app/issues/3256)) ([0578019](https://github.com/open-sauced/app/commit/0578019257797573cb6c7583399a8eda6e054372))
+
+
+### 🍕 Features
+
+* implement PR and issue devstats to repo pages ([#3253](https://github.com/open-sauced/app/issues/3253)) ([caa7eea](https://github.com/open-sauced/app/commit/caa7eea4d764aee96c8d90c6ad4ffb62895312dd))
+* now you can share the StarSearch waitlist on socials ([#3285](https://github.com/open-sauced/app/issues/3285)) ([6732853](https://github.com/open-sauced/app/commit/6732853d918d79a3e6d968c4303bba956eebfa84))
+
+## [2.22.0-beta.11](https://github.com/open-sauced/app/compare/v2.22.0-beta.10...v2.22.0-beta.11) (2024-04-30)
+
+
+### 🍕 Features
+
+* now you can share the StarSearch waitlist on socials ([#3285](https://github.com/open-sauced/app/issues/3285)) ([6732853](https://github.com/open-sauced/app/commit/6732853d918d79a3e6d968c4303bba956eebfa84))
+
+## [2.22.0-beta.10](https://github.com/open-sauced/app/compare/v2.22.0-beta.9...v2.22.0-beta.10) (2024-04-30)
+
+
+### 🐛 Bug Fixes
+
+* capture repo page share as unique event with repo name as metadata ([#3284](https://github.com/open-sauced/app/issues/3284)) ([83cb0de](https://github.com/open-sauced/app/commit/83cb0debc45f5fbbbe2524741bbbfe42b9c729a0))
+
 ## [2.22.0-beta.9](https://github.com/open-sauced/app/compare/v2.22.0-beta.8...v2.22.0-beta.9) (2024-04-29)
 
 
