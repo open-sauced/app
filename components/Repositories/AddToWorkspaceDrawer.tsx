@@ -1,5 +1,5 @@
 import { MdWorkspaces } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
 import Button from "components/shared/Button/button";
@@ -14,9 +14,16 @@ import Text from "components/atoms/Typography/text";
 export default function AddToWorkspaceDrawer({ repository }: { repository: string }) {
   const router = useRouter();
   const { toast } = useToast();
-  const { user, sessionToken } = useSupabaseAuth();
+  const { signIn, user, sessionToken } = useSupabaseAuth();
   const [workspaceId, setWorkspaceId] = useState("new");
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ load: !!user, limit: 100 });
+
+  const [host, setHost] = useState("");
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHost(window.location.origin as string);
+    }
+  }, []);
 
   const addRepositoryToWorkspace = async () => {
     if (workspaceId === "new") {
@@ -63,9 +70,18 @@ export default function AddToWorkspaceDrawer({ repository }: { repository: strin
             lists are now part of your personal workspace.
           </Text>
           <p className="font-medium text-light-orange-10">
-            Create a new workspace and explore open source like never before!
+            Create a new workspace with this repository and explore open source like never before!
           </p>
-          <Button variant="primary" href="/start" className="w-fit gap-2 self-center">
+          <Button
+            variant="primary"
+            className="w-fit gap-2 self-center"
+            onClick={() => {
+              signIn({
+                provider: "github",
+                options: { redirectTo: `${host}/workspaces/new?repos=${JSON.stringify([repository])}` },
+              });
+            }}
+          >
             <BsGithub className="w-5 h-5" />
             Connect with GitHub
           </Button>
@@ -91,7 +107,7 @@ export default function AddToWorkspaceDrawer({ repository }: { repository: strin
               }}
             />
           )}
-          <Button onClick={addRepositoryToWorkspace} variant="primary" className="w-fit self-end">
+          <Button onClick={addRepositoryToWorkspace} variant="primary">
             Confirm
           </Button>
         </>
