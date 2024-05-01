@@ -28,7 +28,7 @@ export default function ContributorsChart({
 }: ContributorsChartProps) {
   const dailyData = useMemo(() => getDailyContributorHistogramToDays({ stats, range }), [stats, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
-  const rangedAverage = useMemo(() => rangedTotal / range, [rangedTotal, range]);
+  const rangedAverage = useMemo(() => (rangedTotal / range).toPrecision(2), [rangedTotal, range]);
 
   return (
     <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
