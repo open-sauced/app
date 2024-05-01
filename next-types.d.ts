@@ -8,6 +8,46 @@ declare module React {
   }
 }
 
+interface DbRepoInfo {
+  readonly id: number;
+  readonly size: number;
+  readonly issues: number;
+  readonly stars: number;
+  readonly forks: number;
+  readonly watchers: number;
+  readonly subscribers: number;
+  readonly network: number;
+  readonly is_fork: boolean;
+  readonly is_private: boolean;
+  readonly is_template: boolean;
+  readonly is_archived: boolean;
+  readonly is_disabled: boolean;
+  readonly has_issues: boolean;
+  readonly has_projects: boolean;
+  readonly has_downloads: boolean;
+  readonly has_wiki: boolean;
+  readonly has_pages: boolean;
+  readonly has_discussions: boolean;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly pushed_at: string;
+  readonly default_branch: string;
+  readonly node_id: string;
+  readonly git_url: string;
+  readonly ssh_url: string;
+  readonly clone_url: string;
+  readonly svn_url: string;
+  readonly mirror_url: string;
+  readonly name: string;
+  readonly full_name: string;
+  readonly description: string;
+  readonly language: string;
+  readonly license: string;
+  readonly url: string;
+  readonly homepage: string;
+  readonly topics: string[];
+}
+
 interface DbRepo {
   readonly id: string;
   readonly host_id: string;

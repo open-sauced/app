@@ -10,7 +10,7 @@ const meta: Meta<typeof StarsChart> = {
     stats: generate30DaysData(),
     range: 30,
     total: 3376,
-    syncId: "repo_id",
+    syncId: 1234,
     isLoading: false,
   },
 };
@@ -22,7 +22,7 @@ export const Days30: Story = {
     stats: generate30DaysData(),
     range: 30,
     total: 3376,
-    syncId: "repo_id",
+    syncId: 1234,
   },
 };
 
@@ -31,7 +31,7 @@ export const Days7: Story = {
     stats: generate7DaysData(),
     range: 7,
     total: 3376,
-    syncId: "repo_id",
+    syncId: 1234,
   },
 };
 
@@ -40,7 +40,7 @@ export const Days90: Story = {
     stats: generate90DaysData(),
     range: 90,
     total: 3376,
-    syncId: "repo_id",
+    syncId: 1234,
   },
 };
 

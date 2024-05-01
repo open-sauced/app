@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.22.1-beta.1](https://github.com/open-sauced/app/compare/v2.22.0...v2.22.1-beta.1) (2024-05-01)
+
+
+### 🐛 Bug Fixes
+
+* repository page speed improvements ([#3269](https://github.com/open-sauced/app/issues/3269)) ([fcbf89d](https://github.com/open-sauced/app/commit/fcbf89d54f098fbaa8487fede28ab15f954fc29b))
+
 ## [2.22.0](https://github.com/open-sauced/app/compare/v2.21.0...v2.22.0) (2024-04-30)
 
 
