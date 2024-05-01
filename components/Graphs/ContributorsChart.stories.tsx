@@ -39,7 +39,7 @@ export const Days90: Story = {
   args: {
     stats: generate90DaysData(),
     range: 90,
-    rangedTotal: 228,
+    rangedTotal: 363,
     syncId: 1234,
   },
 };
