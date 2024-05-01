@@ -20,7 +20,6 @@ import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/use
 import { useToast } from "lib/hooks/useToast";
 
 const HEIGHT_TO_TAKE_OFF_SCROLL_AREA = 340;
-const HEIGHT_TO_TAKE_OFF_SUGGESTIONS = 600;
 
 const SUGGESTIONS = [
   {
