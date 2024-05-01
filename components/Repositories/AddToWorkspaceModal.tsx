@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Card from "components/atoms/Card/card";
 import SingleSelect from "components/atoms/Select/single-select";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
@@ -16,11 +17,16 @@ type AddToWorkspaceModalProps = {
 
 export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }: AddToWorkspaceModalProps) {
   const { toast } = useToast();
+  const router = useRouter();
   const { user, sessionToken } = useSupabaseAuth();
   const [workspaceId, setWorkspaceId] = useState("new");
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ load: !!user, limit: 100 });
 
   const addRepositoryToWorkspace = async () => {
+    if (workspaceId === "new") {
+      router.push(`/workspaces/new?repos=${JSON.stringify([repository])}`);
+    }
+
     const { data, error } = await fetchApiData<Workspace>({
       method: "POST",
       path: `workspaces/${workspaceId}/repos/${repository}`,
