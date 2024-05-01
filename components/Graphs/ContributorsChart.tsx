@@ -3,6 +3,7 @@ import { ValueType, NameType } from "recharts/types/component/DefaultTooltipCont
 
 import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar, Tooltip, type TooltipProps, CartesianGrid } from "recharts";
 import { FaUserAlt } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa6";
 import { getTicks, getDailyContributorHistogramToDays } from "lib/utils/repo-page-utils";
 import { type DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
@@ -36,18 +37,21 @@ export default function ContributorsChart({
           <SkeletonWrapper width={100} height={24} />
         ) : (
           <>
-            <div className="flex gap-1 items-center w-fit">
-              <h3 className="text-sm font-semibold md:text-xl text-slate-800">Contributors</h3>
-              <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+            <div className="flex gap-2 items-center w-fit">
+              <FaUsers className="text-xl lg:text-3xl" />
+              <div className="flex gap-1">
+                <h3 className="text-sm font-semibold md:text-xl text-slate-800">Contributors</h3>
+                <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+              </div>
             </div>
             <aside className="flex gap-8">
               <div>
-                <h3>Total {range} days</h3>
-                <p>{rangedTotal}</p>
+                <h3 className="text-xs lg:text-sm text-slate-500">Total {range} days</h3>
+                <p className="font-semibold text-xl lg:text-3xl">{rangedTotal}</p>
               </div>
               <div>
-                <h3>Average per day</h3>
-                <p>{humanizeNumber(rangedAverage)}</p>
+                <h3 className="text-xs lg:text-sm text-slate-500">Average per day</h3>
+                <p className="font-semibold text-xl lg:text-3xl">{humanizeNumber(rangedAverage)}</p>
               </div>
             </aside>
           </>
@@ -75,7 +79,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
     return (
       <figcaption className="flex flex-col gap-1 bg-white px-4 py-2 rounded-lg border">
         <section className="flex gap-2 items-center">
-          <FaUserAlt className="fill-sauced-orange" />
+          <FaUserAlt className="fill-[#1D48E6]" />
           <p>Contributors: {payload[0]?.value}</p>
         </section>
 
