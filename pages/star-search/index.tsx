@@ -69,7 +69,7 @@ type StarSearchPageProps = {
   ogImageUrl: string;
 };
 
-export type StarSearchChat = {
+type StarSearchChat = {
   author: "You" | "StarSearch";
   content: string;
 };
