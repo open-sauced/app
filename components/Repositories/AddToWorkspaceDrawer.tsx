@@ -107,7 +107,7 @@ export default function AddToWorkspaceDrawer({ repository }: { repository: strin
               }}
             />
           )}
-          <Button onClick={addRepositoryToWorkspace} variant="primary">
+          <Button onClick={addRepositoryToWorkspace} variant="primary" className="w-full !grid">
             Confirm
           </Button>
         </>
