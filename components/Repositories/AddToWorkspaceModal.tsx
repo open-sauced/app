@@ -73,7 +73,7 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }
               </div>
             ) : (
               <>
-                <p>Select workspace to add {repository}</p>
+                <p>Create a new workspace or add to an existing one.</p>
                 {workspacesLoading ? (
                   <p>Loading...</p>
                 ) : (
