@@ -14,7 +14,7 @@ export const useStarSearchFeedback = () => {
       feedback,
       promptContent,
       promptResponse,
-    } as StarSearchFeedbackAnalytic);
+    } satisfies StarSearchFeedbackAnalytic);
   };
 
   return {
