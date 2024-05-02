@@ -184,7 +184,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
     switch (starSearchState) {
       case "initial":
         return (
-          <div className="flex flex-col text-center items-center gap-4 lg:pt-12 mb-16">
+          <div className="flex flex-col text-center items-center gap-4">
             <Header />
             <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
           </div>
@@ -344,15 +344,15 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
 
 function Header() {
   return (
-    <section className="flex flex-col text-center items-center gap-2 lg:gap-4 pt-4 lg:pt-24">
+    <div className="flex flex-col text-center items-center gap-2 lg:gap-4">
       <div className="flex gap-2 items-center">
-        <Image src="/assets/star-search-logo.svg" alt="Star Search Logo" width={40} height={40} />
+        <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
         <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
           StarSearch
         </h1>
       </div>
       <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Ask questions about contributors</h2>
-    </section>
+    </div>
   );
 }
 
