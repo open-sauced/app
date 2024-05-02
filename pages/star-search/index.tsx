@@ -8,6 +8,7 @@ import Markdown from "react-markdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { BsArrowUpShort } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
+import clsx from "clsx";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -194,53 +195,51 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           <>
             <div
               aria-live="polite"
-              className="grow items-center flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto h-[calc(100vh-240px)] overflow-y-auto mb-4"
+              className="grow items-center flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
             >
-              {chat.map((message, i) => (
-                <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
-              ))}
-              {!isRunning ? (
-                <>
-                  <div className="grid gap-2 justify-items-end self-end">
-                    <button
-                      type="button"
-                      className="flex gap-2 items-center hover:text-sauced-orange text-slate-600"
-                      onClick={() => {
-                        setStarSearchState("initial");
-                        setChat([]);
-                      }}
-                    >
-                      Clear chat history
-                      <TrashIcon width={16} height={16} />
-                    </button>
+              <div className="overflow-y-auto">
+                {chat.map((message, i) => (
+                  <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
+                ))}
+                <div ref={scrollRef} />
+              </div>
+              <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
+                <button
+                  type="button"
+                  className="flex gap-2 items-center hover:text-sauced-orange text-slate-600"
+                  onClick={() => {
+                    setStarSearchState("initial");
+                    setChat([]);
+                  }}
+                >
+                  Clear chat history
+                  <TrashIcon width={16} height={16} />
+                </button>
 
-                    <div className="flex justify-end mb-4 gap-2 text-slate-600">
-                      <span>Was this response useful?</span>
-                      <button
-                        type="button"
-                        className="flex gap-2 items-center hover:text-sauced-orange"
-                        onClick={() => {
-                          registerFeedback("positive");
-                        }}
-                      >
-                        <span className="sr-only">Thumbs up</span>
-                        <ThumbsupIcon size={16} />
-                      </button>
-                      <button
-                        type="button"
-                        className="flex gap-2 items-center hover:text-sauced-orange"
-                        onClick={() => {
-                          registerFeedback("negative");
-                        }}
-                      >
-                        <span className="sr-only">Thumbs down</span>
-                        <ThumbsdownIcon size={16} />
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ) : null}
-              <div ref={scrollRef} />
+                <div className="flex justify-end mb-4 gap-2 text-slate-600">
+                  <span>Was this response useful?</span>
+                  <button
+                    type="button"
+                    className="flex gap-2 items-center hover:text-sauced-orange"
+                    onClick={() => {
+                      registerFeedback("positive");
+                    }}
+                  >
+                    <span className="sr-only">Thumbs up</span>
+                    <ThumbsupIcon size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    className="flex gap-2 items-center hover:text-sauced-orange"
+                    onClick={() => {
+                      registerFeedback("negative");
+                    }}
+                  >
+                    <span className="sr-only">Thumbs down</span>
+                    <ThumbsdownIcon size={16} />
+                  </button>
+                </div>
+              </div>
             </div>
             {!isMobile && showSuggestions && (
               <div className="flex flex-col gap-2 mb-14">
