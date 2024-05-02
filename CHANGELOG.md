@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.24.0-beta.5](https://github.com/open-sauced/app/compare/v2.24.0-beta.4...v2.24.0-beta.5) (2024-05-02)
+
+
+### 🐛 Bug Fixes
+
+* Contributor Insight & Repository Insight uses wrong copy ([#3227](https://github.com/open-sauced/app/issues/3227)) ([2810655](https://github.com/open-sauced/app/commit/281065562a58614c950fde53e58c4c54e672dba1))
+
 ## [2.24.0-beta.4](https://github.com/open-sauced/app/compare/v2.24.0-beta.3...v2.24.0-beta.4) (2024-05-02)
 
 
