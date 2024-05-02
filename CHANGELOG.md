@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.24.0-beta.3](https://github.com/open-sauced/app/compare/v2.24.0-beta.2...v2.24.0-beta.3) (2024-05-02)
+
+
+### 🐛 Bug Fixes
+
+* return 404 on invalid workspace ID ([#3301](https://github.com/open-sauced/app/issues/3301)) ([d09c229](https://github.com/open-sauced/app/commit/d09c229a39d23213893d00dc3d0a95f545ea7bd3))
+
 ## [2.24.0-beta.2](https://github.com/open-sauced/app/compare/v2.24.0-beta.1...v2.24.0-beta.2) (2024-05-02)
 
 
