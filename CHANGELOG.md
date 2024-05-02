@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.24.0-beta.2](https://github.com/open-sauced/app/compare/v2.24.0-beta.1...v2.24.0-beta.2) (2024-05-02)
+
+
+### 🍕 Features
+
+* implemented the StarSearch feedback component ([#3298](https://github.com/open-sauced/app/issues/3298)) ([1297274](https://github.com/open-sauced/app/commit/1297274c79e670ee29d351a74f7bd8a8b1b4a9e6))
+
 ## [2.24.0-beta.1](https://github.com/open-sauced/app/compare/v2.23.1-beta.1...v2.24.0-beta.1) (2024-05-01)
 
 
