@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.24.0-beta.4](https://github.com/open-sauced/app/compare/v2.24.0-beta.3...v2.24.0-beta.4) (2024-05-02)
+
+
+### 🐛 Bug Fixes
+
+* filter out undefined values for building workspace owners array ([#3305](https://github.com/open-sauced/app/issues/3305)) ([bd4e1fe](https://github.com/open-sauced/app/commit/bd4e1fe394529409581387cdbd7591e478d2e44f))
+
 ## [2.24.0-beta.3](https://github.com/open-sauced/app/compare/v2.24.0-beta.2...v2.24.0-beta.3) (2024-05-02)
 
 
