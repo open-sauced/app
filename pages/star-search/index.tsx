@@ -12,14 +12,11 @@ import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { getAvatarById } from "lib/utils/github";
-import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { Drawer } from "components/shared/Drawer";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import SEO from "layouts/SEO/SEO";
 import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
-
-const HEIGHT_TO_TAKE_OFF_SCROLL_AREA = 220;
 
 const SUGGESTIONS = [
   {
@@ -79,7 +76,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 576px)");
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback } = useStarSearchFeedback();
@@ -187,10 +184,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
     switch (starSearchState) {
       case "initial":
         return (
-          <div
-            className="flex flex-col text-center items-center gap-4 lg:pt-12 mb-16"
-            // style={{ maxHeight: `calc(100vh - ${HEIGHT_TO_TAKE_OFF_SUGGESTIONS}px)` }}
-          >
+          <div className="flex flex-col text-center items-center gap-4 lg:pt-12 mb-16">
             <Header />
             <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
           </div>
@@ -198,17 +192,16 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       case "chat":
         return (
           <>
-            <ScrollArea
+            <div
               aria-live="polite"
-              className="grow items-center flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto pb-4"
-              style={{ maxHeight: `calc(100vh - ${HEIGHT_TO_TAKE_OFF_SCROLL_AREA}px)` }}
+              className="grow items-center flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto h-[calc(100vh-240px)] overflow-y-auto mb-4"
             >
               {chat.map((message, i) => (
                 <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
               ))}
               {!isRunning ? (
                 <>
-                  <div className="flex justify-end">
+                  <div className="grid gap-2 justify-items-end self-end">
                     <button
                       type="button"
                       className="flex gap-2 items-center hover:text-sauced-orange text-slate-600"
@@ -220,34 +213,35 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                       Clear chat history
                       <TrashIcon width={16} height={16} />
                     </button>
-                  </div>
-                  <div className="flex justify-end mb-4 gap-2 text-slate-600">
-                    <span>Was this response useful?</span>
-                    <button
-                      type="button"
-                      className="flex gap-2 items-center hover:text-sauced-orange"
-                      onClick={() => {
-                        registerFeedback("positive");
-                      }}
-                    >
-                      <span className="sr-only">Thumbs up</span>
-                      <ThumbsupIcon size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      className="flex gap-2 items-center hover:text-sauced-orange"
-                      onClick={() => {
-                        registerFeedback("negative");
-                      }}
-                    >
-                      <span className="sr-only">Thumbs down</span>
-                      <ThumbsdownIcon size={16} />
-                    </button>
+
+                    <div className="flex justify-end mb-4 gap-2 text-slate-600">
+                      <span>Was this response useful?</span>
+                      <button
+                        type="button"
+                        className="flex gap-2 items-center hover:text-sauced-orange"
+                        onClick={() => {
+                          registerFeedback("positive");
+                        }}
+                      >
+                        <span className="sr-only">Thumbs up</span>
+                        <ThumbsupIcon size={16} />
+                      </button>
+                      <button
+                        type="button"
+                        className="flex gap-2 items-center hover:text-sauced-orange"
+                        onClick={() => {
+                          registerFeedback("negative");
+                        }}
+                      >
+                        <span className="sr-only">Thumbs down</span>
+                        <ThumbsdownIcon size={16} />
+                      </button>
+                    </div>
                   </div>
                 </>
               ) : null}
               <div ref={scrollRef} />
-            </ScrollArea>
+            </div>
             {!isMobile && showSuggestions && (
               <div className="flex flex-col gap-2 mb-14">
                 <button
@@ -282,10 +276,10 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         image={ogImageUrl}
         twitterCard="summary_large_image"
       />
-      <ProfileLayout showFooter={false}>
-        <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
+      <ProfileLayout>
+        <div className="relative -mt-1.5 flex flex-col p-2 md:p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
-          <div className="absolute inset-x-0 bottom-2 flex flex-col gap-4 items-center w-full px-2">
+          <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
               starSearchState === "chat" &&
               (isMobile ? (
@@ -294,7 +288,10 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   description="You can customize the prompt after selection"
                   showCloseButton
                   trigger={
-                    <button className="z-30 flex gap-1 shadow-xs items-center text-slate-700 text-sm font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full">
+                    <button
+                      onClick={() => setShowSuggestions(!showSuggestions)}
+                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                    >
                       Need inspiration?
                       <BsArrowUpShort className="text-2xl" />
                     </button>
@@ -307,7 +304,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   {!showSuggestions && (
                     <button
                       onClick={() => setShowSuggestions(!showSuggestions)}
-                      className="z-30 mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full"
+                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
                     >
                       Need inspiration?
                       <BsArrowUpShort className="text-2xl" />
@@ -315,33 +312,30 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   )}
                 </>
               ))}
-            <div className="mx-0.5 lg:mx-auto w-full lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange">
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  const form = event.currentTarget;
-                  const formData = new FormData(form);
-                  submitPrompt(formData.get("prompt") as string);
-                  form.reset();
-                }}
-                className="w-full bg-white h-fit flex justify-between rounded-lg"
-              >
-                <input
-                  required
-                  type="text"
-                  name="prompt"
-                  ref={inputRef}
-                  disabled={isRunning}
-                  placeholder="Ask a question"
-                  className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
-                />
-                <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
-                  <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
-                </button>
-              </form>
-            </div>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                const form = event.currentTarget;
+                const formData = new FormData(form);
+                submitPrompt(formData.get("prompt") as string);
+                form.reset();
+              }}
+              className="bg-white flex justify-between mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
+            >
+              <input
+                required
+                type="text"
+                name="prompt"
+                ref={inputRef}
+                disabled={isRunning}
+                placeholder="Ask a question"
+                className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
+              />
+              <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
+                <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
+              </button>
+            </form>
           </div>
-          <div className="absolute inset-x-0 top-0 z-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
         </div>
       </ProfileLayout>
     </>
@@ -424,7 +418,7 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   return (
     <li className="flex gap-2 justify-center items-start my-4 w-full">
       {renderAvatar()}
-      <Card className="flex flex-col grow bg-white z-10 p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
+      <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
         <h3 className="font-semibold text-sauced-orange">{author}</h3>
         <Markdown>{content}</Markdown>
       </Card>
