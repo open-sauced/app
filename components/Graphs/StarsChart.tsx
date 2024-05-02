@@ -67,9 +67,12 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
           <SkeletonWrapper width={100} height={24} />
         ) : (
           <>
-            <div className="flex gap-1 items-center w-fit">
-              <h3 className="text-sm font-semibold md:text-xl text-slate-800">Stars</h3>
-              <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+            <div className="flex gap-2 items-start w-fit">
+              <FaStar className="text-xl lg:text-2xl" />
+              <div className="flex gap-1">
+                <h3 className="text-sm font-semibold md:text-xl text-slate-800">Stars</h3>
+                <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+              </div>
             </div>
             <div className="flex gap-4 items-center">
               <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>

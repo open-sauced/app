@@ -61,15 +61,18 @@ export default function ForksChart({ stats, total, syncId, range = 30, isLoading
   };
 
   return (
-    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8 px-8">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between">
+    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-8">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
           <>
-            <div className="flex gap-1 items-center w-fit">
-              <h3 className="text-sm font-semibold md:text-xl text-slate-800">Forks</h3>
-              <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+            <div className="flex gap-2 items-start w-fit">
+              <BiGitRepoForked className="text-xl lg:text-2xl" />
+              <div className="flex gap-1">
+                <h3 className="text-sm font-semibold md:text-xl text-slate-800">Forks</h3>
+                <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+              </div>
             </div>
             <div className="flex gap-4 items-center">
               <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
