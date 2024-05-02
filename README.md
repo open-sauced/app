@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-  <img alt="OpenSauced" src="https://i.ibb.co/7jPXt0Z/logo1-92f1a87f.png" width="300px">
+  <img alt="OpenSauced" src="https://github.com/open-sauced/assets/blob/main/logos/logo-on-dark.png">
   <h1>🍕 app.opensauced.pizza 🍕</h1>
   <strong>The site provides insights to Open Source projects.</strong>
 </div>
@@ -45,6 +45,12 @@ To start a local copy of the app on port `3000`:
 
 ```shell
 npm run dev
+```
+
+Interested in helping with potential performance problems? Run the dev server with [Million Lint](https://million.dev/lint). Note that Million Lint is currently only supported for VS Code and it requires the [Million Lint extension](https://marketplace.visualstudio.com/items?itemName=million.million-lint).
+
+```shell
+USE_MILLION_LINT=1 npm run dev
 ```
 
 ### ☁️️ Netlify Edge Functions
@@ -103,5 +109,5 @@ npx -y @open-sauced/conventional-commit
 
 ## 🍕 Community
 
-Got Questions? Join the conversation in our [Discord](https://discord.gg/U2peSNf23P).  
+Got Questions? Join the conversation in our [Discord](https://discord.gg/U2peSNf23P).
 Find OpenSauced videos and release overviews on our [YouTube Channel](https://www.youtube.com/channel/UCklWxKrTti61ZCROE1e5-MQ), and check out the resources on our [Dev.to org](https://dev.to/opensauced).
