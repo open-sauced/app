@@ -19,7 +19,7 @@ import SEO from "layouts/SEO/SEO";
 import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 
-const HEIGHT_TO_TAKE_OFF_SCROLL_AREA = 340;
+const HEIGHT_TO_TAKE_OFF_SCROLL_AREA = 220;
 
 const SUGGESTIONS = [
   {
@@ -282,7 +282,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         image={ogImageUrl}
         twitterCard="summary_large_image"
       />
-      <ProfileLayout>
+      <ProfileLayout showFooter={false}>
         <div className="relative -mt-1.5 flex flex-col p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="absolute inset-x-0 bottom-2 flex flex-col gap-4 items-center w-full px-2">
