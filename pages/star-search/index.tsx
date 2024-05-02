@@ -7,7 +7,7 @@ import Image from "next/image";
 import Markdown from "react-markdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { BsArrowUpShort } from "react-icons/bs";
-import { XCircleIcon } from "@primer/octicons-react";
+import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -16,9 +16,10 @@ import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { Drawer } from "components/shared/Drawer";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import SEO from "layouts/SEO/SEO";
+import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/useStarSearchFeedback";
+import { useToast } from "lib/hooks/useToast";
 
 const HEIGHT_TO_TAKE_OFF_SCROLL_AREA = 340;
-const HEIGHT_TO_TAKE_OFF_SUGGESTIONS = 600;
 
 const SUGGESTIONS = [
   {
@@ -81,6 +82,17 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   const isMobile = useMediaQuery("(max-width: 576px)");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { feedback } = useStarSearchFeedback();
+  const { toast } = useToast();
+
+  function registerFeedback(feedbackType: StarSearchFeedbackAnalytic["feedback"]) {
+    feedback({
+      feedback: feedbackType,
+      promptContent: chat.filter(({ author }) => author === "You").map(({ content }) => content),
+      promptResponse: chat.filter(({ author }) => author === "StarSearch").map(({ content }) => content),
+    });
+    toast({ description: "Thank you for your feedback!", variant: "success" });
+  }
 
   function addPromptInput(prompt: string) {
     if (!inputRef.current?.form) {
@@ -195,19 +207,44 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                 <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
               ))}
               {!isRunning ? (
-                <div className="flex justify-end mb-4">
-                  <button
-                    type="button"
-                    className="flex gap-2 items-center hover:text-sauced-orange"
-                    onClick={() => {
-                      setStarSearchState("initial");
-                      setChat([]);
-                    }}
-                  >
-                    Clear chat history
-                    <TrashIcon width={16} height={16} />
-                  </button>
-                </div>
+                <>
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      className="flex gap-2 items-center hover:text-sauced-orange text-slate-600"
+                      onClick={() => {
+                        setStarSearchState("initial");
+                        setChat([]);
+                      }}
+                    >
+                      Clear chat history
+                      <TrashIcon width={16} height={16} />
+                    </button>
+                  </div>
+                  <div className="flex justify-end mb-4 gap-2 text-slate-600">
+                    <span>Was this response useful?</span>
+                    <button
+                      type="button"
+                      className="flex gap-2 items-center hover:text-sauced-orange"
+                      onClick={() => {
+                        registerFeedback("positive");
+                      }}
+                    >
+                      <span className="sr-only">Thumbs up</span>
+                      <ThumbsupIcon size={16} />
+                    </button>
+                    <button
+                      type="button"
+                      className="flex gap-2 items-center hover:text-sauced-orange"
+                      onClick={() => {
+                        registerFeedback("negative");
+                      }}
+                    >
+                      <span className="sr-only">Thumbs down</span>
+                      <ThumbsdownIcon size={16} />
+                    </button>
+                  </div>
+                </>
               ) : null}
               <div ref={scrollRef} />
             </ScrollArea>
