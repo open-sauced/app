@@ -276,7 +276,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         twitterCard="summary_large_image"
       />
       <ProfileLayout>
-        <div className="relative -mt-1.5 flex flex-col p-2 md:p-4 lg:p-8 justify-between items-center w-full h-full grow bg-slate-50">
+        <div className="relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
@@ -335,6 +335,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
               </button>
             </form>
           </div>
+          <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
         </div>
       </ProfileLayout>
     </>
@@ -343,7 +344,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
 
 function Header() {
   return (
-    <div className="flex flex-col text-center items-center gap-2 lg:gap-4">
+    <div className="flex flex-col text-center items-center gap-2 lg:gap-4 lg:pt-8">
       <div className="flex gap-2 items-center">
         <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
         <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
