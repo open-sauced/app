@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.24.1-beta.1](https://github.com/open-sauced/app/compare/v2.24.0...v2.24.1-beta.1) (2024-05-03)
+
+
+### 🐛 Bug Fixes
+
+* Contributor Insight & Repository Insight uses wrong copy ([#3227](https://github.com/open-sauced/app/issues/3227)) ([2810655](https://github.com/open-sauced/app/commit/281065562a58614c950fde53e58c4c54e672dba1))
+* now the page is cached varying on the day range ([#3310](https://github.com/open-sauced/app/issues/3310)) ([b6a46cf](https://github.com/open-sauced/app/commit/b6a46cfe7ed1b2d79624468928e2517114744082))
+
 ## [2.24.0](https://github.com/open-sauced/app/compare/v2.23.0...v2.24.0) (2024-05-02)
 
 
