@@ -82,13 +82,16 @@ const SingleSelect = ({
                         key={option.value}
                         onSelect={(value) => {
                           setInputValue("");
+                          setIsOpen(false);
                           onValueChange(option.value);
                         }}
                         onMouseDown={(e) => {
                           e.preventDefault();
+                          setIsOpen(false);
                           onValueChange(option.value);
                         }}
                         onClick={() => {
+                          setIsOpen(false);
                           onValueChange(option.value);
                         }}
                         className="!z-50 !cursor-pointer flex justify-between min-w-[7rem] items-center !px-3 rounded-md truncate break-words w-full"
