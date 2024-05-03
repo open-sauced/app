@@ -199,13 +199,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               />
             )}
             <AnnouncementCard
-              title="Track your project with Workspaces!"
+              title="Introducing Star Search!"
               description={
-                "Set up your Workspace to get you and your team access to information about pull requests, issues, and contributors for all your repositories."
+                "Sign up for StarSearch, our AI-powered feature that provides in-depth insights into contributor history and activities, bringing a new depth of knowledge about open source projects."
               }
-              bannerSrc={"/try-workspaces.png"}
-              url={"/workspaces/new?welcome=true"}
-              cta={"Try it"}
+              bannerSrc={"/assets/og-images/star-search-og-image.png"}
+              url={"/star-search/waitlist"}
+              cta={"Join the Waitlist!"}
             />
           </div>
         </div>
