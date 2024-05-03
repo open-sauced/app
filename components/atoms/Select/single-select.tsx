@@ -75,23 +75,23 @@ const SingleSelect = ({
                   className="px-2 focus:ring-0"
                 />
               )}
-              <CommandGroup className="flex flex-col !px-0 !py-0 overflow-x-hidden overflow-y-scroll max-h-52">
+              <CommandGroup className="flex flex-col overflow-x-hidden overflow-y-scroll max-h-52">
                 {isOpen && options.length > 0
                   ? options.map((option) => (
                       <CommandItem
                         key={option.value}
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                        }}
                         onSelect={(value) => {
                           setInputValue("");
+                          onValueChange(option.value);
+                        }}
+                        onMouseDown={(e) => {
+                          e.preventDefault();
                           onValueChange(option.value);
                         }}
                         onClick={() => {
                           onValueChange(option.value);
                         }}
-                        className="!cursor-pointer flex justify-between items-center !px-3 rounded-md truncate break-words w-full"
+                        className="!z-50 !cursor-pointer flex justify-between min-w-[7rem] items-center !px-3 rounded-md truncate break-words w-full"
                       >
                         {option.label}
                       </CommandItem>
