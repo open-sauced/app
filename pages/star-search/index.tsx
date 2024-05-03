@@ -196,9 +196,9 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           <>
             <div
               aria-live="polite"
-              className="grow items-center flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
+              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
             >
-              <ScrollArea>
+              <ScrollArea className="flex grow">
                 {chat.map((message, i) => (
                   <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
                 ))}
