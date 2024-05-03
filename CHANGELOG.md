@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.24.0-beta.5](https://github.com/open-sauced/app/compare/v2.24.0-beta.4...v2.24.0-beta.5) (2024-05-02)
+
+
+### 🐛 Bug Fixes
+
+* Contributor Insight & Repository Insight uses wrong copy ([#3227](https://github.com/open-sauced/app/issues/3227)) ([2810655](https://github.com/open-sauced/app/commit/281065562a58614c950fde53e58c4c54e672dba1))
+
+## [2.24.0-beta.4](https://github.com/open-sauced/app/compare/v2.24.0-beta.3...v2.24.0-beta.4) (2024-05-02)
+
+
+### 🐛 Bug Fixes
+
+* filter out undefined values for building workspace owners array ([#3305](https://github.com/open-sauced/app/issues/3305)) ([bd4e1fe](https://github.com/open-sauced/app/commit/bd4e1fe394529409581387cdbd7591e478d2e44f))
+
+## [2.24.0-beta.3](https://github.com/open-sauced/app/compare/v2.24.0-beta.2...v2.24.0-beta.3) (2024-05-02)
+
+
+### 🐛 Bug Fixes
+
+* return 404 on invalid workspace ID ([#3301](https://github.com/open-sauced/app/issues/3301)) ([d09c229](https://github.com/open-sauced/app/commit/d09c229a39d23213893d00dc3d0a95f545ea7bd3))
+
 ## [2.24.0-beta.2](https://github.com/open-sauced/app/compare/v2.24.0-beta.1...v2.24.0-beta.2) (2024-05-02)
 
 
