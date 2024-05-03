@@ -19,6 +19,7 @@ import Link from "next/link";
 import { LuArrowLeftToLine } from "react-icons/lu";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 
+import SingleSelect from "components/atoms/Select/single-select";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import {
   DropdownMenu,
@@ -30,7 +31,6 @@ import { useWorkspacesRepositoryInsights } from "lib/hooks/api/useWorkspaceRepos
 import { useWorkspacesContributorInsights } from "lib/hooks/api/useWorkspaceContributorInsights";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useFetchUser } from "lib/hooks/useFetchUser";
-import WorkspaceSidebarSelect from "components/Workspaces/WorkspaceSidebarSelect";
 import { InsightsPanel } from "./InsightsPanel";
 import SidebarMenuItem from "./sidebar-menu-item";
 
@@ -104,7 +104,29 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
         <>
           <nav aria-label="sidebar navigation" className="grid gap-4 mt-4 pr-4 pl-2">
             <div className="flex gap-2">
-              <WorkspaceSidebarSelect workspaces={workspaces} workspaceId={workspaceId ?? "new"} />
+              <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
+                <span className="sr-only">Workspace</span>
+                <SingleSelect
+                  options={[
+                    { label: "Create new workspace...", value: "new" },
+                    ...workspaces.map(({ id, name }) => ({
+                      label: name,
+                      value: id,
+                    })),
+                  ]}
+                  position="popper"
+                  value={workspaceId ?? "new"}
+                  placeholder="Select a workspace"
+                  onValueChange={(value) => {
+                    if (value === "new") {
+                      router.push("/workspaces/new");
+                      return;
+                    }
+
+                    router.push(`/workspaces/${value}`);
+                  }}
+                />
+              </label>
               <button onClick={hideSidebar} className="hover:bg-slate-50 p-2 rounded-md">
                 <LuArrowLeftToLine className="w-4 h-4 text-gray-500" />
               </button>
