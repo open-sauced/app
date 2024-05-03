@@ -101,7 +101,6 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }
                         value: id,
                       })),
                     ]}
-                    position="popper"
                     value={workspaceId ?? "new"}
                     placeholder="Select a workspace"
                     onValueChange={(value) => {

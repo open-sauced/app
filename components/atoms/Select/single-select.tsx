@@ -3,7 +3,7 @@ import { RiArrowDownSLine } from "react-icons/ri";
 
 import clsx from "clsx";
 
-import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 import { Command, CommandGroup, CommandInput, CommandItem } from "../Cmd/command";
 
 interface SingleSelectProps {
@@ -40,7 +40,7 @@ const SingleSelect = ({
   }, [isOpen, isSearchable]);
 
   return (
-    <Popover
+    <DropdownMenu
       open={isOpen}
       onOpenChange={(open) => {
         setIsOpen(open);
@@ -49,7 +49,7 @@ const SingleSelect = ({
         }
       }}
     >
-      <PopoverTrigger
+      <DropdownMenuTrigger
         data-inset-label={insetLabel}
         className={clsx(
           "flex text-sm px-3 py-1.5 !border !border-slate-200 rounded-md bg-white data-[state=open]:border-orange-500 min-w-max",
@@ -60,9 +60,9 @@ const SingleSelect = ({
         <div className="flex items-center">
           <RiArrowDownSLine size={20} className="w-5 text-slate-400" />
         </div>
-      </PopoverTrigger>
+      </DropdownMenuTrigger>
 
-      <PopoverContent className="!p-0 z-50 relative bg-white !w-full">
+      <DropdownMenuContent className="!p-0 z-50 relative bg-white !w-full my-1 border shadow-lg rounded-lg">
         <>
           {options.length > 0 && (
             <Command loop className="w-full px-0 pt-1 bg-transparent">
@@ -104,8 +104,8 @@ const SingleSelect = ({
             </Command>
           )}
         </>
-      </PopoverContent>
-    </Popover>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
