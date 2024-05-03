@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
-import { BiSearch } from "react-icons/bi";
 
 import clsx from "clsx";
-import { truncateString } from "lib/utils/truncate-string";
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
+import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
+import { Command, CommandGroup, CommandInput, CommandItem } from "../Cmd/command";
 
 interface SingleSelectProps {
   value?: string;
@@ -32,9 +31,7 @@ const SingleSelect = ({
   const [inputValue, setInputValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  const filteredOptions = options.filter((option) => option.label.toLowerCase().includes(inputValue.toLowerCase()));
-
-  const items = isSearchable ? filteredOptions : options;
+  const current = options.find((option) => option.value === value ?? "");
 
   useEffect(() => {
     if (isOpen && isSearchable) {
@@ -43,9 +40,8 @@ const SingleSelect = ({
   }, [isOpen, isSearchable]);
 
   return (
-    <Select
-      value={value}
-      onValueChange={onValueChange}
+    <Popover
+      open={isOpen}
       onOpenChange={(open) => {
         setIsOpen(open);
         if (!open) {
@@ -53,62 +49,60 @@ const SingleSelect = ({
         }
       }}
     >
-      <SelectTrigger
+      <PopoverTrigger
         data-inset-label={insetLabel}
         className={clsx(
-          `bg-white border`,
+          "flex text-sm px-3 py-1.5 !border !border-slate-200 rounded-md bg-white data-[state=open]:border-orange-500 min-w-max",
           insetLabel && `before:content-[attr(data-inset-label)] before:mr-1 before:font-normal before:text-slate-500`
         )}
-        selectIcon={
-          <div className="flex items-center">
-            <RiArrowDownSLine size={20} />
-          </div>
-        }
       >
-        <SelectValue className="w-10 truncate" placeholder={placeholder ?? "Select time zone"} />
-      </SelectTrigger>
+        <p className="grow text-start">{current?.label ?? placeholder}</p>
+        <div className="flex items-center">
+          <RiArrowDownSLine size={20} className="w-5 text-slate-400" />
+        </div>
+      </PopoverTrigger>
 
-      <SelectContent position={position ?? "item-aligned"} className="z-50 relative bg-white">
+      <PopoverContent className="!p-0 z-50 relative bg-white !w-full">
         <>
-          {isSearchable ? (
-            <div className="flex items-center px-3 py-1.5">
-              <BiSearch className="mr-1" />
-
-              <input
-                ref={inputRef}
-                value={inputValue}
-                className="w-full py-1.5 text-sm outline-none"
-                placeholder={inputPlaceholder ?? "Search Items"}
-                onChange={(e) => {
-                  setInputValue(e.target.value);
-                }}
-              />
-            </div>
-          ) : null}
-          {items.map((option, index) => (
-            <SelectItem
-              onKeyDown={(e) => {
-                if (e.key === "ArrowUp" && index === 0) {
-                  inputRef.current?.focus();
-                }
-              }}
-              title={option.label}
-              key={`timezone_${index}`}
-              className="pl-3 !py-2 truncate"
-              value={option.value}
-            >
-              {truncateString(option.label, 30)}
-            </SelectItem>
-          ))}
-
-          {items.length === 0 && (
-            <SelectItem className="pl-3 text-center" value={""}>
-              No results found
-            </SelectItem>
+          {options.length > 0 && (
+            <Command loop className="w-full px-0 pt-1 bg-transparent">
+              {isSearchable && (
+                <CommandInput
+                  ref={inputRef}
+                  placeholder={inputPlaceholder ?? "Search Items"}
+                  value={inputValue}
+                  onValueChange={setInputValue}
+                  className="px-2 focus:ring-0"
+                />
+              )}
+              <CommandGroup className="flex flex-col !px-0 !py-0 overflow-x-hidden overflow-y-scroll max-h-52">
+                {isOpen && options.length > 0
+                  ? options.map((option) => (
+                      <CommandItem
+                        key={option.value}
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }}
+                        onSelect={(value) => {
+                          setInputValue("");
+                          onValueChange(option.value);
+                        }}
+                        onClick={() => {
+                          onValueChange(option.value);
+                        }}
+                        className="!cursor-pointer flex justify-between items-center !px-3 rounded-md truncate break-words w-full"
+                      >
+                        {option.label}
+                      </CommandItem>
+                    ))
+                  : null}
+              </CommandGroup>
+            </Command>
           )}
         </>
-      </SelectContent>
-    </Select>
+      </PopoverContent>
+    </Popover>
   );
 };
 
