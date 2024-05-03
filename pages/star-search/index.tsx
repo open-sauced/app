@@ -18,6 +18,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import SEO from "layouts/SEO/SEO";
 import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
+import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 
 const SUGGESTIONS = [
   {
@@ -197,12 +198,12 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
               aria-live="polite"
               className="grow items-center flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
             >
-              <div className="overflow-y-auto">
+              <ScrollArea>
                 {chat.map((message, i) => (
                   <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
                 ))}
                 <div ref={scrollRef} />
-              </div>
+              </ScrollArea>
               <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
                 <button
                   type="button"
