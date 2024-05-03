@@ -5,6 +5,44 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.24.1](https://github.com/open-sauced/app/compare/v2.24.0...v2.24.1) (2024-05-03)
+
+
+### 🐛 Bug Fixes
+
+* Contributor Insight & Repository Insight uses wrong copy ([#3227](https://github.com/open-sauced/app/issues/3227)) ([2810655](https://github.com/open-sauced/app/commit/281065562a58614c950fde53e58c4c54e672dba1))
+* now the page is cached varying on the day range ([#3310](https://github.com/open-sauced/app/issues/3310)) ([b6a46cf](https://github.com/open-sauced/app/commit/b6a46cfe7ed1b2d79624468928e2517114744082))
+
+## [2.24.1-beta.1](https://github.com/open-sauced/app/compare/v2.24.0...v2.24.1-beta.1) (2024-05-03)
+
+
+### 🐛 Bug Fixes
+
+* Contributor Insight & Repository Insight uses wrong copy ([#3227](https://github.com/open-sauced/app/issues/3227)) ([2810655](https://github.com/open-sauced/app/commit/281065562a58614c950fde53e58c4c54e672dba1))
+* now the page is cached varying on the day range ([#3310](https://github.com/open-sauced/app/issues/3310)) ([b6a46cf](https://github.com/open-sauced/app/commit/b6a46cfe7ed1b2d79624468928e2517114744082))
+
+## [2.24.0](https://github.com/open-sauced/app/compare/v2.23.0...v2.24.0) (2024-05-02)
+
+
+### 🍕 Features
+
+* implement `ContributorsChart` for repo pages ([#3302](https://github.com/open-sauced/app/issues/3302)) ([b52b0e6](https://github.com/open-sauced/app/commit/b52b0e6ba566ed937456e77d4af1d69e36d6b76e))
+* implemented the StarSearch feedback component ([#3298](https://github.com/open-sauced/app/issues/3298)) ([1297274](https://github.com/open-sauced/app/commit/1297274c79e670ee29d351a74f7bd8a8b1b4a9e6))
+
+
+### 🐛 Bug Fixes
+
+* explore links 404 ([#3297](https://github.com/open-sauced/app/issues/3297)) ([ba05a16](https://github.com/open-sauced/app/commit/ba05a16f55f73b518eb6b62ed388d92ebfe8f70e))
+* filter out undefined values for building workspace owners array ([#3305](https://github.com/open-sauced/app/issues/3305)) ([bd4e1fe](https://github.com/open-sauced/app/commit/bd4e1fe394529409581387cdbd7591e478d2e44f))
+* return 404 on invalid workspace ID ([#3301](https://github.com/open-sauced/app/issues/3301)) ([d09c229](https://github.com/open-sauced/app/commit/d09c229a39d23213893d00dc3d0a95f545ea7bd3))
+
+## [2.24.0-beta.4](https://github.com/open-sauced/app/compare/v2.24.0-beta.3...v2.24.0-beta.4) (2024-05-02)
+
+
+### 🐛 Bug Fixes
+
+* filter out undefined values for building workspace owners array ([#3305](https://github.com/open-sauced/app/issues/3305)) ([bd4e1fe](https://github.com/open-sauced/app/commit/bd4e1fe394529409581387cdbd7591e478d2e44f))
+
 ## [2.24.0-beta.3](https://github.com/open-sauced/app/compare/v2.24.0-beta.2...v2.24.0-beta.3) (2024-05-02)
 
 
