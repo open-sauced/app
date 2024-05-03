@@ -55,6 +55,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // Cache for two hours
   context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=0, stale-while-revalidate=7200");
+  context.res.setHeader("Netlify-Vary", "query=range");
 
   return { props: { repoData, ogImageUrl } };
 }
