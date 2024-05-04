@@ -203,7 +203,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               description={
                 "Sign up for StarSearch, our AI-powered feature that provides in-depth insights into contributor history and activities, bringing a new depth of knowledge about open source projects."
               }
-              bannerSrc={"/assets/og-images/star-search-og-image.png"}
+              bannerSrc={"/assets/images/anouncement-cards/star-search-announcement-card.png"}
               url={"/star-search/waitlist"}
               cta={"Join the Waitlist!"}
             />
