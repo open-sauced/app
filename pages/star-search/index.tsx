@@ -6,7 +6,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { BsArrowUpShort } from "react-icons/bs";
+import { BsArrowUpShort, BsLinkedin, BsTwitterX } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 import * as Sentry from "@sentry/nextjs";
@@ -38,6 +38,7 @@ export interface WidgetDefinition {
 type Author = "You" | "StarSearch";
 
 const componentRegistry = new Map<string, Function>();
+import Button from "components/shared/Button/button";
 
 const SUGGESTIONS = [
   {
@@ -133,17 +134,20 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     searchParams.set("prompt", context.query.prompt as string);
   }
 
+  const sharedPrompt = context.query.prompt ?? (null as string | null);
+
   const ogImageUrl = `${new URL(
     `/og-images/star-search/?${searchParams}`,
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
-  return { props: { userId, ogImageUrl } };
+  return { props: { userId, ogImageUrl, sharedPrompt } };
 }
 
 type StarSearchPageProps = {
   userId: number;
   ogImageUrl: string;
+  sharedPrompt: string;
 };
 
 type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch"; content: string | WidgetDefinition };
@@ -178,7 +182,7 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
   );
 }
 
-export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPageProps) {
+export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -245,6 +249,13 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
   }
 
   useEffect(() => {
+    if (sharedPrompt && inputRef.current) {
+      addPromptInput(sharedPrompt);
+      setShowSuggestions(false);
+    }
+  }, [sharedPrompt, inputRef.current]);
+
+  useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
 
@@ -273,6 +284,8 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
       temp.push({ author: "You", content: prompt });
       return temp;
     });
+
+    return; // TODO: removbe
 
     // get ReadableStream from API
     const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
@@ -344,7 +357,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
         if the content.type is "content", we render the markdown as HTML.
        */
 
-      const values = value.split("\n");
+      const values = value?.split("\n") || [];
 
       values.forEach(async (v) => {
         if (v.startsWith("id:")) {
@@ -775,3 +788,83 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
     </Sentry.ErrorBoundary>
   );
 }
+
+// function ChatboxNew({
+//   author,
+//   content,
+//   userId,
+//   shareLinks = false,
+// }: StarSearchChat & { userId?: number; shareLinks: boolean }) {
+//   const renderAvatar = () => {
+//     switch (author) {
+//       case "You":
+//         return (
+//           <Image
+//             src={getAvatarById(`${userId}`)}
+//             alt="Your profile picture"
+//             width={32}
+//             height={32}
+//             className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
+//           />
+//         );
+//       case "StarSearch":
+//         return (
+//           <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full">
+//             <Image
+//               src="/assets/star-search-logo-white.svg"
+//               alt="StarSearch logo"
+//               width={24}
+//               height={24}
+//               className="w-6 h-6"
+//             />
+//           </div>
+//         );
+//     }
+//   };
+
+//   const tweetQueryParams = new URLSearchParams();
+//   const linkedInQueryParams = new URLSearchParams();
+
+//   if (shareLinks) {
+//     const url = new URL("/star-search", process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
+//     url.searchParams.set("prompt", content);
+
+//     tweetQueryParams.set("text", `Here's my StarSearch prompt! Try it out for yourself. ${url}`);
+
+//     linkedInQueryParams.set("url", `${url}`);
+//   }
+
+//   return (
+//     <li className="my-4 w-full">
+//       <div className="flex gap-2 justify-center items-start ">
+//         {renderAvatar()}
+//         <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
+//           <h3 className="font-semibold text-sauced-orange">{author}</h3>
+//           <Markdown>{content}</Markdown>
+//         </Card>
+//       </div>
+//       {shareLinks ? (
+//         <div className="flex justify-end gap-2 text-slate-600 pt-2">
+//           <Button
+//             variant="primary"
+//             className="flex gap-2 w-max"
+//             href={`http://twitter.com/intent/tweet?${tweetQueryParams}`}
+//             target="_blank"
+//           >
+//             Share on <span className="sr-only">X/Twitter</span>
+//             <BsTwitterX />
+//           </Button>
+//           <Button
+//             variant="primary"
+//             className="flex gap-2 w-max"
+//             href={`https://www.linkedin.com/sharing/share-offsite/?${linkedInQueryParams}`}
+//             target="_blank"
+//           >
+//             Share on <span className="sr-only">LinkedIn</span>
+//             <BsLinkedin />
+//           </Button>
+//         </div>
+//       ) : null}
+//     </li>
+//   );
+// }
