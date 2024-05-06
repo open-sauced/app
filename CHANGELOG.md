@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.25.0-beta.2](https://github.com/open-sauced/app/compare/v2.25.0-beta.1...v2.25.0-beta.2) (2024-05-06)
+
+
+### 🍕 Features
+
+* uniform styling for Repo page charts ([#3306](https://github.com/open-sauced/app/issues/3306)) ([9cd008e](https://github.com/open-sauced/app/commit/9cd008e6e3e90f4d96fb8f8c191d9dda609d1b4e))
+
 ## [2.25.0-beta.1](https://github.com/open-sauced/app/compare/v2.24.2-beta.2...v2.25.0-beta.1) (2024-05-06)
 
 
