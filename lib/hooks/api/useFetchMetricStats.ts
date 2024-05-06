@@ -3,7 +3,7 @@ import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 type UseFetchMetricStatsParams = {
   repository: string;
-  variant: "stars" | "forks" | "contributors"; // TODO: add other MetricCard types
+  variant: "stars" | "forks" | "contributors" | "prs" | "issues"; // TODO: add other MetricCard types
   range: number;
   orderDirection?: "ASC" | "DESC";
 };
@@ -13,6 +13,8 @@ export type StatsType = {
   star_count?: number;
   forks_count?: number;
   contributor_count?: number;
+  opened_issues?: number;
+  closed_issues?: number;
 };
 
 export function useFetchMetricStats({ repository, variant, range, orderDirection = "ASC" }: UseFetchMetricStatsParams) {
@@ -33,6 +35,10 @@ export function useFetchMetricStats({ repository, variant, range, orderDirection
         return `histogram/forks?${query}`;
       case "contributors":
         return `histogram/contributors?${query}`;
+      case "prs":
+        return `histogram/pull-requests?${query}`;
+      case "issues":
+        return `histogram/issues?${query}`;
     }
   };
 

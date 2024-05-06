@@ -24,6 +24,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import ContributorsChart from "components/Graphs/ContributorsChart";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import IssuesChart from "components/Graphs/IssuesChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -104,6 +105,16 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "contributors",
+    range,
+  });
+
+  const {
+    data: issueStats,
+    isLoading: isIssueDataLoading,
+    error: issueError,
+  } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "issues",
     range,
   });
 
@@ -252,6 +263,13 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               rangedTotal={contributorRangedTotal!}
               syncId={syncId}
               isLoading={isContributorDataLoading}
+            />
+            <IssuesChart
+              stats={issueStats}
+              range={range}
+              total={repoData.issues}
+              syncId={syncId}
+              isLoading={isIssueDataLoading}
             />
           </ClientOnly>
         </section>
