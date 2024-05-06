@@ -291,7 +291,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
 
               {bio?.length == 255 ? (
                 <p aria-live="assertive" className="text-light-blue-10 text-xs">
-                  Bio is full cant contain more words
+                  Bio is full and cannot contain more words
                 </p>
               ) : (
                 <p aria-live="polite" className="text-xs">
