@@ -20,6 +20,7 @@ import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 import Card from "components/atoms/Card/card";
 import Button from "components/shared/Button/button";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import humanizeNumber from "lib/utils/humanizeNumber";
 
 type StarsChartProps = {
   stats: StatsType[] | undefined;
@@ -34,6 +35,8 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
   const dailyData = useMemo(() => getDailyStarsHistogramToDays({ stats, range }), [stats, range]);
   const historyData = useMemo(() => getHistoryStarsHistogramToDays({ stats, total, range }), [stats, total, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
+  const starsRangedTotal = useMemo(() => stats?.reduce((prev, curr) => prev + curr.star_count!, 0) ?? 0, [stats]);
+  const averageOverRange = useMemo(() => Math.round(starsRangedTotal / range), [starsRangedTotal, range]);
 
   const renderChart = () => {
     switch (category) {
@@ -62,16 +65,35 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
 
   return (
     <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-8">
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
           <>
-            <div className="flex gap-1 items-center w-fit">
-              <h3 className="text-sm font-semibold md:text-xl text-slate-800">Stars</h3>
-              <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+            <div className="flex flex-col gap-3">
+              <div className="flex gap-2 items-center w-fit">
+                <FaStar className="text-xl" />
+                <div className="flex gap-1 items-center">
+                  <h3 className="text-sm font-semibold md:text-lg text-slate-800">Stars</h3>
+                  <p className="text-sm md:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+                </div>
+              </div>
+              <aside className="flex gap-8">
+                <div>
+                  <h3 className="text-xs lg:text-sm text-slate-500">Total</h3>
+                  <p className="font-semibold text-lg lg:text-xl">{humanizeNumber(total)}</p>
+                </div>
+                <div>
+                  <h3 className="text-xs lg:text-sm text-slate-500">Over {range} days</h3>
+                  <p className="font-semibold text-lg lg:text-xl">{starsRangedTotal}</p>
+                </div>
+                <div>
+                  <h3 className="text-xs lg:text-sm text-slate-500">Avg. per day</h3>
+                  <p className="font-semibold text-lg lg:text-xl">{humanizeNumber(averageOverRange)}</p>
+                </div>
+              </aside>
             </div>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-2 items-center lg:self-start">
               <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
                 Daily
               </Button>
