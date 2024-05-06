@@ -84,7 +84,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     if (member.role === "owner") {
       return member.member.login;
     }
-  });
+  }).filter(Boolean);
 
   const isOwner = !!(workspaceMembers?.data || []).find(
     (member) => member.role === "owner" && member.user_id === userId
