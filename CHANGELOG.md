@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.25.0-beta.1](https://github.com/open-sauced/app/compare/v2.24.2-beta.2...v2.25.0-beta.1) (2024-05-06)
+
+
+### 🍕 Features
+
+* search and select for workspaces in sidebar ([#3307](https://github.com/open-sauced/app/issues/3307)) ([5d91aaf](https://github.com/open-sauced/app/commit/5d91aaff46e5814f677082e9cc2087c81d643dae))
+
 ## [2.24.2-beta.2](https://github.com/open-sauced/app/compare/v2.24.2-beta.1...v2.24.2-beta.2) (2024-05-06)
 
 
