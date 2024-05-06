@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.24.2-beta.2](https://github.com/open-sauced/app/compare/v2.24.2-beta.1...v2.24.2-beta.2) (2024-05-06)
+
+
+### 🐛 Bug Fixes
+
+* style and layout fixes for StarSearch ([#3304](https://github.com/open-sauced/app/issues/3304)) ([599d8f6](https://github.com/open-sauced/app/commit/599d8f68e2ffc9510eace94fedae8cca66e8c5cc))
+
 ## [2.24.2-beta.1](https://github.com/open-sauced/app/compare/v2.24.1...v2.24.2-beta.1) (2024-05-06)
 
 
