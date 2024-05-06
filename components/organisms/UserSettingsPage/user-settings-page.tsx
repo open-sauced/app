@@ -289,9 +289,15 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                 </div>
               </label>
 
-              <p aria-live="polite" className="text-xs">
-                {bio?.length}/255
-              </p>
+              {bio?.length == 255 ? (
+                <p aria-live="assertive" className="text-light-blue-10 text-xs">
+                  Bio is full cant contain more words
+                </p>
+              ) : (
+                <p aria-live="polite" className="text-xs">
+                  {bio?.length}/255
+                </p>
+              )}
             </div>
             <TextInput
               className="bg-light-slate-4"
