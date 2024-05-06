@@ -6,6 +6,8 @@ import ListHeader from "components/ListHeader/list-header";
 import TabsList from "components/TabList/tab-list";
 import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
 import { setQueryParams } from "lib/utils/query-params";
+import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
+import { OptionKeys } from "components/atoms/Select/multi-select";
 
 const ListPageLayout = ({
   children,
@@ -15,6 +17,9 @@ const ListPageLayout = ({
   showRangeFilter = true,
   workspaceId,
   owners,
+  repoFilter = false,
+  repoFilterOptions = [],
+  repoFilterSelect = () => {},
 }: {
   children: React.ReactNode;
   list?: DBList;
@@ -23,6 +28,9 @@ const ListPageLayout = ({
   isOwner: boolean;
   showRangeFilter?: boolean;
   owners?: string[];
+  repoFilter?: boolean;
+  repoFilterOptions?: OptionKeys[];
+  repoFilterSelect?: (repo: OptionKeys[]) => void;
 }) => {
   const router = useRouter();
   const { range } = router.query;
@@ -61,13 +69,14 @@ const ListPageLayout = ({
             />
           )}
           <div>
-            <div className="flex justify-end p-4 md:p-0">
+            <div className="flex justify-end items-center gap-4">
               {showRangeFilter && (
                 <ComponentDateFilter
                   defaultRange={Number(range ?? 30)}
                   setRangeFilter={(range) => setQueryParams({ range: `${range}` })}
                 />
               )}
+              {repoFilter && <TrackedRepositoryFilter options={repoFilterOptions} handleSelect={repoFilterSelect} />}
             </div>
           </div>
         </div>
