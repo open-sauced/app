@@ -31,7 +31,7 @@ const SingleSelect = ({
   const [inputValue, setInputValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  const current = options.find((option) => option.value === value ?? "");
+  const current = options.find((option) => option.value === value);
 
   useEffect(() => {
     if (isOpen && isSearchable) {
