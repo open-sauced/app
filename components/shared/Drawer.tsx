@@ -15,12 +15,20 @@ interface DrawerProps {
   children: React.ReactNode;
   trigger: React.ReactNode;
   showCloseButton?: boolean;
+  asChild?: boolean;
 }
 
-export const Drawer = ({ title, description, children, showCloseButton = true, trigger }: DrawerProps) => {
+export const Drawer = ({
+  title,
+  description,
+  children,
+  showCloseButton = true,
+  trigger,
+  asChild = true,
+}: DrawerProps) => {
   return (
     <InternalDrawer>
-      <DrawerTrigger>{trigger}</DrawerTrigger>
+      <DrawerTrigger asChild={asChild}>{trigger}</DrawerTrigger>
       <DrawerContent className="bg-white">
         <DrawerHeader>
           <DrawerTitle>{title}</DrawerTitle>
