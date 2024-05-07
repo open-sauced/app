@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.25.0-beta.5](https://github.com/open-sauced/app/compare/v2.25.0-beta.4...v2.25.0-beta.5) (2024-05-07)
+
+
+### 🍕 Features
+
+* Issues and PR charts for Repo pages ([#3323](https://github.com/open-sauced/app/issues/3323)) ([97a6239](https://github.com/open-sauced/app/commit/97a6239891ce5597bc8482548ea535f7f7eef1d9))
+
 ## [2.25.0-beta.4](https://github.com/open-sauced/app/compare/v2.25.0-beta.3...v2.25.0-beta.4) (2024-05-07)
 
 
