@@ -4,7 +4,7 @@ import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { BsArrowUpShort } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
@@ -445,7 +445,7 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
       {renderAvatar()}
       <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
         <h3 className="font-semibold text-sauced-orange">{author}</h3>
-        <ReactMarkdown>{content}</ReactMarkdown>
+        <Markdown>{content}</Markdown>
       </Card>
     </li>
   );
