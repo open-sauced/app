@@ -17,7 +17,6 @@ import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
-import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import Button from "components/shared/Button/button";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -198,39 +197,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </div>
           </div>
           <ClientOnly>
-            <section className="w-full h-fit grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-2">
-              <RepositoryStatCard
-                type="pulls"
-                isLoading={isLoading}
-                hasError={isError}
-                stats={
-                  repoStats
-                    ? {
-                        opened: repoStats.open_prs_count ?? 0,
-                        merged: repoStats.merged_prs_count ?? 0,
-                        velocity: repoStats.pr_velocity_count ?? 0,
-                        range,
-                      }
-                    : undefined
-                }
-              />
-              <RepositoryStatCard
-                type="issues"
-                isLoading={isLoading}
-                hasError={isError}
-                stats={
-                  repoStats
-                    ? {
-                        opened: repoStats.opened_issues_count ?? 0,
-                        closed: repoStats.closed_issues_count ?? 0,
-                        velocity: repoStats.issues_velocity_count ?? 0,
-                        range,
-                      }
-                    : undefined
-                }
-              />
-            </section>
-
             <ContributorsChart
               stats={contributorStats}
               range={range}
