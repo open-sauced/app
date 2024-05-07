@@ -231,11 +231,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             <IssuesChart
               stats={issueStats}
               range={range}
-              total={repoData.issues}
+              velocity={repoStats?.issues_velocity_count ?? 0}
               syncId={syncId}
               isLoading={isIssueDataLoading}
             />
-            
+
             <section className="flex flex-col gap-2 lg:flex-row lg:gap-4">
               <StarsChart
                 stats={starsData}
