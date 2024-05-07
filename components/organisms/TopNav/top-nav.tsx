@@ -86,7 +86,7 @@ const Nav = ({ className }: { className?: string }) => {
             )}`}
             href={"/star-search"}
           >
-            <img src="/assets/star-search-logo.svg" alt="Star Search logo" className="w-5 h-5" />
+            <img src="/assets/star-search-logo.svg" alt="" className="w-5 h-5" />
             <p className="mt-0.5">StarSearch</p>
           </Link>
         </li>
