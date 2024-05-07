@@ -10,7 +10,6 @@ import {
   Line,
   CartesianGrid,
 } from "recharts";
-import { BiGitRepoForked } from "react-icons/bi";
 import { VscIssues } from "react-icons/vsc";
 import { type DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
@@ -97,7 +96,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
     return (
       <figcaption className="flex flex-col gap-1 bg-white px-4 py-2 rounded-lg border">
         <section className="flex gap-2 items-center">
-          <BiGitRepoForked className="fill-sauced-orange" />
+          <VscIssues className="fill-sauced-orange" />
           <p>Issues</p>
         </section>
         <p>Opened: {payload[0]?.value}</p>

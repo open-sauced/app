@@ -15,6 +15,8 @@ export type StatsType = {
   contributor_count?: number;
   opened_issues?: number;
   closed_issues?: number;
+  active_prs?: number;
+  accepted_prs?: number;
 };
 
 export function useFetchMetricStats({ repository, variant, range, orderDirection = "ASC" }: UseFetchMetricStatsParams) {

@@ -25,6 +25,7 @@ import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import ContributorsChart from "components/Graphs/ContributorsChart";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import IssuesChart from "components/Graphs/IssuesChart";
+import PRChart from "components/Graphs/PRChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -115,6 +116,16 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "issues",
+    range,
+  });
+
+  const {
+    data: prStats,
+    isLoading: isPrDataLoading,
+    error: prError,
+  } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "prs",
     range,
   });
 
@@ -228,13 +239,22 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               isLoading={isContributorDataLoading}
             />
 
-            <IssuesChart
-              stats={issueStats}
-              range={range}
-              velocity={repoStats?.issues_velocity_count ?? 0}
-              syncId={syncId}
-              isLoading={isIssueDataLoading}
-            />
+            <section className="flex flex-col gap-2 lg:flex-row lg:gap-4">
+              <IssuesChart
+                stats={issueStats}
+                range={range}
+                velocity={repoStats?.issues_velocity_count ?? 0}
+                syncId={syncId}
+                isLoading={isIssueDataLoading}
+              />
+              <PRChart
+                stats={prStats}
+                range={range}
+                velocity={repoStats?.pr_velocity_count ?? 0}
+                syncId={syncId}
+                isLoading={isPrDataLoading}
+              />
+            </section>
 
             <section className="flex flex-col gap-2 lg:flex-row lg:gap-4">
               <StarsChart
