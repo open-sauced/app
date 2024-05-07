@@ -5,12 +5,60 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.25.0-beta.5](https://github.com/open-sauced/app/compare/v2.25.0-beta.4...v2.25.0-beta.5) (2024-05-07)
+
+
+### 🍕 Features
+
+* Issues and PR charts for Repo pages ([#3323](https://github.com/open-sauced/app/issues/3323)) ([97a6239](https://github.com/open-sauced/app/commit/97a6239891ce5597bc8482548ea535f7f7eef1d9))
+
+## [2.25.0-beta.4](https://github.com/open-sauced/app/compare/v2.25.0-beta.3...v2.25.0-beta.4) (2024-05-07)
+
+
+### 🐛 Bug Fixes
+
+* remove alt text from StarSearch logo ([#3308](https://github.com/open-sauced/app/issues/3308)) ([bd29387](https://github.com/open-sauced/app/commit/bd29387b22538512bfcef93371068c2e804b566a))
+
+## [2.25.0-beta.3](https://github.com/open-sauced/app/compare/v2.25.0-beta.2...v2.25.0-beta.3) (2024-05-07)
+
+
+### 🐛 Bug Fixes
+
+* Star-search md rendering renders spacing from LLM ([#3326](https://github.com/open-sauced/app/issues/3326)) ([7bf27f1](https://github.com/open-sauced/app/commit/7bf27f1ff9ab7b8cd605476322ba1393e05f54b5))
+
+## [2.25.0-beta.2](https://github.com/open-sauced/app/compare/v2.25.0-beta.1...v2.25.0-beta.2) (2024-05-06)
+
+
+### 🍕 Features
+
+* uniform styling for Repo page charts ([#3306](https://github.com/open-sauced/app/issues/3306)) ([9cd008e](https://github.com/open-sauced/app/commit/9cd008e6e3e90f4d96fb8f8c191d9dda609d1b4e))
+
+## [2.25.0-beta.1](https://github.com/open-sauced/app/compare/v2.24.2-beta.2...v2.25.0-beta.1) (2024-05-06)
+
 ## [2.24.2](https://github.com/open-sauced/app/compare/v2.24.1...v2.24.2) (2024-05-03)
 
 
 ### 🐛 Bug Fixes
 
 * remove alt text from StarSearch logo ([#3308](https://github.com/open-sauced/app/issues/3308)) ([bd29387](https://github.com/open-sauced/app/commit/bd29387b22538512bfcef93371068c2e804b566a))
+
+### 🍕 Features
+
+* search and select for workspaces in sidebar ([#3307](https://github.com/open-sauced/app/issues/3307)) ([5d91aaf](https://github.com/open-sauced/app/commit/5d91aaff46e5814f677082e9cc2087c81d643dae))
+
+## [2.24.2-beta.2](https://github.com/open-sauced/app/compare/v2.24.2-beta.1...v2.24.2-beta.2) (2024-05-06)
+
+
+### 🐛 Bug Fixes
+
+* style and layout fixes for StarSearch ([#3304](https://github.com/open-sauced/app/issues/3304)) ([599d8f6](https://github.com/open-sauced/app/commit/599d8f68e2ffc9510eace94fedae8cca66e8c5cc))
+
+## [2.24.2-beta.1](https://github.com/open-sauced/app/compare/v2.24.1...v2.24.2-beta.1) (2024-05-06)
+
+
+### 🐛 Bug Fixes
+
+* Change announcement card on highlight feed to starsearch ([#3313](https://github.com/open-sauced/app/issues/3313)) ([a38af76](https://github.com/open-sauced/app/commit/a38af762b22117c64e472b719bca0c7723cd2e88))
 
 ## [2.24.1](https://github.com/open-sauced/app/compare/v2.24.0...v2.24.1) (2024-05-03)
 

@@ -17,13 +17,14 @@ import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
-import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import Button from "components/shared/Button/button";
 import { getAvatarByUsername } from "lib/utils/github";
 import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import ContributorsChart from "components/Graphs/ContributorsChart";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import IssuesChart from "components/Graphs/IssuesChart";
+import PRChart from "components/Graphs/PRChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -107,10 +108,28 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     range,
   });
 
+  const {
+    data: issueStats,
+    isLoading: isIssueDataLoading,
+    error: issueError,
+  } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "issues",
+    range,
+  });
+
+  const {
+    data: prStats,
+    isLoading: isPrDataLoading,
+    error: prError,
+  } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "prs",
+    range,
+  });
+
   const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
 
-  const starsRangedTotal = starsData?.reduce((prev, curr) => prev + curr.star_count!, 0);
-  const forksRangedTotal = forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0);
   const contributorRangedTotal = contributorStats?.reduce((prev, curr) => prev + curr.contributor_count!, 0);
 
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
@@ -135,7 +154,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
       <ProfileLayout>
-        <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-6xl">
+        <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-7xl">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
             <header className="flex items-center gap-4">
               <Avatar size={96} avatarURL={avatarUrl} />
@@ -178,74 +197,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </div>
           </div>
           <ClientOnly>
-            <section className="w-full h-fit grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-2">
-              <RepositoryStatCard
-                type="stars"
-                isLoading={isStarsDataLoading}
-                hasError={starsError !== undefined}
-                stats={{
-                  total: repoData.stars,
-                  over_range: starsRangedTotal!,
-                  range,
-                  average_over_range: Math.round(starsRangedTotal! / range),
-                }}
-              />
-              <RepositoryStatCard
-                type="forks"
-                isLoading={isForksDataLoading}
-                hasError={forkError !== undefined}
-                stats={{
-                  total: repoData.forks,
-                  over_range: forksRangedTotal!,
-                  range,
-                  average_over_range: Math.round(forksRangedTotal! / range),
-                }}
-              />
-              <RepositoryStatCard
-                type="pulls"
-                isLoading={isLoading}
-                hasError={isError}
-                stats={
-                  repoStats
-                    ? {
-                        opened: repoStats.open_prs_count ?? 0,
-                        merged: repoStats.merged_prs_count ?? 0,
-                        velocity: repoStats.pr_velocity_count ?? 0,
-                        range,
-                      }
-                    : undefined
-                }
-              />
-              <RepositoryStatCard
-                type="issues"
-                isLoading={isLoading}
-                hasError={isError}
-                stats={
-                  repoStats
-                    ? {
-                        opened: repoStats.opened_issues_count ?? 0,
-                        closed: repoStats.closed_issues_count ?? 0,
-                        velocity: repoStats.issues_velocity_count ?? 0,
-                        range,
-                      }
-                    : undefined
-                }
-              />
-            </section>
-            <StarsChart
-              stats={starsData}
-              total={repoData.stars}
-              range={range}
-              syncId={syncId}
-              isLoading={isStarsDataLoading}
-            />
-            <ForksChart
-              stats={forkStats}
-              total={repoData.forks}
-              range={range}
-              syncId={syncId}
-              isLoading={isForksDataLoading}
-            />
             <ContributorsChart
               stats={contributorStats}
               range={range}
@@ -253,6 +204,40 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               syncId={syncId}
               isLoading={isContributorDataLoading}
             />
+
+            <section className="flex flex-col gap-2 lg:flex-row lg:gap-4">
+              <IssuesChart
+                stats={issueStats}
+                range={range}
+                velocity={repoStats?.issues_velocity_count ?? 0}
+                syncId={syncId}
+                isLoading={isIssueDataLoading}
+              />
+              <PRChart
+                stats={prStats}
+                range={range}
+                velocity={repoStats?.pr_velocity_count ?? 0}
+                syncId={syncId}
+                isLoading={isPrDataLoading}
+              />
+            </section>
+
+            <section className="flex flex-col gap-2 lg:flex-row lg:gap-4">
+              <StarsChart
+                stats={starsData}
+                total={repoData.stars}
+                range={range}
+                syncId={syncId}
+                isLoading={isStarsDataLoading}
+              />
+              <ForksChart
+                stats={forkStats}
+                total={repoData.forks}
+                range={range}
+                syncId={syncId}
+                isLoading={isForksDataLoading}
+              />
+            </section>
           </ClientOnly>
         </section>
       </ProfileLayout>
