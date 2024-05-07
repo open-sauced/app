@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.25.0-beta.3](https://github.com/open-sauced/app/compare/v2.25.0-beta.2...v2.25.0-beta.3) (2024-05-07)
+
+
+### 🐛 Bug Fixes
+
+* Star-search md rendering renders spacing from LLM ([#3326](https://github.com/open-sauced/app/issues/3326)) ([7bf27f1](https://github.com/open-sauced/app/commit/7bf27f1ff9ab7b8cd605476322ba1393e05f54b5))
+
 ## [2.25.0-beta.2](https://github.com/open-sauced/app/compare/v2.25.0-beta.1...v2.25.0-beta.2) (2024-05-06)
 
 
