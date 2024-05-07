@@ -170,13 +170,37 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       values
         .filter((v) => v.startsWith("data:"))
         .forEach((v) => {
-          const matched = v.match(/data:\s(?<result>.+)/);
+          /*
+           * regex for capturing star-search stream SSEs:
+           * data:\s?(?<result>.*)
+           *
+           * The aim of this regex is to capture all characters coming from
+           * the star-search server side events while also preserving the
+           * empty "data:" frames that may come through (which are newlines).
+           *
+           * 'data:' - matches the "data:" characters explicitly.
+           * '\s'    - matches any whitespace that follows the data. In most cases, this is a single space ' '.
+           * '?'     - matches the previous whitespace token zero or one times. Aka, is optional.
+           *
+           * '(?<result>.*)' - optional named capture group "result".
+           *    ├────── '?'          - capture group is optional.
+           *    ├────── '<result>'   - capture group is named "result".
+           *    └────── '.*'         - matches any characters (including zero characters) after the "data:\s?" segment.
+           *                           this is in service of also capturing empty strings as newlines.
+           */
+
+          const matched = v.match(/data:\s?(?<result>.*)/);
+
           if (!matched || !matched.groups) {
             return;
           }
           const temp = [...chat];
           const changed = temp.at(temp.length - 1);
-          changed!.content += matched.groups.result;
+          if (matched.groups.result === "") {
+            changed!.content += "&nbsp; \n";
+          } else {
+            changed!.content += matched.groups.result;
+          }
           setChat(temp);
         });
     }
