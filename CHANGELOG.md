@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.25.0-beta.4](https://github.com/open-sauced/app/compare/v2.25.0-beta.3...v2.25.0-beta.4) (2024-05-07)
+
+
+### 🐛 Bug Fixes
+
+* remove alt text from StarSearch logo ([#3308](https://github.com/open-sauced/app/issues/3308)) ([bd29387](https://github.com/open-sauced/app/commit/bd29387b22538512bfcef93371068c2e804b566a))
+
 ## [2.25.0-beta.3](https://github.com/open-sauced/app/compare/v2.25.0-beta.2...v2.25.0-beta.3) (2024-05-07)
 
 
