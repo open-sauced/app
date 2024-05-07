@@ -32,16 +32,16 @@ export default function ContributorsChart({
 
   return (
     <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-8">
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4 lg:px-8">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
           <>
             <div className="flex gap-2 items-center w-fit">
-              <FaUsers className="text-xl lg:text-3xl" />
+              <FaUsers className="text-xl" />
               <div className="flex gap-1">
-                <h3 className="text-sm font-semibold md:text-xl text-slate-800">Contributors</h3>
-                <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+                <h3 className="text-sm font-semibold md:text-lg text-slate-800">Contributors</h3>
+                <p className="text-sm md:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
               </div>
             </div>
             <aside className="flex gap-8">

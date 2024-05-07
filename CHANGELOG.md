@@ -31,21 +31,14 @@
 
 ### 🐛 Bug Fixes
 
-* Change announcement card on highlight feed to starsearch ([#3313](https://github.com/open-sauced/app/issues/3313)) ([a38af76](https://github.com/open-sauced/app/commit/a38af762b22117c64e472b719bca0c7723cd2e88))
-
-## [2.24.2](https://github.com/open-sauced/app/compare/v2.24.1...v2.24.2) (2024-05-03)
-
-### 🐛 Bug Fixes
-
-* remove alt text from StarSearch logo ([#3308](https://github.com/open-sauced/app/issues/3308)) ([bd29387](https://github.com/open-sauced/app/commit/bd29387b22538512bfcef93371068c2e804b566a))
-
-
-### 🐛 Bug Fixes
-
 * style and layout fixes for StarSearch ([#3304](https://github.com/open-sauced/app/issues/3304)) ([599d8f6](https://github.com/open-sauced/app/commit/599d8f68e2ffc9510eace94fedae8cca66e8c5cc))
 
 ## [2.24.2-beta.1](https://github.com/open-sauced/app/compare/v2.24.1...v2.24.2-beta.1) (2024-05-06)
 
+
+### 🐛 Bug Fixes
+
+* Change announcement card on highlight feed to starsearch ([#3313](https://github.com/open-sauced/app/issues/3313)) ([a38af76](https://github.com/open-sauced/app/commit/a38af762b22117c64e472b719bca0c7723cd2e88))
 
 ## [2.24.1](https://github.com/open-sauced/app/compare/v2.24.0...v2.24.1) (2024-05-03)
 
