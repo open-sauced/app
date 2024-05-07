@@ -53,8 +53,8 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
           <div className="flex flex-col gap-4 lg:flex-row w-full justify-between">
             <div className="flex gap-1 items-center w-fit">
               <BiGitPullRequest className="text-xl" />
-              <h3 className="text-sm font-semibold md:text-xl text-slate-800">Pull Requests</h3>
-              <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+              <h3 className="text-sm font-semibold md:text-lg text-slate-800">Pull Requests</h3>
+              <p className="text-sm md:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
             </div>
             <aside className="flex gap-8">
               <div>
