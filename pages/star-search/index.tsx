@@ -6,11 +6,13 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { BsArrowUpShort, BsLinkedin, BsTwitterX } from "react-icons/bs";
+import { BsArrowUpShort, BsLink45Deg, BsTwitterX } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 import * as Sentry from "@sentry/nextjs";
 import remarkGfm from "remark-gfm";
+import { HiOutlineShare } from "react-icons/hi";
+import { FiLinkedin } from "react-icons/fi";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { getAvatarById } from "lib/utils/github";
@@ -38,7 +40,14 @@ export interface WidgetDefinition {
 type Author = "You" | "StarSearch";
 
 const componentRegistry = new Map<string, Function>();
-import Button from "components/shared/Button/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "components/atoms/Dropdown/dropdown";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { shortenUrl } from "lib/utils/shorten-url";
 
 const SUGGESTIONS = [
   {
@@ -285,8 +294,6 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
       return temp;
     });
 
-    return; // TODO: removbe
-
     // get ReadableStream from API
     const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
     const response = await fetch(`${baseUrl}/star-search/stream`, {
@@ -501,7 +508,16 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                     if (loaderIndex === i && isRunning && messages.length - 1 === i) {
                       return (
                         <Fragment key={i}>
-                          <Chatbox userId={userId} message={message} />
+                          <Chatbox
+                            userId={userId}
+                            message={message}
+                            prompt={
+                              messages[i - 1]?.content && messages[i - 1]?.author === "You"
+                                ? (messages[i - 1].content as string)
+                                : ""
+                            }
+                            shareLinks={false}
+                          />
                           <li className="flex gap-2 my-4 w-max items-center">
                             <ChatAvatar author="StarSearch" userId={userId} />
                             <StarSearchLoader />
@@ -509,7 +525,19 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                         </Fragment>
                       );
                     } else {
-                      return <Chatbox key={i} userId={userId} message={message} />;
+                      return (
+                        <Chatbox
+                          key={i}
+                          userId={userId}
+                          message={message}
+                          prompt={
+                            messages[i - 1]?.content && messages[i - 1]?.author === "You"
+                              ? (messages[i - 1].content as string)
+                              : ""
+                          }
+                          shareLinks={true}
+                        />
+                      );
                     }
                   })}
                 </ul>
@@ -729,43 +757,134 @@ function SuggestionBoxes({
   );
 }
 
-function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number }) {
+function Chatbox({
+  message,
+  userId,
+  prompt,
+  shareLinks = true,
+}: {
+  message: StarSearchChat;
+  userId?: number;
+  shareLinks: boolean;
+  prompt?: string;
+}) {
+  let promptUrl: URL;
+  let twitterUrl = "https://twitter.com/intent/tweet";
+  let linkedinUrl = "https://www.linkedin.com/sharing/share-offsite/";
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const twitterParams = new URLSearchParams();
+  const linkedinParams = new URLSearchParams();
+
   if (typeof message.content == "string") {
+    if (shareLinks) {
+      const params = new URLSearchParams();
+      params.set("prompt", prompt || "");
+
+      promptUrl = new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
+
+      twitterParams.set("text", "Here's my StarSearch prompt! Try it out for yourself.");
+      twitterParams.set("url", promptUrl.toString());
+
+      linkedinParams.set("url", `${promptUrl}`);
+      linkedinUrl += `?${linkedinParams}`;
+    }
+
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     return (
-      <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
-        <ChatAvatar author={message.author} userId={userId} />
-        <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
-          <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
-          <Markdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              a(props) {
-                if (typeof props.children === "string" && props.children.startsWith("@")) {
-                  return (
-                    <span className="inline-flex gap-1 items-baseline self-center">
-                      <span className="self-center">
-                        <AvatarHoverCard
-                          contributor={props.children.replace("@", "")}
-                          repositories={[]}
-                          size="xsmall"
-                        />
+      <div>
+        <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
+          <ChatAvatar author={message.author} userId={userId} />
+          <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
+            <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
+            <Markdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                a(props) {
+                  if (typeof props.children === "string" && props.children.startsWith("@")) {
+                    return (
+                      <span className="inline-flex gap-1 items-baseline self-center">
+                        <span className="self-center">
+                          <AvatarHoverCard
+                            contributor={props.children.replace("@", "")}
+                            repositories={[]}
+                            size="xsmall"
+                          />
+                        </span>
+                        <a {...props} />
                       </span>
-                      <a {...props} />
-                    </span>
-                  );
-                }
+                    );
+                  }
 
-                return <a {...props} />;
-              },
-            }}
-            className="break-words prose"
-          >
-            {message.content}
-          </Markdown>{" "}
-        </Card>
-      </li>
+                  return <a {...props} />;
+                },
+              }}
+              className="break-words prose"
+            >
+              {message.content}
+            </Markdown>{" "}
+          </Card>
+        </li>
+        {prompt ? (
+          <div className="flex justify-end gap-2 text-slate-600 pt-2">
+            <DropdownMenu open={dropdownOpen} modal={false}>
+              <div className="flex items-center gap-3 w-max">
+                <DropdownMenuTrigger
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7"
+                >
+                  <HiOutlineShare width={18} height={18} />
+                </DropdownMenuTrigger>
+              </div>
+
+              <DropdownMenuContent ref={dropdownRef} align="end" className="flex flex-col gap-1 py-2 rounded-lg">
+                <DropdownMenuItem className="rounded-md">
+                  <a
+                    onClick={async () => {
+                      const shortUrl = await shortenUrl(`${promptUrl}`);
+                      twitterParams.set("url", shortUrl);
+                      twitterUrl += `?${twitterParams.toString()}`;
+                      window.open(twitterUrl, "_blank");
+                    }}
+                    className="flex gap-2.5 py-1 items-center pl-3 pr-7"
+                  >
+                    <BsTwitterX size={22} />
+                    <span>Share to Twitter/X</span>
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="rounded-md">
+                  <a
+                    onClick={async () => {
+                      const shortUrl = await shortenUrl(`${promptUrl}`);
+                      linkedinParams.set("url", shortUrl);
+                      linkedinUrl += `?${linkedinParams.toString()}`;
+                      window.open(twitterUrl, "_blank");
+                    }}
+                    className="flex gap-2.5 py-1 items-center pl-3 pr-7"
+                  >
+                    <FiLinkedin size={22} />
+                    <span>Share to Linkedin</span>
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={async () => {
+                    const shortUrl = await shortenUrl(`${promptUrl}`);
+                    writeToClipboard(shortUrl);
+                    setDropdownOpen(false);
+                  }}
+                  className="rounded-md"
+                >
+                  <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
+                    <BsLink45Deg size={22} />
+                    <span>Copy link</span>
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ) : null}
+      </div>
     );
   }
 
