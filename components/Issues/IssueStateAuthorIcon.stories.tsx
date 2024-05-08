@@ -4,7 +4,7 @@ import { IssueStateAuthorIcon } from "../Issues/IssueStateAuthorIcon";
 type Story = StoryObj<typeof IssueStateAuthorIcon>;
 
 const meta: Meta<typeof IssueStateAuthorIcon> = {
-  title: "Components/PullRequests/IssueStateAuthorIcon",
+  title: "Components/Issues/IssueStateAuthorIcon",
   component: IssueStateAuthorIcon,
   args: {
     author: "brandonroberts",
