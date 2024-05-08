@@ -100,13 +100,10 @@ const mobileColumns = [
       return (
         <div className="flex gap-4">
           <div>
-            TODO: issue icon with state
-            {/* <PrStateAuthorIcon
+            <IssueStateAuthorIcon
               state={info.row.original.issue_state}
-              isDraft={info.row.original.issue_is_draft}
-              isMerged={info.row.original.issue_is_merged}
               author={info.row.original.issue_author_login.replace("[bot]", "")}
-            /> */}
+            />
           </div>
           <div className="flex flex-col gap-2 text-sm">
             <div className="text-base">{info.row.original.issue_title}</div>
