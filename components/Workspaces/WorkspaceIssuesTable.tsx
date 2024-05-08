@@ -17,6 +17,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import "@github/relative-time-element";
 import { setQueryParams } from "lib/utils/query-params";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { IssueStateAuthorIcon } from "components/Issues/IssueStateAuthorIcon";
 
 interface WorkspaceIssueTableProps {
   data: DbRepoIssueEvents[] | null;
@@ -63,18 +64,16 @@ const columns = [
     ),
     size: 300,
   }),
-  //issueTableColumnHelper.accessor("issue_state", {
-  //   cell: (info) => (
-  //     <PrStateAuthorIcon
-  //       state={info.row.original.issue_state}
-  //       isDraft={info.row.original.issue_is_draft}
-  //       isMerged={info.row.original.issue_is_merged}
-  //       author={info.row.original.issue_author_login.replace("[bot]", "")}
-  //     />
-  //   ),
-  //   header: "State",
-  //   size: 60,
-  // }),
+  issueTableColumnHelper.accessor("issue_state", {
+    cell: (info) => (
+      <IssueStateAuthorIcon
+        state={info.row.original.issue_state}
+        author={info.row.original.issue_author_login.replace("[bot]", "")}
+      />
+    ),
+    header: "State",
+    size: 60,
+  }),
   issueTableColumnHelper.accessor("issue_updated_at", {
     header: "Updated At",
     cell: (info) => getTime(info.getValue()),
