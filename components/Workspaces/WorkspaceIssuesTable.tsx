@@ -155,7 +155,7 @@ const mobileColumns = [
   }),
 ];
 
-const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties => {
+const getCommonPinningStyles = (column: Column<DbRepoIssueEvents>): CSSProperties => {
   const isPinned = column.getIsPinned();
   return {
     left: isPinned === "left" ? `${column.getStart("left")}px` : undefined,
