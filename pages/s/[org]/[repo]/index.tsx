@@ -25,6 +25,7 @@ import ContributorsChart from "components/Graphs/ContributorsChart";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import IssuesChart from "components/Graphs/IssuesChart";
 import PRChart from "components/Graphs/PRChart";
+import TabList from "components/TabList/tab-list";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -74,6 +75,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const { toast } = useToast();
   const posthog = usePostHog();
   const isMobile = useMediaQuery("(max-width: 576px)");
+  const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
+  const tabList = [
+    { name: "Overview", path: "" },
+    { name: "Contributors", path: "contributors" },
+  ];
 
   const syncId = repoData.id;
   const router = useRouter();
@@ -128,11 +134,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     range,
   });
 
-  const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
-
   const contributorRangedTotal = contributorStats?.reduce((prev, curr) => prev + curr.contributor_count!, 0);
-
-  const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
+  const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
@@ -196,6 +199,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               </div>
             </div>
           </div>
+          <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
           <ClientOnly>
             <ContributorsChart
               stats={contributorStats}

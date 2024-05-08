@@ -17,6 +17,7 @@ import Button from "components/shared/Button/button";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import Contributors from "components/organisms/Contributors/contributors";
+import TabList from "components/TabList/tab-list";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -67,6 +68,10 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
   const posthog = usePostHog();
   const isMobile = useMediaQuery("(max-width: 576px)");
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
+  const tabList = [
+    { name: "Overview", path: "" },
+    { name: "Contributors", path: "contributors" },
+  ];
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
@@ -129,6 +134,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
               </div>
             </div>
           </div>
+          <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
           <ClientOnly>
             <Contributors repositories={[repoData.id]} defaultLayout="grid" />
           </ClientOnly>
