@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.25.1-beta.1](https://github.com/open-sauced/app/compare/v2.25.0...v2.25.1-beta.1) (2024-05-08)
+
+
+### 🐛 Bug Fixes
+
+* now markdown has common styles ([6200d76](https://github.com/open-sauced/app/commit/6200d769feb1cac2c0e6933217c17c40f7193843))
+* now markdown has common styles ([#3339](https://github.com/open-sauced/app/issues/3339)) ([1db8260](https://github.com/open-sauced/app/commit/1db8260fc29b4df3bcc7e1e1024cdc0244ca6f2c))
+
 ## [2.25.0](https://github.com/open-sauced/app/compare/v2.24.2...v2.25.0) (2024-05-07)
 
 
