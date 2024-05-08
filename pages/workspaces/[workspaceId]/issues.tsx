@@ -20,6 +20,7 @@ import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { OrderIssuesBy, useGetWorkspaceIssues } from "lib/hooks/api/useGetWorkspaceIssues";
 import { WorkspaceIssueTable } from "components/Workspaces/WorkspaceIssuesTable";
 import { SubTabsList } from "components/TabList/tab-list";
+import { SquareTabsList } from "components/shared/SquareTabs";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -123,14 +124,7 @@ const WorkspaceIssuesPage = ({ workspace, isOwner, overLimit }: WorkspaceDashboa
         </div>
         <div className="mt-6 grid gap-6">
           <div className="grid md:flex justify-between gap-2 md:gap-4">
-            <SubTabsList
-              tabList={[
-                { name: "Pull Requests", path: "activity" },
-                { name: "Issues", path: "issues" },
-              ]}
-              selectedTab={"issues"}
-              pageId={`/workspaces/${workspace.id}`}
-            />
+            <SquareTabsList items={["Pull Requests", "Issues"]} />
             <div className="flex justify-end items-center gap-4">
               <TrackedRepositoryFilter
                 options={filterOptions}
