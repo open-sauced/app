@@ -118,7 +118,7 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
         }
       >
         <WorkspaceHeader workspace={workspace} />
-        <div className="grid sm:flex gap-4 pt-3">
+        <div className="grid sm:flex gap-4 pt-3 border-b">
           <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
         </div>
         <div className="grid sm:flex gap-4 pt-3">
