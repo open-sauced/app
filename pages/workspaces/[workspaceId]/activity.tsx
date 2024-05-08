@@ -19,6 +19,7 @@ import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceReposi
 import { setQueryParams } from "lib/utils/query-params";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import TabsList from "components/TabList/tab-list";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -119,6 +120,16 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
         <WorkspaceHeader workspace={workspace} />
         <div className="grid sm:flex gap-4 pt-3">
           <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
+        </div>
+        <div className="grid sm:flex gap-4 pt-3">
+          <TabsList
+            tabList={[
+              { name: "Pull Requests", path: "activity" },
+              { name: "Issues", path: "issues" },
+            ]}
+            selectedTab={"pull requests"}
+            pageId={`/workspaces/${workspace.id}`}
+          />
         </div>
         <div className="mt-6 grid gap-6">
           <div className="flex justify-end items-center gap-4">
