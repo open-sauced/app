@@ -12,6 +12,7 @@ import Link from "next/link";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import clsx from "clsx";
 import Skeleton from "react-loading-skeleton";
+import { HeartFillIcon } from "@primer/octicons-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import Pagination from "components/molecules/Pagination/pagination";
 import "@github/relative-time-element";
@@ -87,6 +88,12 @@ const columns = [
   issueTableColumnHelper.accessor("issue_closed_at", {
     header: "Closed At",
     cell: (info) => (info.row.original.issue_state === "closed" ? getTime(info.getValue()) : "-"),
+    enableSorting: true,
+  }),
+
+  issueTableColumnHelper.accessor("issue_reactions_heart", {
+    header: (_info) => <HeartFillIcon size={16} className="text-red-500" />,
+    cell: (info) => info.getValue(),
     enableSorting: true,
   }),
 ];
@@ -205,41 +212,43 @@ export const WorkspaceIssueTable = ({ data, meta, isLoading }: WorkspaceIssueTab
                     style={{ ...getCommonPinningStyles(header.column), width: header.column.getSize() }}
                     className={clsx(header.column.getIsPinned(), "bg-light-slate-3")}
                   >
-                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    {enableSorting ? (
-                      <button
-                        onClick={(event) => {
-                          setQueryParams({
-                            orderBy: header.id.replace("issue_", ""),
-                            orderDirection: isAscending ? "DESC" : "ASC",
-                          });
+                    <div className="flex items-center">
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                      {enableSorting ? (
+                        <button
+                          onClick={(event) => {
+                            setQueryParams({
+                              orderBy: header.id.replace("issue_", ""),
+                              orderDirection: isAscending ? "DESC" : "ASC",
+                            });
 
-                          setSorting((currentState) => {
-                            const state = currentState
-                              .filter((item) => item.id !== header.id)
-                              .map(({ id }) => ({ id, desc: false }));
+                            setSorting((currentState) => {
+                              const state = currentState
+                                .filter((item) => item.id !== header.id)
+                                .map(({ id }) => ({ id, desc: false }));
 
-                            return [
-                              ...state,
-                              {
-                                id: header.id,
-                                // If it was ascending, we want to set it to descending
-                                desc: isAscending,
-                              },
-                            ];
-                          });
-                        }}
-                      >
-                        <span className="sr-only">{`Sort ${header.column.columnDef.header} in ${
-                          isAscending ? "ascending" : "descending"
-                        } order`}</span>
-                        {isAscending ? (
-                          <BiSolidUpArrow className="w-6 aspect-square" />
-                        ) : (
-                          <BiSolidDownArrow className="w-6 aspect-square" />
-                        )}
-                      </button>
-                    ) : null}
+                              return [
+                                ...state,
+                                {
+                                  id: header.id,
+                                  // If it was ascending, we want to set it to descending
+                                  desc: isAscending,
+                                },
+                              ];
+                            });
+                          }}
+                        >
+                          <span className="sr-only">{`Sort ${header.column.columnDef.header} in ${
+                            isAscending ? "ascending" : "descending"
+                          } order`}</span>
+                          {isAscending ? (
+                            <BiSolidUpArrow className="w-6 aspect-square" />
+                          ) : (
+                            <BiSolidDownArrow className="w-6 aspect-square" />
+                          )}
+                        </button>
+                      ) : null}
+                    </div>
                   </TableHead>
                 );
               })}

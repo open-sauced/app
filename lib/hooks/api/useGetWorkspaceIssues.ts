@@ -7,7 +7,7 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-export type OrderIssuesBy = "created_at" | "closed_at" | "updated_at";
+export type OrderIssuesBy = "created_at" | "closed_at" | "updated_at" | "reactions_heart";
 
 export const useGetWorkspaceIssues = ({
   workspaceId,
