@@ -445,7 +445,7 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
       {renderAvatar()}
       <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
         <h3 className="font-semibold text-sauced-orange">{author}</h3>
-        <Markdown>{content}</Markdown>
+        <Markdown className="markdown">{content}</Markdown>
       </Card>
     </li>
   );
