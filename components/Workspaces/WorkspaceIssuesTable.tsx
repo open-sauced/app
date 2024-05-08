@@ -94,7 +94,7 @@ const columns = [
   issueTableColumnHelper.accessor("issue_reactions_heart", {
     header: (_info) => (
       <div className="flex gap-1 items-center">
-        <HeartFillIcon size={16} className="text-red-500" /> count
+        <HeartFillIcon size={16} className="text-red-500" aria-label="heart reaction" /> count
       </div>
     ),
     cell: (info) => info.getValue(),
