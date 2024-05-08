@@ -26,6 +26,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import IssuesChart from "components/Graphs/IssuesChart";
 import PRChart from "components/Graphs/PRChart";
 import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
+import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -135,6 +136,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
 
+  const {
+    data: lotteryFactor,
+    error: lotteryFactorError,
+    isLoading: isLotteryFactorLoading,
+  } = useRepositoryLottoFactor({ repository: repoData.full_name, range });
+
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
     posthog!.capture("clicked: repo page share button", {
@@ -198,7 +205,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </div>
           </div>
           <ClientOnly>
-            <LotteryFactorChart />
+            <LotteryFactorChart
+              lotteryFactor={lotteryFactor}
+              error={lotteryFactorError}
+              range={range}
+              isLoading={isLotteryFactorLoading}
+            />
             <ContributorsChart
               stats={contributorStats}
               range={range}

@@ -582,3 +582,15 @@ interface DbWorkspacesReposStats {
     activity_ratio: number;
   };
 }
+
+interface ContributorLottoFactor {
+  contributor: string;
+  count: number;
+  percent_of_total: number;
+  lotto_factor: "high" | "moderate" | "low";
+}
+
+interface RepositoryLottoFactor {
+  all_contribs: ContributorLottoFactor[];
+  all_lotto_factor: "high" | "moderate" | "low";
+}
