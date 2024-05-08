@@ -156,6 +156,12 @@ const mobileColumns = [
                 </>
               )}
             </span>
+            {info.row.original.issue_reactions_heart > 0 ? (
+              <span className="flex gap-1 items-center">
+                {info.row.original.issue_reactions_heart}
+                <HeartFillIcon size={16} className="text-red-500" aria-label="heart reaction" />
+              </span>
+            ) : null}
           </div>
         </div>
       );
