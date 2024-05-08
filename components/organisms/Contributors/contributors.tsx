@@ -31,9 +31,10 @@ import ContributorTable from "../ContributorsTable/contributors-table";
 interface ContributorProps {
   repositories?: number[];
   title?: string;
+  defaultLayout?: ToggleValue;
 }
 
-const Contributors = ({ repositories, title }: ContributorProps): JSX.Element => {
+const Contributors = ({ repositories, title, defaultLayout }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
@@ -41,7 +42,7 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
 
   const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
   const { toast } = useToast();
-  const [layout, setLayout] = useState<ToggleValue>("list");
+  const [layout, setLayout] = useState<ToggleValue>(defaultLayout ?? "list");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
