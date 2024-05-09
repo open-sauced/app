@@ -124,6 +124,8 @@ const WorkspaceIssuesPage = ({ workspace, isOwner, overLimit }: WorkspaceDashboa
         <div className="mt-6 grid gap-6">
           <div className="grid md:flex justify-between gap-2 md:gap-4">
             <SubTabsList
+              label="Activity pages"
+              textSize="small"
               tabList={[
                 { name: "Pull Requests", path: "activity" },
                 { name: "Issues", path: "issues" },
