@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.26.0-beta.3](https://github.com/open-sauced/app/compare/v2.26.0-beta.2...v2.26.0-beta.3) (2024-05-09)
+
+
+### 🍕 Features
+
+* implemented the workspace issues table ([#3340](https://github.com/open-sauced/app/issues/3340)) ([ba1bc51](https://github.com/open-sauced/app/commit/ba1bc5124ffe9c300d899f986842fe2f5ff1ddc4))
+
 ## [2.26.0-beta.2](https://github.com/open-sauced/app/compare/v2.26.0-beta.1...v2.26.0-beta.2) (2024-05-09)
 
 
