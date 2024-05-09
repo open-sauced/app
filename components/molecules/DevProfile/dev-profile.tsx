@@ -10,8 +10,9 @@ import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 interface DevProfileProps {
   username: string;
   hasBorder: boolean;
+  truncate?: boolean;
 }
-const DevProfile = ({ username, hasBorder }: DevProfileProps) => {
+const DevProfile = ({ username, hasBorder, truncate }: DevProfileProps) => {
   return (
     <section className="flex items-center gap-2 text-light-slate-11">
       {/* Mobile */}
@@ -29,9 +30,7 @@ const DevProfile = ({ username, hasBorder }: DevProfileProps) => {
         <AvatarHoverCard contributor={username} repositories={[]} size="small" />
       </div>
       <div>
-        <h1 className="text-light-slate-12">
-          {username && username.length > 10 ? truncateString(username, 11) : username}
-        </h1>
+        <h1 className="text-light-slate-12">{username && truncate ? truncateString(username, 11) : username}</h1>
       </div>
     </section>
   );
