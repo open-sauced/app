@@ -48,6 +48,24 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
     return result;
   }, [lotteryFactor]);
 
+  const summary = useMemo(() => {
+    const topFourContributors = lotteryFactor?.all_contribs.slice(0, 4);
+    let count = 0;
+    let percentage = 0;
+    while (percentage < 50 || count !== 4) {
+      percentage += Number((topFourContributors![count].percent_of_total * 100).toPrecision(1));
+      count++;
+    }
+
+    return (
+      <p className="text-slate-500">
+        The top <span className="font-semibold text-black">{count}</span> contributor{count > 1 && "s"} of this
+        repository have made <span className="font-semibold text-black">{percentage}%</span> of all commits in the past{" "}
+        <span className="font-semibold text-black">{range}</span> days.
+      </p>
+    );
+  }, [lotteryFactor, range]);
+
   function getLottoColor(factor: string) {
     switch (factor) {
       case "very-high":
@@ -91,8 +109,9 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
         </header>
       </section>
 
-      <section className="w-full">
-        <div className="flex gap-1 h-3 place-content-center px-8">
+      <section className="w-full px-4 lg:px-8 flex flex-col gap-4 text-sm lg:text-base">
+        {summary}
+        <div className="flex gap-1 h-3 place-content-center">
           {sortedContributors.map((item, index) => {
             return (
               <button
@@ -126,7 +145,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
       {!lotteryFactor ? (
         <p>Loading...</p>
       ) : (
-        <table className="table-auto divide-y text-slate-500 gap-4 w-full px-4 lg:px-8 border-separate border-spacing-y-4">
+        <table className="table-auto divide-y text-xs lg:text-base text-slate-500 gap-4 w-full px-4 lg:px-8 border-separate border-spacing-y-4">
           <thead>
             <tr>
               <th className="font-normal text-start">Contributor</th>
