@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.26.0-beta.2](https://github.com/open-sauced/app/compare/v2.26.0-beta.1...v2.26.0-beta.2) (2024-05-09)
+
+
+### 🍕 Features
+
+* implemented the substabs list component ([#3352](https://github.com/open-sauced/app/issues/3352)) ([5a55026](https://github.com/open-sauced/app/commit/5a550263a7f968a130a2910f141705448dfdee44))
+
 ## [2.26.0-beta.1](https://github.com/open-sauced/app/compare/v2.25.1-beta.1...v2.26.0-beta.1) (2024-05-09)
 
 
