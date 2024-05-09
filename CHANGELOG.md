@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.26.0-beta.4](https://github.com/open-sauced/app/compare/v2.26.0-beta.3...v2.26.0-beta.4) (2024-05-09)
+
+
+### 🍕 Features
+
+* add repository filtering to contributor insight activity page ([#3355](https://github.com/open-sauced/app/issues/3355)) ([58f6dda](https://github.com/open-sauced/app/commit/58f6dda2bc2a6fa4422d8335cd0b352f8c1036c3))
+
 ## [2.26.0-beta.3](https://github.com/open-sauced/app/compare/v2.26.0-beta.2...v2.26.0-beta.3) (2024-05-09)
 
 
