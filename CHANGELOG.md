@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.26.0-beta.5](https://github.com/open-sauced/app/compare/v2.26.0-beta.4...v2.26.0-beta.5) (2024-05-09)
+
+
+### 🐛 Bug Fixes
+
+* style tweaks for MultiSelect component ([#3354](https://github.com/open-sauced/app/issues/3354)) ([6cf9f99](https://github.com/open-sauced/app/commit/6cf9f997b3a4bee8c3a9320c2372beeaab3470ea))
+
 ## [2.26.0-beta.4](https://github.com/open-sauced/app/compare/v2.26.0-beta.3...v2.26.0-beta.4) (2024-05-09)
 
 
