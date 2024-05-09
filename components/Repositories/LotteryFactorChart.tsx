@@ -50,7 +50,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
   }, [lotteryFactor]);
 
   const summary = useMemo(() => {
-    if (isLoading) {
+    if (isLoading || !lotteryFactor) {
       return <p className="text-slate-500">Loading...</p>;
     }
 
@@ -58,7 +58,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
     let count = 0;
     let percentage = 0;
     while (percentage < 50) {
-      percentage += Number((topFourContributors![count].percent_of_total * 100).toPrecision(1));
+      percentage += Number(((topFourContributors[count]?.percent_of_total ?? 0) * 100).toPrecision(1));
       count++;
       if (count === 4) {
         break;
@@ -72,7 +72,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
         <span className="font-semibold text-black">{range}</span> days.
       </p>
     );
-  }, [lotteryFactor, range]);
+  }, [isLoading, lotteryFactor, range]);
 
   function getLottoColor(factor: string) {
     switch (factor) {
