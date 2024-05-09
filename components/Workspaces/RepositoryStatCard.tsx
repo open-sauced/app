@@ -92,7 +92,9 @@ const getPillChart = (total?: number, loading?: boolean) => {
     );
   }
 
-  return <Pill icon={<ArrowTrendingDownIcon color="red" className="w-6 h-6 lg:w-4 lg:h-4" />} text="Low" color="red" />;
+  return (
+    <Pill icon={<ArrowTrendingDownIcon color="slate" className="w-6 h-6 lg:w-4 lg:h-4" />} text="Low" color="slate" />
+  );
 };
 
 const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) => {
