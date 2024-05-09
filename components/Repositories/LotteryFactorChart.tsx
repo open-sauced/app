@@ -52,9 +52,12 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
     const topFourContributors = lotteryFactor?.all_contribs.slice(0, 4);
     let count = 0;
     let percentage = 0;
-    while (percentage < 50 || count !== 4) {
+    while (percentage < 50) {
       percentage += Number((topFourContributors![count].percent_of_total * 100).toPrecision(1));
       count++;
+      if (count === 4) {
+        break;
+      }
     }
 
     return (
