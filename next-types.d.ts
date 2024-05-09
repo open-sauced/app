@@ -587,10 +587,10 @@ interface ContributorLottoFactor {
   contributor: string;
   count: number;
   percent_of_total: number;
-  lotto_factor: "high" | "moderate" | "low";
+  lotto_factor: "very-high" | "high" | "moderate" | "low";
 }
 
 interface RepositoryLottoFactor {
   all_contribs: ContributorLottoFactor[];
-  all_lotto_factor: "high" | "moderate" | "low";
+  all_lotto_factor: "very-high" | "high" | "moderate" | "low";
 }
