@@ -88,7 +88,7 @@
     "date-fns": "^2.29.3",
     "echarts": "^5.4.1",
     "echarts-for-react": "^3.0.2",
-    "next": "^13.5.6",
+    "next": "^14.2.3",
     "nextjs-progressbar": "^0.0.16",
     "octokit": "^3.1.2",
     "open-graph": "^0.2.6",
