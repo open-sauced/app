@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.26.0-beta.1](https://github.com/open-sauced/app/compare/v2.25.1-beta.1...v2.26.0-beta.1) (2024-05-09)
+
+
+### 🍕 Features
+
+* now low activity ratio pills are slate ([#3347](https://github.com/open-sauced/app/issues/3347)) ([18bd781](https://github.com/open-sauced/app/commit/18bd7814567263810699415e93d6d6c4bd0d9590))
+
 ## [2.25.1-beta.1](https://github.com/open-sauced/app/compare/v2.25.0...v2.25.1-beta.1) (2024-05-08)
 
 
