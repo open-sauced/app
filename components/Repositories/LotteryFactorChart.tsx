@@ -18,7 +18,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
   const [hovered, setHovered] = useState<string | undefined>(undefined);
   const topFourPercentage = useMemo(
     () =>
-      !lotteryFactor
+      isLoading || !lotteryFactor
         ? 0
         : Number(
             (
@@ -31,24 +31,29 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
   );
 
   const sortedContributors = useMemo(() => {
-    const result = lotteryFactor
-      ? lotteryFactor.all_contribs.slice(0, 4).map((contributor) => {
-          return {
-            name: contributor.contributor,
-            value: Number((contributor.percent_of_total * 100).toPrecision(1)),
-            factor: contributor.lotto_factor,
-          };
-        })
-      : ([] as {
-          name: string;
-          value: number;
-          factor: "very-high" | "high" | "moderate" | "low" | "Other Contributors";
-        }[]);
+    const result =
+      !isLoading && lotteryFactor
+        ? lotteryFactor.all_contribs.slice(0, 4).map((contributor) => {
+            return {
+              name: contributor.contributor,
+              value: Number((contributor.percent_of_total * 100).toPrecision(1)),
+              factor: contributor.lotto_factor,
+            };
+          })
+        : ([] as {
+            name: string;
+            value: number;
+            factor: "very-high" | "high" | "moderate" | "low" | "Other Contributors";
+          }[]);
     result.push({ name: "Other Contributors", value: 100 - topFourPercentage, factor: "Other Contributors" });
     return result;
   }, [lotteryFactor]);
 
   const summary = useMemo(() => {
+    if (isLoading) {
+      return <p className="text-slate-500">Loading...</p>;
+    }
+
     const topFourContributors = lotteryFactor?.all_contribs.slice(0, 4);
     let count = 0;
     let percentage = 0;
@@ -148,7 +153,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
       {!lotteryFactor ? (
         <p>Loading...</p>
       ) : (
-        <table className="table-auto divide-y text-xs lg:text-base text-slate-500 gap-4 w-full px-4 lg:px-8 border-separate border-spacing-y-4">
+        <table className="table-auto divide-y text-xs lg:text-base text-slate-500 w-full px-4 lg:px-8 border-separate border-spacing-y-2">
           <thead>
             <tr>
               <th className="font-normal text-start">Contributor</th>
@@ -158,37 +163,42 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
           </thead>
           <tbody>
             {lotteryFactor.all_contribs.slice(0, 4).map((contributor) => (
-              <tr key={contributor.contributor} className="items-start">
+              <tr
+                key={contributor.contributor}
+                className={`${hovered === contributor.contributor && "bg-slate-100"} items-start`}
+              >
                 <td
-                  className={`${hovered === contributor.contributor ? "font-semibold" : "font-normal"} border-b-1 pb-5`}
+                  className={`${
+                    hovered === contributor.contributor ? "font-semibold" : "font-normal"
+                  } border-b-1 py-4 pl-2`}
                 >
                   <DevProfile username={contributor.contributor} hasBorder={false} />
                 </td>
                 <td
                   className={`${
                     hovered === contributor.contributor ? "font-semibold" : "font-normal"
-                  } text-center border-b-1`}
+                  } text-center border-b-1 py-4`}
                 >
                   {contributor.count}
                 </td>
                 <td
                   className={`${
                     hovered === contributor.contributor ? "font-semibold" : "font-normal"
-                  } text-end border-b-1`}
+                  } text-end border-b-1 py-4 pr-2`}
                 >
                   {humanizeNumber((contributor.percent_of_total * 100).toPrecision(1))}%
                 </td>
               </tr>
             ))}
-            <tr className={`${hovered === "Other Contributors" ? "font-semibold" : "font-normal"}`}>
-              <td className="flex gap-2 items-center">
+            <tr className={`${hovered === "Other Contributors" ? "font-semibold bg-slate-100" : "font-normal"}`}>
+              <td className="flex gap-2 items-center py-4 pl-2">
                 <StackedOwners
                   owners={lotteryFactor.all_contribs.slice(4, 7).map((contributor) => contributor.contributor)}
                 />
                 <p>Other contributors</p>
               </td>
               <td></td>
-              <td className="text-end">{100 - topFourPercentage}%</td>
+              <td className="text-end py-4 pr-2">{100 - topFourPercentage}%</td>
             </tr>
           </tbody>
         </table>
