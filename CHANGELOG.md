@@ -5,6 +5,49 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.26.0-beta.5](https://github.com/open-sauced/app/compare/v2.26.0-beta.4...v2.26.0-beta.5) (2024-05-09)
+
+
+### 🐛 Bug Fixes
+
+* style tweaks for MultiSelect component ([#3354](https://github.com/open-sauced/app/issues/3354)) ([6cf9f99](https://github.com/open-sauced/app/commit/6cf9f997b3a4bee8c3a9320c2372beeaab3470ea))
+
+## [2.26.0-beta.4](https://github.com/open-sauced/app/compare/v2.26.0-beta.3...v2.26.0-beta.4) (2024-05-09)
+
+
+### 🍕 Features
+
+* add repository filtering to contributor insight activity page ([#3355](https://github.com/open-sauced/app/issues/3355)) ([58f6dda](https://github.com/open-sauced/app/commit/58f6dda2bc2a6fa4422d8335cd0b352f8c1036c3))
+
+## [2.26.0-beta.3](https://github.com/open-sauced/app/compare/v2.26.0-beta.2...v2.26.0-beta.3) (2024-05-09)
+
+
+### 🍕 Features
+
+* implemented the workspace issues table ([#3340](https://github.com/open-sauced/app/issues/3340)) ([ba1bc51](https://github.com/open-sauced/app/commit/ba1bc5124ffe9c300d899f986842fe2f5ff1ddc4))
+
+## [2.26.0-beta.2](https://github.com/open-sauced/app/compare/v2.26.0-beta.1...v2.26.0-beta.2) (2024-05-09)
+
+
+### 🍕 Features
+
+* implemented the substabs list component ([#3352](https://github.com/open-sauced/app/issues/3352)) ([5a55026](https://github.com/open-sauced/app/commit/5a550263a7f968a130a2910f141705448dfdee44))
+
+## [2.26.0-beta.1](https://github.com/open-sauced/app/compare/v2.25.1-beta.1...v2.26.0-beta.1) (2024-05-09)
+
+
+### 🍕 Features
+
+* now low activity ratio pills are slate ([#3347](https://github.com/open-sauced/app/issues/3347)) ([18bd781](https://github.com/open-sauced/app/commit/18bd7814567263810699415e93d6d6c4bd0d9590))
+
+## [2.25.1-beta.1](https://github.com/open-sauced/app/compare/v2.25.0...v2.25.1-beta.1) (2024-05-08)
+
+
+### 🐛 Bug Fixes
+
+* now markdown has common styles ([6200d76](https://github.com/open-sauced/app/commit/6200d769feb1cac2c0e6933217c17c40f7193843))
+* now markdown has common styles ([#3339](https://github.com/open-sauced/app/issues/3339)) ([1db8260](https://github.com/open-sauced/app/commit/1db8260fc29b4df3bcc7e1e1024cdc0244ca6f2c))
+
 ## [2.25.0](https://github.com/open-sauced/app/compare/v2.24.2...v2.25.0) (2024-05-07)
 
 

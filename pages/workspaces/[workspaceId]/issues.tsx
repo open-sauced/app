@@ -10,8 +10,6 @@ import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
 import { DayRangePicker } from "components/shared/DayRangePicker";
-import { OrderPullRequestsBy, useWorkspacePullRequests } from "lib/hooks/api/useWorkspacePullRequests";
-import { WorkspacePullRequestTable } from "components/Workspaces/WorkspacePullRequestsTable";
 import { LimitPicker } from "components/shared/LimitPicker";
 import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilter";
 import { OptionKeys } from "components/atoms/Select/multi-select";
@@ -19,6 +17,8 @@ import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceReposi
 import { setQueryParams } from "lib/utils/query-params";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import { OrderIssuesBy, useGetWorkspaceIssues } from "lib/hooks/api/useGetWorkspaceIssues";
+import { WorkspaceIssueTable } from "components/Workspaces/WorkspaceIssuesTable";
 import { SubTabsList } from "components/TabList/tab-list";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
@@ -71,7 +71,7 @@ interface WorkspaceDashboardProps {
 
 type OrderDirection = "ASC" | "DESC";
 
-const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashboardProps) => {
+const WorkspaceIssuesPage = ({ workspace, isOwner, overLimit }: WorkspaceDashboardProps) => {
   const router = useRouter();
   const {
     limit = 10,
@@ -91,15 +91,15 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
   const repoIds = filteredRepositories.map((option) => Number(option.value));
   const {
     meta,
-    data: pullRequests,
+    data: issues,
     isError,
     isLoading,
-  } = useWorkspacePullRequests({
+  } = useGetWorkspaceIssues({
     workspaceId: workspace.id,
     page: Number(page),
     limit: Number(limit),
     orderDirection: orderDirection as OrderDirection,
-    orderBy: orderBy as OrderPullRequestsBy,
+    orderBy: orderBy as OrderIssuesBy,
     range,
     repoIds,
   });
@@ -118,7 +118,7 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
         }
       >
         <WorkspaceHeader workspace={workspace} />
-        <div className="grid sm:flex gap-4 pt-3 border-b">
+        <div className="grid sm:flex gap-4 pt-3">
           <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
         </div>
         <div className="mt-6 grid gap-6">
@@ -130,7 +130,7 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
                 { name: "Pull Requests", path: "activity" },
                 { name: "Issues", path: "issues" },
               ]}
-              selectedTab={"pull requests"}
+              selectedTab={"issues"}
               pageId={`/workspaces/${workspace.id}`}
             />
             <div className="flex justify-end items-center gap-4">
@@ -146,7 +146,7 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
             </div>
           </div>
           <ClientOnly>
-            <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />
+            <WorkspaceIssueTable isLoading={isLoading} data={issues} meta={meta} />
           </ClientOnly>
         </div>
         <InsightUpgradeModal
@@ -161,4 +161,4 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
   );
 };
 
-export default WorkspaceActivityPage;
+export default WorkspaceIssuesPage;
