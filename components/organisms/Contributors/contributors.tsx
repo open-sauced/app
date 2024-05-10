@@ -29,11 +29,12 @@ import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
 interface ContributorProps {
+  repoNames?: string[]; // TODO: will replace `repositories` with "list" view refactor
   repositories?: number[];
   title?: string;
 }
 
-const Contributors = ({ repositories, title }: ContributorProps): JSX.Element => {
+const Contributors = ({ repoNames, repositories, title }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
@@ -59,7 +60,7 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
     if (state) {
       setSelectedContributors((prev) => [...prev, contributor]);
     } else {
-      setSelectedContributors(selectedContributors.filter((seleted) => seleted.user_id !== contributor.user_id));
+      setSelectedContributors(selectedContributors.filter((selected) => selected.user_id !== contributor.user_id));
     }
   };
 
@@ -204,8 +205,14 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
           {isError ? <>An error occurred!..</> : ""}
           {!isLoading &&
             !isError &&
-            contributorArray.map((contributor, index) => (
-              <ContributorCard key={index} contributor={{ ...contributor }} topic={topic} repositories={repositories} />
+            data.map((contributor, index) => (
+              <ContributorCard
+                key={index}
+                contributor={{ ...contributor }}
+                topic={topic}
+                repoNames={repoNames}
+                repositories={repositories}
+              />
             ))}
         </div>
       ) : (

@@ -1,14 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import ContributorCard from "./contributor-card";
 
+// an example github avatar for user bdougieyo
 const baseContributor = Object.freeze({
-  profile: {
-    // an example github avatar for user bdougieyo
-    githubAvatar: "https://avatars.githubusercontent.com/u/5713670?v=4",
-    githubName: "bdougie",
-    dateOfFirstPR: new Date("2020-01-01").toISOString(),
-  },
-});
+  author_login: "bdougie",
+  updated_at: new Date("2020-01-01").toISOString(),
+} as DbPRContributor);
 
 const meta: Meta<typeof ContributorCard> = {
   title: "Design System/Organisms/Contributor Card",

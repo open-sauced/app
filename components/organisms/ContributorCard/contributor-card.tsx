@@ -1,41 +1,40 @@
 import { useState } from "react";
 
+import Link from "next/link";
+import Icon from "components/atoms/Icon/icon";
 import Card from "components/atoms/Card/card";
+import Badge from "components/atoms/Badge/badge";
 import Text from "components/atoms/Typography/text";
+import Avatar from "components/atoms/Avatar/avatar";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import CardHorizontalBarChart from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
-import CardProfile from "components/molecules/CardProfile/card-profile";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 
-import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
-import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
-import { useFetchUser } from "lib/hooks/useFetchUser";
-import Badge from "components/atoms/Badge/badge";
+import ForkIcon from "img/icons/fork-icon.svg";
+import FirstPRIcon from "img/icons/first-pr-icon.svg";
 
-export interface ContributorObject {
-  profile: {
-    githubAvatar: string;
-    githubName: string;
-    dateOfFirstPR: string;
-  };
-}
+import { useFetchUser } from "lib/hooks/useFetchUser";
+import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
+import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullRequestsChart";
+import { calcDistanceFromToday } from "lib/utils/date-utils";
+import { getAvatarByUsername } from "lib/utils/github";
 
 interface ContributorCardProps {
   className?: string;
-  contributor: ContributorObject;
+  contributor: DbPRContributor;
   topic: string;
+  repoNames?: string[]; // TODO: will replace `repositories` during "list" view refactor
   repositories?: number[];
   range?: string;
 }
 
-const ContributorCard = ({ className, contributor, topic, repositories, range }: ContributorCardProps) => {
-  const { profile } = contributor;
-
+const ContributorCard = ({ className, contributor, topic, repositories, repoNames, range }: ContributorCardProps) => {
   const [showPRs, setShowPRs] = useState(false);
-  const { repoList, meta } = useContributorPullRequestsChart(profile.githubName, topic, repositories, range);
-  const languageList = useContributorLanguages(profile.githubName);
-  const { data: user } = useFetchUser(profile.githubName, {
+  const { repoList, meta } = useContributorPullRequestsChart(contributor.author_login, topic, repositories, range);
+  const languageList = useContributorLanguages(contributor.author_login);
+  const { data: user } = useFetchUser(contributor.author_login, {
     revalidateOnFocus: false,
   });
 
@@ -45,7 +44,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
     <Card className={className && className}>
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between w-full gap-2">
-          <CardProfile {...profile} totalPRs={meta.itemCount} />
+          <CardProfile contributor={contributor} totalPRs={meta.itemCount} />
           <div className="flex flex-col items-end gap-2">
             <CardHorizontalBarChart withDescription={false} languageList={languageList} />
             {!!isMaintainer && <Badge text="maintainer" />}
@@ -53,7 +52,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
         </div>
         <div className="h-32">
           <CardLineChart
-            contributor={contributor.profile.githubName}
+            contributor={contributor.author_login}
             repoIds={repositories}
             range={Number(range ?? 30)}
             className="max-h-36"
@@ -62,7 +61,12 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
         <CardRepoList repoList={repoList} total={repoList.length} />
 
         {showPRs ? (
-          <PullRequestTable contributor={profile.githubName} topic={topic} repositories={repositories} range={range} />
+          <PullRequestTable
+            contributor={contributor.author_login}
+            topic={topic}
+            repositories={repositories}
+            range={range}
+          />
         ) : null}
 
         <div className="flex justify-center w-full">
@@ -79,3 +83,37 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
 };
 
 export default ContributorCard;
+
+function CardProfile({ contributor, totalPRs }: { contributor: DbPRContributor; totalPRs: number }) {
+  const dateOfFirstPR = calcDistanceFromToday(new Date(contributor.updated_at));
+  return (
+    <Link href={`/user/${contributor.author_login}`} as={`/user/${contributor.author_login}`}>
+      <div className="flex items-center gap-2">
+        <Avatar size={40} avatarURL={contributor.author_login && getAvatarByUsername(contributor.author_login)} />
+        <div>
+          <div>
+            <Text className="!text-base !text-black  ">{contributor.author_login}</Text>
+          </div>
+          <div className="flex gap-2 text-xs">
+            <div className="flex items-center gap-1 text-xs text-light-slate-11">
+              {totalPRs !== undefined && (
+                <>
+                  <Tooltip content="PRs merged">
+                    <Icon size={12} alt="PRs merged" IconImage={ForkIcon} />
+                  </Tooltip>
+                  {totalPRs} PR
+                  {totalPRs === 1 ? "" : "s"}
+                </>
+              )}
+            </div>
+            <div className="flex items-center gap-1 text-light-slate-11">
+              <Tooltip content="First commit date">
+                <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} /> {dateOfFirstPR}
+              </Tooltip>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}

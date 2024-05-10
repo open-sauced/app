@@ -19,9 +19,17 @@ import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
 import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
-import { ContributorObject } from "../ContributorCard/contributor-card";
 
 const colorKeys = Object.keys(color);
+
+interface ContributorObject {
+  profile: {
+    githubAvatar: string;
+    githubName: string;
+    dateOfFirstPR: string;
+  };
+}
+
 interface PrObjectType {
   prName: string;
   prStatus: string;
