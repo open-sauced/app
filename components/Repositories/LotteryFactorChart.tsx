@@ -6,6 +6,7 @@ import { DayRange } from "components/shared/DayRangePicker";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import StackedOwners from "components/Workspaces/StackedOwners";
 import DevProfile from "components/molecules/DevProfile/dev-profile";
+import InfoTooltip from "components/shared/InfoTooltip";
 
 type LotteryFactorChartProps = {
   lotteryFactor: RepositoryLottoFactor | undefined;
@@ -96,6 +97,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
           <div className="flex gap-2 items-center">
             <HiOutlineTicket className="text-xl" />
             <h3 className="text-sm font-semibold md:text-lg text-slate-800">Lottery Factor</h3>
+            <InfoTooltip information="Identifies project risk due to dependency on top contributors. Indicates project vulnerability if 2 or fewer do >50% of the work." />
           </div>
           {!lotteryFactor ? (
             <Pill text="..." color="slate" />
