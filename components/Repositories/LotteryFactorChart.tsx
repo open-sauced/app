@@ -22,63 +22,42 @@ type LotteryFactorChartProps = {
 
 export default function LotteryFactorChart({ lotteryFactor, isLoading, error, range }: LotteryFactorChartProps) {
   const [hovered, setHovered] = useState<string | undefined>(undefined);
+  const topFourContributors = lotteryFactor?.all_contribs.slice(0, 4) ?? [];
   const topFourPercentage = useMemo(
     () =>
-      isLoading || !lotteryFactor
-        ? 0
-        : Number(
-            (
-              lotteryFactor.all_contribs
-                .slice(0, 4)
-                .reduce((prev, contributor) => prev + contributor.percent_of_total, 0) * 100
-            ).toPrecision(1)
-          ),
-    [isLoading, lotteryFactor]
+      Number((topFourContributors.reduce((prev, curr) => prev + curr.percent_of_total, 0) ?? 0 * 100).toPrecision(1)),
+    [topFourContributors]
   );
 
   const sortedContributors = useMemo(() => {
     const result =
-      !isLoading && lotteryFactor
-        ? lotteryFactor.all_contribs.slice(0, 4).map((contributor) => {
-            return {
-              name: contributor.contributor,
-              value: Number((contributor.percent_of_total * 100).toPrecision(1)),
-              factor: contributor.lotto_factor,
-            };
-          })
-        : ([] as {
-            name: string;
-            value: number;
-            factor: "very-high" | "high" | "moderate" | "low" | "Other Contributors";
-          }[]);
+      topFourContributors.map((contributor) => {
+        return {
+          name: contributor.contributor,
+          value: Number((contributor.percent_of_total * 100).toPrecision(1)),
+          factor: contributor.lotto_factor as LottoFactor | "Other Contributors",
+        };
+      }) ??
+      ([] as {
+        name: string;
+        value: number;
+        factor: LottoFactor | "Other Contributors";
+      }[]);
     result.push({ name: "Other Contributors", value: 100 - topFourPercentage, factor: "Other Contributors" });
     return result;
-  }, [lotteryFactor]);
+  }, [topFourContributors]);
 
   const summary = useMemo(() => {
-    if (isLoading || !lotteryFactor) {
-      return <p className="text-slate-500">Loading...</p>;
-    }
-
-    const topFourContributors = lotteryFactor?.all_contribs.slice(0, 4);
     let count = 0;
     let percentage = 0;
-    while (percentage < 50) {
-      percentage += Number(((topFourContributors[count]?.percent_of_total ?? 0) * 100).toPrecision(1));
+    while (percentage < 50 && count !== 4) {
+      let current = Number(((topFourContributors.at(count)?.percent_of_total ?? 0) * 100).toPrecision(1));
+      percentage += current;
       count++;
-      if (count === 4) {
-        break;
-      }
     }
 
-    return (
-      <p className="text-slate-500">
-        The top <span className="font-semibold text-black">{count}</span> contributor{count > 1 && "s"} of this
-        repository have made <span className="font-semibold text-black">{percentage}%</span> of all commits in the past{" "}
-        <span className="font-semibold text-black">{range}</span> days.
-      </p>
-    );
-  }, [isLoading, lotteryFactor, range]);
+    return { count, percentage };
+  }, [topFourContributors]);
 
   function getLottoColor(factor: string) {
     switch (factor) {
@@ -128,7 +107,16 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
 
       {error ? null : (
         <section className="w-full px-4 lg:px-8 flex flex-col gap-4 text-sm lg:text-base">
-          {isLoading ? <Skeleton height={32} /> : summary}
+          {isLoading ? (
+            <Skeleton height={32} />
+          ) : (
+            <p className="text-slate-500">
+              The top <span className="font-semibold text-black">{`${summary.count} `}</span>
+              contributor{summary.count > 1 && "s"} of this repository have made{" "}
+              <span className="font-semibold text-black">{summary.percentage}% </span>
+              of all commits in the past <span className="font-semibold text-black">{range}</span> days.
+            </p>
+          )}
           <div className="flex w-full gap-1 h-3 place-content-center">
             {isLoading ? (
               <SkeletonWrapper />
