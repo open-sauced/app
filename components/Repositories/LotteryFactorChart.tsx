@@ -101,7 +101,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
             <Pill text="..." color="slate" />
           ) : (
             <Pill
-              text={lotteryFactor.all_lotto_factor ?? ""}
+              text={lotteryFactor.all_lotto_factor.replace("-", " ") ?? ""}
               color={
                 lotteryFactor.all_lotto_factor === "high"
                   ? "red"
@@ -109,7 +109,9 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
                   ? "yellow"
                   : lotteryFactor.all_lotto_factor === "low"
                   ? "green"
-                  : "purple"
+                  : lotteryFactor.all_lotto_factor === "very-high"
+                  ? "purple"
+                  : "slate"
               }
               className="capitalize"
             />
