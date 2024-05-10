@@ -16,11 +16,20 @@ const meta: Meta<typeof LotteryFactorChart> = {
 
 export default meta;
 
-export const Days30: Story = {
+export const Default: Story = {
   args: {
     lotteryFactor: generateLotteryFactor(),
     range: 30,
     isLoading: false,
+    error: undefined,
+  },
+};
+
+export const LoadingState: Story = {
+  args: {
+    lotteryFactor: generateLotteryFactor(),
+    range: 30,
+    isLoading: true,
     error: undefined,
   },
 };
