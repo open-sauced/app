@@ -25,7 +25,43 @@ export const Days30: Story = {
   },
 };
 
-function generateLotteryFactor() {
+export const AllLottoFactorVeryHigh: Story = {
+  args: {
+    lotteryFactor: generateLotteryFactor("very-high"),
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
+export const AllLottoFactorHigh: Story = {
+  args: {
+    lotteryFactor: generateLotteryFactor("high"),
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
+export const AllLottoFactorModerate: Story = {
+  args: {
+    lotteryFactor: generateLotteryFactor("moderate"),
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
+export const AllLottoFactorLow: Story = {
+  args: {
+    lotteryFactor: generateLotteryFactor("low"),
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
+function generateLotteryFactor(all_lotto_factor = "high") {
   return {
     all_contribs: [
       {
@@ -119,6 +155,6 @@ function generateLotteryFactor() {
         lotto_factor: "low",
       },
     ] as ContributorLottoFactor[],
-    all_lotto_factor: "high" as "very-high" | "high" | "moderate" | "low",
+    all_lotto_factor: all_lotto_factor as LottoFactor,
   };
 }
