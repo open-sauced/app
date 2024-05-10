@@ -27,7 +27,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
                 .reduce((prev, contributor) => prev + contributor.percent_of_total, 0) * 100
             ).toPrecision(1)
           ),
-    [lotteryFactor]
+    [isLoading, lotteryFactor]
   );
 
   const sortedContributors = useMemo(() => {

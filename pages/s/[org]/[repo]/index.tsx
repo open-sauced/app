@@ -140,7 +140,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     data: lotteryFactor,
     error: lotteryFactorError,
     isLoading: isLotteryFactorLoading,
-  } = useRepositoryLottoFactor({ repository: repoData.full_name, range });
+  } = useRepositoryLottoFactor({ repository: repoData.full_name.toLowerCase(), range });
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
