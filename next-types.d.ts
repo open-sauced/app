@@ -606,14 +606,16 @@ interface DbWorkspacesReposStats {
   };
 }
 
+type LottoFactor = "very-high" | "high" | "moderate" | "low"
+
 interface ContributorLottoFactor {
   contributor: string;
   count: number;
   percent_of_total: number;
-  lotto_factor: "very-high" | "high" | "moderate" | "low";
+  lotto_factor: LottoFactor;
 }
 
 interface RepositoryLottoFactor {
   all_contribs: ContributorLottoFactor[];
-  all_lotto_factor: "very-high" | "high" | "moderate" | "low";
+  all_lotto_factor: LottoFactor;
 }
