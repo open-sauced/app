@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.26.1-beta.1](https://github.com/open-sauced/app/compare/v2.26.0...v2.26.1-beta.1) (2024-05-10)
+
+
+### 🐛 Bug Fixes
+
+* title for PR chart tooltip ([#3350](https://github.com/open-sauced/app/issues/3350)) ([56b2746](https://github.com/open-sauced/app/commit/56b2746dd737c0f4788cde0125e7c1787529384d))
+
 ## [2.26.0](https://github.com/open-sauced/app/compare/v2.25.0...v2.26.0) (2024-05-09)
 
 

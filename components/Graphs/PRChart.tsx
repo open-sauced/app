@@ -97,7 +97,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
       <figcaption className="flex flex-col gap-1 bg-white px-4 py-2 rounded-lg border">
         <section className="flex gap-2 items-center">
           <BiGitPullRequest className="fill-sauced-orange" />
-          <p>Issues</p>
+          <p>Pull Requests</p>
         </section>
         <p>Opened: {payload[0]?.value}</p>
         <p>Closed: {payload[1]?.value}</p>
