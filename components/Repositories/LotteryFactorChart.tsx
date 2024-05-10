@@ -1,6 +1,7 @@
 import { HiOutlineTicket } from "react-icons/hi";
 import { useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import Image from "next/image";
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import { DayRange } from "components/shared/DayRangePicker";
@@ -9,6 +10,8 @@ import StackedOwners from "components/Workspaces/StackedOwners";
 import DevProfile from "components/molecules/DevProfile/dev-profile";
 import InfoTooltip from "components/shared/InfoTooltip";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+
+import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 type LotteryFactorChartProps = {
   lotteryFactor: RepositoryLottoFactor | undefined;
@@ -101,7 +104,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
             <h3 className="text-sm font-semibold md:text-lg text-slate-800">Lottery Factor</h3>
             <InfoTooltip information="Identifies project risk due to dependency on top contributors. Indicates project vulnerability if 2 or fewer do >50% of the work." />
           </div>
-          {isLoading || !lotteryFactor ? (
+          {error ? null : isLoading || !lotteryFactor ? (
             <SkeletonWrapper width={42} height={24} radius={999} />
           ) : (
             <Pill
@@ -123,100 +126,111 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
         </header>
       </section>
 
-      <section className="w-full px-4 lg:px-8 flex flex-col gap-4 text-sm lg:text-base">
-        {isLoading ? <Skeleton height={32} /> : summary}
-        <div className="flex w-full gap-1 h-3 place-content-center">
-          {isLoading ? (
-            <SkeletonWrapper />
-          ) : (
-            sortedContributors.map((item, index) => {
-              return (
-                <button
-                  aria-label={`${item.name} is ${item.value}% of the most used languages for contributors in your list`}
-                  key={item.name}
-                  data-language={item.name}
-                  className={`${index === 0 ? "rounded-l-lg" : ""} ${
-                    index === sortedContributors.length - 1 ? "rounded-r-lg" : ""
-                  } transform hover:scale-110 transition-transform hover:z-10`}
-                  style={{ backgroundColor: getLottoColor(item.factor), width: `${item.value}%` }}
-                  onMouseOver={(event) => {
-                    const { language } = event.currentTarget.dataset;
-                    setHovered(language);
-                  }}
-                  onMouseOut={(event) => {
-                    setHovered(undefined);
-                  }}
-                  onFocus={(event) => {
-                    const { language } = event.currentTarget.dataset;
-                    setHovered(language);
-                  }}
-                  onBlur={(event) => {
-                    setHovered(undefined);
-                  }}
-                />
-              );
-            })
-          )}
-        </div>
-      </section>
+      {error ? null : (
+        <section className="w-full px-4 lg:px-8 flex flex-col gap-4 text-sm lg:text-base">
+          {isLoading ? <Skeleton height={32} /> : summary}
+          <div className="flex w-full gap-1 h-3 place-content-center">
+            {isLoading ? (
+              <SkeletonWrapper />
+            ) : (
+              sortedContributors.map((item, index) => {
+                return (
+                  <button
+                    aria-label={`${item.name} is ${item.value}% of the most used languages for contributors in your list`}
+                    key={item.name}
+                    data-language={item.name}
+                    className={`${index === 0 ? "rounded-l-lg" : ""} ${
+                      index === sortedContributors.length - 1 ? "rounded-r-lg" : ""
+                    } transform hover:scale-110 transition-transform hover:z-10`}
+                    style={{ backgroundColor: getLottoColor(item.factor), width: `${item.value}%` }}
+                    onMouseOver={(event) => {
+                      const { language } = event.currentTarget.dataset;
+                      setHovered(language);
+                    }}
+                    onMouseOut={(event) => {
+                      setHovered(undefined);
+                    }}
+                    onFocus={(event) => {
+                      const { language } = event.currentTarget.dataset;
+                      setHovered(language);
+                    }}
+                    onBlur={(event) => {
+                      setHovered(undefined);
+                    }}
+                  />
+                );
+              })
+            )}
+          </div>
+        </section>
+      )}
 
-      <table className="table-auto divide-y text-xs lg:text-base text-slate-500 w-full px-4 lg:px-8 border-separate border-spacing-y-2">
-        <thead>
-          <tr>
-            <th className="font-normal text-start">Contributor</th>
-            <th className="font-normal text-center">Commits</th>
-            <th className="font-normal text-end">% of Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading || !lotteryFactor ? (
-            <SkeletonWrapper count={4} height={32} />
-          ) : (
-            lotteryFactor.all_contribs.slice(0, 4).map((contributor) => (
-              <tr
-                key={contributor.contributor}
-                className={`${hovered === contributor.contributor && "bg-slate-100"} items-start`}
-              >
-                <td
-                  className={`${
-                    hovered === contributor.contributor ? "font-semibold" : "font-normal"
-                  } border-b-1 py-4 pl-2`}
-                >
-                  <DevProfile username={contributor.contributor} hasBorder={false} />
-                </td>
-                <td
-                  className={`${
-                    hovered === contributor.contributor ? "font-semibold" : "font-normal"
-                  } text-center border-b-1 py-4`}
-                >
-                  {contributor.count}
-                </td>
-                <td
-                  className={`${
-                    hovered === contributor.contributor ? "font-semibold" : "font-normal"
-                  } text-end border-b-1 py-4 pr-2`}
-                >
-                  {humanizeNumber((contributor.percent_of_total * 100).toPrecision(1))}%
-                </td>
-              </tr>
-            ))
-          )}
-          {isLoading || !lotteryFactor ? (
-            <Skeleton />
-          ) : (
-            <tr className={`${hovered === "Other Contributors" ? "font-semibold bg-slate-100" : "font-normal"}`}>
-              <td className="flex gap-2 items-center py-4 pl-2">
-                <StackedOwners
-                  owners={lotteryFactor.all_contribs.slice(4, 7).map((contributor) => contributor.contributor)}
-                />
-                <p>Other contributors</p>
-              </td>
-              <td></td>
-              <td className="text-end py-4 pr-2">{100 - topFourPercentage}%</td>
+      {error ? (
+        <div className="flex flex-col gap-4 p-4">
+          <p className="text-slate-500">
+            This repository doesn&apos;t have enough commit data to calculate the Lottery Factor.
+          </p>
+          <Image src={errorImage} alt="No Lottery Factor error image" />
+        </div>
+      ) : (
+        <table className="table-auto divide-y text-xs lg:text-base text-slate-500 w-full px-4 lg:px-8 border-separate border-spacing-y-2">
+          <thead>
+            <tr>
+              <th className="font-normal text-start">Contributor</th>
+              <th className="font-normal text-center">Commits</th>
+              <th className="font-normal text-end">% of Total</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {isLoading || !lotteryFactor ? (
+              <SkeletonWrapper count={4} height={32} />
+            ) : (
+              lotteryFactor.all_contribs.slice(0, 4).map((contributor) => (
+                <tr
+                  key={contributor.contributor}
+                  className={`${hovered === contributor.contributor && "bg-slate-100"} items-start`}
+                >
+                  <td
+                    className={`${
+                      hovered === contributor.contributor ? "font-semibold" : "font-normal"
+                    } border-b-1 py-4 pl-2`}
+                  >
+                    <DevProfile username={contributor.contributor} hasBorder={false} />
+                  </td>
+                  <td
+                    className={`${
+                      hovered === contributor.contributor ? "font-semibold" : "font-normal"
+                    } text-center border-b-1 py-4`}
+                  >
+                    {contributor.count}
+                  </td>
+                  <td
+                    className={`${
+                      hovered === contributor.contributor ? "font-semibold" : "font-normal"
+                    } text-end border-b-1 py-4 pr-2`}
+                  >
+                    {humanizeNumber((contributor.percent_of_total * 100).toPrecision(1))}%
+                  </td>
+                </tr>
+              ))
+            )}
+            {isLoading || !lotteryFactor ? (
+              <Skeleton />
+            ) : (
+              <tr className={`${hovered === "Other Contributors" ? "font-semibold bg-slate-100" : "font-normal"}`}>
+                <td className="flex gap-2 items-center py-4 pl-2">
+                  <StackedOwners
+                    owners={lotteryFactor.all_contribs.slice(4, 7).map((contributor) => contributor.contributor)}
+                  />
+                  <p>Other contributors</p>
+                </td>
+                <td></td>
+                <td className="text-end py-4 pr-2">{100 - topFourPercentage}%</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      )}
     </Card>
   );
 }
