@@ -1,30 +1,22 @@
 import { GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
 import { usePostHog } from "posthog-js/react";
-import { FiCopy } from "react-icons/fi";
-import { MdWorkspaces } from "react-icons/md";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import dynamic from "next/dynamic";
+import { MdWorkspaces } from "react-icons/md";
+import { FiCopy } from "react-icons/fi";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { fetchApiData } from "helpers/fetchApiData";
+import { RepositoryOgImage, getRepositoryOgImage } from "components/Repositories/RepositoryOgImage";
+import { getAvatarByUsername } from "lib/utils/github";
 import { useToast } from "lib/hooks/useToast";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { shortenUrl } from "lib/utils/shorten-url";
-import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
-
 import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
-import StarsChart from "components/Graphs/StarsChart";
-import ForksChart from "components/Graphs/ForksChart";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
-import { DayRangePicker } from "components/shared/DayRangePicker";
-import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import Button from "components/shared/Button/button";
-import { getAvatarByUsername } from "lib/utils/github";
-import { useRepoStats } from "lib/hooks/api/useRepoStats";
-import ContributorsChart from "components/Graphs/ContributorsChart";
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import IssuesChart from "components/Graphs/IssuesChart";
-import PRChart from "components/Graphs/PRChart";
+import { DayRangePicker } from "components/shared/DayRangePicker";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
+import Contributors from "components/organisms/Contributors/contributors";
 import TabList from "components/TabList/tab-list";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
@@ -70,7 +62,7 @@ interface RepoPageProps {
   ogImageUrl: string;
 }
 
-export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
+export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPageProps) {
   const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -80,62 +72,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     { name: "Overview", path: "" },
     { name: "Contributors", path: "contributors" },
   ];
-
-  const syncId = repoData.id;
-  const router = useRouter();
-  const range = (router.query.range ? Number(router.query.range) : 30) as Range;
-  const {
-    data: starsData,
-    isLoading: isStarsDataLoading,
-    error: starsError,
-  } = useFetchMetricStats({
-    repository: repoData.full_name,
-    variant: "stars",
-    range,
-  });
-
-  const {
-    data: forkStats,
-    isLoading: isForksDataLoading,
-    error: forkError,
-  } = useFetchMetricStats({
-    repository: repoData.full_name,
-    variant: "forks",
-    range,
-  });
-
-  const {
-    data: contributorStats,
-    isLoading: isContributorDataLoading,
-    error: contributorError,
-  } = useFetchMetricStats({
-    repository: repoData.full_name,
-    variant: "contributors",
-    range,
-  });
-
-  const {
-    data: issueStats,
-    isLoading: isIssueDataLoading,
-    error: issueError,
-  } = useFetchMetricStats({
-    repository: repoData.full_name,
-    variant: "issues",
-    range,
-  });
-
-  const {
-    data: prStats,
-    isLoading: isPrDataLoading,
-    error: prError,
-  } = useFetchMetricStats({
-    repository: repoData.full_name,
-    variant: "prs",
-    range,
-  });
-
-  const contributorRangedTotal = contributorStats?.reduce((prev, curr) => prev + curr.contributor_count!, 0);
-  const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
@@ -152,7 +88,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
       console.log(error);
     }
   };
-
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
@@ -199,49 +134,9 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               </div>
             </div>
           </div>
-          <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
+          <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
           <ClientOnly>
-            <ContributorsChart
-              stats={contributorStats}
-              range={range}
-              rangedTotal={contributorRangedTotal!}
-              syncId={syncId}
-              isLoading={isContributorDataLoading}
-            />
-
-            <section className="flex flex-col gap-2 lg:flex-row lg:gap-4">
-              <IssuesChart
-                stats={issueStats}
-                range={range}
-                velocity={repoStats?.issues_velocity_count ?? 0}
-                syncId={syncId}
-                isLoading={isIssueDataLoading}
-              />
-              <PRChart
-                stats={prStats}
-                range={range}
-                velocity={repoStats?.pr_velocity_count ?? 0}
-                syncId={syncId}
-                isLoading={isPrDataLoading}
-              />
-            </section>
-
-            <section className="flex flex-col gap-2 lg:flex-row lg:gap-4">
-              <StarsChart
-                stats={starsData}
-                total={repoData.stars}
-                range={range}
-                syncId={syncId}
-                isLoading={isStarsDataLoading}
-              />
-              <ForksChart
-                stats={forkStats}
-                total={repoData.forks}
-                range={range}
-                syncId={syncId}
-                isLoading={isForksDataLoading}
-              />
-            </section>
+            <Contributors repositories={[repoData.id]} defaultLayout="grid" />
           </ClientOnly>
         </section>
       </ProfileLayout>

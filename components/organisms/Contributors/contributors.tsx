@@ -7,13 +7,11 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
 
-import { calcDistanceFromToday } from "lib/utils/date-utils";
 
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LimitSelect, { LimitSelectMap } from "components/atoms/Select/limit-select";
 
 import useContributors from "lib/hooks/api/useContributors";
-import { getAvatarByUsername } from "lib/utils/github";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import ContributorListTableHeaders from "components/molecules/ContributorListTableHeader/contributor-list-table-header";
 import { Popover, PopoverContent, PopoverTrigger } from "components/molecules/Popover/popover";
@@ -31,9 +29,10 @@ import ContributorTable from "../ContributorsTable/contributors-table";
 interface ContributorProps {
   repositories?: number[];
   title?: string;
+  defaultLayout?: ToggleValue;
 }
 
-const Contributors = ({ repositories, title }: ContributorProps): JSX.Element => {
+const Contributors = ({ repositories, title, defaultLayout }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
@@ -41,19 +40,12 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
 
   const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
   const { toast } = useToast();
-  const [layout, setLayout] = useState<ToggleValue>("list");
+  const [layout, setLayout] = useState<ToggleValue>(defaultLayout ?? "list");
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   const isMobile = useMediaQuery("(max-width: 768px)");
-
-  const contributors = data.map((pr) => {
-    return {
-      host_login: pr.author_login,
-      first_commit_time: pr.updated_at,
-    };
-  });
 
   const onSelectContributor = (state: boolean, contributor: DbPRContributor) => {
     if (state) {
@@ -70,20 +62,6 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
       setSelectedContributors([]);
     }
   };
-
-  const contributorArray = isError
-    ? []
-    : contributors.map((contributor) => {
-        const timeSinceFirstCommit = calcDistanceFromToday(new Date(contributor.first_commit_time));
-
-        return {
-          profile: {
-            githubAvatar: getAvatarByUsername(contributor.host_login),
-            githubName: contributor.host_login,
-            dateOfFirstPR: timeSinceFirstCommit,
-          },
-        };
-      });
 
   const PopOverListContent = ({ workspaceId }: { workspaceId: string }) => {
     const { data } = useFetchAllLists();
@@ -204,8 +182,8 @@ const Contributors = ({ repositories, title }: ContributorProps): JSX.Element =>
           {isError ? <>An error occurred!..</> : ""}
           {!isLoading &&
             !isError &&
-            contributorArray.map((contributor, index) => (
-              <ContributorCard key={index} contributor={{ ...contributor }} topic={topic} repositories={repositories} />
+            data.map((contributor, index) => (
+              <ContributorCard key={index} contributor={contributor} topic={topic} repositories={repositories} />
             ))}
         </div>
       ) : (
