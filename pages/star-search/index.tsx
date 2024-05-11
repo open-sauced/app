@@ -167,42 +167,52 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         return;
       }
       const values = value.split("\n");
-      values
-        .filter((v) => v.startsWith("data:"))
-        .forEach((v) => {
-          /*
-           * regex for capturing star-search stream SSEs:
-           * data:\s?(?<result>.*)
-           *
-           * The aim of this regex is to capture all characters coming from
-           * the star-search server side events while also preserving the
-           * empty "data:" frames that may come through (which are newlines).
-           *
-           * 'data:' - matches the "data:" characters explicitly.
-           * '\s'    - matches any whitespace that follows the data. In most cases, this is a single space ' '.
-           * '?'     - matches the previous whitespace token zero or one times. Aka, is optional.
-           *
-           * '(?<result>.*)' - optional named capture group "result".
-           *    ├────── '?'          - capture group is optional.
-           *    ├────── '<result>'   - capture group is named "result".
-           *    └────── '.*'         - matches any characters (including zero characters) after the "data:\s?" segment.
-           *                           this is in service of also capturing empty strings as newlines.
-           */
+      values.forEach((v) => {
+        if (v.startsWith("event:")) {
+          // eslint-disable-next-line no-console
+          console.log("event type", v.substring("event: ".length).trim());
+        } else if (v.startsWith("data: ")) {
+          try {
+            // attempt to parse json like data - in the future, this should be "smarter"
+            // so that it's not also capturing empty lines that denote newlines from the model.
+            // eslint-disable-next-line no-console
+            console.log("event payload", JSON.parse(v.substring("data: ".length).trim()));
+          } catch (e) {
+            /*
+             * regex for capturing star-search stream SSEs:
+             * data:\s?(?<result>.*)
+             *
+             * The aim of this regex is to capture all characters coming from
+             * the star-search server side events while also preserving the
+             * empty "data:" frames that may come through (which are newlines).
+             *
+             * 'data:' - matches the "data:" characters explicitly.
+             * '\s'    - matches any whitespace that follows the data. In most cases, this is a single space ' '.
+             * '?'     - matches the previous whitespace token zero or one times. Aka, is optional.
+             *
+             * '(?<result>.*)' - optional named capture group "result".
+             *    ├────── '?'          - capture group is optional.
+             *    ├────── '<result>'   - capture group is named "result".
+             *    └────── '.*'         - matches any characters (including zero characters) after the "data:\s?" segment.
+             *                           this is in service of also capturing empty strings as newlines.
+             */
 
-          const matched = v.match(/data:\s?(?<result>.*)/);
+            const matched = v.match(/data:\s?(?<result>.*)/);
 
-          if (!matched || !matched.groups) {
-            return;
+            if (!matched || !matched.groups) {
+              return;
+            }
+            const temp = [...chat];
+            const changed = temp.at(temp.length - 1);
+            if (matched.groups.result === "") {
+              changed!.content += "&nbsp; \n";
+            } else {
+              changed!.content += matched.groups.result;
+            }
+            setChat(temp);
           }
-          const temp = [...chat];
-          const changed = temp.at(temp.length - 1);
-          if (matched.groups.result === "") {
-            changed!.content += "&nbsp; \n";
-          } else {
-            changed!.content += matched.groups.result;
-          }
-          setChat(temp);
-        });
+        }
+      });
     }
   };
 
