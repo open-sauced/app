@@ -27,7 +27,7 @@ const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
     case "Dashboard":
       return <Dashboard repositories={repositories} />;
     case "Contributors":
-      return <Contributors repositories={repositories} />;
+      return <Contributors />;
 
     case "Activity":
       return <Activity repositories={repositories} />;

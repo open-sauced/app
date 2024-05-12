@@ -25,6 +25,7 @@ import ContributorsChart from "components/Graphs/ContributorsChart";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import IssuesChart from "components/Graphs/IssuesChart";
 import PRChart from "components/Graphs/PRChart";
+import Contributors from "components/organisms/Contributors/contributors";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -197,6 +198,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </div>
           </div>
           <ClientOnly>
+            <Contributors repositories={[repoData.id]} />
             <ContributorsChart
               stats={contributorStats}
               range={range}

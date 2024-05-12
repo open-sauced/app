@@ -25,12 +25,11 @@ interface ContributorCardProps {
   className?: string;
   contributor: DbPRContributor;
   topic: string;
-  repoNames?: string[]; // TODO: will replace `repositories` during "list" view refactor
   repositories?: number[];
   range?: string;
 }
 
-const ContributorCard = ({ className, contributor, topic, repositories, repoNames, range }: ContributorCardProps) => {
+const ContributorCard = ({ className, contributor, topic, repositories, range }: ContributorCardProps) => {
   const [showPRs, setShowPRs] = useState(false);
   const { repoList, meta } = useContributorPullRequestsChart(contributor.author_login, topic, repositories, range);
   const languageList = useContributorLanguages(contributor.author_login);
