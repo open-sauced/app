@@ -15,7 +15,7 @@ export default function Custom500() {
         }}
       >
         <div className="grid items-center justify-center place-content-start py-7 px-4 md:grid-flow-col  md:justify-between">
-          <HeaderLogo withBg={false} />
+          <HeaderLogo />
         </div>
         <main className="grid place-content-center p-6">
           <h1 className="text-8xl font-bold mb-2">500</h1>
