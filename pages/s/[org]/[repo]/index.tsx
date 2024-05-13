@@ -205,14 +205,14 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </div>
           </div>
           <ClientOnly>
-            <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
               <ContributorsChart
                 stats={contributorStats}
                 range={range}
                 rangedTotal={contributorRangedTotal!}
                 syncId={syncId}
                 isLoading={isContributorDataLoading}
-                className="lg:col-span-4"
+                className="lg:col-span-7"
               />
 
               <LotteryFactorChart
@@ -220,7 +220,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 error={lotteryFactorError}
                 range={range}
                 isLoading={isLotteryFactorLoading}
-                className="lg:col-span-2"
+                className="lg:col-span-5"
               />
 
               <IssuesChart
@@ -229,7 +229,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 velocity={repoStats?.issues_velocity_count ?? 0}
                 syncId={syncId}
                 isLoading={isIssueDataLoading}
-                className="lg:col-span-3"
+                className="lg:col-span-6"
               />
 
               <PRChart
@@ -238,7 +238,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 velocity={repoStats?.pr_velocity_count ?? 0}
                 syncId={syncId}
                 isLoading={isPrDataLoading}
-                className="lg:col-span-3"
+                className="lg:col-span-6"
               />
 
               <StarsChart
@@ -247,7 +247,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 range={range}
                 syncId={syncId}
                 isLoading={isStarsDataLoading}
-                className="lg:col-span-3"
+                className="lg:col-span-6"
               />
 
               <ForksChart
@@ -256,7 +256,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 range={range}
                 syncId={syncId}
                 isLoading={isForksDataLoading}
-                className="lg:col-span-3"
+                className="lg:col-span-6"
               />
             </div>
           </ClientOnly>
