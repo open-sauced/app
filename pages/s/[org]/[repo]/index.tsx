@@ -10,6 +10,7 @@ import { fetchApiData } from "helpers/fetchApiData";
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
+import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 
 import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
@@ -26,6 +27,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import IssuesChart from "components/Graphs/IssuesChart";
 import PRChart from "components/Graphs/PRChart";
 import TabList from "components/TabList/tab-list";
+import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -137,6 +139,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const contributorRangedTotal = contributorStats?.reduce((prev, curr) => prev + curr.contributor_count!, 0);
   const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
 
+  const {
+    data: lotteryFactor,
+    error: lotteryFactorError,
+    isLoading: isLotteryFactorLoading,
+  } = useRepositoryLottoFactor({ repository: repoData.full_name.toLowerCase(), range });
+
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
     posthog!.capture("clicked: repo page share button", {
@@ -201,6 +209,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
           </div>
           <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
           <ClientOnly>
+            <LotteryFactorChart
+              lotteryFactor={lotteryFactor}
+              error={lotteryFactorError}
+              range={range}
+              isLoading={isLotteryFactorLoading}
+            />
             <ContributorsChart
               stats={contributorStats}
               range={range}
