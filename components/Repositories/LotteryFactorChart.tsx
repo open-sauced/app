@@ -160,15 +160,16 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
         </section>
       )}
 
-      {error ? (
+      {error && (
         <div className="flex flex-col gap-4 p-4">
           <p className="text-slate-500">
             This repository doesn&apos;t have enough commit data to calculate the Lottery Factor.
           </p>
           <Image src={errorImage} alt="No Lottery Factor error image" />
         </div>
-      ) : isLoading || !lotteryFactor ? (
-        <div className="flex flex-col gap-4 px-4 lg:px-8">
+      )}
+      {isLoading || !lotteryFactor ? (
+        <div className="flex flex-col w-full gap-4 px-4 lg:px-8">
           <SkeletonWrapper count={4} height={32} />
         </div>
       ) : (
