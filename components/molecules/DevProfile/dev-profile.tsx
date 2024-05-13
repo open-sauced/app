@@ -9,9 +9,10 @@ import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 interface DevProfileProps {
   username: string;
   hasBorder: boolean;
+  size?: "xsmall" | "small" | "medium" | "large";
   truncate?: boolean;
 }
-const DevProfile = ({ username, hasBorder, truncate }: DevProfileProps) => {
+const DevProfile = ({ username, hasBorder, size = "small", truncate }: DevProfileProps) => {
   return (
     <section className="flex items-center gap-2 text-light-slate-11">
       {/* Mobile */}
@@ -26,7 +27,7 @@ const DevProfile = ({ username, hasBorder, truncate }: DevProfileProps) => {
       </Link>
       {/* Desktop */}
       <div className="hidden rounded-full md:flex">
-        <AvatarHoverCard contributor={username} repositories={[]} size="small" />
+        <AvatarHoverCard contributor={username} repositories={[]} size={size} />
       </div>
       <div>
         <h1 className={`${truncate && "truncate"} text-light-slate-12`}>{username}</h1>

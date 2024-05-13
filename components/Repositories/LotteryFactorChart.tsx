@@ -89,8 +89,8 @@ export default function LotteryFactorChart({
   }
 
   return (
-    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-full items-center pt-8 p-4`}>
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4 lg:px-8">
+    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-full items-center pt-8`}>
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
         <header className="flex w-full justify-between items-center">
           <div className="flex gap-2 items-center">
             <HiOutlineTicket className="text-xl" />
@@ -120,7 +120,7 @@ export default function LotteryFactorChart({
       </section>
 
       {error ? null : (
-        <section className="w-full px-4 lg:px-8 flex flex-col gap-4 text-sm lg:text-base">
+        <section className="w-full px-4 flex flex-col gap-4 text-sm">
           {isLoading ? (
             <Skeleton height={32} />
           ) : (
@@ -176,11 +176,11 @@ export default function LotteryFactorChart({
         </div>
       )}
       {isLoading || !lotteryFactor ? (
-        <div className="flex flex-col w-full gap-4 px-4 lg:px-8">
+        <div className="flex flex-col w-full gap-4 px-4">
           <SkeletonWrapper count={4} height={32} />
         </div>
       ) : (
-        <table className="table-fixed divide-y text-xs lg:text-base text-slate-500 w-full px-4 lg:px-8 border-separate border-spacing-y-2">
+        <table className="table-fixed divide-y text-xs lg:text-sm text-slate-500 w-full px-4 border-separate border-spacing-y-2">
           <thead>
             <tr>
               <th className="font-normal text-start">Contributor</th>
@@ -188,24 +188,16 @@ export default function LotteryFactorChart({
               <th className="font-normal text-end">% of Total</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="!text-xs truncate">
             {sortedContributors.slice(0, 4).map(({ name, count, value }) => (
-              <tr key={name} className={`${hovered === name && "bg-slate-100"} items-start`}>
+              <tr key={name} className={`${hovered === name && "bg-slate-100"} grow items-start`}>
                 <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 py-4 pl-2`}>
-                  <DevProfile username={name} hasBorder={false} />
+                  <DevProfile username={name} hasBorder={false} size="xsmall" />
                 </td>
-                <td
-                  className={`${
-                    hovered === name ? "font-semibold" : "font-normal"
-                  } text-end border-b-1 tabular-nums w-fit`}
-                >
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1  w-fit`}>
                   {count}
                 </td>
-                <td
-                  className={`${
-                    hovered === name ? "font-semibold" : "font-normal"
-                  } text-end border-b-1 py-4 pr-2 tabular-nums`}
-                >
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1 py-4 pr-2 `}>
                   {value}%
                 </td>
               </tr>
@@ -221,9 +213,7 @@ export default function LotteryFactorChart({
                   <p>Other contributors</p>
                 </td>
                 <td></td>
-                <td className="text-end py-4 pr-2 tabular-nums">
-                  {sortedContributors.at(sortedContributors.length - 1)?.value}%
-                </td>
+                <td className="text-end py-4 pr-2 ">{sortedContributors.at(sortedContributors.length - 1)?.value}%</td>
               </tr>
             )}
           </tbody>
