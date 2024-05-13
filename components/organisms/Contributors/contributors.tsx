@@ -7,7 +7,6 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
 
-
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LimitSelect, { LimitSelectMap } from "components/atoms/Select/limit-select";
 
@@ -32,7 +31,7 @@ interface ContributorProps {
   defaultLayout?: ToggleValue;
 }
 
-const Contributors = ({ repositories, title, defaultLayout }: ContributorProps): JSX.Element => {
+const Contributors = ({ repositories, title, defaultLayout = "list" }: ContributorProps): JSX.Element => {
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
@@ -40,7 +39,7 @@ const Contributors = ({ repositories, title, defaultLayout }: ContributorProps):
 
   const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
   const { toast } = useToast();
-  const [layout, setLayout] = useState<ToggleValue>(defaultLayout ?? "list");
+  const [layout, setLayout] = useState<ToggleValue>(defaultLayout);
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
@@ -51,7 +50,7 @@ const Contributors = ({ repositories, title, defaultLayout }: ContributorProps):
     if (state) {
       setSelectedContributors((prev) => [...prev, contributor]);
     } else {
-      setSelectedContributors(selectedContributors.filter((seleted) => seleted.user_id !== contributor.user_id));
+      setSelectedContributors(selectedContributors.filter((selected) => selected.user_id !== contributor.user_id));
     }
   };
 
