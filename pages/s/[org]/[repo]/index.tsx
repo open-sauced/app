@@ -11,7 +11,6 @@ import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 
-import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
@@ -27,6 +26,7 @@ import IssuesChart from "components/Graphs/IssuesChart";
 import PRChart from "components/Graphs/PRChart";
 import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
 import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -161,8 +161,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
-      <ProfileLayout>
-        <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-7xl">
+      <WorkspaceLayout>
+        <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
             <header className="flex items-center gap-4">
               <Avatar size={96} avatarURL={avatarUrl} />
@@ -205,56 +205,63 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </div>
           </div>
           <ClientOnly>
-            <LotteryFactorChart
-              lotteryFactor={lotteryFactor}
-              error={lotteryFactorError}
-              range={range}
-              isLoading={isLotteryFactorLoading}
-            />
-            <ContributorsChart
-              stats={contributorStats}
-              range={range}
-              rangedTotal={contributorRangedTotal!}
-              syncId={syncId}
-              isLoading={isContributorDataLoading}
-            />
+            <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
+              <ContributorsChart
+                stats={contributorStats}
+                range={range}
+                rangedTotal={contributorRangedTotal!}
+                syncId={syncId}
+                isLoading={isContributorDataLoading}
+                className="lg:col-span-4"
+              />
 
-            <section className="flex flex-col gap-2 lg:flex-row lg:gap-4">
+              <LotteryFactorChart
+                lotteryFactor={lotteryFactor}
+                error={lotteryFactorError}
+                range={range}
+                isLoading={isLotteryFactorLoading}
+                className="lg:col-span-2"
+              />
+
               <IssuesChart
                 stats={issueStats}
                 range={range}
                 velocity={repoStats?.issues_velocity_count ?? 0}
                 syncId={syncId}
                 isLoading={isIssueDataLoading}
+                className="lg:col-span-3"
               />
+
               <PRChart
                 stats={prStats}
                 range={range}
                 velocity={repoStats?.pr_velocity_count ?? 0}
                 syncId={syncId}
                 isLoading={isPrDataLoading}
+                className="lg:col-span-3"
               />
-            </section>
 
-            <section className="flex flex-col gap-2 lg:flex-row lg:gap-4">
               <StarsChart
                 stats={starsData}
                 total={repoData.stars}
                 range={range}
                 syncId={syncId}
                 isLoading={isStarsDataLoading}
+                className="lg:col-span-3"
               />
+
               <ForksChart
                 stats={forkStats}
                 total={repoData.forks}
                 range={range}
                 syncId={syncId}
                 isLoading={isForksDataLoading}
+                className="lg:col-span-3"
               />
-            </section>
+            </div>
           </ClientOnly>
         </section>
-      </ProfileLayout>
+      </WorkspaceLayout>
 
       <AddToWorkspaceModal
         repository={repoData.full_name}

@@ -17,6 +17,7 @@ type ContributorsChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  className?: string;
 };
 
 export default function ContributorsChart({
@@ -25,13 +26,14 @@ export default function ContributorsChart({
   syncId,
   range = 30,
   isLoading,
+  className,
 }: ContributorsChartProps) {
   const dailyData = useMemo(() => getDailyContributorHistogramToDays({ stats, range }), [stats, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
   const rangedAverage = useMemo(() => (rangedTotal / range).toPrecision(2), [rangedTotal, range]);
 
   return (
-    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
+    <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center pt-8`}>
       <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4 lg:px-8">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
