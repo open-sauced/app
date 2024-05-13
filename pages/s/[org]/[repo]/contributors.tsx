@@ -134,7 +134,9 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
               </div>
             </div>
           </div>
-          <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
+          <div className="border-b">
+            <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
+          </div>
           <ClientOnly>
             <Contributors repositories={[repoData.id]} defaultLayout="grid" />
           </ClientOnly>

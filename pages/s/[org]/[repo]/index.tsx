@@ -207,7 +207,9 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               </div>
             </div>
           </div>
-          <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
+          <div className="border-b">
+            <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
+          </div>
           <ClientOnly>
             <LotteryFactorChart
               lotteryFactor={lotteryFactor}
