@@ -606,7 +606,7 @@ interface DbWorkspacesReposStats {
   };
 }
 
-type LottoFactor = "very-high" | "high" | "moderate" | "low"
+type LottoFactor = "very-high" | "high" | "moderate" | "low";
 
 interface ContributorLottoFactor {
   contributor: string;

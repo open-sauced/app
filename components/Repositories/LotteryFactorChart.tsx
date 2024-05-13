@@ -167,6 +167,10 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
           </p>
           <Image src={errorImage} alt="No Lottery Factor error image" />
         </div>
+      ) : isLoading || !lotteryFactor ? (
+        <div className="flex flex-col gap-4 px-4 lg:px-8">
+          <SkeletonWrapper count={4} height={32} />
+        </div>
       ) : (
         <table className="table-fixed divide-y text-xs lg:text-base text-slate-500 w-full px-4 lg:px-8 border-separate border-spacing-y-2">
           <thead>
@@ -177,31 +181,27 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
             </tr>
           </thead>
           <tbody>
-            {isLoading || !lotteryFactor ? (
-              <SkeletonWrapper count={4} height={32} />
-            ) : (
-              sortedContributors.slice(0, 4).map(({ name, count, value }) => (
-                <tr key={name} className={`${hovered === name && "bg-slate-100"} items-start`}>
-                  <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 py-4 pl-2`}>
-                    <DevProfile username={name} hasBorder={false} />
-                  </td>
-                  <td
-                    className={`${
-                      hovered === name ? "font-semibold" : "font-normal"
-                    } text-end border-b-1 tabular-nums w-fit`}
-                  >
-                    {count}
-                  </td>
-                  <td
-                    className={`${
-                      hovered === name ? "font-semibold" : "font-normal"
-                    } text-end border-b-1 py-4 pr-2 tabular-nums`}
-                  >
-                    {value}%
-                  </td>
-                </tr>
-              ))
-            )}
+            {sortedContributors.slice(0, 4).map(({ name, count, value }) => (
+              <tr key={name} className={`${hovered === name && "bg-slate-100"} items-start`}>
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 py-4 pl-2`}>
+                  <DevProfile username={name} hasBorder={false} />
+                </td>
+                <td
+                  className={`${
+                    hovered === name ? "font-semibold" : "font-normal"
+                  } text-end border-b-1 tabular-nums w-fit`}
+                >
+                  {count}
+                </td>
+                <td
+                  className={`${
+                    hovered === name ? "font-semibold" : "font-normal"
+                  } text-end border-b-1 py-4 pr-2 tabular-nums`}
+                >
+                  {value}%
+                </td>
+              </tr>
+            ))}
             {isLoading || !lotteryFactor ? (
               <Skeleton />
             ) : (
