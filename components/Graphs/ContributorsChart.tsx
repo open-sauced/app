@@ -59,7 +59,7 @@ export default function ContributorsChart({
           </>
         )}
       </section>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height="100%">
         {isLoading ? (
           <SkeletonWrapper width={100} height={100} />
         ) : (
