@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.27.0-beta.2](https://github.com/open-sauced/app/compare/v2.27.0-beta.1...v2.27.0-beta.2) (2024-05-13)
+
+
+### 🐛 Bug Fixes
+
+* now opening workspace dropdown puts focus on search input ([#3364](https://github.com/open-sauced/app/issues/3364)) ([bafa0e4](https://github.com/open-sauced/app/commit/bafa0e47b244114b22ecdf773b9c67ad54cd2f2a))
+
 ## [2.27.0-beta.1](https://github.com/open-sauced/app/compare/v2.26.1-beta.1...v2.27.0-beta.1) (2024-05-13)
 
 
