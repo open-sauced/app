@@ -13,12 +13,12 @@ interface PaginatedResponse {
 /**
  * Fetch contributors based on pull requests.
  *
- * @param intialLimit
+ * @param initialLimit
  * @param repoIds
  * @param range
  * @returns
  */
-const useContributors = (limit = 10, repoIds: number[] = []) => {
+const useContributors = (limit = 10, repositories: string[] = []) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
 
@@ -39,21 +39,18 @@ const useContributors = (limit = 10, repoIds: number[] = []) => {
     query.set("limit", `${limit}`);
   }
 
-  if (repoIds?.length > 0) {
+  if (repositories?.length > 0 || query.get("repo")) {
     query.delete("topic");
-    query.set("repoIds", repoIds.join(","));
-  }
-
-  if (query.get("repo")) {
-    query.delete("topic");
-    query.set("repos", query.get("repo")!);
+    const repos = repositories ?? [];
+    repos.push(query.get("repo") ?? "");
+    query.set("repos", repositories.join(","));
   }
 
   query.set("range", `${range ?? 30}`);
 
   const baseEndpoint = "contributors/search";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
-  const makeRequest = query.get("topic") || query.get("repos") || repoIds?.length > 0;
+  const makeRequest = query.get("topic") || query.get("repos") || repositories?.length > 0;
 
   const { data, error, mutate, isLoading } = useSWR<PaginatedResponse, Error>(
     makeRequest ? endpointString : null,

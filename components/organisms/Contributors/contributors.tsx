@@ -7,7 +7,6 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import TableHeader from "components/molecules/TableHeader/table-header";
 
-
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LimitSelect, { LimitSelectMap } from "components/atoms/Select/limit-select";
 
@@ -27,7 +26,7 @@ import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
 interface ContributorProps {
-  repositories?: number[];
+  repositories?: string[];
   title?: string;
 }
 

@@ -25,7 +25,7 @@ interface ContributorCardProps {
   className?: string;
   contributor: DbPRContributor;
   topic: string;
-  repositories?: number[];
+  repositories?: string[];
   range?: string;
 }
 
@@ -52,7 +52,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
         <div className="h-32">
           <CardLineChart
             contributor={contributor.author_login}
-            repoIds={repositories}
+            repositories={repositories}
             range={Number(range ?? 30)}
             className="max-h-36"
           />

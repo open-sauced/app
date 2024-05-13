@@ -45,7 +45,7 @@ interface PrObjectType {
 interface ContributorProfilePageProps {
   contributor?: ContributorObject;
   topic?: string;
-  repositories?: number[];
+  repositories?: string[];
   listOfPRs?: PrObjectType[];
   githubAvatar?: string;
   githubName: string;
@@ -106,7 +106,7 @@ const ContributorProfilePage = ({
   } = user || {};
 
   const { data: histogramData } = usePullRequestsHistogram({
-    repoIds: repositories,
+    repositories,
     range: Number(range),
     width: 1,
     contributor: githubName,
@@ -237,7 +237,7 @@ const ContributorProfilePage = ({
                     </div>
                     <div className="h-32 mt-10">
                       <CardLineChart
-                        repoIds={repositories}
+                        repositories={repositories}
                         contributor={githubName}
                         range={Number(range)}
                         className="!h-32"

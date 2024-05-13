@@ -11,11 +11,12 @@ import Repositories from "../Repositories/repositories";
 export type PrStatusFilter = "open" | "closed" | "all";
 
 interface DashboardProps {
-  repositories?: number[];
+  repoIds?: number[];
+  repositories?: string[];
 }
 
-const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
-  const { data: insightsData, isLoading } = usePullRequestsHistogram({ repoIds: repositories });
+const Dashboard = ({ repoIds, repositories }: DashboardProps): JSX.Element => {
+  const { data: insightsData, isLoading } = usePullRequestsHistogram({ repositories });
   const { data: contributorData, meta: contributorMeta } = useContributors(undefined, repositories);
   const router = useRouter();
   const { range = 30 } = router.query;
@@ -85,7 +86,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       </aside>
 
       <section className="flex flex-col max-w-full gap-4 my-6">
-        <Repositories repositories={repositories} />
+        <Repositories repositories={repoIds} />
       </section>
     </div>
   );

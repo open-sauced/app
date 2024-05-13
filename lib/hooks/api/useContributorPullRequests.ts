@@ -13,7 +13,7 @@ export function getContributorPRUrl(
   contributor: string,
   filter: string | string[] | undefined,
   topic: string,
-  repoIds: number[] = [],
+  repositories: string[] = [],
   limit = 8,
   range = "30"
 ) {
@@ -28,8 +28,8 @@ export function getContributorPRUrl(
     query.set("limit", `${limit}`);
   }
 
-  if (repoIds?.length > 0) {
-    query.set("repoIds", repoIds.join(","));
+  if (repositories?.length > 0) {
+    query.set("repos", repositories.join(","));
   }
 
   query.set("range", `${range}`);
@@ -46,7 +46,7 @@ export const fetchContributorPRs = async (...args: Parameters<typeof getContribu
 interface ContributorPullRequestOptions {
   contributor: string;
   topic: string;
-  repoIds?: number[];
+  repositories?: string[];
   limit?: number;
   range?: string;
 }
@@ -59,10 +59,10 @@ const useContributorPullRequests = (
     range: "30",
   }
 ) => {
-  const { contributor, topic, repoIds, limit, range } = options;
+  const { contributor, topic, repositories, limit, range } = options;
   const router = useRouter();
   const { selectedFilter } = router.query;
-  const endpointString = getContributorPRUrl(contributor, selectedFilter, topic, repoIds, limit, range);
+  const endpointString = getContributorPRUrl(contributor, selectedFilter, topic, repositories, limit, range);
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
     contributor ? endpointString : null,

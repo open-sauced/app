@@ -14,7 +14,7 @@ import Tooltip from "components/atoms/Tooltip/tooltip";
 interface PullRequestTableProps {
   contributor: string;
   topic: string;
-  repositories?: number[];
+  repositories?: string[];
   limit?: number;
   isHoverCard?: boolean;
   range?: string;
@@ -31,7 +31,7 @@ const PullRequestTable = ({
   const { data, isLoading } = useContributorPullRequests({
     contributor,
     topic,
-    repoIds: repositories,
+    repositories,
     limit,
     range,
   });

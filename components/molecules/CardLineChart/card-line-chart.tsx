@@ -7,11 +7,11 @@ import getFormattedTooltipValue from "lib/utils/get-formatted-tooltip-value";
 interface CardLineChartProps {
   className?: string;
   contributor: string;
-  repoIds?: number[];
+  repositories?: string[];
   range?: number;
 }
 
-const CardLineChart: React.FC<CardLineChartProps> = ({ className, contributor, repoIds = [], range = 30 }) => {
+const CardLineChart: React.FC<CardLineChartProps> = ({ className, contributor, repositories = [], range = 30 }) => {
   const lineChart = {
     xAxis: {
       type: "category",
@@ -56,7 +56,7 @@ const CardLineChart: React.FC<CardLineChartProps> = ({ className, contributor, r
     },
   };
   const { data: histogramData } = usePullRequestsHistogram({
-    repoIds,
+    repositories,
     range: Number(range),
     width: 1,
     contributor,

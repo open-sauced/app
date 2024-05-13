@@ -198,7 +198,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </div>
           </div>
           <ClientOnly>
-            <Contributors repositories={[repoData.id]} />
+            <Contributors repositories={[repoData.full_name]} />
             <ContributorsChart
               stats={contributorStats}
               range={range}

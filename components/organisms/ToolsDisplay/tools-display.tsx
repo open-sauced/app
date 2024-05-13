@@ -8,10 +8,11 @@ import Activity from "../Activity/activity";
 
 interface ToolProps {
   tool?: string;
-  repositories?: number[];
+  repositories?: string[];
+  repoIds?: number[];
 }
 
-const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
+const Tool = ({ tool, repositories, repoIds }: ToolProps): JSX.Element => {
   const { user } = useSupabaseAuth();
   const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
 
@@ -25,12 +26,12 @@ const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
 
   switch (tool) {
     case "Dashboard":
-      return <Dashboard repositories={repositories} />;
+      return <Dashboard repoIds={repoIds} repositories={repositories} />;
     case "Contributors":
       return <Contributors />;
 
     case "Activity":
-      return <Activity repositories={repositories} />;
+      return <Activity repositories={repoIds} />;
     default:
       return <> {tool ? `${tool}` : ""}</>;
   }

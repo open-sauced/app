@@ -33,7 +33,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
   const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
     contributor: username,
     topic: "*",
-    repoIds: [],
+    repositories: [],
     limit: 50,
     range: range,
   });

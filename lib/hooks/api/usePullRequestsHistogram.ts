@@ -51,13 +51,13 @@ const getInsights = (insights: DbPullRequestGitHubEventsHistogram[], intervalDay
 };
 
 const usePullRequestsHistogram = ({
-  repoIds = [],
+  repositories = [],
   range = 30,
   width = 30,
   contributor = "",
   direction = "ASC",
 }: {
-  repoIds?: number[];
+  repositories?: string[];
   range?: number;
   width?: number;
   contributor?: string;
@@ -73,9 +73,9 @@ const usePullRequestsHistogram = ({
     query.set("topic", topic);
   }
 
-  if (repoIds?.length > 0) {
+  if (repositories?.length > 0) {
     query.delete("topic");
-    query.set("repoIds", repoIds.join(","));
+    query.set("repoIds", repositories.join(","));
     query.delete("filter");
   }
 
@@ -99,7 +99,7 @@ const usePullRequestsHistogram = ({
 
   const baseEndpoint = "histogram/pull-requests";
   const endpointString = `${baseEndpoint}?${query.toString()}`;
-  const makeRequest = query.get("topic") || query.get("repo") || query.get("contributor") || repoIds?.length > 0;
+  const makeRequest = query.get("topic") || query.get("repo") || query.get("contributor") || repositories?.length > 0;
 
   const { data, error, mutate } = useSWR<DbPullRequestGitHubEventsHistogram[], Error>(
     makeRequest ? endpointString : null,
