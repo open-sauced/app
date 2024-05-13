@@ -27,6 +27,7 @@ import PRChart from "components/Graphs/PRChart";
 import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
 import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import useSession from "lib/hooks/useSession";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -76,6 +77,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const { toast } = useToast();
   const posthog = usePostHog();
   const isMobile = useMediaQuery("(max-width: 576px)");
+  const { session } = useSession(true);
 
   const syncId = repoData.id;
   const router = useRouter();
@@ -161,7 +163,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
-      <WorkspaceLayout>
+      <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
             <header className="flex items-center gap-4">
