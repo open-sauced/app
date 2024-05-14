@@ -10,6 +10,7 @@ import { fetchApiData } from "helpers/fetchApiData";
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
+import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import StarsChart from "components/Graphs/StarsChart";
@@ -24,10 +25,12 @@ import ContributorsChart from "components/Graphs/ContributorsChart";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import IssuesChart from "components/Graphs/IssuesChart";
 import PRChart from "components/Graphs/PRChart";
+import TabList from "components/TabList/tab-list";
 import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
 import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useSession from "lib/hooks/useSession";
+
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -78,6 +81,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const posthog = usePostHog();
   const isMobile = useMediaQuery("(max-width: 576px)");
   const { session } = useSession(true);
+  const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
+  const tabList = [
+    { name: "Overview", path: "" },
+    { name: "Contributors", path: "contributors" },
+  ];
+
 
   const syncId = repoData.id;
   const router = useRouter();
@@ -132,11 +141,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     range,
   });
 
-  const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
-
   const contributorRangedTotal = contributorStats?.reduce((prev, curr) => prev + curr.contributor_count!, 0);
-
-  const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
+  const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
 
   const {
     data: lotteryFactor,
@@ -205,6 +211,9 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 <DayRangePicker />
               </div>
             </div>
+          </div>
+          <div className="border-b">
+            <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
           </div>
           <ClientOnly>
             <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">

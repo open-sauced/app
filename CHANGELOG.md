@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.27.0-beta.4](https://github.com/open-sauced/app/compare/v2.27.0-beta.3...v2.27.0-beta.4) (2024-05-14)
+
+
+### 🍕 Features
+
+* Contributors tab for Repo pages ([#3342](https://github.com/open-sauced/app/issues/3342)) ([f1142c3](https://github.com/open-sauced/app/commit/f1142c3732b4842984cf726f0fa0624ea639ea6b))
+
+## [2.27.0-beta.3](https://github.com/open-sauced/app/compare/v2.27.0-beta.2...v2.27.0-beta.3) (2024-05-14)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch remains visible on smaller screens in the top menu ([#3374](https://github.com/open-sauced/app/issues/3374)) ([d6d0048](https://github.com/open-sauced/app/commit/d6d004812dfad3683520bce7cf90154cb175036a))
+
 ## [2.27.0-beta.2](https://github.com/open-sauced/app/compare/v2.27.0-beta.1...v2.27.0-beta.2) (2024-05-13)
 
 
