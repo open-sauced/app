@@ -5,12 +5,14 @@ import Markdown from "react-markdown";
 import { ArrowRightIcon } from "@primer/octicons-react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { BsLinkedin, BsTwitterX } from "react-icons/bs";
 import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import humanizeNumber from "lib/utils/humanizeNumber";
 import { getAvatarById } from "lib/utils/github";
 import ProfileLayout from "layouts/profile";
 import { useWaitlistCount } from "lib/hooks/api/useWaitlistCount";
+import SEO from "layouts/SEO/SEO";
 
 interface ChatboxProps {
   author: string;
@@ -86,10 +88,16 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     initialWaitlistCount = waitlistPayload.waitlisted_users;
   }
 
+  const ogImageUrl = `${new URL(
+    "/assets/og-images/star-search-og-image.png",
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  )}`;
+
   return {
     props: {
       alreadyOnWaitlist,
       initialWaitlistCount,
+      ogImageUrl,
     },
   };
 };
@@ -97,15 +105,39 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 interface StarSearchWaitListPageProps {
   alreadyOnWaitlist: boolean;
   initialWaitlistCount: number;
+  ogImageUrl: string;
+}
+
+function getTitle({
+  sessionToken,
+  isWaitlisted,
+  waitlistCount,
+  alreadyOnWaitlist,
+}: {
+  sessionToken: string | null | undefined;
+  isWaitlisted: boolean;
+  waitlistCount: number;
+  alreadyOnWaitlist: boolean;
+}) {
+  switch (true) {
+    case sessionToken && isWaitlisted:
+      return alreadyOnWaitlist
+        ? `You're already on the waitlist along with ${humanizeNumber(waitlistCount)} other people.`
+        : `You're in along with ${humanizeNumber(waitlistCount)} other people on the waitlist!`;
+    case !sessionToken:
+    default:
+      return "Copilot, but for git history";
+  }
 }
 
 export default function StarSearchWaitListPage({
   alreadyOnWaitlist,
   initialWaitlistCount,
+  ogImageUrl,
 }: StarSearchWaitListPageProps) {
   const { sessionToken, signIn } = useSupabaseAuth();
   const [isWaitlisted, setIsWaitlisted] = useState<boolean>(alreadyOnWaitlist);
-  const { data: waitlistCount } = useWaitlistCount(initialWaitlistCount);
+  const { data: waitlistCount = 1 } = useWaitlistCount(initialWaitlistCount);
 
   async function joinWaitlist() {
     const bearerToken = sessionToken ? sessionToken : undefined;
@@ -130,85 +162,123 @@ export default function StarSearchWaitListPage({
     joinWaitlist();
   }
 
+  const tweetQueryParams = new URLSearchParams();
+  const linkedInQueryParams = new URLSearchParams();
+
+  if (isWaitlisted) {
+    const url = new URL("/star-search/waitlist", process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
+    tweetQueryParams.set(
+      "text",
+      `I just joined the waitlist for @saucedopen's StarSearch, Copilot for git history. Join me! ${url}`
+    );
+
+    linkedInQueryParams.set("url", `${url}`);
+  }
+
   return (
-    <ProfileLayout>
-      <div className="flex flex-col items-center gap-4 px-2 mb-8 sm:pt-8 md:pt-0 lg:w-99">
-        <div className="flex gap-2 items-center">
-          <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
-          <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
-            StarSearch
-          </h1>
-        </div>
-        <p className="font-semibold text-5xl text-center tracking-tight text-balance">Copilot, but for git history</p>
-        <p className="text-center">Ask anything, get AI powered insights based on contributor data</p>
-        <div className="grid place-content-center h-16">
-          {sessionToken && isWaitlisted && waitlistCount ? (
-            <>
-              {alreadyOnWaitlist ? (
-                <p className="grid place-content-center">
-                  You&apos;re already on the waitlist along with {humanizeNumber(waitlistCount)} other people.
-                </p>
-              ) : (
-                <p className="grid place-content-center">
-                  You&apos;re in along with {humanizeNumber(waitlistCount)} other people on the Star Search waitlist!
-                </p>
-              )}
-            </>
-          ) : (
-            <>
-              {autoAdd ? null : (
-                <>
-                  {sessionToken ? (
-                    <form
-                      onSubmit={(event) => {
-                        event.preventDefault();
-                        joinWaitlist();
-                      }}
-                    >
-                      <Button variant="primary" className="flex gap-2 md:mt-6">
-                        <span>Join the Waitlist</span>
+    <>
+      <SEO
+        title="OpenSauced Insights - StarSearch"
+        description="Copilot, but for git history"
+        image={ogImageUrl}
+        twitterCard="summary_large_image"
+      />
+      <ProfileLayout>
+        <div className="flex flex-col items-center gap-4 px-2 mb-8 sm:pt-8 md:pt-0 lg:w-99" aria-live="polite">
+          <div className="flex gap-2 items-center">
+            <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
+            <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
+              StarSearch
+            </h1>
+          </div>
+          <p className="font-semibold text-5xl text-center tracking-tight text-balance">
+            {getTitle({ sessionToken, isWaitlisted, waitlistCount, alreadyOnWaitlist })}
+          </p>
+          <p className="text-center">
+            {isWaitlisted
+              ? "Share with others to get early access sooner"
+              : "Ask anything, get AI-powered insights based on contributor data"}
+          </p>
+          <div className="grid place-content-center h-16">
+            {sessionToken && isWaitlisted && waitlistCount ? (
+              <div className="flex gap-4">
+                <Button
+                  variant="primary"
+                  className="flex gap-2 w-max"
+                  href={`http://twitter.com/intent/tweet?${tweetQueryParams}`}
+                  target="_blank"
+                >
+                  Share on <span className="sr-only">X/Twitter</span>
+                  <BsTwitterX />
+                </Button>
+                <Button
+                  variant="primary"
+                  className="flex gap-2 w-max"
+                  href={`https://www.linkedin.com/sharing/share-offsite/?${linkedInQueryParams}`}
+                  target="_blank"
+                >
+                  Share on <span className="sr-only">LinkedIn</span>
+                  <BsLinkedin />
+                </Button>
+              </div>
+            ) : (
+              <>
+                {autoAdd ? null : (
+                  <>
+                    {sessionToken ? (
+                      <form
+                        onSubmit={(event) => {
+                          event.preventDefault();
+                          joinWaitlist();
+                        }}
+                      >
+                        <Button variant="primary" className="flex gap-2 md:mt-6">
+                          <span>Join the Waitlist</span>
+                          <ArrowRightIcon />
+                        </Button>
+                      </form>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        onClick={async () => {
+                          const params = new URLSearchParams();
+                          params.set("redirectedFrom", "/star-search");
+
+                          await signIn({
+                            provider: "github",
+                            options: {
+                              redirectTo: `${new URL("/star-search/waitlist?add=true", window.location.href)}`,
+                            },
+                          });
+                        }}
+                        className="flex gap-2 md:mt-6"
+                      >
+                        <span>Sign up to Join the Waitlist</span>
                         <ArrowRightIcon />
                       </Button>
-                    </form>
-                  ) : (
-                    <Button
-                      variant="primary"
-                      onClick={async () => {
-                        const params = new URLSearchParams();
-                        params.set("redirectedFrom", "/star-search");
-
-                        await signIn({
-                          provider: "github",
-                          options: { redirectTo: `${new URL("/star-search/waitlist?add=true", window.location.href)}` },
-                        });
-                      }}
-                      className="flex gap-2 md:mt-6"
-                    >
-                      <span>Sign up to Join the Waitlist</span>
-                      <ArrowRightIcon />
-                    </Button>
-                  )}
-                </>
-              )}
-            </>
-          )}
-        </div>
-        <ul className="place-content-center px-2 lg:bg-[url(../public/assets/images/waitlist-background.png)] lg:bg-no-repeat lg:bg-center lg:bg-cover mt-4 md:mt-8 flex flex-col gap-8 w-full">
-          <li className="flex gap-4 text-slate-600">
-            <Chatbox author="You" content="Who worked on React Server Components recently?" />
-          </li>
-          <li className="flex gap-4 text-slate-600 place-self-end">
-            <Chatbox
-              author="StarSearch"
-              content={`Based on the provided GitHub activities and contributions data, the following users have recently worked on React Server Components:
+                    )}
+                  </>
+                )}
+              </>
+            )}
+          </div>
+          <ul className="place-content-center px-2 lg:bg-[url(../public/assets/images/waitlist-background.png)] lg:bg-no-repeat lg:bg-center lg:bg-cover mt-4 md:mt-8 flex flex-col gap-8 w-full">
+            <li className="flex gap-4 text-slate-600">
+              <Chatbox author="You" content="Who worked on React Server Components recently?" />
+            </li>
+            <li className="flex gap-4 text-slate-600 place-self-end">
+              <Chatbox
+                author="StarSearch"
+                content={`Based on the provided GitHub activities and contributions data, the following users have recently worked on React Server Components:
 
 1. **@brunnolou:** Submitted a pull request titled "Feature/react server components" to the danswer-ai/danswer repository, including changes related to adding react server components with the aim of enhancing the functionality of the project.
 1. **@sebmarkbage:** Implemented the concept of a DEV-only "owner" for Server Components in the React repository through a pull request titled "Track Owner for Server Components". The owner concept is added for parity with DevTools and could be used to wire up future owner-based stacks.
 1. **@EvanBacon:** Submitted a pull request to the facebook/react-native repository titled "mark all of react-native as client boundary for React Server Components". The pull request marks all of react-native as a client boundary for React Server Components, allowing for importing react-native in a react-server environment for React Server Components support.`}
-            />
-          </li>
-        </ul>
-      </div>
-    </ProfileLayout>
+              />
+            </li>
+          </ul>
+        </div>
+      </ProfileLayout>
+    </>
   );
 }

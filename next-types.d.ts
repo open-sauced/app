@@ -8,6 +8,46 @@ declare module React {
   }
 }
 
+interface DbRepoInfo {
+  readonly id: number;
+  readonly size: number;
+  readonly issues: number;
+  readonly stars: number;
+  readonly forks: number;
+  readonly watchers: number;
+  readonly subscribers: number;
+  readonly network: number;
+  readonly is_fork: boolean;
+  readonly is_private: boolean;
+  readonly is_template: boolean;
+  readonly is_archived: boolean;
+  readonly is_disabled: boolean;
+  readonly has_issues: boolean;
+  readonly has_projects: boolean;
+  readonly has_downloads: boolean;
+  readonly has_wiki: boolean;
+  readonly has_pages: boolean;
+  readonly has_discussions: boolean;
+  readonly created_at: string;
+  readonly updated_at: string;
+  readonly pushed_at: string;
+  readonly default_branch: string;
+  readonly node_id: string;
+  readonly git_url: string;
+  readonly ssh_url: string;
+  readonly clone_url: string;
+  readonly svn_url: string;
+  readonly mirror_url: string;
+  readonly name: string;
+  readonly full_name: string;
+  readonly description: string;
+  readonly language: string;
+  readonly license: string;
+  readonly url: string;
+  readonly homepage: string;
+  readonly topics: string[];
+}
+
 interface DbRepo {
   readonly id: string;
   readonly host_id: string;
@@ -24,7 +64,11 @@ interface DbRepo {
   readonly draft_prs_count?: number;
   readonly spam_prs_count?: number;
   readonly pr_velocity_count?: number;
+  readonly opened_issues_count?: number;
+  readonly closed_issues_count?: number;
+  readonly issues_velocity_count?: number;
   readonly churnTotalCount?: number;
+  readonly activity_ratio?: number;
   readonly language: string;
   readonly stars: number;
   readonly description: string;
@@ -115,6 +159,29 @@ interface DbRepoPREvents {
   readonly repo_name: string;
   readonly pr_commits: number;
   linesCount: number;
+}
+
+interface DbRepoIssueEvents {
+  readonly event_id: number;
+  readonly id: string;
+  readonly issue_number: number;
+  readonly issue_state: "open" | "closed" | "reopened";
+  readonly issue_title: string;
+  readonly issue_body: string;
+  readonly issue_author_login: string;
+  readonly issue_created_at: string;
+  readonly issue_closed_at: string;
+  readonly issue_updated_at: string;
+  readonly issue_comments: string;
+  readonly repo_name: string;
+  readonly issue_reactions_plus_one: number;
+  readonly issue_reactions_minus_one: number;
+  readonly issue_reactions_laugh: number;
+  readonly issue_reactions_hooray: number;
+  readonly issue_reactions_confused: number;
+  readonly issue_reactions_heart: number;
+  readonly issue_reactions_rocket: number;
+  readonly issue_reactions_eyes: number;
 }
 
 interface DbPRContributor {
@@ -511,6 +578,7 @@ interface Workspace {
   is_public: boolean;
   payee_user_id: string | null;
   members: WorkspaceMember[];
+  exceeds_upgrade_limits: boolean;
 }
 
 interface WorkspaceMember {
@@ -536,4 +604,18 @@ interface DbWorkspacesReposStats {
     forks: number;
     activity_ratio: number;
   };
+}
+
+type LottoFactor = "very-high" | "high" | "moderate" | "low";
+
+interface ContributorLottoFactor {
+  contributor: string;
+  count: number;
+  percent_of_total: number;
+  lotto_factor: LottoFactor;
+}
+
+interface RepositoryLottoFactor {
+  all_contribs: ContributorLottoFactor[];
+  all_lotto_factor: LottoFactor;
 }

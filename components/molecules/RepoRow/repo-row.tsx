@@ -48,7 +48,7 @@ export const getActivity = (total?: number, loading?: boolean) => {
     return <Pill icon={<MinusSmallIcon color="black" className="w-4 h-4" />} text="Medium" color="yellow" />;
   }
 
-  return <Pill icon={<ArrowTrendingDownIcon color="red" className="w-4 h-4" />} text="Low" color="red" />;
+  return <Pill icon={<ArrowTrendingDownIcon color="slate" className="w-4 h-4" />} text="Low" color="slate" />;
 };
 
 const getTotalPrs = (

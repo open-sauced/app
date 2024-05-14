@@ -246,3 +246,43 @@ but never configured it. */
 .text-balance {
   text-wrap: balance;
 }
+
+.markdown a {
+  @apply text-sauced-orange;
+}
+
+.markdown a:hover {
+  @apply underline;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-semibold;
+  @apply text-slate-900;
+}
+
+.markdown h1 {
+  @apply text-2xl;
+}
+
+.markdown h2 {
+  @apply text-xl;
+}
+
+.markdown h3 {
+  @apply text-lg;
+}
+
+.markdown ul {
+  @apply ml-4;
+  @apply list-disc;
+}
+
+.markdown ol {
+  @apply ml-4;
+  @apply list-decimal;
+}

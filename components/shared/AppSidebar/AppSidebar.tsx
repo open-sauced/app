@@ -107,6 +107,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
               <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
                 <span className="sr-only">Workspace</span>
                 <SingleSelect
+                  isSearchable
                   options={[
                     { label: "Create new workspace...", value: "new" },
                     ...workspaces.map(({ id, name }) => ({
@@ -122,7 +123,6 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                       router.push("/workspaces/new");
                       return;
                     }
-
                     router.push(`/workspaces/${value}`);
                   }}
                 />
@@ -211,7 +211,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
               />
               <SidebarMenuItem
                 title="Explore"
-                url={`/${userInterest}/dashboard/filter/recent`}
+                url={`/explore/topic/${userInterest}/dashboard/filter/recent`}
                 icon={<Squares2X2Icon className="w-5 h-5 text-slate-400" />}
               />
             </ul>
