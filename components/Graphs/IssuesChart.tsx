@@ -47,7 +47,7 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
 
   return (
     <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center pt-8`}>
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
+      <section className="flex flex-col lg:flex-row w-full items-start gap-4 lg:justify-between px-4">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (

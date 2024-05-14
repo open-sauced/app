@@ -34,7 +34,7 @@ export default function ContributorsChart({
 
   return (
     <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center pt-8`}>
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4 lg:px-8">
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-start gap-4 lg:justify-between px-4 lg:px-8">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (

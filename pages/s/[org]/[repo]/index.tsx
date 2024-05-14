@@ -77,11 +77,11 @@ interface RepoPageProps {
 }
 
 export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
-  const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const { toast } = useToast();
   const posthog = usePostHog();
-  const isMobile = useMediaQuery("(max-width: 576px)");
   const { session } = useSession(true);
+  const isMobile = useMediaQuery("(max-width: 576px)");
+  const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
   const tabList = [
     { name: "Overview", path: "" },
@@ -170,7 +170,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
       <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
-        <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
+        <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
             <header className="flex items-center gap-4">
               <Avatar size={96} avatarURL={avatarUrl} />
@@ -223,7 +223,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 rangedTotal={contributorRangedTotal!}
                 syncId={syncId}
                 isLoading={isContributorDataLoading}
-                className="lg:col-span-8 h-full min-h-[28rem]"
+                className="lg:col-span-8 h-full max-h-[31.85rem]"
               />
 
               <LotteryFactorChart
@@ -231,7 +231,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 error={lotteryFactorError}
                 range={range}
                 isLoading={isLotteryFactorLoading}
-                className="lg:col-span-4"
+                className="lg:col-span-4 h-fit"
               />
 
               <IssuesChart
@@ -240,7 +240,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 velocity={repoStats?.issues_velocity_count ?? 0}
                 syncId={syncId}
                 isLoading={isIssueDataLoading}
-                className="lg:col-span-6"
+                className="lg:col-span-6 h-fit"
               />
 
               <PRChart
@@ -249,7 +249,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 velocity={repoStats?.pr_velocity_count ?? 0}
                 syncId={syncId}
                 isLoading={isPrDataLoading}
-                className="lg:col-span-6"
+                className="lg:col-span-6 h-fit"
               />
 
               <StarsChart
@@ -258,7 +258,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 range={range}
                 syncId={syncId}
                 isLoading={isStarsDataLoading}
-                className="lg:col-span-6"
+                className="lg:col-span-6 h-fit"
               />
 
               <ForksChart
@@ -267,7 +267,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 range={range}
                 syncId={syncId}
                 isLoading={isForksDataLoading}
-                className="lg:col-span-6"
+                className="lg:col-span-6 h-fit"
               />
             </div>
           </ClientOnly>
