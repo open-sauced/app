@@ -1,36 +1,37 @@
-import { GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
-import { usePostHog } from "posthog-js/react";
 import { FiCopy } from "react-icons/fi";
 import { MdWorkspaces } from "react-icons/md";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import dynamic from "next/dynamic";
+
 import { useState } from "react";
-import { fetchApiData } from "helpers/fetchApiData";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { usePostHog } from "posthog-js/react";
+import { GetServerSidePropsContext } from "next";
+
+import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
+import { fetchApiData } from "helpers/fetchApiData";
+import { getAvatarByUsername } from "lib/utils/github";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 
 import Avatar from "components/atoms/Avatar/avatar";
+import Button from "components/shared/Button/button";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
+import TabList from "components/TabList/tab-list";
+import { DayRangePicker } from "components/shared/DayRangePicker";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
+import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
+
+import PRChart from "components/Graphs/PRChart";
 import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
-import { DayRangePicker } from "components/shared/DayRangePicker";
-import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
-import Button from "components/shared/Button/button";
-import { getAvatarByUsername } from "lib/utils/github";
-import { useRepoStats } from "lib/hooks/api/useRepoStats";
-import ContributorsChart from "components/Graphs/ContributorsChart";
-import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import IssuesChart from "components/Graphs/IssuesChart";
-import PRChart from "components/Graphs/PRChart";
-import TabList from "components/TabList/tab-list";
-import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
-import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
-import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import useSession from "lib/hooks/useSession";
-
+import ContributorsChart from "components/Graphs/ContributorsChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -86,7 +87,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     { name: "Overview", path: "" },
     { name: "Contributors", path: "contributors" },
   ];
-
 
   const syncId = repoData.id;
   const router = useRouter();
