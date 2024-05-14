@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.27.0-beta.5](https://github.com/open-sauced/app/compare/v2.27.0-beta.4...v2.27.0-beta.5) (2024-05-14)
+
+
+### 🐛 Bug Fixes
+
+* temporarily returning for event: function_call in readable stream from StarSearch ([#3379](https://github.com/open-sauced/app/issues/3379)) ([f6f4b01](https://github.com/open-sauced/app/commit/f6f4b01095bba524c77ee267dd401d2757adf330))
+
 ## [2.27.0-beta.4](https://github.com/open-sauced/app/compare/v2.27.0-beta.3...v2.27.0-beta.4) (2024-05-14)
 
 
