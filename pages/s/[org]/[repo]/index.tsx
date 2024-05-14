@@ -207,14 +207,14 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </div>
           </div>
           <ClientOnly>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+            <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
               <ContributorsChart
                 stats={contributorStats}
                 range={range}
                 rangedTotal={contributorRangedTotal!}
                 syncId={syncId}
                 isLoading={isContributorDataLoading}
-                className="lg:col-span-8 max-h-[36rem] lg:max-h-full"
+                className="lg:col-span-8 !h-fit lg:max-h-full"
               />
 
               <LotteryFactorChart
