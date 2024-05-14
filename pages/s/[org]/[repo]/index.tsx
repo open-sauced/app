@@ -214,7 +214,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 rangedTotal={contributorRangedTotal!}
                 syncId={syncId}
                 isLoading={isContributorDataLoading}
-                className="lg:col-span-7"
+                className="lg:col-span-8 max-h-[36rem] lg:max-h-full"
               />
 
               <LotteryFactorChart
@@ -222,7 +222,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 error={lotteryFactorError}
                 range={range}
                 isLoading={isLotteryFactorLoading}
-                className="lg:col-span-5"
+                className="lg:col-span-4"
               />
 
               <IssuesChart

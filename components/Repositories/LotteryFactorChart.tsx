@@ -188,16 +188,20 @@ export default function LotteryFactorChart({
               <th className="font-normal text-end">% of Total</th>
             </tr>
           </thead>
-          <tbody className="!text-xs truncate">
+          <tbody className="!text-small truncate">
             {sortedContributors.slice(0, 4).map(({ name, count, value }) => (
               <tr key={name} className={`${hovered === name && "bg-slate-100"} grow items-start`}>
-                <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 py-4 pl-2`}>
-                  <DevProfile username={name} hasBorder={false} size="xsmall" />
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 pt-1 pb-2 pl-2`}>
+                  <DevProfile username={name} hasBorder={false} size="medium" />
                 </td>
-                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1  w-fit`}>
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1 w-fit`}>
                   {count}
                 </td>
-                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1 py-4 pr-2 `}>
+                <td
+                  className={`${
+                    hovered === name ? "font-semibold" : "font-normal"
+                  } text-end border-b-1 pt-1 pb-2 pr-2 `}
+                >
                   {value}%
                 </td>
               </tr>
