@@ -166,7 +166,14 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         setIsRunning(false); // enables input
         return;
       }
+
+      // TODO: Remove this once https://github.com/open-sauced/app/issues/3372 is implemented.
+      if (value.startsWith("event: function_call")) {
+        continue;
+      }
+
       const values = value.split("\n");
+
       values
         .filter((v) => v.startsWith("data:"))
         .forEach((v) => {
