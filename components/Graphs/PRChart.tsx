@@ -25,9 +25,10 @@ type PRChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  className?: string;
 };
 
-export default function PRChart({ stats, velocity, syncId, range = 30, isLoading }: PRChartProps) {
+export default function PRChart({ stats, velocity, syncId, range = 30, isLoading, className }: PRChartProps) {
   const dailyData = useMemo(() => getDailyPullRequestsHistogramToDays({ stats, range }), [stats, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
   const { openedRangedTotal, closedRangedTotal } = useMemo(
@@ -45,8 +46,8 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
   );
 
   return (
-    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
+    <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center pt-8`}>
+      <section className="flex flex-col lg:flex-row w-full items-start gap-4 lg:justify-between px-4">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
@@ -97,7 +98,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
       <figcaption className="flex flex-col gap-1 bg-white px-4 py-2 rounded-lg border">
         <section className="flex gap-2 items-center">
           <BiGitPullRequest className="fill-sauced-orange" />
-          <p>Issues</p>
+          <p>Pull Requests</p>
         </section>
         <p>Opened: {payload[0]?.value}</p>
         <p>Closed: {payload[1]?.value}</p>

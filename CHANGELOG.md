@@ -5,6 +5,149 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.0-beta.1](https://github.com/open-sauced/app/compare/v2.28.0...v2.29.0-beta.1) (2024-05-15)
+
+
+### 🍕 Features
+
+* only tag maintainers for the specific repo on repo pages ([#3395](https://github.com/open-sauced/app/issues/3395)) ([54c9a93](https://github.com/open-sauced/app/commit/54c9a9339709cde1b34768fd3ec1090157c835b1))
+
+## [2.28.0](https://github.com/open-sauced/app/compare/v2.27.0...v2.28.0) (2024-05-15)
+
+
+### 🍕 Features
+
+* layout changes for repo pages ([#3373](https://github.com/open-sauced/app/issues/3373)) ([51c5bde](https://github.com/open-sauced/app/commit/51c5bde17fa5a1d25aef0ead323c61d33ef41091))
+
+
+### 🐛 Bug Fixes
+
+* now on smaller screens a drawer opens for welcome to workspaces ([#3386](https://github.com/open-sauced/app/issues/3386)) ([d54f2db](https://github.com/open-sauced/app/commit/d54f2db69c63a4974e79b0c27c5b37adaee34aab))
+
+## [2.28.0-beta.2](https://github.com/open-sauced/app/compare/v2.28.0-beta.1...v2.28.0-beta.2) (2024-05-15)
+
+
+### 🐛 Bug Fixes
+
+* now on smaller screens a drawer opens for welcome to workspaces ([#3386](https://github.com/open-sauced/app/issues/3386)) ([d54f2db](https://github.com/open-sauced/app/commit/d54f2db69c63a4974e79b0c27c5b37adaee34aab))
+
+## [2.28.0-beta.1](https://github.com/open-sauced/app/compare/v2.27.0...v2.28.0-beta.1) (2024-05-15)
+
+
+### 🍕 Features
+
+* layout changes for repo pages ([#3373](https://github.com/open-sauced/app/issues/3373)) ([51c5bde](https://github.com/open-sauced/app/commit/51c5bde17fa5a1d25aef0ead323c61d33ef41091))
+
+## [2.27.0](https://github.com/open-sauced/app/compare/v2.26.0...v2.27.0) (2024-05-15)
+
+
+### 🍕 Features
+
+* Contributors tab for Repo pages ([#3342](https://github.com/open-sauced/app/issues/3342)) ([f1142c3](https://github.com/open-sauced/app/commit/f1142c3732b4842984cf726f0fa0624ea639ea6b))
+* Lottery Factor chart for Repo pages ([#3343](https://github.com/open-sauced/app/issues/3343)) ([deda50e](https://github.com/open-sauced/app/commit/deda50e6c69367c6e9a225a92ee6c6a0e959c775))
+
+
+### 🐛 Bug Fixes
+
+* now opening workspace dropdown puts focus on search input ([#3364](https://github.com/open-sauced/app/issues/3364)) ([bafa0e4](https://github.com/open-sauced/app/commit/bafa0e47b244114b22ecdf773b9c67ad54cd2f2a))
+* now StarSearch remains visible on smaller screens in the top menu ([#3374](https://github.com/open-sauced/app/issues/3374)) ([d6d0048](https://github.com/open-sauced/app/commit/d6d004812dfad3683520bce7cf90154cb175036a))
+* temporarily returning for event: function_call in readable stream from StarSearch ([#3379](https://github.com/open-sauced/app/issues/3379)) ([f6f4b01](https://github.com/open-sauced/app/commit/f6f4b01095bba524c77ee267dd401d2757adf330))
+* title for PR chart tooltip ([#3350](https://github.com/open-sauced/app/issues/3350)) ([56b2746](https://github.com/open-sauced/app/commit/56b2746dd737c0f4788cde0125e7c1787529384d))
+
+## [2.27.0-beta.5](https://github.com/open-sauced/app/compare/v2.27.0-beta.4...v2.27.0-beta.5) (2024-05-14)
+
+
+### 🐛 Bug Fixes
+
+* temporarily returning for event: function_call in readable stream from StarSearch ([#3379](https://github.com/open-sauced/app/issues/3379)) ([f6f4b01](https://github.com/open-sauced/app/commit/f6f4b01095bba524c77ee267dd401d2757adf330))
+
+## [2.27.0-beta.4](https://github.com/open-sauced/app/compare/v2.27.0-beta.3...v2.27.0-beta.4) (2024-05-14)
+
+
+### 🍕 Features
+
+* Contributors tab for Repo pages ([#3342](https://github.com/open-sauced/app/issues/3342)) ([f1142c3](https://github.com/open-sauced/app/commit/f1142c3732b4842984cf726f0fa0624ea639ea6b))
+
+## [2.27.0-beta.3](https://github.com/open-sauced/app/compare/v2.27.0-beta.2...v2.27.0-beta.3) (2024-05-14)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch remains visible on smaller screens in the top menu ([#3374](https://github.com/open-sauced/app/issues/3374)) ([d6d0048](https://github.com/open-sauced/app/commit/d6d004812dfad3683520bce7cf90154cb175036a))
+
+## [2.27.0-beta.2](https://github.com/open-sauced/app/compare/v2.27.0-beta.1...v2.27.0-beta.2) (2024-05-13)
+
+
+### 🐛 Bug Fixes
+
+* now opening workspace dropdown puts focus on search input ([#3364](https://github.com/open-sauced/app/issues/3364)) ([bafa0e4](https://github.com/open-sauced/app/commit/bafa0e47b244114b22ecdf773b9c67ad54cd2f2a))
+
+## [2.27.0-beta.1](https://github.com/open-sauced/app/compare/v2.26.1-beta.1...v2.27.0-beta.1) (2024-05-13)
+
+
+### 🍕 Features
+
+* Lottery Factor chart for Repo pages ([#3343](https://github.com/open-sauced/app/issues/3343)) ([deda50e](https://github.com/open-sauced/app/commit/deda50e6c69367c6e9a225a92ee6c6a0e959c775))
+
+## [2.26.1-beta.1](https://github.com/open-sauced/app/compare/v2.26.0...v2.26.1-beta.1) (2024-05-10)
+
+
+### 🐛 Bug Fixes
+
+* title for PR chart tooltip ([#3350](https://github.com/open-sauced/app/issues/3350)) ([56b2746](https://github.com/open-sauced/app/commit/56b2746dd737c0f4788cde0125e7c1787529384d))
+
+## [2.26.0](https://github.com/open-sauced/app/compare/v2.25.0...v2.26.0) (2024-05-09)
+
+
+### 🍕 Features
+
+* add repository filtering to contributor insight activity page ([#3355](https://github.com/open-sauced/app/issues/3355)) ([58f6dda](https://github.com/open-sauced/app/commit/58f6dda2bc2a6fa4422d8335cd0b352f8c1036c3))
+* implemented the substabs list component ([#3352](https://github.com/open-sauced/app/issues/3352)) ([5a55026](https://github.com/open-sauced/app/commit/5a550263a7f968a130a2910f141705448dfdee44))
+* implemented the workspace issues table ([#3340](https://github.com/open-sauced/app/issues/3340)) ([ba1bc51](https://github.com/open-sauced/app/commit/ba1bc5124ffe9c300d899f986842fe2f5ff1ddc4))
+* now low activity ratio pills are slate ([#3347](https://github.com/open-sauced/app/issues/3347)) ([18bd781](https://github.com/open-sauced/app/commit/18bd7814567263810699415e93d6d6c4bd0d9590))
+
+
+### 🐛 Bug Fixes
+
+* now markdown has common styles ([6200d76](https://github.com/open-sauced/app/commit/6200d769feb1cac2c0e6933217c17c40f7193843))
+* now markdown has common styles ([#3339](https://github.com/open-sauced/app/issues/3339)) ([1db8260](https://github.com/open-sauced/app/commit/1db8260fc29b4df3bcc7e1e1024cdc0244ca6f2c))
+* style tweaks for MultiSelect component ([#3354](https://github.com/open-sauced/app/issues/3354)) ([6cf9f99](https://github.com/open-sauced/app/commit/6cf9f997b3a4bee8c3a9320c2372beeaab3470ea))
+
+## [2.26.0-beta.5](https://github.com/open-sauced/app/compare/v2.26.0-beta.4...v2.26.0-beta.5) (2024-05-09)
+
+
+### 🐛 Bug Fixes
+
+* style tweaks for MultiSelect component ([#3354](https://github.com/open-sauced/app/issues/3354)) ([6cf9f99](https://github.com/open-sauced/app/commit/6cf9f997b3a4bee8c3a9320c2372beeaab3470ea))
+
+## [2.26.0-beta.4](https://github.com/open-sauced/app/compare/v2.26.0-beta.3...v2.26.0-beta.4) (2024-05-09)
+
+
+### 🍕 Features
+
+* add repository filtering to contributor insight activity page ([#3355](https://github.com/open-sauced/app/issues/3355)) ([58f6dda](https://github.com/open-sauced/app/commit/58f6dda2bc2a6fa4422d8335cd0b352f8c1036c3))
+
+## [2.26.0-beta.3](https://github.com/open-sauced/app/compare/v2.26.0-beta.2...v2.26.0-beta.3) (2024-05-09)
+
+
+### 🍕 Features
+
+* implemented the workspace issues table ([#3340](https://github.com/open-sauced/app/issues/3340)) ([ba1bc51](https://github.com/open-sauced/app/commit/ba1bc5124ffe9c300d899f986842fe2f5ff1ddc4))
+
+## [2.26.0-beta.2](https://github.com/open-sauced/app/compare/v2.26.0-beta.1...v2.26.0-beta.2) (2024-05-09)
+
+
+### 🍕 Features
+
+* implemented the substabs list component ([#3352](https://github.com/open-sauced/app/issues/3352)) ([5a55026](https://github.com/open-sauced/app/commit/5a550263a7f968a130a2910f141705448dfdee44))
+
+## [2.26.0-beta.1](https://github.com/open-sauced/app/compare/v2.25.1-beta.1...v2.26.0-beta.1) (2024-05-09)
+
+
+### 🍕 Features
+
+* now low activity ratio pills are slate ([#3347](https://github.com/open-sauced/app/issues/3347)) ([18bd781](https://github.com/open-sauced/app/commit/18bd7814567263810699415e93d6d6c4bd0d9590))
+
 ## [2.25.1-beta.1](https://github.com/open-sauced/app/compare/v2.25.0...v2.25.1-beta.1) (2024-05-08)
 
 

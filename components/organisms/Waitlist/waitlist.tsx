@@ -11,7 +11,7 @@ const WaitlistComponent = () => {
     <ComponentGradient>
       <div className="z-10">
         <div className="py-3 flex justify-center">
-          <HeaderLogo withBg={false} />
+          <HeaderLogo />
         </div>
         <div className="mt-24">
           <div className="text-center">
