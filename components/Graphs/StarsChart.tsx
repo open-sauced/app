@@ -28,9 +28,10 @@ type StarsChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  className?: string;
 };
 
-export default function StarsChart({ stats, total, syncId, range = 30, isLoading }: StarsChartProps) {
+export default function StarsChart({ stats, total, syncId, range = 30, isLoading, className }: StarsChartProps) {
   const [category, setCategory] = useState<"daily" | "history">("daily");
   const dailyData = useMemo(() => getDailyStarsHistogramToDays({ stats, range }), [stats, range]);
   const historyData = useMemo(() => getHistoryStarsHistogramToDays({ stats, total, range }), [stats, total, range]);
@@ -64,7 +65,7 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
   };
 
   return (
-    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
+    <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center pt-8`}>
       <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />

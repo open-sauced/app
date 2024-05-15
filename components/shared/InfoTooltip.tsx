@@ -4,10 +4,11 @@ import { HiOutlineInformationCircle } from "react-icons/hi";
 
 export default function InfoTooltip({ information }: { information: string }) {
   const [open, setOpen] = useState(false);
+
   return (
     <Tooltip open={open}>
       <TooltipTrigger asChild>
-        <button onClick={() => setOpen(!open)}>
+        <button onMouseOver={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onClick={() => setOpen(!open)}>
           <HiOutlineInformationCircle className="text-slate-500" />
         </button>
       </TooltipTrigger>
