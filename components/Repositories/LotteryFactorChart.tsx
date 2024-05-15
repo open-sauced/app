@@ -2,14 +2,16 @@ import { HiOutlineTicket } from "react-icons/hi";
 import { useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
+import Link from "next/link";
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import { DayRange } from "components/shared/DayRangePicker";
 import StackedOwners from "components/Workspaces/StackedOwners";
-import DevProfile from "components/molecules/DevProfile/dev-profile";
 import InfoTooltip from "components/shared/InfoTooltip";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import Avatar from "components/atoms/Avatar/avatar";
 
+import { getAvatarByUsername } from "lib/utils/github";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 type LotteryFactorChartProps = {
@@ -192,7 +194,17 @@ export default function LotteryFactorChart({
             {sortedContributors.slice(0, 4).map(({ name, count, value }) => (
               <tr key={name} className={`${hovered === name && "bg-slate-100"} grow items-start`}>
                 <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 pt-1 pb-2 pl-2`}>
-                  <DevProfile username={name} hasBorder={false} size="medium" />
+                  {/*
+                    Temporarily copying the DevProfile JSX minus the desktop view to fix this issue https://github.com/open-sauced/app/pull/3373#issuecomment-2112399608
+                  */}
+                  <div className="flex items-center gap-2 text-light-slate-11">
+                    <Link href={`/user/${name}`} className="rounded-full">
+                      <Avatar size={45} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
+                    </Link>
+                    <div>
+                      <h1 className="truncate text-light-slate-12">{name}</h1>
+                    </div>
+                  </div>
                 </td>
                 <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1 w-fit`}>
                   {count}
