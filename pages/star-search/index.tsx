@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import Markdown from "react-markdown";
@@ -20,10 +20,12 @@ import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/use
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 
-interface ComponentDefinition {
+export interface WidgetDefinition {
   name: string;
   arguments: Record<string, Record<string, any>>;
 }
+
+type EventType = "content" | "function_call";
 
 const componentRegistry = new Map<string, Function>();
 
@@ -47,6 +49,26 @@ const SUGGESTIONS = [
 ];
 
 type SuggesionTypes = (typeof SUGGESTIONS)[number];
+
+async function updateComponentRegistry(name: string) {
+  if (!componentRegistry.has(name)) {
+    try {
+      let component;
+
+      switch (name) {
+        case "renderLottoFactor":
+          component = (await import("components/StarSearchWidgets/LotteryFactorWidget")).default;
+          break;
+        default:
+          break;
+      }
+
+      if (component) {
+        componentRegistry.set(name, component);
+      }
+    } catch (error) {}
+  }
+}
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -75,25 +97,14 @@ type StarSearchPageProps = {
   ogImageUrl: string;
 };
 
-type StarSearchChat = {
-  author: "You" | "StarSearch";
-  content: string;
-};
+type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch"; content: string | WidgetDefinition };
 
-function renderStarSearchComponent(componentDefinition: ComponentDefinition) {
+function renderStarSearchComponent(widgetDefinition: WidgetDefinition) {
   try {
-    const Component = componentRegistry.get(componentDefinition.name);
-
-    switch (componentDefinition.name) {
-      case "renderLottoFactor":
-        break;
-
-      default:
-        throw new Error(`Unknown component name: ${name}`);
-    }
+    const Component = componentRegistry.get(widgetDefinition.name);
 
     // @ts-expect-error TODO: fix this for the full working implementation
-    return <Component {...componentDefinition.arguments} />;
+    return <Component {...widgetDefinition.arguments} />;
   } catch (error: unknown) {
     // TODO: Sentry to log invalid JSON payload from StarSearch event of type function_call.
     return null;
@@ -103,7 +114,7 @@ function renderStarSearchComponent(componentDefinition: ComponentDefinition) {
 export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
-  const [componentDefinitions, setComponentDefinitions] = useState<ComponentDefinition[]>([]);
+  const [componentDefinitions, setComponentDefinitions] = useState<WidgetDefinition[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -115,8 +126,24 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   function registerFeedback(feedbackType: StarSearchFeedbackAnalytic["feedback"]) {
     feedback({
       feedback: feedbackType,
-      promptContent: chat.filter(({ author }) => author === "You").map(({ content }) => content),
-      promptResponse: chat.filter(({ author }) => author === "StarSearch").map(({ content }) => content),
+      promptContent: chat
+        .filter(({ author }) => author === "You")
+        .map(({ content }) => {
+          if (typeof content !== "string") {
+            return JSON.stringify(content);
+          }
+
+          return content;
+        }),
+      promptResponse: chat
+        .filter(({ author }) => author === "StarSearch")
+        .map(({ content }) => {
+          if (typeof content !== "string") {
+            return JSON.stringify(content);
+          }
+
+          return content;
+        }),
     });
     toast({ description: "Thank you for your feedback!", variant: "success" });
   }
@@ -195,36 +222,46 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         return;
       }
 
-      /* when the event type is function_call we know we need to render a component, if the event type is content, we render the markdown as HTML */
+      /**
 
-      // if the string starts with "event: function_call" we know we need to render a component. So filter out those values into a separate array
-      if (value.startsWith("event: function_call")) {
-        const matched = value.match(/data:\s?(?<result>.*)/);
-        if (!matched?.groups?.result) {
-          return;
-        }
+        Content has this shape:
 
-        const rawComponentDefinition = matched.groups.result;
+        event: function_call
+        id: 1
+        data: {"name":"renderLottoFactor","arguments":"{\"repoName\":\"kubernetes/kubernetes\"}"}
 
-        try {
-          const componentDefinition = JSON.parse(rawComponentDefinition) as ComponentDefinition;
-          const componentKey = componentDefinition.name;
 
-          if (!componentRegistry.has(componentKey)) {
-            const componentJsx = (await import("components/StarSearchWidgets/LotteryFactorWidget")).default;
-            componentRegistry.set(componentKey, componentJsx);
-          }
-          setComponentDefinitions((prev) => [...prev, componentDefinition]);
-        } catch (error) {
-          // Notify Sentry of the error
-        }
-      }
+        event: content
+        id: 2
+        data: The
+
+        event: content
+        id: 3
+        data:  Lottery
+
+        event: content
+        id: 4
+        data:  Factor
+
+
+        If the event type is function_call, we know we need to render a component, if the event type is content, we render the markdown as HTML.
+       */
 
       const values = value.split("\n");
 
-      values
-        .filter((v) => v.startsWith("data:"))
-        .forEach((v) => {
+      let eventType: EventType = "content";
+
+      values.forEach(async (v) => {
+        if (v.startsWith("id:")) {
+          return;
+        }
+
+        if (v.startsWith("event:")) {
+          eventType = v.split(/:\s+/)[1] as EventType;
+          return;
+        }
+
+        if (v.startsWith("data:")) {
           /*
            * regex for capturing star-search stream SSEs:
            * data:\s?(?<result>.*)
@@ -250,27 +287,42 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
             return;
           }
 
-          let canParseJson = false;
+          let jsonContent;
+          const { result } = matched.groups;
+
           try {
-            JSON.parse(matched.groups.result);
-            canParseJson = true;
+            if (eventType === "function_call") {
+              jsonContent = JSON.parse(result);
+              jsonContent.arguments = JSON.parse(jsonContent.arguments);
+            }
           } catch (error) {
-            // nothing. this is temporary for a demo for bdougie.
+            // Only log an error if it's a function call as we expect the content to be JSON.
+            if (eventType === "function_call") {
+              // TODO: Log to Sentry
+            }
           }
 
-          if (canParseJson) {
-            return;
-          }
+          const updatedChat = [...chat];
 
-          const temp = [...chat];
-          const changed = temp.at(temp.length - 1);
-          if (matched.groups.result === "") {
-            changed!.content += "&nbsp; \n";
+          if (eventType === "function_call") {
+            await updateComponentRegistry(jsonContent.name);
+            updatedChat.push({
+              author: "StarSearch",
+              content: jsonContent,
+            });
+            setChat(updatedChat);
           } else {
-            changed!.content += matched.groups.result;
+            const changes = updatedChat.at(-1);
+
+            if (changes) {
+              changes.content += matched.groups.result === "" ? "&nbsp; \n" : result;
+              setChat(updatedChat);
+            }
           }
-          setChat(temp);
-        });
+
+          return;
+        }
+      });
     }
   };
 
@@ -292,10 +344,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
             >
               <ScrollArea className="flex grow">
                 {chat.map((message, i) => (
-                  <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
-                ))}
-                {componentDefinitions.map((componentDefinition, i) => (
-                  <Fragment key={i}>{renderStarSearchComponent(componentDefinition.name)}</Fragment>
+                  <Chatbox key={i} userId={userId} message={message} />
                 ))}
                 <div ref={scrollRef} />
               </ScrollArea>
@@ -483,9 +532,9 @@ function SuggestionBoxes({
   );
 }
 
-function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number }) {
+function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number }) {
   const renderAvatar = () => {
-    switch (author) {
+    switch (message.author) {
       case "You":
         return (
           <Image
@@ -498,7 +547,7 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
         );
       case "StarSearch":
         return (
-          <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full">
+          <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full w-max">
             <Image
               src="/assets/star-search-logo-white.svg"
               alt="StarSearch logo"
@@ -512,11 +561,15 @@ function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number
   };
 
   return (
-    <li className="flex gap-2 justify-center items-start my-4 w-full">
+    <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
       {renderAvatar()}
       <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
-        <h3 className="font-semibold text-sauced-orange">{author}</h3>
-        <Markdown className="markdown">{content}</Markdown>
+        <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
+        {typeof message.content === "string" ? (
+          <Markdown>{message.content}</Markdown>
+        ) : (
+          <>{renderStarSearchComponent(message.content)}</>
+        )}
       </Card>
     </li>
   );
