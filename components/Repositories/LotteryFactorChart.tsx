@@ -2,14 +2,16 @@ import { HiOutlineTicket } from "react-icons/hi";
 import { useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
+import Link from "next/link";
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import { DayRange } from "components/shared/DayRangePicker";
 import StackedOwners from "components/Workspaces/StackedOwners";
-import DevProfile from "components/molecules/DevProfile/dev-profile";
 import InfoTooltip from "components/shared/InfoTooltip";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import Avatar from "components/atoms/Avatar/avatar";
 
+import { getAvatarByUsername } from "lib/utils/github";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 type LotteryFactorChartProps = {
@@ -17,9 +19,16 @@ type LotteryFactorChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: DayRange;
+  className?: string;
 };
 
-export default function LotteryFactorChart({ lotteryFactor, isLoading, error, range }: LotteryFactorChartProps) {
+export default function LotteryFactorChart({
+  lotteryFactor,
+  isLoading,
+  error,
+  range,
+  className,
+}: LotteryFactorChartProps) {
   const [hovered, setHovered] = useState<string | undefined>(undefined);
   const topFourContributors = lotteryFactor?.all_contribs.slice(0, 4) ?? [];
 
@@ -82,8 +91,8 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
   }
 
   return (
-    <Card className="flex flex-col gap-4 w-full h-full items-center pt-8 p-4">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4 lg:px-8">
+    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-full items-center pt-8`}>
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
         <header className="flex w-full justify-between items-center">
           <div className="flex gap-2 items-center">
             <HiOutlineTicket className="text-xl" />
@@ -113,7 +122,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
       </section>
 
       {error ? null : (
-        <section className="w-full px-4 lg:px-8 flex flex-col gap-4 text-sm lg:text-base">
+        <section className="w-full px-4 flex flex-col gap-4 text-sm">
           {isLoading ? (
             <Skeleton height={32} />
           ) : (
@@ -169,11 +178,11 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
         </div>
       )}
       {isLoading || !lotteryFactor ? (
-        <div className="flex flex-col w-full gap-4 px-4 lg:px-8">
+        <div className="flex flex-col w-full gap-4 px-4">
           <SkeletonWrapper count={4} height={32} />
         </div>
       ) : (
-        <table className="table-fixed divide-y text-xs lg:text-base text-slate-500 w-full px-4 lg:px-8 border-separate border-spacing-y-2">
+        <table className="table-fixed divide-y text-xs lg:text-sm text-slate-500 w-full px-4 border-separate border-spacing-y-2">
           <thead>
             <tr>
               <th className="font-normal text-start">Contributor</th>
@@ -181,23 +190,29 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
               <th className="font-normal text-end">% of Total</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="!text-small truncate">
             {sortedContributors.slice(0, 4).map(({ name, count, value }) => (
-              <tr key={name} className={`${hovered === name && "bg-slate-100"} items-start`}>
-                <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 py-4 pl-2`}>
-                  <DevProfile username={name} hasBorder={false} />
+              <tr key={name} className={`${hovered === name && "bg-slate-100"} grow items-start`}>
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 pt-1 pb-2 pl-2`}>
+                  {/*
+                    Temporarily copying the DevProfile JSX minus the desktop view to fix this issue https://github.com/open-sauced/app/pull/3373#issuecomment-2112399608
+                  */}
+                  <div className="flex items-center gap-2 text-light-slate-11">
+                    <Link href={`/user/${name}`} className="rounded-full">
+                      <Avatar size={45} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
+                    </Link>
+                    <div>
+                      <h1 className="truncate text-light-slate-12">{name}</h1>
+                    </div>
+                  </div>
                 </td>
-                <td
-                  className={`${
-                    hovered === name ? "font-semibold" : "font-normal"
-                  } text-end border-b-1 tabular-nums w-fit`}
-                >
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1 w-fit`}>
                   {count}
                 </td>
                 <td
                   className={`${
                     hovered === name ? "font-semibold" : "font-normal"
-                  } text-end border-b-1 py-4 pr-2 tabular-nums`}
+                  } text-end border-b-1 pt-1 pb-2 pr-2 `}
                 >
                   {value}%
                 </td>
@@ -214,9 +229,7 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
                   <p>Other contributors</p>
                 </td>
                 <td></td>
-                <td className="text-end py-4 pr-2 tabular-nums">
-                  {sortedContributors.at(sortedContributors.length - 1)?.value}%
-                </td>
+                <td className="text-end py-4 pr-2 ">{sortedContributors.at(sortedContributors.length - 1)?.value}%</td>
               </tr>
             )}
           </tbody>
