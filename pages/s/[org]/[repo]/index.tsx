@@ -232,7 +232,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   error={lotteryFactorError}
                   range={range}
                   isLoading={isLotteryFactorLoading}
-                  className="max-h-fit lg:max-h-full lg:col-span-4"
+                  className="lg:col-span-4"
                 />
               </section>
 
