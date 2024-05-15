@@ -32,9 +32,13 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
   const githubAvatar = getAvatarByUsername(contributor.author_login);
   const { repoList, meta } = useContributorPullRequestsChart(contributor.author_login, topic, repositories, range);
   const languageList = useContributorLanguages(contributor.author_login);
-  const { data: user } = useFetchUser(contributor.author_login, {
-    revalidateOnFocus: false,
-  });
+  const { data: user } = useFetchUser(
+    contributor.author_login,
+    {
+      revalidateOnFocus: false,
+    },
+    repositories
+  );
 
   const { is_maintainer: isMaintainer } = user ?? {};
 
