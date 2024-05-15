@@ -20,6 +20,11 @@ import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/use
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 
+interface ComponentDefinition {
+  name: string;
+  arguments: Record<string, Record<string, any>>;
+}
+
 const componentRegistry = new Map<string, Function>();
 
 const SUGGESTIONS = [
@@ -75,15 +80,11 @@ type StarSearchChat = {
   content: string;
 };
 
-function renderStarSearchComponent(componentDefinition: string) {
+function renderStarSearchComponent(componentDefinition: ComponentDefinition) {
   try {
-    const Component = componentRegistry.get(componentDefinition);
-    const { name, arguments: rawProps } = JSON.parse(componentDefinition) as {
-      name: string;
-      arguments: string;
-    };
+    const Component = componentRegistry.get(componentDefinition.name);
 
-    switch (name) {
+    switch (componentDefinition.name) {
       case "renderLottoFactor":
         break;
 
@@ -91,10 +92,8 @@ function renderStarSearchComponent(componentDefinition: string) {
         throw new Error(`Unknown component name: ${name}`);
     }
 
-    const props = JSON.parse(rawProps);
-
     // @ts-expect-error TODO: fix this for the full working implementation
-    return <Component {...props} />;
+    return <Component {...componentDefinition.arguments} />;
   } catch (error: unknown) {
     // TODO: Sentry to log invalid JSON payload from StarSearch event of type function_call.
     return null;
@@ -104,7 +103,7 @@ function renderStarSearchComponent(componentDefinition: string) {
 export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
-  const [componentDefinitions, setComponentDefinitions] = useState<string[]>([]);
+  const [componentDefinitions, setComponentDefinitions] = useState<ComponentDefinition[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -205,11 +204,20 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           return;
         }
 
-        const componentDefinition = matched.groups.result;
-        // TODO: if the component is already in the registry, we don't need to import it again
-        const componentJsx = (await import("components/StarSearchWidgets/LotteryFactorWidget")).default;
-        componentRegistry.set(componentDefinition, componentJsx);
-        setComponentDefinitions((prev) => [...prev, componentDefinition]);
+        const rawComponentDefinition = matched.groups.result;
+
+        try {
+          const componentDefinition = JSON.parse(rawComponentDefinition) as ComponentDefinition;
+          const componentKey = componentDefinition.name;
+
+          if (!componentRegistry.has(componentKey)) {
+            const componentJsx = (await import("components/StarSearchWidgets/LotteryFactorWidget")).default;
+            componentRegistry.set(componentKey, componentJsx);
+          }
+          setComponentDefinitions((prev) => [...prev, componentDefinition]);
+        } catch (error) {
+          // Notify Sentry of the error
+        }
       }
 
       const values = value.split("\n");
@@ -287,7 +295,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
                 ))}
                 {componentDefinitions.map((componentDefinition, i) => (
-                  <Fragment key={i}>{renderStarSearchComponent(componentDefinition)}</Fragment>
+                  <Fragment key={i}>{renderStarSearchComponent(componentDefinition.name)}</Fragment>
                 ))}
                 <div ref={scrollRef} />
               </ScrollArea>
