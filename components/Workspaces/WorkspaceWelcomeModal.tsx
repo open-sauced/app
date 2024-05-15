@@ -31,7 +31,7 @@ export default function WorkspaceWelcomeModal({ isOpen, onClose }: WorkspaceWelc
     </div>
   );
 
-  const isSmallScreen = useMediaQuery("(max-width: 768px)");
+  const isSmallScreen = useMediaQuery("(max-width: 640px)");
   const drawerButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
