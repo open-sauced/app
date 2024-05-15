@@ -24,11 +24,9 @@ export default function WorkspaceWelcomeModal({ isOpen, onClose }: WorkspaceWelc
   );
 
   const content = (
-    <div className="grid gap-4 place-content-center">
-      <p className="font-medium text-light-orange-10">
-        Create a new workspace and explore open source like never before!
-      </p>
-    </div>
+    <p className="font-medium text-light-orange-10 text-center">
+      Create a new workspace and explore open source like never before!
+    </p>
   );
 
   const isSmallScreen = useMediaQuery("(max-width: 640px)");
