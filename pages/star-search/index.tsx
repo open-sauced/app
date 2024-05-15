@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import Markdown from "react-markdown";
@@ -19,6 +19,8 @@ import SEO from "layouts/SEO/SEO";
 import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+
+const componentRegistry = new Map<string, Function>();
 
 const SUGGESTIONS = [
   {
@@ -73,9 +75,35 @@ type StarSearchChat = {
   content: string;
 };
 
+function renderStarSearchComponent(componentDefinition: string) {
+  try {
+    const Component = componentRegistry.get(componentDefinition);
+    const { name, arguments: rawProps } = JSON.parse(componentDefinition) as {
+      name: string;
+      arguments: string;
+    };
+
+    switch (name) {
+      case "renderLottoFactor":
+        break;
+
+      default:
+        throw new Error(`Unknown component name: ${name}`);
+    }
+
+    const props = JSON.parse(rawProps);
+
+    return <Component {...props} />;
+  } catch (error: unknown) {
+    // TODO: Sentry to log invalid JSON payload from StarSearch event of type function_call.
+    return null;
+  }
+}
+
 export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
+  const [componentDefinitions, setComponentDefinitions] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -167,9 +195,20 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         return;
       }
 
-      // TODO: Remove this once https://github.com/open-sauced/app/issues/3372 is implemented.
+      /* when the event type is function_call we know we need to render a component, if the event type is content, we render the markdown as HTML */
+
+      // if the string starts with "event: function_call" we know we need to render a component. So filter out those values into a separate array
       if (value.startsWith("event: function_call")) {
-        continue;
+        const matched = value.match(/data:\s?(?<result>.*)/);
+        if (!matched?.groups?.result) {
+          return;
+        }
+
+        const componentDefinition = matched.groups.result;
+        // TODO: if the component is already in the registry, we don't need to import it again
+        const componentJsx = (await import("components/StarSearchWidgets/LotteryFactorWidget")).default;
+        componentRegistry.set(componentDefinition, componentJsx);
+        setComponentDefinitions((prev) => [...prev, componentDefinition]);
       }
 
       const values = value.split("\n");
@@ -201,6 +240,19 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           if (!matched || !matched.groups) {
             return;
           }
+
+          let canParseJson = false;
+          try {
+            JSON.parse(matched.groups.result);
+            canParseJson = true;
+          } catch (error) {
+            // nothing. this is temporary for a demo for bdougie.
+          }
+
+          if (canParseJson) {
+            return;
+          }
+
           const temp = [...chat];
           const changed = temp.at(temp.length - 1);
           if (matched.groups.result === "") {
@@ -232,6 +284,9 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
               <ScrollArea className="flex grow">
                 {chat.map((message, i) => (
                   <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
+                ))}
+                {componentDefinitions.map((componentDefinition, i) => (
+                  <Fragment key={i}>{renderStarSearchComponent(componentDefinition)}</Fragment>
                 ))}
                 <div ref={scrollRef} />
               </ScrollArea>
