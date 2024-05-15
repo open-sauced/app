@@ -199,7 +199,7 @@ export default function LotteryFactorChart({
                   */}
                   <div className="flex items-center gap-2 text-light-slate-11">
                     <Link href={`/user/${name}`} className="rounded-full">
-                      <Avatar size={45} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
+                      <Avatar size={36} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
                     </Link>
                     <div>
                       <h1 className="truncate text-light-slate-12">{name}</h1>
