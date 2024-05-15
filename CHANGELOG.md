@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.28.0-beta.1](https://github.com/open-sauced/app/compare/v2.27.0...v2.28.0-beta.1) (2024-05-15)
+
+
+### 🍕 Features
+
+* layout changes for repo pages ([#3373](https://github.com/open-sauced/app/issues/3373)) ([51c5bde](https://github.com/open-sauced/app/commit/51c5bde17fa5a1d25aef0ead323c61d33ef41091))
+
 ## [2.27.0](https://github.com/open-sauced/app/compare/v2.26.0...v2.27.0) (2024-05-15)
 
 
