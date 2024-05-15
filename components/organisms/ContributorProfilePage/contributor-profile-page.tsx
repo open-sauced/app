@@ -19,7 +19,6 @@ import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
 import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
-import { ContributorObject } from "../ContributorCard/contributor-card";
 
 const colorKeys = Object.keys(color);
 interface PrObjectType {
@@ -35,7 +34,7 @@ interface PrObjectType {
 }
 
 interface ContributorProfilePageProps {
-  contributor?: ContributorObject;
+  contributor?: DbPRContributor;
   topic?: string;
   repositories?: number[];
   listOfPRs?: PrObjectType[];

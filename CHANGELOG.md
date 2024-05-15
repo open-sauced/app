@@ -5,6 +5,48 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.27.0-beta.5](https://github.com/open-sauced/app/compare/v2.27.0-beta.4...v2.27.0-beta.5) (2024-05-14)
+
+
+### 🐛 Bug Fixes
+
+* temporarily returning for event: function_call in readable stream from StarSearch ([#3379](https://github.com/open-sauced/app/issues/3379)) ([f6f4b01](https://github.com/open-sauced/app/commit/f6f4b01095bba524c77ee267dd401d2757adf330))
+
+## [2.27.0-beta.4](https://github.com/open-sauced/app/compare/v2.27.0-beta.3...v2.27.0-beta.4) (2024-05-14)
+
+
+### 🍕 Features
+
+* Contributors tab for Repo pages ([#3342](https://github.com/open-sauced/app/issues/3342)) ([f1142c3](https://github.com/open-sauced/app/commit/f1142c3732b4842984cf726f0fa0624ea639ea6b))
+
+## [2.27.0-beta.3](https://github.com/open-sauced/app/compare/v2.27.0-beta.2...v2.27.0-beta.3) (2024-05-14)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch remains visible on smaller screens in the top menu ([#3374](https://github.com/open-sauced/app/issues/3374)) ([d6d0048](https://github.com/open-sauced/app/commit/d6d004812dfad3683520bce7cf90154cb175036a))
+
+## [2.27.0-beta.2](https://github.com/open-sauced/app/compare/v2.27.0-beta.1...v2.27.0-beta.2) (2024-05-13)
+
+
+### 🐛 Bug Fixes
+
+* now opening workspace dropdown puts focus on search input ([#3364](https://github.com/open-sauced/app/issues/3364)) ([bafa0e4](https://github.com/open-sauced/app/commit/bafa0e47b244114b22ecdf773b9c67ad54cd2f2a))
+
+## [2.27.0-beta.1](https://github.com/open-sauced/app/compare/v2.26.1-beta.1...v2.27.0-beta.1) (2024-05-13)
+
+
+### 🍕 Features
+
+* Lottery Factor chart for Repo pages ([#3343](https://github.com/open-sauced/app/issues/3343)) ([deda50e](https://github.com/open-sauced/app/commit/deda50e6c69367c6e9a225a92ee6c6a0e959c775))
+
+## [2.26.1-beta.1](https://github.com/open-sauced/app/compare/v2.26.0...v2.26.1-beta.1) (2024-05-10)
+
+
+### 🐛 Bug Fixes
+
+* title for PR chart tooltip ([#3350](https://github.com/open-sauced/app/issues/3350)) ([56b2746](https://github.com/open-sauced/app/commit/56b2746dd737c0f4788cde0125e7c1787529384d))
+
 ## [2.26.0](https://github.com/open-sauced/app/compare/v2.25.0...v2.26.0) (2024-05-09)
 
 

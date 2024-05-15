@@ -164,7 +164,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
         }}
       >
         <div className="grid justify-center place-content-start py-7 px-3 md:justify-start">
-          <HeaderLogo withBg={false} />
+          <HeaderLogo />
         </div>
         <div
           className="grid place-content-center"

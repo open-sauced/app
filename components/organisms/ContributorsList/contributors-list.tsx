@@ -6,8 +6,6 @@ import ContributorListTableHeaders from "components/molecules/ContributorListTab
 import Pagination from "components/molecules/Pagination/pagination";
 import TableHeader from "components/molecules/TableHeader/table-header";
 import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
-import { calcDistanceFromToday } from "lib/utils/date-utils";
-import { getAvatarByUsername } from "lib/utils/github";
 import ContributorCard from "../ContributorCard/contributor-card";
 
 interface ContributorsListProps {
@@ -25,24 +23,10 @@ interface ContributorCardListProps {
 }
 
 const ContributorCardList = ({ contributors = [], topic, range }: ContributorCardListProps) => {
-  const contributorArray = contributors.map((contributor) => {
-    const dateOfFirstPR = calcDistanceFromToday(new Date(contributor.updated_at));
-
-    return {
-      profile: {
-        githubAvatar: getAvatarByUsername(contributor.author_login || contributor.username),
-        githubName: contributor.author_login || contributor.username,
-        dateOfFirstPR,
-      },
-    };
-  });
-
   return (
     <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
-      {contributorArray.map((contributor) => {
-        return (
-          <ContributorCard key={contributor.profile.githubName} contributor={contributor} topic={topic} range={range} />
-        );
+      {contributors.map((contributor) => {
+        return <ContributorCard key={contributor.author_login} contributor={contributor} topic={topic} range={range} />;
       })}
     </div>
   );
