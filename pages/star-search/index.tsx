@@ -93,6 +93,7 @@ function renderStarSearchComponent(componentDefinition: string) {
 
     const props = JSON.parse(rawProps);
 
+    // @ts-expect-error TODO: fix this for the full working implementation
     return <Component {...props} />;
   } catch (error: unknown) {
     // TODO: Sentry to log invalid JSON payload from StarSearch event of type function_call.
