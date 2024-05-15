@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.28.0-beta.2](https://github.com/open-sauced/app/compare/v2.28.0-beta.1...v2.28.0-beta.2) (2024-05-15)
+
+
+### 🐛 Bug Fixes
+
+* now on smaller screens a drawer opens for welcome to workspaces ([#3386](https://github.com/open-sauced/app/issues/3386)) ([d54f2db](https://github.com/open-sauced/app/commit/d54f2db69c63a4974e79b0c27c5b37adaee34aab))
+
 ## [2.28.0-beta.1](https://github.com/open-sauced/app/compare/v2.27.0...v2.28.0-beta.1) (2024-05-15)
 
 
