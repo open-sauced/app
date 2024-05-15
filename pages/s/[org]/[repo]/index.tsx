@@ -217,7 +217,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
           </div>
           <ClientOnly>
             <div className="flex flex-col gap-4">
-              <section className="flex flex-col gap-4 lg:grid-cols-12 lg:max-h-[36rem]">
+              <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[36rem]">
                 <ContributorsChart
                   stats={contributorStats}
                   range={range}
