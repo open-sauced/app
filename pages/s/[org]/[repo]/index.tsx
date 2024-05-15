@@ -216,59 +216,63 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
           </div>
           <ClientOnly>
-            <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4">
-              <ContributorsChart
-                stats={contributorStats}
-                range={range}
-                rangedTotal={contributorRangedTotal!}
-                syncId={syncId}
-                isLoading={isContributorDataLoading}
-                className="lg:col-span-8 h-full max-h-[31.85rem]"
-              />
+            <div className="flex flex-col gap-4">
+              <section className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:max-h-[36rem]">
+                <ContributorsChart
+                  stats={contributorStats}
+                  range={range}
+                  rangedTotal={contributorRangedTotal!}
+                  syncId={syncId}
+                  isLoading={isContributorDataLoading}
+                  className="lg:col-span-8"
+                />
 
-              <LotteryFactorChart
-                lotteryFactor={lotteryFactor}
-                error={lotteryFactorError}
-                range={range}
-                isLoading={isLotteryFactorLoading}
-                className="lg:col-span-4 h-fit"
-              />
+                <LotteryFactorChart
+                  lotteryFactor={lotteryFactor}
+                  error={lotteryFactorError}
+                  range={range}
+                  isLoading={isLotteryFactorLoading}
+                  className="lg:col-span-4"
+                />
+              </section>
 
-              <IssuesChart
-                stats={issueStats}
-                range={range}
-                velocity={repoStats?.issues_velocity_count ?? 0}
-                syncId={syncId}
-                isLoading={isIssueDataLoading}
-                className="lg:col-span-6 h-fit"
-              />
+              <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+                <IssuesChart
+                  stats={issueStats}
+                  range={range}
+                  velocity={repoStats?.issues_velocity_count ?? 0}
+                  syncId={syncId}
+                  isLoading={isIssueDataLoading}
+                  className="lg:col-span-6 h-fit"
+                />
 
-              <PRChart
-                stats={prStats}
-                range={range}
-                velocity={repoStats?.pr_velocity_count ?? 0}
-                syncId={syncId}
-                isLoading={isPrDataLoading}
-                className="lg:col-span-6 h-fit"
-              />
+                <PRChart
+                  stats={prStats}
+                  range={range}
+                  velocity={repoStats?.pr_velocity_count ?? 0}
+                  syncId={syncId}
+                  isLoading={isPrDataLoading}
+                  className="lg:col-span-6 h-fit"
+                />
 
-              <StarsChart
-                stats={starsData}
-                total={repoData.stars}
-                range={range}
-                syncId={syncId}
-                isLoading={isStarsDataLoading}
-                className="lg:col-span-6 h-fit"
-              />
+                <StarsChart
+                  stats={starsData}
+                  total={repoData.stars}
+                  range={range}
+                  syncId={syncId}
+                  isLoading={isStarsDataLoading}
+                  className="lg:col-span-6 h-fit"
+                />
 
-              <ForksChart
-                stats={forkStats}
-                total={repoData.forks}
-                range={range}
-                syncId={syncId}
-                isLoading={isForksDataLoading}
-                className="lg:col-span-6 h-fit"
-              />
+                <ForksChart
+                  stats={forkStats}
+                  total={repoData.forks}
+                  range={range}
+                  syncId={syncId}
+                  isLoading={isForksDataLoading}
+                  className="lg:col-span-6 h-fit"
+                />
+              </section>
             </div>
           </ClientOnly>
         </section>
