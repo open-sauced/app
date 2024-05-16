@@ -121,6 +121,8 @@ function renderStarSearchComponent(widgetDefinition: WidgetDefinition) {
         }
       )
     );
+
+    // Returning null because widgets enhance the experiece but are not critical to the functionality.
     return null;
   }
 }
@@ -556,8 +558,20 @@ function SuggestionBoxes({
 }
 
 function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number }) {
-  if (typeof message.content !== "string" && !componentRegistry.has(message.content.name)) {
-    return null;
+  let content;
+
+  if (typeof message.content == "string") {
+    content = <Markdown>{message.content}</Markdown>;
+  } else {
+    if (!componentRegistry.has(message.content.name)) {
+      return null;
+    }
+
+    content = renderStarSearchComponent(message.content);
+
+    if (!content) {
+      return null;
+    }
   }
 
   const renderAvatar = () => {
@@ -592,11 +606,7 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
       {renderAvatar()}
       <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
         <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
-        {typeof message.content === "string" ? (
-          <Markdown>{message.content}</Markdown>
-        ) : (
-          <>{renderStarSearchComponent(message.content)}</>
-        )}
+        {content}
       </Card>
     </li>
   );
