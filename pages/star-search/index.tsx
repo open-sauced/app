@@ -51,23 +51,25 @@ const SUGGESTIONS = [
 type SuggesionTypes = (typeof SUGGESTIONS)[number];
 
 async function updateComponentRegistry(name: string) {
-  if (!componentRegistry.has(name)) {
-    try {
-      let component;
-
-      switch (name) {
-        case "renderLottoFactor":
-          component = (await import("components/StarSearchWidgets/LotteryFactorWidget")).default;
-          break;
-        default:
-          break;
-      }
-
-      if (component) {
-        componentRegistry.set(name, component);
-      }
-    } catch (error) {}
+  if (componentRegistry.has(name)) {
+    return;
   }
+
+  try {
+    let component;
+
+    switch (name) {
+      case "renderLottoFactor":
+        component = (await import("components/StarSearchWidgets/LotteryFactorWidget")).default;
+        break;
+      default:
+        break;
+    }
+
+    if (component) {
+      componentRegistry.set(name, component);
+    }
+  } catch (error) {}
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -540,6 +542,10 @@ function SuggestionBoxes({
 }
 
 function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number }) {
+  if (typeof message.content !== "string" && !componentRegistry.has(message.content.name)) {
+    return null;
+  }
+
   const renderAvatar = () => {
     switch (message.author) {
       case "You":
