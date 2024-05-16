@@ -23,10 +23,11 @@ import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 
 export interface WidgetDefinition {
   name: string;
-  arguments: Record<string, Record<string, any>>;
+  arguments?: Record<string, Record<string, any>>;
 }
 
 type EventType = "content" | "function_call";
+type Author = "You" | "StarSearch";
 
 const componentRegistry = new Map<string, Function>();
 
@@ -50,6 +51,38 @@ const SUGGESTIONS = [
 ];
 
 type SuggesionTypes = (typeof SUGGESTIONS)[number];
+
+interface ChatAvatarProps {
+  author: Author;
+  userId?: number;
+}
+
+function ChatAvatar({ author, userId }: ChatAvatarProps) {
+  switch (author) {
+    case "You":
+      return (
+        <Image
+          src={getAvatarById(`${userId}`)}
+          alt="Your profile picture"
+          width={32}
+          height={32}
+          className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
+        />
+      );
+    case "StarSearch":
+      return (
+        <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full w-max">
+          <Image
+            src="/assets/star-search-logo-white.svg"
+            alt="StarSearch logo"
+            width={24}
+            height={24}
+            className="w-6 h-6"
+          />
+        </div>
+      );
+  }
+}
 
 async function updateComponentRegistry(name: string) {
   if (componentRegistry.has(name)) {
@@ -108,8 +141,6 @@ type StarSearchPageProps = {
 
 type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch"; content: string | WidgetDefinition };
 
-// describe what renderStarSearchComponent does in a comment
-
 /**
  * This function renders a StarSearch widget component based on the widget definition provided.
  * The function will look up the widget component in the component registry and render it with the provided arguments (component props).
@@ -119,7 +150,7 @@ type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch
  * @returns The rendered widget component or null if the widget component is not found.
  *
  */
-function renderStarSearchComponent(widgetDefinition: WidgetDefinition) {
+function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefinition }) {
   try {
     const Component = componentRegistry.get(widgetDefinition.name);
     const componentToRender = Component ? <Component {...widgetDefinition.arguments} /> : null;
@@ -586,43 +617,16 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
       return null;
     }
 
-    content = renderStarSearchComponent(message.content);
+    content = <StarSearchWidget widgetDefinition={message.content} />;
 
     if (!content) {
       return null;
     }
   }
 
-  const renderAvatar = () => {
-    switch (message.author) {
-      case "You":
-        return (
-          <Image
-            src={getAvatarById(`${userId}`)}
-            alt="Your profile picture"
-            width={32}
-            height={32}
-            className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
-          />
-        );
-      case "StarSearch":
-        return (
-          <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full w-max">
-            <Image
-              src="/assets/star-search-logo-white.svg"
-              alt="StarSearch logo"
-              width={24}
-              height={24}
-              className="w-6 h-6"
-            />
-          </div>
-        );
-    }
-  };
-
   return (
     <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
-      {renderAvatar()}
+      <ChatAvatar author="StarSearch" userId={userId} />
       <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
         <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
         {content}
