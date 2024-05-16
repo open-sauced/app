@@ -16,7 +16,11 @@ import { getAvatarById } from "lib/utils/github";
 import { Drawer } from "components/shared/Drawer";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import SEO from "layouts/SEO/SEO";
-import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/useStarSearchFeedback";
+import {
+  StarSearchFeedbackAnalytic,
+  StarSearchPromptAnalytic,
+  useStarSearchFeedback,
+} from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 
@@ -81,8 +85,15 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { feedback } = useStarSearchFeedback();
+  const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
+
+  function registerPrompt(promptInput: StarSearchPromptAnalytic) {
+    prompt({
+      promptContent: promptInput.promptContent,
+      promptResponse: promptInput.promptResponse,
+    });
+  }
 
   function registerFeedback(feedbackType: StarSearchFeedbackAnalytic["feedback"]) {
     feedback({
@@ -164,6 +175,10 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
+        registerPrompt({
+          promptContent: prompt,
+          promptResponse: chat[chat.length - 1]?.content || "No response captured",
+        });
         return;
       }
 
