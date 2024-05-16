@@ -306,18 +306,16 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           const { result } = matched.groups;
 
           try {
+            // function_call means we're loading a widget definition for the enriched UI
             if (eventType === "function_call") {
               jsonContent = JSON.parse(result);
               jsonContent.arguments = JSON.parse(jsonContent.arguments as any) as WidgetDefinition["arguments"];
               await updateComponentRegistry(jsonContent.name);
             }
           } catch (error) {
-            // Only log an error if it's a function call as we expect the content to be JSON.
-            if (eventType === "function_call") {
-              Sentry.captureException(
-                new Error(`Failed to parse JSON for StarSearch widget. JSON payload: ${result}`, { cause: error })
-              );
-            }
+            Sentry.captureException(
+              new Error(`Failed to parse JSON for StarSearch widget. JSON payload: ${result}`, { cause: error })
+            );
           }
 
           setChat((chat) => {
@@ -325,6 +323,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
 
             if (matched.groups) {
               if (eventType === "function_call") {
+                // create a new chat item because the widget will require it's own chatbox.
                 updatedChat.push({
                   author: "StarSearch",
                   content: jsonContent,
@@ -334,6 +333,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
 
                 if (changes) {
                   if (!changes || typeof changes.content !== "string") {
+                    // if the previous item in the chats was a widget, we need to add a new chat item.
                     updatedChat.push({
                       author: "StarSearch",
                       content: "",
@@ -342,6 +342,8 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   }
 
                   if (changes) {
+                    // concatenate the new content to the previous chat item as it's a continuation of the same message
+                    // coming from the readable stream.
                     changes.content += matched.groups.result === "" ? "&nbsp; \n" : result;
                   }
                 }
