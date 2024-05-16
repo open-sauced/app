@@ -29,12 +29,32 @@ module.exports = millionLint({
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
   images: {
-    domains: [
-      "avatars.githubusercontent.com",
-      "images.unsplash.com",
-      "www.github.com",
-      "github.com",
-      "res.cloudinary.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "www.github.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "github.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+      },
     ],
   },
   async redirects() {
