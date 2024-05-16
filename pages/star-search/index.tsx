@@ -114,7 +114,6 @@ function renderStarSearchComponent(widgetDefinition: WidgetDefinition) {
 export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
-  const [componentDefinitions, setComponentDefinitions] = useState<WidgetDefinition[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -178,7 +177,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
 
     // add user prompt to history
     setChat((history) => {
-      const temp = history;
+      const temp = [...history];
       temp.push({ author: "You", content: prompt });
       return temp;
     });
@@ -199,19 +198,13 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
 
     if (response.status !== 200) {
       setChat((history) => {
-        const temp = history;
+        const temp = [...history];
         temp.push({ author: "StarSearch", content: "There's been an error. Try again." });
         return temp;
       });
       setIsRunning(false); // enables input
       return;
     }
-
-    setChat((history) => {
-      const temp = history;
-      temp.push({ author: "StarSearch", content: "" });
-      return temp;
-    });
 
     const decoder = new TextDecoderStream();
     const reader = response.body?.pipeThrough(decoder).getReader();
@@ -287,13 +280,14 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
             return;
           }
 
-          let jsonContent;
+          let jsonContent: WidgetDefinition;
           const { result } = matched.groups;
 
           try {
             if (eventType === "function_call") {
               jsonContent = JSON.parse(result);
-              jsonContent.arguments = JSON.parse(jsonContent.arguments);
+              jsonContent.arguments = JSON.parse(jsonContent.arguments as any) as WidgetDefinition["arguments"];
+              await updateComponentRegistry(jsonContent.name);
             }
           } catch (error) {
             // Only log an error if it's a function call as we expect the content to be JSON.
@@ -302,23 +296,36 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
             }
           }
 
-          const updatedChat = [...chat];
+          setChat((chat) => {
+            const updatedChat = [...chat];
 
-          if (eventType === "function_call") {
-            await updateComponentRegistry(jsonContent.name);
-            updatedChat.push({
-              author: "StarSearch",
-              content: jsonContent,
-            });
-            setChat(updatedChat);
-          } else {
-            const changes = updatedChat.at(-1);
+            if (matched.groups) {
+              if (eventType === "function_call") {
+                updatedChat.push({
+                  author: "StarSearch",
+                  content: jsonContent,
+                });
+              } else {
+                let changes = updatedChat.at(-1);
 
-            if (changes) {
-              changes.content += matched.groups.result === "" ? "&nbsp; \n" : result;
-              setChat(updatedChat);
+                if (changes) {
+                  if (!changes || typeof changes.content !== "string") {
+                    updatedChat.push({
+                      author: "StarSearch",
+                      content: "",
+                    });
+                    changes = updatedChat.at(-1);
+                  }
+
+                  if (changes) {
+                    changes.content += matched.groups.result === "" ? "&nbsp; \n" : result;
+                  }
+                }
+              }
             }
-          }
+
+            return updatedChat;
+          });
 
           return;
         }
