@@ -7,20 +7,15 @@ interface LotteryFactorWidgetProps {
 
 const LotteryFactorWidget = ({ repoName }: LotteryFactorWidgetProps) => {
   const range = 30;
-  const {
-    data: lotteryFactor,
-    error: lotteryFactorError,
-    isLoading: isLotteryFactorLoading,
-  } = useRepositoryLottoFactor({ repository: repoName.toLowerCase(), range });
+  const { data, error, isLoading } = useRepositoryLottoFactor({ repository: repoName.toLowerCase(), range });
 
-  return (
-    <LotteryFactorChart
-      lotteryFactor={lotteryFactor}
-      isLoading={isLotteryFactorLoading}
-      error={lotteryFactorError}
-      range={range}
-    />
-  );
+  if (error) {
+    // whether it's a 404 or any other error, we don't want to rener the widget
+    // StarSearch will handle the error.
+    throw error;
+  }
+
+  return <LotteryFactorChart lotteryFactor={data} isLoading={isLoading} error={error} range={range} />;
 };
 
 export default LotteryFactorWidget;
