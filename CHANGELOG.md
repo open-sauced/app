@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.0-beta.7](https://github.com/open-sauced/app/compare/v2.29.0-beta.6...v2.29.0-beta.7) (2024-05-16)
+
+
+### 🍕 Features
+
+* capture all StarSearch prompts in PostHog ([#3405](https://github.com/open-sauced/app/issues/3405)) ([f7d8ac6](https://github.com/open-sauced/app/commit/f7d8ac6377046e0c14784178d96bdfbb3148fc81))
+
+
+### 🐛 Bug Fixes
+
+* fixed TS error and logic for gathering prompt response ([#3410](https://github.com/open-sauced/app/issues/3410)) ([36d26c2](https://github.com/open-sauced/app/commit/36d26c2530941271307fee96e771c02583d7f635))
+
 ## [2.29.0-beta.6](https://github.com/open-sauced/app/compare/v2.29.0-beta.5...v2.29.0-beta.6) (2024-05-16)
 
 
