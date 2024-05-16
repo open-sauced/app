@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.0-beta.3](https://github.com/open-sauced/app/compare/v2.29.0-beta.2...v2.29.0-beta.3) (2024-05-16)
+
+
+### 🐛 Bug Fixes
+
+* remove unused waitlist components ([#3404](https://github.com/open-sauced/app/issues/3404)) ([a99b113](https://github.com/open-sauced/app/commit/a99b113563ed4bccba1a6b2d2a95aa8db34e1b49))
+
 ## [2.29.0-beta.2](https://github.com/open-sauced/app/compare/v2.29.0-beta.1...v2.29.0-beta.2) (2024-05-15)
 
 
