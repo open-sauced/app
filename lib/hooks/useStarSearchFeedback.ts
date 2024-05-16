@@ -6,8 +6,20 @@ export interface StarSearchFeedbackAnalytic {
   promptResponse: string[];
 }
 
+export interface StarSearchPromptAnalytic {
+  promptContent: string;
+  promptResponse: string;
+}
+
 export const useStarSearchFeedback = () => {
   const posthog = usePostHog();
+
+  const prompt = ({ promptContent, promptResponse }: StarSearchPromptAnalytic) => {
+    posthog.capture("star_search_prompt", {
+      promptContent,
+      promptResponse,
+    } satisfies StarSearchPromptAnalytic);
+  };
 
   const feedback = ({ feedback, promptContent, promptResponse }: StarSearchFeedbackAnalytic) => {
     posthog.capture("star_search_feedback", {
@@ -19,5 +31,6 @@ export const useStarSearchFeedback = () => {
 
   return {
     feedback,
+    prompt,
   };
 };
