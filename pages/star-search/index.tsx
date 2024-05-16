@@ -61,7 +61,7 @@ async function updateComponentRegistry(name: string) {
 
     switch (name) {
       case "renderLottoFactor":
-        component = (await import("components/StarSearchWidgets/LotteryFactorWidget")).default;
+        component = (await import("components/StarSearch/Widgets/LotteryFactorWidget")).default;
         break;
       default:
         break;
