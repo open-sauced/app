@@ -10,7 +10,7 @@ const LotteryFactorWidget = ({ repoName }: LotteryFactorWidgetProps) => {
   const { data, error, isLoading } = useRepositoryLottoFactor({ repository: repoName.toLowerCase(), range });
 
   if (error) {
-    // whether it's a 404 or any other error, we don't want to rener the widget
+    // whether it's a 404 or any other error, we don't want to render the widget
     // StarSearch will handle the error.
     throw error;
   }
