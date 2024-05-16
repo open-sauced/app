@@ -287,9 +287,15 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
+        const textChat = chat.filter((item) => typeof item.content === "string");
         registerPrompt({
           promptContent: prompt,
-          promptResponse: chat[chat.length - 1]?.content || "No response captured",
+          promptResponse:
+            chat
+              .slice(1)
+              // There can be multiple responses because of widgets, so we need to serialize the widget data
+              .map((c) => (typeof c.content === "string" ? c.content : JSON.stringify(c.content)))
+              .join("\n") || "No response captured",
         });
         return;
       }
