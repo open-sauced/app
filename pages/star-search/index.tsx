@@ -108,6 +108,17 @@ type StarSearchPageProps = {
 
 type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch"; content: string | WidgetDefinition };
 
+// describe what renderStarSearchComponent does in a comment
+
+/**
+ * This function renders a StarSearch widget component based on the widget definition provided.
+ * The function will look up the widget component in the component registry and render it with the provided arguments (component props).
+ *
+ * @param widgetDefinition - The widget definition object that contains the name of the widget and the arguments to pass to the widget.
+ *
+ * @returns The rendered widget component or null if the widget component is not found.
+ *
+ */
 function renderStarSearchComponent(widgetDefinition: WidgetDefinition) {
   try {
     const Component = componentRegistry.get(widgetDefinition.name);
