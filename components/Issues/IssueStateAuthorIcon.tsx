@@ -31,7 +31,7 @@ export const IssueStateAuthorIcon = ({ state, author }: { state: IssueState; aut
       backgroundColor = "bg-green-600";
       break;
     case "closed":
-      backgroundColor = "bg-red-600";
+      backgroundColor = "bg-purple-600";
       break;
   }
 
