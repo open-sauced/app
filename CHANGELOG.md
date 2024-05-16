@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.0-beta.4](https://github.com/open-sauced/app/compare/v2.29.0-beta.3...v2.29.0-beta.4) (2024-05-16)
+
+
+### 🐛 Bug Fixes
+
+* Change closed issue state to purple on issues table ([#3406](https://github.com/open-sauced/app/issues/3406)) ([71b4478](https://github.com/open-sauced/app/commit/71b4478e6dee44ffba2d630f282a7bf5ccb9514a))
+
 ## [2.29.0-beta.3](https://github.com/open-sauced/app/compare/v2.29.0-beta.2...v2.29.0-beta.3) (2024-05-16)
 
 
