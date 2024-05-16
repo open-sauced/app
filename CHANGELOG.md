@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.0-beta.2](https://github.com/open-sauced/app/compare/v2.29.0-beta.1...v2.29.0-beta.2) (2024-05-15)
+
+
+### 🐛 Bug Fixes
+
+* correct placeholder text in HighlightInput component ([#3348](https://github.com/open-sauced/app/issues/3348)) ([2ea0d24](https://github.com/open-sauced/app/commit/2ea0d243c8f2fbb5447a4210270a162020478d82))
+
 ## [2.29.0-beta.1](https://github.com/open-sauced/app/compare/v2.28.0...v2.29.0-beta.1) (2024-05-15)
 
 
