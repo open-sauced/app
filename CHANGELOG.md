@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.0-beta.5](https://github.com/open-sauced/app/compare/v2.29.0-beta.4...v2.29.0-beta.5) (2024-05-16)
+
+
+### 🍕 Features
+
+* implemented Enriched UI responses for StarSearch ([#3394](https://github.com/open-sauced/app/issues/3394)) ([9886681](https://github.com/open-sauced/app/commit/988668124459b5d9ded678b8f6f2dadbe8f71a37))
+
 ## [2.29.0-beta.4](https://github.com/open-sauced/app/compare/v2.29.0-beta.3...v2.29.0-beta.4) (2024-05-16)
 
 
