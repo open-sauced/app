@@ -9,6 +9,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { BsArrowUpShort } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
+import * as Sentry from "@sentry/nextjs";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -104,11 +105,22 @@ type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch
 function renderStarSearchComponent(widgetDefinition: WidgetDefinition) {
   try {
     const Component = componentRegistry.get(widgetDefinition.name);
+    const componentToRender = Component ? <Component {...widgetDefinition.arguments} /> : null;
 
-    // @ts-expect-error TODO: fix this for the full working implementation
-    return <Component {...widgetDefinition.arguments} />;
+    if (componentToRender === null) {
+      throw new Error(`Component ${widgetDefinition.name} not found in registry`);
+    }
+
+    return componentToRender;
   } catch (error: unknown) {
-    // TODO: Sentry to log invalid JSON payload from StarSearch event of type function_call.
+    Sentry.captureException(
+      new Error(
+        `Unable to render dynamic widget in StarSearch. Widget definition: ${JSON.stringify(widgetDefinition)}`,
+        {
+          cause: error,
+        }
+      )
+    );
     return null;
   }
 }
@@ -294,7 +306,9 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           } catch (error) {
             // Only log an error if it's a function call as we expect the content to be JSON.
             if (eventType === "function_call") {
-              // TODO: Log to Sentry
+              Sentry.captureException(
+                new Error(`Failed to parse JSON for StarSearch widget. JSON payload: ${result}`, { cause: error })
+              );
             }
           }
 
