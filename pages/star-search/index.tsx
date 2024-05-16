@@ -70,7 +70,13 @@ async function updateComponentRegistry(name: string) {
     if (component) {
       componentRegistry.set(name, component);
     }
-  } catch (error) {}
+  } catch (error) {
+    Sentry.captureException(
+      new Error(`Unable to dynamically import the widget component for StarSearch. Widget name: ${name}`, {
+        cause: error,
+      })
+    );
+  }
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
