@@ -17,6 +17,7 @@ type ContributorsChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  className?: string;
 };
 
 export default function ContributorsChart({
@@ -25,23 +26,24 @@ export default function ContributorsChart({
   syncId,
   range = 30,
   isLoading,
+  className,
 }: ContributorsChartProps) {
   const dailyData = useMemo(() => getDailyContributorHistogramToDays({ stats, range }), [stats, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
   const rangedAverage = useMemo(() => (rangedTotal / range).toPrecision(2), [rangedTotal, range]);
 
   return (
-    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4 lg:px-8">
+    <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center !px-6 !py-8`}>
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-start gap-4 lg:justify-between px-2">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
           <>
             <div className="flex gap-2 items-center w-fit">
               <FaUsers className="text-xl" />
-              <div className="flex gap-1">
+              <div className="flex gap-1 items-center">
                 <h3 className="text-sm font-semibold md:text-lg text-slate-800">Contributors</h3>
-                <p className="text-sm md:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+                <p className="text-sm md:text-base w-fit pl-2 text-slate-500 font-medium">{range} days</p>
               </div>
             </div>
             <aside className="flex gap-8">
@@ -57,16 +59,22 @@ export default function ContributorsChart({
           </>
         )}
       </section>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={370}>
         {isLoading ? (
           <SkeletonWrapper width={100} height={100} />
         ) : (
-          <BarChart data={dailyData} syncId={syncId}>
+          <BarChart data={dailyData} syncId={syncId} className="!-left-6">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
-            <YAxis interval={1} />
+            <YAxis
+              domain={["auto", "auto"]}
+              fontSize={14}
+              tick={{ fill: "#94a3b8" }}
+              axisLine={{ stroke: "#94a3b8" }}
+              tickLine={{ stroke: "#94a3b8" }}
+            />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
-            <Bar dataKey="contributor_count" fill="#1D48E6" />
+            <Bar dataKey="contributor_count" fill="#2563eb" />
           </BarChart>
         )}
       </ResponsiveContainer>
@@ -79,7 +87,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
     return (
       <figcaption className="flex flex-col gap-1 bg-white px-4 py-2 rounded-lg border">
         <section className="flex gap-2 items-center">
-          <FaUserAlt className="fill-[#1D48E6]" />
+          <FaUserAlt className="fill-[#2563eb]" />
           <p>Contributors: {payload[0]?.value}</p>
         </section>
 
@@ -92,7 +100,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
 function CustomTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8">
+      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8" fontSize={14}>
         {payload.value}
       </text>
     </g>

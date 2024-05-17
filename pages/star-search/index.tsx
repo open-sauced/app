@@ -9,6 +9,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { BsArrowUpShort } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
+import * as Sentry from "@sentry/nextjs";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -16,9 +17,23 @@ import { getAvatarById } from "lib/utils/github";
 import { Drawer } from "components/shared/Drawer";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import SEO from "layouts/SEO/SEO";
-import { StarSearchFeedbackAnalytic, useStarSearchFeedback } from "lib/hooks/useStarSearchFeedback";
+import {
+  StarSearchFeedbackAnalytic,
+  StarSearchPromptAnalytic,
+  useStarSearchFeedback,
+} from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+
+export interface WidgetDefinition {
+  name: string;
+  arguments?: Record<string, Record<string, any>>;
+}
+
+type EventType = "content" | "function_call";
+type Author = "You" | "StarSearch";
+
+const componentRegistry = new Map<string, Function>();
 
 const SUGGESTIONS = [
   {
@@ -31,7 +46,7 @@ const SUGGESTIONS = [
   },
   {
     title: "Find contributors based on their work",
-    prompt: "Who are people making pull requests in vercel/turbo about css modules?",
+    prompt: "Show me the lottery factor for contributors in the remix-run/react-router project?",
   },
   {
     title: "Find experts",
@@ -40,6 +55,66 @@ const SUGGESTIONS = [
 ];
 
 type SuggesionTypes = (typeof SUGGESTIONS)[number];
+
+interface ChatAvatarProps {
+  author: Author;
+  userId?: number;
+}
+
+function ChatAvatar({ author, userId }: ChatAvatarProps) {
+  switch (author) {
+    case "You":
+      return (
+        <Image
+          src={getAvatarById(`${userId}`)}
+          alt="Your profile picture"
+          width={32}
+          height={32}
+          className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
+        />
+      );
+    case "StarSearch":
+      return (
+        <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full w-max">
+          <Image
+            src="/assets/star-search-logo-white.svg"
+            alt="StarSearch logo"
+            width={24}
+            height={24}
+            className="w-6 h-6"
+          />
+        </div>
+      );
+  }
+}
+
+async function updateComponentRegistry(name: string) {
+  if (componentRegistry.has(name)) {
+    return;
+  }
+
+  try {
+    let component;
+
+    switch (name) {
+      case "renderLottoFactor":
+        component = (await import("components/StarSearch/Widgets/LotteryFactorWidget")).default;
+        break;
+      default:
+        break;
+    }
+
+    if (component) {
+      componentRegistry.set(name, component);
+    }
+  } catch (error) {
+    Sentry.captureException(
+      new Error(`Unable to dynamically import the widget component for StarSearch. Widget name: ${name}`, {
+        cause: error,
+      })
+    );
+  }
+}
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -68,10 +143,41 @@ type StarSearchPageProps = {
   ogImageUrl: string;
 };
 
-type StarSearchChat = {
-  author: "You" | "StarSearch";
-  content: string;
-};
+type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch"; content: string | WidgetDefinition };
+
+/**
+ * This function renders a StarSearch widget component based on the widget definition provided.
+ * The function will look up the widget component in the component registry and render it with the provided arguments (component props).
+ *
+ * @param widgetDefinition - The widget definition object that contains the name of the widget and the arguments to pass to the widget.
+ *
+ * @returns The rendered widget component or null if the widget component is not found.
+ *
+ */
+function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefinition }) {
+  try {
+    const Component = componentRegistry.get(widgetDefinition.name);
+    const componentToRender = Component ? <Component {...widgetDefinition.arguments} /> : null;
+
+    if (componentToRender === null) {
+      throw new Error(`Component ${widgetDefinition.name} not found in registry`);
+    }
+
+    return componentToRender;
+  } catch (error: unknown) {
+    Sentry.captureException(
+      new Error(
+        `Unable to render dynamic widget in StarSearch. Widget definition: ${JSON.stringify(widgetDefinition)}`,
+        {
+          cause: error,
+        }
+      )
+    );
+
+    // Returning null because widgets enhance the experiece but are not critical to the functionality.
+    return null;
+  }
+}
 
 export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
@@ -81,14 +187,37 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { feedback } = useStarSearchFeedback();
+  const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
+
+  function registerPrompt(promptInput: StarSearchPromptAnalytic) {
+    prompt({
+      promptContent: promptInput.promptContent,
+      promptResponse: promptInput.promptResponse,
+    });
+  }
 
   function registerFeedback(feedbackType: StarSearchFeedbackAnalytic["feedback"]) {
     feedback({
       feedback: feedbackType,
-      promptContent: chat.filter(({ author }) => author === "You").map(({ content }) => content),
-      promptResponse: chat.filter(({ author }) => author === "StarSearch").map(({ content }) => content),
+      promptContent: chat
+        .filter(({ author }) => author === "You")
+        .map(({ content }) => {
+          if (typeof content !== "string") {
+            return JSON.stringify(content);
+          }
+
+          return content;
+        }),
+      promptResponse: chat
+        .filter(({ author }) => author === "StarSearch")
+        .map(({ content }) => {
+          if (typeof content !== "string") {
+            return JSON.stringify(content);
+          }
+
+          return content;
+        }),
     });
     toast({ description: "Thank you for your feedback!", variant: "success" });
   }
@@ -123,7 +252,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
 
     // add user prompt to history
     setChat((history) => {
-      const temp = history;
+      const temp = [...history];
       temp.push({ author: "You", content: prompt });
       return temp;
     });
@@ -144,7 +273,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
 
     if (response.status !== 200) {
       setChat((history) => {
-        const temp = history;
+        const temp = [...history];
         temp.push({ author: "StarSearch", content: "There's been an error. Try again." });
         return temp;
       });
@@ -152,24 +281,65 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       return;
     }
 
-    setChat((history) => {
-      const temp = history;
-      temp.push({ author: "StarSearch", content: "" });
-      return temp;
-    });
-
     const decoder = new TextDecoderStream();
     const reader = response.body?.pipeThrough(decoder).getReader();
     while (true) {
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
+        const textChat = chat.filter((item) => typeof item.content === "string");
+        registerPrompt({
+          promptContent: prompt,
+          promptResponse:
+            chat
+              .slice(1)
+              // There can be multiple responses because of widgets, so we need to serialize the widget data
+              .map((c) => (typeof c.content === "string" ? c.content : JSON.stringify(c.content)))
+              .join("\n") || "No response captured",
+        });
         return;
       }
+
+      /**
+
+        Content has this shape:
+
+        event: function_call
+        id: 1
+        data: {"name":"renderLottoFactor","arguments":"{\"repoName\":\"kubernetes/kubernetes\"}"}
+
+
+        event: content
+        id: 2
+        data: The
+
+        event: content
+        id: 3
+        data:  Lottery
+
+        event: content
+        id: 4
+        data:  Factor
+
+
+        If the event type is function_call, we know we need to render a component, if the event type is content, we render the markdown as HTML.
+       */
+
       const values = value.split("\n");
-      values
-        .filter((v) => v.startsWith("data:"))
-        .forEach((v) => {
+
+      let eventType: EventType = "content";
+
+      values.forEach(async (v) => {
+        if (v.startsWith("id:")) {
+          return;
+        }
+
+        if (v.startsWith("event:")) {
+          eventType = v.split(/:\s+/)[1] as EventType;
+          return;
+        }
+
+        if (v.startsWith("data:")) {
           /*
            * regex for capturing star-search stream SSEs:
            * data:\s?(?<result>.*)
@@ -194,15 +364,61 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           if (!matched || !matched.groups) {
             return;
           }
-          const temp = [...chat];
-          const changed = temp.at(temp.length - 1);
-          if (matched.groups.result === "") {
-            changed!.content += "&nbsp; \n";
-          } else {
-            changed!.content += matched.groups.result;
+
+          let jsonContent: WidgetDefinition;
+          const { result } = matched.groups;
+
+          try {
+            // function_call means we're loading a widget definition for the enriched UI
+            if (eventType === "function_call") {
+              jsonContent = JSON.parse(result);
+              jsonContent.arguments = JSON.parse(jsonContent.arguments as any) as WidgetDefinition["arguments"];
+              await updateComponentRegistry(jsonContent.name);
+            }
+          } catch (error) {
+            Sentry.captureException(
+              new Error(`Failed to parse JSON for StarSearch widget. JSON payload: ${result}`, { cause: error })
+            );
           }
-          setChat(temp);
-        });
+
+          setChat((chat) => {
+            const updatedChat = [...chat];
+
+            if (matched.groups) {
+              if (eventType === "function_call") {
+                // create a new chat item because the widget will require it's own chatbox.
+                updatedChat.push({
+                  author: "StarSearch",
+                  content: jsonContent,
+                });
+              } else {
+                let changes = updatedChat.at(-1);
+
+                if (changes) {
+                  if (!changes || typeof changes.content !== "string") {
+                    // if the previous item in the chats was a widget, we need to add a new chat item.
+                    updatedChat.push({
+                      author: "StarSearch",
+                      content: "",
+                    });
+                    changes = updatedChat.at(-1);
+                  }
+
+                  if (changes) {
+                    // concatenate the new content to the previous chat item as it's a continuation of the same message
+                    // coming from the readable stream.
+                    changes.content += matched.groups.result === "" ? "&nbsp; \n" : result;
+                  }
+                }
+              }
+            }
+
+            return updatedChat;
+          });
+
+          return;
+        }
+      });
     }
   };
 
@@ -224,7 +440,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
             >
               <ScrollArea className="flex grow">
                 {chat.map((message, i) => (
-                  <Chatbox key={i} userId={userId} author={message.author} content={message.content} />
+                  <Chatbox key={i} userId={userId} message={message} />
                 ))}
                 <div ref={scrollRef} />
               </ScrollArea>
@@ -412,40 +628,29 @@ function SuggestionBoxes({
   );
 }
 
-function Chatbox({ author, content, userId }: StarSearchChat & { userId?: number }) {
-  const renderAvatar = () => {
-    switch (author) {
-      case "You":
-        return (
-          <Image
-            src={getAvatarById(`${userId}`)}
-            alt="Your profile picture"
-            width={32}
-            height={32}
-            className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
-          />
-        );
-      case "StarSearch":
-        return (
-          <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full">
-            <Image
-              src="/assets/star-search-logo-white.svg"
-              alt="StarSearch logo"
-              width={24}
-              height={24}
-              className="w-6 h-6"
-            />
-          </div>
-        );
+function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number }) {
+  let content;
+
+  if (typeof message.content == "string") {
+    content = <Markdown>{message.content}</Markdown>;
+  } else {
+    if (!componentRegistry.has(message.content.name)) {
+      return null;
     }
-  };
+
+    content = <StarSearchWidget widgetDefinition={message.content} />;
+
+    if (!content) {
+      return null;
+    }
+  }
 
   return (
-    <li className="flex gap-2 justify-center items-start my-4 w-full">
-      {renderAvatar()}
+    <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
+      <ChatAvatar author="StarSearch" userId={userId} />
       <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
-        <h3 className="font-semibold text-sauced-orange">{author}</h3>
-        <Markdown>{content}</Markdown>
+        <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
+        {content}
       </Card>
     </li>
   );

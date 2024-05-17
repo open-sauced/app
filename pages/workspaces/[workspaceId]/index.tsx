@@ -140,7 +140,7 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
         }
       >
         <WorkspaceHeader workspace={workspace} />
-        <div className="grid sm:flex gap-4 pt-3">
+        <div className="grid sm:flex gap-4 pt-3 border-b">
           <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
           <div className="flex justify-end items-center gap-4">
             <Button variant="outline" onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)}>

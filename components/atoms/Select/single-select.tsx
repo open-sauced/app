@@ -35,7 +35,14 @@ const SingleSelect = ({
 
   useEffect(() => {
     if (isOpen && isSearchable) {
-      inputRef.current?.focus();
+      // TODO: Revisit this. There's a timing issue where the input's ref is set when the dropdown is opened
+      // but it still can't receive focus. This is a workaround to focus the input after
+      // the dropdown is opened.
+      setTimeout(() => {
+        if (isOpen && isSearchable) {
+          inputRef.current?.focus();
+        }
+      });
     }
   }, [isOpen, isSearchable]);
 

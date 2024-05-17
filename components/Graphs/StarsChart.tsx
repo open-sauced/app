@@ -28,9 +28,10 @@ type StarsChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  className?: string;
 };
 
-export default function StarsChart({ stats, total, syncId, range = 30, isLoading }: StarsChartProps) {
+export default function StarsChart({ stats, total, syncId, range = 30, isLoading, className }: StarsChartProps) {
   const [category, setCategory] = useState<"daily" | "history">("daily");
   const dailyData = useMemo(() => getDailyStarsHistogramToDays({ stats, range }), [stats, range]);
   const historyData = useMemo(() => getHistoryStarsHistogramToDays({ stats, total, range }), [stats, total, range]);
@@ -42,9 +43,16 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
     switch (category) {
       case "daily":
         return (
-          <BarChart data={dailyData} syncId={syncId}>
+          <BarChart data={dailyData} syncId={syncId} className="-left-5">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
-            <YAxis interval={1} />
+            <YAxis
+              interval={1}
+              domain={["auto", "auto"]}
+              fontSize={14}
+              tick={{ fill: "#94a3b8" }}
+              axisLine={{ stroke: "#94a3b8" }}
+              tickLine={{ stroke: "#94a3b8" }}
+            />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
             <Bar dataKey="star_count" fill="#FF5100" />
@@ -52,9 +60,15 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
         );
       case "history":
         return (
-          <LineChart data={historyData} syncId={syncId}>
+          <LineChart data={dailyData} syncId={syncId} className="-left-5">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
-            <YAxis domain={["auto", "auto"]} />
+            <YAxis
+              domain={["auto", "auto"]}
+              fontSize={14}
+              tick={{ fill: "#94a3b8" }}
+              axisLine={{ stroke: "#94a3b8" }}
+              tickLine={{ stroke: "#94a3b8" }}
+            />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
             <Line dataKey="star_count" stroke="#FF5100" />
@@ -64,8 +78,8 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
   };
 
   return (
-    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
+    <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center !px-6 !py-8`}>
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-2">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
@@ -75,7 +89,7 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
                 <FaStar className="text-xl" />
                 <div className="flex gap-1 items-center">
                   <h3 className="text-sm font-semibold md:text-lg text-slate-800">Stars</h3>
-                  <p className="text-sm md:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+                  <p className="text-sm md:text-base w-fit pl-2 text-slate-500 font-medium">{range} days</p>
                 </div>
               </div>
               <aside className="flex gap-8">
@@ -129,7 +143,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
 function CustomTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8">
+      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8" fontSize={14}>
         {payload.value}
       </text>
     </g>
