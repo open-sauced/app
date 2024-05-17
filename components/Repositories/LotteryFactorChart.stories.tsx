@@ -36,7 +36,7 @@ export const LoadingState: Story = {
 
 export const ErrorState: Story = {
   args: {
-    lotteryFactor: generateLotteryFactor({ all_lotto_factor: "high" }),
+    lotteryFactor: undefined,
     range: 30,
     isLoading: false,
     error: new Error(),
