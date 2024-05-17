@@ -33,27 +33,22 @@ module.exports = millionLint({
       {
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
-        port: "",
       },
       {
         protocol: "https",
         hostname: "images.unsplash.com",
-        port: "",
       },
       {
         protocol: "https",
         hostname: "www.github.com",
-        port: "",
       },
       {
         protocol: "https",
         hostname: "github.com",
-        port: "",
       },
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        port: "",
       },
     ],
   },
