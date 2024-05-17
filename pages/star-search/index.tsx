@@ -24,6 +24,7 @@ import {
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 
 export interface WidgetDefinition {
   name: string;
@@ -439,9 +440,21 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
               className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
             >
               <ScrollArea className="flex grow">
-                {chat.map((message, i) => (
-                  <Chatbox key={i} userId={userId} message={message} />
-                ))}
+                {chat.map((message, i, chats) => {
+                  if (i > 0 && i === chats.length - 1 && isRunning) {
+                    return (
+                      <>
+                        <li className="flex gap-2 my-4 w-max items-center">
+                          <ChatAvatar author="StarSearch" userId={userId} />
+                          <StarSearchLoader />
+                        </li>
+                        <Chatbox key={i} userId={userId} message={message} />
+                      </>
+                    );
+                  } else {
+                    return <Chatbox key={i} userId={userId} message={message} />;
+                  }
+                })}
                 <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
