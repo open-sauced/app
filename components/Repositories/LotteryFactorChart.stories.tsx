@@ -79,6 +79,18 @@ export const AllLottoFactorLow: Story = {
   },
 };
 
+export const NoContributors: Story = {
+  args: {
+    lotteryFactor: {
+      all_contribs: [],
+      all_lotto_factor: "low",
+    },
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
 export const OneContributor: Story = {
   args: {
     lotteryFactor: {

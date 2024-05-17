@@ -31,6 +31,7 @@ export default function LotteryFactorChart({
 }: LotteryFactorChartProps) {
   const [hovered, setHovered] = useState<string | undefined>(undefined);
   const topFourContributors = lotteryFactor?.all_contribs.slice(0, 4) ?? [];
+  const hasContributors = topFourContributors.length > 0;
 
   const { sortedContributors } = useMemo(() => {
     const result =
@@ -130,10 +131,19 @@ export default function LotteryFactorChart({
             <Skeleton height={32} />
           ) : (
             <p className="text-slate-500">
-              The top <span className="font-semibold text-black">{`${summary.count} `}</span>
-              contributor{summary.count > 1 && "s"} of this repository have made{" "}
-              <span className="font-semibold text-black">{summary.percentage}% </span>
-              of all commits in the past <span className="font-semibold text-black">{range}</span> days.
+              {hasContributors ? (
+                <>
+                  The top <span className="font-semibold text-black">{`${summary.count} `}</span>
+                  contributor{summary.count > 1 && "s"} of this repository have made{" "}
+                  <span className="font-semibold text-black">{summary.percentage}% </span>
+                  of all commits in the past <span className="font-semibold text-black">{range}</span> days.
+                </>
+              ) : (
+                <>
+                  No one has contributed to the repository in the past{" "}
+                  <span className="font-semibold text-black">{range}</span> days.
+                </>
+              )}
             </p>
           )}
           <div className="flex w-full gap-1 h-3 place-content-center">
@@ -185,57 +195,65 @@ export default function LotteryFactorChart({
           <SkeletonWrapper count={4} height={32} />
         </div>
       ) : (
-        <table className="table-fixed divide-y text-xs lg:text-sm text-slate-500 w-full px-4 border-separate border-spacing-y-2">
-          <thead>
-            <tr>
-              <th className="font-normal text-start">Contributor</th>
-              <th className="font-normal text-end w-fit">Commits</th>
-              <th className="font-normal text-end">% of Total</th>
-            </tr>
-          </thead>
-          <tbody className="!text-small truncate">
-            {sortedContributors.slice(0, 4).map(({ name, count, value }) => (
-              <tr key={name} className={`${hovered === name && "bg-slate-100"} grow items-start`}>
-                <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 pt-1 pb-2 pl-2`}>
-                  {/*
+        <>
+          {hasContributors ? (
+            <table className="table-fixed divide-y text-xs lg:text-sm text-slate-500 w-full px-4 border-separate border-spacing-y-2">
+              <thead>
+                <tr>
+                  <th className="font-normal text-start">Contributor</th>
+                  <th className="font-normal text-end w-fit">Commits</th>
+                  <th className="font-normal text-end">% of Total</th>
+                </tr>
+              </thead>
+              <tbody className="!text-small truncate">
+                {sortedContributors.slice(0, 4).map(({ name, count, value }) => (
+                  <tr key={name} className={`${hovered === name && "bg-slate-100"} grow items-start`}>
+                    <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 pt-1 pb-2 pl-2`}>
+                      {/*
                     Temporarily copying the DevProfile JSX minus the desktop view to fix this issue https://github.com/open-sauced/app/pull/3373#issuecomment-2112399608
                   */}
-                  <div className="flex items-center gap-2 text-light-slate-11">
-                    <Link href={`/user/${name}`} className="rounded-full">
-                      <Avatar size={36} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
-                    </Link>
-                    <div>
-                      <h1 className="truncate text-light-slate-12">{name}</h1>
-                    </div>
-                  </div>
-                </td>
-                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1 w-fit`}>
-                  {count}
-                </td>
-                <td
-                  className={`${
-                    hovered === name ? "font-semibold" : "font-normal"
-                  } text-end border-b-1 pt-1 pb-2 pr-2 `}
-                >
-                  {value}%
-                </td>
-              </tr>
-            ))}
-            {isLoading || !lotteryFactor ? <Skeleton /> : null}
-            {lotteryFactor?.all_contribs.length > 4 ? (
-              <tr className={`${hovered === "Other Contributors" ? "font-semibold bg-slate-100" : "font-normal"}`}>
-                <td className="flex gap-2 items-center py-4 pl-2">
-                  <StackedOwners
-                    owners={lotteryFactor.all_contribs.slice(4, 7).map((contributor) => contributor.contributor)}
-                  />
-                  <p>Other contributors</p>
-                </td>
-                <td></td>
-                <td className="text-end py-4 pr-2 ">{sortedContributors.at(sortedContributors.length - 1)?.value}%</td>
-              </tr>
-            ) : null}
-          </tbody>
-        </table>
+                      <div className="flex items-center gap-2 text-light-slate-11">
+                        <Link href={`/user/${name}`} className="rounded-full">
+                          <Avatar size={36} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
+                        </Link>
+                        <div>
+                          <h1 className="truncate text-light-slate-12">{name}</h1>
+                        </div>
+                      </div>
+                    </td>
+                    <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1 w-fit`}>
+                      {count}
+                    </td>
+                    <td
+                      className={`${
+                        hovered === name ? "font-semibold" : "font-normal"
+                      } text-end border-b-1 pt-1 pb-2 pr-2 `}
+                    >
+                      {value}%
+                    </td>
+                  </tr>
+                ))}
+                {isLoading || !lotteryFactor ? <Skeleton /> : null}
+                {lotteryFactor?.all_contribs.length > 4 ? (
+                  <tr className={`${hovered === "Other Contributors" ? "font-semibold bg-slate-100" : "font-normal"}`}>
+                    <td className="flex gap-2 items-center py-4 pl-2">
+                      <StackedOwners
+                        owners={lotteryFactor.all_contribs.slice(4, 7).map((contributor) => contributor.contributor)}
+                      />
+                      <p>Other contributors</p>
+                    </td>
+                    <td></td>
+                    <td className="text-end py-4 pr-2 ">
+                      {sortedContributors.at(sortedContributors.length - 1)?.value}%
+                    </td>
+                  </tr>
+                ) : null}
+              </tbody>
+            </table>
+          ) : (
+            <Image src={errorImage} alt="" />
+          )}
+        </>
       )}
     </Card>
   );
