@@ -632,7 +632,9 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
   let content;
 
   if (typeof message.content == "string") {
-    content = <Markdown>{message.content}</Markdown>;
+    // Breaking all words so that the rendered markdown doesn't overflow the container
+    // in certain cases where the content is a long string.
+    content = <Markdown className="break-all">{message.content}</Markdown>;
   } else {
     if (!componentRegistry.has(message.content.name)) {
       return null;
