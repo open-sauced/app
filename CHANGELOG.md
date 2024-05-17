@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.1-beta.2](https://github.com/open-sauced/app/compare/v2.29.1-beta.1...v2.29.1-beta.2) (2024-05-17)
+
+
+### 🐛 Bug Fixes
+
+* disable search for workspace dropdown if not logged in ([#3414](https://github.com/open-sauced/app/issues/3414)) ([b242e92](https://github.com/open-sauced/app/commit/b242e92f8b7e79996c87d1714a89b978b9db2a37))
+
 ## [2.29.1-beta.1](https://github.com/open-sauced/app/compare/v2.29.0...v2.29.1-beta.1) (2024-05-17)
 
 
