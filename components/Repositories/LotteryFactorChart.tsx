@@ -218,9 +218,8 @@ export default function LotteryFactorChart({
                 </td>
               </tr>
             ))}
-            {isLoading || !lotteryFactor ? (
-              <Skeleton />
-            ) : (
+            {isLoading || !lotteryFactor ? <Skeleton /> : null}
+            {lotteryFactor?.all_contribs.length > 4 ? (
               <tr className={`${hovered === "Other Contributors" ? "font-semibold bg-slate-100" : "font-normal"}`}>
                 <td className="flex gap-2 items-center py-4 pl-2">
                   <StackedOwners
@@ -231,7 +230,7 @@ export default function LotteryFactorChart({
                 <td></td>
                 <td className="text-end py-4 pr-2 ">{sortedContributors.at(sortedContributors.length - 1)?.value}%</td>
               </tr>
-            )}
+            ) : null}
           </tbody>
         </table>
       )}
