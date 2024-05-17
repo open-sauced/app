@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.1-beta.3](https://github.com/open-sauced/app/compare/v2.29.1-beta.2...v2.29.1-beta.3) (2024-05-17)
+
+
+### 🐛 Bug Fixes
+
+* fixed rendering of lottery chart when less than 4 contributors ([#3415](https://github.com/open-sauced/app/issues/3415)) ([3888ecb](https://github.com/open-sauced/app/commit/3888ecb0481d87aa925d2f506a4e4ef93e78787b))
+
 ## [2.29.1-beta.2](https://github.com/open-sauced/app/compare/v2.29.1-beta.1...v2.29.1-beta.2) (2024-05-17)
 
 
