@@ -46,7 +46,7 @@ const SUGGESTIONS = [
   },
   {
     title: "Find contributors based on their work",
-    prompt: "Who are people making pull requests in vercel/turbo about css modules?",
+    prompt: "Show me the lottery factor for contributors in the remix-run/react-router project?",
   },
   {
     title: "Find experts",
