@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.1-beta.4](https://github.com/open-sauced/app/compare/v2.29.1-beta.3...v2.29.1-beta.4) (2024-05-17)
+
+
+### 🐛 Bug Fixes
+
+* fix to avoid StarSearch UI breaking when long words are outputted ([#3420](https://github.com/open-sauced/app/issues/3420)) ([4d6bb23](https://github.com/open-sauced/app/commit/4d6bb2384a49f0a9917d73889dec3deefdd090c8))
+
 ## [2.29.1-beta.3](https://github.com/open-sauced/app/compare/v2.29.1-beta.2...v2.29.1-beta.3) (2024-05-17)
 
 
