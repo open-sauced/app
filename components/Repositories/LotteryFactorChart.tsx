@@ -177,7 +177,7 @@ export default function LotteryFactorChart({
           <p className="text-slate-500">
             This repository doesn&apos;t have enough commit data to calculate the Lottery Factor.
           </p>
-          <Image src={errorImage} alt="No Lottery Factor error image" />
+          <Image src={errorImage} alt="" />
         </div>
       )}
       {isLoading || !lotteryFactor ? (
