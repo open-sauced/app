@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.1-beta.1](https://github.com/open-sauced/app/compare/v2.29.0...v2.29.1-beta.1) (2024-05-17)
+
+
+### 🐛 Bug Fixes
+
+* swap out css module prompt with lottery factor ([#3413](https://github.com/open-sauced/app/issues/3413)) ([2c9def0](https://github.com/open-sauced/app/commit/2c9def0e2abcd99b23b9bdeba2a10033a5a1bb6c))
+
 ## [2.29.0](https://github.com/open-sauced/app/compare/v2.28.0...v2.29.0) (2024-05-16)
 
 
