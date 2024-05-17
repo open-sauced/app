@@ -132,8 +132,9 @@ export default function LotteryFactorChart({
           <p className="text-slate-500">
             {hasContributors ? (
               <>
-                The top <span className="font-semibold text-black">{`${summary.count} `}</span>
-                contributor{summary.count > 1 && "s"} of this repository have made{" "}
+                The top{" "}
+                {summary.count > 1 ? <span className="font-semibold text-black">{`${summary.count} `}</span> : null}
+                contributor{summary.count > 1 && "s"} of this repository {summary.count > 1 ? "have" : "has"} made{" "}
                 <span className="font-semibold text-black">{summary.percentage}% </span>
                 of all commits in the past <span className="font-semibold text-black">{range}</span> days.
               </>
