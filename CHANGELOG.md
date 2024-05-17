@@ -5,6 +5,43 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.29.0](https://github.com/open-sauced/app/compare/v2.28.0...v2.29.0) (2024-05-16)
+
+
+### 🍕 Features
+
+* capture all StarSearch prompts in PostHog ([#3405](https://github.com/open-sauced/app/issues/3405)) ([f7d8ac6](https://github.com/open-sauced/app/commit/f7d8ac6377046e0c14784178d96bdfbb3148fc81))
+* implemented Enriched UI responses for StarSearch ([#3394](https://github.com/open-sauced/app/issues/3394)) ([9886681](https://github.com/open-sauced/app/commit/988668124459b5d9ded678b8f6f2dadbe8f71a37))
+* only tag maintainers for the specific repo on repo pages ([#3395](https://github.com/open-sauced/app/issues/3395)) ([54c9a93](https://github.com/open-sauced/app/commit/54c9a9339709cde1b34768fd3ec1090157c835b1))
+
+
+### 🐛 Bug Fixes
+
+* Change closed issue state to purple on issues table ([#3406](https://github.com/open-sauced/app/issues/3406)) ([71b4478](https://github.com/open-sauced/app/commit/71b4478e6dee44ffba2d630f282a7bf5ccb9514a))
+* correct placeholder text in HighlightInput component ([#3348](https://github.com/open-sauced/app/issues/3348)) ([2ea0d24](https://github.com/open-sauced/app/commit/2ea0d243c8f2fbb5447a4210270a162020478d82))
+* fixed TS error and logic for gathering prompt response ([#3410](https://github.com/open-sauced/app/issues/3410)) ([36d26c2](https://github.com/open-sauced/app/commit/36d26c2530941271307fee96e771c02583d7f635))
+* remove unused waitlist components ([#3404](https://github.com/open-sauced/app/issues/3404)) ([a99b113](https://github.com/open-sauced/app/commit/a99b113563ed4bccba1a6b2d2a95aa8db34e1b49))
+* styling repo pages layout ([#3398](https://github.com/open-sauced/app/issues/3398)) ([376de84](https://github.com/open-sauced/app/commit/376de845ece67dc7424d5f0762e61d9fa03f2d5c))
+
+## [2.29.0-beta.7](https://github.com/open-sauced/app/compare/v2.29.0-beta.6...v2.29.0-beta.7) (2024-05-16)
+
+
+### 🍕 Features
+
+* capture all StarSearch prompts in PostHog ([#3405](https://github.com/open-sauced/app/issues/3405)) ([f7d8ac6](https://github.com/open-sauced/app/commit/f7d8ac6377046e0c14784178d96bdfbb3148fc81))
+
+
+### 🐛 Bug Fixes
+
+* fixed TS error and logic for gathering prompt response ([#3410](https://github.com/open-sauced/app/issues/3410)) ([36d26c2](https://github.com/open-sauced/app/commit/36d26c2530941271307fee96e771c02583d7f635))
+
+## [2.29.0-beta.6](https://github.com/open-sauced/app/compare/v2.29.0-beta.5...v2.29.0-beta.6) (2024-05-16)
+
+
+### 🐛 Bug Fixes
+
+* styling repo pages layout ([#3398](https://github.com/open-sauced/app/issues/3398)) ([376de84](https://github.com/open-sauced/app/commit/376de845ece67dc7424d5f0762e61d9fa03f2d5c))
+
 ## [2.29.0-beta.5](https://github.com/open-sauced/app/compare/v2.29.0-beta.4...v2.29.0-beta.5) (2024-05-16)
 
 
