@@ -46,7 +46,7 @@ const SUGGESTIONS = [
   },
   {
     title: "Find contributors based on their work",
-    prompt: "Show me the lottery factor for contributors in the remix/react-router project?",
+    prompt: "Show me the lottery factor for contributors in the remix-run/react-router project?",
   },
   {
     title: "Find experts",
