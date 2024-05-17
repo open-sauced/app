@@ -51,12 +51,15 @@ export default function LotteryFactorChart({
 
     const topFourPercentage = result.reduce((prev, curr) => (prev += curr.value), 0);
 
-    result.push({
-      name: "Other Contributors",
-      count: 0,
-      value: 100 - topFourPercentage,
-      factor: "Other Contributors",
-    });
+    if (lotteryFactor?.all_contribs.length && lotteryFactor?.all_contribs.length > 4) {
+      result.push({
+        name: "Other Contributors",
+        count: 0,
+        value: 100 - topFourPercentage,
+        factor: "Other Contributors",
+      });
+    }
+
     return {
       sortedContributors: result,
       topFourPercentage,

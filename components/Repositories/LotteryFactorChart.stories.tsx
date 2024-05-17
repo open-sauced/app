@@ -88,6 +88,24 @@ export const OneContributor: Story = {
   },
 };
 
+export const TwoContributors: Story = {
+  args: {
+    lotteryFactor: generateLotteryFactor({ all_lotto_factor: "low", numberOfContributors: 2 }),
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
+export const ThreeContributors: Story = {
+  args: {
+    lotteryFactor: generateLotteryFactor({ all_lotto_factor: "low", numberOfContributors: 3 }),
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
 function generateLotteryFactor({
   all_lotto_factor,
   numberOfContributors,
