@@ -81,7 +81,17 @@ export const AllLottoFactorLow: Story = {
 
 export const OneContributor: Story = {
   args: {
-    lotteryFactor: generateLotteryFactor({ all_lotto_factor: "low", numberOfContributors: 1 }),
+    lotteryFactor: {
+      all_contribs: [
+        {
+          contributor: "nickytonline",
+          count: 100,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+      ],
+      all_lotto_factor: "very-high",
+    },
     range: 30,
     isLoading: false,
     error: undefined,
@@ -90,7 +100,23 @@ export const OneContributor: Story = {
 
 export const TwoContributors: Story = {
   args: {
-    lotteryFactor: generateLotteryFactor({ all_lotto_factor: "low", numberOfContributors: 2 }),
+    lotteryFactor: {
+      all_contribs: [
+        {
+          contributor: "brandonroberts",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+        {
+          contributor: "nickytonline",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+      ],
+      all_lotto_factor: "very-high",
+    },
     range: 30,
     isLoading: false,
     error: undefined,
@@ -99,20 +125,36 @@ export const TwoContributors: Story = {
 
 export const ThreeContributors: Story = {
   args: {
-    lotteryFactor: generateLotteryFactor({ all_lotto_factor: "low", numberOfContributors: 3 }),
+    lotteryFactor: {
+      all_contribs: [
+        {
+          contributor: "brandonroberts",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+        {
+          contributor: "zeucapua",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+        {
+          contributor: "nickytonline",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+      ],
+      all_lotto_factor: "very-high",
+    },
     range: 30,
     isLoading: false,
     error: undefined,
   },
 };
 
-function generateLotteryFactor({
-  all_lotto_factor,
-  numberOfContributors,
-}: {
-  all_lotto_factor: LottoFactor;
-  numberOfContributors?: number;
-}) {
+function generateLotteryFactor({ all_lotto_factor }: { all_lotto_factor: LottoFactor; numberOfContributors?: number }) {
   const all_contribs = [
     {
       contributor: "nickytonline",
@@ -207,7 +249,7 @@ function generateLotteryFactor({
   ] as ContributorLottoFactor[];
 
   return {
-    all_contribs: numberOfContributors ? all_contribs.slice(0, numberOfContributors) : all_contribs,
+    all_contribs,
     all_lotto_factor,
   };
 }
