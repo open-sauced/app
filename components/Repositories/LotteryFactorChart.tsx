@@ -203,10 +203,10 @@ export default function LotteryFactorChart({
               <th className="font-normal text-end">% of Total</th>
             </tr>
           </thead>
-          <tbody className="!text-small truncate">
+          <tbody className="!text-small truncate [&_tr_td]:border-b-1">
             {sortedContributors.slice(0, 4).map(({ name, count, value }) => (
               <tr key={name} className={`${hovered === name && "bg-slate-100"} grow items-start`}>
-                <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 pt-1 pb-2 pl-2`}>
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} pt-1 pb-2 pl-2`}>
                   {/*
                     Temporarily copying the DevProfile JSX minus the desktop view to fix this issue https://github.com/open-sauced/app/pull/3373#issuecomment-2112399608
                   */}
@@ -219,14 +219,8 @@ export default function LotteryFactorChart({
                     </div>
                   </div>
                 </td>
-                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end border-b-1 w-fit`}>
-                  {count}
-                </td>
-                <td
-                  className={`${
-                    hovered === name ? "font-semibold" : "font-normal"
-                  } text-end border-b-1 pt-1 pb-2 pr-2 `}
-                >
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end w-fit`}>{count}</td>
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end pt-1 pb-2 pr-2 `}>
                   {value}%
                 </td>
               </tr>
