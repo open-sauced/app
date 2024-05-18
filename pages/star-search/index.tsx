@@ -433,10 +433,14 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           </div>
         );
       case "chat":
+        // We only want to process the chat messages that are either strings or valid widgets.
+        // The API currently sends back other function calls that we currently do not support or don't need to support,
+        // so we filter those out by checking if they are in the component registry.
         const chatMessagesToProcess = chat.filter(
           (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
         );
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
+
         return (
           <>
             <div
