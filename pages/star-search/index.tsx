@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import Markdown from "react-markdown";
@@ -288,7 +288,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
-        const textChat = chat.filter((item) => typeof item.content === "string");
+
         registerPrompt({
           promptContent: prompt,
           promptResponse:
@@ -433,6 +433,10 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           </div>
         );
       case "chat":
+        const chatMessagesToProcess = chat.filter(
+          (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
+        );
+        const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
         return (
           <>
             <div
@@ -440,16 +444,16 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
               className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
             >
               <ScrollArea className="flex grow">
-                {chat.map((message, i, chats) => {
-                  if (i > 0 && i === chats.length - 1 && isRunning) {
+                {chatMessagesToProcess.map((message, i, messages) => {
+                  if (loaderIndex === i && isRunning && messages.length - 1 === i) {
                     return (
-                      <>
+                      <Fragment key={i}>
+                        <Chatbox userId={userId} message={message} />
                         <li className="flex gap-2 my-4 w-max items-center">
                           <ChatAvatar author="StarSearch" userId={userId} />
                           <StarSearchLoader />
                         </li>
-                        <Chatbox key={i} userId={userId} message={message} />
-                      </>
+                      </Fragment>
                     );
                   } else {
                     return <Chatbox key={i} userId={userId} message={message} />;
