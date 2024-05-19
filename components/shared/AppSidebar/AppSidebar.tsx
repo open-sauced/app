@@ -224,6 +224,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                 url={`/explore/topic/${userInterest}/dashboard/filter/recent`}
                 icon={<Squares2X2Icon className="w-5 h-5 text-slate-400" />}
               />
+              {/* StarSearch link in smaller screen with <Image /> tag from next/image */}
               <SidebarMenuItem
                 title="StarSearch"
                 url={"/star-search"}
