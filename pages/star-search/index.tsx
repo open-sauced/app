@@ -445,7 +445,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         return (
           <div className="flex flex-col text-center items-center gap-4">
             <Header />
-            <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
+            {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
           </div>
         );
       case "chat":
@@ -553,12 +553,11 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         image={ogImageUrl}
         twitterCard="summary_large_image"
       />
-      <ProfileLayout>
-        <div className="relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
+      <ProfileLayout showFooter={false}>
+        <div className="star-search relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
-              starSearchState === "chat" &&
               (isMobile ? (
                 <Drawer
                   title="Choose a suggestion"
