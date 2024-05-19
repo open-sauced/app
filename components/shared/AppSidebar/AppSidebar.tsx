@@ -227,7 +227,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
               <SidebarMenuItem
                 title="StarSearch"
                 url={"/star-search"}
-                icon={<Image src="/assets/star-search-logo.svg" alt="" className="w-5 h-5" />}
+                icon={<Image src="/assets/star-search-logo.svg" alt="" width={20} height={20} />}
               />
             </ul>
             <ul className="border-t-1 pt-1 mb-2 px-2">
