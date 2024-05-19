@@ -17,6 +17,7 @@ import { BiHomeAlt } from "react-icons/bi";
 import { useEffectOnce } from "react-use";
 import Link from "next/link";
 import { LuArrowLeftToLine } from "react-icons/lu";
+import Image from "next/image";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 
 import SingleSelect from "components/atoms/Select/single-select";
@@ -222,6 +223,11 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                 title="Explore"
                 url={`/explore/topic/${userInterest}/dashboard/filter/recent`}
                 icon={<Squares2X2Icon className="w-5 h-5 text-slate-400" />}
+              />
+              <SidebarMenuItem
+                title="StarSearch"
+                url={"/star-search"}
+                icon={<Image src="/assets/star-search-logo.svg" alt="" className="w-5 h-5" />}
               />
             </ul>
             <ul className="border-t-1 pt-1 mb-2 px-2">
