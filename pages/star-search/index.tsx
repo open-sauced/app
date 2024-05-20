@@ -24,6 +24,7 @@ import {
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { Carousel } from "components/shared/Carousel";
 
 export interface WidgetDefinition {
   name: string;
@@ -174,7 +175,7 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
       )
     );
 
-    // Returning null because widgets enhance the experiece but are not critical to the functionality.
+    // Returning null because widgets enhance the experience but are not critical to the functionality.
     return null;
   }
 }
@@ -606,12 +607,10 @@ function SuggestionBoxes({
   isHorizontal?: boolean;
   suggestions: SuggesionTypes[];
 }) {
-  return (
-    <div
-      className={`${
-        isHorizontal ? "flex overflow-x-scroll snap-x" : "grid grid-cols-1 lg:grid-cols-2 place-content-center"
-      } gap-2 lg:gap-4 w-full max-w-3xl`}
-    >
+  return isHorizontal ? (
+    <Carousel></Carousel>
+  ) : (
+    <div className="grid grid-cols-1 lg:grid-cols-2 place-content-center gap-2 lg:gap-4 w-full max-w-3xl">
       {suggestions.map((suggestion, i) => (
         <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
           <Card
