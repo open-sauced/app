@@ -16,6 +16,7 @@ interface DrawerProps {
   trigger: React.ReactNode;
   showCloseButton?: boolean;
   asChild?: boolean;
+  isOpen?: boolean;
   onClose?: () => void;
 }
 
@@ -26,10 +27,11 @@ export const Drawer = ({
   showCloseButton = true,
   trigger,
   asChild = true,
+  isOpen,
   onClose,
 }: DrawerProps) => {
   return (
-    <InternalDrawer>
+    <InternalDrawer open={isOpen} onClose={onClose}>
       <DrawerTrigger asChild={asChild}>{trigger}</DrawerTrigger>
       <DrawerContent className="bg-white">
         <DrawerHeader>
