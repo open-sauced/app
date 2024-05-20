@@ -20,6 +20,7 @@ import { getHistoryForksHistogramToDays, getDailyForksHistogramToDays, getTicks 
 import Card from "components/atoms/Card/card";
 import Button from "components/shared/Button/button";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import humanizeNumber from "lib/utils/humanizeNumber";
 
 type ForksChartProps = {
   stats: StatsType[] | undefined;
@@ -27,21 +28,31 @@ type ForksChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  className?: string;
 };
 
-export default function ForksChart({ stats, total, syncId, range = 30, isLoading }: ForksChartProps) {
+export default function ForksChart({ stats, total, syncId, range = 30, isLoading, className }: ForksChartProps) {
   const [category, setCategory] = useState<"daily" | "history">("daily");
   const dailyData = useMemo(() => getDailyForksHistogramToDays({ stats, range }), [stats, range]);
   const historyData = useMemo(() => getHistoryForksHistogramToDays({ stats, total, range }), [stats, total, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
+  const forksRangedTotal = useMemo(() => stats?.reduce((prev, curr) => prev + curr.forks_count!, 0) ?? 0, [stats]);
+  const averageOverRange = useMemo(() => Math.round(forksRangedTotal / range), [forksRangedTotal, range]);
 
   const renderChart = () => {
     switch (category) {
       case "daily":
         return (
-          <BarChart data={dailyData} syncId={syncId}>
+          <BarChart data={dailyData} syncId={syncId} className="!-left-6">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
-            <YAxis interval={1} />
+            <YAxis
+              interval={1}
+              domain={["auto", "auto"]}
+              fontSize={14}
+              tick={{ fill: "#94a3b8" }}
+              axisLine={{ stroke: "#94a3b8" }}
+              tickLine={{ stroke: "#94a3b8" }}
+            />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
             <Bar dataKey="forks_count" fill="#FF5100" />
@@ -49,9 +60,15 @@ export default function ForksChart({ stats, total, syncId, range = 30, isLoading
         );
       case "history":
         return (
-          <LineChart data={historyData} syncId={syncId}>
+          <LineChart data={historyData} syncId={syncId} className="!-left-6">
             <XAxis dataKey="bucket" tick={false} />
-            <YAxis domain={["auto", "auto"]} />
+            <YAxis
+              domain={["auto", "auto"]}
+              fontSize={14}
+              tick={{ fill: "#94a3b8" }}
+              axisLine={{ stroke: "#94a3b8" }}
+              tickLine={{ stroke: "#94a3b8" }}
+            />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
             <Line dataKey="forks_count" stroke="#FF5100" />
@@ -61,17 +78,36 @@ export default function ForksChart({ stats, total, syncId, range = 30, isLoading
   };
 
   return (
-    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8 px-8">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between">
+    <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center !px-6 !py-8`}>
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-2">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
           <>
-            <div className="flex gap-1 items-center w-fit">
-              <h3 className="text-sm font-semibold md:text-xl text-slate-800">Forks</h3>
-              <p className="text-sm md:text-xl w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+            <div className="flex flex-col gap-3 grow">
+              <div className="flex gap-2 items-center w-fit">
+                <BiGitRepoForked className="text-xl" />
+                <div className="flex gap-1 items-center">
+                  <h3 className="text-sm font-semibold md:text-lg text-slate-800">Forks</h3>
+                  <p className="text-sm md:text-base w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+                </div>
+              </div>
+              <aside className="flex gap-8">
+                <div>
+                  <h3 className="text-xs lg:text-sm text-slate-500">Total</h3>
+                  <p className="font-semibold text-lg lg:text-xl">{humanizeNumber(total)}</p>
+                </div>
+                <div>
+                  <h3 className="text-xs lg:text-sm text-slate-500">Over {range} days</h3>
+                  <p className="font-semibold text-lg lg:text-xl">{forksRangedTotal}</p>
+                </div>
+                <div>
+                  <h3 className="text-xs lg:text-sm text-slate-500">Avg. per day</h3>
+                  <p className="font-semibold text-lg lg:text-xl">{humanizeNumber(averageOverRange)}</p>
+                </div>
+              </aside>
             </div>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-2 items-center w-fit lg:self-start">
               <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
                 Daily
               </Button>
@@ -107,7 +143,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
 function CustomTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8">
+      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8" fontSize={14}>
         {payload.value}
       </text>
     </g>

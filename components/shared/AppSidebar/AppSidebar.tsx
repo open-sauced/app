@@ -52,7 +52,7 @@ interface AppSideBarProps {
 }
 
 export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSideBarProps) => {
-  const { user } = useSupabaseAuth();
+  const { user, signIn } = useSupabaseAuth();
   const { data: rawRepoInsights, isLoading: repoInsightsLoading } = useWorkspacesRepositoryInsights({ workspaceId });
   const { data: rawContributorInsights, isLoading: contributorInsightsLoading } = useWorkspacesContributorInsights({
     workspaceId,
@@ -107,6 +107,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
               <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
                 <span className="sr-only">Workspace</span>
                 <SingleSelect
+                  isSearchable={!!user}
                   options={[
                     { label: "Create new workspace...", value: "new" },
                     ...workspaces.map(({ id, name }) => ({
@@ -119,10 +120,18 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                   placeholder="Select a workspace"
                   onValueChange={(value) => {
                     if (value === "new") {
+                      if (!user) {
+                        signIn({
+                          provider: "github",
+                          options: {
+                            redirectTo: `${new URL("/workspaces/new", window.location.href)}`,
+                          },
+                        });
+                        return;
+                      }
                       router.push("/workspaces/new");
                       return;
                     }
-
                     router.push(`/workspaces/${value}`);
                   }}
                 />
@@ -211,13 +220,8 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
               />
               <SidebarMenuItem
                 title="Explore"
-                url={`/${userInterest}/dashboard/filter/recent`}
+                url={`/explore/topic/${userInterest}/dashboard/filter/recent`}
                 icon={<Squares2X2Icon className="w-5 h-5 text-slate-400" />}
-              />
-              <SidebarMenuItem
-                title="StarSearch"
-                url={"/star-search"}
-                icon={<img src="/assets/star-search-logo.svg" alt="" className="w-5 h-5" />}
               />
             </ul>
             <ul className="border-t-1 pt-1 mb-2 px-2">

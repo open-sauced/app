@@ -1,24 +1,44 @@
-import { GetServerSidePropsContext } from "next";
-import { useRouter } from "next/router";
-import { HiOutlineExternalLink } from "react-icons/hi";
-import { usePostHog } from "posthog-js/react";
 import { FiCopy } from "react-icons/fi";
-import { fetchApiData } from "helpers/fetchApiData";
-import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
+import { MdWorkspaces } from "react-icons/md";
+import { HiOutlineExternalLink } from "react-icons/hi";
 
-import ProfileLayout from "layouts/profile";
-import Avatar from "components/atoms/Avatar/avatar";
-import StarsChart from "components/Graphs/StarsChart";
-import ForksChart from "components/Graphs/ForksChart";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
-import { DayRangePicker } from "components/shared/DayRangePicker";
-import { RepositoryStatCard } from "components/Workspaces/RepositoryStatCard";
-import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
+import { useState } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { usePostHog } from "posthog-js/react";
+import { GetServerSidePropsContext } from "next";
+
+import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
-import Button from "components/shared/Button/button";
+import { fetchApiData } from "helpers/fetchApiData";
 import { getAvatarByUsername } from "lib/utils/github";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { useRepoStats } from "lib/hooks/api/useRepoStats";
+import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
+import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
+
+import Avatar from "components/atoms/Avatar/avatar";
+import Button from "components/shared/Button/button";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
+import TabList from "components/TabList/tab-list";
+import { DayRangePicker } from "components/shared/DayRangePicker";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
+import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
+
+import PRChart from "components/Graphs/PRChart";
+import StarsChart from "components/Graphs/StarsChart";
+import ForksChart from "components/Graphs/ForksChart";
+import IssuesChart from "components/Graphs/IssuesChart";
+import ContributorsChart from "components/Graphs/ContributorsChart";
+
+const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
+  ssr: false,
+});
+const AddToWorkspaceDrawer = dynamic(() => import("components/Repositories/AddToWorkspaceDrawer"), {
+  ssr: false,
+});
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
@@ -43,6 +63,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   // Cache for two hours
   context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=0, stale-while-revalidate=7200");
+  context.res.setHeader("Netlify-Vary", "query=range");
+  context.res.setHeader("Cache-Tag", `repo-pages,repo-page-${repoData.id}`);
 
   return { props: { repoData, ogImageUrl } };
 }
@@ -55,9 +77,16 @@ interface RepoPageProps {
 }
 
 export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
-  const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const { toast } = useToast();
   const posthog = usePostHog();
+  const { session } = useSession(true);
+  const isMobile = useMediaQuery("(max-width: 576px)");
+  const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
+  const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
+  const tabList = [
+    { name: "Overview", path: "" },
+    { name: "Contributors", path: "contributors" },
+  ];
 
   const syncId = repoData.id;
   const router = useRouter();
@@ -82,10 +111,44 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     range,
   });
 
+  const {
+    data: contributorStats,
+    isLoading: isContributorDataLoading,
+    error: contributorError,
+  } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "contributors",
+    range,
+  });
+
+  const {
+    data: issueStats,
+    isLoading: isIssueDataLoading,
+    error: issueError,
+  } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "issues",
+    range,
+  });
+
+  const {
+    data: prStats,
+    isLoading: isPrDataLoading,
+    error: prError,
+  } = useFetchMetricStats({
+    repository: repoData.full_name,
+    variant: "prs",
+    range,
+  });
+
+  const contributorRangedTotal = contributorStats?.reduce((prev, curr) => prev + curr.contributor_count!, 0);
   const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
 
-  const starsRangedTotal = starsData?.reduce((prev, curr) => prev + curr.star_count!, 0);
-  const forksRangedTotal = forkStats?.reduce((prev, curr) => prev + curr.forks_count!, 0);
+  const {
+    data: lotteryFactor,
+    error: lotteryFactorError,
+    isLoading: isLotteryFactorLoading,
+  } = useRepositoryLottoFactor({ repository: repoData.full_name.toLowerCase(), range });
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
@@ -106,11 +169,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
-      <ProfileLayout>
-        <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-6xl">
+      <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
+        <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
             <header className="flex items-center gap-4">
-              <Avatar size={96} avatarURL={avatarUrl} />
+              <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
               <div className="flex flex-col gap-2">
                 <a
                   href={`https://github.com/${repoData.full_name}`}
@@ -120,93 +183,106 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   <h1>{repoData.full_name}</h1>
                   <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
                 </a>
-                <p className="md:text-xl">{repoData.description}</p>
+                <p>{repoData.description}</p>
               </div>
             </header>
-            <div className="self-end flex gap-2 items-center">
-              <DayRangePicker />
-              <Button
-                variant="outline"
-                onClick={copyUrlToClipboard}
-                className="my-auto gap-2 items-center shrink-0 place-self-end"
-              >
-                <FiCopy />
-                Share
-              </Button>
+            <div className="self-end flex flex-col gap-2 items-end">
+              {isMobile ? (
+                <AddToWorkspaceDrawer repository={repoData.full_name} />
+              ) : (
+                <Button
+                  variant="primary"
+                  onClick={() => setIsAddToWorkspaceModalOpen(true)}
+                  className="shrink-0 items-center gap-3 w-fit"
+                >
+                  <MdWorkspaces />
+                  Add to Workspace
+                </Button>
+              )}
+              <div className="flex gap-2 items-center">
+                <Button
+                  variant="outline"
+                  onClick={copyUrlToClipboard}
+                  className="my-auto gap-2 items-center shrink-0 place-self-end"
+                >
+                  <FiCopy />
+                  Share
+                </Button>
+                <DayRangePicker />
+              </div>
             </div>
           </div>
+          <div className="border-b">
+            <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
+          </div>
           <ClientOnly>
-            <section className="w-full h-fit grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-2">
-              <RepositoryStatCard
-                type="stars"
-                isLoading={isStarsDataLoading}
-                hasError={starsError !== undefined}
-                stats={{
-                  total: repoData.stars,
-                  over_range: starsRangedTotal!,
-                  range,
-                  average_over_range: Math.round(starsRangedTotal! / range),
-                }}
-              />
-              <RepositoryStatCard
-                type="forks"
-                isLoading={isForksDataLoading}
-                hasError={forkError !== undefined}
-                stats={{
-                  total: repoData.forks,
-                  over_range: forksRangedTotal!,
-                  range,
-                  average_over_range: Math.round(forksRangedTotal! / range),
-                }}
-              />
-              <RepositoryStatCard
-                type="pulls"
-                isLoading={isLoading}
-                hasError={isError}
-                stats={
-                  repoStats
-                    ? {
-                        opened: repoStats.open_prs_count ?? 0,
-                        merged: repoStats.merged_prs_count ?? 0,
-                        velocity: repoStats.pr_velocity_count ?? 0,
-                        range,
-                      }
-                    : undefined
-                }
-              />
-              <RepositoryStatCard
-                type="issues"
-                isLoading={isLoading}
-                hasError={isError}
-                stats={
-                  repoStats
-                    ? {
-                        opened: repoStats.opened_issues_count ?? 0,
-                        closed: repoStats.closed_issues_count ?? 0,
-                        velocity: repoStats.issues_velocity_count ?? 0,
-                        range,
-                      }
-                    : undefined
-                }
-              />
-            </section>
-            <StarsChart
-              stats={starsData}
-              total={repoData.stars}
-              range={range}
-              syncId={syncId}
-              isLoading={isStarsDataLoading}
-            />
-            <ForksChart
-              stats={forkStats}
-              total={repoData.forks}
-              range={range}
-              syncId={syncId}
-              isLoading={isForksDataLoading}
-            />
+            <div className="flex flex-col gap-4">
+              <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[36rem]">
+                <ContributorsChart
+                  stats={contributorStats}
+                  range={range}
+                  rangedTotal={contributorRangedTotal!}
+                  syncId={syncId}
+                  isLoading={isContributorDataLoading}
+                  className="h-full lg:col-span-8"
+                />
+
+                <LotteryFactorChart
+                  lotteryFactor={lotteryFactor}
+                  error={lotteryFactorError}
+                  range={range}
+                  isLoading={isLotteryFactorLoading}
+                  className="lg:col-span-4"
+                />
+              </section>
+
+              <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+                <IssuesChart
+                  stats={issueStats}
+                  range={range}
+                  velocity={repoStats?.issues_velocity_count ?? 0}
+                  syncId={syncId}
+                  isLoading={isIssueDataLoading}
+                  className="lg:col-span-6 h-fit"
+                />
+
+                <PRChart
+                  stats={prStats}
+                  range={range}
+                  velocity={repoStats?.pr_velocity_count ?? 0}
+                  syncId={syncId}
+                  isLoading={isPrDataLoading}
+                  className="lg:col-span-6 h-fit"
+                />
+
+                <StarsChart
+                  stats={starsData}
+                  total={repoData.stars}
+                  range={range}
+                  syncId={syncId}
+                  isLoading={isStarsDataLoading}
+                  className="lg:col-span-6 h-fit"
+                />
+
+                <ForksChart
+                  stats={forkStats}
+                  total={repoData.forks}
+                  range={range}
+                  syncId={syncId}
+                  isLoading={isForksDataLoading}
+                  className="lg:col-span-6 h-fit"
+                />
+              </section>
+            </div>
           </ClientOnly>
         </section>
-      </ProfileLayout>
+      </WorkspaceLayout>
+
+      <AddToWorkspaceModal
+        repository={repoData.full_name}
+        isOpen={isAddToWorkspaceModalOpen}
+        onCloseModal={() => setIsAddToWorkspaceModalOpen(false)}
+      />
     </>
   );
 }

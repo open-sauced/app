@@ -20,7 +20,7 @@ const TopNav = () => {
     <header className="top-nav-container w-full sm:fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b px-2">
       <div className="flex gap-2 justify-between items-center mx-auto px-2">
         <div className="flex gap-3 md:gap-8 items-center">
-          <HeaderLogo responsive={true} withBg={false} textIsBlack />
+          <HeaderLogo textIsBlack />
           <Nav className="flex" />
           {user && onboarded === false && (
             <div className="relative lg:hidden">
@@ -79,14 +79,14 @@ const Nav = ({ className }: { className?: string }) => {
             Highlights
           </Link>
         </li>
-        <li className="hidden lg:inline">
+        <li>
           <Link
             className={`tracking-tight font-medium text-sm text-slate-700 hover:text-orange-500 flex gap-1 items-center transition-all ${getActiveStyle(
               router.pathname === "/star-search"
             )}`}
             href={"/star-search"}
           >
-            <img src="/assets/star-search-logo.svg" alt="Star Search logo" className="w-5 h-5" />
+            <img src="/assets/star-search-logo.svg" alt="" className="w-5 h-5" />
             <p className="mt-0.5">StarSearch</p>
           </Link>
         </li>

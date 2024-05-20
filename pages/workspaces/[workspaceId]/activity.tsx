@@ -19,6 +19,7 @@ import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceReposi
 import { setQueryParams } from "lib/utils/query-params";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import { SubTabsList } from "components/TabList/tab-list";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -117,20 +118,32 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
         }
       >
         <WorkspaceHeader workspace={workspace} />
-        <div className="grid sm:flex gap-4 pt-3">
+        <div className="grid sm:flex gap-4 pt-3 border-b">
           <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
         </div>
         <div className="mt-6 grid gap-6">
-          <div className="flex justify-end items-center gap-4">
-            <TrackedRepositoryFilter
-              options={filterOptions}
-              handleSelect={(selected: OptionKeys[]) => {
-                setFilteredRepositories(selected);
-                setQueryParams({ page: "1" });
-              }}
+          <div className="grid md:flex justify-between gap-2 md:gap-4">
+            <SubTabsList
+              label="Activity pages"
+              textSize="small"
+              tabList={[
+                { name: "Pull Requests", path: "activity" },
+                { name: "Issues", path: "issues" },
+              ]}
+              selectedTab={"pull requests"}
+              pageId={`/workspaces/${workspace.id}`}
             />
-            <DayRangePicker />
-            <LimitPicker />
+            <div className="flex justify-end items-center gap-4">
+              <TrackedRepositoryFilter
+                options={filterOptions}
+                handleSelect={(selected: OptionKeys[]) => {
+                  setFilteredRepositories(selected);
+                  setQueryParams({ page: "1" });
+                }}
+              />
+              <DayRangePicker />
+              <LimitPicker />
+            </div>
           </div>
           <ClientOnly>
             <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />

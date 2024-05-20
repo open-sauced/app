@@ -161,6 +161,29 @@ interface DbRepoPREvents {
   linesCount: number;
 }
 
+interface DbRepoIssueEvents {
+  readonly event_id: number;
+  readonly id: string;
+  readonly issue_number: number;
+  readonly issue_state: "open" | "closed" | "reopened";
+  readonly issue_title: string;
+  readonly issue_body: string;
+  readonly issue_author_login: string;
+  readonly issue_created_at: string;
+  readonly issue_closed_at: string;
+  readonly issue_updated_at: string;
+  readonly issue_comments: string;
+  readonly repo_name: string;
+  readonly issue_reactions_plus_one: number;
+  readonly issue_reactions_minus_one: number;
+  readonly issue_reactions_laugh: number;
+  readonly issue_reactions_hooray: number;
+  readonly issue_reactions_confused: number;
+  readonly issue_reactions_heart: number;
+  readonly issue_reactions_rocket: number;
+  readonly issue_reactions_eyes: number;
+}
+
 interface DbPRContributor {
   readonly author_login: string;
   readonly username: string;
@@ -581,4 +604,18 @@ interface DbWorkspacesReposStats {
     forks: number;
     activity_ratio: number;
   };
+}
+
+type LottoFactor = "very-high" | "high" | "moderate" | "low";
+
+interface ContributorLottoFactor {
+  contributor: string;
+  count: number;
+  percent_of_total: number;
+  lotto_factor: LottoFactor;
+}
+
+interface RepositoryLottoFactor {
+  all_contribs: ContributorLottoFactor[];
+  all_lotto_factor: LottoFactor;
 }

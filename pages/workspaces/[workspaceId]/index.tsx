@@ -4,6 +4,7 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import { useLocalStorage } from "react-use";
 import { useEffect, useState } from "react";
+import * as Sentry from "@sentry/nextjs";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
 import Repositories from "components/organisms/Repositories/repositories";
@@ -35,6 +36,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   } = await supabase.auth.getSession();
   const bearerToken = session ? session.access_token : "";
   const workspaceId = context.params?.workspaceId as string;
+
+  if (!workspaceId) {
+    Sentry.captureException(new Error(`Invalid workspaceId ${context.req.url}`));
+    return { notFound: true };
+  }
+
   const range = context.query.range ? Number(context.query.range as string) : 30;
   const { data, error } = await fetchApiData<Workspace>({
     path: `workspaces/${workspaceId}`,
@@ -133,7 +140,7 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
         }
       >
         <WorkspaceHeader workspace={workspace} />
-        <div className="grid sm:flex gap-4 pt-3">
+        <div className="grid sm:flex gap-4 pt-3 border-b">
           <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
           <div className="flex justify-end items-center gap-4">
             <Button variant="outline" onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)}>

@@ -20,12 +20,14 @@ const useMostActiveContributors = ({
   initData,
   intialLimit = 20,
   defaultContributorType = "all",
+  repos,
 }: {
   listId: string;
   initData?: ContributorStat[];
   intialLimit?: number;
 
   defaultContributorType?: ContributorType;
+  repos?: string[];
 }) => {
   const [limit, setLimit] = useState(intialLimit);
   const router = useRouter();
@@ -40,10 +42,14 @@ const useMostActiveContributors = ({
   query.set("orderBy", "total_contributions");
   query.set("orderDirection", "DESC");
 
+  if (repos) {
+    query.set("repos", repos.join(","));
+  }
+
   const apiEndpoint = `lists/${listId}/stats/most-active-contributors?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    listId ? apiEndpoint : null,
+    listId && repos ? apiEndpoint : null,
     expPublicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
