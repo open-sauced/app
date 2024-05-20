@@ -29,7 +29,7 @@ describe("[lib] validateEmail()", () => {
     expect(result).toBeFalsy();
   });
 
-  it("Should return true even if string has no an unusual domain", () => {
+  it("Should return true even if string has an unusual domain", () => {
     const testString = "ahmedatwa@yahoo";
     const result = validateEmail(testString);
 
