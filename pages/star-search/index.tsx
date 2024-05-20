@@ -24,7 +24,7 @@ import {
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
-import { Carousel } from "components/shared/Carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
 
 export interface WidgetDefinition {
   name: string;
@@ -608,7 +608,23 @@ function SuggestionBoxes({
   suggestions: SuggesionTypes[];
 }) {
   return isHorizontal ? (
-    <Carousel></Carousel>
+    <Carousel className="w-full max-w-[32rem] mx-auto px-auto" orientation="horizontal">
+      <CarouselContent>
+        {suggestions.map((suggestion, i) => (
+          <CarouselItem key={i}>
+            <button onClick={() => addPromptInput(suggestion.prompt)}>
+              <Card className="w-[30rem] shadow-md border-none text-start !p-6 text-slate-600">
+                <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
+                <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
+              </Card>
+            </button>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+
+      <CarouselPrevious variant="text" />
+      <CarouselNext variant="text" />
+    </Carousel>
   ) : (
     <div className="grid grid-cols-1 lg:grid-cols-2 place-content-center gap-2 lg:gap-4 w-full max-w-3xl">
       {suggestions.map((suggestion, i) => (
