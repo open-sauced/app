@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.10](https://github.com/open-sauced/app/compare/v2.30.0-beta.9...v2.30.0-beta.10) (2024-05-21)
+
+
+### 🍕 Features
+
+* update to lunch week card ([#3439](https://github.com/open-sauced/app/issues/3439)) ([d41f8fa](https://github.com/open-sauced/app/commit/d41f8fa12141e9711bdf651ad9aa1463881dcf83))
+
 ## [2.30.0-beta.9](https://github.com/open-sauced/app/compare/v2.30.0-beta.8...v2.30.0-beta.9) (2024-05-21)
 
 
