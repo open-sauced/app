@@ -463,22 +463,24 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
               aria-live="polite"
               className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
             >
-              <ScrollArea className="flex grow">
-                {chatMessagesToProcess.map((message, i, messages) => {
-                  if (loaderIndex === i && isRunning && messages.length - 1 === i) {
-                    return (
-                      <Fragment key={i}>
-                        <Chatbox userId={userId} message={message} />
-                        <li className="flex gap-2 my-4 w-max items-center">
-                          <ChatAvatar author="StarSearch" userId={userId} />
-                          <StarSearchLoader />
-                        </li>
-                      </Fragment>
-                    );
-                  } else {
-                    return <Chatbox key={i} userId={userId} message={message} />;
-                  }
-                })}
+              <ScrollArea className="flex grow" asChild={true}>
+                <ul>
+                  {chatMessagesToProcess.map((message, i, messages) => {
+                    if (loaderIndex === i && isRunning && messages.length - 1 === i) {
+                      return (
+                        <Fragment key={i}>
+                          <Chatbox userId={userId} message={message} />
+                          <li className="flex gap-2 my-4 w-max items-center">
+                            <ChatAvatar author="StarSearch" userId={userId} />
+                            <StarSearchLoader />
+                          </li>
+                        </Fragment>
+                      );
+                    } else {
+                      return <Chatbox key={i} userId={userId} message={message} />;
+                    }
+                  })}
+                </ul>
                 <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
