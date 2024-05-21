@@ -39,11 +39,11 @@ const componentRegistry = new Map<string, Function>();
 const SUGGESTIONS = [
   {
     title: "Get information on contributor activity",
-    prompt: "What type of pull requests has brandonroberts worked on?",
+    prompt: "What type of pull requests has @brandonroberts worked on?",
   },
   {
     title: "Identify key contributors",
-    prompt: "Who are the most prevalent contributors to the Typescript ecosystem?",
+    prompt: "Who are the most prevalent contributors to the TypeScript ecosystem?",
   },
   {
     title: "Find contributors based on their work",
