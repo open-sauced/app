@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.1](https://github.com/open-sauced/app/compare/v2.29.1-beta.4...v2.30.0-beta.1) (2024-05-21)
+
+
+### 🍕 Features
+
+* added a loader for StarSearch responses ([#3422](https://github.com/open-sauced/app/issues/3422)) ([8972760](https://github.com/open-sauced/app/commit/8972760cd799fe6097be7d420e6e63729cffc1a8))
+
 ## [2.29.1-beta.4](https://github.com/open-sauced/app/compare/v2.29.1-beta.3...v2.29.1-beta.4) (2024-05-17)
 
 
