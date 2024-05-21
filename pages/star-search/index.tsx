@@ -514,15 +514,15 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
               </div>
             </div>
             {!isMobile && showSuggestions && (
-              <div className="flex flex-col gap-2 mb-14">
+              <div className="relative flex flex-col gap-2 mb-14">
                 <button
                   onClick={() => {
                     setShowSuggestions(false);
                     inputRef.current?.focus();
                   }}
-                  className="flex gap-2 w-fit self-end hover:text-sauced-orange focus-visible:text-sauced-orange focus-visible:ring focus-visible:border-orange-500 focus-visible:ring-orange-100"
+                  className="absolute flex gap-2 w-fit self-end -right-5 -top-3"
                 >
-                  <XCircleIcon className="w-6 h-6" aria-label="Close suggestions" />
+                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
                 </button>
                 <SuggestionBoxes
                   isHorizontal
@@ -638,12 +638,12 @@ function SuggestionBoxes({
   suggestions: SuggesionTypes[];
 }) {
   return isHorizontal ? (
-    <Carousel className="w-full max-w-[32rem] mx-auto px-auto" orientation="horizontal">
+    <Carousel className="w-fit max-w-[32rem] mx-auto px-auto" orientation="horizontal">
       <CarouselContent>
         {suggestions.map((suggestion, i) => (
-          <CarouselItem key={i}>
-            <button onClick={() => addPromptInput(suggestion.prompt)}>
-              <Card className="w-[30rem] shadow-md border-none text-start !p-6 text-slate-600">
+          <CarouselItem key={i} className="items-stretch">
+            <button onClick={() => addPromptInput(suggestion.prompt)} className="h-full mx-auto">
+              <Card className="w-[30rem] shadow-md border-none mx-auto h-full text-start !p-6 text-slate-600">
                 <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
                 <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
               </Card>
@@ -652,18 +652,14 @@ function SuggestionBoxes({
         ))}
       </CarouselContent>
 
-      <CarouselPrevious variant="text" />
-      <CarouselNext variant="text" />
+      <CarouselPrevious />
+      <CarouselNext />
     </Carousel>
   ) : (
     <div className="grid grid-cols-1 lg:grid-cols-2 place-content-center gap-2 lg:gap-4 w-full max-w-3xl">
       {suggestions.map((suggestion, i) => (
         <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
-          <Card
-            className={`${
-              isHorizontal ? "w-[30rem] snap-start" : "w-full h-fit"
-            } shadow-md border-none text-start !p-6 text-slate-600`}
-          >
+          <Card className="w-fit h-fit shadow-md border-none text-start !p-6 text-slate-600">
             <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
             <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
           </Card>
