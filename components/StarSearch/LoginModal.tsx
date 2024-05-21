@@ -52,7 +52,7 @@ const StarSearchLoginModal = ({ isOpen, onClose }: StarSearchLoginModalProps) =>
   ) : (
     <Dialog open={isOpen}>
       <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal} onPointerDownOutside={onCloseModal}>
-        <Card className="!p-0 max-w-s">
+        <Card className="!p-0 max-w-sm">
           <section className="relative flex justify-end w-full align-top">
             <div className="absolute left-0">
               <Image src="/assets/star-search-beam.png" alt="StarSearch logo" width="240" height="240" />
@@ -71,7 +71,7 @@ const StarSearchLoginModal = ({ isOpen, onClose }: StarSearchLoginModalProps) =>
                 access!
               </Text>
 
-              <div className="flex justify-center gap-4">
+              <div className="flex justify-center gap-4 pt-2">
                 <Button className="w-fit gap-2 self-center" variant="primary" onClick={login}>
                   <BsGithub className="w-5 h-5" />
                   Connect with GitHub
