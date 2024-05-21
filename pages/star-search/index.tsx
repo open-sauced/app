@@ -182,6 +182,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [ranOnce, setRanOnce] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
@@ -253,6 +254,11 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
     if (isRunning) {
       return;
     }
+
+    if (!ranOnce) {
+      setRanOnce(true);
+    }
+
     if (starSearchState === "initial") {
       setStarSearchState("chat");
     }
@@ -443,9 +449,9 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
     switch (starSearchState) {
       case "initial":
         return (
-          <div className="flex flex-col text-center items-center gap-4">
+          <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
             <Header />
-            <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
+            {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
           </div>
         );
       case "chat":
@@ -456,29 +462,37 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
           (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
         );
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
+        let heightToRemove = 300;
+
+        if (!isRunning && !isMobile && ranOnce) {
+          heightToRemove = showSuggestions ? 580 : 380;
+        }
 
         return (
           <>
             <div
               aria-live="polite"
-              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
+              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4"
+              style={{ height: `calc(100vh - ${heightToRemove}px)` }}
             >
-              <ScrollArea className="flex grow">
-                {chatMessagesToProcess.map((message, i, messages) => {
-                  if (loaderIndex === i && isRunning && messages.length - 1 === i) {
-                    return (
-                      <Fragment key={i}>
-                        <Chatbox userId={userId} message={message} />
-                        <li className="flex gap-2 my-4 w-max items-center">
-                          <ChatAvatar author="StarSearch" userId={userId} />
-                          <StarSearchLoader />
-                        </li>
-                      </Fragment>
-                    );
-                  } else {
-                    return <Chatbox key={i} userId={userId} message={message} />;
-                  }
-                })}
+              <ScrollArea className="flex grow" asChild={true}>
+                <ul>
+                  {chatMessagesToProcess.map((message, i, messages) => {
+                    if (loaderIndex === i && isRunning && messages.length - 1 === i) {
+                      return (
+                        <Fragment key={i}>
+                          <Chatbox userId={userId} message={message} />
+                          <li className="flex gap-2 my-4 w-max items-center">
+                            <ChatAvatar author="StarSearch" userId={userId} />
+                            <StarSearchLoader />
+                          </li>
+                        </Fragment>
+                      );
+                    } else {
+                      return <Chatbox key={i} userId={userId} message={message} />;
+                    }
+                  })}
+                </ul>
                 <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
@@ -553,12 +567,11 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         image={ogImageUrl}
         twitterCard="summary_large_image"
       />
-      <ProfileLayout>
-        <div className="relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
+      <ProfileLayout showFooter={false}>
+        <div className="star-search relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
-              starSearchState === "chat" &&
               (isMobile ? (
                 <Drawer
                   title="Choose a suggestion"
@@ -578,7 +591,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 </Drawer>
               ) : (
                 <>
-                  {!showSuggestions && (
+                  {!showSuggestions && ranOnce && (
                     <button
                       onClick={() => setShowSuggestions(!showSuggestions)}
                       className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
