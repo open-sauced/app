@@ -462,12 +462,18 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
           (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
         );
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
+        let heightToRemove = 300;
+
+        if (!isRunning && !isMobile && ranOnce) {
+          heightToRemove = showSuggestions ? 580 : 380;
+        }
 
         return (
           <>
             <div
               aria-live="polite"
-              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
+              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4"
+              style={{ height: `calc(100vh - ${heightToRemove}px)` }}
             >
               <ScrollArea className="flex grow" asChild={true}>
                 <ul>
