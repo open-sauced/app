@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.8](https://github.com/open-sauced/app/compare/v2.30.0-beta.7...v2.30.0-beta.8) (2024-05-21)
+
+
+### 🍕 Features
+
+* Small update to copy for suggested starsearch queries ([#3438](https://github.com/open-sauced/app/issues/3438)) ([012db59](https://github.com/open-sauced/app/commit/012db591c2ba6c126dc3ffe825771c73023fa98a))
+
 ## [2.30.0-beta.7](https://github.com/open-sauced/app/compare/v2.30.0-beta.6...v2.30.0-beta.7) (2024-05-21)
 
 
