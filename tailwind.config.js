@@ -36,7 +36,7 @@ module.exports = {
       },
       colors: {
         sauced: {
-          orange: "hsla(19, 100%, 50%, 1)",
+          orange: "hsla(19, 100%, 50%, var(--tw-bg-opacity))",
           light: "hsl(24, 100%, 95%)",
         },
         gradient: {

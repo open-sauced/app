@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import Markdown from "react-markdown";
@@ -24,6 +24,7 @@ import {
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 
 export interface WidgetDefinition {
   name: string;
@@ -287,7 +288,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
-        const textChat = chat.filter((item) => typeof item.content === "string");
+
         registerPrompt({
           promptContent: prompt,
           promptResponse:
@@ -432,6 +433,14 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           </div>
         );
       case "chat":
+        // We only want to process the chat messages that are either strings or valid widgets.
+        // The API currently sends back other function calls that we currently do not support or don't need to support,
+        // so we filter those out by checking if they are in the component registry.
+        const chatMessagesToProcess = chat.filter(
+          (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
+        );
+        const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
+
         return (
           <>
             <div
@@ -439,9 +448,21 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
               className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
             >
               <ScrollArea className="flex grow">
-                {chat.map((message, i) => (
-                  <Chatbox key={i} userId={userId} message={message} />
-                ))}
+                {chatMessagesToProcess.map((message, i, messages) => {
+                  if (loaderIndex === i && isRunning && messages.length - 1 === i) {
+                    return (
+                      <Fragment key={i}>
+                        <Chatbox userId={userId} message={message} />
+                        <li className="flex gap-2 my-4 w-max items-center">
+                          <ChatAvatar author="StarSearch" userId={userId} />
+                          <StarSearchLoader />
+                        </li>
+                      </Fragment>
+                    );
+                  } else {
+                    return <Chatbox key={i} userId={userId} message={message} />;
+                  }
+                })}
                 <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
