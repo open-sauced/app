@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.6](https://github.com/open-sauced/app/compare/v2.30.0-beta.5...v2.30.0-beta.6) (2024-05-21)
+
+
+### 🐛 Bug Fixes
+
+* updated StarSearch copy ([#3440](https://github.com/open-sauced/app/issues/3440)) ([abe33f1](https://github.com/open-sauced/app/commit/abe33f1526ec00a8549963413d0c2470761ea3c2))
+
+## [2.30.0-beta.5](https://github.com/open-sauced/app/compare/v2.30.0-beta.4...v2.30.0-beta.5) (2024-05-21)
+
+
+### 🐛 Bug Fixes
+
+* remove reactions from issues table ([#3435](https://github.com/open-sauced/app/issues/3435)) ([e15c6b6](https://github.com/open-sauced/app/commit/e15c6b64521316af4f61b0bcaf545e3a7889e3ae))
+
 ## [2.30.0-beta.4](https://github.com/open-sauced/app/compare/v2.30.0-beta.3...v2.30.0-beta.4) (2024-05-21)
 
 
