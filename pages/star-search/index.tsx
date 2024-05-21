@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import Markdown from "react-markdown";
@@ -10,6 +10,7 @@ import { BsArrowUpShort } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 import * as Sentry from "@sentry/nextjs";
+import remarkGfm from "remark-gfm";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
@@ -25,13 +26,13 @@ import {
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
+import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 
 export interface WidgetDefinition {
   name: string;
   arguments?: Record<string, Record<string, any>>;
 }
 
-type EventType = "content" | "function_call";
 type Author = "You" | "StarSearch";
 
 const componentRegistry = new Map<string, Function>();
@@ -288,7 +289,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
-        const textChat = chat.filter((item) => typeof item.content === "string");
+
         registerPrompt({
           promptContent: prompt,
           promptResponse:
@@ -302,97 +303,103 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       }
 
       /**
+        Content has this shape where each chunk has the concatenated "content.parts"
+        that make up the whole message as it flows in.
 
-        Content has this shape:
-
-        event: function_call
         id: 1
-        data: {"name":"renderLottoFactor","arguments":"{\"repoName\":\"kubernetes/kubernetes\"}"}
+        data: {"id":"123-abc","author":"manager","iso_time":"2024-05-20T20:30:42.0","content":{"type":"content","parts":["I"]},"status":"in_progress","error":null}
 
-
-        event: content
         id: 2
-        data: The
+        data: {"id":"123-abc","author":"manager","iso_time":"2024-05-20T20:30:43.0","content":{"type":"content","parts":["I am"]},"status":"in_progress","error":null}
 
-        event: content
         id: 3
-        data:  Lottery
+        data: {"id":"123-abc","author":"manager","iso_time":"2024-05-20T20:30:44.0","content":{"type":"content","parts":["I am StarSearch"]},"status":"in_progress","error":null}
 
-        event: content
-        id: 4
-        data:  Factor
+        ... etc. etc.
+
+        id: 5
+        data: {"id":"123-abc","author":"manager","iso_time":"2024-05-20T20:30:45.0","content":{"type":"content","parts":["I am StarSearch. Witness me."]},"status":"done","error":null}
 
 
-        If the event type is function_call, we know we need to render a component, if the event type is content, we render the markdown as HTML.
+        If the content.type is "function_call", we know we need to render a component.
+        if the content.type is "content", we render the markdown as HTML.
        */
 
       const values = value.split("\n");
 
-      let eventType: EventType = "content";
-
       values.forEach(async (v) => {
         if (v.startsWith("id:")) {
-          return;
-        }
-
-        if (v.startsWith("event:")) {
-          eventType = v.split(/:\s+/)[1] as EventType;
+          // this is just the id of the SSE from the response.
           return;
         }
 
         if (v.startsWith("data:")) {
           /*
-           * regex for capturing star-search stream SSEs:
-           * data:\s?(?<result>.*)
+           * regex for capturing star-search stream events JSON:
+           * data:\s(?<result>.*)
            *
            * The aim of this regex is to capture all characters coming from
-           * the star-search server side events while also preserving the
-           * empty "data:" frames that may come through (which are newlines).
+           * the star-search server side events.
            *
            * 'data:' - matches the "data:" characters explicitly.
            * '\s'    - matches any whitespace that follows the data. In most cases, this is a single space ' '.
-           * '?'     - matches the previous whitespace token zero or one times. Aka, is optional.
+           *           So, for example, this captures 'data: '.
            *
-           * '(?<result>.*)' - optional named capture group "result".
-           *    ├────── '?'          - capture group is optional.
-           *    ├────── '<result>'   - capture group is named "result".
-           *    └────── '.*'         - matches any characters (including zero characters) after the "data:\s?" segment.
-           *                           this is in service of also capturing empty strings as newlines.
+           * '(?<result>.*)' - named capture group "result".
+           *    ├────── '?<result>'  - capture group is named "result".
+           *    └────── '.*'         - matches any characters (including zero characters) after the "data:\s" segment.
+           *                           Should capture ALL of the json object on the line after 'data: '.
+           *
+           * Example: data: { id: "abc123" }
+           * - Captures the 'data: ' (including the space)
+           * - The named capture group "result" gets the entire JSON object "{ id: \"abc123\" }"
+           *   as a string that can be parsed to an object.
            */
 
-          const matched = v.match(/data:\s?(?<result>.*)/);
+          const matched = v.match(/data:\s(?<result>.*)/);
 
           if (!matched || !matched.groups) {
             return;
           }
 
-          let jsonContent: WidgetDefinition;
-          const { result } = matched.groups;
-
           try {
+            let jsonContent: WidgetDefinition;
+            const { result } = matched.groups;
+
+            // deserialize the json dump from the payload
+            const payload = JSON.parse(result) as StarSearchPayload;
+
+            // skip over cases where the payload is somehow malformed or missing content altogether
+            if (!payload || !payload.content || payload.content.parts.length === 0) {
+              Sentry.captureException(
+                new Error(`Parsed and rejected malformed JSON for StarSearch. JSON payload: ${v}`)
+              );
+              return;
+            }
+
             // function_call means we're loading a widget definition for the enriched UI
-            if (eventType === "function_call") {
-              jsonContent = JSON.parse(result);
+            if (payload.content.type === "function_call") {
+              jsonContent = JSON.parse(payload.content.parts[0]);
               jsonContent.arguments = JSON.parse(jsonContent.arguments as any) as WidgetDefinition["arguments"];
               await updateComponentRegistry(jsonContent.name);
-            }
-          } catch (error) {
-            Sentry.captureException(
-              new Error(`Failed to parse JSON for StarSearch widget. JSON payload: ${result}`, { cause: error })
-            );
-          }
 
-          setChat((chat) => {
-            const updatedChat = [...chat];
+              setChat((chat) => {
+                const updatedChat = [...chat];
 
-            if (matched.groups) {
-              if (eventType === "function_call") {
                 // create a new chat item because the widget will require it's own chatbox.
                 updatedChat.push({
                   author: "StarSearch",
                   content: jsonContent,
                 });
-              } else {
+
+                return updatedChat;
+              });
+            }
+
+            if (payload.content.type === "content" || payload.content.type === "final") {
+              setChat((chat) => {
+                const updatedChat = [...chat];
+
                 let changes = updatedChat.at(-1);
 
                 if (changes) {
@@ -406,16 +413,19 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   }
 
                   if (changes) {
-                    // concatenate the new content to the previous chat item as it's a continuation of the same message
-                    // coming from the readable stream.
-                    changes.content += matched.groups.result === "" ? "&nbsp; \n" : result;
+                    // set the content that was reserved by the stream event
+                    changes.content = payload.content.parts[0];
                   }
                 }
-              }
-            }
 
-            return updatedChat;
-          });
+                return updatedChat;
+              });
+            }
+          } catch (error) {
+            Sentry.captureException(
+              new Error(`Failed to parse JSON for StarSearch. JSON payload: ${v}`, { cause: error })
+            );
+          }
 
           return;
         }
@@ -433,6 +443,14 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           </div>
         );
       case "chat":
+        // We only want to process the chat messages that are either strings or valid widgets.
+        // The API currently sends back other function calls that we currently do not support or don't need to support,
+        // so we filter those out by checking if they are in the component registry.
+        const chatMessagesToProcess = chat.filter(
+          (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
+        );
+        const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
+
         return (
           <>
             <div
@@ -440,9 +458,21 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
               className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
             >
               <ScrollArea className="flex grow">
-                {chat.map((message, i) => (
-                  <Chatbox key={i} userId={userId} message={message} />
-                ))}
+                {chatMessagesToProcess.map((message, i, messages) => {
+                  if (loaderIndex === i && isRunning && messages.length - 1 === i) {
+                    return (
+                      <Fragment key={i}>
+                        <Chatbox userId={userId} message={message} />
+                        <li className="flex gap-2 my-4 w-max items-center">
+                          <ChatAvatar author="StarSearch" userId={userId} />
+                          <StarSearchLoader />
+                        </li>
+                      </Fragment>
+                    );
+                  } else {
+                    return <Chatbox key={i} userId={userId} message={message} />;
+                  }
+                })}
                 <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
@@ -649,7 +679,11 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
   if (typeof message.content == "string") {
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
-    content = <Markdown className="break-all">{message.content}</Markdown>;
+    content = (
+      <Markdown remarkPlugins={[remarkGfm]} className="break-words prose">
+        {message.content}
+      </Markdown>
+    );
   } else {
     if (!componentRegistry.has(message.content.name)) {
       return null;
