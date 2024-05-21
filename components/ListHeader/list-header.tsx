@@ -42,7 +42,7 @@ const ListHeader = ({
 
     try {
       const shortUrl = await shortenUrl(url);
-      await writeToClipboard(shortUrl);
+      writeToClipboard(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
