@@ -126,6 +126,11 @@ module.exports = millionLint({
           permanent: true,
         };
       }),
+      {
+        source: "/star-search/waitlist",
+        destination: "/star-search",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
