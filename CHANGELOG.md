@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.2](https://github.com/open-sauced/app/compare/v2.30.0-beta.1...v2.30.0-beta.2) (2024-05-21)
+
+
+### 🍕 Features
+
+* Use StarSearchPayload from API ([#3424](https://github.com/open-sauced/app/issues/3424)) ([a8b01f7](https://github.com/open-sauced/app/commit/a8b01f7cfa86b95d972fa112d8159810326bb9e6))
+
 ## [2.30.0-beta.1](https://github.com/open-sauced/app/compare/v2.29.1-beta.4...v2.30.0-beta.1) (2024-05-21)
 
 
