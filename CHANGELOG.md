@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.9](https://github.com/open-sauced/app/compare/v2.30.0-beta.8...v2.30.0-beta.9) (2024-05-21)
+
+
+### 🍕 Features
+
+* open up access to StarSearch and show modal/drawer for login ([#3442](https://github.com/open-sauced/app/issues/3442)) ([d228949](https://github.com/open-sauced/app/commit/d22894966317b9882985f41ec1297d821863dd84))
+
 ## [2.30.0-beta.8](https://github.com/open-sauced/app/compare/v2.30.0-beta.7...v2.30.0-beta.8) (2024-05-21)
 
 
