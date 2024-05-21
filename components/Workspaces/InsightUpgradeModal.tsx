@@ -23,7 +23,7 @@ export default function InsightUpgradeModal({
   onClose,
 }: InsightUpgradeModalProps) {
   const posthog = usePostHog();
-  const isMobile = useMediaQuery("(max-width: 576px)");
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const title = variant !== "workspace" ? "This Workspace is over the free limit" : "Upgrade to a PRO Workspace";
   const description =
