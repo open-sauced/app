@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.4](https://github.com/open-sauced/app/compare/v2.30.0-beta.3...v2.30.0-beta.4) (2024-05-21)
+
+
+### 🐛 Bug Fixes
+
+* add support for clipboard copy in Safari and use utility function ([#3433](https://github.com/open-sauced/app/issues/3433)) ([2d1b74f](https://github.com/open-sauced/app/commit/2d1b74fe86123d3a607d5f267230efc47d943fd3))
+
 ## [2.30.0-beta.3](https://github.com/open-sauced/app/compare/v2.30.0-beta.2...v2.30.0-beta.3) (2024-05-21)
 
 
