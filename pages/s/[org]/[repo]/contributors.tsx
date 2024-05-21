@@ -19,6 +19,7 @@ import Contributors from "components/organisms/Contributors/contributors";
 import TabList from "components/TabList/tab-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useSession from "lib/hooks/useSession";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -83,7 +84,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
 
     try {
       const shortUrl = await shortenUrl(url);
-      await navigator.clipboard.writeText(shortUrl);
+      await writeToClipboard(shortUrl);
       toast({ description: "Copied to clipboard.", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console

@@ -16,6 +16,7 @@ import { useToast } from "lib/hooks/useToast";
 import { setQueryParams } from "lib/utils/query-params";
 import StackedOwners from "components/Workspaces/StackedOwners";
 import { shortenUrl } from "lib/utils/shorten-url";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
@@ -56,7 +57,7 @@ const InsightHeader = ({
 
     try {
       const shortUrl = await shortenUrl(url);
-      await navigator.clipboard.writeText(shortUrl);
+      await writeToClipboard(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console

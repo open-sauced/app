@@ -47,6 +47,7 @@ import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 import { shortenUrl } from "lib/utils/shorten-url";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import GenericBlogOpenGraphImg from "../GenericBlogOpenGraphImg/generic-blog-open-graph-img";
 import {
@@ -247,7 +248,7 @@ const ContributorHighlightCard = ({
 
     try {
       const shortUrl = await shortenUrl(url);
-      await navigator.clipboard.writeText(shortUrl);
+      await writeToClipboard(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console

@@ -7,6 +7,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { useToast } from "lib/hooks/useToast";
 import Pill from "components/atoms/Pill/pill";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
 
 interface WorkspaceHeaderProps {
   workspace: Workspace;
@@ -25,7 +26,7 @@ export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
 
     try {
       const shortUrl = await shortenUrl(url);
-      await navigator.clipboard.writeText(shortUrl);
+      await writeToClipboard(shortUrl);
       toast({ description: "Copied to clipboard.", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
