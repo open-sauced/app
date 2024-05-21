@@ -1,12 +1,12 @@
 {
   "name": "@open-sauced/app",
-  "version": "2.30.0-beta.7",
+  "version": "2.30.0-beta.9",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@open-sauced/app",
-      "version": "2.30.0-beta.7",
+      "version": "2.30.0-beta.9",
       "hasInstallScript": true,
       "license": "Apache 2.0",
       "dependencies": {
