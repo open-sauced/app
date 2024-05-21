@@ -60,7 +60,7 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
         );
       case "history":
         return (
-          <LineChart data={dailyData} syncId={syncId} className="-left-5">
+          <LineChart data={historyData} syncId={syncId} className="-left-5">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
             <YAxis
               domain={["auto", "auto"]}
