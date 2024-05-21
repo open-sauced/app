@@ -619,3 +619,27 @@ interface RepositoryLottoFactor {
   all_contribs: ContributorLottoFactor[];
   all_lotto_factor: LottoFactor;
 }
+
+// sourced from open-sauced/api
+
+type StarSearchEvent = "content" | "final" | "function_call";
+type StarSearchPayloadStatus = "in_progress" | "done";
+
+interface StarSearchContent {
+  type: StarSearchEvent;
+  parts: string[];
+}
+
+interface StarSearchError {
+  type: string;
+  message: string;
+}
+
+interface StarSearchPayload {
+  id?: string;
+  author?: string;
+  iso_time: string;
+  content: StarSearchContent;
+  status: StarSearchPayloadStatus;
+  error?: StarSearchError;
+}
