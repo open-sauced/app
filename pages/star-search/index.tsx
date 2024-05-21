@@ -182,6 +182,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [ranOnce, setRanOnce] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
@@ -253,6 +254,11 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
     if (isRunning) {
       return;
     }
+
+    if (!ranOnce) {
+      setRanOnce(true);
+    }
+
     if (starSearchState === "initial") {
       setStarSearchState("chat");
     }
@@ -579,7 +585,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 </Drawer>
               ) : (
                 <>
-                  {!showSuggestions && (
+                  {!showSuggestions && ranOnce && (
                     <button
                       onClick={() => setShowSuggestions(!showSuggestions)}
                       className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
