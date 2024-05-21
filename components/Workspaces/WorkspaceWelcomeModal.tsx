@@ -17,7 +17,7 @@ const EmbeddedVideo = () => {
   return (
     <iframe
       width="100%"
-      className="border-2 border-light-orange-9 shadow-md rounded-lg mb-4 aspect-video"
+      className="shadow-md rounded-lg mb-4 aspect-video"
       src="https://www.youtube-nocookie.com/embed/xpxIyR4-rRc?si=UwT2Ukmjc08hFjU-"
       title="Welcome to Workspaces"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
