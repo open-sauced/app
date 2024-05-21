@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.5](https://github.com/open-sauced/app/compare/v2.30.0-beta.4...v2.30.0-beta.5) (2024-05-21)
+
+
+### 🐛 Bug Fixes
+
+* remove reactions from issues table ([#3435](https://github.com/open-sauced/app/issues/3435)) ([e15c6b6](https://github.com/open-sauced/app/commit/e15c6b64521316af4f61b0bcaf545e3a7889e3ae))
+
+## [2.30.0-beta.4](https://github.com/open-sauced/app/compare/v2.30.0-beta.3...v2.30.0-beta.4) (2024-05-21)
+
+
+### 🐛 Bug Fixes
+
+* add support for clipboard copy in Safari and use utility function ([#3433](https://github.com/open-sauced/app/issues/3433)) ([2d1b74f](https://github.com/open-sauced/app/commit/2d1b74fe86123d3a607d5f267230efc47d943fd3))
+
+## [2.30.0-beta.3](https://github.com/open-sauced/app/compare/v2.30.0-beta.2...v2.30.0-beta.3) (2024-05-21)
+
+
+### 🐛 Bug Fixes
+
+* add mobile drawer for `InsightUpgradeModal` ([#3429](https://github.com/open-sauced/app/issues/3429)) ([d081980](https://github.com/open-sauced/app/commit/d0819809e01d80fc1f7ab17a1a6b0c3c11604588))
+
+## [2.30.0-beta.2](https://github.com/open-sauced/app/compare/v2.30.0-beta.1...v2.30.0-beta.2) (2024-05-21)
+
+
+### 🍕 Features
+
+* Use StarSearchPayload from API ([#3424](https://github.com/open-sauced/app/issues/3424)) ([a8b01f7](https://github.com/open-sauced/app/commit/a8b01f7cfa86b95d972fa112d8159810326bb9e6))
+
+## [2.30.0-beta.1](https://github.com/open-sauced/app/compare/v2.29.1-beta.4...v2.30.0-beta.1) (2024-05-21)
+
+
+### 🍕 Features
+
+* added a loader for StarSearch responses ([#3422](https://github.com/open-sauced/app/issues/3422)) ([8972760](https://github.com/open-sauced/app/commit/8972760cd799fe6097be7d420e6e63729cffc1a8))
+
 ## [2.29.1-beta.4](https://github.com/open-sauced/app/compare/v2.29.1-beta.3...v2.29.1-beta.4) (2024-05-17)
 
 
