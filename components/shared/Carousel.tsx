@@ -173,6 +173,7 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.HTMLProps<HTM
 
     return (
       <button
+        // @ts-ignore
         type="button"
         ref={ref}
         className={clsx(
@@ -200,6 +201,7 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.HTMLProps<HTMLBut
 
     return (
       <button
+        // @ts-ignore
         type="button"
         ref={ref}
         className={clsx(
