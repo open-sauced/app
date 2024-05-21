@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { BsGithub } from "react-icons/bs";
 import { MdOutlineClose } from "react-icons/md";
 
@@ -52,11 +53,11 @@ const StarSearchLoginModal = ({ isOpen, onClose }: StarSearchLoginModalProps) =>
     <Dialog open={isOpen}>
       <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal} onPointerDownOutside={onCloseModal}>
         <Card className="!p-0 max-w-s">
-          <section className="flex w-full justify-between align-top">
-            <div className="">
-              {/* <Image src="/assets/star-search-beam.png" alt="StarSearch Logo" width="100" height="100" /> */}
+          <section className="relative flex justify-end w-full align-top">
+            <div className="absolute left-0">
+              <Image src="/assets/star-search-beam.png" alt="StarSearch logo" width="240" height="240" />
             </div>
-            <button onClick={onCloseModal} className="mr-4 mt-4 mb-0">
+            <button onClick={onCloseModal} className="p-4">
               <MdOutlineClose className="w-6 h-6" />
             </button>
           </section>
