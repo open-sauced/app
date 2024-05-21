@@ -622,7 +622,7 @@ function Header() {
           StarSearch
         </h1>
       </div>
-      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Ask questions about contributors</h2>
+      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Copilot, but for git history</h2>
     </div>
   );
 }
