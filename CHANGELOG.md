@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.11](https://github.com/open-sauced/app/compare/v2.30.0-beta.10...v2.30.0-beta.11) (2024-05-21)
+
+
+### 🍕 Features
+
+* add workspaces intro video to welcome modal ([#3432](https://github.com/open-sauced/app/issues/3432)) ([d4bce9a](https://github.com/open-sauced/app/commit/d4bce9aed5ba52129c1ddd4db3afea59ebd29f47))
+
+
+### 🐛 Bug Fixes
+
+* fixed scrolling issues with StarSearch ([#3444](https://github.com/open-sauced/app/issues/3444)) ([2c46494](https://github.com/open-sauced/app/commit/2c4649449e371b9b833177620fb45ad2eeb9ebe1))
+* history chart using correct data for `StarsChart` ([#3443](https://github.com/open-sauced/app/issues/3443)) ([f85f1fd](https://github.com/open-sauced/app/commit/f85f1fde3371c606701fc2c19a5ffb9147b48ec1))
+
 ## [2.30.0-beta.10](https://github.com/open-sauced/app/compare/v2.30.0-beta.9...v2.30.0-beta.10) (2024-05-21)
 
 
