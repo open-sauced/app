@@ -443,7 +443,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
     switch (starSearchState) {
       case "initial":
         return (
-          <div className="flex flex-col text-center items-center gap-4">
+          <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
             <Header />
             {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
           </div>
