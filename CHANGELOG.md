@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.3](https://github.com/open-sauced/app/compare/v2.30.0-beta.2...v2.30.0-beta.3) (2024-05-21)
+
+
+### 🐛 Bug Fixes
+
+* add mobile drawer for `InsightUpgradeModal` ([#3429](https://github.com/open-sauced/app/issues/3429)) ([d081980](https://github.com/open-sauced/app/commit/d0819809e01d80fc1f7ab17a1a6b0c3c11604588))
+
 ## [2.30.0-beta.2](https://github.com/open-sauced/app/compare/v2.30.0-beta.1...v2.30.0-beta.2) (2024-05-21)
 
 
