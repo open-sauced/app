@@ -38,22 +38,27 @@ export default function WorkspaceWelcomeModal({ isOpen, onClose }: WorkspaceWelc
     }
   }, [isSmallScreen, isOpen]);
 
+  const EmbeddedVideo = () => {
+    return (
+      <iframe
+        width="100%"
+        height="300px"
+        className="border-2 border-light-orange-9 shadow-md rounded-lg mb-4 aspect-video"
+        src="https://www.youtube-nocookie.com/embed/xpxIyR4-rRc?si=UwT2Ukmjc08hFjU-"
+        title="Welcome to Workspaces"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      ></iframe>
+    );
+  };
+
   return isSmallScreen ? (
     <Drawer
       title={TITLE}
       description={
         <div className="text-center flex flex-col items-center justify-between gap-4 !p-8">
-          <iframe
-            width="100%"
-            height="300px"
-            className="border-2 border-light-orange-9 shadow-md rounded-lg mb-4"
-            src="https://www.youtube-nocookie.com/embed/xpxIyR4-rRc?si=UwT2Ukmjc08hFjU-"
-            title="Welcome to Workspaces"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
+          <EmbeddedVideo />
           {description}
         </div>
       }
@@ -79,17 +84,7 @@ export default function WorkspaceWelcomeModal({ isOpen, onClose }: WorkspaceWelc
     <Dialog open={isOpen}>
       <DialogContent autoStyle={false} onEscapeKeyDown={onClose} onPointerDownOutside={onClose}>
         <Card className="sm:w-96 md:w-max max-w-xl text-center flex flex-col items-center justify-between gap-4 !p-8">
-          <iframe
-            width="100%"
-            height="300px"
-            className="border-2 border-light-orange-9 shadow-md rounded-lg mb-4"
-            src="https://www.youtube-nocookie.com/embed/xpxIyR4-rRc?si=UwT2Ukmjc08hFjU-"
-            title="Welcome to Workspaces"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
+          <EmbeddedVideo />
           <DialogTitle>
             <Title level={2}>Welcome to Workspaces</Title>
           </DialogTitle>
