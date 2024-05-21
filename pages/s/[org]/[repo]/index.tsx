@@ -32,6 +32,7 @@ import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
 import IssuesChart from "components/Graphs/IssuesChart";
 import ContributorsChart from "components/Graphs/ContributorsChart";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -158,7 +159,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
     try {
       const shortUrl = await shortenUrl(url);
-      await navigator.clipboard.writeText(shortUrl);
+      writeToClipboard(shortUrl);
       toast({ description: "Copied to clipboard.", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console

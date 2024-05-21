@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import Markdown from "react-markdown";
@@ -10,7 +10,7 @@ import { BsArrowUpShort } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 import * as Sentry from "@sentry/nextjs";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import remarkGfm from "remark-gfm";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { getAvatarById } from "lib/utils/github";
@@ -24,13 +24,15 @@ import {
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
+import StarSearchLoginModal from "components/StarSearch/LoginModal";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 export interface WidgetDefinition {
   name: string;
   arguments?: Record<string, Record<string, any>>;
 }
 
-type EventType = "content" | "function_call";
 type Author = "You" | "StarSearch";
 
 const componentRegistry = new Map<string, Function>();
@@ -38,15 +40,15 @@ const componentRegistry = new Map<string, Function>();
 const SUGGESTIONS = [
   {
     title: "Get information on contributor activity",
-    prompt: "What type of pull requests has brandonroberts worked on?",
+    prompt: "What type of pull requests has @brandonroberts worked on?",
   },
   {
     title: "Identify key contributors",
-    prompt: "Who are the most prevalent contributors to the Typescript ecosystem?",
+    prompt: "Who are the most prevalent contributors to the TypeScript ecosystem?",
   },
   {
     title: "Find contributors based on their work",
-    prompt: "Who are people making pull requests in vercel/turbo about css modules?",
+    prompt: "Show me the lottery factor for contributors in the remix-run/react-router project?",
   },
   {
     title: "Find experts",
@@ -123,23 +125,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } = await supabase.auth.getSession();
 
   const userId = Number(session?.user.user_metadata.sub);
-  const featureFlags = userId ? await getAllFeatureFlags(userId) : null;
-
-  if (!userId || featureFlags == null || !featureFlags["star_search"]) {
-    return { redirect: { destination: `/star-search/waitlist`, permanent: false } };
-  }
 
   const ogImageUrl = `${new URL(
     "/assets/og-images/star-search-og-image.png",
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
-  return { props: { userId, bearerToken: session?.access_token, ogImageUrl } };
+  return { props: { userId, ogImageUrl } };
 }
 
 type StarSearchPageProps = {
   userId: number;
-  bearerToken: string;
   ogImageUrl: string;
 };
 
@@ -179,16 +175,19 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
   }
 }
 
-export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
+export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [ranOnce, setRanOnce] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
+  const { sessionToken: bearerToken } = useSupabaseAuth();
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   function registerPrompt(promptInput: StarSearchPromptAnalytic) {
     prompt({
@@ -223,6 +222,11 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   }
 
   function addPromptInput(prompt: string) {
+    if (!bearerToken) {
+      setLoginModalOpen(true);
+      return;
+    }
+
     if (!inputRef.current?.form) {
       return;
     }
@@ -242,9 +246,19 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   }, [chat, showSuggestions]);
 
   const submitPrompt = async (prompt: string) => {
+    if (!bearerToken) {
+      setLoginModalOpen(true);
+      return;
+    }
+
     if (isRunning) {
       return;
     }
+
+    if (!ranOnce) {
+      setRanOnce(true);
+    }
+
     if (starSearchState === "initial") {
       setStarSearchState("chat");
     }
@@ -287,7 +301,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
-        const textChat = chat.filter((item) => typeof item.content === "string");
+
         registerPrompt({
           promptContent: prompt,
           promptResponse:
@@ -301,97 +315,103 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
       }
 
       /**
+        Content has this shape where each chunk has the concatenated "content.parts"
+        that make up the whole message as it flows in.
 
-        Content has this shape:
-
-        event: function_call
         id: 1
-        data: {"name":"renderLottoFactor","arguments":"{\"repoName\":\"kubernetes/kubernetes\"}"}
+        data: {"id":"123-abc","author":"manager","iso_time":"2024-05-20T20:30:42.0","content":{"type":"content","parts":["I"]},"status":"in_progress","error":null}
 
-
-        event: content
         id: 2
-        data: The
+        data: {"id":"123-abc","author":"manager","iso_time":"2024-05-20T20:30:43.0","content":{"type":"content","parts":["I am"]},"status":"in_progress","error":null}
 
-        event: content
         id: 3
-        data:  Lottery
+        data: {"id":"123-abc","author":"manager","iso_time":"2024-05-20T20:30:44.0","content":{"type":"content","parts":["I am StarSearch"]},"status":"in_progress","error":null}
 
-        event: content
-        id: 4
-        data:  Factor
+        ... etc. etc.
+
+        id: 5
+        data: {"id":"123-abc","author":"manager","iso_time":"2024-05-20T20:30:45.0","content":{"type":"content","parts":["I am StarSearch. Witness me."]},"status":"done","error":null}
 
 
-        If the event type is function_call, we know we need to render a component, if the event type is content, we render the markdown as HTML.
+        If the content.type is "function_call", we know we need to render a component.
+        if the content.type is "content", we render the markdown as HTML.
        */
 
       const values = value.split("\n");
 
-      let eventType: EventType = "content";
-
       values.forEach(async (v) => {
         if (v.startsWith("id:")) {
-          return;
-        }
-
-        if (v.startsWith("event:")) {
-          eventType = v.split(/:\s+/)[1] as EventType;
+          // this is just the id of the SSE from the response.
           return;
         }
 
         if (v.startsWith("data:")) {
           /*
-           * regex for capturing star-search stream SSEs:
-           * data:\s?(?<result>.*)
+           * regex for capturing star-search stream events JSON:
+           * data:\s(?<result>.*)
            *
            * The aim of this regex is to capture all characters coming from
-           * the star-search server side events while also preserving the
-           * empty "data:" frames that may come through (which are newlines).
+           * the star-search server side events.
            *
            * 'data:' - matches the "data:" characters explicitly.
            * '\s'    - matches any whitespace that follows the data. In most cases, this is a single space ' '.
-           * '?'     - matches the previous whitespace token zero or one times. Aka, is optional.
+           *           So, for example, this captures 'data: '.
            *
-           * '(?<result>.*)' - optional named capture group "result".
-           *    ├────── '?'          - capture group is optional.
-           *    ├────── '<result>'   - capture group is named "result".
-           *    └────── '.*'         - matches any characters (including zero characters) after the "data:\s?" segment.
-           *                           this is in service of also capturing empty strings as newlines.
+           * '(?<result>.*)' - named capture group "result".
+           *    ├────── '?<result>'  - capture group is named "result".
+           *    └────── '.*'         - matches any characters (including zero characters) after the "data:\s" segment.
+           *                           Should capture ALL of the json object on the line after 'data: '.
+           *
+           * Example: data: { id: "abc123" }
+           * - Captures the 'data: ' (including the space)
+           * - The named capture group "result" gets the entire JSON object "{ id: \"abc123\" }"
+           *   as a string that can be parsed to an object.
            */
 
-          const matched = v.match(/data:\s?(?<result>.*)/);
+          const matched = v.match(/data:\s(?<result>.*)/);
 
           if (!matched || !matched.groups) {
             return;
           }
 
-          let jsonContent: WidgetDefinition;
-          const { result } = matched.groups;
-
           try {
+            let jsonContent: WidgetDefinition;
+            const { result } = matched.groups;
+
+            // deserialize the json dump from the payload
+            const payload = JSON.parse(result) as StarSearchPayload;
+
+            // skip over cases where the payload is somehow malformed or missing content altogether
+            if (!payload || !payload.content || payload.content.parts.length === 0) {
+              Sentry.captureException(
+                new Error(`Parsed and rejected malformed JSON for StarSearch. JSON payload: ${v}`)
+              );
+              return;
+            }
+
             // function_call means we're loading a widget definition for the enriched UI
-            if (eventType === "function_call") {
-              jsonContent = JSON.parse(result);
+            if (payload.content.type === "function_call") {
+              jsonContent = JSON.parse(payload.content.parts[0]);
               jsonContent.arguments = JSON.parse(jsonContent.arguments as any) as WidgetDefinition["arguments"];
               await updateComponentRegistry(jsonContent.name);
-            }
-          } catch (error) {
-            Sentry.captureException(
-              new Error(`Failed to parse JSON for StarSearch widget. JSON payload: ${result}`, { cause: error })
-            );
-          }
 
-          setChat((chat) => {
-            const updatedChat = [...chat];
+              setChat((chat) => {
+                const updatedChat = [...chat];
 
-            if (matched.groups) {
-              if (eventType === "function_call") {
                 // create a new chat item because the widget will require it's own chatbox.
                 updatedChat.push({
                   author: "StarSearch",
                   content: jsonContent,
                 });
-              } else {
+
+                return updatedChat;
+              });
+            }
+
+            if (payload.content.type === "content" || payload.content.type === "final") {
+              setChat((chat) => {
+                const updatedChat = [...chat];
+
                 let changes = updatedChat.at(-1);
 
                 if (changes) {
@@ -405,16 +425,19 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                   }
 
                   if (changes) {
-                    // concatenate the new content to the previous chat item as it's a continuation of the same message
-                    // coming from the readable stream.
-                    changes.content += matched.groups.result === "" ? "&nbsp; \n" : result;
+                    // set the content that was reserved by the stream event
+                    changes.content = payload.content.parts[0];
                   }
                 }
-              }
-            }
 
-            return updatedChat;
-          });
+                return updatedChat;
+              });
+            }
+          } catch (error) {
+            Sentry.captureException(
+              new Error(`Failed to parse JSON for StarSearch. JSON payload: ${v}`, { cause: error })
+            );
+          }
 
           return;
         }
@@ -426,22 +449,50 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
     switch (starSearchState) {
       case "initial":
         return (
-          <div className="flex flex-col text-center items-center gap-4">
+          <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
             <Header />
-            <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
+            {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
           </div>
         );
       case "chat":
+        // We only want to process the chat messages that are either strings or valid widgets.
+        // The API currently sends back other function calls that we currently do not support or don't need to support,
+        // so we filter those out by checking if they are in the component registry.
+        const chatMessagesToProcess = chat.filter(
+          (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
+        );
+        const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
+        let heightToRemove = 300;
+
+        if (!isRunning && !isMobile && ranOnce) {
+          heightToRemove = showSuggestions ? 580 : 380;
+        }
+
         return (
           <>
             <div
               aria-live="polite"
-              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
+              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4"
+              style={{ height: `calc(100vh - ${heightToRemove}px)` }}
             >
-              <ScrollArea className="flex grow">
-                {chat.map((message, i) => (
-                  <Chatbox key={i} userId={userId} message={message} />
-                ))}
+              <ScrollArea className="flex grow" asChild={true}>
+                <ul>
+                  {chatMessagesToProcess.map((message, i, messages) => {
+                    if (loaderIndex === i && isRunning && messages.length - 1 === i) {
+                      return (
+                        <Fragment key={i}>
+                          <Chatbox userId={userId} message={message} />
+                          <li className="flex gap-2 my-4 w-max items-center">
+                            <ChatAvatar author="StarSearch" userId={userId} />
+                            <StarSearchLoader />
+                          </li>
+                        </Fragment>
+                      );
+                    } else {
+                      return <Chatbox key={i} userId={userId} message={message} />;
+                    }
+                  })}
+                </ul>
                 <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
@@ -516,12 +567,11 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         image={ogImageUrl}
         twitterCard="summary_large_image"
       />
-      <ProfileLayout>
-        <div className="relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
+      <ProfileLayout showFooter={false}>
+        <div className="star-search relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
-              starSearchState === "chat" &&
               (isMobile ? (
                 <Drawer
                   title="Choose a suggestion"
@@ -541,7 +591,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                 </Drawer>
               ) : (
                 <>
-                  {!showSuggestions && (
+                  {!showSuggestions && ranOnce && (
                     <button
                       onClick={() => setShowSuggestions(!showSuggestions)}
                       className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
@@ -570,6 +620,11 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                 disabled={isRunning}
                 placeholder="Ask a question"
                 className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
+                onClick={() => {
+                  if (!bearerToken) {
+                    setLoginModalOpen(true);
+                  }
+                }}
               />
               <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
                 <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
@@ -578,6 +633,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           </div>
           <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
         </div>
+        <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
       </ProfileLayout>
     </>
   );
@@ -592,7 +648,7 @@ function Header() {
           StarSearch
         </h1>
       </div>
-      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Ask questions about contributors</h2>
+      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Copilot, but for git history</h2>
     </div>
   );
 }
@@ -632,7 +688,13 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
   let content;
 
   if (typeof message.content == "string") {
-    content = <Markdown>{message.content}</Markdown>;
+    // Breaking all words so that the rendered markdown doesn't overflow the container
+    // in certain cases where the content is a long string.
+    content = (
+      <Markdown remarkPlugins={[remarkGfm]} className="break-words prose">
+        {message.content}
+      </Markdown>
+    );
   } else {
     if (!componentRegistry.has(message.content.name)) {
       return null;

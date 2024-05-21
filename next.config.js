@@ -29,12 +29,27 @@ module.exports = millionLint({
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
   images: {
-    domains: [
-      "avatars.githubusercontent.com",
-      "images.unsplash.com",
-      "www.github.com",
-      "github.com",
-      "res.cloudinary.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.github.com",
+      },
+      {
+        protocol: "https",
+        hostname: "github.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
   async redirects() {
@@ -111,6 +126,11 @@ module.exports = millionLint({
           permanent: true,
         };
       }),
+      {
+        source: "/star-search/waitlist",
+        destination: "/star-search",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

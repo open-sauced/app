@@ -286,3 +286,7 @@ h6 {
   @apply ml-4;
   @apply list-decimal;
 }
+
+body:has(.star-search) {
+  overflow: hidden;
+}

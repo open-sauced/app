@@ -36,7 +36,7 @@ export const LoadingState: Story = {
 
 export const ErrorState: Story = {
   args: {
-    lotteryFactor: generateLotteryFactor(),
+    lotteryFactor: undefined,
     range: 30,
     isLoading: false,
     error: new Error(),
@@ -54,7 +54,7 @@ export const AllLottoFactorVeryHigh: Story = {
 
 export const AllLottoFactorHigh: Story = {
   args: {
-    lotteryFactor: generateLotteryFactor("high"),
+    lotteryFactor: generateLotteryFactor(),
     range: 30,
     isLoading: false,
     error: undefined,
@@ -79,7 +79,94 @@ export const AllLottoFactorLow: Story = {
   },
 };
 
-function generateLotteryFactor(all_lotto_factor = "high") {
+export const NoContributors: Story = {
+  args: {
+    lotteryFactor: {
+      all_contribs: [],
+      all_lotto_factor: "low",
+    },
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
+export const OneContributor: Story = {
+  args: {
+    lotteryFactor: {
+      all_contribs: [
+        {
+          contributor: "nickytonline",
+          count: 100,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+      ],
+      all_lotto_factor: "very-high",
+    },
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
+export const TwoContributors: Story = {
+  args: {
+    lotteryFactor: {
+      all_contribs: [
+        {
+          contributor: "brandonroberts",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+        {
+          contributor: "nickytonline",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+      ],
+      all_lotto_factor: "very-high",
+    },
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
+export const ThreeContributors: Story = {
+  args: {
+    lotteryFactor: {
+      all_contribs: [
+        {
+          contributor: "brandonroberts",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+        {
+          contributor: "zeucapua",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+        {
+          contributor: "nickytonline",
+          count: 15,
+          percent_of_total: 1,
+          lotto_factor: "high",
+        },
+      ],
+      all_lotto_factor: "very-high",
+    },
+    range: 30,
+    isLoading: false,
+    error: undefined,
+  },
+};
+
+function generateLotteryFactor(all_lotto_factor: LottoFactor = "high") {
   return {
     all_contribs: [
       {
@@ -173,6 +260,6 @@ function generateLotteryFactor(all_lotto_factor = "high") {
         lotto_factor: "low",
       },
     ] as ContributorLottoFactor[],
-    all_lotto_factor: all_lotto_factor as LottoFactor,
+    all_lotto_factor,
   };
 }
