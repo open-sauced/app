@@ -11,7 +11,6 @@ import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-reac
 import clsx from "clsx";
 import * as Sentry from "@sentry/nextjs";
 import remarkGfm from "remark-gfm";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { getAvatarById } from "lib/utils/github";
@@ -26,6 +25,8 @@ import {
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
+import StarSearchLoginModal from "components/StarSearch/LoginModal";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 export interface WidgetDefinition {
   name: string;
@@ -39,11 +40,11 @@ const componentRegistry = new Map<string, Function>();
 const SUGGESTIONS = [
   {
     title: "Get information on contributor activity",
-    prompt: "What type of pull requests has brandonroberts worked on?",
+    prompt: "What type of pull requests has @brandonroberts worked on?",
   },
   {
     title: "Identify key contributors",
-    prompt: "Who are the most prevalent contributors to the Typescript ecosystem?",
+    prompt: "Who are the most prevalent contributors to the TypeScript ecosystem?",
   },
   {
     title: "Find contributors based on their work",
@@ -124,23 +125,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } = await supabase.auth.getSession();
 
   const userId = Number(session?.user.user_metadata.sub);
-  const featureFlags = userId ? await getAllFeatureFlags(userId) : null;
-
-  if (!userId || featureFlags == null || !featureFlags["star_search"]) {
-    return { redirect: { destination: `/star-search/waitlist`, permanent: false } };
-  }
 
   const ogImageUrl = `${new URL(
     "/assets/og-images/star-search-og-image.png",
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
-  return { props: { userId, bearerToken: session?.access_token, ogImageUrl } };
+  return { props: { userId, ogImageUrl } };
 }
 
 type StarSearchPageProps = {
   userId: number;
-  bearerToken: string;
   ogImageUrl: string;
 };
 
@@ -180,7 +175,7 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
   }
 }
 
-export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
+export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -190,6 +185,8 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
+  const { sessionToken: bearerToken } = useSupabaseAuth();
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   function registerPrompt(promptInput: StarSearchPromptAnalytic) {
     prompt({
@@ -224,6 +221,11 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   }
 
   function addPromptInput(prompt: string) {
+    if (!bearerToken) {
+      setLoginModalOpen(true);
+      return;
+    }
+
     if (!inputRef.current?.form) {
       return;
     }
@@ -243,6 +245,11 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   }, [chat, showSuggestions]);
 
   const submitPrompt = async (prompt: string) => {
+    if (!bearerToken) {
+      setLoginModalOpen(true);
+      return;
+    }
+
     if (isRunning) {
       return;
     }
@@ -600,6 +607,11 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                 disabled={isRunning}
                 placeholder="Ask a question"
                 className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
+                onClick={() => {
+                  if (!bearerToken) {
+                    setLoginModalOpen(true);
+                  }
+                }}
               />
               <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
                 <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
@@ -608,6 +620,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           </div>
           <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
         </div>
+        <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
       </ProfileLayout>
     </>
   );
@@ -622,7 +635,7 @@ function Header() {
           StarSearch
         </h1>
       </div>
-      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Ask questions about contributors</h2>
+      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Copilot, but for git history</h2>
     </div>
   );
 }

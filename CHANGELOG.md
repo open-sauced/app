@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.0-beta.10](https://github.com/open-sauced/app/compare/v2.30.0-beta.9...v2.30.0-beta.10) (2024-05-21)
+
+
+### 🍕 Features
+
+* update to lunch week card ([#3439](https://github.com/open-sauced/app/issues/3439)) ([d41f8fa](https://github.com/open-sauced/app/commit/d41f8fa12141e9711bdf651ad9aa1463881dcf83))
+
+## [2.30.0-beta.9](https://github.com/open-sauced/app/compare/v2.30.0-beta.8...v2.30.0-beta.9) (2024-05-21)
+
+
+### 🍕 Features
+
+* open up access to StarSearch and show modal/drawer for login ([#3442](https://github.com/open-sauced/app/issues/3442)) ([d228949](https://github.com/open-sauced/app/commit/d22894966317b9882985f41ec1297d821863dd84))
+
+## [2.30.0-beta.8](https://github.com/open-sauced/app/compare/v2.30.0-beta.7...v2.30.0-beta.8) (2024-05-21)
+
+
+### 🍕 Features
+
+* Small update to copy for suggested starsearch queries ([#3438](https://github.com/open-sauced/app/issues/3438)) ([012db59](https://github.com/open-sauced/app/commit/012db591c2ba6c126dc3ffe825771c73023fa98a))
+
+## [2.30.0-beta.7](https://github.com/open-sauced/app/compare/v2.30.0-beta.6...v2.30.0-beta.7) (2024-05-21)
+
+
+### 🐛 Bug Fixes
+
+* now sauced-orange colour defaults to 1 for opacity ([#3437](https://github.com/open-sauced/app/issues/3437)) ([aa9f67f](https://github.com/open-sauced/app/commit/aa9f67f88f9ab857bd79a6ade984fd3b625ef0a4))
+
+## [2.30.0-beta.6](https://github.com/open-sauced/app/compare/v2.30.0-beta.5...v2.30.0-beta.6) (2024-05-21)
+
+
+### 🐛 Bug Fixes
+
+* updated StarSearch copy ([#3440](https://github.com/open-sauced/app/issues/3440)) ([abe33f1](https://github.com/open-sauced/app/commit/abe33f1526ec00a8549963413d0c2470761ea3c2))
+
 ## [2.30.0-beta.5](https://github.com/open-sauced/app/compare/v2.30.0-beta.4...v2.30.0-beta.5) (2024-05-21)
 
 
