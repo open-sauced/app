@@ -466,7 +466,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         let heightToRemove = 300;
 
         if (!isRunning && !isMobile && ranOnce) {
-          heightToRemove = showSuggestions ? 580 : 380;
+          heightToRemove = showSuggestions ? 450 : 380;
         }
 
         return (
@@ -534,27 +534,6 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 </div>
               </div>
             </div>
-            {!isMobile && showSuggestions && (
-              <div className="relative flex flex-col gap-2 mb-14">
-                <button
-                  onClick={() => {
-                    setShowSuggestions(false);
-                    inputRef.current?.focus();
-                  }}
-                  className="absolute flex gap-2 w-fit self-end -right-5 -top-3"
-                >
-                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
-                </button>
-                <SuggestionBoxes
-                  isHorizontal
-                  addPromptInput={(prompt) => {
-                    addPromptInput(prompt);
-                    setShowSuggestions(false);
-                  }}
-                  suggestions={SUGGESTIONS}
-                />
-              </div>
-            )}
           </>
         );
     }
@@ -603,6 +582,27 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                   )}
                 </>
               ))}
+            {!isMobile && showSuggestions && (
+              <div className="relative flex flex-col gap-2 mb-4 w-fit mx-auto">
+                <button
+                  onClick={() => {
+                    setShowSuggestions(false);
+                    inputRef.current?.focus();
+                  }}
+                  className="absolute flex gap-2 w-fit self-end -right-5 -top-3"
+                >
+                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
+                </button>
+                <SuggestionBoxes
+                  isHorizontal
+                  addPromptInput={(prompt) => {
+                    addPromptInput(prompt);
+                    setShowSuggestions(false);
+                  }}
+                  suggestions={SUGGESTIONS}
+                />
+              </div>
+            )}
             <form
               onSubmit={(event) => {
                 event.preventDefault();
@@ -664,7 +664,7 @@ function SuggestionBoxes({
   suggestions: SuggesionTypes[];
 }) {
   return isHorizontal ? (
-    <Carousel className="w-fit max-w-[32rem] mx-auto px-auto" orientation="horizontal">
+    <Carousel className="w-fit max-w-[32rem] my-0 mx-auto px-auto" orientation="horizontal">
       <CarouselContent>
         {suggestions.map((suggestion, i) => (
           <CarouselItem key={i} className="items-stretch">
