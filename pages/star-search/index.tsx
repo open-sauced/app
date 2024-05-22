@@ -11,7 +11,6 @@ import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-reac
 import clsx from "clsx";
 import * as Sentry from "@sentry/nextjs";
 import remarkGfm from "remark-gfm";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { getAvatarById } from "lib/utils/github";
@@ -27,6 +26,8 @@ import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
+import StarSearchLoginModal from "components/StarSearch/LoginModal";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 export interface WidgetDefinition {
   name: string;
@@ -40,11 +41,11 @@ const componentRegistry = new Map<string, Function>();
 const SUGGESTIONS = [
   {
     title: "Get information on contributor activity",
-    prompt: "What type of pull requests has brandonroberts worked on?",
+    prompt: "What type of pull requests has @brandonroberts worked on?",
   },
   {
     title: "Identify key contributors",
-    prompt: "Who are the most prevalent contributors to the Typescript ecosystem?",
+    prompt: "Who are the most prevalent contributors to the TypeScript ecosystem?",
   },
   {
     title: "Find contributors based on their work",
@@ -125,23 +126,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } = await supabase.auth.getSession();
 
   const userId = Number(session?.user.user_metadata.sub);
-  const featureFlags = userId ? await getAllFeatureFlags(userId) : null;
-
-  if (!userId || featureFlags == null || !featureFlags["star_search"]) {
-    return { redirect: { destination: `/star-search/waitlist`, permanent: false } };
-  }
 
   const ogImageUrl = `${new URL(
     "/assets/og-images/star-search-og-image.png",
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
-  return { props: { userId, bearerToken: session?.access_token, ogImageUrl } };
+  return { props: { userId, ogImageUrl } };
 }
 
 type StarSearchPageProps = {
   userId: number;
-  bearerToken: string;
   ogImageUrl: string;
 };
 
@@ -181,16 +176,19 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
   }
 }
 
-export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: StarSearchPageProps) {
+export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [ranOnce, setRanOnce] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
+  const { sessionToken: bearerToken } = useSupabaseAuth();
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   function registerPrompt(promptInput: StarSearchPromptAnalytic) {
     prompt({
@@ -225,6 +223,11 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   }
 
   function addPromptInput(prompt: string) {
+    if (!bearerToken) {
+      setLoginModalOpen(true);
+      return;
+    }
+
     if (!inputRef.current?.form) {
       return;
     }
@@ -244,9 +247,19 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
   }, [chat, showSuggestions]);
 
   const submitPrompt = async (prompt: string) => {
+    if (!bearerToken) {
+      setLoginModalOpen(true);
+      return;
+    }
+
     if (isRunning) {
       return;
     }
+
+    if (!ranOnce) {
+      setRanOnce(true);
+    }
+
     if (starSearchState === "initial") {
       setStarSearchState("chat");
     }
@@ -437,9 +450,9 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
     switch (starSearchState) {
       case "initial":
         return (
-          <div className="flex flex-col text-center items-center gap-4">
+          <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
             <Header />
-            <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
+            {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
           </div>
         );
       case "chat":
@@ -450,29 +463,37 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
         );
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
+        let heightToRemove = 300;
+
+        if (!isRunning && !isMobile && ranOnce) {
+          heightToRemove = showSuggestions ? 580 : 380;
+        }
 
         return (
           <>
             <div
               aria-live="polite"
-              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4 h-[calc(100vh-240px)]"
+              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4"
+              style={{ height: `calc(100vh - ${heightToRemove}px)` }}
             >
-              <ScrollArea className="flex grow">
-                {chatMessagesToProcess.map((message, i, messages) => {
-                  if (loaderIndex === i && isRunning && messages.length - 1 === i) {
-                    return (
-                      <Fragment key={i}>
-                        <Chatbox userId={userId} message={message} />
-                        <li className="flex gap-2 my-4 w-max items-center">
-                          <ChatAvatar author="StarSearch" userId={userId} />
-                          <StarSearchLoader />
-                        </li>
-                      </Fragment>
-                    );
-                  } else {
-                    return <Chatbox key={i} userId={userId} message={message} />;
-                  }
-                })}
+              <ScrollArea className="flex grow" asChild={true}>
+                <ul>
+                  {chatMessagesToProcess.map((message, i, messages) => {
+                    if (loaderIndex === i && isRunning && messages.length - 1 === i) {
+                      return (
+                        <Fragment key={i}>
+                          <Chatbox userId={userId} message={message} />
+                          <li className="flex gap-2 my-4 w-max items-center">
+                            <ChatAvatar author="StarSearch" userId={userId} />
+                            <StarSearchLoader />
+                          </li>
+                        </Fragment>
+                      );
+                    } else {
+                      return <Chatbox key={i} userId={userId} message={message} />;
+                    }
+                  })}
+                </ul>
                 <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
@@ -547,12 +568,11 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
         image={ogImageUrl}
         twitterCard="summary_large_image"
       />
-      <ProfileLayout>
-        <div className="relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
+      <ProfileLayout showFooter={false}>
+        <div className="star-search relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
-              starSearchState === "chat" &&
               (isMobile ? (
                 <Drawer
                   title="Choose a suggestion"
@@ -572,7 +592,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                 </Drawer>
               ) : (
                 <>
-                  {!showSuggestions && (
+                  {!showSuggestions && ranOnce && (
                     <button
                       onClick={() => setShowSuggestions(!showSuggestions)}
                       className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
@@ -601,6 +621,11 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
                 disabled={isRunning}
                 placeholder="Ask a question"
                 className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
+                onClick={() => {
+                  if (!bearerToken) {
+                    setLoginModalOpen(true);
+                  }
+                }}
               />
               <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
                 <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
@@ -609,6 +634,7 @@ export default function StarSearchPage({ userId, bearerToken, ogImageUrl }: Star
           </div>
           <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
         </div>
+        <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
       </ProfileLayout>
     </>
   );
@@ -623,7 +649,7 @@ function Header() {
           StarSearch
         </h1>
       </div>
-      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Ask questions about contributors</h2>
+      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Copilot, but for git history</h2>
     </div>
   );
 }
