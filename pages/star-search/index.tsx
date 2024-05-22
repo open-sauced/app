@@ -465,7 +465,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         let heightToRemove = 300;
 
         if (!isRunning && !isMobile && ranOnce) {
-          heightToRemove = showSuggestions ? 580 : 380;
+          heightToRemove = showSuggestions ? 600 : 400;
         }
 
         return (
