@@ -131,6 +131,11 @@ module.exports = millionLint({
         destination: "/star-search",
         permanent: true,
       },
+      {
+        source: "/u/:user",
+        destination: "/user/:user",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
