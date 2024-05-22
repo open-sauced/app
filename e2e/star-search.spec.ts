@@ -67,4 +67,7 @@ test("StarSearch (Logged Out Experience)", async ({ page }) => {
   promptInput.click();
 
   await expect(loginDialog).toBeVisible();
+
+  // Ensure there is a login via GitHub button in the dialog.
+  expect(loginDialog.getByRole("button", { name: "Connect with GitHub", exact: true })).toBeVisible();
 });
