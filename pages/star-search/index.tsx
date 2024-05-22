@@ -709,7 +709,7 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
 
   return (
     <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
-      <ChatAvatar author="StarSearch" userId={userId} />
+      <ChatAvatar author={message.author} userId={userId} />
       <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
         <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
         {content}
