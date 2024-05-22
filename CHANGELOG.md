@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.30.1-beta.1](https://github.com/open-sauced/app/compare/v2.30.0...v2.30.1-beta.1) (2024-05-22)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch prompt/response area no longer scrolls when opening/closing suggestions ([#3448](https://github.com/open-sauced/app/issues/3448)) ([41b49a7](https://github.com/open-sauced/app/commit/41b49a7e751bbad27e5557d10e95e9d40bc6fbf6))
+
 ## [2.30.0](https://github.com/open-sauced/app/compare/v2.29.0...v2.30.0) (2024-05-21)
 
 
