@@ -243,7 +243,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat, showSuggestions]);
+  }, [chat]);
 
   const submitPrompt = async (prompt: string) => {
     if (!bearerToken) {
