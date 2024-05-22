@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.31.0-beta.1](https://github.com/open-sauced/app/compare/v2.30.1-beta.2...v2.31.0-beta.1) (2024-05-22)
+
+
+### 🍕 Features
+
+* add hallucination disclaimer to `/star-search` ([#3450](https://github.com/open-sauced/app/issues/3450)) ([3019ef2](https://github.com/open-sauced/app/commit/3019ef259903eb1d4987e0879d68a250a15e2043))
+
 ## [2.30.1-beta.2](https://github.com/open-sauced/app/compare/v2.30.1-beta.1...v2.30.1-beta.2) (2024-05-22)
 
 
