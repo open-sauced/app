@@ -247,7 +247,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat, showSuggestions]);
+  }, [chat]);
 
   const submitPrompt = async (prompt: string) => {
     if (!bearerToken) {
@@ -469,7 +469,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         let heightToRemove = 300;
 
         if (!isRunning && !isMobile && ranOnce) {
-          heightToRemove = showSuggestions ? 580 : 380;
+          heightToRemove = showSuggestions ? 600 : 400;
         }
 
         return (
@@ -631,9 +631,13 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 }}
               />
               <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
+                <span className="sr-only">Submit your question to StarSearch</span>
                 <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
               </button>
             </form>
+            <p className="text-sm text-slate-400 text-center py-2">
+              StarSearch may generate incorrect responses, double check important information
+            </p>
           </div>
           <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
         </div>
@@ -673,16 +677,21 @@ function SuggestionBoxes({
       } gap-2 lg:gap-4 w-full max-w-3xl`}
     >
       {suggestions.map((suggestion, i) => (
-        <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
-          <Card
-            className={`${
-              isHorizontal ? "w-[30rem] snap-start" : "w-full h-fit"
-            } shadow-md border-none text-start !p-6 text-slate-600`}
+        <Card key={i} className="!p-6 shadow-md border-none text-slate-600">
+          <button
+            onClick={() => addPromptInput(suggestion.prompt)}
+            className={`${isHorizontal ? "w-[30rem] snap-start" : "w-full h-fit"} text-start`}
+            aria-labelledby={`prompt-label-${i}`}
+            aria-describedby={`prompt-description-${i}`}
           >
-            <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
-            <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
-          </Card>
-        </button>
+            <span id={`prompt-label-${i}`} className="text-sm lg:text-base font-semibold">
+              {suggestion.title}
+            </span>
+            <p id={`prompt-description-${i}`} className="text-xs lg:text-sm">
+              {suggestion.prompt}
+            </p>
+          </button>
+        </Card>
       ))}
     </div>
   );
