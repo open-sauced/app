@@ -501,21 +501,19 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 </ul>
                 <div ref={scrollRef} />
               </ScrollArea>
-              <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
+              <div className={clsx("text-slate-600 flex gap-4 items-center self-end", isRunning && "invisible")}>
                 <button
                   type="button"
-                  className="flex gap-2 items-center hover:text-sauced-orange text-slate-600"
+                  className="flex gap-2 items-center hover:text-sauced-orange"
                   onClick={() => {
                     setStarSearchState("initial");
                     setChat([]);
                   }}
                 >
                   Clear chat history
-                  <TrashIcon width={16} height={16} />
+                  <TrashIcon width={18} height={18} />
                 </button>
-
-                <div className="flex justify-end mb-4 gap-2 text-slate-600">
-                  <span>Was this response useful?</span>
+                <span className="flex gap-1">
                   <button
                     type="button"
                     className="flex gap-2 items-center hover:text-sauced-orange"
@@ -536,7 +534,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
-                </div>
+                </span>
               </div>
             </div>
           </>
