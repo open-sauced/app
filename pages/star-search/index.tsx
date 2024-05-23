@@ -553,7 +553,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         twitterCard="summary_large_image"
       />
       <ProfileLayout showFooter={false}>
-        <div className="star-search relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
+        <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
@@ -641,7 +641,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
               StarSearch may generate incorrect responses, double check important information
             </p>
           </div>
-          <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
+          <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]"></div>
         </div>
         <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
       </ProfileLayout>
@@ -693,8 +693,8 @@ function SuggestionBoxes({
   ) : (
     <div className="grid grid-cols-1 lg:grid-cols-2 place-content-center gap-2 lg:gap-4 w-full max-w-3xl">
       {suggestions.map((suggestion, i) => (
-        <button 
-          key={i} 
+        <button
+          key={i}
           onClick={() => addPromptInput(suggestion.prompt)}
           aria-labelledby={`prompt-label-${i}`}
           aria-describedby={`prompt-description-${i}`}
