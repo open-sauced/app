@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.31.0-beta.2](https://github.com/open-sauced/app/compare/v2.31.0-beta.1...v2.31.0-beta.2) (2024-05-23)
+
+
+### 🍕 Features
+
+* now /u/some_username redirects to /user/some_username ([#3458](https://github.com/open-sauced/app/issues/3458)) ([312c231](https://github.com/open-sauced/app/commit/312c231a13b077b91bea3d16f2c0d6c304b7f649))
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch widgets have a max width of 440px and are centered in the card ([#3451](https://github.com/open-sauced/app/issues/3451)) ([3657d65](https://github.com/open-sauced/app/commit/3657d65f15eb8314ff003a9dc32e3bc3c1c5a56d))
+
 ## [2.31.0-beta.1](https://github.com/open-sauced/app/compare/v2.30.1-beta.2...v2.31.0-beta.1) (2024-05-22)
 
 
