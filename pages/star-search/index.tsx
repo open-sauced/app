@@ -470,8 +470,8 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
         let heightToRemove = 300;
 
-        if (!isRunning && !isMobile && ranOnce) {
-          heightToRemove = showSuggestions ? 470 : 400;
+        if (!isRunning && !isMobile && ranOnce && showSuggestions) {
+          heightToRemove = 370;
         }
 
         return (
