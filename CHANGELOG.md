@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.31.0-beta.4](https://github.com/open-sauced/app/compare/v2.31.0-beta.3...v2.31.0-beta.4) (2024-05-23)
+
+
+### 🍕 Features
+
+* show `/star-search` suggestions as carousel ([#3431](https://github.com/open-sauced/app/issues/3431)) ([3160c1d](https://github.com/open-sauced/app/commit/3160c1da1c09601d7b48b49969e830a566cf638b))
+
 ## [2.31.0-beta.3](https://github.com/open-sauced/app/compare/v2.31.0-beta.2...v2.31.0-beta.3) (2024-05-23)
 
 
