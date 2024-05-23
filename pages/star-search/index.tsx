@@ -636,7 +636,11 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
               </button>
             </form>
             <p className="text-sm text-slate-400 text-center py-2">
-              StarSearch may generate incorrect responses, double check important information
+              {isMobile ? (
+                <>StarSearch may generate incorrect responses</>
+              ) : (
+                <>StarSearch may generate incorrect responses, double check important information</>
+              )}
             </p>
           </div>
           <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]"></div>
