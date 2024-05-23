@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.31.0-beta.7](https://github.com/open-sauced/app/compare/v2.31.0-beta.6...v2.31.0-beta.7) (2024-05-23)
+
+
+### 🐛 Bug Fixes
+
+* height style tweaks for StarSearch ([#3464](https://github.com/open-sauced/app/issues/3464)) ([3af57ff](https://github.com/open-sauced/app/commit/3af57fff5e2cbc617a619210d8839bf8eac16425))
+
 ## [2.31.0-beta.6](https://github.com/open-sauced/app/compare/v2.31.0-beta.5...v2.31.0-beta.6) (2024-05-23)
 
 
