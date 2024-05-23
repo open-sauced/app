@@ -476,12 +476,12 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
 
         return (
           <>
-            <div
-              aria-live="polite"
-              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4"
-              style={{ height: `calc(100vh - ${heightToRemove}px)` }}
-            >
-              <ScrollArea className="flex grow" asChild={true}>
+            <div aria-live="polite" className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4">
+              <ScrollArea
+                className="flex grow"
+                asChild={true}
+                style={{ maxHeight: `calc(100vh - ${heightToRemove}px)` }}
+              >
                 <ul>
                   {chatMessagesToProcess.map((message, i, messages) => {
                     if (loaderIndex === i && isRunning && messages.length - 1 === i) {
