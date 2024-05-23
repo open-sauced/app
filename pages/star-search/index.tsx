@@ -28,6 +28,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 export interface WidgetDefinition {
   name: string;
@@ -719,7 +720,26 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     content = (
-      <Markdown remarkPlugins={[remarkGfm]} className="break-words prose">
+      <Markdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          a(props) {
+            if (typeof props.children === "string" && props.children.startsWith("@")) {
+              return (
+                <span className="inline-flex gap-1 items-baseline self-center">
+                  <span className="self-center">
+                    <AvatarHoverCard contributor={props.children.replace("@", "")} repositories={[]} size="xsmall" />
+                  </span>
+                  <a {...props} />
+                </span>
+              );
+            }
+
+            return <a {...props} />;
+          },
+        }}
+        className="break-words prose"
+      >
         {message.content}
       </Markdown>
     );
