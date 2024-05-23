@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.31.0-beta.3](https://github.com/open-sauced/app/compare/v2.31.0-beta.2...v2.31.0-beta.3) (2024-05-23)
+
+
+### 🐛 Bug Fixes
+
+* now avatar for logged in user appears for StarSearch prompt ([#3454](https://github.com/open-sauced/app/issues/3454)) ([9994b06](https://github.com/open-sauced/app/commit/9994b060af3c2abacf7dfbcb55548a41f0466efe))
+* prevent fetching contributor and repo insights for new workspaceId ([#3419](https://github.com/open-sauced/app/issues/3419)) ([6334df1](https://github.com/open-sauced/app/commit/6334df158192d609723b820b47e4593e7cba7b21))
+
 ## [2.31.0-beta.2](https://github.com/open-sauced/app/compare/v2.31.0-beta.1...v2.31.0-beta.2) (2024-05-23)
 
 
