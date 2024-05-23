@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.31.0-beta.6](https://github.com/open-sauced/app/compare/v2.31.0-beta.5...v2.31.0-beta.6) (2024-05-23)
+
+
+### 🐛 Bug Fixes
+
+* now clear history and feedback buttons are always just under the last StarSearch response ([#3455](https://github.com/open-sauced/app/issues/3455)) ([7561553](https://github.com/open-sauced/app/commit/756155329cab366d87952df7b2e1e6f2aa6147d3))
+
 ## [2.31.0-beta.5](https://github.com/open-sauced/app/compare/v2.31.0-beta.4...v2.31.0-beta.5) (2024-05-23)
 
 
