@@ -24,9 +24,11 @@ import {
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 export interface WidgetDefinition {
   name: string;
@@ -174,7 +176,7 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
       )
     );
 
-    // Returning null because widgets enhance the experiece but are not critical to the functionality.
+    // Returning null because widgets enhance the experience but are not critical to the functionality.
     return null;
   }
 }
@@ -469,7 +471,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         let heightToRemove = 300;
 
         if (!isRunning && !isMobile && ranOnce) {
-          heightToRemove = showSuggestions ? 600 : 400;
+          heightToRemove = showSuggestions ? 470 : 400;
         }
 
         return (
@@ -537,27 +539,6 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 </div>
               </div>
             </div>
-            {!isMobile && showSuggestions && (
-              <div className="flex flex-col gap-2 mb-14">
-                <button
-                  onClick={() => {
-                    setShowSuggestions(false);
-                    inputRef.current?.focus();
-                  }}
-                  className="flex gap-2 w-fit self-end hover:text-sauced-orange focus-visible:text-sauced-orange focus-visible:ring focus-visible:border-orange-500 focus-visible:ring-orange-100"
-                >
-                  <XCircleIcon className="w-6 h-6" aria-label="Close suggestions" />
-                </button>
-                <SuggestionBoxes
-                  isHorizontal
-                  addPromptInput={(prompt) => {
-                    addPromptInput(prompt);
-                    setShowSuggestions(false);
-                  }}
-                  suggestions={SUGGESTIONS}
-                />
-              </div>
-            )}
           </>
         );
     }
@@ -606,6 +587,27 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                   )}
                 </>
               ))}
+            {!isMobile && showSuggestions && (
+              <div className="relative flex flex-col gap-2 mb-4 w-fit mx-auto">
+                <button
+                  onClick={() => {
+                    setShowSuggestions(false);
+                    inputRef.current?.focus();
+                  }}
+                  className="absolute flex gap-2 w-fit self-end -right-5 -top-3"
+                >
+                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
+                </button>
+                <SuggestionBoxes
+                  isHorizontal
+                  addPromptInput={(prompt) => {
+                    addPromptInput(prompt);
+                    setShowSuggestions(false);
+                  }}
+                  suggestions={SUGGESTIONS}
+                />
+              </div>
+            )}
             <form
               onSubmit={(event) => {
                 event.preventDefault();
@@ -670,28 +672,42 @@ function SuggestionBoxes({
   isHorizontal?: boolean;
   suggestions: SuggesionTypes[];
 }) {
-  return (
-    <div
-      className={`${
-        isHorizontal ? "flex overflow-x-scroll snap-x" : "grid grid-cols-1 lg:grid-cols-2 place-content-center"
-      } gap-2 lg:gap-4 w-full max-w-3xl`}
-    >
+  return isHorizontal ? (
+    <Carousel className="w-fit max-w-[32rem] my-0 mx-auto px-auto" orientation="horizontal">
+      <CarouselContent>
+        {suggestions.map((suggestion, i) => (
+          <CarouselItem key={i} className="items-stretch">
+            <button onClick={() => addPromptInput(suggestion.prompt)} className="h-full mx-auto">
+              <Card className="w-[30rem] shadow-md border-none mx-auto h-full text-start !p-6 text-slate-600">
+                <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
+                <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
+              </Card>
+            </button>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  ) : (
+    <div className="grid grid-cols-1 lg:grid-cols-2 place-content-center gap-2 lg:gap-4 w-full max-w-3xl">
       {suggestions.map((suggestion, i) => (
-        <Card key={i} className="!p-6 shadow-md border-none text-slate-600">
-          <button
-            onClick={() => addPromptInput(suggestion.prompt)}
-            className={`${isHorizontal ? "w-[30rem] snap-start" : "w-full h-fit"} text-start`}
-            aria-labelledby={`prompt-label-${i}`}
-            aria-describedby={`prompt-description-${i}`}
-          >
+        <button 
+          key={i} 
+          onClick={() => addPromptInput(suggestion.prompt)}
+          aria-labelledby={`prompt-label-${i}`}
+          aria-describedby={`prompt-description-${i}`}
+        >
+          <Card className="w-fit h-fit shadow-md border-none text-start !p-6 text-slate-600">
             <span id={`prompt-label-${i}`} className="text-sm lg:text-base font-semibold">
               {suggestion.title}
             </span>
             <p id={`prompt-description-${i}`} className="text-xs lg:text-sm">
               {suggestion.prompt}
             </p>
-          </button>
-        </Card>
+          </Card>
+        </button>
       ))}
     </div>
   );
@@ -704,7 +720,26 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     content = (
-      <Markdown remarkPlugins={[remarkGfm]} className="break-words prose">
+      <Markdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          a(props) {
+            if (typeof props.children === "string" && props.children.startsWith("@")) {
+              return (
+                <span className="inline-flex gap-1 items-baseline self-center">
+                  <span className="self-center">
+                    <AvatarHoverCard contributor={props.children.replace("@", "")} repositories={[]} size="xsmall" />
+                  </span>
+                  <a {...props} />
+                </span>
+              );
+            }
+
+            return <a {...props} />;
+          },
+        }}
+        className="break-words prose"
+      >
         {message.content}
       </Markdown>
     );
