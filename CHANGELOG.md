@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.0-beta.1](https://github.com/open-sauced/app/compare/v2.31.0...v2.32.0-beta.1) (2024-05-23)
+
+
+### 🍕 Features
+
+* Adds URL parameter validators to fetch requests ([#3467](https://github.com/open-sauced/app/issues/3467)) ([4c056d9](https://github.com/open-sauced/app/commit/4c056d93f0bf98353961723acee233cca6611cef))
+
 ## [2.31.0](https://github.com/open-sauced/app/compare/v2.30.0...v2.31.0) (2024-05-23)
 
 
