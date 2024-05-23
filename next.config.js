@@ -126,6 +126,16 @@ module.exports = millionLint({
           permanent: true,
         };
       }),
+      {
+        source: "/star-search/waitlist",
+        destination: "/star-search",
+        permanent: true,
+      },
+      {
+        source: "/u/:user",
+        destination: "/user/:user",
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
