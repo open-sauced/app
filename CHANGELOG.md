@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.31.0-beta.5](https://github.com/open-sauced/app/compare/v2.31.0-beta.4...v2.31.0-beta.5) (2024-05-23)
+
+
+### 🍕 Features
+
+* added hover cards to StarSearch results that return links to GitHub users ([#3461](https://github.com/open-sauced/app/issues/3461)) ([254e5e1](https://github.com/open-sauced/app/commit/254e5e16044b88076d46329952f540e8c88d4886))
+
 ## [2.31.0-beta.4](https://github.com/open-sauced/app/compare/v2.31.0-beta.3...v2.31.0-beta.4) (2024-05-23)
 
 
