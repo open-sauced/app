@@ -470,8 +470,8 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
         let heightToRemove = 300;
 
-        if (!isRunning && !isMobile && ranOnce) {
-          heightToRemove = showSuggestions ? 470 : 400;
+        if (!isRunning && !isMobile && ranOnce && showSuggestions) {
+          heightToRemove = 370;
         }
 
         return (
@@ -501,21 +501,19 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 </ul>
                 <div ref={scrollRef} />
               </ScrollArea>
-              <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
+              <div className={clsx("text-slate-600 flex gap-4 items-center self-end", isRunning && "invisible")}>
                 <button
                   type="button"
-                  className="flex gap-2 items-center hover:text-sauced-orange text-slate-600"
+                  className="flex gap-2 items-center hover:text-sauced-orange"
                   onClick={() => {
                     setStarSearchState("initial");
                     setChat([]);
                   }}
                 >
                   Clear chat history
-                  <TrashIcon width={16} height={16} />
+                  <TrashIcon width={18} height={18} />
                 </button>
-
-                <div className="flex justify-end mb-4 gap-2 text-slate-600">
-                  <span>Was this response useful?</span>
+                <span className="flex gap-1">
                   <button
                     type="button"
                     className="flex gap-2 items-center hover:text-sauced-orange"
@@ -536,7 +534,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
-                </div>
+                </span>
               </div>
             </div>
           </>
@@ -553,7 +551,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         twitterCard="summary_large_image"
       />
       <ProfileLayout showFooter={false}>
-        <div className="star-search relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
+        <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
@@ -638,10 +636,14 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
               </button>
             </form>
             <p className="text-sm text-slate-400 text-center py-2">
-              StarSearch may generate incorrect responses, double check important information
+              {isMobile ? (
+                <>StarSearch may generate incorrect responses</>
+              ) : (
+                <>StarSearch may generate incorrect responses, double check important information</>
+              )}
             </p>
           </div>
-          <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
+          <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]"></div>
         </div>
         <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
       </ProfileLayout>
@@ -693,8 +695,8 @@ function SuggestionBoxes({
   ) : (
     <div className="grid grid-cols-1 lg:grid-cols-2 place-content-center gap-2 lg:gap-4 w-full max-w-3xl">
       {suggestions.map((suggestion, i) => (
-        <button 
-          key={i} 
+        <button
+          key={i}
           onClick={() => addPromptInput(suggestion.prompt)}
           aria-labelledby={`prompt-label-${i}`}
           aria-describedby={`prompt-description-${i}`}
