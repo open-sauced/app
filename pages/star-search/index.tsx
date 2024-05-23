@@ -24,9 +24,11 @@ import {
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 
 export interface WidgetDefinition {
   name: string;
@@ -159,7 +161,11 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
       throw new Error(`Component ${widgetDefinition.name} not found in registry`);
     }
 
-    return componentToRender;
+    return (
+      <div className="w-full lg:w-1/2 mx-auto pt-2" style={{ maxWidth: "440px" }}>
+        {componentToRender}
+      </div>
+    );
   } catch (error: unknown) {
     Sentry.captureException(
       new Error(
@@ -170,7 +176,7 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
       )
     );
 
-    // Returning null because widgets enhance the experiece but are not critical to the functionality.
+    // Returning null because widgets enhance the experience but are not critical to the functionality.
     return null;
   }
 }
@@ -243,7 +249,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat, showSuggestions]);
+  }, [chat]);
 
   const submitPrompt = async (prompt: string) => {
     if (!bearerToken) {
@@ -464,18 +470,18 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
         let heightToRemove = 300;
 
-        if (!isRunning && !isMobile && ranOnce) {
-          heightToRemove = showSuggestions ? 580 : 380;
+        if (!isRunning && !isMobile && ranOnce && showSuggestions) {
+          heightToRemove = 370;
         }
 
         return (
           <>
-            <div
-              aria-live="polite"
-              className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4"
-              style={{ height: `calc(100vh - ${heightToRemove}px)` }}
-            >
-              <ScrollArea className="flex grow" asChild={true}>
+            <div aria-live="polite" className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4">
+              <ScrollArea
+                className="flex grow"
+                asChild={true}
+                style={{ maxHeight: `calc(100vh - ${heightToRemove}px)` }}
+              >
                 <ul>
                   {chatMessagesToProcess.map((message, i, messages) => {
                     if (loaderIndex === i && isRunning && messages.length - 1 === i) {
@@ -495,21 +501,19 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 </ul>
                 <div ref={scrollRef} />
               </ScrollArea>
-              <div className={clsx("grid gap-2 justify-items-end self-end mt-2", isRunning && "invisible")}>
+              <div className={clsx("text-slate-600 flex gap-4 items-center self-end", isRunning && "invisible")}>
                 <button
                   type="button"
-                  className="flex gap-2 items-center hover:text-sauced-orange text-slate-600"
+                  className="flex gap-2 items-center hover:text-sauced-orange"
                   onClick={() => {
                     setStarSearchState("initial");
                     setChat([]);
                   }}
                 >
                   Clear chat history
-                  <TrashIcon width={16} height={16} />
+                  <TrashIcon width={18} height={18} />
                 </button>
-
-                <div className="flex justify-end mb-4 gap-2 text-slate-600">
-                  <span>Was this response useful?</span>
+                <span className="flex gap-1">
                   <button
                     type="button"
                     className="flex gap-2 items-center hover:text-sauced-orange"
@@ -530,30 +534,9 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
-                </div>
+                </span>
               </div>
             </div>
-            {!isMobile && showSuggestions && (
-              <div className="flex flex-col gap-2 mb-14">
-                <button
-                  onClick={() => {
-                    setShowSuggestions(false);
-                    inputRef.current?.focus();
-                  }}
-                  className="flex gap-2 w-fit self-end hover:text-sauced-orange focus-visible:text-sauced-orange focus-visible:ring focus-visible:border-orange-500 focus-visible:ring-orange-100"
-                >
-                  <XCircleIcon className="w-6 h-6" aria-label="Close suggestions" />
-                </button>
-                <SuggestionBoxes
-                  isHorizontal
-                  addPromptInput={(prompt) => {
-                    addPromptInput(prompt);
-                    setShowSuggestions(false);
-                  }}
-                  suggestions={SUGGESTIONS}
-                />
-              </div>
-            )}
           </>
         );
     }
@@ -568,7 +551,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         twitterCard="summary_large_image"
       />
       <ProfileLayout showFooter={false}>
-        <div className="star-search relative -mt-1.5 flex flex-col p-10 lg:p-16 justify-between items-center w-full h-full grow bg-slate-50">
+        <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
@@ -602,6 +585,27 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                   )}
                 </>
               ))}
+            {!isMobile && showSuggestions && (
+              <div className="relative flex flex-col gap-2 mb-4 w-fit mx-auto">
+                <button
+                  onClick={() => {
+                    setShowSuggestions(false);
+                    inputRef.current?.focus();
+                  }}
+                  className="absolute flex gap-2 w-fit self-end -right-5 -top-3"
+                >
+                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
+                </button>
+                <SuggestionBoxes
+                  isHorizontal
+                  addPromptInput={(prompt) => {
+                    addPromptInput(prompt);
+                    setShowSuggestions(false);
+                  }}
+                  suggestions={SUGGESTIONS}
+                />
+              </div>
+            )}
             <form
               onSubmit={(event) => {
                 event.preventDefault();
@@ -627,11 +631,19 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 }}
               />
               <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
+                <span className="sr-only">Submit your question to StarSearch</span>
                 <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
               </button>
             </form>
+            <p className="text-sm text-slate-400 text-center py-2">
+              {isMobile ? (
+                <>StarSearch may generate incorrect responses</>
+              ) : (
+                <>StarSearch may generate incorrect responses, double check important information</>
+              )}
+            </p>
           </div>
-          <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
+          <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]"></div>
         </div>
         <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
       </ProfileLayout>
@@ -662,21 +674,40 @@ function SuggestionBoxes({
   isHorizontal?: boolean;
   suggestions: SuggesionTypes[];
 }) {
-  return (
-    <div
-      className={`${
-        isHorizontal ? "flex overflow-x-scroll snap-x" : "grid grid-cols-1 lg:grid-cols-2 place-content-center"
-      } gap-2 lg:gap-4 w-full max-w-3xl`}
-    >
+  return isHorizontal ? (
+    <Carousel className="w-fit max-w-[32rem] my-0 mx-auto px-auto" orientation="horizontal">
+      <CarouselContent>
+        {suggestions.map((suggestion, i) => (
+          <CarouselItem key={i} className="items-stretch">
+            <button onClick={() => addPromptInput(suggestion.prompt)} className="h-full mx-auto">
+              <Card className="w-[30rem] shadow-md border-none mx-auto h-full text-start !p-6 text-slate-600">
+                <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
+                <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
+              </Card>
+            </button>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  ) : (
+    <div className="grid grid-cols-1 lg:grid-cols-2 place-content-center gap-2 lg:gap-4 w-full max-w-3xl">
       {suggestions.map((suggestion, i) => (
-        <button key={i} onClick={() => addPromptInput(suggestion.prompt)}>
-          <Card
-            className={`${
-              isHorizontal ? "w-[30rem] snap-start" : "w-full h-fit"
-            } shadow-md border-none text-start !p-6 text-slate-600`}
-          >
-            <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
-            <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
+        <button
+          key={i}
+          onClick={() => addPromptInput(suggestion.prompt)}
+          aria-labelledby={`prompt-label-${i}`}
+          aria-describedby={`prompt-description-${i}`}
+        >
+          <Card className="w-fit h-fit shadow-md border-none text-start !p-6 text-slate-600">
+            <span id={`prompt-label-${i}`} className="text-sm lg:text-base font-semibold">
+              {suggestion.title}
+            </span>
+            <p id={`prompt-description-${i}`} className="text-xs lg:text-sm">
+              {suggestion.prompt}
+            </p>
           </Card>
         </button>
       ))}
@@ -691,7 +722,26 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     content = (
-      <Markdown remarkPlugins={[remarkGfm]} className="break-words prose">
+      <Markdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          a(props) {
+            if (typeof props.children === "string" && props.children.startsWith("@")) {
+              return (
+                <span className="inline-flex gap-1 items-baseline self-center">
+                  <span className="self-center">
+                    <AvatarHoverCard contributor={props.children.replace("@", "")} repositories={[]} size="xsmall" />
+                  </span>
+                  <a {...props} />
+                </span>
+              );
+            }
+
+            return <a {...props} />;
+          },
+        }}
+        className="break-words prose"
+      >
         {message.content}
       </Markdown>
     );
@@ -709,7 +759,7 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
 
   return (
     <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
-      <ChatAvatar author="StarSearch" userId={userId} />
+      <ChatAvatar author={message.author} userId={userId} />
       <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
         <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
         {content}

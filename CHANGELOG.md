@@ -5,6 +5,75 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.31.0-beta.7](https://github.com/open-sauced/app/compare/v2.31.0-beta.6...v2.31.0-beta.7) (2024-05-23)
+
+
+### 🐛 Bug Fixes
+
+* height style tweaks for StarSearch ([#3464](https://github.com/open-sauced/app/issues/3464)) ([3af57ff](https://github.com/open-sauced/app/commit/3af57fff5e2cbc617a619210d8839bf8eac16425))
+
+## [2.31.0-beta.6](https://github.com/open-sauced/app/compare/v2.31.0-beta.5...v2.31.0-beta.6) (2024-05-23)
+
+
+### 🐛 Bug Fixes
+
+* now clear history and feedback buttons are always just under the last StarSearch response ([#3455](https://github.com/open-sauced/app/issues/3455)) ([7561553](https://github.com/open-sauced/app/commit/756155329cab366d87952df7b2e1e6f2aa6147d3))
+
+## [2.31.0-beta.5](https://github.com/open-sauced/app/compare/v2.31.0-beta.4...v2.31.0-beta.5) (2024-05-23)
+
+
+### 🍕 Features
+
+* added hover cards to StarSearch results that return links to GitHub users ([#3461](https://github.com/open-sauced/app/issues/3461)) ([254e5e1](https://github.com/open-sauced/app/commit/254e5e16044b88076d46329952f540e8c88d4886))
+
+## [2.31.0-beta.4](https://github.com/open-sauced/app/compare/v2.31.0-beta.3...v2.31.0-beta.4) (2024-05-23)
+
+
+### 🍕 Features
+
+* show `/star-search` suggestions as carousel ([#3431](https://github.com/open-sauced/app/issues/3431)) ([3160c1d](https://github.com/open-sauced/app/commit/3160c1da1c09601d7b48b49969e830a566cf638b))
+
+## [2.31.0-beta.3](https://github.com/open-sauced/app/compare/v2.31.0-beta.2...v2.31.0-beta.3) (2024-05-23)
+
+
+### 🐛 Bug Fixes
+
+* now avatar for logged in user appears for StarSearch prompt ([#3454](https://github.com/open-sauced/app/issues/3454)) ([9994b06](https://github.com/open-sauced/app/commit/9994b060af3c2abacf7dfbcb55548a41f0466efe))
+* prevent fetching contributor and repo insights for new workspaceId ([#3419](https://github.com/open-sauced/app/issues/3419)) ([6334df1](https://github.com/open-sauced/app/commit/6334df158192d609723b820b47e4593e7cba7b21))
+
+## [2.31.0-beta.2](https://github.com/open-sauced/app/compare/v2.31.0-beta.1...v2.31.0-beta.2) (2024-05-23)
+
+
+### 🍕 Features
+
+* now /u/some_username redirects to /user/some_username ([#3458](https://github.com/open-sauced/app/issues/3458)) ([312c231](https://github.com/open-sauced/app/commit/312c231a13b077b91bea3d16f2c0d6c304b7f649))
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch widgets have a max width of 440px and are centered in the card ([#3451](https://github.com/open-sauced/app/issues/3451)) ([3657d65](https://github.com/open-sauced/app/commit/3657d65f15eb8314ff003a9dc32e3bc3c1c5a56d))
+
+## [2.31.0-beta.1](https://github.com/open-sauced/app/compare/v2.30.1-beta.2...v2.31.0-beta.1) (2024-05-22)
+
+
+### 🍕 Features
+
+* add hallucination disclaimer to `/star-search` ([#3450](https://github.com/open-sauced/app/issues/3450)) ([3019ef2](https://github.com/open-sauced/app/commit/3019ef259903eb1d4987e0879d68a250a15e2043))
+
+## [2.30.1-beta.2](https://github.com/open-sauced/app/compare/v2.30.1-beta.1...v2.30.1-beta.2) (2024-05-22)
+
+
+### ✅ Tests
+
+* added E2E tests for StarSearch logged out experience ([#3449](https://github.com/open-sauced/app/issues/3449)) ([63e6a93](https://github.com/open-sauced/app/commit/63e6a93b992a2425ce28d2390c9348291e76ea44))
+
+## [2.30.1-beta.1](https://github.com/open-sauced/app/compare/v2.30.0...v2.30.1-beta.1) (2024-05-22)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch prompt/response area no longer scrolls when opening/closing suggestions ([#3448](https://github.com/open-sauced/app/issues/3448)) ([41b49a7](https://github.com/open-sauced/app/commit/41b49a7e751bbad27e5557d10e95e9d40bc6fbf6))
+
 ## [2.30.0](https://github.com/open-sauced/app/compare/v2.29.0...v2.30.0) (2024-05-21)
 
 

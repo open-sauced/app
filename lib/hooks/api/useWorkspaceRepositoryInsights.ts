@@ -24,7 +24,7 @@ export const useWorkspacesRepositoryInsights = ({
   const endpointString = `workspaces/${workspaceId}/insights?${searchParams}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(
-    workspaceId ? endpointString : null,
+    workspaceId && workspaceId !== "new" ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 

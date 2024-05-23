@@ -41,7 +41,7 @@ export const Avatar = ({ contributor, size = "large" }: AvatarProps): JSX.Elemen
   return (
     <Image
       alt={contributor}
-      className="border rounded-full"
+      className="border rounded-full not-prose"
       height={width}
       src={getAvatarByUsername(contributor, 40)}
       width={height}

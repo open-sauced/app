@@ -51,7 +51,12 @@ const StarSearchLoginModal = ({ isOpen, onClose }: StarSearchLoginModalProps) =>
     </Drawer>
   ) : (
     <Dialog open={isOpen}>
-      <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal} onPointerDownOutside={onCloseModal}>
+      <DialogContent
+        autoStyle={false}
+        onEscapeKeyDown={onCloseModal}
+        onPointerDownOutside={onCloseModal}
+        aria-label="Login to try StarSearch"
+      >
         <Card className="!p-0 max-w-sm">
           <section className="relative flex justify-end w-full align-top">
             <div className="absolute left-0">
