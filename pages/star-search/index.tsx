@@ -159,7 +159,11 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
       throw new Error(`Component ${widgetDefinition.name} not found in registry`);
     }
 
-    return componentToRender;
+    return (
+      <div className="w-full lg:w-1/2 mx-auto pt-2" style={{ maxWidth: "440px" }}>
+        {componentToRender}
+      </div>
+    );
   } catch (error: unknown) {
     Sentry.captureException(
       new Error(
@@ -465,7 +469,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         let heightToRemove = 300;
 
         if (!isRunning && !isMobile && ranOnce) {
-          heightToRemove = showSuggestions ? 580 : 380;
+          heightToRemove = showSuggestions ? 600 : 400;
         }
 
         return (
@@ -631,6 +635,9 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
               </button>
             </form>
+            <p className="text-sm text-slate-400 text-center py-2">
+              StarSearch may generate incorrect responses, double check important information
+            </p>
           </div>
           <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-40 blur-[40px]"></div>
         </div>
