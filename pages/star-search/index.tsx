@@ -160,7 +160,11 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
       throw new Error(`Component ${widgetDefinition.name} not found in registry`);
     }
 
-    return componentToRender;
+    return (
+      <div className="w-full lg:w-1/2 mx-auto pt-2" style={{ maxWidth: "440px" }}>
+        {componentToRender}
+      </div>
+    );
   } catch (error: unknown) {
     Sentry.captureException(
       new Error(
