@@ -269,6 +269,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
       setStarSearchState("chat");
     }
     setIsRunning(true); // disables input
+    setShowSuggestions(false);
 
     // add user prompt to history
     setChat((history) => {
@@ -507,6 +508,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                   className="flex gap-2 items-center hover:text-sauced-orange"
                   onClick={() => {
                     setStarSearchState("initial");
+                    setShowSuggestions(false);
                     setChat([]);
                   }}
                 >
@@ -574,7 +576,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                 </Drawer>
               ) : (
                 <>
-                  {!showSuggestions && ranOnce && (
+                  {starSearchState !== "initial" && !showSuggestions && ranOnce && (
                     <button
                       onClick={() => setShowSuggestions(!showSuggestions)}
                       className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
@@ -701,7 +703,7 @@ function SuggestionBoxes({
           aria-labelledby={`prompt-label-${i}`}
           aria-describedby={`prompt-description-${i}`}
         >
-          <Card className="w-fit h-fit shadow-md border-none text-start !p-6 text-slate-600">
+          <Card className="w-full h-fit shadow-md border-none text-start !p-6 text-slate-600">
             <span id={`prompt-label-${i}`} className="text-sm lg:text-base font-semibold">
               {suggestion.title}
             </span>
