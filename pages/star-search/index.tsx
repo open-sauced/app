@@ -477,7 +477,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
 
         return (
           <>
-            <div aria-live="polite" className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4">
+            <div aria-live="polite" className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto">
               <ScrollArea
                 className="flex grow"
                 asChild={true}
