@@ -701,7 +701,7 @@ function SuggestionBoxes({
           aria-labelledby={`prompt-label-${i}`}
           aria-describedby={`prompt-description-${i}`}
         >
-          <Card className="w-fit h-fit shadow-md border-none text-start !p-6 text-slate-600">
+          <Card className="w-full h-fit shadow-md border-none text-start !p-6 text-slate-600">
             <span id={`prompt-label-${i}`} className="text-sm lg:text-base font-semibold">
               {suggestion.title}
             </span>
