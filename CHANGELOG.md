@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.0-beta.2](https://github.com/open-sauced/app/compare/v2.32.0-beta.1...v2.32.0-beta.2) (2024-05-24)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch suggestion boxes have uniform widths ([#3471](https://github.com/open-sauced/app/issues/3471)) ([1302d33](https://github.com/open-sauced/app/commit/1302d3368d0bc2e32ff88b067e6f233baaedf90c))
+
 ## [2.32.0-beta.1](https://github.com/open-sauced/app/compare/v2.31.0...v2.32.0-beta.1) (2024-05-23)
 
 
