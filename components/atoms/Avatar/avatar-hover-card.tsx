@@ -45,6 +45,7 @@ export const Avatar = ({ contributor, size = "large" }: AvatarProps): JSX.Elemen
       height={width}
       src={getAvatarByUsername(contributor, 40)}
       width={height}
+      loading="lazy"
     />
   );
 };
