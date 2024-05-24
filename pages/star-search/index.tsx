@@ -29,6 +29,7 @@ import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 export interface WidgetDefinition {
   name: string;
@@ -269,7 +270,6 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
       setStarSearchState("chat");
     }
     setIsRunning(true); // disables input
-    setShowSuggestions(false);
 
     // add user prompt to history
     setChat((history) => {
@@ -458,7 +458,9 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         return (
           <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
             <Header />
-            {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
+            <ClientOnly>
+              {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
+            </ClientOnly>
           </div>
         );
       case "chat":
@@ -477,7 +479,7 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
 
         return (
           <>
-            <div aria-live="polite" className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto">
+            <div aria-live="polite" className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4">
               <ScrollArea
                 className="flex grow"
                 asChild={true}
@@ -508,7 +510,6 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
                   className="flex gap-2 items-center hover:text-sauced-orange"
                   onClick={() => {
                     setStarSearchState("initial");
-                    setShowSuggestions(false);
                     setChat([]);
                   }}
                 >
@@ -556,58 +557,60 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
         <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
           <div className="sticky bottom-2 md:bottom-4 w-full">
-            {!isRunning &&
-              (isMobile ? (
-                <Drawer
-                  title="Choose a suggestion"
-                  description="You can customize the prompt after selection"
-                  showCloseButton
-                  trigger={
-                    <button
-                      onClick={() => setShowSuggestions(!showSuggestions)}
-                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                    >
-                      Need inspiration?
-                      <BsArrowUpShort className="text-2xl" />
-                    </button>
-                  }
-                >
-                  <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
-                </Drawer>
-              ) : (
-                <>
-                  {starSearchState !== "initial" && !showSuggestions && ranOnce && (
-                    <button
-                      onClick={() => setShowSuggestions(!showSuggestions)}
-                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                    >
-                      Need inspiration?
-                      <BsArrowUpShort className="text-2xl" />
-                    </button>
-                  )}
-                </>
-              ))}
-            {!isMobile && showSuggestions && (
-              <div className="relative flex flex-col gap-2 mb-4 w-fit mx-auto">
-                <button
-                  onClick={() => {
-                    setShowSuggestions(false);
-                    inputRef.current?.focus();
-                  }}
-                  className="absolute flex gap-2 w-fit self-end -right-5 -top-3"
-                >
-                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
-                </button>
-                <SuggestionBoxes
-                  isHorizontal
-                  addPromptInput={(prompt) => {
-                    addPromptInput(prompt);
-                    setShowSuggestions(false);
-                  }}
-                  suggestions={SUGGESTIONS}
-                />
-              </div>
-            )}
+            <ClientOnly>
+              {!isRunning &&
+                (isMobile ? (
+                  <Drawer
+                    title="Choose a suggestion"
+                    description="You can customize the prompt after selection"
+                    showCloseButton
+                    trigger={
+                      <button
+                        onClick={() => setShowSuggestions(!showSuggestions)}
+                        className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                      >
+                        Need inspiration?
+                        <BsArrowUpShort className="text-2xl" />
+                      </button>
+                    }
+                  >
+                    <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
+                  </Drawer>
+                ) : (
+                  <>
+                    {!showSuggestions && ranOnce && (
+                      <button
+                        onClick={() => setShowSuggestions(!showSuggestions)}
+                        className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                      >
+                        Need inspiration?
+                        <BsArrowUpShort className="text-2xl" />
+                      </button>
+                    )}
+                  </>
+                ))}
+              {!isMobile && showSuggestions && (
+                <div className="relative flex flex-col gap-2 mb-4 w-fit mx-auto">
+                  <button
+                    onClick={() => {
+                      setShowSuggestions(false);
+                      inputRef.current?.focus();
+                    }}
+                    className="absolute flex gap-2 w-fit self-end -right-5 -top-3"
+                  >
+                    <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
+                  </button>
+                  <SuggestionBoxes
+                    isHorizontal
+                    addPromptInput={(prompt) => {
+                      addPromptInput(prompt);
+                      setShowSuggestions(false);
+                    }}
+                    suggestions={SUGGESTIONS}
+                  />
+                </div>
+              )}
+            </ClientOnly>
             <form
               onSubmit={(event) => {
                 event.preventDefault();
@@ -638,11 +641,13 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
               </button>
             </form>
             <p className="text-sm text-slate-400 text-center py-2">
-              {isMobile ? (
-                <>StarSearch may generate incorrect responses</>
-              ) : (
-                <>StarSearch may generate incorrect responses, double check important information</>
-              )}
+              <ClientOnly>
+                {isMobile ? (
+                  <>StarSearch may generate incorrect responses</>
+                ) : (
+                  <>StarSearch may generate incorrect responses, double check important information</>
+                )}
+              </ClientOnly>
             </p>
           </div>
           <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]"></div>
@@ -703,7 +708,7 @@ function SuggestionBoxes({
           aria-labelledby={`prompt-label-${i}`}
           aria-describedby={`prompt-description-${i}`}
         >
-          <Card className="w-full h-fit shadow-md border-none text-start !p-6 text-slate-600">
+          <Card className="w-full h-full shadow-md border-none text-start !p-6 text-slate-600">
             <span id={`prompt-label-${i}`} className="text-sm lg:text-base font-semibold">
               {suggestion.title}
             </span>
