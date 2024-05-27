@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.0-beta.4](https://github.com/open-sauced/app/compare/v2.32.0-beta.3...v2.32.0-beta.4) (2024-05-27)
+
+
+### 🐛 Bug Fixes
+
+* **search:** only show one not found message ([#3477](https://github.com/open-sauced/app/issues/3477)) ([7714523](https://github.com/open-sauced/app/commit/7714523271d72a75c520ac3ae0a936fb7f0f07b7))
+
 ## [2.32.0-beta.3](https://github.com/open-sauced/app/compare/v2.32.0-beta.2...v2.32.0-beta.3) (2024-05-27)
 
 
