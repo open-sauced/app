@@ -87,8 +87,6 @@ const SearchDialog = () => {
       return <SearchResult cursor={cursor} result={userSearchResult?.data} />;
     } else if (!isSearchError && isSearching) {
       return <SearchLoading />;
-    } else if (isSearchError && !isSearching) {
-      return <SearchError variant="users" />;
     }
   };
 
@@ -98,9 +96,6 @@ const SearchDialog = () => {
     }
     if (repoDataLoading) {
       return <SearchLoading />;
-    }
-    if (repoDataError || repoData.length === 0) {
-      return <SearchError variant="repositories" />;
     }
     if (repoData.length > 0) {
       return (
@@ -169,6 +164,11 @@ const SearchDialog = () => {
         <div className="w-full h-full flex flex-col items-center">
           {searchTerm.length < 3 ? (
             <SearchInfo />
+          ) : isSearchError && !isSearching && (repoDataError || repoData.length === 0) ? (
+            <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
+                <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
+                We couldn&apos;t find any users or repositories with that name
+            </Text>            
           ) : (
             <>
               <section className="flex flex-col w-full">{renderUserSearchState()}</section>
@@ -234,10 +234,10 @@ const SearchLoading = () => (
   </div>
 );
 
-const SearchError = ({ variant }: { variant: "users" | "repositories" }) => (
+const SearchError = () => (
   <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
     <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
-    We couldn&apos;t find any {variant} with that name
+    We couldn&apos;t find any users or repositories with that name
   </Text>
 );
 
