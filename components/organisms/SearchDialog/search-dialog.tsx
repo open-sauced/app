@@ -165,7 +165,10 @@ const SearchDialog = () => {
           {searchTerm.length < 3 ? (
             <SearchInfo />
           ) : isSearchError && !isSearching && (repoDataError || repoData.length === 0) ? (
-            <SearchError />
+            <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
+                <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
+                We couldn&apos;t find any users or repositories with that name
+            </Text>            
           ) : (
             <>
               <section className="flex flex-col w-full">{renderUserSearchState()}</section>
