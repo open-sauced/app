@@ -16,6 +16,7 @@ import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
 import { useHasMounted } from "lib/hooks/useHasMounted";
 import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
+import { isValidUrlSlug } from "lib/utils/url-validators";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -106,7 +107,12 @@ Contributor.PageLayout = ProfileLayout;
 export default Contributor;
 
 export const getServerSideProps = async (context: UserSSRPropsContext) => {
-  const { username } = context.params!;
+  const { username } = context.params ?? { username: "" };
+
+  if (!isValidUrlSlug(username)) {
+    return { notFound: true };
+  }
+
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
     headers: {
       accept: "application/json",
@@ -114,9 +120,7 @@ export const getServerSideProps = async (context: UserSSRPropsContext) => {
   });
 
   if (!req.ok) {
-    return {
-      notFound: true,
-    };
+    return { notFound: true };
   }
 
   const userData = (await req.json()) as DbUser;
