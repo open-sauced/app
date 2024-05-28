@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.0-beta.6](https://github.com/open-sauced/app/compare/v2.32.0-beta.5...v2.32.0-beta.6) (2024-05-28)
+
+
+### 🐛 Bug Fixes
+
+* now if a dynamic widget errors out, StarSearch continues to work ([#3474](https://github.com/open-sauced/app/issues/3474)) ([f840d6b](https://github.com/open-sauced/app/commit/f840d6b4fbcf5f81d2dacb42099b221bfff6d0c9))
+
 ## [2.32.0-beta.5](https://github.com/open-sauced/app/compare/v2.32.0-beta.4...v2.32.0-beta.5) (2024-05-28)
 
 
