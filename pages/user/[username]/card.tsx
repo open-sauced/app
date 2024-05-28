@@ -17,6 +17,7 @@ import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
+import { isValidUrlSlug } from "lib/utils/url-validators";
 import TwitterIcon from "../../../img/icons/social-twitter.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -43,6 +44,10 @@ interface Params extends ParsedUrlQuery {
 }
 
 async function fetchUserData(username: string) {
+  if (!isValidUrlSlug(username)) {
+    throw new Error("Invalid input");
+  }
+
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
     headers: {
       accept: "application/json",

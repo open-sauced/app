@@ -5,6 +5,63 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.0-beta.8](https://github.com/open-sauced/app/compare/v2.32.0-beta.7...v2.32.0-beta.8) (2024-05-28)
+
+
+### 🍕 Features
+
+* Updates error copy StarSearch ([#3494](https://github.com/open-sauced/app/issues/3494)) ([735c8c6](https://github.com/open-sauced/app/commit/735c8c6257253048ec3de10bbc6b34af5dd95b25))
+
+## [2.32.0-beta.7](https://github.com/open-sauced/app/compare/v2.32.0-beta.6...v2.32.0-beta.7) (2024-05-28)
+
+
+### 🐛 Bug Fixes
+
+* update feed highlight to StarSearch ([#3489](https://github.com/open-sauced/app/issues/3489)) ([c99921a](https://github.com/open-sauced/app/commit/c99921ad9d404dd5a6351b02175e4c213c7d9122))
+
+## [2.32.0-beta.6](https://github.com/open-sauced/app/compare/v2.32.0-beta.5...v2.32.0-beta.6) (2024-05-28)
+
+
+### 🐛 Bug Fixes
+
+* now if a dynamic widget errors out, StarSearch continues to work ([#3474](https://github.com/open-sauced/app/issues/3474)) ([f840d6b](https://github.com/open-sauced/app/commit/f840d6b4fbcf5f81d2dacb42099b221bfff6d0c9))
+
+## [2.32.0-beta.5](https://github.com/open-sauced/app/compare/v2.32.0-beta.4...v2.32.0-beta.5) (2024-05-28)
+
+
+### 🐛 Bug Fixes
+
+* now search input is no longer squised on non-macOS devices ([#3487](https://github.com/open-sauced/app/issues/3487)) ([15d70ce](https://github.com/open-sauced/app/commit/15d70ce4f158f75bea167daf8b3dbbda50e37b89))
+* now the outline button shows button text when disabled ([#3485](https://github.com/open-sauced/app/issues/3485)) ([cb8bd3a](https://github.com/open-sauced/app/commit/cb8bd3ac4defb0f71dc772ffa2ce31dfc217d585))
+
+## [2.32.0-beta.4](https://github.com/open-sauced/app/compare/v2.32.0-beta.3...v2.32.0-beta.4) (2024-05-27)
+
+
+### 🐛 Bug Fixes
+
+* **search:** only show one not found message ([#3477](https://github.com/open-sauced/app/issues/3477)) ([7714523](https://github.com/open-sauced/app/commit/7714523271d72a75c520ac3ae0a936fb7f0f07b7))
+
+## [2.32.0-beta.3](https://github.com/open-sauced/app/compare/v2.32.0-beta.2...v2.32.0-beta.3) (2024-05-27)
+
+
+### 🐛 Bug Fixes
+
+* added more padding between footer and highlights ([#3483](https://github.com/open-sauced/app/issues/3483)) ([352cde5](https://github.com/open-sauced/app/commit/352cde5600514f09a23934d214cfa86d77b7e29d))
+
+## [2.32.0-beta.2](https://github.com/open-sauced/app/compare/v2.32.0-beta.1...v2.32.0-beta.2) (2024-05-24)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch suggestion boxes have uniform widths ([#3471](https://github.com/open-sauced/app/issues/3471)) ([1302d33](https://github.com/open-sauced/app/commit/1302d3368d0bc2e32ff88b067e6f233baaedf90c))
+
+## [2.32.0-beta.1](https://github.com/open-sauced/app/compare/v2.31.0...v2.32.0-beta.1) (2024-05-23)
+
+
+### 🍕 Features
+
+* Adds URL parameter validators to fetch requests ([#3467](https://github.com/open-sauced/app/issues/3467)) ([4c056d9](https://github.com/open-sauced/app/commit/4c056d93f0bf98353961723acee233cca6611cef))
+
 ## [2.31.0](https://github.com/open-sauced/app/compare/v2.30.0...v2.31.0) (2024-05-23)
 
 
