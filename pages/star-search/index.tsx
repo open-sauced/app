@@ -285,8 +285,12 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
 
     if (response.status !== 200) {
       setChat((history) => {
+        const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
+
+Need some ideas? Try hitting the **Need Inspiration?** button below!`;
         const temp = [...history];
-        temp.push({ author: "StarSearch", content: "There's been an error. Try again." });
+
+        temp.push({ author: "StarSearch", content: cannedMessage });
         return temp;
       });
       setIsRunning(false); // enables input
