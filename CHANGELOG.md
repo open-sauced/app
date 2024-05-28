@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.0-beta.8](https://github.com/open-sauced/app/compare/v2.32.0-beta.7...v2.32.0-beta.8) (2024-05-28)
+
+
+### 🍕 Features
+
+* Updates error copy StarSearch ([#3494](https://github.com/open-sauced/app/issues/3494)) ([735c8c6](https://github.com/open-sauced/app/commit/735c8c6257253048ec3de10bbc6b34af5dd95b25))
+
 ## [2.32.0-beta.7](https://github.com/open-sauced/app/compare/v2.32.0-beta.6...v2.32.0-beta.7) (2024-05-28)
 
 
