@@ -125,7 +125,7 @@ const ContributorProfileTab = ({
         profile: login,
       });
 
-      copyToClipboard(`${new URL(`/user/${login}`, location.origin)}`).then(() => {
+      copyToClipboard(`${new URL(`/u/${login}`, location.origin)}`).then(() => {
         toast({
           title: "Copied to clipboard",
           description: "Share this link with your friend to invite them to OpenSauced!",
@@ -259,7 +259,7 @@ const ContributorProfileTab = ({
                 onClick={() =>
                   signIn({
                     provider: "github",
-                    options: { redirectTo: `${window.location.origin}/user/${login}` },
+                    options: { redirectTo: `${window.location.origin}/u/${login}` },
                   })
                 }
                 className="max-md:w-full md:w-40 flex justify-center"

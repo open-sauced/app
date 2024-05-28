@@ -227,7 +227,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               <div className="flex flex-col gap-8 mx-auto mt-10">
                 <div className="flex flex-col gap-6 px-3">
                   <div className="flex items-center gap-3">
-                    <Link href={`/user/${singleHighlight.login}`} className="flex items-center gap-3">
+                    <Link href={`/u/${singleHighlight.login}`} className="flex items-center gap-3">
                       <Avatar
                         alt="user profile avatar"
                         isCircle

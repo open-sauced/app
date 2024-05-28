@@ -16,7 +16,7 @@ const DevProfile = ({ username, hasBorder, size = "small", truncate }: DevProfil
   return (
     <section className="flex items-center gap-2 text-light-slate-11">
       {/* Mobile */}
-      <Link href={`/user/${username}`} className="rounded-full md:hidden">
+      <Link href={`/u/${username}`} className="rounded-full md:hidden">
         <Avatar
           className={hasBorder ? "ring-2 ring-orange-500" : ""}
           size={45}

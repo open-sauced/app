@@ -58,7 +58,7 @@ const AuthSection: React.FC = ({}) => {
   const authMenu = {
     authed: [
       <Link
-        href={`/user/${user?.user_metadata.user_name}`}
+        href={`/u/${user?.user_metadata.user_name}`}
         key="settings"
         className="flex items-center px-4 py-2 text-lg transition rounded-md cursor-pointer group gap-x-3 hover:bg-light-orange-3"
       >

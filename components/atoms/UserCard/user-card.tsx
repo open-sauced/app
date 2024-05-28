@@ -26,7 +26,7 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
       ) : (
         <div className="flex flex-col items-center gap-6 px-9">
           <div className="flex flex-col items-center gap-2 -mt-10">
-            <Link href={`/user/${username}`}>
+            <Link href={`/u/${username}`}>
               <Image
                 className="border border-white rounded-full "
                 width={100}
@@ -37,7 +37,7 @@ const UserCard = ({ username, name, meta, loading }: UserCardProps) => {
             </Link>
             <div className="text-center">
               <h3 className="text-lg ">{name}</h3>
-              <Link className="text-lg text-slate-700" href={`/user/${username}`}>{`@${username}`}</Link>
+              <Link className="text-lg text-slate-700" href={`/u/${username}`}>{`@${username}`}</Link>
             </div>
           </div>
           <div className="flex items-center gap-5 text-base text-center ">

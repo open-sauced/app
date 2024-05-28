@@ -46,7 +46,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
     <Card className={className && className}>
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between w-full gap-2">
-          <Link href={`/user/${contributor.author_login}`} as={`/user/${contributor.author_login}`}>
+          <Link href={`/u/${contributor.author_login}`} as={`/u/${contributor.author_login}`}>
             <div className="flex items-center gap-2">
               <Avatar size={40} avatarURL={githubAvatar ? githubAvatar : undefined} />
               <div>

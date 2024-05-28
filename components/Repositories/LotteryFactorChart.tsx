@@ -212,7 +212,7 @@ export default function LotteryFactorChart({
                     Temporarily copying the DevProfile JSX minus the desktop view to fix this issue https://github.com/open-sauced/app/pull/3373#issuecomment-2112399608
                   */}
                   <div className="flex items-center gap-2 text-light-slate-11">
-                    <Link href={`/user/${name}`} className="rounded-full">
+                    <Link href={`/u/${name}`} className="rounded-full">
                       <Avatar size={36} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
                     </Link>
                     <div>

@@ -166,9 +166,9 @@ const SearchDialog = () => {
             <SearchInfo />
           ) : isSearchError && !isSearching && (repoDataError || repoData.length === 0) ? (
             <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
-                <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
-                We couldn&apos;t find any users or repositories with that name
-            </Text>            
+              <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
+              We couldn&apos;t find any users or repositories with that name
+            </Text>
           ) : (
             <>
               <section className="flex flex-col w-full">{renderUserSearchState()}</section>
@@ -270,7 +270,7 @@ const UserResultCard = ({ login, active }: UserResultCardProps) => {
 
   return (
     <Link
-      href={`/user/${login}`}
+      href={`/u/${login}`}
       className={clsx(
         active && "_cursorActive bg-slate-100",
         "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"
