@@ -166,9 +166,9 @@ const SearchDialog = () => {
             <SearchInfo />
           ) : isSearchError && !isSearching && (repoDataError || repoData.length === 0) ? (
             <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
-                <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
-                We couldn&apos;t find any users or repositories with that name
-            </Text>            
+              <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
+              We couldn&apos;t find any users or repositories with that name
+            </Text>
           ) : (
             <>
               <section className="flex flex-col w-full">{renderUserSearchState()}</section>
@@ -200,7 +200,9 @@ const SearchDialogTrigger = () => {
   return (
     <>
       <div
-        className="hidden sm:flex justify-between p-1 pl-3 h-fit w-56 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden"
+        className={`hidden sm:flex justify-between p-1 pl-3 h-fit ${
+          isMac ? "w-56" : "w-64"
+        } ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden`}
         onClick={() => setOpenSearch(true)}
       >
         <div className="flex items-center">
