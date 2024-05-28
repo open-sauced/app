@@ -29,18 +29,18 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
   ) => {
     const styles: Record<ButtonsProps["variant"], string> = {
       primary: `bg-light-orange-9 text-light-orange-2 border-light-orange-9 hover:bg-light-orange-10 ${
-        disabled ? "bg-light-orange-7 hover:bg-light-orange-7 pointer-events-none" : ""
+        disabled ? "bg-light-orange-7 hover:bg-light-orange-7" : ""
       }`,
       default: `bg-white border-light-slate-8 text-light-slate-11 hover:bg-light-slate-2 ${
-        disabled ? "bg-light-slate-4 text-light-slate-9 pointer-events-none" : ""
+        disabled ? "bg-light-slate-4 text-light-slate-9" : ""
       }`,
       dark: `bg-dark-slate-6 border-dark-slate-8 text-light-orange-2 hover:bg-dark-slate-8 ${
-        disabled ? "bg-dark-slate-4 text-dark-slate-9 pointer-events-none" : ""
+        disabled ? "bg-dark-slate-4 text-dark-slate-9" : ""
       }`,
       outline: `bg-orange-50 border-orange-500 text-orange-600 hover:bg-orange-100 ${
-        disabled ? "bg-light-orange-3 pointer-events-none text-light-orange-7 border-light-orange-5" : ""
+        disabled ? "bg-light-orange-3 text-light-orange-7 border-light-orange-5" : ""
       }`,
-      link: `text-orange-600 hover:bg-orange-100 border-none ${disabled ? "text-orange-400 pointer-events-none" : ""}`,
+      link: `text-orange-600 hover:bg-orange-100 border-none ${disabled ? "text-orange-400" : ""}`,
       destructive: "border-dark-red-8 bg-dark-red-8 text-white hover:border-dark-red-7 hover:bg-dark-red-7",
       text: "",
     };
@@ -48,7 +48,6 @@ const Button = React.forwardRef<HTMLElement, ButtonsProps>(
     const rootClass = clsx(
       styles[variant],
       disabled && "cursor-not-allowed",
-      disabled && variant !== "destructive" && "bg-light-orange-7 hover:bg-light-orange-7",
       "items-center inline-flex text-sm font-semibold tracking-tight border py-2 px-4 rounded-md focus-visible:border-orange-500 focus:outline-none focus-visible:ring focus-visible:ring-orange-200 whitespace-nowrap",
       className
     );
