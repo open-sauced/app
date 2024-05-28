@@ -2,14 +2,16 @@ import { HiOutlineTicket } from "react-icons/hi";
 import { useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
+import Link from "next/link";
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import { DayRange } from "components/shared/DayRangePicker";
 import StackedOwners from "components/Workspaces/StackedOwners";
-import DevProfile from "components/molecules/DevProfile/dev-profile";
 import InfoTooltip from "components/shared/InfoTooltip";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import Avatar from "components/atoms/Avatar/avatar";
 
+import { getAvatarByUsername } from "lib/utils/github";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 type LotteryFactorChartProps = {
@@ -17,11 +19,19 @@ type LotteryFactorChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: DayRange;
+  className?: string;
 };
 
-export default function LotteryFactorChart({ lotteryFactor, isLoading, error, range }: LotteryFactorChartProps) {
+export default function LotteryFactorChart({
+  lotteryFactor,
+  isLoading,
+  error,
+  range,
+  className,
+}: LotteryFactorChartProps) {
   const [hovered, setHovered] = useState<string | undefined>(undefined);
   const topFourContributors = lotteryFactor?.all_contribs.slice(0, 4) ?? [];
+  const hasContributors = topFourContributors.length > 0;
 
   const { sortedContributors } = useMemo(() => {
     const result =
@@ -42,12 +52,15 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
 
     const topFourPercentage = result.reduce((prev, curr) => (prev += curr.value), 0);
 
-    result.push({
-      name: "Other Contributors",
-      count: 0,
-      value: 100 - topFourPercentage,
-      factor: "Other Contributors",
-    });
+    if (lotteryFactor?.all_contribs.length && lotteryFactor?.all_contribs.length > 4) {
+      result.push({
+        name: "Other Contributors",
+        count: 0,
+        value: 100 - topFourPercentage,
+        factor: "Other Contributors",
+      });
+    }
+
     return {
       sortedContributors: result,
       topFourPercentage,
@@ -82,8 +95,8 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
   }
 
   return (
-    <Card className="flex flex-col gap-4 w-full h-full items-center pt-8 p-4">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4 lg:px-8">
+    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-full items-center pt-8`}>
+      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
         <header className="flex w-full justify-between items-center">
           <div className="flex gap-2 items-center">
             <HiOutlineTicket className="text-xl" />
@@ -112,68 +125,78 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
         </header>
       </section>
 
-      {error ? null : (
-        <section className="w-full px-4 lg:px-8 flex flex-col gap-4 text-sm lg:text-base">
-          {isLoading ? (
-            <Skeleton height={32} />
-          ) : (
-            <p className="text-slate-500">
-              The top <span className="font-semibold text-black">{`${summary.count} `}</span>
-              contributor{summary.count > 1 && "s"} of this repository have made{" "}
-              <span className="font-semibold text-black">{summary.percentage}% </span>
-              of all commits in the past <span className="font-semibold text-black">{range}</span> days.
-            </p>
-          )}
-          <div className="flex w-full gap-1 h-3 place-content-center">
-            {isLoading ? (
-              <SkeletonWrapper />
-            ) : (
-              sortedContributors.map((item, index) => {
-                return (
-                  <button
-                    aria-label={`${item.name} is ${item.value}% of the most used languages for contributors in your list`}
-                    key={item.name}
-                    data-language={item.name}
-                    className={`${index === 0 ? "rounded-l-lg" : ""} ${
-                      index === sortedContributors.length - 1 ? "rounded-r-lg" : ""
-                    } transform hover:scale-110 transition-transform hover:z-10`}
-                    style={{ backgroundColor: getLottoColor(item.factor), width: `${item.value}%` }}
-                    onMouseOver={(event) => {
-                      const { language } = event.currentTarget.dataset;
-                      setHovered(language);
-                    }}
-                    onMouseOut={(event) => {
-                      setHovered(undefined);
-                    }}
-                    onFocus={(event) => {
-                      const { language } = event.currentTarget.dataset;
-                      setHovered(language);
-                    }}
-                    onBlur={(event) => {
-                      setHovered(undefined);
-                    }}
-                  />
-                );
-              })
-            )}
-          </div>
-        </section>
-      )}
-
-      {error && (
-        <div className="flex flex-col gap-4 p-4">
+      <section className="w-full px-4 flex flex-col gap-4 text-sm">
+        {isLoading ? (
+          <Skeleton height={32} />
+        ) : (
           <p className="text-slate-500">
-            This repository doesn&apos;t have enough commit data to calculate the Lottery Factor.
+            {hasContributors ? (
+              <>
+                The top{" "}
+                {summary.count > 1 ? <span className="font-semibold text-black">{`${summary.count} `}</span> : null}
+                contributor{summary.count > 1 && "s"} of this repository {summary.count > 1 ? "have" : "has"} made{" "}
+                <span className="font-semibold text-black">{summary.percentage}% </span>
+                of all commits in the past <span className="font-semibold text-black">{range}</span> days.
+              </>
+            ) : (
+              <>
+                {error ? (
+                  <>This repository doesn&apos;t have enough commit data to calculate the Lottery Factor.</>
+                ) : (
+                  <>
+                    No one has contributed to the repository in the past{" "}
+                    <span className="font-semibold text-black">{range}</span> days.
+                  </>
+                )}
+              </>
+            )}
           </p>
-          <Image src={errorImage} alt="No Lottery Factor error image" />
+        )}
+        <div className="flex w-full gap-1 h-3 place-content-center">
+          {isLoading ? (
+            <SkeletonWrapper />
+          ) : (
+            sortedContributors.map((item, index) => {
+              return (
+                <button
+                  aria-label={`${item.name} is ${item.value}% of the most used languages for contributors in your list`}
+                  key={item.name}
+                  data-language={item.name}
+                  className={`${index === 0 ? "rounded-l-lg" : ""} ${
+                    index === sortedContributors.length - 1 ? "rounded-r-lg" : ""
+                  } transform hover:scale-110 transition-transform hover:z-10`}
+                  style={{ backgroundColor: getLottoColor(item.factor), width: `${item.value}%` }}
+                  onMouseOver={(event) => {
+                    const { language } = event.currentTarget.dataset;
+                    setHovered(language);
+                  }}
+                  onMouseOut={(event) => {
+                    setHovered(undefined);
+                  }}
+                  onFocus={(event) => {
+                    const { language } = event.currentTarget.dataset;
+                    setHovered(language);
+                  }}
+                  onBlur={(event) => {
+                    setHovered(undefined);
+                  }}
+                />
+              );
+            })
+          )}
         </div>
-      )}
-      {isLoading || !lotteryFactor ? (
-        <div className="flex flex-col w-full gap-4 px-4 lg:px-8">
+      </section>
+
+      {error || !hasContributors ? <Image src={errorImage} alt="" /> : null}
+
+      {isLoading ? (
+        <div className="flex flex-col w-full gap-4 px-4">
           <SkeletonWrapper count={4} height={32} />
         </div>
-      ) : (
-        <table className="table-fixed divide-y text-xs lg:text-base text-slate-500 w-full px-4 lg:px-8 border-separate border-spacing-y-2">
+      ) : null}
+
+      {!isLoading && hasContributors ? (
+        <table className="table-fixed divide-y text-xs lg:text-sm text-slate-500 w-full px-4 border-separate border-spacing-y-2">
           <thead>
             <tr>
               <th className="font-normal text-start">Contributor</th>
@@ -181,31 +204,30 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
               <th className="font-normal text-end">% of Total</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="!text-small truncate [&_tr_td]:border-b-1">
             {sortedContributors.slice(0, 4).map(({ name, count, value }) => (
-              <tr key={name} className={`${hovered === name && "bg-slate-100"} items-start`}>
-                <td className={`${hovered === name ? "font-semibold" : "font-normal"} border-b-1 py-4 pl-2`}>
-                  <DevProfile username={name} hasBorder={false} />
+              <tr key={name} className={`${hovered === name && "bg-slate-100"} grow items-start`}>
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} pt-1 pb-2 pl-2`}>
+                  {/*
+                    Temporarily copying the DevProfile JSX minus the desktop view to fix this issue https://github.com/open-sauced/app/pull/3373#issuecomment-2112399608
+                  */}
+                  <div className="flex items-center gap-2 text-light-slate-11">
+                    <Link href={`/user/${name}`} className="rounded-full">
+                      <Avatar size={36} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
+                    </Link>
+                    <div>
+                      <h1 className="truncate text-light-slate-12">{name}</h1>
+                    </div>
+                  </div>
                 </td>
-                <td
-                  className={`${
-                    hovered === name ? "font-semibold" : "font-normal"
-                  } text-end border-b-1 tabular-nums w-fit`}
-                >
-                  {count}
-                </td>
-                <td
-                  className={`${
-                    hovered === name ? "font-semibold" : "font-normal"
-                  } text-end border-b-1 py-4 pr-2 tabular-nums`}
-                >
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end w-fit`}>{count}</td>
+                <td className={`${hovered === name ? "font-semibold" : "font-normal"} text-end pt-1 pb-2 pr-2 `}>
                   {value}%
                 </td>
               </tr>
             ))}
-            {isLoading || !lotteryFactor ? (
-              <Skeleton />
-            ) : (
+            {isLoading ? <Skeleton /> : null}
+            {lotteryFactor?.all_contribs.length && lotteryFactor?.all_contribs.length > 4 ? (
               <tr className={`${hovered === "Other Contributors" ? "font-semibold bg-slate-100" : "font-normal"}`}>
                 <td className="flex gap-2 items-center py-4 pl-2">
                   <StackedOwners
@@ -214,14 +236,12 @@ export default function LotteryFactorChart({ lotteryFactor, isLoading, error, ra
                   <p>Other contributors</p>
                 </td>
                 <td></td>
-                <td className="text-end py-4 pr-2 tabular-nums">
-                  {sortedContributors.at(sortedContributors.length - 1)?.value}%
-                </td>
+                <td className="text-end py-4 pr-2 ">{sortedContributors.at(sortedContributors.length - 1)?.value}%</td>
               </tr>
-            )}
+            ) : null}
           </tbody>
         </table>
-      )}
+      ) : null}
     </Card>
   );
 }

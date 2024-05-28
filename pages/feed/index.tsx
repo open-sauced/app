@@ -176,7 +176,7 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
       />
 
       <div
-        className="container flex flex-col justify-center w-full gap-12 px-2 pt-4 md:items-start md:px-16 md:flex-row"
+        className="container flex flex-col justify-center w-full gap-12 px-2 pt-4 pb-14 md:items-start md:px-16 md:flex-row"
         ref={topRef}
       >
         <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-1/5`}>
@@ -199,13 +199,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               />
             )}
             <AnnouncementCard
-              title="Introducing Star Search!"
+              title="Join Us for Lunch Week!"
               description={
-                "Sign up for StarSearch, our AI-powered feature that provides in-depth insights into contributor history and activities, bringing a new depth of knowledge about open source projects."
+                "Lunch time is launch time at OpenSauced this week. Join us every day at lunch time as we share the new features we've been cooking up!"
               }
-              bannerSrc={"/assets/images/anouncement-cards/star-search-announcement-card.png"}
-              url={"/star-search/waitlist"}
-              cta={"Join the Waitlist!"}
+              bannerSrc={"/assets/images/anouncement-cards/lunch-week-banner.png"}
+              url={"https://opensauced.pizza/lunchweek"}
+              cta={"See What's Cooking!"}
             />
           </div>
         </div>

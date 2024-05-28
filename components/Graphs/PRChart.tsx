@@ -25,9 +25,10 @@ type PRChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  className?: string;
 };
 
-export default function PRChart({ stats, velocity, syncId, range = 30, isLoading }: PRChartProps) {
+export default function PRChart({ stats, velocity, syncId, range = 30, isLoading, className }: PRChartProps) {
   const dailyData = useMemo(() => getDailyPullRequestsHistogramToDays({ stats, range }), [stats, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
   const { openedRangedTotal, closedRangedTotal } = useMemo(
@@ -45,12 +46,12 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
   );
 
   return (
-    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
+    <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center !px-6 !py-8`}>
+      <section className="flex flex-col lg:flex-row w-full items-start gap-4 lg:justify-between">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
-          <div className="flex flex-col gap-4 lg:flex-row w-full justify-between">
+          <div className="flex flex-col gap-4 lg:flex-row w-full items-start justify-between px-2">
             <div className="flex gap-1 items-center w-fit">
               <BiGitPullRequest className="text-xl" />
               <h3 className="text-sm font-semibold md:text-lg text-slate-800">Pull Requests</h3>
@@ -58,16 +59,25 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
             </div>
             <aside className="flex gap-8">
               <div>
-                <h3 className="text-xs lg:text-sm text-slate-500">Opened</h3>
+                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">
+                  Opened
+                  <span className={`w-2 h-2 rounded-full bg-[#16a34a] mx-1 inline-block`}></span>
+                </h3>
                 <p className="font-semibold text-xl lg:text-3xl">{humanizeNumber(openedRangedTotal)}</p>
               </div>
               <div>
-                <h3 className="text-xs lg:text-sm text-slate-500">Closed</h3>
+                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">
+                  Merged
+                  <span className={`w-2 h-2 rounded-full bg-[#9333ea] mx-1 inline-block`}></span>
+                </h3>
                 <p className="font-semibold text-xl lg:text-3xl">{humanizeNumber(closedRangedTotal)}</p>
               </div>
               <div>
-                <h3 className="text-xs lg:text-sm text-slate-500">Velocity</h3>
-                <p className="font-semibold text-xl lg:text-3xl">{humanizeNumber(velocity)}d</p>
+                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">Velocity</h3>
+                <p className="font-semibold text-xl lg:text-3xl">
+                  {humanizeNumber(velocity)}
+                  <span className="text-lg text-slate-600">d</span>
+                </p>
               </div>
             </aside>
           </div>
@@ -77,9 +87,15 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
         {isLoading ? (
           <SkeletonWrapper width={100} height={100} />
         ) : (
-          <LineChart data={dailyData} syncId={syncId}>
+          <LineChart data={dailyData} syncId={syncId} className="-left-6">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
-            <YAxis domain={["auto", "auto"]} />
+            <YAxis
+              domain={["auto", "auto"]}
+              fontSize={14}
+              tick={{ fill: "#94a3b8" }}
+              axisLine={{ stroke: "#94a3b8" }}
+              tickLine={{ stroke: "#94a3b8" }}
+            />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
             <Line dataKey="active_prs" stroke="#16a34a" strokeWidth={2} />
@@ -94,15 +110,26 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
 function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
   if (active && payload) {
     return (
-      <figcaption className="flex flex-col gap-1 bg-white px-4 py-2 rounded-lg border">
-        <section className="flex gap-2 items-center">
-          <BiGitPullRequest className="fill-sauced-orange" />
+      <figcaption className="flex flex-col gap-1 text-sm bg-white px-4 py-3 rounded-lg border w-fit">
+        <section className="flex gap-2 font-medium text-slate-500 items-center text-xs w-fit">
+          <BiGitPullRequest className="fill-slate-500" />
           <p>Pull Requests</p>
+          <p>{payload[0]?.payload.bucket}</p>
         </section>
-        <p>Opened: {payload[0]?.value}</p>
-        <p>Closed: {payload[1]?.value}</p>
-
-        <p className="text-light-slate-9 text-sm">{payload[0]?.payload.bucket}</p>
+        <section className="flex justify-between">
+          <p className="flex gap-2 items-center px-1 text-slate-500">
+            <span className={`w-2 h-2 rounded-full bg-[#16a34a] inline-block`}></span>
+            Opened:
+          </p>
+          <p className="font-medium pl-2">{payload[0]?.value}</p>
+        </section>
+        <section className="flex justify-between">
+          <p className="flex gap-2 items-center px-1 text-slate-500">
+            <span className={`w-2 h-2 rounded-full bg-[#9333ea] inline-block`}></span>
+            Merged:
+          </p>
+          <p className="font-medium pl-2">{payload[1]?.value}</p>
+        </section>
       </figcaption>
     );
   }
@@ -111,7 +138,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
 function CustomTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8">
+      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8" fontSize={14}>
         {payload.value}
       </text>
     </g>

@@ -25,9 +25,10 @@ type IssuesChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  className?: string;
 };
 
-export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoading }: IssuesChartProps) {
+export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoading, className }: IssuesChartProps) {
   const dailyData = useMemo(() => getDailyIssuesHistogramToDays({ stats, range }), [stats, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
   const { openedRangedTotal, closedRangedTotal } = useMemo(
@@ -45,29 +46,38 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
   );
 
   return (
-    <Card className="flex flex-col gap-8 w-full h-full items-center pt-8">
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
+    <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center !px-6 !py-8`}>
+      <section className="flex flex-col lg:flex-row w-full items-start gap-4 lg:justify-between px-2">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
-          <div className="flex flex-col gap-4 lg:flex-row w-full justify-between">
+          <div className="flex flex-col gap-4 lg:flex-row w-full items-start justify-between">
             <div className="flex gap-1 items-center w-fit">
               <VscIssues className="text-xl" />
               <h3 className="text-sm font-semibold md:text-lg text-slate-800">Issues</h3>
-              <p className="text-sm md:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+              <p className="text-sm md:text-base w-fit pl-2 text-slate-500 font-medium">{range} days</p>
             </div>
-            <aside className="flex gap-8">
+            <aside className="flex gap-6">
               <div>
-                <h3 className="text-xs lg:text-sm text-slate-500">Opened</h3>
+                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">
+                  Opened
+                  <span className={`w-2 h-2 rounded-full bg-[#16a34a] mx-1 inline-block`}></span>
+                </h3>
                 <p className="font-semibold text-xl lg:text-3xl">{humanizeNumber(openedRangedTotal)}</p>
               </div>
               <div>
-                <h3 className="text-xs lg:text-sm text-slate-500">Closed</h3>
+                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">
+                  Closed
+                  <span className={`w-2 h-2 rounded-full bg-[#9333ea] mx-1 inline-block`}></span>
+                </h3>
                 <p className="font-semibold text-xl lg:text-3xl">{humanizeNumber(closedRangedTotal)}</p>
               </div>
               <div>
-                <h3 className="text-xs lg:text-sm text-slate-500">Velocity</h3>
-                <p className="font-semibold text-xl lg:text-3xl">{humanizeNumber(velocity)}d</p>
+                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">Velocity</h3>
+                <p className="font-semibold text-xl lg:text-3xl">
+                  {humanizeNumber(velocity)}
+                  <span className="text-xl text-slate-500 pl-0.5">d</span>
+                </p>
               </div>
             </aside>
           </div>
@@ -77,9 +87,15 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
         {isLoading ? (
           <SkeletonWrapper width={100} height={100} />
         ) : (
-          <LineChart data={dailyData} syncId={syncId}>
+          <LineChart data={dailyData} syncId={syncId} className="-left-6">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
-            <YAxis domain={["auto", "auto"]} />
+            <YAxis
+              domain={["auto", "auto"]}
+              fontSize={14}
+              tick={{ fill: "#94a3b8" }}
+              axisLine={{ stroke: "#94a3b8" }}
+              tickLine={{ stroke: "#94a3b8" }}
+            />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
             <Line dataKey="opened_issues" stroke="#16a34a" strokeWidth={2} />
@@ -94,15 +110,26 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
 function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
   if (active && payload) {
     return (
-      <figcaption className="flex flex-col gap-1 bg-white px-4 py-2 rounded-lg border">
-        <section className="flex gap-2 items-center">
-          <VscIssues className="fill-sauced-orange" />
+      <figcaption className="flex flex-col gap-1 text-sm bg-white px-4 py-3 rounded-lg border w-fit">
+        <section className="flex gap-2 font-medium text-slate-500 items-center text-xs w-fit">
+          <VscIssues className="fill-slate-500" />
           <p>Issues</p>
+          <p>{payload[0]?.payload.bucket}</p>
         </section>
-        <p>Opened: {payload[0]?.value}</p>
-        <p>Closed: {payload[1]?.value}</p>
-
-        <p className="text-light-slate-9 text-sm">{payload[0]?.payload.bucket}</p>
+        <section className="flex justify-between">
+          <p className="flex gap-2 items-center text-slate-500">
+            <span className={`w-2 h-2 rounded-full bg-[#16a34a] inline-block`}></span>
+            Opened:
+          </p>
+          <p className="font-medium">{payload[0]?.value}</p>
+        </section>
+        <section className="flex justify-between">
+          <p className="flex gap-2 items-center text-slate-500">
+            <span className={`w-2 h-2 rounded-full bg-[#9333ea] inline-block`}></span>
+            Closed:
+          </p>
+          <p className="font-medium">{payload[1]?.value}</p>
+        </section>
       </figcaption>
     );
   }
@@ -111,7 +138,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
 function CustomTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8">
+      <text x={0} y={0} dy={20} textAnchor="middle" fill="#94a3b8" fontSize={14}>
         {payload.value}
       </text>
     </g>

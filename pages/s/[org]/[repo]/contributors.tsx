@@ -11,13 +11,15 @@ import { getAvatarByUsername } from "lib/utils/github";
 import { useToast } from "lib/hooks/useToast";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { shortenUrl } from "lib/utils/shorten-url";
-import ProfileLayout from "layouts/profile";
 import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/shared/Button/button";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import Contributors from "components/organisms/Contributors/contributors";
 import TabList from "components/TabList/tab-list";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import useSession from "lib/hooks/useSession";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -66,6 +68,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
   const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const { toast } = useToast();
   const posthog = usePostHog();
+  const { session } = useSession(true);
   const isMobile = useMediaQuery("(max-width: 576px)");
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
   const tabList = [
@@ -81,7 +84,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
 
     try {
       const shortUrl = await shortenUrl(url);
-      await navigator.clipboard.writeText(shortUrl);
+      writeToClipboard(shortUrl);
       toast({ description: "Copied to clipboard.", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -91,7 +94,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
-      <ProfileLayout>
+      <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <section className="px-2 pt-2 md:pt-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-7xl">
           <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
             <header className="flex items-center gap-4">
@@ -141,7 +144,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
             <Contributors repositories={[repoData.id]} defaultLayout="grid" />
           </ClientOnly>
         </section>
-      </ProfileLayout>
+      </WorkspaceLayout>
 
       <AddToWorkspaceModal
         repository={repoData.full_name}

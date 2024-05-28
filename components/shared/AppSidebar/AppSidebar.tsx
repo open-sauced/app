@@ -52,7 +52,7 @@ interface AppSideBarProps {
 }
 
 export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSideBarProps) => {
-  const { user } = useSupabaseAuth();
+  const { user, signIn } = useSupabaseAuth();
   const { data: rawRepoInsights, isLoading: repoInsightsLoading } = useWorkspacesRepositoryInsights({ workspaceId });
   const { data: rawContributorInsights, isLoading: contributorInsightsLoading } = useWorkspacesContributorInsights({
     workspaceId,
@@ -107,7 +107,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
               <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
                 <span className="sr-only">Workspace</span>
                 <SingleSelect
-                  isSearchable
+                  isSearchable={!!user}
                   options={[
                     { label: "Create new workspace...", value: "new" },
                     ...workspaces.map(({ id, name }) => ({
@@ -120,6 +120,15 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                   placeholder="Select a workspace"
                   onValueChange={(value) => {
                     if (value === "new") {
+                      if (!user) {
+                        signIn({
+                          provider: "github",
+                          options: {
+                            redirectTo: `${new URL("/workspaces/new", window.location.href)}`,
+                          },
+                        });
+                        return;
+                      }
                       router.push("/workspaces/new");
                       return;
                     }

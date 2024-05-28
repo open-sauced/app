@@ -12,7 +12,6 @@ import Link from "next/link";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import clsx from "clsx";
 import Skeleton from "react-loading-skeleton";
-import { HeartFillIcon } from "@primer/octicons-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import Pagination from "components/molecules/Pagination/pagination";
 import "@github/relative-time-element";
@@ -90,16 +89,6 @@ const columns = [
     cell: (info) => (info.row.original.issue_state === "closed" ? getTime(info.getValue()) : "-"),
     enableSorting: true,
   }),
-
-  issueTableColumnHelper.accessor("issue_reactions_heart", {
-    header: (_info) => (
-      <div className="flex gap-1 items-center">
-        <HeartFillIcon size={16} className="text-red-500" aria-label="heart reaction" /> Reactions
-      </div>
-    ),
-    cell: (info) => info.getValue(),
-    enableSorting: true,
-  }),
 ];
 
 const mobileColumns = [
@@ -156,12 +145,6 @@ const mobileColumns = [
                 </>
               )}
             </span>
-            {info.row.original.issue_reactions_heart > 0 ? (
-              <span className="flex gap-1 items-center">
-                {info.row.original.issue_reactions_heart}
-                <HeartFillIcon size={16} className="text-red-500" aria-label="heart reaction" />
-              </span>
-            ) : null}
           </div>
         </div>
       );
