@@ -199,13 +199,13 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
               />
             )}
             <AnnouncementCard
-              title="Join Us for Lunch Week!"
+              title="Introducing StarSearch!"
               description={
-                "Lunch time is launch time at OpenSauced this week. Join us every day at lunch time as we share the new features we've been cooking up!"
+                "Start using StarSearch, our AI-powered feature that allows you to ask questions and get answers with in-depth insights into contributor history and activities, bringing a new depth of knowledge about open source projects."
               }
-              bannerSrc={"/assets/images/anouncement-cards/lunch-week-banner.png"}
-              url={"https://opensauced.pizza/lunchweek"}
-              cta={"See What's Cooking!"}
+              bannerSrc={"/assets/images/anouncement-cards/star-search-announcement-card.png"}
+              url={"/star-search"}
+              cta={"Try It Now!"}
             />
           </div>
         </div>
