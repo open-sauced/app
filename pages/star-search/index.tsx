@@ -671,7 +671,7 @@ function SuggestionBoxes({
   suggestions: SuggesionTypes[];
 }) {
   return isHorizontal ? (
-    <Carousel className="w-fit max-w-[32rem] my-0 mx-auto px-auto" orientation="horizontal">
+    <Carousel className="w-fit max-w-[32rem] my-0 mx-auto px-auto md:ml-[1.63rem] lg:mx-auto" orientation="horizontal">
       <CarouselContent>
         {suggestions.map((suggestion, i) => (
           <CarouselItem key={i} className="items-stretch">
