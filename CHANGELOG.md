@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.0-beta.5](https://github.com/open-sauced/app/compare/v2.32.0-beta.4...v2.32.0-beta.5) (2024-05-28)
+
+
+### 🐛 Bug Fixes
+
+* now search input is no longer squised on non-macOS devices ([#3487](https://github.com/open-sauced/app/issues/3487)) ([15d70ce](https://github.com/open-sauced/app/commit/15d70ce4f158f75bea167daf8b3dbbda50e37b89))
+* now the outline button shows button text when disabled ([#3485](https://github.com/open-sauced/app/issues/3485)) ([cb8bd3a](https://github.com/open-sauced/app/commit/cb8bd3ac4defb0f71dc772ffa2ce31dfc217d585))
+
+## [2.32.0-beta.4](https://github.com/open-sauced/app/compare/v2.32.0-beta.3...v2.32.0-beta.4) (2024-05-27)
+
+
+### 🐛 Bug Fixes
+
+* **search:** only show one not found message ([#3477](https://github.com/open-sauced/app/issues/3477)) ([7714523](https://github.com/open-sauced/app/commit/7714523271d72a75c520ac3ae0a936fb7f0f07b7))
+
+## [2.32.0-beta.3](https://github.com/open-sauced/app/compare/v2.32.0-beta.2...v2.32.0-beta.3) (2024-05-27)
+
+
+### 🐛 Bug Fixes
+
+* added more padding between footer and highlights ([#3483](https://github.com/open-sauced/app/issues/3483)) ([352cde5](https://github.com/open-sauced/app/commit/352cde5600514f09a23934d214cfa86d77b7e29d))
+
 ## [2.32.0-beta.2](https://github.com/open-sauced/app/compare/v2.32.0-beta.1...v2.32.0-beta.2) (2024-05-24)
 
 
