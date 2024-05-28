@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.0-beta.7](https://github.com/open-sauced/app/compare/v2.32.0-beta.6...v2.32.0-beta.7) (2024-05-28)
+
+
+### 🐛 Bug Fixes
+
+* update feed highlight to StarSearch ([#3489](https://github.com/open-sauced/app/issues/3489)) ([c99921a](https://github.com/open-sauced/app/commit/c99921ad9d404dd5a6351b02175e4c213c7d9122))
+
 ## [2.32.0-beta.6](https://github.com/open-sauced/app/compare/v2.32.0-beta.5...v2.32.0-beta.6) (2024-05-28)
 
 
