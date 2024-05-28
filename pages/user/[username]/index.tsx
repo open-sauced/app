@@ -106,38 +106,25 @@ Contributor.PageLayout = ProfileLayout;
 export default Contributor;
 
 export const getServerSideProps = async (context: UserSSRPropsContext) => {
-  return await handleUserSSR(context);
-};
+  const { username } = context.params!;
+  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
+    headers: {
+      accept: "application/json",
+    },
+  });
 
-export type UserSSRPropsContext = GetServerSidePropsContext<{ username: string }>;
-
-export async function handleUserSSR({ params }: GetServerSidePropsContext<{ username: string }>) {
-  const { username } = params!;
-
-  async function fetchUserData() {
-    try {
-      const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
-        headers: {
-          accept: "application/json",
-        },
-      });
-
-      if (!req.ok) {
-        return null;
-      }
-
-      return (await req.json()) as DbUser;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      return null;
-    }
+  if (!req.ok) {
+    return {
+      redirect: { destination: "/404" },
+    };
   }
 
-  const userData = await fetchUserData();
+  const userData = (await req.json()) as DbUser;
   const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/users/${username}`;
 
   return {
     props: { username, user: userData, ogImage },
   };
-}
+};
+
+export type UserSSRPropsContext = GetServerSidePropsContext<{ username: string }>;
