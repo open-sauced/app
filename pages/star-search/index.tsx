@@ -153,32 +153,24 @@ type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch
  *
  */
 function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefinition }) {
-  try {
-    const Component = componentRegistry.get(widgetDefinition.name);
-    const componentToRender = Component ? <Component {...widgetDefinition.arguments} /> : null;
-
-    if (componentToRender === null) {
-      throw new Error(`Component ${widgetDefinition.name} not found in registry`);
-    }
-
-    return (
-      <div className="w-full lg:w-1/2 mx-auto pt-2" style={{ maxWidth: "440px" }}>
-        {componentToRender}
-      </div>
-    );
-  } catch (error: unknown) {
+  const Component = componentRegistry.get(widgetDefinition.name);
+  if (Component == null) {
     Sentry.captureException(
       new Error(
-        `Unable to render dynamic widget in StarSearch. Widget definition: ${JSON.stringify(widgetDefinition)}`,
-        {
-          cause: error,
-        }
+        `Component not found in the StarSearch component  registry. Widget definition: ${JSON.stringify(
+          widgetDefinition
+        )}`
       )
     );
 
-    // Returning null because widgets enhance the experience but are not critical to the functionality.
     return null;
   }
+
+  return (
+    <div className="w-full lg:w-1/2 pt-2" style={{ maxWidth: "440px" }}>
+      <Component {...widgetDefinition.arguments} />
+    </div>
+  );
 }
 
 export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPageProps) {
@@ -716,54 +708,61 @@ function SuggestionBoxes({
 }
 
 function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number }) {
-  let content;
-
   if (typeof message.content == "string") {
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
-    content = (
-      <Markdown
-        remarkPlugins={[remarkGfm]}
-        components={{
-          a(props) {
-            if (typeof props.children === "string" && props.children.startsWith("@")) {
-              return (
-                <span className="inline-flex gap-1 items-baseline self-center">
-                  <span className="self-center">
-                    <AvatarHoverCard contributor={props.children.replace("@", "")} repositories={[]} size="xsmall" />
-                  </span>
-                  <a {...props} />
-                </span>
-              );
-            }
+    return (
+      <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
+        <ChatAvatar author={message.author} userId={userId} />
+        <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
+          <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              a(props) {
+                if (typeof props.children === "string" && props.children.startsWith("@")) {
+                  return (
+                    <span className="inline-flex gap-1 items-baseline self-center">
+                      <span className="self-center">
+                        <AvatarHoverCard
+                          contributor={props.children.replace("@", "")}
+                          repositories={[]}
+                          size="xsmall"
+                        />
+                      </span>
+                      <a {...props} />
+                    </span>
+                  );
+                }
 
-            return <a {...props} />;
-          },
-        }}
-        className="break-words prose"
-      >
-        {message.content}
-      </Markdown>
+                return <a {...props} />;
+              },
+            }}
+            className="break-words prose"
+          >
+            {message.content}
+          </Markdown>{" "}
+        </Card>
+      </li>
     );
-  } else {
-    if (!componentRegistry.has(message.content.name)) {
-      return null;
-    }
-
-    content = <StarSearchWidget widgetDefinition={message.content} />;
-
-    if (!content) {
-      return null;
-    }
   }
 
+  if (!componentRegistry.has(message.content.name)) {
+    return null;
+  }
+
+  // No fallback is being used for the dynamic widget because if it fails for some reason, it's better to not render it than cause
+  // noise with a message like, unable to render the lotto factor widget. The widgets are additive to the textual response which
+  // is still valuable.
   return (
-    <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
-      <ChatAvatar author={message.author} userId={userId} />
-      <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
-        <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
-        {content}
-      </Card>
-    </li>
+    <Sentry.ErrorBoundary>
+      <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
+        <ChatAvatar author={message.author} userId={userId} />
+        <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
+          <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
+          <StarSearchWidget widgetDefinition={message.content} />
+        </Card>
+      </li>
+    </Sentry.ErrorBoundary>
   );
 }
