@@ -115,7 +115,7 @@ export const getServerSideProps = async (context: UserSSRPropsContext) => {
 
   if (!req.ok) {
     return {
-      redirect: { destination: "/404" },
+      notFound: true,
     };
   }
 
