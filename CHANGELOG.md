@@ -5,15 +5,30 @@
 
 > All notable changes to this project will be documented in this file
 
-## [2.32.0-beta.9](https://github.com/open-sauced/app/compare/v2.32.0-beta.8...v2.32.0-beta.9) (2024-05-28)
+## [2.32.1-beta.1](https://github.com/open-sauced/app/compare/v2.32.0...v2.32.1-beta.1) (2024-05-29)
 
 
 ### 🐛 Bug Fixes
 
 * center `/star-search` suggestions in medium view ([#3473](https://github.com/open-sauced/app/issues/3473)) ([f617ccd](https://github.com/open-sauced/app/commit/f617ccdc5c660b3736a3d8036f82e5e3d171d8b6))
 
-## [2.32.0-beta.8](https://github.com/open-sauced/app/compare/v2.32.0-beta.7...v2.32.0-beta.8) (2024-05-28)
+## [2.32.0](https://github.com/open-sauced/app/compare/v2.31.0...v2.32.0) (2024-05-28)
 
+
+### 🐛 Bug Fixes
+
+* added more padding between footer and highlights ([#3483](https://github.com/open-sauced/app/issues/3483)) ([352cde5](https://github.com/open-sauced/app/commit/352cde5600514f09a23934d214cfa86d77b7e29d))
+* now the outline button shows button text when disabled ([#3485](https://github.com/open-sauced/app/issues/3485)) ([cb8bd3a](https://github.com/open-sauced/app/commit/cb8bd3ac4defb0f71dc772ffa2ce31dfc217d585))
+* **search:** only show one not found message ([#3477](https://github.com/open-sauced/app/issues/3477)) ([7714523](https://github.com/open-sauced/app/commit/7714523271d72a75c520ac3ae0a936fb7f0f07b7))
+* update feed highlight to StarSearch ([#3489](https://github.com/open-sauced/app/issues/3489)) ([c99921a](https://github.com/open-sauced/app/commit/c99921ad9d404dd5a6351b02175e4c213c7d9122))
+
+
+### 🍕 Features
+
+* Adds URL parameter validators to fetch requests ([#3467](https://github.com/open-sauced/app/issues/3467)) ([4c056d9](https://github.com/open-sauced/app/commit/4c056d93f0bf98353961723acee233cca6611cef))
+* Updates error copy StarSearch ([#3494](https://github.com/open-sauced/app/issues/3494)) ([735c8c6](https://github.com/open-sauced/app/commit/735c8c6257253048ec3de10bbc6b34af5dd95b25))
+
+## [2.32.0-beta.8](https://github.com/open-sauced/app/compare/v2.32.0-beta.7...v2.32.0-beta.8) (2024-05-28)
 
 ### 🍕 Features
 
