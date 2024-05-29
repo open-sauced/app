@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.1-beta.2](https://github.com/open-sauced/app/compare/v2.32.1-beta.1...v2.32.1-beta.2) (2024-05-29)
+
+
+### 🐛 Bug Fixes
+
+* `LotteryFactorChart` loading state overflow ([#3497](https://github.com/open-sauced/app/issues/3497)) ([00426f8](https://github.com/open-sauced/app/commit/00426f8b24c77cfa26c0b57b82e00e583492d6a7))
+* redirect to 404 if user not found ([#3492](https://github.com/open-sauced/app/issues/3492)) ([6522eeb](https://github.com/open-sauced/app/commit/6522eeb2c0f839c035df19391aa7f75d656629e4))
+
 ## [2.32.1-beta.1](https://github.com/open-sauced/app/compare/v2.32.0...v2.32.1-beta.1) (2024-05-29)
 
 
