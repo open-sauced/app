@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.32.1-beta.1](https://github.com/open-sauced/app/compare/v2.32.0...v2.32.1-beta.1) (2024-05-29)
+
+
+### 🐛 Bug Fixes
+
+* center `/star-search` suggestions in medium view ([#3473](https://github.com/open-sauced/app/issues/3473)) ([f617ccd](https://github.com/open-sauced/app/commit/f617ccdc5c660b3736a3d8036f82e5e3d171d8b6))
+
 ## [2.32.0](https://github.com/open-sauced/app/compare/v2.31.0...v2.32.0) (2024-05-28)
 
 
