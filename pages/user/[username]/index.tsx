@@ -16,6 +16,7 @@ import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
 import { useHasMounted } from "lib/hooks/useHasMounted";
 import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
+import { isValidUrlSlug } from "lib/utils/url-validators";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -106,38 +107,28 @@ Contributor.PageLayout = ProfileLayout;
 export default Contributor;
 
 export const getServerSideProps = async (context: UserSSRPropsContext) => {
-  return await handleUserSSR(context);
-};
+  const { username } = context.params ?? { username: "" };
 
-export type UserSSRPropsContext = GetServerSidePropsContext<{ username: string }>;
-
-export async function handleUserSSR({ params }: GetServerSidePropsContext<{ username: string }>) {
-  const { username } = params!;
-
-  async function fetchUserData() {
-    try {
-      const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
-        headers: {
-          accept: "application/json",
-        },
-      });
-
-      if (!req.ok) {
-        return null;
-      }
-
-      return (await req.json()) as DbUser;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      return null;
-    }
+  if (!isValidUrlSlug(username)) {
+    return { notFound: true };
   }
 
-  const userData = await fetchUserData();
+  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  if (!req.ok) {
+    return { notFound: true };
+  }
+
+  const userData = (await req.json()) as DbUser;
   const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/users/${username}`;
 
   return {
     props: { username, user: userData, ogImage },
   };
-}
+};
+
+export type UserSSRPropsContext = GetServerSidePropsContext<{ username: string }>;
