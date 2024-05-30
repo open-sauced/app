@@ -828,14 +828,14 @@ function Chatbox({
           </Card>
         </li>
         {prompt ? (
-          <div className="flex justify-end text-slate-600">
+          <div className="flex justify-end text-slate-600 py-4">
             <DropdownMenu open={dropdownOpen} modal={false}>
               <div className="flex items-center gap-3 w-max">
                 <DropdownMenuTrigger
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7"
                 >
-                  <HiOutlineShare width={18} height={18} />
+                  <HiOutlineShare width={22} height={22} />
                 </DropdownMenuTrigger>
               </div>
 
@@ -847,6 +847,7 @@ function Chatbox({
                       twitterParams.set("url", shortUrl);
                       twitterUrl += `?${twitterParams.toString()}`;
                       window.open(twitterUrl, "_blank");
+                      setDropdownOpen(false);
                     }}
                     className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                   >
@@ -861,6 +862,7 @@ function Chatbox({
                       linkedinParams.set("url", shortUrl);
                       linkedinUrl += `?${linkedinParams.toString()}`;
                       window.open(linkedinUrl, "_blank");
+                      setDropdownOpen(false);
                     }}
                     className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                   >
