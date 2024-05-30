@@ -669,7 +669,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 placeholder="Ask a question"
                 className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
                 onClick={() => {
-                  if (!bearerToken && sharedPrompt) {
+                  if (!bearerToken && !sharedPrompt) {
                     setLoginModalOpen(true);
                   }
                 }}
