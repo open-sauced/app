@@ -3,6 +3,8 @@ import { ImageResponse } from "og_edge";
 import type { Config } from "https://edge.netlify.com";
 import { getLocalAsset } from "../og-image-utils.ts";
 
+const MAX_CHARS = 200;
+
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
   const prompt = searchParams.get("prompt");
@@ -74,7 +76,7 @@ export default async function handler(req: Request) {
             maxHeight: "400px",
           }}
         >
-          {prompt.length > 310 ? `${prompt.slice(0, 310)}...` : prompt}
+          {prompt.length > MAX_CHARS ? `${prompt.slice(0, MAX_CHARS)}...` : prompt}
         </p>
       </div>
     );
