@@ -789,7 +789,6 @@ function Chatbox({
       twitterParams.set("url", promptUrl.toString());
 
       linkedinParams.set("url", `${promptUrl}`);
-      linkedinUrl += `?${linkedinParams}`;
     }
 
     // Breaking all words so that the rendered markdown doesn't overflow the container
@@ -861,7 +860,7 @@ function Chatbox({
                       const shortUrl = await shortenUrl(`${promptUrl}`);
                       linkedinParams.set("url", shortUrl);
                       linkedinUrl += `?${linkedinParams.toString()}`;
-                      window.open(twitterUrl, "_blank");
+                      window.open(linkedinUrl, "_blank");
                     }}
                     className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                   >
