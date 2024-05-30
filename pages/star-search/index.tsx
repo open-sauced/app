@@ -237,8 +237,8 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
     toast({ description: "Thank you for your feedback!", variant: "success" });
   }
 
-  function addPromptInput(prompt: string) {
-    if (!bearerToken) {
+  function addPromptInput(prompt: string, checkAuth = true) {
+    if (checkAuth && !bearerToken) {
       setLoginModalOpen(true);
       return;
     }
@@ -250,16 +250,18 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
     inputRef.current.value = prompt;
     const { form } = inputRef.current;
 
-    if (typeof form.requestSubmit === "function") {
-      form.requestSubmit();
-    } else {
-      form.dispatchEvent(new Event("submit", { cancelable: true }));
+    if (bearerToken) {
+      if (typeof form.requestSubmit === "function") {
+        form.requestSubmit();
+      } else {
+        form.dispatchEvent(new Event("submit", { cancelable: true }));
+      }
     }
   }
 
   useEffect(() => {
     if (sharedPrompt && inputRef.current) {
-      addPromptInput(sharedPrompt);
+      addPromptInput(sharedPrompt, false);
       setShowSuggestions(false);
     }
   }, [sharedPrompt, inputRef.current]);
@@ -268,8 +270,8 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
 
-  const submitPrompt = async (prompt: string) => {
-    if (!bearerToken) {
+  const submitPrompt = async (prompt: string, checkAuth = true) => {
+    if (checkAuth && !bearerToken) {
       setLoginModalOpen(true);
       return;
     }
@@ -653,7 +655,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 event.preventDefault();
                 const form = event.currentTarget;
                 const formData = new FormData(form);
-                submitPrompt(formData.get("prompt") as string);
+                submitPrompt(formData.get("prompt") as string, !sharedPrompt);
                 form.reset();
               }}
               className="bg-white flex justify-between mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
@@ -667,7 +669,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 placeholder="Ask a question"
                 className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
                 onClick={() => {
-                  if (!bearerToken) {
+                  if (!bearerToken && sharedPrompt) {
                     setLoginModalOpen(true);
                   }
                 }}
@@ -783,7 +785,7 @@ function Chatbox({
 
       promptUrl = new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
 
-      twitterParams.set("text", "Here's my StarSearch prompt! Try it out for yourself.");
+      twitterParams.set("text", `Here's my StarSearch prompt!\n\n${prompt}\n\nTry it out for yourself.\n`);
       twitterParams.set("url", promptUrl.toString());
 
       linkedinParams.set("url", `${promptUrl}`);
@@ -827,7 +829,7 @@ function Chatbox({
           </Card>
         </li>
         {prompt ? (
-          <div className="flex justify-end gap-2 text-slate-600 pt-2">
+          <div className="flex justify-end text-slate-600">
             <DropdownMenu open={dropdownOpen} modal={false}>
               <div className="flex items-center gap-3 w-max">
                 <DropdownMenuTrigger
@@ -907,83 +909,3 @@ function Chatbox({
     </Sentry.ErrorBoundary>
   );
 }
-
-// function ChatboxNew({
-//   author,
-//   content,
-//   userId,
-//   shareLinks = false,
-// }: StarSearchChat & { userId?: number; shareLinks: boolean }) {
-//   const renderAvatar = () => {
-//     switch (author) {
-//       case "You":
-//         return (
-//           <Image
-//             src={getAvatarById(`${userId}`)}
-//             alt="Your profile picture"
-//             width={32}
-//             height={32}
-//             className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
-//           />
-//         );
-//       case "StarSearch":
-//         return (
-//           <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full">
-//             <Image
-//               src="/assets/star-search-logo-white.svg"
-//               alt="StarSearch logo"
-//               width={24}
-//               height={24}
-//               className="w-6 h-6"
-//             />
-//           </div>
-//         );
-//     }
-//   };
-
-//   const tweetQueryParams = new URLSearchParams();
-//   const linkedInQueryParams = new URLSearchParams();
-
-//   if (shareLinks) {
-//     const url = new URL("/star-search", process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
-//     url.searchParams.set("prompt", content);
-
-//     tweetQueryParams.set("text", `Here's my StarSearch prompt! Try it out for yourself. ${url}`);
-
-//     linkedInQueryParams.set("url", `${url}`);
-//   }
-
-//   return (
-//     <li className="my-4 w-full">
-//       <div className="flex gap-2 justify-center items-start ">
-//         {renderAvatar()}
-//         <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
-//           <h3 className="font-semibold text-sauced-orange">{author}</h3>
-//           <Markdown>{content}</Markdown>
-//         </Card>
-//       </div>
-//       {shareLinks ? (
-//         <div className="flex justify-end gap-2 text-slate-600 pt-2">
-//           <Button
-//             variant="primary"
-//             className="flex gap-2 w-max"
-//             href={`http://twitter.com/intent/tweet?${tweetQueryParams}`}
-//             target="_blank"
-//           >
-//             Share on <span className="sr-only">X/Twitter</span>
-//             <BsTwitterX />
-//           </Button>
-//           <Button
-//             variant="primary"
-//             className="flex gap-2 w-max"
-//             href={`https://www.linkedin.com/sharing/share-offsite/?${linkedInQueryParams}`}
-//             target="_blank"
-//           >
-//             Share on <span className="sr-only">LinkedIn</span>
-//             <BsLinkedin />
-//           </Button>
-//         </div>
-//       ) : null}
-//     </li>
-//   );
-// }
