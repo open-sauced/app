@@ -10,9 +10,13 @@ export default async function handler(req: Request) {
   const prompt = searchParams.get("prompt");
 
   const logoImg = getLocalAsset(new URL("/assets/og-images/workspaces/open-sauced-logo.png", req.url));
-  const interSemiBoldFont = getLocalAsset(new URL("/assets/card/Inter-SemiBold.ttf", req.url));
-
-  const [interSemiBoldFontData, logoImgData] = await Promise.all([interSemiBoldFont, logoImg]);
+  const interFontRegular = getLocalAsset(new URL("/assets/fonts/Inter-Regular.otf", req.url));
+  const interFontMedium = getLocalAsset(new URL("/assets/fonts/Inter-Medium.otf", req.url));
+  const [interFontRegularData, interFontMediumData, logoImgData] = await Promise.all([
+    interFontRegular,
+    interFontMedium,
+    logoImg,
+  ]);
 
   let imageContents;
 
@@ -94,10 +98,16 @@ export default async function handler(req: Request) {
 
     fonts: [
       {
-        name: "Inter",
-        data: interSemiBoldFontData,
-        weight: 700,
+        name: "Inter Regular",
+        data: interFontRegularData,
+        weight: 400,
         style: "normal",
+      },
+      {
+        name: "Inter Medium",
+        data: interFontMediumData,
+        weight: 500,
+        style: "medium",
       },
     ],
   });
