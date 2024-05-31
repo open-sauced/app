@@ -187,7 +187,7 @@ export default function LotteryFactorChart({
         </div>
       </section>
 
-      {error || !hasContributors ? <Image src={errorImage} alt="" /> : null}
+      {!isLoading && (error || !hasContributors) ? <Image src={errorImage} alt="" /> : null}
 
       {isLoading ? (
         <div className="flex flex-col w-full gap-4 px-4">
