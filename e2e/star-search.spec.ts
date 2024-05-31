@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import config from "../playwright.config";
 
 test("StarSearch (Logged Out Experience)", async ({ page }) => {
   await page.goto("/star-search");
@@ -70,4 +71,26 @@ test("StarSearch (Logged Out Experience)", async ({ page }) => {
 
   // Ensure there is a login via GitHub button in the dialog.
   expect(loginDialog.getByRole("button", { name: "Connect with GitHub", exact: true })).toBeVisible();
+});
+
+test("StarSearch OG image should exist", async ({ page }) => {
+  await page.goto("/star-search");
+
+  const expectedUrl = `${config.use?.baseURL}/og-images/star-search/?`;
+
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", expectedUrl);
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", expectedUrl);
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
+});
+
+test("StarSearch OG image should exist for shared prompt", async ({ page }) => {
+  await page.goto(
+    "/star-search/?prompt=Show%20me%20the%20lottery%20factor%20for%20contributors%20in%20the%20remix-run/react-router%20project"
+  );
+
+  const expectedUrl = `${config.use?.baseURL}/og-images/star-search/?prompt=Show+me+the+lottery+factor+for+contributors+in+the+remix-run%2Freact-router+project`;
+
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", expectedUrl);
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", expectedUrl);
+  await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
 });
