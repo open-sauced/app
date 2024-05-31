@@ -3,7 +3,7 @@ import { ImageResponse } from "og_edge";
 import type { Config } from "https://edge.netlify.com";
 import { getLocalAsset } from "../og-image-utils.ts";
 
-const MAX_CHARS = 200;
+const MAX_CHARS = 130;
 
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -19,29 +19,17 @@ export default async function handler(req: Request) {
   ]);
 
   let imageContents;
+  const absTop = 171.5;
 
   if (!prompt) {
     imageContents = (
-      <div
-        style={{
-          fontFamily: '"Inter"',
-          color: "#fff",
-          display: "flex",
-          flexDirection: "column",
-          fontSize: "1rem",
-          fontWeight: 700,
-          backgroundImage: `url("${new URL(`/assets/og-images/star-search-og-image.png`, req.url)}")`,
-          backgroundSize: "1200px 630px",
-          width: "100%",
-          height: "100%",
-          padding: "62px",
-        }}
-      ></div>
+      <img src={`${new URL(`/assets/og-images/star-search-og-image.png`, req.url)}`} width="1200" height="630" />
     );
   } else {
     imageContents = (
       <div
         style={{
+          position: "relative",
           fontFamily: '"Inter"',
           color: "#fff",
           display: "flex",
@@ -53,28 +41,41 @@ export default async function handler(req: Request) {
           width: "100%",
           height: "100%",
           padding: "62px",
+          paddingLeft: "43px",
+          paddingRight: "43px",
         }}
       >
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            position: "absolute",
+            top: absTop,
+            left: 44,
+            backgroundImage: `url("${new URL(`/assets/star-search-white.png`, req.url)}")`,
+            backgroundSize: "280px 43px",
+            backgroundRepeat: "no-repeat",
+            width: "100%",
+            height: "100%",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            top: absTop + 5,
+            left: 343,
+            fontFamily: '"Inter Regular"',
+            fontSize: "37px",
+            letterSpacing: "-2px",
+            color: "#FF6B42",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element  */}
-          <img
-            alt="Open Sauced Logo"
-            width="185"
-            height="32"
-            // @ts-ignore
-            src={logoImgData}
-          />
+          Copilot, but for git history
         </div>
         <p
           style={{
-            marginTop: "64px",
-            fontSize: "48px",
+            marginTop: absTop + 30,
+            fontFamily: '"Inter Medium"',
+            fontSize: "54px",
+            letterSpacing: "-2px",
             overflow: "hidden",
             height: "400px",
             maxHeight: "400px",
@@ -82,6 +83,18 @@ export default async function handler(req: Request) {
         >
           {prompt.length > MAX_CHARS ? `${prompt.slice(0, MAX_CHARS)}...` : prompt}
         </p>
+        {/* eslint-disable-next-line @next/next/no-img-element  */}
+        <img
+          width="185"
+          height="32"
+          // @ts-ignore
+          src={logoImgData}
+          style={{
+            position: "absolute",
+            bottom: "39px",
+            right: "43px",
+          }}
+        />
       </div>
     );
   }
