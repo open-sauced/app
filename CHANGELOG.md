@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.33.0-beta.1](https://github.com/open-sauced/app/compare/v2.32.1-beta.2...v2.33.0-beta.1) (2024-05-31)
+
+
+### 🍕 Features
+
+* convert /user/[username] routes to /u/[username] with redirects ([#3486](https://github.com/open-sauced/app/issues/3486)) ([975b673](https://github.com/open-sauced/app/commit/975b673d692a27170fc795adbbdf99ab3d033c1b))
+
 ## [2.32.1-beta.2](https://github.com/open-sauced/app/compare/v2.32.1-beta.1...v2.32.1-beta.2) (2024-05-29)
 
 
