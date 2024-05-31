@@ -12,7 +12,7 @@ export default function StackedOwners({ owners }: { owners: string[] }) {
           className="w-8 h-8 overflow-hidden transition-all duration-300 border-2 border-white border-solid rounded-full"
         >
           <HoverCard.Root>
-            <Link href={`/user/${username}`} as={`/user/${username}`}>
+            <Link href={`/u/${username}`} as={`/u/${username}`}>
               <HoverCard.Trigger>
                 <Avatar contributor={username} />
               </HoverCard.Trigger>

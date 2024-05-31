@@ -66,7 +66,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
 
   useEffect(() => {
     if (onboarded) {
-      router.push(`/user/${user?.user_metadata.user_name}`);
+      router.push(`/u/${user?.user_metadata.user_name}`);
     } else if (onboarded === false && user && providerToken) {
       setQueryParams({ step: "2" } satisfies QueryParams);
     }
@@ -244,7 +244,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
 
       if (data.ok) {
         store.onboardUser();
-        router.push(`/user/${user?.user_metadata.user_name}`);
+        router.push(`/u/${user?.user_metadata.user_name}`);
       } else {
         setLoading(false);
         // eslint-disable-next-line no-console

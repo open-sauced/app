@@ -272,7 +272,7 @@ const UserResultCard = ({ login, active }: UserResultCardProps) => {
 
   return (
     <Link
-      href={`/user/${login}`}
+      href={`/u/${login}`}
       className={clsx(
         active && "_cursorActive bg-slate-100",
         "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"
