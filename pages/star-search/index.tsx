@@ -204,6 +204,11 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
   const { toast } = useToast();
   const { sessionToken: bearerToken } = useSupabaseAuth();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  let promptUrl: URL;
+  let twitterUrl = "https://twitter.com/intent/tweet";
+  let linkedinUrl = "https://www.linkedin.com/sharing/share-offsite/";
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   function registerPrompt(promptInput: StarSearchPromptAnalytic) {
     prompt({
@@ -475,6 +480,20 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
   };
 
   const renderState = () => {
+    const twitterParams = new URLSearchParams();
+    const linkedinParams = new URLSearchParams();
+    const params = new URLSearchParams();
+
+    const prompt = chat.find(({ author }) => author === "You")?.content as string;
+    params.set("prompt", prompt);
+
+    promptUrl = new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
+
+    twitterParams.set("text", `Here's my StarSearch prompt!\n\n"${prompt}"\n\nTry it out for yourself.`);
+    twitterParams.set("url", promptUrl.toString());
+
+    linkedinParams.set("url", `${promptUrl}`);
+
     switch (starSearchState) {
       case "initial":
         return (
@@ -510,16 +529,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                     if (loaderIndex === i && isRunning && messages.length - 1 === i) {
                       return (
                         <Fragment key={i}>
-                          <Chatbox
-                            userId={userId}
-                            message={message}
-                            prompt={
-                              messages[i - 1]?.content && messages[i - 1]?.author === "You"
-                                ? (messages[i - 1].content as string)
-                                : ""
-                            }
-                            shareLinks={false}
-                          />
+                          <Chatbox userId={userId} message={message} />
                           <li className="flex gap-2 my-4 w-max items-center">
                             <ChatAvatar author="StarSearch" userId={userId} />
                             <StarSearchLoader />
@@ -527,19 +537,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                         </Fragment>
                       );
                     } else {
-                      return (
-                        <Chatbox
-                          key={i}
-                          userId={userId}
-                          message={message}
-                          prompt={
-                            messages[i - 1]?.content && messages[i - 1]?.author === "You"
-                              ? (messages[i - 1].content as string)
-                              : ""
-                          }
-                          shareLinks={true}
-                        />
-                      );
+                      return <Chatbox key={i} userId={userId} message={message} />;
                     }
                   })}
                 </ul>
@@ -578,6 +576,65 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
+                  {prompt && (
+                    <div className="flex gap-2 items-center hover:text-sauced-orange">
+                      <DropdownMenu open={dropdownOpen} modal={false}>
+                        <DropdownMenuTrigger onClick={() => setDropdownOpen(!dropdownOpen)}>
+                          <HiOutlineShare width={22} height={22} />
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent
+                          ref={dropdownRef}
+                          align="end"
+                          className="flex flex-col gap-1 py-2 rounded-lg"
+                        >
+                          <DropdownMenuItem className="rounded-md">
+                            <a
+                              onClick={async () => {
+                                const shortUrl = await shortenUrl(`${promptUrl}`);
+                                twitterParams.set("url", shortUrl);
+                                twitterUrl += `?${twitterParams.toString()}`;
+                                window.open(twitterUrl, "_blank");
+                                setDropdownOpen(false);
+                              }}
+                              className="flex gap-2.5 py-1 items-center pl-3 pr-7"
+                            >
+                              <BsTwitterX size={22} />
+                              <span>Share to Twitter/X</span>
+                            </a>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="rounded-md">
+                            <a
+                              onClick={async () => {
+                                const shortUrl = await shortenUrl(`${promptUrl}`);
+                                linkedinParams.set("url", shortUrl);
+                                linkedinUrl += `?${linkedinParams.toString()}`;
+                                window.open(linkedinUrl, "_blank");
+                                setDropdownOpen(false);
+                              }}
+                              className="flex gap-2.5 py-1 items-center pl-3 pr-7"
+                            >
+                              <FiLinkedin size={22} />
+                              <span>Share to Linkedin</span>
+                            </a>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={async () => {
+                              const shortUrl = await shortenUrl(`${promptUrl}`);
+                              writeToClipboard(shortUrl);
+                              setDropdownOpen(false);
+                            }}
+                            className="rounded-md"
+                          >
+                            <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
+                              <BsLink45Deg size={22} />
+                              <span>Copy link</span>
+                            </div>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  )}
                 </span>
               </div>
             </div>
@@ -759,38 +816,8 @@ function SuggestionBoxes({
   );
 }
 
-function Chatbox({
-  message,
-  userId,
-  prompt,
-  shareLinks = true,
-}: {
-  message: StarSearchChat;
-  userId?: number;
-  shareLinks: boolean;
-  prompt?: string;
-}) {
-  let promptUrl: URL;
-  let twitterUrl = "https://twitter.com/intent/tweet";
-  let linkedinUrl = "https://www.linkedin.com/sharing/share-offsite/";
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const twitterParams = new URLSearchParams();
-  const linkedinParams = new URLSearchParams();
-
+function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number }) {
   if (typeof message.content == "string") {
-    if (shareLinks) {
-      const params = new URLSearchParams();
-      params.set("prompt", prompt || "");
-
-      promptUrl = new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
-
-      twitterParams.set("text", `Here's my StarSearch prompt!\n\n${prompt}\n\nTry it out for yourself.\n`);
-      twitterParams.set("url", promptUrl.toString());
-
-      linkedinParams.set("url", `${promptUrl}`);
-    }
-
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     return (
@@ -827,66 +854,6 @@ function Chatbox({
             </Markdown>{" "}
           </Card>
         </li>
-        {prompt ? (
-          <div className="flex justify-end text-slate-600 py-4">
-            <DropdownMenu open={dropdownOpen} modal={false}>
-              <div className="flex items-center gap-3 w-max">
-                <DropdownMenuTrigger
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="py-2 px-2 rounded-full data-[state=open]:bg-light-slate-7"
-                >
-                  <HiOutlineShare width={22} height={22} />
-                </DropdownMenuTrigger>
-              </div>
-
-              <DropdownMenuContent ref={dropdownRef} align="end" className="flex flex-col gap-1 py-2 rounded-lg">
-                <DropdownMenuItem className="rounded-md">
-                  <a
-                    onClick={async () => {
-                      const shortUrl = await shortenUrl(`${promptUrl}`);
-                      twitterParams.set("url", shortUrl);
-                      twitterUrl += `?${twitterParams.toString()}`;
-                      window.open(twitterUrl, "_blank");
-                      setDropdownOpen(false);
-                    }}
-                    className="flex gap-2.5 py-1 items-center pl-3 pr-7"
-                  >
-                    <BsTwitterX size={22} />
-                    <span>Share to Twitter/X</span>
-                  </a>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="rounded-md">
-                  <a
-                    onClick={async () => {
-                      const shortUrl = await shortenUrl(`${promptUrl}`);
-                      linkedinParams.set("url", shortUrl);
-                      linkedinUrl += `?${linkedinParams.toString()}`;
-                      window.open(linkedinUrl, "_blank");
-                      setDropdownOpen(false);
-                    }}
-                    className="flex gap-2.5 py-1 items-center pl-3 pr-7"
-                  >
-                    <FiLinkedin size={22} />
-                    <span>Share to Linkedin</span>
-                  </a>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={async () => {
-                    const shortUrl = await shortenUrl(`${promptUrl}`);
-                    writeToClipboard(shortUrl);
-                    setDropdownOpen(false);
-                  }}
-                  className="rounded-md"
-                >
-                  <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
-                    <BsLink45Deg size={22} />
-                    <span>Copy link</span>
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        ) : null}
       </div>
     );
   }
