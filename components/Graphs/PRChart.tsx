@@ -76,7 +76,7 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
                 <h3 className="text-xs lg:text-sm !font-medium text-slate-500">Velocity</h3>
                 <p className="font-semibold text-xl lg:text-2xl xl:text-3xl">
                   {humanizeNumber(velocity)}
-                  <span className="text-lg text-slate-600">d</span>
+                  <span className="text-xl text-slate-500 pl-0.5">d</span>
                 </p>
               </div>
             </aside>
