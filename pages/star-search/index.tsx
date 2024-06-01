@@ -74,7 +74,7 @@ function ChatAvatar({ author, userId }: ChatAvatarProps) {
           alt="Your profile picture"
           width={32}
           height={32}
-          className="w-8 h-8 rounded-full lg:w-10 lg:h-10"
+          className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
         />
       );
     case "StarSearch":
@@ -172,7 +172,7 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
   }
 
   return (
-    <div className="w-full pt-2 lg:w-1/2" style={{ maxWidth: "440px" }}>
+    <div className="w-full lg:w-1/2 pt-2" style={{ maxWidth: "440px" }}>
       <Component {...widgetDefinition.arguments} />
     </div>
   );
@@ -477,7 +477,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
         return (
           <>
-            <div aria-live="polite" className="flex flex-col w-full max-w-xl mx-auto mb-4 lg:max-w-5xl lg:px-8">
+            <div aria-live="polite" className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4">
               <ScrollArea
                 className="flex grow"
                 asChild={true}
@@ -489,7 +489,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                       return (
                         <Fragment key={i}>
                           <Chatbox userId={userId} message={message} />
-                          <li className="flex items-center gap-2 my-4 w-max">
+                          <li className="flex gap-2 my-4 w-max items-center">
                             <ChatAvatar author="StarSearch" userId={userId} />
                             <StarSearchLoader />
                           </li>
@@ -505,7 +505,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
               <div className={clsx("text-slate-600 flex gap-4 items-center self-end", isRunning && "invisible")}>
                 <button
                   type="button"
-                  className="flex items-center gap-2 hover:text-sauced-orange"
+                  className="flex gap-2 items-center hover:text-sauced-orange"
                   onClick={() => {
                     setStarSearchState("initial");
                     setChat([]);
@@ -517,7 +517,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 <span className="flex gap-1">
                   <button
                     type="button"
-                    className="flex items-center gap-2 hover:text-sauced-orange"
+                    className="flex gap-2 items-center hover:text-sauced-orange"
                     onClick={() => {
                       registerFeedback("positive");
                     }}
@@ -527,7 +527,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                   </button>
                   <button
                     type="button"
-                    className="flex items-center gap-2 hover:text-sauced-orange"
+                    className="flex gap-2 items-center hover:text-sauced-orange"
                     onClick={() => {
                       registerFeedback("negative");
                     }}
@@ -554,7 +554,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       <ProfileLayout showFooter={false}>
         <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
-          <div className="sticky w-full bottom-2 md:bottom-4">
+          <div className="sticky bottom-2 md:bottom-4 w-full">
             {!isRunning &&
               (isMobile ? (
                 <Drawer
@@ -587,13 +587,13 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 </>
               ))}
             {!isMobile && showSuggestions && (
-              <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
+              <div className="relative flex flex-col gap-2 mb-4 w-fit mx-auto">
                 <button
                   onClick={() => {
                     setShowSuggestions(false);
                     inputRef.current?.focus();
                   }}
-                  className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
+                  className="absolute flex gap-2 w-fit self-end -right-5 -top-3"
                 >
                   <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
                 </button>
@@ -624,19 +624,19 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 ref={inputRef}
                 disabled={isRunning}
                 placeholder="Ask a question"
-                className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
+                className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
                 onClick={() => {
                   if (!bearerToken) {
                     setLoginModalOpen(true);
                   }
                 }}
               />
-              <button type="submit" disabled={isRunning} className="p-2 bg-white rounded-r-lg">
+              <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
                 <span className="sr-only">Submit your question to StarSearch</span>
-                <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
+                <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
               </button>
             </form>
-            <p className="py-2 text-sm text-center text-slate-400">
+            <p className="text-sm text-slate-400 text-center py-2">
               {isMobile ? (
                 <>StarSearch may generate incorrect responses</>
               ) : (
@@ -654,14 +654,14 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
 function Header() {
   return (
-    <div className="flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-col text-center items-center gap-2 lg:gap-4 lg:pt-8">
+      <div className="flex gap-2 items-center">
         <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
-        <h1 className="text-3xl font-bold text-transparent lg:text-4xl bg-clip-text bg-gradient-to-r from-sauced-orange to-amber-400">
+        <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
           StarSearch
         </h1>
       </div>
-      <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">Copilot, but for git history</h2>
+      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Copilot, but for git history</h2>
     </div>
   );
 }
@@ -682,7 +682,7 @@ function SuggestionBoxes({
           <CarouselItem key={i} className="items-stretch">
             <button onClick={() => addPromptInput(suggestion.prompt)} className="h-full mx-auto">
               <Card className="w-[30rem] shadow-md border-none mx-auto h-full text-start !p-6 text-slate-600">
-                <h3 className="text-sm font-semibold lg:text-base">{suggestion.title}</h3>
+                <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
                 <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
               </Card>
             </button>
@@ -694,7 +694,7 @@ function SuggestionBoxes({
       <CarouselNext />
     </Carousel>
   ) : (
-    <div className="grid w-full max-w-3xl grid-cols-1 gap-2 lg:grid-cols-2 place-content-center lg:gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 place-content-center gap-2 lg:gap-4 w-full max-w-3xl">
       {suggestions.map((suggestion, i) => (
         <button
           key={i}
@@ -703,7 +703,7 @@ function SuggestionBoxes({
           aria-describedby={`prompt-description-${i}`}
         >
           <Card className="w-full h-full shadow-md border-none text-start !p-6 text-slate-600">
-            <span id={`prompt-label-${i}`} className="text-sm font-semibold lg:text-base">
+            <span id={`prompt-label-${i}`} className="text-sm lg:text-base font-semibold">
               {suggestion.title}
             </span>
             <p id={`prompt-description-${i}`} className="text-xs lg:text-sm">
@@ -721,7 +721,7 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     return (
-      <li className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
+      <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
         <ChatAvatar author={message.author} userId={userId} />
         <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
           <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
@@ -731,7 +731,7 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
               a(props) {
                 if (typeof props.children === "string" && props.children.startsWith("@")) {
                   return (
-                    <span className="inline-flex items-baseline self-center gap-1">
+                    <span className="inline-flex gap-1 items-baseline self-center">
                       <span className="self-center">
                         <AvatarHoverCard
                           contributor={props.children.replace("@", "")}
@@ -747,7 +747,7 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
                 return <a {...props} />;
               },
             }}
-            className="prose break-words"
+            className="break-words prose"
           >
             {message.content}
           </Markdown>{" "}
@@ -765,7 +765,7 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
   // is still valuable.
   return (
     <Sentry.ErrorBoundary>
-      <li className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
+      <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
         <ChatAvatar author={message.author} userId={userId} />
         <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
           <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
