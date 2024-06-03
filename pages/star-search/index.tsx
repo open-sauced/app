@@ -127,9 +127,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } = await supabase.auth.getSession();
 
   const userId = Number(session?.user.user_metadata.sub);
+  const searchParams = new URLSearchParams();
+
+  if (context.query.prompt) {
+    searchParams.set("prompt", context.query.prompt as string);
+  }
 
   const ogImageUrl = `${new URL(
-    "/assets/og-images/star-search-og-image.png",
+    `/og-images/star-search/?${searchParams}`,
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
