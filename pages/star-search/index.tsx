@@ -264,6 +264,10 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
     }
   }
 
+  function openWindow(url: string) {
+    setTimeout(() => window.open(url, "_blank"));
+  }
+
   useEffect(() => {
     if (sharedPrompt && inputRef.current) {
       addPromptInput(sharedPrompt, false);
@@ -577,7 +581,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                     <ThumbsdownIcon size={16} />
                   </button>
                   {prompt && (
-                    <div className="flex gap-2 items-center hover:text-sauced-orange">
+                    <div className="flex gap-2 items-center pl-4 hover:text-sauced-orange">
                       <DropdownMenu open={dropdownOpen} modal={false}>
                         <DropdownMenuTrigger onClick={() => setDropdownOpen(!dropdownOpen)}>
                           <HiOutlineShare width={22} height={22} />
@@ -594,7 +598,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                                 const shortUrl = await shortenUrl(`${promptUrl}`);
                                 twitterParams.set("url", shortUrl);
                                 twitterUrl += `?${twitterParams.toString()}`;
-                                window.open(twitterUrl, "_blank");
+                                openWindow(twitterUrl);
                                 setDropdownOpen(false);
                               }}
                               className="flex gap-2.5 py-1 items-center pl-3 pr-7"
@@ -609,7 +613,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                                 const shortUrl = await shortenUrl(`${promptUrl}`);
                                 linkedinParams.set("url", shortUrl);
                                 linkedinUrl += `?${linkedinParams.toString()}`;
-                                window.open(linkedinUrl, "_blank");
+                                openWindow(linkedinUrl);
                                 setDropdownOpen(false);
                               }}
                               className="flex gap-2.5 py-1 items-center pl-3 pr-7"
