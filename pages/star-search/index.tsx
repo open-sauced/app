@@ -489,7 +489,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
     promptUrl = new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
 
-    twitterParams.set("text", `Here's my StarSearch prompt!\n\n"${prompt}"\n\nTry it out for yourself.`);
+    twitterParams.set("text", `Here's my StarSearch prompt!\n\nTry it out for yourself.`);
     twitterParams.set("url", promptUrl.toString());
 
     linkedinParams.set("url", `${promptUrl}`);
