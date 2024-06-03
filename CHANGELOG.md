@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.33.0-beta.3](https://github.com/open-sauced/app/compare/v2.33.0-beta.2...v2.33.0-beta.3) (2024-06-03)
+
+
+### 🐛 Bug Fixes
+
+* fix repo pages chart layouts for 'large' size ([#3503](https://github.com/open-sauced/app/issues/3503)) ([5d6b2d6](https://github.com/open-sauced/app/commit/5d6b2d6a961dac9fd961ddada08f9841681b71a4))
+
 ## [2.33.0-beta.2](https://github.com/open-sauced/app/compare/v2.33.0-beta.1...v2.33.0-beta.2) (2024-06-03)
 
 
