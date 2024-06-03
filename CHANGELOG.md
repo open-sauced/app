@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.33.0-beta.2](https://github.com/open-sauced/app/compare/v2.33.0-beta.1...v2.33.0-beta.2) (2024-06-03)
+
+
+### 🍕 Features
+
+* share prompt OG image for StarSearch ([#3499](https://github.com/open-sauced/app/issues/3499)) ([6e97673](https://github.com/open-sauced/app/commit/6e97673b258b1f5968845227c69451b2ba31e99e))
+
 ## [2.33.0-beta.1](https://github.com/open-sauced/app/compare/v2.32.1-beta.2...v2.33.0-beta.1) (2024-05-31)
 
 
