@@ -5,6 +5,23 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.33.0](https://github.com/open-sauced/app/compare/v2.32.0...v2.33.0) (2024-06-04)
+
+
+### 🍕 Features
+
+* convert /user/[username] routes to /u/[username] with redirects ([#3486](https://github.com/open-sauced/app/issues/3486)) ([975b673](https://github.com/open-sauced/app/commit/975b673d692a27170fc795adbbdf99ab3d033c1b))
+* share prompt OG image for StarSearch ([#3499](https://github.com/open-sauced/app/issues/3499)) ([6e97673](https://github.com/open-sauced/app/commit/6e97673b258b1f5968845227c69451b2ba31e99e))
+
+
+### 🐛 Bug Fixes
+
+* `LotteryFactorChart` loading state overflow ([#3497](https://github.com/open-sauced/app/issues/3497)) ([00426f8](https://github.com/open-sauced/app/commit/00426f8b24c77cfa26c0b57b82e00e583492d6a7))
+* center `/star-search` suggestions in medium view ([#3473](https://github.com/open-sauced/app/issues/3473)) ([f617ccd](https://github.com/open-sauced/app/commit/f617ccdc5c660b3736a3d8036f82e5e3d171d8b6))
+* fix repo pages chart layouts for 'large' size ([#3503](https://github.com/open-sauced/app/issues/3503)) ([5d6b2d6](https://github.com/open-sauced/app/commit/5d6b2d6a961dac9fd961ddada08f9841681b71a4))
+* redirect to 404 if user not found ([#3492](https://github.com/open-sauced/app/issues/3492)) ([6522eeb](https://github.com/open-sauced/app/commit/6522eeb2c0f839c035df19391aa7f75d656629e4))
+* Use the "repos" query param in top-project-contributions-by-contributor ([#3510](https://github.com/open-sauced/app/issues/3510)) ([dc2a281](https://github.com/open-sauced/app/commit/dc2a281148f7642cd69171ce4efdb2f764025aac))
+
 ## [2.33.0-beta.4](https://github.com/open-sauced/app/compare/v2.33.0-beta.3...v2.33.0-beta.4) (2024-06-04)
 
 
