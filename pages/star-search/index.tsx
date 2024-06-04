@@ -220,6 +220,7 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
   const [twitterShareUrl, setTwitterShareUrl] = useState<string | undefined>();
   const [linkedInShareUrl, setLinkedInShareUrl] = useState<string | undefined>();
   const promptMessage = chat[0]?.content as string | undefined; // First message is always the prompt
+  const [checkAuth, setCheckAuth] = useState(true);
 
   useEffect(() => {
     if (!promptMessage) {
@@ -278,7 +279,7 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
     toast({ description: "Thank you for your feedback!", variant: "success" });
   }
 
-  function addPromptInput(prompt: string, checkAuth = true) {
+  function addPromptInput(prompt: string) {
     if (checkAuth && !bearerToken) {
       setLoginModalOpen(true);
       return;
@@ -303,11 +304,19 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
   }
 
   useEffect(() => {
-    if (sharedPrompt && inputRef.current) {
-      addPromptInput(sharedPrompt, false);
+    if (!sharedPrompt || ranOnce) {
+      return;
+    }
+
+    if (checkAuth) {
+      setCheckAuth(false);
+    }
+
+    if (inputRef.current && !checkAuth) {
+      addPromptInput(sharedPrompt);
       setShowSuggestions(false);
     }
-  }, [sharedPrompt, inputRef.current]);
+  }, [sharedPrompt, inputRef.current, checkAuth]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -331,6 +340,7 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
       setStarSearchState("chat");
     }
     setIsRunning(true); // disables input
+    setCheckAuth(true);
 
     // add user prompt to history
     setChat((history) => {
@@ -746,7 +756,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 placeholder="Ask a question"
                 className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
                 onClick={() => {
-                  if (!bearerToken && !sharedPrompt) {
+                  if (checkAuth || (!bearerToken && !sharedPrompt)) {
                     setLoginModalOpen(true);
                   }
                 }}
