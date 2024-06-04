@@ -291,12 +291,14 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
     inputRef.current.value = prompt;
     const { form } = inputRef.current;
 
-    if (bearerToken) {
-      if (typeof form.requestSubmit === "function") {
-        form.requestSubmit();
-      } else {
-        form.dispatchEvent(new Event("submit", { cancelable: true }));
-      }
+    if (!checkAuth || bearerToken) {
+      setTimeout(() => {
+        if (typeof form.requestSubmit === "function") {
+          form.requestSubmit();
+        } else {
+          form.dispatchEvent(new Event("submit", { cancelable: true }));
+        }
+      });
     }
   }
 
