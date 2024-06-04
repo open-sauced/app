@@ -52,7 +52,7 @@ export const PrStateAuthorIcon = ({
 
   return (
     <div className="relative w-max">
-      <Link href={`/user/${author}`} title={`User profile for ${author}`}>
+      <Link href={`/u/${author}`} title={`User profile for ${author}`}>
         <Avatar contributor={author} size="medium" />
       </Link>
       <div

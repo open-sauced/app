@@ -49,7 +49,7 @@ export default function DevCard(props: DevCardProps) {
     }
   }, [props.isInteractive, props.isFlipped]);
 
-  const profileHref = `/user/${props.username}`;
+  const profileHref = `/u/${props.username}`;
 
   function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     if (!isInteractive) {

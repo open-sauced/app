@@ -148,7 +148,7 @@ const Notifications: WithPageLayout = () => {
             <div className="flex flex-col gap-2 mb-10">
               {notifications?.map((notification) => (
                 <div className="p-2 border bg-light-slate-2 rounded-lg flex items-center gap-4" key={notification.id}>
-                  <Link href={`/user/${notification.from_user.login}`}>
+                  <Link href={`/u/${notification.from_user.login}`}>
                     <Avatar
                       initialsClassName="text-8xl leading-none"
                       initials={notification.meta_id.charAt(0)}

@@ -5,15 +5,55 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.33.0-beta.4](https://github.com/open-sauced/app/compare/v2.33.0-beta.3...v2.33.0-beta.4) (2024-06-04)
+
+
+### 🐛 Bug Fixes
+
+* Use the "repos" query param in top-project-contributions-by-contributor ([#3510](https://github.com/open-sauced/app/issues/3510)) ([dc2a281](https://github.com/open-sauced/app/commit/dc2a281148f7642cd69171ce4efdb2f764025aac))
+
+## [2.33.0-beta.3](https://github.com/open-sauced/app/compare/v2.33.0-beta.2...v2.33.0-beta.3) (2024-06-03)
+
+
+### 🐛 Bug Fixes
+
+* fix repo pages chart layouts for 'large' size ([#3503](https://github.com/open-sauced/app/issues/3503)) ([5d6b2d6](https://github.com/open-sauced/app/commit/5d6b2d6a961dac9fd961ddada08f9841681b71a4))
+
+## [2.33.0-beta.2](https://github.com/open-sauced/app/compare/v2.33.0-beta.1...v2.33.0-beta.2) (2024-06-03)
+
+
+### 🍕 Features
+
+* share prompt OG image for StarSearch ([#3499](https://github.com/open-sauced/app/issues/3499)) ([6e97673](https://github.com/open-sauced/app/commit/6e97673b258b1f5968845227c69451b2ba31e99e))
+
+## [2.33.0-beta.1](https://github.com/open-sauced/app/compare/v2.32.1-beta.2...v2.33.0-beta.1) (2024-05-31)
+
+
+### 🍕 Features
+
+* convert /user/[username] routes to /u/[username] with redirects ([#3486](https://github.com/open-sauced/app/issues/3486)) ([975b673](https://github.com/open-sauced/app/commit/975b673d692a27170fc795adbbdf99ab3d033c1b))
+
+## [2.32.1-beta.2](https://github.com/open-sauced/app/compare/v2.32.1-beta.1...v2.32.1-beta.2) (2024-05-29)
+
+
+### 🐛 Bug Fixes
+
+* `LotteryFactorChart` loading state overflow ([#3497](https://github.com/open-sauced/app/issues/3497)) ([00426f8](https://github.com/open-sauced/app/commit/00426f8b24c77cfa26c0b57b82e00e583492d6a7))
+* redirect to 404 if user not found ([#3492](https://github.com/open-sauced/app/issues/3492)) ([6522eeb](https://github.com/open-sauced/app/commit/6522eeb2c0f839c035df19391aa7f75d656629e4))
+
+## [2.32.1-beta.1](https://github.com/open-sauced/app/compare/v2.32.0...v2.32.1-beta.1) (2024-05-29)
+
+
+### 🐛 Bug Fixes
+
+* center `/star-search` suggestions in medium view ([#3473](https://github.com/open-sauced/app/issues/3473)) ([f617ccd](https://github.com/open-sauced/app/commit/f617ccdc5c660b3736a3d8036f82e5e3d171d8b6))
+
 ## [2.32.0](https://github.com/open-sauced/app/compare/v2.31.0...v2.32.0) (2024-05-28)
 
 
 ### 🐛 Bug Fixes
 
 * added more padding between footer and highlights ([#3483](https://github.com/open-sauced/app/issues/3483)) ([352cde5](https://github.com/open-sauced/app/commit/352cde5600514f09a23934d214cfa86d77b7e29d))
-* now if a dynamic widget errors out, StarSearch continues to work ([#3474](https://github.com/open-sauced/app/issues/3474)) ([f840d6b](https://github.com/open-sauced/app/commit/f840d6b4fbcf5f81d2dacb42099b221bfff6d0c9))
-* now search input is no longer squised on non-macOS devices ([#3487](https://github.com/open-sauced/app/issues/3487)) ([15d70ce](https://github.com/open-sauced/app/commit/15d70ce4f158f75bea167daf8b3dbbda50e37b89))
-* now StarSearch suggestion boxes have uniform widths ([#3471](https://github.com/open-sauced/app/issues/3471)) ([1302d33](https://github.com/open-sauced/app/commit/1302d3368d0bc2e32ff88b067e6f233baaedf90c))
 * now the outline button shows button text when disabled ([#3485](https://github.com/open-sauced/app/issues/3485)) ([cb8bd3a](https://github.com/open-sauced/app/commit/cb8bd3ac4defb0f71dc772ffa2ce31dfc217d585))
 * **search:** only show one not found message ([#3477](https://github.com/open-sauced/app/issues/3477)) ([7714523](https://github.com/open-sauced/app/commit/7714523271d72a75c520ac3ae0a936fb7f0f07b7))
 * update feed highlight to StarSearch ([#3489](https://github.com/open-sauced/app/issues/3489)) ([c99921a](https://github.com/open-sauced/app/commit/c99921ad9d404dd5a6351b02175e4c213c7d9122))
@@ -25,7 +65,6 @@
 * Updates error copy StarSearch ([#3494](https://github.com/open-sauced/app/issues/3494)) ([735c8c6](https://github.com/open-sauced/app/commit/735c8c6257253048ec3de10bbc6b34af5dd95b25))
 
 ## [2.32.0-beta.8](https://github.com/open-sauced/app/compare/v2.32.0-beta.7...v2.32.0-beta.8) (2024-05-28)
-
 
 ### 🍕 Features
 
