@@ -532,8 +532,12 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       case "initial":
         return (
           <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
-            <Header />
-            {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
+            {sharedPrompt && !ranOnce ? null : (
+              <>
+                <Header />
+                {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
+              </>
+            )}
           </div>
         );
       case "chat":
