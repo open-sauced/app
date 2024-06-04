@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.33.0-beta.4](https://github.com/open-sauced/app/compare/v2.33.0-beta.3...v2.33.0-beta.4) (2024-06-04)
+
+
+### 🐛 Bug Fixes
+
+* Use the "repos" query param in top-project-contributions-by-contributor ([#3510](https://github.com/open-sauced/app/issues/3510)) ([dc2a281](https://github.com/open-sauced/app/commit/dc2a281148f7642cd69171ce4efdb2f764025aac))
+
 ## [2.33.0-beta.3](https://github.com/open-sauced/app/compare/v2.33.0-beta.2...v2.33.0-beta.3) (2024-06-03)
 
 
