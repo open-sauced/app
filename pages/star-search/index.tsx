@@ -236,7 +236,7 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
     setTimeout(async () => {
       const shortUrl = await shortenUrl(`${promptUrl}`);
 
-      twitterParams.set("text", `Here's my StarSearch prompt!\n\nTry it out for yourself.`);
+      twitterParams.set("text", `Here's my StarSearch prompt!\n\nTry it out for yourself. #StarSearch`);
       twitterParams.set("url", shortUrl);
       twitterUrl += `?${twitterParams.toString()}`;
       setTwitterShareUrl(twitterUrl);
@@ -828,25 +828,30 @@ function SuggestionBoxes({
       <CarouselNext />
     </Carousel>
   ) : (
-    <div className="grid w-full max-w-3xl grid-cols-1 gap-2 lg:grid-cols-2 place-content-center lg:gap-4">
+    <ul
+      aria-label="suggested prompts"
+      className="grid w-full max-w-3xl grid-cols-1 gap-2 lg:grid-cols-2 place-content-center lg:gap-4"
+    >
       {suggestions.map((suggestion, i) => (
-        <button
-          key={i}
-          onClick={() => addPromptInput(suggestion.prompt)}
-          aria-labelledby={`prompt-label-${i}`}
-          aria-describedby={`prompt-description-${i}`}
-        >
-          <Card className="w-full h-full shadow-md border-none text-start !p-6 text-slate-600">
-            <span id={`prompt-label-${i}`} className="text-sm font-semibold lg:text-base">
-              {suggestion.title}
-            </span>
-            <p id={`prompt-description-${i}`} className="text-xs lg:text-sm">
-              {suggestion.prompt}
-            </p>
-          </Card>
-        </button>
+        <li key={i}>
+          <button
+            onClick={() => addPromptInput(suggestion.prompt)}
+            aria-labelledby={`prompt-label-${i}`}
+            aria-describedby={`prompt-description-${i}`}
+            className="w-full h-full"
+          >
+            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
+              <span id={`prompt-label-${i}`} className="text-sm font-semibold lg:text-base">
+                {suggestion.title}
+              </span>
+              <p id={`prompt-description-${i}`} className="text-xs lg:text-sm">
+                {suggestion.prompt}
+              </p>
+            </Card>
+          </button>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 
