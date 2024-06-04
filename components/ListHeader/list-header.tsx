@@ -22,6 +22,7 @@ interface ListHeaderProps {
   isOwner: boolean;
   numberOfContributors: number;
   owners?: string[];
+  overLimit?: boolean;
 }
 
 const ListHeader = ({
@@ -32,6 +33,7 @@ const ListHeader = ({
   isOwner,
   numberOfContributors,
   owners,
+  overLimit,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -78,7 +80,7 @@ const ListHeader = ({
         <Button onClick={() => handleCopyToClipboard()} className="px-6 py-2 bg-white " variant="text">
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
-        {isOwner && (
+        {isOwner && !overLimit && (
           <Link
             href={
               workspaceId ? `/workspaces/${workspaceId}/contributor-insights/${listId}/edit` : `/lists/${listId}/edit`
