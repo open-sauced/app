@@ -143,7 +143,17 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
         <div className="grid sm:flex gap-4 pt-3 border-b">
           <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
           <div className="flex justify-end items-center gap-4">
-            <Button variant="outline" onClick={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (overLimit) {
+                  setIsInsightUpgradeModalOpen(true);
+                  return;
+                }
+
+                router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
+              }}
+            >
               Add repositories
             </Button>
             <DayRangePicker />
@@ -181,7 +191,16 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
               </>
             ) : (
               <Card className="bg-transparent">
-                <EmptyState onAddRepos={() => router.push(`/workspaces/${workspace.id}/settings#load-wizard`)} />
+                <EmptyState
+                  onAddRepos={() => {
+                    if (overLimit) {
+                      setIsInsightUpgradeModalOpen(true);
+                      return;
+                    }
+
+                    router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
+                  }}
+                />
               </Card>
             )}
           </ClientOnly>

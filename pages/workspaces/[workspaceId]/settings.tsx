@@ -41,6 +41,7 @@ const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightU
 interface WorkspaceSettingsProps {
   workspace: Workspace;
   canDeleteWorkspace: boolean;
+  overLimit: boolean;
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -84,12 +85,13 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   return {
     props: {
       workspace: data,
+      overLimit: !!data.exceeds_upgrade_limits,
       canDeleteWorkspace: sessionData && workspaceId !== sessionData.personal_workspace_id,
     },
   };
 };
 
-const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsProps) => {
+const WorkspaceSettings = ({ workspace, canDeleteWorkspace, overLimit }: WorkspaceSettingsProps) => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -259,6 +261,11 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           isLoading={isLoading}
           repositories={pendingTrackedRepos}
           onAddRepos={() => {
+            if (overLimit) {
+              setIsWorkspaceUpgradeModalOpen(true);
+              return;
+            }
+
             setTrackedReposModalOpen(true);
           }}
           onRemoveTrackedRepo={(event) => {
@@ -282,7 +289,14 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
 
         <ClientOnly>
           <WorkspaceMembersConfig
-            onAddMember={async (username) => await addMember(workspace.id, sessionToken, username)}
+            onAddMember={async (username) => {
+              if (overLimit) {
+                setIsWorkspaceUpgradeModalOpen(true);
+                return null;
+              }
+
+              return await addMember(workspace.id, sessionToken, username);
+            }}
             onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
             onDeleteMember={async (memberId) => await deleteMember(workspace.id, sessionToken, memberId)}
             members={workspaceMembers}
@@ -418,7 +432,7 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
         ) : null}
 
         <InsightUpgradeModal
-          variant="workspace"
+          variant="all"
           workspaceId={workspace.id}
           isOpen={isWorkspaceUpgradeModalOpen}
           onClose={() => setIsWorkspaceUpgradeModalOpen(false)}

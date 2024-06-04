@@ -16,10 +16,12 @@ const HubPageLayout = ({
   page = "dashboard",
   owners,
   children,
+  overLimit,
 }: {
   page?: string;
   owners?: string[];
   children: React.ReactNode;
+  overLimit?: boolean;
 }) => {
   const router = useRouter();
   const { userId } = useSupabaseAuth();
@@ -65,7 +67,7 @@ const HubPageLayout = ({
                 insight={insight}
                 repositories={repositories}
                 insightId={id}
-                canEdit={canEdit}
+                canEdit={canEdit && !overLimit}
                 workspaceId={workspaceId}
                 owners={owners}
               />

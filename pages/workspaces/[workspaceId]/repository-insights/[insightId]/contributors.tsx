@@ -61,12 +61,12 @@ const HubPage = ({ insight, ogImage, workspaceId, owners, isOwner }: InsightPage
           ) : null
         }
       >
-        <HubPageLayout page="contributors" owners={owners}>
+        <HubPageLayout page="contributors" owners={owners} overLimit={showBanner}>
           <Contributors repositories={repositories} title={insight.name} />
         </HubPageLayout>
         <InsightUpgradeModal
           workspaceId={workspaceId}
-          variant="repositories"
+          variant="all"
           isOpen={isInsightUpgradeModalOpen}
           onClose={() => setIsInsightUpgradeModalOpen(false)}
           overLimit={repositories.length}
