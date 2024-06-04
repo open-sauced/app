@@ -10,6 +10,15 @@
 
 body {
   @apply font-normal;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   background-color: #f8f9fa;
   @apply text-light-slate-12;
 }
