@@ -67,9 +67,10 @@ const HubPageLayout = ({
                 insight={insight}
                 repositories={repositories}
                 insightId={id}
-                canEdit={canEdit && !overLimit}
+                canEdit={canEdit}
                 workspaceId={workspaceId}
                 owners={owners}
+                overLimit={overLimit}
               />
             </ClientOnly>
           )}
