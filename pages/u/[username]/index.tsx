@@ -38,8 +38,15 @@ import Title from "components/atoms/Typography/title";
 import { LanguagePill } from "components/shared/LanguagePill/LanguagePill";
 import Badge from "components/atoms/Badge/badge";
 import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
-import { getFormattedDate } from "lib/utils/date-utils";
+import { getFormattedDate, getRelativeDays } from "lib/utils/date-utils";
 import { InterestType } from "lib/utils/getInterestOptions";
+import Text from "components/atoms/Typography/text";
+import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
+import Pill from "components/atoms/Pill/pill";
+import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
+import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
+import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
+import ContributorProfileTab from "components/organisms/ContributorProfileTab/contributor-profile-tab";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { username } = (context.params as { username: string }) ?? { username: "" };
@@ -105,6 +112,7 @@ export default function UserPage({ user }: { user: DbUser }) {
       {hasMounted && (
         <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
           <div className="w-full ">
+            {/* HEADER SECTION */}
             <UserPageHeader
               user={user}
               avatar={githubAvatar}
@@ -115,6 +123,7 @@ export default function UserPage({ user }: { user: DbUser }) {
             />
 
             <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
+              {/* INFO SECTION */}
               <div className="flex flex-col lg:gap-4 md:gap-2 lg:w-80 md:w-full">
                 <div className="flex flex-col gap-6">
                   <div className="pb-6 border-b">
@@ -264,14 +273,13 @@ export default function UserPage({ user }: { user: DbUser }) {
                 </div>
               </div>
               <div className="flex-1 mt-10 lg:mt-0">
-                {/**
-                {!!user ? (
+                {user ? (
                   <ContributorProfileTab
                     repoList={repoList}
                     recentContributionCount={recentContributionCount}
                     prVelocity={prVelocity}
                     totalPrs={totalPrs}
-                    user?.login={githubName}
+                    githubName={githubName}
                     prMerged={prMerged}
                     contributor={user}
                     prTotal={prTotal}
@@ -279,81 +287,8 @@ export default function UserPage({ user }: { user: DbUser }) {
                     range={range}
                   />
                 ) : (
-                  <>
-                    <div>
-                      <Title className="!text-light-slate-12 !text-xl" level={4}>
-                        Contribution Insights
-                      </Title>
-                    </div>
-                    <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
-                      <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
-                        <div>
-                          <span className="text-xs text-light-slate-11">PRs opened</span>
-                          {totalPrs >= 0 ? (
-                            <div className="flex mt-1 lg:justify-center md:pr-8">
-                              <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
-                                {totalPrs} PRs
-                              </Text>
-                            </div>
-                          ) : (
-                            <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
-                          )}
-                        </div>
-                        <div>
-                          <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
-                          {prVelocity ? (
-                            <div className="flex items-center gap-2 lg:justify-center">
-                              <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
-                                {getRelativeDays(prVelocity)}
-                              </Text>
-
-                              <Pill color="purple" text={`${prsMergedPercentage}%`} />
-                            </div>
-                          ) : (
-                            <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
-                          )}
-                        </div>
-                        <div>
-                          <span className="text-xs text-light-slate-11">Contributed Repos</span>
-                          {recentContributionCount >= 0 ? (
-                            <div className="flex mt-1 lg:justify-center">
-                              <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
-                                {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
-                              </Text>
-                            </div>
-                          ) : (
-                            <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="h-32 mt-10">
-                        <CardLineChart
-                          repoIds={repositories}
-                          contributor={user?.login}
-                          range={Number(range)}
-                          className="!h-32"
-                        />
-                      </div>
-                      <div>
-                        <CardRepoList limit={7} repoList={repoList} total={repoList.length} />
-                      </div>
-
-                      <div className="mt-6">
-                        <PullRequestTable
-                          limit={15}
-                          contributor={user?.login}
-                          topic={"*"}
-                          repositories={undefined}
-                          range={range}
-                        />
-                      </div>
-                      <div className="mt-8 text-sm text-light-slate-9">
-                        <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
-                      </div>
-                    </div>
-                  </>
+                  <UserNotConnectedTabs />
                 )}
-                **/}
               </div>
             </div>
           </div>
@@ -486,10 +421,6 @@ function UserPageHeader({ user, avatar, isOwner, posthog, currentPath, toast }: 
   );
 }
 
-function UserPageInfo() {
-  return <></>;
-}
-
 function UserHighlightsTab() {
   return <></>;
 }
@@ -569,6 +500,77 @@ function UserLanguageChart({ contributorLanguages }: { contributorLanguages: Lan
   );
 }
 
+type UserNotConnectedTabsProps = {
+  totalPrs: number;
+  prVelocity: number;
+};
+
+function UserNotConnectedTabs() {
+  return (
+    <>
+      <div>
+        <Title className="!text-light-slate-12 !text-xl" level={4}>
+          Contribution Insights
+        </Title>
+      </div>
+      <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
+        <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
+          <div>
+            <span className="text-xs text-light-slate-11">PRs opened</span>
+            {totalPrs >= 0 ? (
+              <div className="flex mt-1 lg:justify-center md:pr-8">
+                <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{totalPrs} PRs</Text>
+              </div>
+            ) : (
+              <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+            )}
+          </div>
+          <div>
+            <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
+            {prVelocity ? (
+              <div className="flex items-center gap-2 lg:justify-center">
+                <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                  {getRelativeDays(prVelocity)}
+                </Text>
+
+                <Pill color="purple" text={`${prsMergedPercentage}%`} />
+              </div>
+            ) : (
+              <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+            )}
+          </div>
+          <div>
+            <span className="text-xs text-light-slate-11">Contributed Repos</span>
+            {recentContributionCount >= 0 ? (
+              <div className="flex mt-1 lg:justify-center">
+                <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                  {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
+                </Text>
+              </div>
+            ) : (
+              <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+            )}
+          </div>
+        </div>
+        <div className="h-32 mt-10">
+          <CardLineChart contributor={user?.login} range={Number(range)} className="!h-32" />
+        </div>
+        <div>
+          <CardRepoList limit={7} repoList={repoList} total={repoList.length} />
+        </div>
+
+        <div className="mt-6">
+          <PullRequestTable limit={15} contributor={user?.login} topic={"*"} repositories={undefined} range={range} />
+        </div>
+        <div className="mt-8 text-sm text-light-slate-9">
+          <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// TODO
 function AddToListDropdown({ username }: { username: string }) {
   return <></>;
 }
