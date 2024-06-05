@@ -4,6 +4,10 @@ import config from "../playwright.config";
 test("StarSearch (Logged Out Experience)", async ({ page }) => {
   await page.goto("/star-search");
 
+  expect(await page.getByRole("list", { name: "suggested prompts" })).toBeVisible();
+  expect(await page.getByRole("heading", { name: "StarSearch" })).toBeVisible();
+  expect(await page.getByRole("heading", { name: "Copilot, but for git history" })).toBeVisible();
+
   // Ensure all suggestions are present
   const firstSuggestsion = await page.getByRole("button", {
     name: "Get information on contributor activity",
@@ -83,11 +87,38 @@ test("StarSearch OG image should exist", async ({ page }) => {
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
 });
 
-test("StarSearch OG image should exist for shared prompt", async ({ page }) => {
+test("StarSearch shared prompt", async ({ page }) => {
   await page.goto(
     "/star-search/?prompt=Show%20me%20the%20lottery%20factor%20for%20contributors%20in%20the%20remix-run/react-router%20project"
   );
 
+  expect(await page.getByRole("list", { name: "suggested prompts" })).not.toBeVisible();
+  expect(await page.getByRole("heading", { name: "StarSearch" })).not.toBeVisible();
+  expect(await page.getByRole("heading", { name: "Copilot, but for git history" })).not.toBeVisible();
+
+  const loginDialog = await page.getByRole("dialog", { name: "Login to try StarSearch", exact: true });
+  expect(loginDialog).toBeHidden();
+
+  const promptInput = await page.getByRole("textbox", { name: "Ask a question", exact: true });
+  expect(promptInput).toBeVisible();
+  expect(promptInput).toBeDisabled();
+
+  // get an element with role feed and name "StarSearch conversation" and check that it exists.
+  const feed = await page.getByRole("feed", { name: "StarSearch conversation" });
+  expect(feed).toBeVisible();
+  expect(feed).toHaveAttribute("aria-busy", "true");
+
+  const firstArticle = await feed.locator("article").first();
+  expect(await firstArticle.getByRole("heading", { name: "You" })).toBeVisible();
+  expect(await firstArticle.getByLabel("chat message")).toHaveText(
+    "Show me the lottery factor for contributors in the remix-run/react-router project"
+  );
+
+  expect(await feed.getByRole("progressbar", { name: "Loading..." })).toBeVisible();
+
+  // TODO: See if we can test the completion of the response since we don't want to add artificial delays.
+
+  // check for OG image
   const expectedUrl = `${config.use?.baseURL}/og-images/star-search/?prompt=Show+me+the+lottery+factor+for+contributors+in+the+remix-run%2Freact-router+project`;
 
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", expectedUrl);

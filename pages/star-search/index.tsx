@@ -556,29 +556,29 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
         return (
           <>
-            <div aria-live="polite" className="flex flex-col w-full max-w-xl mx-auto mb-4 lg:max-w-5xl lg:px-8">
+            <div className="flex flex-col w-full max-w-xl mx-auto mb-4 lg:max-w-5xl lg:px-8">
               <ScrollArea
                 className="flex grow"
                 asChild={true}
                 style={{ maxHeight: `calc(100vh - ${heightToRemove}px)` }}
               >
-                <ul>
+                <section role="feed" aria-label="StarSearch conversation" aria-busy={isRunning} aria-setsize={-1}>
                   {chatMessagesToProcess.map((message, i, messages) => {
                     if (loaderIndex === i && isRunning && messages.length - 1 === i) {
                       return (
                         <Fragment key={i}>
                           <Chatbox userId={userId} message={message} />
-                          <li className="flex items-center gap-2 my-4 w-max">
+                          <div className="flex items-center gap-2 my-4 w-max">
                             <ChatAvatar author="StarSearch" userId={userId} />
                             <StarSearchLoader />
-                          </li>
+                          </div>
                         </Fragment>
                       );
                     } else {
                       return <Chatbox key={i} userId={userId} message={message} />;
                     }
                   })}
-                </ul>
+                </section>
                 <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("text-slate-600 flex gap-4 items-center self-end", isRunning && "invisible")}>
@@ -860,11 +860,14 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     return (
-      <div>
-        <li className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
-          <ChatAvatar author={message.author} userId={userId} />
-          <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
-            <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
+      <div className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
+        <ChatAvatar author={message.author} userId={userId} />
+        <Card
+          className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline"
+          focusable
+        >
+          <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
+          <div aria-label="chat message">
             <Markdown
               remarkPlugins={[remarkGfm]}
               components={{
@@ -890,9 +893,9 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
               className="prose break-words"
             >
               {message.content}
-            </Markdown>{" "}
-          </Card>
-        </li>
+            </Markdown>
+          </div>
+        </Card>
       </div>
     );
   }
