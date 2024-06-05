@@ -7,7 +7,7 @@ interface CardProps {
   focusable?: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ className, children, heading, focusable = false }) => {
+const Card = ({ className, children, heading, focusable = false }: CardProps) => {
   return (
     <article
       className={`${className ? className : ""} block ${heading ? "" : "p-3"} bg-white border rounded-lg shadow-xs`}
