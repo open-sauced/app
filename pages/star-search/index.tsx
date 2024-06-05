@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 
 import Image from "next/image";
 import Markdown from "react-markdown";
@@ -29,6 +29,7 @@ import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import useSession from "lib/hooks/useSession";
 
 export interface WidgetDefinition {
   name: string;
@@ -178,7 +179,7 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
   );
 }
 
-export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPageProps) {
+export default function StarSearchPage({ userId: initialUserId, ogImageUrl }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -189,7 +190,9 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
+  const { session } = useSession(true);
   const { sessionToken: bearerToken } = useSupabaseAuth();
+  const userId = useMemo(() => (session ? session.id : initialUserId), [session]);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   function registerPrompt(promptInput: StarSearchPromptAnalytic) {
