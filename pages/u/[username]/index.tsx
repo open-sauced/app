@@ -1,13 +1,12 @@
 import { GetServerSidePropsContext } from "next";
-import Head from "next/head";
-import { jsonLdScriptProps } from "react-schemaorg";
-import { Person } from "schema-dts";
-
 import { useRouter } from "next/router";
-import ProfileLayout from "layouts/profile";
+import Image from "next/image";
+import Link from "next/link";
+import { FiCopy } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { PostHog } from "posthog-js";
+import { usePostHog } from "posthog-js/react";
 import SEO from "layouts/SEO/SEO";
-
-import { WithPageLayout } from "interfaces/with-page-layout";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import useRepoList from "lib/hooks/useRepoList";
@@ -15,99 +14,25 @@ import { getAvatarByUsername } from "lib/utils/github";
 import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
 import { useHasMounted } from "lib/hooks/useHasMounted";
-import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 import { isValidUrlSlug } from "lib/utils/url-validators";
+import useSession from "lib/hooks/useSession";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
-// A quick fix to the hydration issue. Should be replaced with a real solution.
-// Slows down the page's initial client rendering as the component won't be loaded on the server.
-export type ContributorSSRProps = {
-  username: string;
-  user?: DbUser;
-  ogImage: string;
-};
+import rainbowCover from "img/rainbow-cover.png";
+import pizzaGradient from "img/icons/pizza-gradient.svg";
+import Avatar from "components/atoms/Avatar/avatar";
+import Tooltip from "components/atoms/Tooltip/tooltip";
+import { cardPageUrl } from "lib/utils/urls";
+import Button from "components/shared/Button/button";
+import colors from "lib/utils/color.json";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { AllSimpleColors, LanguageObject } from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { shortenUrl } from "lib/utils/shorten-url";
+import { useToast } from "lib/hooks/useToast";
 
-const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
-  const router = useRouter();
-  const range = (router.query.range as string) ?? "30";
-  const hasMounted = useHasMounted();
-
-  const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
-    contributor: username,
-    topic: "*",
-    repoIds: [],
-    limit: 50,
-    range: range,
-  });
-  const isError = !user;
-  const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.repo_name))).join(","));
-  const mergedPrs = contributorPRData.filter((prData) => prData.pr_is_merged);
-  const contributorLanguageList = useContributorLanguages(username);
-  const githubAvatar = getAvatarByUsername(username, 300);
-  const prVelocity = getContributorPullRequestVelocity(contributorPRData);
-
-  if (!hasMounted) {
-    return (
-      <SEO
-        title={`${username} | OpenSauced`}
-        description={`${user?.bio || `${username} has connected their GitHub but has not added a bio.`}`}
-        image={ogImage}
-        twitterCard="summary_large_image"
-      />
-    );
-  }
-
-  return (
-    <>
-      <SEO
-        title={`${username} | OpenSauced`}
-        description={`${user?.bio || `${username} has connected their GitHub but has not added a bio.`}`}
-        image={ogImage}
-        twitterCard="summary_large_image"
-      />
-
-      <Head>
-        {user && (
-          <script
-            {...jsonLdScriptProps<Person>({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: username,
-              url: `https://www.github.com/${user.login}`,
-              image: githubAvatar,
-              sameAs: user.twitter_username ? `https://twitter.com/${user.twitter_username}` : undefined,
-              description: user.bio ?? undefined,
-              email: user.display_email ? user.email : undefined,
-              knowsAbout: contributorLanguageList.map((cll) => cll.languageName),
-              worksFor: user.company ?? undefined,
-            })}
-          />
-        )}
-      </Head>
-      <div className="w-full">
-        <ContributorProfilePage
-          prMerged={mergedPrs.length}
-          error={isError}
-          loading={false}
-          user={user}
-          langList={contributorLanguageList}
-          githubName={username}
-          githubAvatar={githubAvatar}
-          prTotal={contributorPRMeta.itemCount}
-          recentContributionCount={repoList.length}
-          prFirstOpenedDate={user?.first_opened_pr_at}
-          prVelocity={prVelocity}
-          range={range}
-        />
-      </div>
-    </>
-  );
-};
-
-Contributor.PageLayout = ProfileLayout;
-export default Contributor;
-
-export const getServerSideProps = async (context: UserSSRPropsContext) => {
-  const { username } = context.params ?? { username: "" };
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const { username } = (context.params as { username: string }) ?? { username: "" };
 
   if (!isValidUrlSlug(username)) {
     return { notFound: true };
@@ -124,11 +49,370 @@ export const getServerSideProps = async (context: UserSSRPropsContext) => {
   }
 
   const userData = (await req.json()) as DbUser;
-  const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/users/${username}`;
 
   return {
-    props: { username, user: userData, ogImage },
+    props: { user: userData },
   };
 };
 
-export type UserSSRPropsContext = GetServerSidePropsContext<{ username: string }>;
+export default function UserPage({ user }: { user: DbUser }) {
+  const router = useRouter();
+  const currentPath = router.asPath;
+  const posthog = usePostHog();
+  const { toast } = useToast();
+  const hasMounted = useHasMounted();
+  const range = (router.query.range as string) ?? "30";
+  const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/users/${user.login}`;
+
+  const username = user.login;
+  const { session } = useSession(true);
+  const { user: loggedInUser } = useSupabaseAuth();
+  const isOwner = user?.login === loggedInUser?.user_metadata.user_name;
+
+  const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
+    contributor: username,
+    topic: "*",
+    repoIds: [],
+    limit: 50,
+    range: range,
+  });
+  const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.repo_name))).join(","));
+  const prVelocity = getContributorPullRequestVelocity(contributorPRData);
+
+  const mergedPrs = contributorPRData.filter((prData) => prData.pr_is_merged);
+  const contributorLanguages = useContributorLanguages(username);
+  const githubAvatar = getAvatarByUsername(username, 300);
+
+  return (
+    <>
+      <SEO
+        title={`${username} | OpenSauced`}
+        description={`${user?.bio || `${username} has connected their GitHub but has not added a bio.`}`}
+        image={ogImage}
+        twitterCard="summary_large_image"
+      />
+      {hasMounted && (
+        <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
+          <div className="w-full ">
+            {/* TODO */}
+            <UserPageHeader user={user} avatar={githubAvatar} posthog={posthog} toast={toast} />
+
+            <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
+              <div className="flex flex-col lg:gap-4 md:gap-2 lg:w-80 md:w-full">
+                {/* TODO */}
+                <UserPageInfo />
+
+                <div>
+                  <p className="mb-4">Languages</p>
+                  <UserLanguageChart contributorLanguages={contributorLanguages} />
+                </div>
+              </div>
+              <div className="flex-1 mt-10 lg:mt-0">
+                {/**
+                {!!user ? (
+                  <ContributorProfileTab
+                    repoList={repoList}
+                    recentContributionCount={recentContributionCount}
+                    prVelocity={prVelocity}
+                    totalPrs={totalPrs}
+                    user?.login={githubName}
+                    prMerged={prMerged}
+                    contributor={user}
+                    prTotal={prTotal}
+                    prsMergedPercentage={prsMergedPercentage}
+                    range={range}
+                  />
+                ) : (
+                  <>
+                    <div>
+                      <Title className="!text-light-slate-12 !text-xl" level={4}>
+                        Contribution Insights
+                      </Title>
+                    </div>
+                    <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
+                      <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
+                        <div>
+                          <span className="text-xs text-light-slate-11">PRs opened</span>
+                          {totalPrs >= 0 ? (
+                            <div className="flex mt-1 lg:justify-center md:pr-8">
+                              <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                                {totalPrs} PRs
+                              </Text>
+                            </div>
+                          ) : (
+                            <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+                          )}
+                        </div>
+                        <div>
+                          <span className="text-xs text-light-slate-11">Avg PRs velocity</span>
+                          {prVelocity ? (
+                            <div className="flex items-center gap-2 lg:justify-center">
+                              <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                                {getRelativeDays(prVelocity)}
+                              </Text>
+
+                              <Pill color="purple" text={`${prsMergedPercentage}%`} />
+                            </div>
+                          ) : (
+                            <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+                          )}
+                        </div>
+                        <div>
+                          <span className="text-xs text-light-slate-11">Contributed Repos</span>
+                          {recentContributionCount >= 0 ? (
+                            <div className="flex mt-1 lg:justify-center">
+                              <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                                {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
+                              </Text>
+                            </div>
+                          ) : (
+                            <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="h-32 mt-10">
+                        <CardLineChart
+                          repoIds={repositories}
+                          contributor={user?.login}
+                          range={Number(range)}
+                          className="!h-32"
+                        />
+                      </div>
+                      <div>
+                        <CardRepoList limit={7} repoList={repoList} total={repoList.length} />
+                      </div>
+
+                      <div className="mt-6">
+                        <PullRequestTable
+                          limit={15}
+                          contributor={user?.login}
+                          topic={"*"}
+                          repositories={undefined}
+                          range={range}
+                        />
+                      </div>
+                      <div className="mt-8 text-sm text-light-slate-9">
+                        <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
+                      </div>
+                    </div>
+                  </>
+                )}
+                **/}
+              </div>
+            </div>
+          </div>
+        </WorkspaceLayout>
+      )}
+    </>
+  );
+}
+
+type UserPageHeaderProps = {
+  user: DbUser;
+  avatar?: string;
+  isOwner: boolean;
+  posthog: PostHog;
+  currentPath: string;
+  toast: ({ ...props }) => { id: string; dismiss: () => void; update: () => void };
+};
+
+function UserPageHeader({ user, avatar, isOwner, posthog, currentPath, toast }: UserPageHeaderProps) {
+  const [host, setHost] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHost(window.location.origin as string);
+    }
+  }, [user]);
+
+  const handleCopyToClipboard = async (content: string) => {
+    const url = new URL(content).toString();
+    posthog!.capture("clicked: profile copied", {
+      profile: user.login,
+    });
+
+    try {
+      const shortUrl = await shortenUrl(url);
+      writeToClipboard(shortUrl);
+      toast({ description: "Copied to clipboard", variant: "success" });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  };
+
+  return (
+    <div className="w-full relative bg-light-slate-6 h-[216px]">
+      {user?.is_open_sauced_member && (
+        <div className="absolute w-full h-full">
+          <Image priority alt="user profile cover image" fill={true} className="object-cover" src={rainbowCover} />
+        </div>
+      )}
+
+      <div className="container flex flex-row items-end justify-between gap-2 px-2 py-6 mx-auto md:px-16">
+        <div className="translate-y-[65px] hidden md:inline-flex relative">
+          <Avatar
+            initialsClassName="text-[100px] -translate-y-2.5  leading-none"
+            initials={user.login?.charAt(0)}
+            hasBorder
+            avatarURL={user?.is_open_sauced_member ? avatar : ""}
+            size={184}
+            isCircle
+          />
+
+          <Tooltip content="Get dev card">
+            <Link
+              href={cardPageUrl(user?.login!)}
+              className="absolute bottom-0 z-10 grid w-12 h-12 rounded-full shadow-xs place-content-center border-conic-gradient right-4"
+            >
+              <div className="grid overflow-hidden rounded-full w-11 h-11 place-content-center bg-black/80">
+                <Image priority alt="user profile cover image" className="w-6 h-[1.7rem] " src={pizzaGradient} />
+              </div>
+            </Link>
+          </Tooltip>
+        </div>
+        <div className="translate-y-[110px] md:hidden relative">
+          <Avatar
+            initialsClassName="text-[70px] -translate-y-1 leading-none"
+            initials={user?.login?.charAt(0)}
+            hasBorder
+            avatarURL={user?.is_open_sauced_member ? avatar : ""}
+            size={120}
+            isCircle
+          />
+          <Link
+            href={cardPageUrl(user?.login!)}
+            className="absolute bottom-0 z-10 grid rounded-full shadow-xs w-11 h-11 right-1 place-content-center border-conic-gradient"
+          >
+            <div className="grid w-[2.5em] h-[2.5em] overflow-hidden rounded-full place-content-center bg-black/80">
+              <Image priority alt="user profile cover image" className="w-5 h-5 " src={pizzaGradient} />
+            </div>
+          </Link>
+        </div>
+
+        {user?.is_open_sauced_member ? (
+          <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-10 md:gap-6">
+              <Button
+                onClick={() => handleCopyToClipboard(`${host}/u/${user?.login}`)}
+                className="my-auto gap-2 items-center shrink-0 place-self-end"
+                variant="primary"
+              >
+                <FiCopy />
+                <span className="hidden md:block">Share</span>
+              </Button>
+
+              {user && !isOwner && <AddToListDropdown username={user.login ?? ""} />}
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-wrap items-center justify-center max-md:translate-y-14">
+            {!isOwner && (
+              <Button
+                onClick={() => {
+                  handleCopyToClipboard(`${new URL(currentPath, location.origin)}`).then(() => {
+                    toast({
+                      title: "Copied to clipboard",
+                      description: "Share this link with your friend to invite them to OpenSauced!",
+                      variant: "success",
+                    });
+                  });
+                }}
+                variant="primary"
+              >
+                Invite to opensauced
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function UserPageInfo() {
+  return <></>;
+}
+
+function UserHighlightsTab() {
+  return <></>;
+}
+
+function UserContributionsTab() {
+  return <></>;
+}
+
+function UserLanguageChart({ contributorLanguages }: { contributorLanguages: LanguageObject[] }) {
+  const languageToColor: AllSimpleColors = colors as AllSimpleColors;
+  const NOTSUPPORTED = "#64748B";
+  const colorKeys = Object.keys(colors);
+  const languageList = (contributorLanguages || []).map((language) => {
+    const preparedLanguageKey = colorKeys.find((key) => key.toLowerCase() === language.languageName.toLowerCase());
+
+    return {
+      languageName: preparedLanguageKey ? preparedLanguageKey : language.languageName,
+      percentageUsed: language.percentageUsed,
+    };
+  });
+  const sortedLangArray = languageList.slice().sort((a, b) => b.percentageUsed - a.percentageUsed);
+  const [percentage, setPercentage] = useState(0);
+
+  useEffect(() => {
+    if (sortedLangArray.length === 0) return;
+
+    const totalSumOfFirstFivePercentage = sortedLangArray
+      .slice(0, 5)
+      .map((lang) => lang.percentageUsed)
+      .reduce((prev: number, next: number) => prev + next);
+    setPercentage(totalSumOfFirstFivePercentage);
+  }, [percentage, sortedLangArray]);
+
+  return (
+    <div className="flex flex-col gap-1 min-w-[7.5rem]">
+      <div className="flex items-center w-full justify-end rounded-full gap-0.5 overflow-hidden">
+        {sortedLangArray.map(({ languageName, percentageUsed }, index) => {
+          return (
+            index < 5 && (
+              <div
+                key={index}
+                className="h-2 transition-all duration-500 ease-in-out"
+                style={{
+                  width: `${percentageUsed < 20 ? (percentageUsed / percentage) * 100 : percentageUsed}%`,
+                  backgroundColor: languageToColor[languageName]
+                    ? (languageToColor[languageName].color as string)
+                    : NOTSUPPORTED,
+                }}
+              />
+            )
+          );
+        })}
+      </div>
+      <div className="flex flex-wrap mt-2 text-sm gap-x-4 gap-y-2">
+        {sortedLangArray.map(({ languageName, percentageUsed }, i) => {
+          return (
+            i < 5 && (
+              <div key={i} className="flex items-center gap-2.5 ">
+                <span
+                  style={{
+                    backgroundColor: languageToColor[languageName]
+                      ? (languageToColor[languageName].color as string)
+                      : NOTSUPPORTED,
+                  }}
+                  className="w-2.5 h-2.5 rounded-full "
+                ></span>
+                <p>
+                  {languageName}{" "}
+                  <span className="font-normal">{`${Number((percentageUsed / percentage) * 100).toFixed(1)}%`}</span>
+                </p>
+              </div>
+            )
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function AddToListDropdown({ username }: { username: string }) {
+  return <></>;
+}
