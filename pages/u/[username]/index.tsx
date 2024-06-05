@@ -2,10 +2,14 @@ import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import { FiCopy } from "react-icons/fi";
+import { FiClock, FiCopy, FiGithub, FiLinkedin } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { PostHog } from "posthog-js";
 import { usePostHog } from "posthog-js/react";
+import clsx from "clsx";
+import { FaGlobe, FaXTwitter } from "react-icons/fa6";
+import { AiOutlineGift } from "react-icons/ai";
+import { BsDiscord } from "react-icons/bs";
 import SEO from "layouts/SEO/SEO";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
@@ -29,7 +33,13 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { AllSimpleColors, LanguageObject } from "components/molecules/CardHorizontalBarChart/card-horizontal-bar-chart";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { shortenUrl } from "lib/utils/shorten-url";
-import { useToast } from "lib/hooks/useToast";
+import { Toast, ToasterToast, useToast } from "lib/hooks/useToast";
+import Title from "components/atoms/Typography/title";
+import { LanguagePill } from "components/shared/LanguagePill/LanguagePill";
+import Badge from "components/atoms/Badge/badge";
+import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
+import { getFormattedDate } from "lib/utils/date-utils";
+import { InterestType } from "lib/utils/getInterestOptions";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { username } = (context.params as { username: string }) ?? { username: "" };
@@ -76,6 +86,7 @@ export default function UserPage({ user }: { user: DbUser }) {
     limit: 50,
     range: range,
   });
+  const interestArray = user.interests?.split(",").filter(Boolean) as InterestType[];
   const repoList = useRepoList(Array.from(new Set(contributorPRData.map((prData) => prData.repo_name))).join(","));
   const prVelocity = getContributorPullRequestVelocity(contributorPRData);
 
@@ -94,13 +105,158 @@ export default function UserPage({ user }: { user: DbUser }) {
       {hasMounted && (
         <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
           <div className="w-full ">
-            {/* TODO */}
-            <UserPageHeader user={user} avatar={githubAvatar} posthog={posthog} toast={toast} />
+            <UserPageHeader
+              user={user}
+              avatar={githubAvatar}
+              posthog={posthog}
+              isOwner={isOwner}
+              currentPath={currentPath}
+              toast={toast}
+            />
 
             <div className="container flex flex-col justify-between w-full px-2 pt-24 mx-auto overflow-hidden md:px-16 lg:flex-row lg:gap-40">
               <div className="flex flex-col lg:gap-4 md:gap-2 lg:w-80 md:w-full">
-                {/* TODO */}
-                <UserPageInfo />
+                <div className="flex flex-col gap-6">
+                  <div className="pb-6 border-b">
+                    <div className="flex gap-2 items-center mb-2">
+                      <Title className="!text-2xl" level={3}>
+                        {user.login}
+                      </Title>
+                      {user.is_maintainer && <Badge text="maintainer" />}
+                    </div>
+                    <div className="flex items-center text-sm gap-3">
+                      {user.is_open_sauced_member && (
+                        <>
+                          <div className="flex gap-2 items-center">
+                            <div className="flex gap-1 items-center">
+                              <span className="font-semibold text-sm"> {user.followers_count} </span>
+                              <span className="font-normal text-light-slate-11 text-sm"> followers</span>
+                            </div>
+                            <div className="flex gap-1 items-center">
+                              <span className="font-semibold text-sm"> {user.following_count} </span>
+                              <span className="font-normal text-light-slate-11 text-sm"> following</span>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  {user.is_open_sauced_member && (
+                    <>
+                      <div className="flex flex-col gap-2 border-b pb-6">
+                        <Title className="!text-base" level={5}>
+                          About
+                        </Title>
+                        <p className={clsx(" text-sm", !user.bio && "")}>
+                          {user.bio || user.login + " has connected their GitHub but has not added a bio."}
+                        </p>
+                        <div className="flex flex-col text-sm mt-2  gap-2">
+                          {user.display_local_time && (
+                            <span className="flex gap-2 items-center">
+                              <FiClock />
+                              <span>
+                                {getTimeByTimezone(user.timezone ? getTimezone(user.timezone) : 1)}{" "}
+                                {user.timezone ? `(UTC${getTimezone(user.timezone)})` : "(UTC+1)"}
+                              </span>
+                            </span>
+                          )}
+
+                          {user.url && (
+                            <span className="flex gap-2 items-center">
+                              <FaGlobe />
+                              <Link href={user.url} target="_blank" className="w-max hover:text-orange-500 ">
+                                {user.url}
+                              </Link>
+                            </span>
+                          )}
+
+                          <span className="flex gap-2 items-center">
+                            <Tooltip content="First PR Opened Date">
+                              <AiOutlineGift className="" />
+                            </Tooltip>
+                            {user.first_opened_pr_at ? getFormattedDate(user.first_opened_pr_at) : "June 2022"}
+                          </span>
+
+                          <span className="flex gap-2 items-center">
+                            <FiGithub />
+                            <Link
+                              href={`https://github.com/${user.login}`}
+                              target="_blank"
+                              className="w-max hover:text-orange-500 "
+                            >
+                              {user.login}
+                            </Link>
+                          </span>
+
+                          {user.twitter_username && (
+                            <span className="flex gap-2 items-center">
+                              <FaXTwitter />
+                              <Link
+                                href={`https://twitter.com/${user.twitter_username}`}
+                                target="_blank"
+                                className="w-max hover:text-orange-500 "
+                              >
+                                {user.twitter_username}
+                              </Link>
+                            </span>
+                          )}
+
+                          {user.linkedin_url && (
+                            <span className="flex gap-2 items-center">
+                              <FiLinkedin />
+                              <Link href={user.linkedin_url} target="_blank" className="w-max hover:text-orange-500 ">
+                                {user.linkedin_url.replace(
+                                  /^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile|company)/,
+                                  "in"
+                                )}
+                              </Link>
+                            </span>
+                          )}
+
+                          {user.discord_url && (
+                            <span className="flex gap-2 items-center">
+                              <BsDiscord />
+                              <Link href={user.discord_url} target="_blank" className="w-max hover:text-orange-500">
+                                {`discord/#${user.discord_url.match(/\d{17,}$/)?.[0]}`}
+                              </Link>
+                            </span>
+                          )}
+
+                          {user.github_sponsors_url && (
+                            <span className="flex gap-2 items-center">
+                              <FiGithub />
+                              <Link
+                                href={user.github_sponsors_url}
+                                target="_blank"
+                                className="w-max hover:text-orange-500 "
+                              >
+                                {user.github_sponsors_url.replace(/^(http(s)?:\/\/)?([\w]+\.)?github\.com\//, "")}
+                              </Link>
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      {interestArray && interestArray.length > 0 && (
+                        <div className="flex  flex-col gap-4 border-b pb-6">
+                          <Title className="!text-base" level={5}>
+                            Current Interests
+                          </Title>
+                          <div className="flex gap-1.5 flex-wrap">
+                            {interestArray.map((interest, index) => (
+                              <Link
+                                href={`/explore/topic/${interest}/dashboard/filter/recent`}
+                                key={index}
+                                className="rounded-3xl"
+                              >
+                                <LanguagePill topic={interest} />
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
 
                 <div>
                   <p className="mb-4">Languages</p>
@@ -213,7 +369,7 @@ type UserPageHeaderProps = {
   isOwner: boolean;
   posthog: PostHog;
   currentPath: string;
-  toast: ({ ...props }) => { id: string; dismiss: () => void; update: () => void };
+  toast: ({ ...props }: Toast) => { id: string; dismiss: () => void; update: (props: ToasterToast) => void };
 };
 
 function UserPageHeader({ user, avatar, isOwner, posthog, currentPath, toast }: UserPageHeaderProps) {
