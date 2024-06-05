@@ -11,8 +11,6 @@ import { getInsightWithWorkspace, getListWithWorkspace, getWorkspaceUrl } from "
 const pathsToMatch = [
   "/",
   "/feed/",
-  "/user/notifications",
-  "/user/settings",
   "/account-deleted",
   "/workspaces/:path*",
   "/lists/:path*",

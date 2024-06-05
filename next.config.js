@@ -132,7 +132,7 @@ module.exports = millionLint({
         permanent: true,
       },
       {
-        source: "/user/:user",
+        source: "/user/:user((?!settings|notifications|\\/card$).*)",
         destination: "/u/:user",
         permanent: true,
       },
