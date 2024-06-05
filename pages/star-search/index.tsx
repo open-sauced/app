@@ -37,7 +37,7 @@ export interface WidgetDefinition {
   arguments?: Record<string, Record<string, any>>;
 }
 
-type Author = "You" | "StarSearch";
+type Author = "You" | "StarSearch" | "Guest";
 
 const componentRegistry = new Map<string, Function>();
 import {
@@ -87,6 +87,7 @@ function ChatAvatar({ author, userId }: ChatAvatarProps) {
           className="w-8 h-8 rounded-full lg:w-10 lg:h-10"
         />
       );
+    case "Guest":
     case "StarSearch":
       return (
         <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full w-max">
@@ -99,6 +100,9 @@ function ChatAvatar({ author, userId }: ChatAvatarProps) {
           />
         </div>
       );
+
+    default:
+      throw new Error(`Invalid author: ${author} type provided`);
   }
 }
 
@@ -861,7 +865,7 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
     // in certain cases where the content is a long string.
     return (
       <div className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
-        <ChatAvatar author={message.author} userId={userId} />
+        <ChatAvatar author={userId ? message.author : "Guest"} userId={userId} />
         <Card
           className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline"
           focusable
