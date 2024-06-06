@@ -160,6 +160,7 @@ const ListsOverview = ({
         isOwner={isOwner}
         showRangeFilter={false}
         owners={owners}
+        overLimit={showBanner}
       >
         <div className="flex flex-col w-full gap-4">
           <ClientOnly>

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import Link from "next/link";
 import { usePostHog } from "posthog-js/react";
 
 import { FiCopy } from "react-icons/fi";
 
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 import getRepoInsights from "lib/utils/get-repo-insights";
 import Button from "components/shared/Button/button";
 import Title from "components/atoms/Typography/title";
@@ -20,6 +20,8 @@ import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
+
 interface InsightHeaderProps {
   insight?: DbUserInsight;
   repositories?: number[];
@@ -27,6 +29,7 @@ interface InsightHeaderProps {
   canEdit: boolean | undefined;
   workspaceId?: string;
   owners?: string[];
+  overLimit?: boolean;
 }
 
 const InsightHeader = ({
@@ -36,12 +39,14 @@ const InsightHeader = ({
   canEdit,
   workspaceId,
   owners,
+  overLimit,
 }: InsightHeaderProps): JSX.Element => {
   const router = useRouter();
   const { range } = router.query;
   const { data: repoData, meta: repoMeta } = useRepositories(repositories);
   const { repoList } = getRepoInsights(repoData);
   const [insightPageLink, setInsightPageLink] = useState("");
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const { toast } = useToast();
   const posthog = usePostHog();
 
@@ -98,11 +103,20 @@ const InsightHeader = ({
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
         {canEdit && (
-          <Link href={`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`}>
-            <Button className="text-xs w-max" variant="primary">
-              <FaEdit className="mr-2" /> Edit
-            </Button>
-          </Link>
+          <Button
+            className="text-xs w-max"
+            variant="primary"
+            onClick={() => {
+              if (overLimit) {
+                setIsInsightUpgradeModalOpen(true);
+                return;
+              }
+
+              router.push(`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`);
+            }}
+          >
+            <FaEdit className="mr-2" /> Edit
+          </Button>
         )}
         <div className=" md:hidden mt-auto">
           <ComponentDateFilter
@@ -113,6 +127,15 @@ const InsightHeader = ({
           />
         </div>
       </div>
+      {workspaceId && (
+        <InsightUpgradeModal
+          workspaceId={workspaceId}
+          variant="all"
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          overLimit={0}
+        />
+      )}
     </div>
   );
 };

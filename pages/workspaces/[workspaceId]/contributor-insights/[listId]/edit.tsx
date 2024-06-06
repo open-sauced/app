@@ -14,9 +14,11 @@ import Title from "components/atoms/Typography/title";
 import TextInput from "components/atoms/TextInput/text-input";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
+import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 
 const TrackedContributorsModal = dynamic(import("components/Workspaces/TrackedContributorsModal"));
 const DeleteListPageModal = dynamic(import("components/organisms/ListPage/DeleteListPageModal"));
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -90,6 +92,9 @@ export default function ContributorInsightEditPage({
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(initialTrackedContributors);
   const [isTrackedContributorsModalOpen, setIsTrackedContributorsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
+  const overLimit = isOwner && !isWorkspaceUpgraded;
 
   const updateInsight = async () => {
     const { error: updateError } = await updateWorkspaceContributorInsight({
@@ -165,7 +170,14 @@ export default function ContributorInsightEditPage({
         <TrackedContributorsTable
           disabled={loading}
           contributors={trackedContributors}
-          onAddContributors={() => setIsTrackedContributorsModalOpen(true)}
+          onAddContributors={() => {
+            if (overLimit) {
+              setIsInsightUpgradeModalOpen(true);
+              return;
+            }
+
+            setIsTrackedContributorsModalOpen(true);
+          }}
           onRemoveTrackedContributor={(event) => {
             const { contributor } = event.currentTarget.dataset;
 
@@ -230,6 +242,15 @@ export default function ContributorInsightEditPage({
         onConfirm={deleteInsight}
         onClose={() => setIsDeleteModalOpen(false)}
       />
+      {isOwner ? (
+        <InsightUpgradeModal
+          workspaceId={workspaceId}
+          variant="all"
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          overLimit={trackedContributors.size}
+        />
+      ) : null}
     </WorkspaceLayout>
   );
 }

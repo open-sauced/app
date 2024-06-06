@@ -41,10 +41,11 @@ const WorkspaceMembersConfig = ({
     setLoading(true);
     const res = await onAddMember(username);
     setLoading(false);
-    setUsername("");
-    if (res) {
+
+    if (res && res !== null) {
       toast({ description: "Member added successfully", variant: "success" });
-    } else {
+      setUsername("");
+    } else if (res === false) {
       toast({ description: "Error: The user entered was not found on OpenSauced!", variant: "danger" });
     }
   };
