@@ -47,6 +47,9 @@ import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
 import ContributorProfileTab from "components/organisms/ContributorProfileTab/contributor-profile-tab";
+import MultiSelect, { OptionKeys } from "components/atoms/Select/multi-select";
+import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
+import { useFetchUser } from "lib/hooks/useFetchUser";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { username } = (context.params as { username: string }) ?? { username: "" };
@@ -570,12 +573,78 @@ function UserLanguageChart({ contributorLanguages }: { contributorLanguages: Lan
   );
 }
 
-type UserNotConnectedTabsProps = {
-  totalPrs: number;
-  prVelocity: number;
-};
-
 // TODO
-function AddToListDropdown({ username }: { username: string }) {
-  return <></>;
-}
+// Making this dropdown separate to optimize for performance and not fetch certain data until the dropdown is rendered
+const AddToListDropdown = ({ username }: { username: string }) => {
+  const [selectListOpen, setSelectListOpen] = useState(false);
+  const [selectedList, setSelectedList] = useState<OptionKeys[]>([]);
+  const { data } = useFetchAllLists();
+  const { data: contributor } = useFetchUser(username ?? "");
+  const { toast } = useToast();
+
+  const listOptions = data ? data.map((list) => ({ label: list.name, value: list.id })) : [];
+
+  const handleSelectList = (value: OptionKeys) => {
+    const isOptionSelected = selectedList.some((s) => s.value === value.value);
+    if (isOptionSelected) {
+      setSelectedList((prev) => prev.filter((s) => s.value !== value.value));
+    } else {
+      setSelectedList((prev) => [...prev, value]);
+    }
+  };
+
+  const handleAddToList = async () => {
+    if (selectedList.length > 0 && contributor) {
+      const listIds = selectedList.map((list) => list.value);
+      const response = Promise.all(listIds.map((listIds) => addListContributor(listIds, [{ id: contributor.id }])));
+
+      response
+        .then((res) => {
+          toast({
+            description: `
+          You've added ${username} to ${selectedList.length} list${selectedList.length > 1 ? "s" : ""}!`,
+            variant: "success",
+          });
+        })
+        .catch((res) => {
+          const failedList = listOptions.filter((list) => res.some((r: any) => r.error?.list_id === list.value));
+          toast({
+            description: `
+          Failed to add ${username} to ${failedList[0].label} ${
+            failedList.length > 1 && `and ${failedList.length - 1} other lists`
+          } !
+          `,
+            variant: "danger",
+          });
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (!selectListOpen && selectedList.length > 0) {
+      handleAddToList();
+      setSelectedList([]);
+    }
+  }, [selectListOpen]);
+
+  return (
+    <MultiSelect
+      open={selectListOpen}
+      setOpen={setSelectListOpen}
+      emptyState={
+        <div className="grid gap-2 p-4">
+          <p>You have no lists</p>
+          <Link className="text-sauced-orange" href="/hub/lists/new">
+            Create a list
+          </Link>
+        </div>
+      }
+      className="md:px-4 max-sm:text-sm"
+      placeholder="Add to list"
+      options={listOptions}
+      selected={selectedList}
+      setSelected={setSelectedList}
+      handleSelect={(option) => handleSelectList(option)}
+    />
+  );
+};
