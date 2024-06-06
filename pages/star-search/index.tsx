@@ -1,16 +1,17 @@
 import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { Fragment, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import Markdown from "react-markdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { BsArrowUpShort } from "react-icons/bs";
+import { BsArrowUpShort, BsLink45Deg, BsTwitterX } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 import * as Sentry from "@sentry/nextjs";
 import remarkGfm from "remark-gfm";
+import { HiOutlineShare } from "react-icons/hi";
+import { FiLinkedin } from "react-icons/fi";
 import Card from "components/atoms/Card/card";
 import ProfileLayout from "layouts/profile";
 import { getAvatarById } from "lib/utils/github";
@@ -29,15 +30,24 @@ import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import useSession from "lib/hooks/useSession";
 
 export interface WidgetDefinition {
   name: string;
   arguments?: Record<string, Record<string, any>>;
 }
 
-type Author = "You" | "StarSearch";
+type Author = "You" | "StarSearch" | "Guest";
 
 const componentRegistry = new Map<string, Function>();
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "components/atoms/Dropdown/dropdown";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { shortenUrl } from "lib/utils/shorten-url";
 
 const SUGGESTIONS = [
   {
@@ -74,9 +84,10 @@ function ChatAvatar({ author, userId }: ChatAvatarProps) {
           alt="Your profile picture"
           width={32}
           height={32}
-          className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
+          className="w-8 h-8 rounded-full lg:w-10 lg:h-10"
         />
       );
+    case "Guest":
     case "StarSearch":
       return (
         <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full w-max">
@@ -89,6 +100,9 @@ function ChatAvatar({ author, userId }: ChatAvatarProps) {
           />
         </div>
       );
+
+    default:
+      throw new Error(`Invalid author: ${author} type provided`);
   }
 }
 
@@ -121,16 +135,12 @@ async function updateComponentRegistry(name: string) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createPagesServerClient(context);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const userId = Number(session?.user.user_metadata.sub);
   const searchParams = new URLSearchParams();
+  let sharedPrompt: string | null = null;
 
   if (context.query.prompt) {
-    searchParams.set("prompt", context.query.prompt as string);
+    sharedPrompt = context.query.prompt as string;
+    searchParams.set("prompt", sharedPrompt);
   }
 
   const ogImageUrl = `${new URL(
@@ -138,12 +148,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
-  return { props: { userId, ogImageUrl } };
+  return { props: { ogImageUrl, sharedPrompt } };
 }
 
 type StarSearchPageProps = {
-  userId: number;
   ogImageUrl: string;
+  sharedPrompt: string | null;
 };
 
 type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch"; content: string | WidgetDefinition };
@@ -172,13 +182,24 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
   }
 
   return (
-    <div className="w-full lg:w-1/2 pt-2" style={{ maxWidth: "440px" }}>
+    <div className="w-full pt-2 lg:w-1/2" style={{ maxWidth: "440px" }}>
       <Component {...widgetDefinition.arguments} />
     </div>
   );
 }
 
-export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPageProps) {
+function getSharedPromptUrl(promptMessage: string | undefined) {
+  if (!promptMessage) {
+    return;
+  }
+
+  const params = new URLSearchParams();
+  params.set("prompt", promptMessage);
+
+  return new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
+}
+
+export default function StarSearchPage({ ogImageUrl, sharedPrompt }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -189,8 +210,41 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
+  const { session } = useSession(true);
+  const userId = session ? session.id : undefined;
   const { sessionToken: bearerToken } = useSupabaseAuth();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [twitterShareUrl, setTwitterShareUrl] = useState<string | undefined>();
+  const [linkedInShareUrl, setLinkedInShareUrl] = useState<string | undefined>();
+  const promptMessage = chat[0]?.content as string | undefined; // First message is always the prompt
+  const [checkAuth, setCheckAuth] = useState(false);
+
+  useEffect(() => {
+    if (!promptMessage) {
+      return;
+    }
+
+    const promptUrl = getSharedPromptUrl(promptMessage);
+    let twitterUrl = "https://twitter.com/intent/tweet";
+    let linkedinUrl = "https://www.linkedin.com/sharing/share-offsite/";
+    const twitterParams = new URLSearchParams();
+    const linkedinParams = new URLSearchParams();
+
+    setTimeout(async () => {
+      const shortUrl = await shortenUrl(`${promptUrl}`);
+
+      twitterParams.set("text", `Here's my StarSearch prompt!\n\nTry it out for yourself. #StarSearch`);
+      twitterParams.set("url", shortUrl);
+      twitterUrl += `?${twitterParams.toString()}`;
+      setTwitterShareUrl(twitterUrl);
+
+      linkedinParams.set("url", shortUrl);
+      linkedinUrl += `?${linkedinParams.toString()}`;
+      setLinkedInShareUrl(linkedinUrl);
+    }, 0);
+  }, [promptMessage]);
 
   function registerPrompt(promptInput: StarSearchPromptAnalytic) {
     prompt({
@@ -225,11 +279,6 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
   }
 
   function addPromptInput(prompt: string) {
-    if (!bearerToken) {
-      setLoginModalOpen(true);
-      return;
-    }
-
     if (!inputRef.current?.form) {
       return;
     }
@@ -237,19 +286,32 @@ export default function StarSearchPage({ userId, ogImageUrl }: StarSearchPagePro
     inputRef.current.value = prompt;
     const { form } = inputRef.current;
 
-    if (typeof form.requestSubmit === "function") {
-      form.requestSubmit();
-    } else {
-      form.dispatchEvent(new Event("submit", { cancelable: true }));
-    }
+    setTimeout(() => {
+      if (typeof form.requestSubmit === "function") {
+        form.requestSubmit();
+      } else {
+        form.dispatchEvent(new Event("submit", { cancelable: true }));
+      }
+    });
   }
+
+  useEffect(() => {
+    if (!sharedPrompt || ranOnce) {
+      return;
+    }
+
+    if (inputRef.current && !checkAuth) {
+      addPromptInput(sharedPrompt);
+      setShowSuggestions(false);
+    }
+  }, [sharedPrompt, inputRef.current, checkAuth]);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
 
   const submitPrompt = async (prompt: string) => {
-    if (!bearerToken) {
+    if ((checkAuth && sharedPrompt && !bearerToken) || (!bearerToken && !sharedPrompt)) {
       setLoginModalOpen(true);
       return;
     }
@@ -299,6 +361,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
         return temp;
       });
       setIsRunning(false); // enables input
+      setCheckAuth(true);
       return;
     }
 
@@ -308,6 +371,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
+        setCheckAuth(true);
 
         registerPrompt({
           promptContent: prompt,
@@ -344,7 +408,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
         if the content.type is "content", we render the markdown as HTML.
        */
 
-      const values = value.split("\n");
+      const values = value?.split("\n") || [];
 
       values.forEach(async (v) => {
         if (v.startsWith("id:")) {
@@ -419,6 +483,15 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
               setChat((chat) => {
                 const updatedChat = [...chat];
 
+                if (updatedChat.length === 1) {
+                  updatedChat.push({
+                    author: "StarSearch",
+                    content: payload.content.parts[0],
+                  });
+
+                  return updatedChat;
+                }
+
                 let changes = updatedChat.at(-1);
 
                 if (changes) {
@@ -457,8 +530,12 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       case "initial":
         return (
           <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
-            <Header />
-            {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
+            {sharedPrompt && !ranOnce ? null : (
+              <>
+                <Header />
+                {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
+              </>
+            )}
           </div>
         );
       case "chat":
@@ -468,6 +545,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
         const chatMessagesToProcess = chat.filter(
           (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
         );
+
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
         let heightToRemove = 300;
 
@@ -477,35 +555,35 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
         return (
           <>
-            <div aria-live="polite" className="flex flex-col w-full max-w-xl lg:max-w-5xl lg:px-8 mx-auto mb-4">
+            <div className="flex flex-col w-full max-w-xl mx-auto mb-4 lg:max-w-5xl lg:px-8">
               <ScrollArea
                 className="flex grow"
                 asChild={true}
                 style={{ maxHeight: `calc(100vh - ${heightToRemove}px)` }}
               >
-                <ul>
+                <section role="feed" aria-label="StarSearch conversation" aria-busy={isRunning} aria-setsize={-1}>
                   {chatMessagesToProcess.map((message, i, messages) => {
                     if (loaderIndex === i && isRunning && messages.length - 1 === i) {
                       return (
                         <Fragment key={i}>
                           <Chatbox userId={userId} message={message} />
-                          <li className="flex gap-2 my-4 w-max items-center">
+                          <div className="flex items-center gap-2 my-4 w-max">
                             <ChatAvatar author="StarSearch" userId={userId} />
                             <StarSearchLoader />
-                          </li>
+                          </div>
                         </Fragment>
                       );
                     } else {
                       return <Chatbox key={i} userId={userId} message={message} />;
                     }
                   })}
-                </ul>
+                </section>
                 <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("text-slate-600 flex gap-4 items-center self-end", isRunning && "invisible")}>
                 <button
                   type="button"
-                  className="flex gap-2 items-center hover:text-sauced-orange"
+                  className="flex items-center gap-2 hover:text-sauced-orange"
                   onClick={() => {
                     setStarSearchState("initial");
                     setChat([]);
@@ -517,7 +595,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 <span className="flex gap-1">
                   <button
                     type="button"
-                    className="flex gap-2 items-center hover:text-sauced-orange"
+                    className="flex items-center gap-2 hover:text-sauced-orange"
                     onClick={() => {
                       registerFeedback("positive");
                     }}
@@ -527,7 +605,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                   </button>
                   <button
                     type="button"
-                    className="flex gap-2 items-center hover:text-sauced-orange"
+                    className="flex items-center gap-2 hover:text-sauced-orange"
                     onClick={() => {
                       registerFeedback("negative");
                     }}
@@ -535,6 +613,64 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
+                  {promptMessage && (
+                    <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
+                      <DropdownMenu open={dropdownOpen} modal={false}>
+                        <DropdownMenuTrigger
+                          onClick={() => setDropdownOpen(!dropdownOpen)}
+                          aria-label="Share prompt options"
+                        >
+                          <HiOutlineShare width={22} height={22} />
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent
+                          ref={dropdownRef}
+                          align="end"
+                          className="flex flex-col gap-1 py-2 rounded-lg"
+                        >
+                          <DropdownMenuItem className="rounded-md">
+                            <a
+                              href={twitterShareUrl}
+                              target="_blank"
+                              onClick={() => {
+                                setDropdownOpen(false);
+                              }}
+                              className="flex gap-2.5 py-1 items-center pl-3 pr-7"
+                            >
+                              <BsTwitterX size={22} />
+                              <span>Share to Twitter/X</span>
+                            </a>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="rounded-md">
+                            <a
+                              href={linkedInShareUrl}
+                              target="_blank"
+                              onClick={() => {
+                                setDropdownOpen(false);
+                              }}
+                              className="flex gap-2.5 py-1 items-center pl-3 pr-7"
+                            >
+                              <FiLinkedin size={22} />
+                              <span>Share to LinkedIn</span>
+                            </a>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={async () => {
+                              const shortUrl = await shortenUrl(`${getSharedPromptUrl(promptMessage)}`);
+                              writeToClipboard(shortUrl);
+                              setDropdownOpen(false);
+                            }}
+                            className="rounded-md"
+                          >
+                            <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
+                              <BsLink45Deg size={22} />
+                              <span>Copy link</span>
+                            </div>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  )}
                 </span>
               </div>
             </div>
@@ -554,7 +690,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       <ProfileLayout showFooter={false}>
         <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
           {renderState()}
-          <div className="sticky bottom-2 md:bottom-4 w-full">
+          <div className="sticky w-full bottom-2 md:bottom-4">
             {!isRunning &&
               (isMobile ? (
                 <Drawer
@@ -587,13 +723,13 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 </>
               ))}
             {!isMobile && showSuggestions && (
-              <div className="relative flex flex-col gap-2 mb-4 w-fit mx-auto">
+              <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
                 <button
                   onClick={() => {
                     setShowSuggestions(false);
                     inputRef.current?.focus();
                   }}
-                  className="absolute flex gap-2 w-fit self-end -right-5 -top-3"
+                  className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
                 >
                   <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
                 </button>
@@ -624,19 +760,19 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 ref={inputRef}
                 disabled={isRunning}
                 placeholder="Ask a question"
-                className="p-4 border bg-white focus:outline-none grow rounded-l-lg border-none"
-                onClick={() => {
-                  if (!bearerToken) {
+                className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
+                onFocus={() => {
+                  if ((checkAuth && sharedPrompt && !bearerToken) || (!bearerToken && !sharedPrompt)) {
                     setLoginModalOpen(true);
                   }
                 }}
               />
-              <button type="submit" disabled={isRunning} className="bg-white p-2 rounded-r-lg">
+              <button type="submit" disabled={isRunning} className="p-2 bg-white rounded-r-lg">
                 <span className="sr-only">Submit your question to StarSearch</span>
-                <MdOutlineSubdirectoryArrowRight className="rounded-lg w-10 h-10 p-2 bg-light-orange-3 text-light-orange-10" />
+                <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
               </button>
             </form>
-            <p className="text-sm text-slate-400 text-center py-2">
+            <p className="py-2 text-sm text-center text-slate-400">
               {isMobile ? (
                 <>StarSearch may generate incorrect responses</>
               ) : (
@@ -654,15 +790,15 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
 function Header() {
   return (
-    <div className="flex flex-col text-center items-center gap-2 lg:gap-4 lg:pt-8">
-      <div className="flex gap-2 items-center">
+    <header className="flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
+      <div className="flex items-center gap-2">
         <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
-        <h1 className="text-3xl lg:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-sauced-orange to-amber-400">
+        <h1 className="text-3xl font-bold text-transparent lg:text-4xl bg-clip-text bg-gradient-to-r from-sauced-orange to-amber-400">
           StarSearch
         </h1>
       </div>
-      <h2 className="text-3xl lg:text-4xl font-semibold text-slate-600 pt-1">Copilot, but for git history</h2>
-    </div>
+      <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">Copilot, but for git history</h2>
+    </header>
   );
 }
 
@@ -682,7 +818,7 @@ function SuggestionBoxes({
           <CarouselItem key={i} className="items-stretch">
             <button onClick={() => addPromptInput(suggestion.prompt)} className="h-full mx-auto">
               <Card className="w-[30rem] shadow-md border-none mx-auto h-full text-start !p-6 text-slate-600">
-                <h3 className="text-sm lg:text-base font-semibold">{suggestion.title}</h3>
+                <h3 className="text-sm font-semibold lg:text-base">{suggestion.title}</h3>
                 <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
               </Card>
             </button>
@@ -694,25 +830,30 @@ function SuggestionBoxes({
       <CarouselNext />
     </Carousel>
   ) : (
-    <div className="grid grid-cols-1 lg:grid-cols-2 place-content-center gap-2 lg:gap-4 w-full max-w-3xl">
+    <ul
+      aria-label="suggested prompts"
+      className="grid w-full max-w-3xl grid-cols-1 gap-2 lg:grid-cols-2 place-content-center lg:gap-4"
+    >
       {suggestions.map((suggestion, i) => (
-        <button
-          key={i}
-          onClick={() => addPromptInput(suggestion.prompt)}
-          aria-labelledby={`prompt-label-${i}`}
-          aria-describedby={`prompt-description-${i}`}
-        >
-          <Card className="w-full h-full shadow-md border-none text-start !p-6 text-slate-600">
-            <span id={`prompt-label-${i}`} className="text-sm lg:text-base font-semibold">
-              {suggestion.title}
-            </span>
-            <p id={`prompt-description-${i}`} className="text-xs lg:text-sm">
-              {suggestion.prompt}
-            </p>
-          </Card>
-        </button>
+        <li key={i}>
+          <button
+            onClick={() => addPromptInput(suggestion.prompt)}
+            aria-labelledby={`prompt-label-${i}`}
+            aria-describedby={`prompt-description-${i}`}
+            className="w-full h-full"
+          >
+            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
+              <span id={`prompt-label-${i}`} className="text-sm font-semibold lg:text-base">
+                {suggestion.title}
+              </span>
+              <p id={`prompt-description-${i}`} className="text-xs lg:text-sm">
+                {suggestion.prompt}
+              </p>
+            </Card>
+          </button>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 
@@ -721,38 +862,43 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     return (
-      <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
-        <ChatAvatar author={message.author} userId={userId} />
-        <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
+      <div className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
+        <ChatAvatar author={userId ? message.author : "Guest"} userId={userId} />
+        <Card
+          className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline"
+          focusable
+        >
           <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
-          <Markdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              a(props) {
-                if (typeof props.children === "string" && props.children.startsWith("@")) {
-                  return (
-                    <span className="inline-flex gap-1 items-baseline self-center">
-                      <span className="self-center">
-                        <AvatarHoverCard
-                          contributor={props.children.replace("@", "")}
-                          repositories={[]}
-                          size="xsmall"
-                        />
+          <div aria-label="chat message">
+            <Markdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                a(props) {
+                  if (typeof props.children === "string" && props.children.startsWith("@")) {
+                    return (
+                      <span className="inline-flex items-baseline self-center gap-1">
+                        <span className="self-center">
+                          <AvatarHoverCard
+                            contributor={props.children.replace("@", "")}
+                            repositories={[]}
+                            size="xsmall"
+                          />
+                        </span>
+                        <a {...props} />
                       </span>
-                      <a {...props} />
-                    </span>
-                  );
-                }
+                    );
+                  }
 
-                return <a {...props} />;
-              },
-            }}
-            className="break-words prose"
-          >
-            {message.content}
-          </Markdown>{" "}
+                  return <a {...props} />;
+                },
+              }}
+              className="prose break-words"
+            >
+              {message.content}
+            </Markdown>
+          </div>
         </Card>
-      </li>
+      </div>
     );
   }
 
@@ -765,7 +911,7 @@ function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number
   // is still valuable.
   return (
     <Sentry.ErrorBoundary>
-      <li className="grid gap-2 md:flex md:justify-center items-start my-4 w-full">
+      <li className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
         <ChatAvatar author={message.author} userId={userId} />
         <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
           <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
