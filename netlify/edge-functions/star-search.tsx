@@ -79,6 +79,7 @@ export default async function handler(req: Request) {
             overflow: "hidden",
             height: "400px",
             maxHeight: "400px",
+            wordBreak: "break-all",
           }}
         >
           {prompt.length > MAX_CHARS ? `${prompt.slice(0, MAX_CHARS)}...` : prompt}
