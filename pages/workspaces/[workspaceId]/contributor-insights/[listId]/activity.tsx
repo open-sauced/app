@@ -294,6 +294,7 @@ const ListActivityPage = ({
         repoFilter={true}
         repoFilterOptions={filterOptions}
         repoFilterSelect={setFilteredRepositories}
+        overLimit={showBanner}
       >
         {isError ? (
           <Error errorMessage="Unable to load list activity" />
@@ -327,7 +328,7 @@ const ListActivityPage = ({
       </ListPageLayout>
       <InsightUpgradeModal
         workspaceId={workspaceId}
-        variant="contributors"
+        variant="all"
         isOpen={isInsightUpgradeModalOpen}
         onClose={() => setIsInsightUpgradeModalOpen(false)}
         overLimit={numberOfContributors}

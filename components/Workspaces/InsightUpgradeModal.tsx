@@ -1,6 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { usePostHog } from "posthog-js/react";
+import { useRouter } from "next/router";
 import { Dialog, DialogTitle, DialogContent, DialogCloseButton } from "components/molecules/Dialog/dialog";
 import Button from "components/shared/Button/button";
 import Card from "components/atoms/Card/card";
@@ -10,26 +11,21 @@ import { Drawer } from "components/shared/Drawer";
 type InsightUpgradeModalProps = {
   workspaceId: string;
   overLimit?: number;
-  variant: "repositories" | "contributors" | "workspace";
+  variant: "repositories" | "contributors" | "workspace" | "all";
   isOpen: boolean;
   onClose: () => void;
 };
 
-export default function InsightUpgradeModal({
-  workspaceId,
-  overLimit,
-  variant,
-  isOpen,
-  onClose,
-}: InsightUpgradeModalProps) {
+export default function InsightUpgradeModal({ workspaceId, variant, isOpen, onClose }: InsightUpgradeModalProps) {
   const posthog = usePostHog();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const router = useRouter();
 
   const title = variant !== "workspace" ? "This Workspace is over the free limit" : "Upgrade to a PRO Workspace";
   const description =
     variant !== "workspace"
-      ? `Your workspace has exceeded the limit for free usage. Free Workspaces only allow for 100 repositories
-    and 10 contributors tracked. Don't worry, your insights won't be deleted. If you want to
+      ? `Your workspace has exceeded the limit for free usage. Free Workspaces only allow for 20 repositories
+    and 10 contributors tracked per insight page and 100 workspace repositories. Don't worry, your insights won't be deleted. If you want to
     continue using OpenSauced you should upgrade your Workspace to a PRO Account.`
       : `Setting your workspace to private is a PRO feature. Upgrade your Workspace and get exclusive access to
     your work for you and your team!`;
@@ -60,18 +56,23 @@ export default function InsightUpgradeModal({
           <ul className="flex flex-col gap-3">
             <ChecklistItem color="green">Private or public Workspaces, you choose!</ChecklistItem>
             <ChecklistItem color="green">
+              Up to <span className="font-bold">1,000</span> workspace repositories
+            </ChecklistItem>
+            <ChecklistItem color="green">
               Up to <span className="font-bold">100</span> contributors per insight page
             </ChecklistItem>
             <ChecklistItem color="green">
-              Up to <span className="font-bold">1,000</span> repositories per insight page
+              Up to <span className="font-bold">100</span> repositories per insight page
             </ChecklistItem>
           </ul>
 
           <Button
             onClick={() => {
-              if (variant === "workspace") onClose();
+              if (variant !== "workspace") {
+                router.push(`/workspaces/${workspaceId}/settings#upgrade`);
+              }
+              if (variant === "workspace" || variant === "all") onClose();
             }}
-            href={variant !== "workspace" ? `/workspaces/${workspaceId}/settings#upgrade` : ""}
             variant="primary"
             className="flex justify-center"
           >
@@ -92,12 +93,15 @@ export default function InsightUpgradeModal({
           </div>
 
           <ul className="flex flex-col gap-3">
-            <ChecklistItem color="orange">Public only Workspaces</ChecklistItem>
+            <ChecklistItem color="orange">Public Workspaces only!</ChecklistItem>
+            <ChecklistItem color="orange">
+              Up to <span className="font-bold">100</span> workspace repositories
+            </ChecklistItem>
             <ChecklistItem color="orange">
               Up to <span className="font-bold">10</span> contributors per insight page
             </ChecklistItem>
             <ChecklistItem color="orange">
-              Up to <span className="font-bold">100</span> repositories per insight page
+              Up to <span className="font-bold">20</span> repositories per insight page
             </ChecklistItem>
           </ul>
 
@@ -135,12 +139,15 @@ export default function InsightUpgradeModal({
                 </div>
 
                 <ul className="flex flex-col gap-3">
-                  <ChecklistItem color="orange">Public only Workspaces</ChecklistItem>
+                  <ChecklistItem color="orange">Public Workspaces only!</ChecklistItem>
+                  <ChecklistItem color="orange">
+                    Up to <span className="font-bold">100</span> workspace repositories
+                  </ChecklistItem>
                   <ChecklistItem color="orange">
                     Up to <span className="font-bold">10</span> contributors per insight page
                   </ChecklistItem>
                   <ChecklistItem color="orange">
-                    Up to <span className="font-bold">100</span> repositories per insight page
+                    Up to <span className="font-bold">20</span> repositories per insight page
                   </ChecklistItem>
                 </ul>
 
@@ -170,18 +177,23 @@ export default function InsightUpgradeModal({
                 <ul className="flex flex-col gap-3">
                   <ChecklistItem color="green">Private or public Workspaces, you choose!</ChecklistItem>
                   <ChecklistItem color="green">
+                    Up to <span className="font-bold">1,000</span> workspace repositories
+                  </ChecklistItem>
+                  <ChecklistItem color="green">
                     Up to <span className="font-bold">100</span> contributors per insight page
                   </ChecklistItem>
                   <ChecklistItem color="green">
-                    Up to <span className="font-bold">1,000</span> repositories per insight page
+                    Up to <span className="font-bold">100</span> repositories per insight page
                   </ChecklistItem>
                 </ul>
 
                 <Button
                   onClick={() => {
-                    if (variant === "workspace") onClose();
+                    if (variant !== "workspace") {
+                      router.push(`/workspaces/${workspaceId}/settings#upgrade`);
+                    }
+                    if (variant === "workspace" || variant === "all") onClose();
                   }}
-                  href={variant !== "workspace" ? `/workspaces/${workspaceId}/settings#upgrade` : ""}
                   variant="primary"
                   className="py-3 flex justify-center"
                 >

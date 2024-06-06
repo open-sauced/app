@@ -1,8 +1,10 @@
-import Link from "next/link";
 import { FaEdit } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";
 import { usePostHog } from "posthog-js/react";
 
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import Button from "components/shared/Button/button";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
@@ -14,6 +16,8 @@ import StackedOwners from "components/Workspaces/StackedOwners";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
+
 interface ListHeaderProps {
   name: string;
   listId: string;
@@ -22,6 +26,7 @@ interface ListHeaderProps {
   isOwner: boolean;
   numberOfContributors: number;
   owners?: string[];
+  overLimit?: boolean;
 }
 
 const ListHeader = ({
@@ -32,9 +37,12 @@ const ListHeader = ({
   isOwner,
   numberOfContributors,
   owners,
+  overLimit,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
+  const router = useRouter();
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   const handleCopyToClipboard = async () => {
     const url = new URL(window.location.href).toString();
@@ -79,17 +87,30 @@ const ListHeader = ({
           <FiCopy className="mt-1 mr-2" /> Share
         </Button>
         {isOwner && (
-          <Link
-            href={
-              workspaceId ? `/workspaces/${workspaceId}/contributor-insights/${listId}/edit` : `/lists/${listId}/edit`
-            }
+          <Button
+            variant="primary"
+            onClick={() => {
+              if (overLimit) {
+                setIsInsightUpgradeModalOpen(true);
+                return;
+              }
+
+              router.push(`/workspaces/${workspaceId}/contributor-insights/${listId}/edit`);
+            }}
           >
-            <Button variant="primary">
-              <FaEdit className="mr-2" /> Edit
-            </Button>
-          </Link>
+            <FaEdit className="mr-2" /> Edit
+          </Button>
         )}
       </div>
+      {workspaceId && (
+        <InsightUpgradeModal
+          workspaceId={workspaceId}
+          variant="all"
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          overLimit={0}
+        />
+      )}
     </div>
   );
 };

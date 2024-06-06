@@ -178,6 +178,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
         numberOfContributors={numberOfContributors}
         isOwner={isOwner}
         owners={owners}
+        overLimit={showBanner}
       >
         <div
           ref={topRef}

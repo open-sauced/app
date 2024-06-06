@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.34.0-beta.4](https://github.com/open-sauced/app/compare/v2.34.0-beta.3...v2.34.0-beta.4) (2024-06-06)
+
+
+### 🍕 Features
+
+* enforce upgrades on workspaces that exceed usage ([#3511](https://github.com/open-sauced/app/issues/3511)) ([d98d4b1](https://github.com/open-sauced/app/commit/d98d4b19c6c9ee0b69bbd0be5ab536ca7aaaca28))
+
+## [2.34.0-beta.3](https://github.com/open-sauced/app/compare/v2.34.0-beta.2...v2.34.0-beta.3) (2024-06-06)
+
+
+### 🐛 Bug Fixes
+
+* now long words break so they fit in the StarSearch Share Prompt OG image ([#3532](https://github.com/open-sauced/app/issues/3532)) ([d752399](https://github.com/open-sauced/app/commit/d752399e7aba016586f98f5bac8906f5d247896b))
+
+## [2.34.0-beta.2](https://github.com/open-sauced/app/compare/v2.34.0-beta.1...v2.34.0-beta.2) (2024-06-06)
+
+
+### 🐛 Bug Fixes
+
+* update user redirects to exclude notifications, settings, and card paths ([#3525](https://github.com/open-sauced/app/issues/3525)) ([efc893e](https://github.com/open-sauced/app/commit/efc893e1fb6819212e83ac4a7cd2c10c9216ef0a))
+
+## [2.34.0-beta.1](https://github.com/open-sauced/app/compare/v2.33.1-beta.1...v2.34.0-beta.1) (2024-06-06)
+
+
+### 🍕 Features
+
+* implemented StarSearch share prompt ([#3324](https://github.com/open-sauced/app/issues/3324)) ([c7ce190](https://github.com/open-sauced/app/commit/c7ce190b359906a57d420f757234e03d7a7c7120))
+
+## [2.33.1-beta.1](https://github.com/open-sauced/app/compare/v2.33.0...v2.33.1-beta.1) (2024-06-06)
+
+
+### 🐛 Bug Fixes
+
+* set `/star-search` user avatar after logging in ([#3531](https://github.com/open-sauced/app/issues/3531)) ([71b54b7](https://github.com/open-sauced/app/commit/71b54b7ac5bfa5a6746cc9e301e6282c4c2c2425))
+
 ## [2.33.0](https://github.com/open-sauced/app/compare/v2.32.0...v2.33.0) (2024-06-04)
 
 
