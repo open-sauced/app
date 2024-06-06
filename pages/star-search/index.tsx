@@ -1,7 +1,6 @@
 import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import Markdown from "react-markdown";
@@ -122,12 +121,6 @@ async function updateComponentRegistry(name: string) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createPagesServerClient(context);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const userId = Number(session?.user.user_metadata.sub);
   const searchParams = new URLSearchParams();
 
   if (context.query.prompt) {
@@ -139,13 +132,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
-  return { props: { userId, ogImageUrl } };
+  return { props: { ogImageUrl } };
 }
-
-type StarSearchPageProps = {
-  userId: number;
-  ogImageUrl: string;
-};
 
 type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch"; content: string | WidgetDefinition };
 
@@ -179,7 +167,7 @@ function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefini
   );
 }
 
-export default function StarSearchPage({ userId: initialUserId, ogImageUrl }: StarSearchPageProps) {
+export default function StarSearchPage({ ogImageUrl }: { ogImageUrl: string }) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -191,8 +179,8 @@ export default function StarSearchPage({ userId: initialUserId, ogImageUrl }: St
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
   const { session } = useSession(true);
+  const userId = session ? session.id : "";
   const { sessionToken: bearerToken } = useSupabaseAuth();
-  const userId = useMemo(() => (session ? session.id : initialUserId), [session]);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
   function registerPrompt(promptInput: StarSearchPromptAnalytic) {
