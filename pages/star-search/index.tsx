@@ -142,12 +142,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   const userId = Number(session?.user.user_metadata.sub);
   const searchParams = new URLSearchParams();
+  let sharedPrompt: string | null = null;
 
   if (context.query.prompt) {
-    searchParams.set("prompt", context.query.prompt as string);
+    sharedPrompt = context.query.prompt as string;
+    searchParams.set("prompt", sharedPrompt);
   }
-
-  const sharedPrompt = context.query.prompt ?? (null as string | null);
 
   const ogImageUrl = `${new URL(
     `/og-images/star-search/?${searchParams}`,
@@ -160,7 +160,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 type StarSearchPageProps = {
   userId: number;
   ogImageUrl: string;
-  sharedPrompt: string;
+  sharedPrompt: string | null;
 };
 
 type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch"; content: string | WidgetDefinition };
@@ -224,7 +224,7 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
   const [twitterShareUrl, setTwitterShareUrl] = useState<string | undefined>();
   const [linkedInShareUrl, setLinkedInShareUrl] = useState<string | undefined>();
   const promptMessage = chat[0]?.content as string | undefined; // First message is always the prompt
-  const [checkAuth, setCheckAuth] = useState(true);
+  const [checkAuth, setCheckAuth] = useState(false);
 
   useEffect(() => {
     if (!promptMessage) {
@@ -284,11 +284,6 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
   }
 
   function addPromptInput(prompt: string) {
-    if (checkAuth && !bearerToken) {
-      setLoginModalOpen(true);
-      return;
-    }
-
     if (!inputRef.current?.form) {
       return;
     }
@@ -296,24 +291,18 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
     inputRef.current.value = prompt;
     const { form } = inputRef.current;
 
-    if (!checkAuth || bearerToken) {
-      setTimeout(() => {
-        if (typeof form.requestSubmit === "function") {
-          form.requestSubmit();
-        } else {
-          form.dispatchEvent(new Event("submit", { cancelable: true }));
-        }
-      });
-    }
+    setTimeout(() => {
+      if (typeof form.requestSubmit === "function") {
+        form.requestSubmit();
+      } else {
+        form.dispatchEvent(new Event("submit", { cancelable: true }));
+      }
+    });
   }
 
   useEffect(() => {
     if (!sharedPrompt || ranOnce) {
       return;
-    }
-
-    if (checkAuth) {
-      setCheckAuth(false);
     }
 
     if (inputRef.current && !checkAuth) {
@@ -326,8 +315,8 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
 
-  const submitPrompt = async (prompt: string, checkAuth = true) => {
-    if (checkAuth && !bearerToken) {
+  const submitPrompt = async (prompt: string) => {
+    if ((checkAuth && sharedPrompt && !bearerToken) || (!bearerToken && !sharedPrompt)) {
       setLoginModalOpen(true);
       return;
     }
@@ -344,7 +333,6 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
       setStarSearchState("chat");
     }
     setIsRunning(true); // disables input
-    setCheckAuth(true);
 
     // add user prompt to history
     setChat((history) => {
@@ -378,6 +366,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
         return temp;
       });
       setIsRunning(false); // enables input
+      setCheckAuth(true);
       return;
     }
 
@@ -387,6 +376,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
+        setCheckAuth(true);
 
         registerPrompt({
           promptContent: prompt,
@@ -763,7 +753,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 event.preventDefault();
                 const form = event.currentTarget;
                 const formData = new FormData(form);
-                submitPrompt(formData.get("prompt") as string, !sharedPrompt);
+                submitPrompt(formData.get("prompt") as string);
                 form.reset();
               }}
               className="bg-white flex justify-between mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
@@ -776,8 +766,8 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 disabled={isRunning}
                 placeholder="Ask a question"
                 className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
-                onClick={() => {
-                  if (checkAuth || (!bearerToken && !sharedPrompt)) {
+                onFocus={() => {
+                  if ((checkAuth && sharedPrompt && !bearerToken) || (!bearerToken && !sharedPrompt)) {
                     setLoginModalOpen(true);
                   }
                 }}
