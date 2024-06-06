@@ -109,6 +109,8 @@ test("StarSearch shared prompt (Logged Out Flow)", async ({ page }) => {
   // get an element with role feed and name "StarSearch conversation" and check that it exists.
   const feed = page.getByRole("feed", { name: "StarSearch conversation" });
   await expect(feed).toBeVisible();
+
+  // This is commented out for now because I haven't figured out a way yet to get the mocked stream response to slow down a bit.
   // await expect(feed).toHaveAttribute("aria-busy", "true");
 
   const firstArticle = feed.locator("article").first();
@@ -117,6 +119,7 @@ test("StarSearch shared prompt (Logged Out Flow)", async ({ page }) => {
     "Who are the most prevalent contributors to the TypeScript ecosystem?"
   );
 
+  // This is commented out for now because I haven't figured out a way yet to get the mocked stream response to slow down a bit.
   // await expect(feed.getByRole("progressbar", { name: "Loading..." })).toBeVisible();
 
   await expect(feed.getByRole("progressbar", { name: "Loading..." })).not.toBeVisible();
@@ -147,7 +150,7 @@ test("StarSearch shared prompt (Logged Out Flow)", async ({ page }) => {
   await expect(page.getByRole("menuitem", { name: "Share to LinkedIn", exact: true })).not.toBeVisible();
   await expect(page.getByRole("menuitem", { name: "Copy link", exact: true })).not.toBeVisible();
 
-  // check for OG image
+  // check for shared prompt OG image
   const expectedUrl = `${config.use?.baseURL}/og-images/star-search/?prompt=Who+are+the+most+prevalent+contributors+to+the+TypeScript+ecosystem%3F`;
 
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", expectedUrl);
