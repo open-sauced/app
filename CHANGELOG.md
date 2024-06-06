@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.33.1-beta.1](https://github.com/open-sauced/app/compare/v2.33.0...v2.33.1-beta.1) (2024-06-06)
+
+
+### 🐛 Bug Fixes
+
+* set `/star-search` user avatar after logging in ([#3531](https://github.com/open-sauced/app/issues/3531)) ([71b54b7](https://github.com/open-sauced/app/commit/71b54b7ac5bfa5a6746cc9e301e6282c4c2c2425))
+
 ## [2.33.0](https://github.com/open-sauced/app/compare/v2.32.0...v2.33.0) (2024-06-04)
 
 

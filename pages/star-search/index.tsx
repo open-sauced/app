@@ -1,5 +1,4 @@
 import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { Fragment, useEffect, useRef, useState } from "react";
 
@@ -31,6 +30,7 @@ import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import useSession from "lib/hooks/useSession";
 
 export interface WidgetDefinition {
   name: string;
@@ -135,12 +135,6 @@ async function updateComponentRegistry(name: string) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const supabase = createPagesServerClient(context);
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const userId = Number(session?.user.user_metadata.sub);
   const searchParams = new URLSearchParams();
   let sharedPrompt: string | null = null;
 
@@ -154,11 +148,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
-  return { props: { userId, ogImageUrl, sharedPrompt } };
+  return { props: { ogImageUrl, sharedPrompt } };
 }
 
 type StarSearchPageProps = {
-  userId: number;
   ogImageUrl: string;
   sharedPrompt: string | null;
 };
@@ -206,7 +199,7 @@ function getSharedPromptUrl(promptMessage: string | undefined) {
   return new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
 }
 
-export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: StarSearchPageProps) {
+export default function StarSearchPage({ ogImageUrl, sharedPrompt }: StarSearchPageProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChat[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -217,6 +210,8 @@ export default function StarSearchPage({ userId, ogImageUrl, sharedPrompt }: Sta
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
+  const { session } = useSession(true);
+  const userId = session ? session.id : undefined;
   const { sessionToken: bearerToken } = useSupabaseAuth();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
