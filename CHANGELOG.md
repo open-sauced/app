@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.34.0-beta.2](https://github.com/open-sauced/app/compare/v2.34.0-beta.1...v2.34.0-beta.2) (2024-06-06)
+
+
+### 🐛 Bug Fixes
+
+* update user redirects to exclude notifications, settings, and card paths ([#3525](https://github.com/open-sauced/app/issues/3525)) ([efc893e](https://github.com/open-sauced/app/commit/efc893e1fb6819212e83ac4a7cd2c10c9216ef0a))
+
 ## [2.34.0-beta.1](https://github.com/open-sauced/app/compare/v2.33.1-beta.1...v2.34.0-beta.1) (2024-06-06)
 
 
