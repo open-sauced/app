@@ -179,7 +179,7 @@ export default function StarSearchPage({ ogImageUrl }: { ogImageUrl: string }) {
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
   const { session } = useSession(true);
-  const userId = session ? session.id : "";
+  const userId = session ? session.id : undefined;
   const { sessionToken: bearerToken } = useSupabaseAuth();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
