@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.34.0-beta.4](https://github.com/open-sauced/app/compare/v2.34.0-beta.3...v2.34.0-beta.4) (2024-06-06)
+
+
+### 🍕 Features
+
+* enforce upgrades on workspaces that exceed usage ([#3511](https://github.com/open-sauced/app/issues/3511)) ([d98d4b1](https://github.com/open-sauced/app/commit/d98d4b19c6c9ee0b69bbd0be5ab536ca7aaaca28))
+
 ## [2.34.0-beta.3](https://github.com/open-sauced/app/compare/v2.34.0-beta.2...v2.34.0-beta.3) (2024-06-06)
 
 
