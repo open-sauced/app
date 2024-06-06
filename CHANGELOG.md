@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.34.0-beta.3](https://github.com/open-sauced/app/compare/v2.34.0-beta.2...v2.34.0-beta.3) (2024-06-06)
+
+
+### 🐛 Bug Fixes
+
+* now long words break so they fit in the StarSearch Share Prompt OG image ([#3532](https://github.com/open-sauced/app/issues/3532)) ([d752399](https://github.com/open-sauced/app/commit/d752399e7aba016586f98f5bac8906f5d247896b))
+
 ## [2.34.0-beta.2](https://github.com/open-sauced/app/compare/v2.34.0-beta.1...v2.34.0-beta.2) (2024-06-06)
 
 
