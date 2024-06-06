@@ -6,6 +6,7 @@ export function getRepoList(repos: string) {
       const [repoOwner, repoName] = repo.split("/");
 
       return {
+        repoOwner,
         repoName,
         repoIcon: `https://www.github.com/${repoOwner ?? "github"}.png?size=460`,
       };
