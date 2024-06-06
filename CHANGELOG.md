@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.34.0-beta.1](https://github.com/open-sauced/app/compare/v2.33.1-beta.1...v2.34.0-beta.1) (2024-06-06)
+
+
+### 🍕 Features
+
+* implemented StarSearch share prompt ([#3324](https://github.com/open-sauced/app/issues/3324)) ([c7ce190](https://github.com/open-sauced/app/commit/c7ce190b359906a57d420f757234e03d7a7c7120))
+
 ## [2.33.1-beta.1](https://github.com/open-sauced/app/compare/v2.33.0...v2.33.1-beta.1) (2024-06-06)
 
 
