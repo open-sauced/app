@@ -173,7 +173,6 @@ export default function StarSearchPage({ ogImageUrl }: { ogImageUrl: string }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [ranOnce, setRanOnce] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
@@ -182,6 +181,7 @@ export default function StarSearchPage({ ogImageUrl }: { ogImageUrl: string }) {
   const userId = session ? session.id : undefined;
   const { sessionToken: bearerToken } = useSupabaseAuth();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   function registerPrompt(promptInput: StarSearchPromptAnalytic) {
     prompt({
