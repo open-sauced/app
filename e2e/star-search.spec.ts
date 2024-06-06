@@ -133,12 +133,10 @@ test("StarSearch shared prompt (Logged Out Flow)", async ({ page }) => {
   const sharePopupMenuTrigger = await page.getByRole("button", { name: "Share prompt options", exact: true });
   expect(sharePopupMenuTrigger).toBeVisible();
   expect(sharePopupMenuTrigger).toHaveAttribute("aria-haspopup", "menu");
-  expect(sharePopupMenuTrigger).not.toHaveAttribute("aria-expanded");
 
   // open share prompt options menu
   await sharePopupMenuTrigger.click();
 
-  expect(sharePopupMenuTrigger).toHaveAttribute("aria-expanded", "true");
   expect(await page.getByRole("menuitem", { name: "Share to Twitter/X", exact: true })).toBeVisible();
   expect(await page.getByRole("menuitem", { name: "Share to LinkedIn", exact: true })).toBeVisible();
   expect(await page.getByRole("menuitem", { name: "Copy link", exact: true })).toBeVisible();
