@@ -498,6 +498,15 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
               setChat((chat) => {
                 const updatedChat = [...chat];
 
+                if (updatedChat.length === 1) {
+                  updatedChat.push({
+                    author: "StarSearch",
+                    content: payload.content.parts[0],
+                  });
+
+                  return updatedChat;
+                }
+
                 let changes = updatedChat.at(-1);
 
                 if (changes) {
@@ -551,6 +560,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
         const chatMessagesToProcess = chat.filter(
           (c) => typeof c.content === "string" || componentRegistry.has(c.content.name)
         );
+
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
         let heightToRemove = 300;
 
@@ -621,7 +631,10 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                   {promptMessage && (
                     <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
                       <DropdownMenu open={dropdownOpen} modal={false}>
-                        <DropdownMenuTrigger onClick={() => setDropdownOpen(!dropdownOpen)}>
+                        <DropdownMenuTrigger
+                          onClick={() => setDropdownOpen(!dropdownOpen)}
+                          aria-label="Share prompt options"
+                        >
                           <HiOutlineShare width={22} height={22} />
                         </DropdownMenuTrigger>
 
@@ -653,7 +666,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                               className="flex gap-2.5 py-1 items-center pl-3 pr-7"
                             >
                               <FiLinkedin size={22} />
-                              <span>Share to Linkedin</span>
+                              <span>Share to LinkedIn</span>
                             </a>
                           </DropdownMenuItem>
                           <DropdownMenuItem
@@ -792,7 +805,8 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
 function Header() {
   return (
-    <div className="flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
+    <header className="flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
+      fff
       <div className="flex items-center gap-2">
         <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
         <h1 className="text-3xl font-bold text-transparent lg:text-4xl bg-clip-text bg-gradient-to-r from-sauced-orange to-amber-400">
@@ -800,7 +814,7 @@ function Header() {
         </h1>
       </div>
       <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">Copilot, but for git history</h2>
-    </div>
+    </header>
   );
 }
 
