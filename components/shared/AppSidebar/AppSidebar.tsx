@@ -17,6 +17,7 @@ import { BiHomeAlt } from "react-icons/bi";
 import { useEffectOnce } from "react-use";
 import Link from "next/link";
 import { LuArrowLeftToLine } from "react-icons/lu";
+import { usePostHog } from "posthog-js/react";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 
 import SingleSelect from "components/atoms/Select/single-select";
@@ -53,6 +54,7 @@ interface AppSideBarProps {
 
 export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSideBarProps) => {
   const { user, signIn } = useSupabaseAuth();
+  const posthog = usePostHog();
   const { data: rawRepoInsights, isLoading: repoInsightsLoading } = useWorkspacesRepositoryInsights({ workspaceId });
   const { data: rawContributorInsights, isLoading: contributorInsightsLoading } = useWorkspacesContributorInsights({
     workspaceId,
@@ -120,6 +122,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                   placeholder="Select a workspace"
                   onValueChange={(value) => {
                     if (value === "new") {
+                      posthog.capture("clicked: sidebar Create Workspace");
                       if (!user) {
                         signIn({
                           provider: "github",
