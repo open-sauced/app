@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { ComponentProps, useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { usePostHog } from "posthog-js/react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -32,6 +33,7 @@ const NewWorkspace = () => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
+  const posthog = usePostHog();
   const nameQuery = router.query.name as string;
   const descriptionQuery = router.query.description as string;
   const reposQuery = router.query.repos as string;
@@ -118,6 +120,9 @@ const NewWorkspace = () => {
             className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
             loading={isSaving}
             loadingText={"Creating Workspace..."}
+            onClick={() => {
+              posthog.capture("clicked: finish Create Workspace");
+            }}
           >
             Create Workspace
           </Button>
@@ -155,6 +160,7 @@ const NewWorkspace = () => {
         <TrackedReposTable
           repositories={trackedRepos}
           onAddRepos={() => {
+            posthog.capture("clicked: Add Repositories (Create workspace)");
             setTrackedReposModalOpen(true);
           }}
           onRemoveTrackedRepo={(event) => {
