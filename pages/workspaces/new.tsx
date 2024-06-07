@@ -73,6 +73,7 @@ const NewWorkspace = () => {
 
   const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
+    posthog.capture("clicked: finish Create Workspace");
     setIsSaving(true);
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
@@ -120,9 +121,6 @@ const NewWorkspace = () => {
             className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
             loading={isSaving}
             loadingText={"Creating Workspace..."}
-            onClick={() => {
-              posthog.capture("clicked: finish Create Workspace");
-            }}
           >
             Create Workspace
           </Button>
