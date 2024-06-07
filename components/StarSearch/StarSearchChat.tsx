@@ -2,12 +2,10 @@ import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { Fragment, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { BsArrowUpShort, BsLink45Deg, BsTwitterX } from "react-icons/bs";
+import { BsArrowUpShort } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 import { captureException } from "@sentry/nextjs";
-import { HiOutlineShare } from "react-icons/hi";
-import { FiLinkedin } from "react-icons/fi";
 import { Drawer } from "components/shared/Drawer";
 import {
   StarSearchFeedbackAnalytic,
@@ -18,18 +16,13 @@ import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "components/atoms/Dropdown/dropdown";
-import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { shortenUrl } from "lib/utils/shorten-url";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { ChatAvatar } from "./ChatAvatar";
 import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
 import { SuggestedPrompts } from "./SuggestedPrompts";
+import { SharePromptMenu } from "./SharePromptMenu";
 
 const SUGGESTIONS = [
   {
@@ -88,7 +81,7 @@ function getSharedPromptUrl(promptMessage: string | undefined) {
   const params = new URLSearchParams();
   params.set("prompt", promptMessage);
 
-  return new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
+  return `${new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000")}`;
 }
 
 type StarSearchChatProps = {
@@ -109,10 +102,7 @@ export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: 
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [twitterShareUrl, setTwitterShareUrl] = useState<string | undefined>();
-  const [linkedInShareUrl, setLinkedInShareUrl] = useState<string | undefined>();
+  const [sharePromptUrl, setSharePromptUrl] = useState<string | undefined>();
   const promptMessage = chat[0]?.content as string | undefined; // First message is always the prompt
   const [checkAuth, setCheckAuth] = useState(false);
 
@@ -121,23 +111,11 @@ export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: 
       return;
     }
 
-    const promptUrl = getSharedPromptUrl(promptMessage);
-    let twitterUrl = "https://twitter.com/intent/tweet";
-    let linkedinUrl = "https://www.linkedin.com/sharing/share-offsite/";
-    const twitterParams = new URLSearchParams();
-    const linkedinParams = new URLSearchParams();
-
     setTimeout(async () => {
+      const promptUrl = getSharedPromptUrl(promptMessage);
       const shortUrl = await shortenUrl(`${promptUrl}`);
 
-      twitterParams.set("text", `Here's my StarSearch prompt!\n\nTry it out for yourself. #StarSearch`);
-      twitterParams.set("url", shortUrl);
-      twitterUrl += `?${twitterParams.toString()}`;
-      setTwitterShareUrl(twitterUrl);
-
-      linkedinParams.set("url", shortUrl);
-      linkedinUrl += `?${linkedinParams.toString()}`;
-      setLinkedInShareUrl(linkedinUrl);
+      setSharePromptUrl(shortUrl);
     }, 0);
   }, [promptMessage]);
 
@@ -506,64 +484,17 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
-                  {promptMessage && (
+                  {sharePromptUrl ? (
                     <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
-                      <DropdownMenu open={dropdownOpen} modal={false}>
-                        <DropdownMenuTrigger
-                          onClick={() => setDropdownOpen(!dropdownOpen)}
-                          aria-label="Share prompt options"
-                        >
-                          <HiOutlineShare width={22} height={22} />
-                        </DropdownMenuTrigger>
-
-                        <DropdownMenuContent
-                          ref={dropdownRef}
-                          align="end"
-                          className="flex flex-col gap-1 py-2 rounded-lg"
-                        >
-                          <DropdownMenuItem className="rounded-md">
-                            <a
-                              href={twitterShareUrl}
-                              target="_blank"
-                              onClick={() => {
-                                setDropdownOpen(false);
-                              }}
-                              className="flex gap-2.5 py-1 items-center pl-3 pr-7"
-                            >
-                              <BsTwitterX size={22} />
-                              <span>Share to Twitter/X</span>
-                            </a>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem className="rounded-md">
-                            <a
-                              href={linkedInShareUrl}
-                              target="_blank"
-                              onClick={() => {
-                                setDropdownOpen(false);
-                              }}
-                              className="flex gap-2.5 py-1 items-center pl-3 pr-7"
-                            >
-                              <FiLinkedin size={22} />
-                              <span>Share to LinkedIn</span>
-                            </a>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={async () => {
-                              const shortUrl = await shortenUrl(`${getSharedPromptUrl(promptMessage)}`);
-                              writeToClipboard(shortUrl);
-                              setDropdownOpen(false);
-                            }}
-                            className="rounded-md"
-                          >
-                            <div className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer">
-                              <BsLink45Deg size={22} />
-                              <span>Copy link</span>
-                            </div>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                      <SharePromptMenu
+                        promptUrl={sharePromptUrl}
+                        copyLinkHandler={async (url: string) => {
+                          await writeToClipboard(url);
+                          toast({ description: "Link copied to clipboard", variant: "success" });
+                        }}
+                      />
                     </div>
-                  )}
+                  ) : null}
                 </span>
               </div>
             </div>
