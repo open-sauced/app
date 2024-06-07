@@ -1,18 +1,13 @@
 import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
 import { Fragment, useEffect, useRef, useState } from "react";
-
 import Image from "next/image";
-import Markdown from "react-markdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { BsArrowUpShort, BsLink45Deg, BsTwitterX } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
-import * as Sentry from "@sentry/nextjs";
-import remarkGfm from "remark-gfm";
+import { captureException } from "@sentry/nextjs";
 import { HiOutlineShare } from "react-icons/hi";
 import { FiLinkedin } from "react-icons/fi";
-import Card from "components/atoms/Card/card";
-import { getAvatarById } from "lib/utils/github";
 import { Drawer } from "components/shared/Drawer";
 import {
   StarSearchFeedbackAnalytic,
@@ -21,19 +16,8 @@ import {
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
-import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
-
-export interface WidgetDefinition {
-  name: string;
-  arguments?: Record<string, Record<string, any>>;
-}
-
-type Author = "You" | "StarSearch" | "Guest";
-
-const componentRegistry = new Map<string, Function>();
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,6 +26,10 @@ import {
 } from "components/atoms/Dropdown/dropdown";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { shortenUrl } from "lib/utils/shorten-url";
+import { ChatAvatar } from "./ChatAvatar";
+import { WidgetDefinition } from "./StarSearchWidget";
+import { Chatbox, StarSearchChatMessage } from "./Chatbox";
+import { SuggestedPrompts } from "./SuggestedPrompts";
 
 const SUGGESTIONS = [
   {
@@ -62,43 +50,7 @@ const SUGGESTIONS = [
   },
 ];
 
-type SuggesionTypes = (typeof SUGGESTIONS)[number];
-
-interface ChatAvatarProps {
-  author: Author;
-  userId?: number;
-}
-
-function ChatAvatar({ author, userId }: ChatAvatarProps) {
-  switch (author) {
-    case "You":
-      return (
-        <Image
-          src={getAvatarById(`${userId}`)}
-          alt="Your profile picture"
-          width={32}
-          height={32}
-          className="w-8 h-8 rounded-full lg:w-10 lg:h-10"
-        />
-      );
-    case "Guest":
-    case "StarSearch":
-      return (
-        <div className="bg-gradient-to-br from-sauced-orange to-amber-400 px-1.5 py-1 lg:p-2 rounded-full w-max">
-          <Image
-            src="/assets/star-search-logo-white.svg"
-            alt="StarSearch logo"
-            width={24}
-            height={24}
-            className="w-6 h-6"
-          />
-        </div>
-      );
-
-    default:
-      throw new Error(`Invalid author: ${author} type provided`);
-  }
-}
+const componentRegistry = new Map<string, React.ComponentType<any>>();
 
 async function updateComponentRegistry(name: string) {
   if (componentRegistry.has(name)) {
@@ -120,44 +72,12 @@ async function updateComponentRegistry(name: string) {
       componentRegistry.set(name, component);
     }
   } catch (error) {
-    Sentry.captureException(
+    captureException(
       new Error(`Unable to dynamically import the widget component for StarSearch. Widget name: ${name}`, {
         cause: error,
       })
     );
   }
-}
-
-type StarSearchChat = { author: "You"; content: string } | { author: "StarSearch"; content: string | WidgetDefinition };
-
-/**
- * This function renders a StarSearch widget component based on the widget definition provided.
- * The function will look up the widget component in the component registry and render it with the provided arguments (component props).
- *
- * @param widgetDefinition - The widget definition object that contains the name of the widget and the arguments to pass to the widget.
- *
- * @returns The rendered widget component or null if the widget component is not found.
- *
- */
-function StarSearchWidget({ widgetDefinition }: { widgetDefinition: WidgetDefinition }) {
-  const Component = componentRegistry.get(widgetDefinition.name);
-  if (Component == null) {
-    Sentry.captureException(
-      new Error(
-        `Component not found in the StarSearch component  registry. Widget definition: ${JSON.stringify(
-          widgetDefinition
-        )}`
-      )
-    );
-
-    return null;
-  }
-
-  return (
-    <div className="w-full pt-2 lg:w-1/2" style={{ maxWidth: "440px" }}>
-      <Component {...widgetDefinition.arguments} />
-    </div>
-  );
 }
 
 function getSharedPromptUrl(promptMessage: string | undefined) {
@@ -171,16 +91,16 @@ function getSharedPromptUrl(promptMessage: string | undefined) {
   return new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000");
 }
 
-type StarSearchEmbedProps = {
+type StarSearchChatProps = {
   userId: number | undefined;
   sharedPrompt: string | null;
   bearerToken: string | undefined | null;
   isMobile: boolean;
 };
 
-export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: StarSearchEmbedProps) {
+export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
-  const [chat, setChat] = useState<StarSearchChat[]>([]);
+  const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -429,9 +349,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
             // skip over cases where the payload is somehow malformed or missing content altogether
             if (!payload || !payload.content || payload.content.parts.length === 0) {
-              Sentry.captureException(
-                new Error(`Parsed and rejected malformed JSON for StarSearch. JSON payload: ${v}`)
-              );
+              captureException(new Error(`Parsed and rejected malformed JSON for StarSearch. JSON payload: ${v}`));
               return;
             }
 
@@ -489,9 +407,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
               });
             }
           } catch (error) {
-            Sentry.captureException(
-              new Error(`Failed to parse JSON for StarSearch. JSON payload: ${v}`, { cause: error })
-            );
+            captureException(new Error(`Failed to parse JSON for StarSearch. JSON payload: ${v}`, { cause: error }));
           }
 
           return;
@@ -508,7 +424,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
             {sharedPrompt && !ranOnce ? null : (
               <>
                 <Header />
-                {isMobile ? null : <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
+                {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
               </>
             )}
           </div>
@@ -541,7 +457,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                     if (loaderIndex === i && isRunning && messages.length - 1 === i) {
                       return (
                         <Fragment key={i}>
-                          <Chatbox userId={userId} message={message} />
+                          <Chatbox userId={userId} message={message} componentRegistry={componentRegistry} />
                           <div className="flex items-center gap-2 my-4 w-max">
                             <ChatAvatar author="StarSearch" userId={userId} />
                             <StarSearchLoader />
@@ -549,7 +465,9 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                         </Fragment>
                       );
                     } else {
-                      return <Chatbox key={i} userId={userId} message={message} />;
+                      return (
+                        <Chatbox key={i} userId={userId} message={message} componentRegistry={componentRegistry} />
+                      );
                     }
                   })}
                 </section>
@@ -675,7 +593,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                   </button>
                 }
               >
-                <SuggestionBoxes addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
+                <SuggestedPrompts addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
               </Drawer>
             ) : (
               <>
@@ -701,7 +619,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
               >
                 <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
               </button>
-              <SuggestionBoxes
+              <SuggestedPrompts
                 isHorizontal
                 addPromptInput={(prompt) => {
                   addPromptInput(prompt);
@@ -766,125 +684,5 @@ function Header() {
       </div>
       <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">Copilot, but for git history</h2>
     </header>
-  );
-}
-
-function SuggestionBoxes({
-  addPromptInput,
-  isHorizontal,
-  suggestions,
-}: {
-  addPromptInput: (prompt: string) => void;
-  isHorizontal?: boolean;
-  suggestions: SuggesionTypes[];
-}) {
-  return isHorizontal ? (
-    <Carousel className="w-fit max-w-[32rem] my-0 mx-auto px-auto md:ml-[1.63rem] lg:mx-auto" orientation="horizontal">
-      <CarouselContent>
-        {suggestions.map((suggestion, i) => (
-          <CarouselItem key={i} className="items-stretch">
-            <button onClick={() => addPromptInput(suggestion.prompt)} className="h-full mx-auto">
-              <Card className="w-[30rem] shadow-md border-none mx-auto h-full text-start !p-6 text-slate-600">
-                <h3 className="text-sm font-semibold lg:text-base">{suggestion.title}</h3>
-                <p className="text-xs lg:text-sm">{suggestion.prompt}</p>
-              </Card>
-            </button>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
-  ) : (
-    <ul
-      aria-label="suggested prompts"
-      className="grid w-full max-w-3xl grid-cols-1 gap-2 lg:grid-cols-2 place-content-center lg:gap-4"
-    >
-      {suggestions.map((suggestion, i) => (
-        <li key={i}>
-          <button
-            onClick={() => addPromptInput(suggestion.prompt)}
-            aria-labelledby={`prompt-label-${i}`}
-            aria-describedby={`prompt-description-${i}`}
-            className="w-full h-full"
-          >
-            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
-              <span id={`prompt-label-${i}`} className="text-sm font-semibold lg:text-base">
-                {suggestion.title}
-              </span>
-              <p id={`prompt-description-${i}`} className="text-xs lg:text-sm">
-                {suggestion.prompt}
-              </p>
-            </Card>
-          </button>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function Chatbox({ message, userId }: { message: StarSearchChat; userId?: number }) {
-  if (typeof message.content == "string") {
-    // Breaking all words so that the rendered markdown doesn't overflow the container
-    // in certain cases where the content is a long string.
-    return (
-      <div className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
-        <ChatAvatar author={userId ? message.author : "Guest"} userId={userId} />
-        <Card
-          className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline"
-          focusable
-        >
-          <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
-          <div aria-label="chat message">
-            <Markdown
-              remarkPlugins={[remarkGfm]}
-              components={{
-                a(props) {
-                  if (typeof props.children === "string" && props.children.startsWith("@")) {
-                    return (
-                      <span className="inline-flex items-baseline self-center gap-1">
-                        <span className="self-center">
-                          <AvatarHoverCard
-                            contributor={props.children.replace("@", "")}
-                            repositories={[]}
-                            size="xsmall"
-                          />
-                        </span>
-                        <a {...props} />
-                      </span>
-                    );
-                  }
-
-                  return <a {...props} />;
-                },
-              }}
-              className="prose break-words"
-            >
-              {message.content}
-            </Markdown>
-          </div>
-        </Card>
-      </div>
-    );
-  }
-
-  if (!componentRegistry.has(message.content.name)) {
-    return null;
-  }
-
-  // No fallback is being used for the dynamic widget because if it fails for some reason, it's better to not render it than cause
-  // noise with a message like, unable to render the lotto factor widget. The widgets are additive to the textual response which
-  // is still valuable.
-  return (
-    <Sentry.ErrorBoundary>
-      <li className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
-        <ChatAvatar author={message.author} userId={userId} />
-        <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline">
-          <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
-          <StarSearchWidget widgetDefinition={message.content} />
-        </Card>
-      </li>
-    </Sentry.ErrorBoundary>
   );
 }
