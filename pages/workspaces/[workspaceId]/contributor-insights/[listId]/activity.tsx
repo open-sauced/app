@@ -285,47 +285,49 @@ const ListActivityPage = ({
         ) : null
       }
     >
-      <ListPageLayout
-        list={list}
-        workspaceId={workspaceId}
-        numberOfContributors={numberOfContributors}
-        isOwner={isOwner}
-        owners={owners}
-        repoFilter={true}
-        repoFilterOptions={filterOptions}
-        repoFilterSelect={setFilteredRepositories}
-        overLimit={showBanner}
-      >
-        {isError ? (
-          <Error errorMessage="Unable to load list activity" />
-        ) : (
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-            <MostActiveContributorsCard
-              data={contributorStats?.data ?? []}
-              totalContributions={contributorStats?.meta.allContributionsCount ?? 0}
-              topContributor={contributorStats?.data?.length ? contributorStats.data[0] : undefined}
-              setContributorType={setContributorType}
-              contributorType={contributorType}
-              isLoading={isLoading}
-            />
-            <span ref={treemapRef} className="relative">
-              <ContributionsTreemap
-                projectId={projectId}
-                orgName={currentOrgName}
-                onDrillDown={onDrillDown as NodeMouseEventHandler<object>}
-                onDrillUp={onDrillUp}
-                data={treemapData}
-                color={getGraphColorPalette()}
-                isLoading={isLoadingProjectContributionsByUser || isTreemapLoading}
-                onToggleResize={onToggleResize}
+      <div className="px-4 py-8 lg:px-16 lg:py-12">
+        <ListPageLayout
+          list={list}
+          workspaceId={workspaceId}
+          numberOfContributors={numberOfContributors}
+          isOwner={isOwner}
+          owners={owners}
+          repoFilter={true}
+          repoFilterOptions={filterOptions}
+          repoFilterSelect={setFilteredRepositories}
+          overLimit={showBanner}
+        >
+          {isError ? (
+            <Error errorMessage="Unable to load list activity" />
+          ) : (
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+              <MostActiveContributorsCard
+                data={contributorStats?.data ?? []}
+                totalContributions={contributorStats?.meta.allContributionsCount ?? 0}
+                topContributor={contributorStats?.data?.length ? contributorStats.data[0] : undefined}
+                setContributorType={setContributorType}
+                contributorType={contributorType}
+                isLoading={isLoading}
               />
-            </span>
-            <FeatureFlagged flag="contributions_evolution_by_type" featureFlags={featureFlags}>
-              <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
-            </FeatureFlagged>
-          </div>
-        )}
-      </ListPageLayout>
+              <span ref={treemapRef} className="relative">
+                <ContributionsTreemap
+                  projectId={projectId}
+                  orgName={currentOrgName}
+                  onDrillDown={onDrillDown as NodeMouseEventHandler<object>}
+                  onDrillUp={onDrillUp}
+                  data={treemapData}
+                  color={getGraphColorPalette()}
+                  isLoading={isLoadingProjectContributionsByUser || isTreemapLoading}
+                  onToggleResize={onToggleResize}
+                />
+              </span>
+              <FeatureFlagged flag="contributions_evolution_by_type" featureFlags={featureFlags}>
+                <ContributionsEvolutionByType data={evolutionData} isLoading={isLoadingEvolution} />
+              </FeatureFlagged>
+            </div>
+          )}
+        </ListPageLayout>
+      </div>
       <InsightUpgradeModal
         workspaceId={workspaceId}
         variant="all"

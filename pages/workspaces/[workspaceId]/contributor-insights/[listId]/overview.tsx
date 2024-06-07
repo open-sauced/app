@@ -162,7 +162,7 @@ const ListsOverview = ({
         owners={owners}
         overLimit={showBanner}
       >
-        <div className="flex flex-col w-full gap-4">
+        <div className="flex flex-col w-full gap-4 px-4 py-8 lg:px-16 lg:py-12">
           <ClientOnly>
             <section className="flex flex-wrap items-center max-w-full gap-4 lg:flex-row lg:flex-nowrap">
               <HighlightCard

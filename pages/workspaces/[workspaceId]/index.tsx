@@ -139,86 +139,88 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
           ) : null
         }
       >
-        <WorkspaceHeader workspace={workspace} />
-        <div className="grid sm:flex gap-4 pt-3 border-b">
-          <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
-          <div className="flex justify-end items-center gap-4">
-            <Button
-              variant="outline"
-              onClick={() => {
-                if (overLimit) {
-                  setIsInsightUpgradeModalOpen(true);
-                  return;
-                }
+        <div className="px-4 py-8 lg:px-16 lg:py-12">
+          <WorkspaceHeader workspace={workspace} />
+          <div className="grid sm:flex gap-4 pt-3 border-b">
+            <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
+            <div className="flex justify-end items-center gap-4">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  if (overLimit) {
+                    setIsInsightUpgradeModalOpen(true);
+                    return;
+                  }
 
-                router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
-              }}
-            >
-              Add repositories
-            </Button>
-            <DayRangePicker />
-            <TrackedRepositoryFilter
-              options={filterOptions}
-              handleSelect={(selected: OptionKeys[]) => setFilteredRepositories(selected)}
-            />
+                  router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
+                }}
+              >
+                Add repositories
+              </Button>
+              <DayRangePicker />
+              <TrackedRepositoryFilter
+                options={filterOptions}
+                handleSelect={(selected: OptionKeys[]) => setFilteredRepositories(selected)}
+              />
+            </div>
           </div>
-        </div>
-        <div className="mt-6 grid gap-6">
-          <ClientOnly>
-            {repoIds.length > 0 ? (
-              <>
-                <div className="flex flex-col lg:flex-row gap-6">
-                  <RepositoryStatCard
-                    type="pulls"
-                    stats={stats?.data?.pull_requests}
-                    isLoading={isLoadingStats}
-                    hasError={isStatsError}
-                  />
-                  <RepositoryStatCard
-                    type="issues"
-                    stats={stats?.data?.issues}
-                    isLoading={isLoadingStats}
-                    hasError={isStatsError}
-                  />
-                  <RepositoryStatCard
-                    type="engagement"
-                    stats={stats?.data?.repos}
-                    isLoading={isLoadingStats}
-                    hasError={isStatsError}
-                  />
-                </div>
-                <Repositories repositories={repoIds} showSearch={false} />
-              </>
-            ) : (
-              <Card className="bg-transparent">
-                <EmptyState
-                  onAddRepos={() => {
-                    if (overLimit) {
-                      setIsInsightUpgradeModalOpen(true);
-                      return;
-                    }
+          <div className="mt-6 grid gap-6">
+            <ClientOnly>
+              {repoIds.length > 0 ? (
+                <>
+                  <div className="flex flex-col lg:flex-row gap-6">
+                    <RepositoryStatCard
+                      type="pulls"
+                      stats={stats?.data?.pull_requests}
+                      isLoading={isLoadingStats}
+                      hasError={isStatsError}
+                    />
+                    <RepositoryStatCard
+                      type="issues"
+                      stats={stats?.data?.issues}
+                      isLoading={isLoadingStats}
+                      hasError={isStatsError}
+                    />
+                    <RepositoryStatCard
+                      type="engagement"
+                      stats={stats?.data?.repos}
+                      isLoading={isLoadingStats}
+                      hasError={isStatsError}
+                    />
+                  </div>
+                  <Repositories repositories={repoIds} showSearch={false} />
+                </>
+              ) : (
+                <Card className="bg-transparent">
+                  <EmptyState
+                    onAddRepos={() => {
+                      if (overLimit) {
+                        setIsInsightUpgradeModalOpen(true);
+                        return;
+                      }
 
-                    router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
-                  }}
-                />
-              </Card>
-            )}
-          </ClientOnly>
-        </div>
+                      router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
+                    }}
+                  />
+                </Card>
+              )}
+            </ClientOnly>
+          </div>
 
-        <WorkspaceWelcomeModal
-          isOpen={showWelcome!}
-          onClose={() => {
-            setShowWelcome(false);
-          }}
-        />
-        <InsightUpgradeModal
-          workspaceId={workspace.id}
-          variant="contributors"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={10}
-        />
+          <WorkspaceWelcomeModal
+            isOpen={showWelcome!}
+            onClose={() => {
+              setShowWelcome(false);
+            }}
+          />
+          <InsightUpgradeModal
+            workspaceId={workspace.id}
+            variant="contributors"
+            isOpen={isInsightUpgradeModalOpen}
+            onClose={() => setIsInsightUpgradeModalOpen(false)}
+            overLimit={10}
+          />
+        </div>
       </WorkspaceLayout>
     </>
   );
