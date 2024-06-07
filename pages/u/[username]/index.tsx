@@ -17,6 +17,8 @@ import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velo
 import { useHasMounted } from "lib/hooks/useHasMounted";
 import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 import { isValidUrlSlug } from "lib/utils/url-validators";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import useSession from "lib/hooks/useSession";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -30,6 +32,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
   const router = useRouter();
   const range = (router.query.range as string) ?? "30";
   const hasMounted = useHasMounted();
+  const { session } = useSession(true);
 
   const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
     contributor: username,
@@ -83,7 +86,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           />
         )}
       </Head>
-      <div className="w-full">
+      <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <ContributorProfilePage
           prMerged={mergedPrs.length}
           error={isError}
@@ -98,7 +101,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           prVelocity={prVelocity}
           range={range}
         />
-      </div>
+      </WorkspaceLayout>
     </>
   );
 };
