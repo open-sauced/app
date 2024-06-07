@@ -7,9 +7,12 @@ import { useEffect, useState } from "react";
 import { PostHog } from "posthog-js";
 import { usePostHog } from "posthog-js/react";
 import clsx from "clsx";
-import { FaGlobe, FaXTwitter } from "react-icons/fa6";
+import { FaGlobe, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { AiOutlineGift } from "react-icons/ai";
 import { BsDiscord } from "react-icons/bs";
+import { MdClose } from "react-icons/md";
+import { TbMailFilled } from "react-icons/tb";
+import { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import SEO from "layouts/SEO/SEO";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
@@ -24,6 +27,7 @@ import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 
 import rainbowCover from "img/rainbow-cover.png";
 import pizzaGradient from "img/icons/pizza-gradient.svg";
+import openSaucedImg from "img/openSauced-icon.png";
 import Avatar from "components/atoms/Avatar/avatar";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { cardPageUrl } from "lib/utils/urls";
@@ -46,10 +50,20 @@ import Pill from "components/atoms/Pill/pill";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import PullRequestTable from "components/molecules/PullRequestTable/pull-request-table";
-import ContributorProfileTab from "components/organisms/ContributorProfileTab/contributor-profile-tab";
 import MultiSelect, { OptionKeys } from "components/atoms/Select/multi-select";
 import { addListContributor, useFetchAllLists } from "lib/hooks/useList";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import { copyToClipboard } from "lib/utils/copy-to-clipboard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
+import UserRepositoryRecommendations from "components/organisms/UserRepositoryRecommendations/user-repository-recommendations";
+import { setQueryParams } from "lib/utils/query-params";
+
+type TabKey = "highlights" | "contributions" | "recommendations";
+const tabs: Record<TabKey, string> = {
+  highlights: "Highlights",
+  contributions: "Contributions",
+  recommendations: "Recommendations",
+};
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const { username } = (context.params as { username: string }) ?? { username: "" };
@@ -84,9 +98,15 @@ export default function UserPage({ user }: { user: DbUser }) {
   const range = (router.query.range as string) ?? "30";
   const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/users/${user.login}`;
 
+  const { tab = "contributions" } = router.query as { tab: TabKey };
+  function onTabChange(value: string) {
+    const tabValue = value as TabKey;
+    setQueryParams({ tab: tabValue } satisfies { tab: TabKey });
+  }
+
   const username = user.login;
   const { session } = useSession(true);
-  const { user: loggedInUser } = useSupabaseAuth();
+  const { user: loggedInUser, signIn } = useSupabaseAuth();
   const isOwner = user?.login === loggedInUser?.user_metadata.user_name;
 
   const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
@@ -345,20 +365,50 @@ export default function UserPage({ user }: { user: DbUser }) {
                   <UserLanguageChart contributorLanguages={contributorLanguages} />
                 </div>
               </div>
+
+              {/* TABS SECTION */}
               <div className="flex-1 mt-10 lg:mt-0">
                 {user ? (
-                  <ContributorProfileTab
-                    repoList={repoList}
-                    recentContributionCount={repoList.length}
-                    prVelocity={prVelocity}
-                    totalPrs={contributorPRMeta.itemCount}
-                    githubName={user.login}
-                    prMerged={mergedPrs.length}
-                    contributor={user}
-                    prTotal={contributorPRMeta.itemCount}
-                    prsMergedPercentage={Math.floor(((mergedPrs.length || 0) / contributorPRMeta.itemCount) * 100)}
-                    range={range}
-                  />
+                  <Tabs value={tab} onValueChange={onTabChange}>
+                    <TabsList className="justify-start w-full overflow-x-auto border-b">
+                      {(Object.keys(tabs) as TabKey[]).map((tab) => (
+                        <TabsTrigger
+                          key={tab}
+                          className={clsx(
+                            "data-[state=active]:border-sauced-orange shrink-0 data-[state=active]:border-b-2 text-lg",
+                            tab === "recommendations" &&
+                              "font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#EA4600] to-[#EB9B00]",
+                            loggedInUser &&
+                              loggedInUser.user_metadata.user_name !== user.login &&
+                              tab === "recommendations" &&
+                              "hidden",
+                            !user && tab === "recommendations" && "hidden"
+                          )}
+                          value={tab}
+                        >
+                          {tabs[tab]}
+                        </TabsTrigger>
+                      ))}
+                    </TabsList>
+
+                    <UserInviteJumbotron
+                      user={user}
+                      loggedInUser={loggedInUser}
+                      posthog={posthog}
+                      toast={toast}
+                      signIn={signIn}
+                    />
+
+                    {/* Highlights Tab details */}
+                    <UserHighlightsTab user={user} />
+
+                    {/* Contributions Tab Details */}
+                    <UserContributionsTab />
+
+                    {loggedInUser && loggedInUser.user_metadata.login === user.login && (
+                      <UserRecommendationsTab user={user} interests={user.interests} />
+                    )}
+                  </Tabs>
                 ) : (
                   <UserNotConnectedTabs />
                 )}
@@ -494,12 +544,293 @@ function UserPageHeader({ user, avatar, isOwner, posthog, currentPath, toast }: 
   );
 }
 
-function UserHighlightsTab() {
+function UserHighlightsTab({ user }: { user: DbUser }) {
   return <></>;
+  {
+    /**
+  return (
+    <TabsContent value={"highlights" satisfies TabKey}>
+      {(hasHighlights || inputVisible) && user_name === login && (
+        <div className="flex max-w-3xl px-2 pt-4 lg:gap-x-3">
+          <div className="hidden lg:inline-flex pt-[0.4rem]">
+            <Avatar
+              alt="user profile avatar"
+              isCircle
+              size="sm"
+              avatarURL={`https://www.github.com/${user.login}.png?size=300`}
+            />
+          </div>
+
+          <HighlightInputForm refreshCallback={mutate} />
+        </div>
+      )}
+      <div className="flex flex-col gap-8 mt-8">
+        {isError && <>An error occurred</>}
+        {isLoading && (
+          <>
+            {Array.from({ length: 2 }).map((_, index) => (
+              <div className="flex flex-col gap-2 lg:flex-row lg:gap-6" key={index}>
+                <SkeletonWrapper width={100} height={20} />
+                <div className="md:max-w-[40rem]">
+                  <SkeletonWrapper height={20} width={500} classNames="mb-2" />
+                  <SkeletonWrapper height={300} />
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+        <>
+          {hasHighlights ? (
+            <div>
+              {highlights.map(({ id, title, highlight, url, shipped_at, created_at, type, tagged_repos }) => (
+                <div className="flex flex-col gap-2 mb-6 lg:flex-row lg:gap-7" key={id}>
+                  <div>
+                    <Link href={`/feed/${id}`}>
+                      <p className="text-sm text-light-slate-10 w-28 max-w-28">
+                        {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
+                      </p>
+                    </Link>
+                  </div>
+                  <ContributorHighlightCard
+                    emojis={emojis}
+                    id={id}
+                    user={user.login || ""}
+                    title={title}
+                    desc={highlight}
+                    highlightLink={url}
+                    shipped_date={shipped_at}
+                    type={type}
+                    refreshCallBack={mutate}
+                    taggedRepos={tagged_repos}
+                  />
+                </div>
+              ))}
+              {meta.pageCount > 1 && (
+                <div className="mt-10 max-w-[48rem] flex px-2 items-center justify-between">
+                  <div>
+                    <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+                  </div>
+                  <Pagination
+                    pages={[]}
+                    totalPage={meta.pageCount}
+                    page={meta.page}
+                    pageSize={meta.itemCount}
+                    goToPage
+                    hasNextPage={meta.hasNextPage}
+                    hasPreviousPage={meta.hasPreviousPage}
+                    onPageChange={function (page: number): void {
+                      setPage(page);
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          ) : (
+            getEmptyHighlightPreset()
+          )}
+        </>
+      </div>
+    </TabsContent>
+  )
+  **/
+  }
 }
 
 function UserContributionsTab() {
   return <></>;
+  {
+    /**
+  return (
+    <TabsContent value={"contributions" satisfies TabKey}>
+      <div className="mt-4">
+        <div className="p-4 mt-4 bg-white border rounded-2xl md:p-6">
+          <div className="flex justify-end">
+            <DayRangePicker />
+          </div>
+          <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
+            <div>
+              <span className="text-xs text-light-slate-11">PRs opened</span>
+              {totalPrs ? (
+                <div className="flex mt-1 lg:justify-center md:pr-8">
+                  <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{totalPrs} PRs</Text>
+                </div>
+              ) : (
+                <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+              )}
+            </div>
+            <div>
+              <span className="text-xs text-light-slate-11">Avg PR velocity</span>
+              {prVelocity ? (
+                <div className="flex items-center gap-2 lg:justify-center">
+                  <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                    {getRelativeDays(prVelocity)}
+                  </Text>
+
+                  <Pill color="purple" text={`${prsMergedPercentage}%`} />
+                </div>
+              ) : (
+                <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+              )}
+            </div>
+            <div>
+              <span className="text-xs text-light-slate-11">Contributed Repos</span>
+              {recentContributionCount ? (
+                <div className="flex mt-1 lg:justify-center">
+                  <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                    {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
+                  </Text>
+                </div>
+              ) : (
+                <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+              )}
+            </div>
+          </div>
+          <div className="mt-2 h-36">
+            <CardLineChart contributor={githubName} range={Number(range)} className="!h-36" />
+          </div>
+          <div>
+            <CardRepoList limit={7} repoList={repoList} />
+          </div>
+          <div className="mt-6">
+            <PullRequestTable
+              limit={15}
+              contributor={githubName}
+              topic={"*"}
+              repositories={undefined}
+              range={range}
+            />
+          </div>
+          <div className="mt-8 text-sm text-light-slate-9">
+            <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
+          </div>
+        </div>
+      </div>
+    </TabsContent>
+  );
+  **/
+  }
+}
+
+function UserRecommendationsTab({ user, interests }: { user: DbUser; interests: string }) {
+  return (
+    <TabsContent value={"recommendations" satisfies TabKey}>
+      <UserRepositoryRecommendations contributor={user} userInterests={interests} />
+    </TabsContent>
+  );
+}
+
+type UserInviteJumbotronProps = {
+  user: DbUser;
+  loggedInUser: User | null;
+  posthog: PostHog;
+  signIn: (data: SignInWithOAuthCredentials) => void;
+  toast: ({ ...props }: Toast) => { id: string; dismiss: () => void; update: (props: ToasterToast) => void };
+};
+
+function UserInviteJumbotron({ user, loggedInUser, posthog, signIn, toast }: UserInviteJumbotronProps) {
+  const handleInviteClick = () => {
+    const hasSocials = !!(user.twitter_username || user.display_email || user.linkedin_url);
+
+    if (!hasSocials) {
+      posthog!.capture("clicked: profile copied", {
+        profile: user.login,
+      });
+
+      copyToClipboard(`${new URL(`/u/${user.login}`, location.origin)}`).then(() => {
+        toast({
+          title: "Copied to clipboard",
+          description: "Share this link with your friend to invite them to OpenSauced!",
+          variant: "success",
+        });
+      });
+    } else {
+      setShowSocialLinks(true);
+    }
+  };
+
+  const [showSocialLinks, setShowSocialLinks] = useState(false);
+  const [showInviteJumbotron, setShowInviteJumbotron] = useState(!user.is_open_sauced_member);
+
+  const EMAIL_BODY = `Hey ${user.login}. I'm using OpenSauced to keep track of my contributions and discover new projects. Try connecting your GitHub to https://oss.fyi/try`;
+  return (
+    <div className="bg-white relative p-6 my-10 rounded-xl gap-4 flex flex-col md:flex-row items-center justify-between shadow-xl md:pr-14">
+      <MdClose
+        onClick={() => setShowInviteJumbotron(!showInviteJumbotron)}
+        role="button"
+        className="absolute right-5 top-5 text-xl text-slate-600"
+      />
+      <div className="flex-1 md:flex-[2.5]">
+        <div className="flex items-center gap-2">
+          <Image className="rounded" alt="OpenSauced Logo" width={30} height={30} src={openSaucedImg} />
+          <Title className="font-semibold text-lg" level={4}>
+            Do you know {user.login}?
+          </Title>
+        </div>
+
+        <p className="text-slate-500 text-sm mt-2">
+          Invite {user.login} to join OpenSauced to be able to access insights, interact with other developers and find
+          new open source opportunities!
+        </p>
+      </div>
+      <div className="flex items-end flex-col gap-2 self-end flex-1 max-md:w-full">
+        {!showSocialLinks && (
+          <Button onClick={handleInviteClick} className="max-md:w-full md:w-40 flex justify-center" variant="primary">
+            Invite to opensauced
+          </Button>
+        )}
+
+        {showSocialLinks && (
+          <div className="flex items-center gap-3">
+            {user.twitter_username && (
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  `Check out @saucedopen. The platform for open source contributors to find their next contribution. https://oss.fyi/social-coding. @${user.twitter_username}`
+                )}&hashtags=opensource,github`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white bg-blue-400 rounded-full p-3"
+              >
+                <FaXTwitter className="text-lg" />
+              </a>
+            )}
+            {user.display_email && (
+              <a
+                href={`mailto:${user.email}?subject=${encodeURIComponent(
+                  "Invitation to join OpenSauced!"
+                )}&body=${encodeURIComponent(EMAIL_BODY)}`}
+                className="text-white bg-red-400 rounded-full p-3"
+              >
+                <TbMailFilled className="text-lg" />
+              </a>
+            )}
+            {user.linkedin_url && (
+              <a
+                href={`https://www.linkedin.com/in/${user.linkedin_url}`}
+                className="text-white bg-blue-600 rounded-full p-3"
+              >
+                <FaLinkedinIn className="text-lg" />
+              </a>
+            )}
+          </div>
+        )}
+
+        {!loggedInUser && !showSocialLinks && (
+          <Button
+            onClick={() =>
+              signIn({
+                provider: "github",
+                options: { redirectTo: `${window.location.origin}/u/${user.login}` },
+              })
+            }
+            className="max-md:w-full md:w-40 flex justify-center"
+            variant="text"
+          >
+            This is me!
+          </Button>
+        )}
+      </div>
+    </div>
+  );
 }
 
 function UserLanguageChart({ contributorLanguages }: { contributorLanguages: LanguageObject[] }) {
@@ -573,7 +904,6 @@ function UserLanguageChart({ contributorLanguages }: { contributorLanguages: Lan
   );
 }
 
-// TODO
 // Making this dropdown separate to optimize for performance and not fetch certain data until the dropdown is rendered
 const AddToListDropdown = ({ username }: { username: string }) => {
   const [selectListOpen, setSelectListOpen] = useState(false);
