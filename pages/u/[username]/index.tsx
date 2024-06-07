@@ -4,10 +4,8 @@ import { jsonLdScriptProps } from "react-schemaorg";
 import { Person } from "schema-dts";
 
 import { useRouter } from "next/router";
-import ProfileLayout from "layouts/profile";
 import SEO from "layouts/SEO/SEO";
 
-import { WithPageLayout } from "interfaces/with-page-layout";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import useRepoList from "lib/hooks/useRepoList";
@@ -28,7 +26,7 @@ export type ContributorSSRProps = {
   ogImage: string;
 };
 
-const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
+export default function Contributor({ username, user, ogImage }: ContributorSSRProps) {
   const router = useRouter();
   const range = (router.query.range as string) ?? "30";
   const hasMounted = useHasMounted();
@@ -104,10 +102,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
       </WorkspaceLayout>
     </>
   );
-};
-
-Contributor.PageLayout = ProfileLayout;
-export default Contributor;
+}
 
 export const getServerSideProps = async (context: UserSSRPropsContext) => {
   const { username } = context.params ?? { username: "" };
