@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.35.0-beta.2](https://github.com/open-sauced/app/compare/v2.35.0-beta.1...v2.35.0-beta.2) (2024-06-07)
+
+
+### 🍕 Features
+
+* add posthog captures on creating workspace flow ([#3539](https://github.com/open-sauced/app/issues/3539)) ([54acb87](https://github.com/open-sauced/app/commit/54acb87432fb31b7fb2ecc48187cd3b82b220941))
+
 ## [2.35.0-beta.1](https://github.com/open-sauced/app/compare/v2.34.0...v2.35.0-beta.1) (2024-06-07)
 
 
