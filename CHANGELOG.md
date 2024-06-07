@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.35.0-beta.1](https://github.com/open-sauced/app/compare/v2.34.0...v2.35.0-beta.1) (2024-06-07)
+
+
+### 🍕 Features
+
+* StarSearch as a standalone component ([#3538](https://github.com/open-sauced/app/issues/3538)) ([54b7a41](https://github.com/open-sauced/app/commit/54b7a41ed0e8abb8022c58caaeacfa8764c1f0d8))
+
 ## [2.34.0](https://github.com/open-sauced/app/compare/v2.33.0...v2.34.0) (2024-06-06)
 
 
