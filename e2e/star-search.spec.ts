@@ -2,6 +2,8 @@ import { test, expect } from "@playwright/test";
 import config from "../playwright.config";
 import { starSearchResponse } from "./fixtures/star-search/streamResponse";
 
+const BASE_URL = config.use?.baseURL ?? "http://localhost:3000";
+
 test("StarSearch (Logged Out Flow)", async ({ page }) => {
   await page.goto("/star-search");
 
@@ -79,14 +81,14 @@ test("StarSearch (Logged Out Flow)", async ({ page }) => {
 test("StarSearch OG image should exist", async ({ page }) => {
   await page.goto("/star-search");
 
-  const expectedUrl = `${config.use?.baseURL}/og-images/star-search/?`;
+  const expectedUrl = `${BASE_URL}/og-images/star-search/?`;
 
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", expectedUrl);
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", expectedUrl);
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
 });
 
-test("StarSearch shared prompt (Logged Out Flow)", async ({ page }) => {
+test("StarSearch shared prompt (Logged Out Flow)", async ({ page, browserName }) => {
   await page.route(/\/v2\/star-search\/stream/, async (route) => {
     await route.fulfill({
       status: 200,
@@ -139,19 +141,45 @@ test("StarSearch shared prompt (Logged Out Flow)", async ({ page }) => {
   // open share prompt options menu
   await sharePopupMenuTrigger.click();
 
-  await expect(page.getByRole("menuitem", { name: "Share to Twitter/X", exact: true })).toBeVisible();
-  await expect(page.getByRole("menuitem", { name: "Share to LinkedIn", exact: true })).toBeVisible();
-  await expect(page.getByRole("menuitem", { name: "Copy link", exact: true })).toBeVisible();
+  const shareToTwitterMenuItem = page.getByRole("menuitem", { name: "Share to Twitter/X", exact: true });
+  const shareToLinkedInMenuItem = page.getByRole("menuitem", { name: "Share to LinkedIn", exact: true });
+  const copyLinkMenuItem = page.getByRole("menuitem", { name: "Copy link", exact: true });
 
-  // close share prompt options menu
-  await sharePopupMenuTrigger.click();
+  await expect(shareToTwitterMenuItem).toBeVisible();
+  await expect(shareToTwitterMenuItem.locator("a")).toHaveAttribute(
+    "href",
+    `https://twitter.com/intent/tweet?text=Here%27s+my+StarSearch+prompt%21%0A%0ATry+it+out+for+yourself.+%23StarSearch&url=${encodeURIComponent(
+      BASE_URL
+    )}%2Fstar-search%3Fprompt%3DWho%2Bare%2Bthe%2Bmost%2Bprevalent%2Bcontributors%2Bto%2Bthe%2BTypeScript%2Becosystem%253F`
+  );
+
+  await expect(shareToLinkedInMenuItem).toBeVisible();
+  await expect(shareToLinkedInMenuItem.locator("a")).toHaveAttribute(
+    "href",
+    `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      BASE_URL
+    )}%2Fstar-search%3Fprompt%3DWho%2Bare%2Bthe%2Bmost%2Bprevalent%2Bcontributors%2Bto%2Bthe%2BTypeScript%2Becosystem%253F`
+  );
+  await expect(copyLinkMenuItem).toBeVisible();
+
+  if (["webkit", "Desktop Safari", "Mobile Safari"].includes(browserName)) {
+    // Webkit does not support clipboard API access in Playwright at the moment.
+    await sharePopupMenuTrigger.click();
+  } else {
+    // Ensure link was copied correctly
+    await copyLinkMenuItem.click();
+    await expect(await page.evaluate("navigator.clipboard.readText()")).toEqual(
+      `${BASE_URL}/star-search?prompt=Who+are+the+most+prevalent+contributors+to+the+TypeScript+ecosystem%3F`
+    );
+  }
+
   await expect(sharePopupMenuTrigger).not.toHaveAttribute("aria-expanded");
-  await expect(page.getByRole("menuitem", { name: "Share to Twitter/X", exact: true })).not.toBeVisible();
-  await expect(page.getByRole("menuitem", { name: "Share to LinkedIn", exact: true })).not.toBeVisible();
-  await expect(page.getByRole("menuitem", { name: "Copy link", exact: true })).not.toBeVisible();
+  await expect(shareToTwitterMenuItem).not.toBeVisible();
+  await expect(shareToLinkedInMenuItem).not.toBeVisible();
+  await expect(copyLinkMenuItem).not.toBeVisible();
 
   // check for shared prompt OG image
-  const expectedUrl = `${config.use?.baseURL}/og-images/star-search/?prompt=Who+are+the+most+prevalent+contributors+to+the+TypeScript+ecosystem%3F`;
+  const expectedUrl = `${BASE_URL}/og-images/star-search/?prompt=Who+are+the+most+prevalent+contributors+to+the+TypeScript+ecosystem%3F`;
 
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", expectedUrl);
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", expectedUrl);
