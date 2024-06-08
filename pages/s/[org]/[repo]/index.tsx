@@ -171,112 +171,114 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
       <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
-        <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
-          <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
-            <header className="flex items-center gap-4">
-              <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
-              <div className="flex flex-col gap-2">
-                <a
-                  href={`https://github.com/${repoData.full_name}`}
-                  target="_blank"
-                  className="group hover:underline underline-offset-2 text-xl md:text-3xl font-bold flex gap-2 items-center"
-                >
-                  <h1>{repoData.full_name}</h1>
-                  <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
-                </a>
-                <p>{repoData.description}</p>
-              </div>
-            </header>
-            <div className="self-end flex flex-col gap-2 items-end">
-              {isMobile ? (
-                <AddToWorkspaceDrawer repository={repoData.full_name} />
-              ) : (
-                <Button
-                  variant="primary"
-                  onClick={() => setIsAddToWorkspaceModalOpen(true)}
-                  className="shrink-0 items-center gap-3 w-fit"
-                >
-                  <MdWorkspaces />
-                  Add to Workspace
-                </Button>
-              )}
-              <div className="flex gap-2 items-center">
-                <Button
-                  variant="outline"
-                  onClick={copyUrlToClipboard}
-                  className="my-auto gap-2 items-center shrink-0 place-self-end"
-                >
-                  <FiCopy />
-                  Share
-                </Button>
-                <DayRangePicker />
+        <div className="px-4 py-8 lg:px-16 lg:py-12">
+          <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
+            <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
+              <header className="flex items-center gap-4">
+                <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
+                <div className="flex flex-col gap-2">
+                  <a
+                    href={`https://github.com/${repoData.full_name}`}
+                    target="_blank"
+                    className="group hover:underline underline-offset-2 text-xl md:text-3xl font-bold flex gap-2 items-center"
+                  >
+                    <h1>{repoData.full_name}</h1>
+                    <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
+                  </a>
+                  <p>{repoData.description}</p>
+                </div>
+              </header>
+              <div className="self-end flex flex-col gap-2 items-end">
+                {isMobile ? (
+                  <AddToWorkspaceDrawer repository={repoData.full_name} />
+                ) : (
+                  <Button
+                    variant="primary"
+                    onClick={() => setIsAddToWorkspaceModalOpen(true)}
+                    className="shrink-0 items-center gap-3 w-fit"
+                  >
+                    <MdWorkspaces />
+                    Add to Workspace
+                  </Button>
+                )}
+                <div className="flex gap-2 items-center">
+                  <Button
+                    variant="outline"
+                    onClick={copyUrlToClipboard}
+                    className="my-auto gap-2 items-center shrink-0 place-self-end"
+                  >
+                    <FiCopy />
+                    Share
+                  </Button>
+                  <DayRangePicker />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="border-b">
-            <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
-          </div>
-          <ClientOnly>
-            <div className="flex flex-col gap-4">
-              <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[36rem]">
-                <ContributorsChart
-                  stats={contributorStats}
-                  range={range}
-                  rangedTotal={contributorRangedTotal!}
-                  syncId={syncId}
-                  isLoading={isContributorDataLoading}
-                  className="h-full lg:col-span-8"
-                />
-
-                <LotteryFactorChart
-                  lotteryFactor={lotteryFactor}
-                  error={lotteryFactorError}
-                  range={range}
-                  isLoading={isLotteryFactorLoading}
-                  className="lg:col-span-4"
-                />
-              </section>
-
-              <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                <IssuesChart
-                  stats={issueStats}
-                  range={range}
-                  velocity={repoStats?.issues_velocity_count ?? 0}
-                  syncId={syncId}
-                  isLoading={isIssueDataLoading}
-                  className="lg:col-span-6 h-fit"
-                />
-
-                <PRChart
-                  stats={prStats}
-                  range={range}
-                  velocity={repoStats?.pr_velocity_count ?? 0}
-                  syncId={syncId}
-                  isLoading={isPrDataLoading}
-                  className="lg:col-span-6 h-fit"
-                />
-
-                <StarsChart
-                  stats={starsData}
-                  total={repoData.stars}
-                  range={range}
-                  syncId={syncId}
-                  isLoading={isStarsDataLoading}
-                  className="lg:col-span-6 h-fit"
-                />
-
-                <ForksChart
-                  stats={forkStats}
-                  total={repoData.forks}
-                  range={range}
-                  syncId={syncId}
-                  isLoading={isForksDataLoading}
-                  className="lg:col-span-6 h-fit"
-                />
-              </section>
+            <div className="border-b">
+              <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
             </div>
-          </ClientOnly>
-        </section>
+            <ClientOnly>
+              <div className="flex flex-col gap-4">
+                <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[36rem]">
+                  <ContributorsChart
+                    stats={contributorStats}
+                    range={range}
+                    rangedTotal={contributorRangedTotal!}
+                    syncId={syncId}
+                    isLoading={isContributorDataLoading}
+                    className="h-full lg:col-span-8"
+                  />
+
+                  <LotteryFactorChart
+                    lotteryFactor={lotteryFactor}
+                    error={lotteryFactorError}
+                    range={range}
+                    isLoading={isLotteryFactorLoading}
+                    className="lg:col-span-4"
+                  />
+                </section>
+
+                <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+                  <IssuesChart
+                    stats={issueStats}
+                    range={range}
+                    velocity={repoStats?.issues_velocity_count ?? 0}
+                    syncId={syncId}
+                    isLoading={isIssueDataLoading}
+                    className="lg:col-span-6 h-fit"
+                  />
+
+                  <PRChart
+                    stats={prStats}
+                    range={range}
+                    velocity={repoStats?.pr_velocity_count ?? 0}
+                    syncId={syncId}
+                    isLoading={isPrDataLoading}
+                    className="lg:col-span-6 h-fit"
+                  />
+
+                  <StarsChart
+                    stats={starsData}
+                    total={repoData.stars}
+                    range={range}
+                    syncId={syncId}
+                    isLoading={isStarsDataLoading}
+                    className="lg:col-span-6 h-fit"
+                  />
+
+                  <ForksChart
+                    stats={forkStats}
+                    total={repoData.forks}
+                    range={range}
+                    syncId={syncId}
+                    isLoading={isForksDataLoading}
+                    className="lg:col-span-6 h-fit"
+                  />
+                </section>
+              </div>
+            </ClientOnly>
+          </section>
+        </div>
       </WorkspaceLayout>
 
       <AddToWorkspaceModal
