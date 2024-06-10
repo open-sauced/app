@@ -33,6 +33,7 @@ import ForksChart from "components/Graphs/ForksChart";
 import IssuesChart from "components/Graphs/IssuesChart";
 import ContributorsChart from "components/Graphs/ContributorsChart";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -228,13 +229,19 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   className="h-full lg:col-span-8"
                 />
 
-                <LotteryFactorChart
-                  lotteryFactor={lotteryFactor}
-                  error={lotteryFactorError}
-                  range={range}
-                  isLoading={isLotteryFactorLoading}
-                  className="lg:col-span-4"
-                />
+                <div className="lg:col-span-4 flex flex-col gap-2">
+                  <ContributorConfidenceChart
+                    contributorConfidence={repoStats?.contributor_confidence}
+                    isError={isError}
+                    isLoading={isLoading}
+                  />
+                  <LotteryFactorChart
+                    lotteryFactor={lotteryFactor}
+                    error={lotteryFactorError}
+                    range={range}
+                    isLoading={isLotteryFactorLoading}
+                  />
+                </div>
               </section>
 
               <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
