@@ -55,10 +55,10 @@ export default function ContributorConfidenceChart({
         </a>
       </header>
 
-      <section className="flex lg:flex-col xl:flex-row gap-2 justify-between w-full h-fit max-h-24 lg:max-h-full xl:max-h-24">
-        {!isError && (isLoading || !contributorConfidence) ? (
-          <SkeletonWrapper width={200} height={150} />
-        ) : (
+      {!isError && (isLoading || !contributorConfidence) ? (
+        <SkeletonWrapper width={300} height={100} />
+      ) : (
+        <section className="flex lg:flex-col xl:flex-row gap-2 justify-between w-full h-fit max-h-24 lg:max-h-full xl:max-h-24">
           <div className="w-full !max-w-[14rem] lg:max-w-full lg:mx-auto h-full lg:max-h-24 xl:h-full">
             <ResponsiveContainer width="100%" height={150}>
               <PieChart>
@@ -75,14 +75,14 @@ export default function ContributorConfidenceChart({
               </PieChart>
             </ResponsiveContainer>
           </div>
-        )}
-        <section className="flex flex-col gap-1 lg:text-center xl:text-start">
-          <h3 className="font-medium text-base lg:text-sm text-slate-700">This project {projectStatus}</h3>
-          <p className="text-base lg:text-sm text-slate-600">
-            {projectDescription} stargazers and forkers come back later on to a meaningful contribution.
-          </p>
+          <section className="flex flex-col gap-1 lg:text-center xl:text-start">
+            <h3 className="font-medium text-base lg:text-sm text-slate-700">This project {projectStatus}</h3>
+            <p className="text-base lg:text-sm text-slate-600">
+              {projectDescription} stargazers and forkers come back later on to a meaningful contribution.
+            </p>
+          </section>
         </section>
-      </section>
+      )}
     </Card>
   );
 }
