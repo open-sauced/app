@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.35.0-beta.3](https://github.com/open-sauced/app/compare/v2.35.0-beta.2...v2.35.0-beta.3) (2024-06-10)
+
+
+### 🍕 Features
+
+* add workspace sidebar to `/explore` ([#3540](https://github.com/open-sauced/app/issues/3540)) ([7928a48](https://github.com/open-sauced/app/commit/7928a489ec102a8472b84bb297b42cd221b7e54f))
+
 ## [2.35.0-beta.2](https://github.com/open-sauced/app/compare/v2.35.0-beta.1...v2.35.0-beta.2) (2024-06-07)
 
 
