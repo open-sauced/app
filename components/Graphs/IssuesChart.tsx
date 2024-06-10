@@ -54,19 +54,19 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
           <div className="flex flex-col gap-4 w-full items-start justify-between px-2">
             <div className="flex gap-1 items-center w-fit">
               <VscIssues className="text-xl" />
-              <h3 className="text-sm font-semibold lg:text-lg text-slate-800">Issues</h3>
-              <p className="text-sm lg:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+              <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Issues</h3>
+              <p className="text-sm xl:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
             </div>
             <aside className="flex gap-6">
               <div>
-                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">
+                <h3 className="text-xs xl:text-sm !font-medium text-slate-500">
                   Opened
                   <span className={`w-2 h-2 rounded-full bg-[#16a34a] mx-1 inline-block`}></span>
                 </h3>
                 <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(openedRangedTotal)}</p>
               </div>
               <div>
-                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">
+                <h3 className="text-xs xl:text-sm !font-medium text-slate-500">
                   Closed
                   <span className={`w-2 h-2 rounded-full bg-[#9333ea] mx-1 inline-block`}></span>
                 </h3>
@@ -83,7 +83,7 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
           </div>
         )}
       </section>
-      <ResponsiveContainer width="100%" height={210}>
+      <ResponsiveContainer width="100%" height={220}>
         {isLoading ? (
           <SkeletonWrapper width={100} height={100} />
         ) : (
