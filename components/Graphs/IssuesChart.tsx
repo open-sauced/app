@@ -63,18 +63,18 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
                   Opened
                   <span className={`w-2 h-2 rounded-full bg-[#16a34a] mx-1 inline-block`}></span>
                 </h3>
-                <p className="font-semibold text-xl lg:text-2xl">{humanizeNumber(openedRangedTotal)}</p>
+                <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(openedRangedTotal)}</p>
               </div>
               <div>
                 <h3 className="text-xs lg:text-sm !font-medium text-slate-500">
                   Closed
                   <span className={`w-2 h-2 rounded-full bg-[#9333ea] mx-1 inline-block`}></span>
                 </h3>
-                <p className="font-semibold text-xl lg:text-2xl">{humanizeNumber(closedRangedTotal)}</p>
+                <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(closedRangedTotal)}</p>
               </div>
               <div>
                 <h3 className="text-xs lg:text-sm !font-medium text-slate-500">Velocity</h3>
-                <p className="font-semibold text-xl lg:text-2xl">
+                <p className="font-semibold text-xl xl:text-2xl">
                   {humanizeNumber(velocity)}
                   <span className="text-xl text-slate-500 pl-0.5">d</span>
                 </p>
