@@ -42,18 +42,18 @@ export default function ContributorsChart({
             <div className="flex gap-2 items-center w-fit">
               <FaUsers className="text-xl" />
               <div className="flex gap-1 items-center">
-                <h3 className="text-sm font-semibold md:text-lg text-slate-800">Contributors</h3>
-                <p className="text-sm md:text-base w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+                <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Contributors</h3>
+                <p className="text-sm xl:text-base w-fit pl-2 text-slate-500 font-medium">{range} days</p>
               </div>
             </div>
             <aside className="flex gap-8">
               <div>
-                <h3 className="text-xs lg:text-sm text-slate-500">Total {range} days</h3>
-                <p className="font-semibold text-xl lg:text-3xl">{rangedTotal}</p>
+                <h3 className="text-xs xl:text-sm text-slate-500">Total {range} days</h3>
+                <p className="font-semibold text-xl xl:text-3xl">{rangedTotal}</p>
               </div>
               <div>
                 <h3 className="text-xs lg:text-sm text-slate-500">Average per day</h3>
-                <p className="font-semibold text-xl lg:text-3xl">{humanizeNumber(rangedAverage)}</p>
+                <p className="font-semibold text-xl xl:text-3xl">{humanizeNumber(rangedAverage)}</p>
               </div>
             </aside>
           </>
