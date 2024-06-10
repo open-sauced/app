@@ -219,22 +219,45 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
           </div>
           <ClientOnly>
             <div className="flex flex-col gap-4">
-              <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[36rem]">
-                <ContributorsChart
-                  stats={contributorStats}
-                  range={range}
-                  rangedTotal={contributorRangedTotal!}
-                  syncId={syncId}
-                  isLoading={isContributorDataLoading}
-                  className="h-full lg:col-span-8"
-                />
+              <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[48rem]">
+                <div className="lg:col-span-8 flex flex-col gap-4">
+                  <ContributorsChart
+                    stats={contributorStats}
+                    range={range}
+                    rangedTotal={contributorRangedTotal!}
+                    syncId={syncId}
+                    isLoading={isContributorDataLoading}
+                    className="h-fit"
+                  />
 
-                <div className="lg:col-span-4 flex flex-col gap-2">
+                  <div className="flex gap-4 flex-col lg:flex-row">
+                    <IssuesChart
+                      stats={issueStats}
+                      range={range}
+                      velocity={repoStats?.issues_velocity_count ?? 0}
+                      syncId={syncId}
+                      isLoading={isIssueDataLoading}
+                      className="h-fit"
+                    />
+
+                    <PRChart
+                      stats={prStats}
+                      range={range}
+                      velocity={repoStats?.pr_velocity_count ?? 0}
+                      syncId={syncId}
+                      isLoading={isPrDataLoading}
+                      className="h-fit"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-4 flex flex-col gap-4">
                   <ContributorConfidenceChart
                     contributorConfidence={repoStats?.contributor_confidence}
                     isError={isError}
                     isLoading={isLoading}
                   />
+
                   <LotteryFactorChart
                     lotteryFactor={lotteryFactor}
                     error={lotteryFactorError}
@@ -245,24 +268,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               </section>
 
               <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                <IssuesChart
-                  stats={issueStats}
-                  range={range}
-                  velocity={repoStats?.issues_velocity_count ?? 0}
-                  syncId={syncId}
-                  isLoading={isIssueDataLoading}
-                  className="lg:col-span-6 h-fit"
-                />
-
-                <PRChart
-                  stats={prStats}
-                  range={range}
-                  velocity={repoStats?.pr_velocity_count ?? 0}
-                  syncId={syncId}
-                  isLoading={isPrDataLoading}
-                  className="lg:col-span-6 h-fit"
-                />
-
                 <StarsChart
                   stats={starsData}
                   total={repoData.stars}

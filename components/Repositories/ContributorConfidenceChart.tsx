@@ -52,11 +52,11 @@ export default function ContributorConfidenceChart({
         </a>
       </header>
 
-      <section className="flex gap-2 justify-between w-full max-h-24 overflow-y-clip">
+      <section className="flex gap-2 justify-between w-full max-h-24 lg:overflow-y-clip">
         {!isError && (isLoading || !contributorConfidence) ? (
           <SkeletonWrapper width={200} height={150} />
         ) : (
-          <ResponsiveContainer width="75%" height={150}>
+          <ResponsiveContainer width="100%" height={150}>
             <PieChart>
               <Pie data={data} dataKey="value" startAngle={180} endAngle={0} innerRadius={42} paddingAngle={0}>
                 {data.map((entry, index) => (
