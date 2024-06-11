@@ -14,7 +14,7 @@ interface ShareMenuProps {
   copyLinkHandler: (url: string) => Promise<void>;
 }
 
-export function SharePromptMenu({ promptUrl, copyLinkHandler }: ShareMenuProps) {
+export function ShareChatMenu({ promptUrl, copyLinkHandler }: ShareMenuProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -74,6 +74,7 @@ export function SharePromptMenu({ promptUrl, copyLinkHandler }: ShareMenuProps) 
             <span>Copy link</span>
           </div>
         </DropdownMenuItem>
+        <p className="px-4 pt-3 ml-0 text-xs border-t text-light-slate-11">Sharing will make this chat public</p>
       </DropdownMenuContent>
     </DropdownMenu>
   );

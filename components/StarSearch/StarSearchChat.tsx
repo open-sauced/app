@@ -22,7 +22,7 @@ import { ChatAvatar } from "./ChatAvatar";
 import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
 import { SuggestedPrompts } from "./SuggestedPrompts";
-import { SharePromptMenu } from "./SharePromptMenu";
+import { ShareChatMenu } from "./ShareChatMenu";
 
 const SUGGESTIONS = [
   {
@@ -520,7 +520,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                   </button>
                   {sharePromptUrl ? (
                     <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
-                      <SharePromptMenu
+                      <ShareChatMenu
                         promptUrl={sharePromptUrl}
                         copyLinkHandler={async (url: string) => {
                           await writeToClipboard(url);
