@@ -21,7 +21,7 @@ export default function ContributorConfidenceChart({
   const data = useMemo(
     () => [
       { name: "confidence", value: percentage },
-      { name: "difference", value: 100 - percentage },
+      { name: "difference", value: 50 - percentage },
     ],
     [contributorConfidence]
   );
