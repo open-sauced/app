@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.35.0-beta.5](https://github.com/open-sauced/app/compare/v2.35.0-beta.4...v2.35.0-beta.5) (2024-06-11)
+
+
+### 🐛 Bug Fixes
+
+* check for valid list id and redirect if invalid ([#3544](https://github.com/open-sauced/app/issues/3544)) ([fcad2e3](https://github.com/open-sauced/app/commit/fcad2e33b3c9940f4f2027da000abb01f06c6989))
+
+## [2.35.0-beta.4](https://github.com/open-sauced/app/compare/v2.35.0-beta.3...v2.35.0-beta.4) (2024-06-11)
+
+
+### 🍕 Features
+
+* add workspace sidebar to `/feed` ([#3541](https://github.com/open-sauced/app/issues/3541)) ([936d06d](https://github.com/open-sauced/app/commit/936d06d81284728d8792f01693839c32948f3cf7))
+
 ## [2.35.0-beta.3](https://github.com/open-sauced/app/compare/v2.35.0-beta.2...v2.35.0-beta.3) (2024-06-10)
 
 

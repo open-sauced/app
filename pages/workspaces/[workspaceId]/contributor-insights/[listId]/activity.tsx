@@ -72,7 +72,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }),
   ]);
 
-  if (error?.status === 404 || error?.status === 401) {
+  if (error?.status === 404 || error?.status === 401 || !list?.id) {
     return {
       notFound: true,
     };
