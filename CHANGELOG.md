@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.35.0-beta.5](https://github.com/open-sauced/app/compare/v2.35.0-beta.4...v2.35.0-beta.5) (2024-06-11)
+
+
+### 🐛 Bug Fixes
+
+* check for valid list id and redirect if invalid ([#3544](https://github.com/open-sauced/app/issues/3544)) ([fcad2e3](https://github.com/open-sauced/app/commit/fcad2e33b3c9940f4f2027da000abb01f06c6989))
+
 ## [2.35.0-beta.4](https://github.com/open-sauced/app/compare/v2.35.0-beta.3...v2.35.0-beta.4) (2024-06-11)
 
 
