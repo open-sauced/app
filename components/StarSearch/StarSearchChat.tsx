@@ -16,13 +16,18 @@ import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
-import { shortenUrl } from "lib/utils/shorten-url";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { useGetStarSearchThreadHistory } from "lib/hooks/api/useGetStarSearchThreadHistory";
+import { getThreadStream } from "lib/utils/star-search-utils";
 import { ChatAvatar } from "./ChatAvatar";
 import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
 import { SuggestedPrompts } from "./SuggestedPrompts";
 import { ShareChatMenu } from "./ShareChatMenu";
+
+const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
+
+Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
 const SUGGESTIONS = [
   {
@@ -73,25 +78,14 @@ async function updateComponentRegistry(name: string) {
   }
 }
 
-function getSharedPromptUrl(promptMessage: string | undefined) {
-  if (!promptMessage) {
-    return;
-  }
-
-  const params = new URLSearchParams();
-  params.set("prompt", promptMessage);
-
-  return `${new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000")}`;
-}
-
 type StarSearchChatProps = {
   userId: number | undefined;
-  sharedPrompt: string | null;
+  sharedChatId: string | null;
   bearerToken: string | undefined | null;
   isMobile: boolean;
 };
 
-export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: StarSearchChatProps) {
+export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -102,16 +96,37 @@ export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: 
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const [sharePromptUrl, setSharePromptUrl] = useState<string | undefined>();
-  const promptMessage = chat[0]?.content as string | undefined; // First message is always the prompt
+  let promptMessage = chat[0]?.content as string | undefined; // First message is always the prompt
   const [checkAuth, setCheckAuth] = useState(false);
-  const [chatId, setChatId] = useState<string | null>();
+  const [chatId, setChatId] = useState<string | null>(sharedChatId);
+  const {
+    data: threadHistory,
+    isError,
+    isLoading,
+    mutate: mutateThreadHistory,
+  } = useGetStarSearchThreadHistory(chatId);
+
+  useEffect(() => {
+    // Prevents the thread history from running when a new thread has been created and is currently
+    // being used. This check is also to prevent the thread history from running multiple times.
+    if (!threadHistory || isLoading || !sharedChatId || (ranOnce && sharedChatId)) {
+      return;
+    }
+
+    if (isError) {
+      setChat([]);
+      chatError();
+      return;
+    }
+
+    const stream = getThreadStream(threadHistory.thread_history);
+    setStarSearchState("chat");
+    processStream(stream.getReader());
+  }, [threadHistory, isError, isLoading, sharedChatId]);
 
   function chatError(resetChatId = false) {
+    setStarSearchState("chat");
     setChat((history) => {
-      const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
-
-Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       const temp = [...history];
 
       temp.push({ author: "StarSearch", content: cannedMessage });
@@ -119,160 +134,17 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
     });
     setIsRunning(false); // enables input
     setCheckAuth(true);
-
     if (resetChatId) {
       setChatId(null);
     }
   }
 
-  useEffect(() => {
-    if (!promptMessage) {
-      return;
-    }
-
-    setTimeout(async () => {
-      const promptUrl = getSharedPromptUrl(promptMessage);
-      const shortUrl = await shortenUrl(`${promptUrl}`);
-
-      setSharePromptUrl(shortUrl);
-    }, 0);
-  }, [promptMessage]);
-
-  function registerPrompt(promptInput: StarSearchPromptAnalytic) {
-    prompt({
-      promptContent: promptInput.promptContent,
-      promptResponse: promptInput.promptResponse,
-    });
-  }
-
-  function registerFeedback(feedbackType: StarSearchFeedbackAnalytic["feedback"]) {
-    feedback({
-      feedback: feedbackType,
-      promptContent: chat
-        .filter(({ author }) => author === "You")
-        .map(({ content }) => {
-          if (typeof content !== "string") {
-            return JSON.stringify(content);
-          }
-
-          return content;
-        }),
-      promptResponse: chat
-        .filter(({ author }) => author === "StarSearch")
-        .map(({ content }) => {
-          if (typeof content !== "string") {
-            return JSON.stringify(content);
-          }
-
-          return content;
-        }),
-    });
-    toast({ description: "Thank you for your feedback!", variant: "success" });
-  }
-
-  function addPromptInput(prompt: string) {
-    if (!inputRef.current?.form) {
-      return;
-    }
-
-    inputRef.current.value = prompt;
-    const { form } = inputRef.current;
-
-    setTimeout(() => {
-      if (typeof form.requestSubmit === "function") {
-        form.requestSubmit();
-      } else {
-        form.dispatchEvent(new Event("submit", { cancelable: true }));
-      }
-    });
-  }
-
-  useEffect(() => {
-    if (!sharedPrompt || ranOnce) {
-      return;
-    }
-
-    if (inputRef.current && !checkAuth) {
-      addPromptInput(sharedPrompt);
-      setShowSuggestions(false);
-    }
-  }, [sharedPrompt, inputRef.current, checkAuth]);
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat]);
-
-  const submitPrompt = async (prompt: string) => {
-    if ((checkAuth && sharedPrompt && !bearerToken) || (!bearerToken && !sharedPrompt)) {
-      setLoginModalOpen(true);
-      return;
-    }
-
-    if (isRunning) {
-      return;
-    }
-
-    if (!ranOnce) {
-      setRanOnce(true);
-    }
-
-    if (starSearchState === "initial") {
-      setStarSearchState("chat");
-    }
-    setIsRunning(true); // disables input
-
-    // add user prompt to history
-    setChat((history) => {
-      const temp = [...history];
-      temp.push({ author: "You", content: prompt });
-      return temp;
-    });
-
-    // get ReadableStream from API
-    const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
-    let id = chatId;
-
-    if (!id) {
-      // Get new StarSearch conversation ID
-      const starSearchThreadResponse = await fetch(`${baseUrl}/star-search`, {
-        method: "POST",
-        body: "{}",
-        headers: {
-          Accept: "*/*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${bearerToken}`,
-        },
-      });
-
-      if (starSearchThreadResponse.status !== 201) {
-        chatError(true);
-        return;
-      }
-
-      const payload = await starSearchThreadResponse.json();
-      id = payload.id;
-      setChatId(id);
-    }
-
-    const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
-      method: "POST",
-      body: JSON.stringify({
-        query_text: prompt,
-      }),
-      headers: {
-        Accept: "*/*",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${bearerToken}`,
-      },
-    });
-
-    if (response.status !== 200) {
+  async function processStream(reader: ReadableStreamDefaultReader<string> | undefined) {
+    if (!reader) {
       chatError();
       return;
     }
 
-    const decoder = new TextDecoderStream();
-    const reader = response.body?.pipeThrough(decoder).getReader();
     while (true) {
       const { done, value } = await reader!.read();
       if (done) {
@@ -356,7 +228,13 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
             const { result } = matched.groups;
 
             // deserialize the json dump from the payload
-            const payload = JSON.parse(result) as StarSearchPayload;
+            let payload = JSON.parse(result) as StarSearchPayload;
+
+            // begin: temporary until John updates message column
+            if ("data" in payload) {
+              payload = payload.data as StarSearchPayload;
+            }
+            // end: temporary until John updates message column
 
             // skip over cases where the payload is somehow malformed or missing content altogether
             if (!payload || !payload.content || payload.content.parts.length === 0) {
@@ -387,7 +265,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
               setChat((chat) => {
                 const updatedChat = [...chat];
 
-                if (updatedChat.length === 1) {
+                if (updatedChat.length <= 1) {
                   updatedChat.push({
                     author: "StarSearch",
                     content: payload.content.parts[0],
@@ -417,6 +295,19 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 return updatedChat;
               });
             }
+
+            if (payload.content.type === "user_prompt") {
+              setChat((chat) => {
+                const updatedChat = [...chat];
+
+                updatedChat.push({
+                  author: "You",
+                  content: payload.content.parts[0],
+                });
+
+                return updatedChat;
+              });
+            }
           } catch (error) {
             captureException(new Error(`Failed to parse JSON for StarSearch. JSON payload: ${v}`, { cause: error }));
           }
@@ -425,6 +316,135 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
         }
       });
     }
+  }
+
+  function registerPrompt(promptInput: StarSearchPromptAnalytic) {
+    prompt({
+      promptContent: promptInput.promptContent,
+      promptResponse: promptInput.promptResponse,
+    });
+  }
+
+  function registerFeedback(feedbackType: StarSearchFeedbackAnalytic["feedback"]) {
+    feedback({
+      feedback: feedbackType,
+      promptContent: chat
+        .filter(({ author }) => author === "You")
+        .map(({ content }) => {
+          if (typeof content !== "string") {
+            return JSON.stringify(content);
+          }
+
+          return content;
+        }),
+      promptResponse: chat
+        .filter(({ author }) => author === "StarSearch")
+        .map(({ content }) => {
+          if (typeof content !== "string") {
+            return JSON.stringify(content);
+          }
+
+          return content;
+        }),
+    });
+    toast({ description: "Thank you for your feedback!", variant: "success" });
+  }
+
+  function addPromptInput(prompt: string) {
+    if (!inputRef.current?.form) {
+      return;
+    }
+
+    inputRef.current.value = prompt;
+    const { form } = inputRef.current;
+
+    setTimeout(() => {
+      if (typeof form.requestSubmit === "function") {
+        form.requestSubmit();
+      } else {
+        form.dispatchEvent(new Event("submit", { cancelable: true }));
+      }
+    });
+  }
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
+
+  const submitPrompt = async (prompt: string) => {
+    if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
+      setLoginModalOpen(true);
+      return;
+    }
+
+    if (isRunning) {
+      return;
+    }
+
+    if (!ranOnce) {
+      setRanOnce(true);
+    }
+
+    if (starSearchState === "initial") {
+      setStarSearchState("chat");
+    }
+    setIsRunning(true); // disables input
+
+    // add user prompt to history
+    setChat((history) => {
+      const temp = [...history];
+      temp.push({ author: "You", content: prompt });
+      return temp;
+    });
+
+    // get ReadableStream from API
+    const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
+
+    // Get new StarSearch conversation ID
+    let id = chatId;
+
+    if (!id) {
+      const starSearchThreadResponse = await fetch(`${baseUrl}/star-search`, {
+        method: "POST",
+        body: "{}",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      });
+
+      if (starSearchThreadResponse.status !== 201) {
+        chatError(true);
+        return;
+      }
+
+      const payload = await starSearchThreadResponse.json();
+      id = payload.id;
+      setChatId(id);
+    }
+
+    const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
+      method: "POST",
+      body: JSON.stringify({
+        query_text: prompt,
+      }),
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      chatError();
+      return;
+    }
+
+    const decoder = new TextDecoderStream();
+    const reader = response.body?.pipeThrough(decoder).getReader();
+
+    processStream(reader);
   };
 
   const renderState = () => {
@@ -432,12 +452,8 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       case "initial":
         return (
           <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
-            {sharedPrompt && !ranOnce ? null : (
-              <>
-                <Header />
-                {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
-              </>
-            )}
+            <Header />
+            {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
           </div>
         );
       case "chat":
@@ -518,17 +534,49 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
-                  {sharePromptUrl ? (
-                    <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
-                      <ShareChatMenu
-                        promptUrl={sharePromptUrl}
-                        copyLinkHandler={async (url: string) => {
-                          await writeToClipboard(url);
-                          toast({ description: "Link copied to clipboard", variant: "success" });
-                        }}
-                      />
-                    </div>
-                  ) : null}
+                  <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
+                    <ShareChatMenu
+                      createLink={
+                        threadHistory?.is_publicly_viewable
+                          ? undefined
+                          : async () => {
+                              const response = await fetch(
+                                `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
+                                {
+                                  body: "",
+                                  method: "POST",
+                                  headers: {
+                                    Authorization: `Bearer ${bearerToken}`,
+                                  },
+                                }
+                              );
+
+                              if (response.status == 201) {
+                                toast({
+                                  description: "Share link created",
+                                  variant: "success",
+                                });
+                                // Causes a re-fetch of the thread history so the hook reruns
+                                // and gets the public_link and is_publicly_viewable property updates
+                                mutateThreadHistory(undefined, true);
+                              } else {
+                                toast({
+                                  description: "Failed to create a share link",
+                                  variant: "danger",
+                                });
+                              }
+                            }
+                      }
+                      shareUrl={threadHistory?.public_link}
+                      copyLinkHandler={async (url: string) => {
+                        await writeToClipboard(url);
+                        toast({
+                          description: "Link copied to clipboard",
+                          variant: "success",
+                        });
+                      }}
+                    />
+                  </div>
                 </span>
               </div>
             </div>
@@ -613,7 +661,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
               placeholder="Ask a question"
               className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
               onFocus={() => {
-                if ((checkAuth && sharedPrompt && !bearerToken) || (!bearerToken && !sharedPrompt)) {
+                if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
                   setLoginModalOpen(true);
                 }
               }}
