@@ -148,17 +148,13 @@ test("StarSearch shared prompt (Logged Out Flow)", async ({ page, browserName })
   await expect(shareToTwitterMenuItem).toBeVisible();
   await expect(shareToTwitterMenuItem.locator("a")).toHaveAttribute(
     "href",
-    `https://twitter.com/intent/tweet?text=Here%27s+my+StarSearch+prompt%21%0A%0ATry+it+out+for+yourself.+%23StarSearch&url=${encodeURIComponent(
-      BASE_URL
-    )}%2Fstar-search%3Fprompt%3DWho%2Bare%2Bthe%2Bmost%2Bprevalent%2Bcontributors%2Bto%2Bthe%2BTypeScript%2Becosystem%253F`
+    `https://twitter.com/intent/tweet?text=Here%27s+my+StarSearch+prompt%21%0A%0ATry+it+out+for+yourself.+%23StarSearch&url=https%3A%2F%2Fdub.sh%2Fte9DaAI`
   );
 
   await expect(shareToLinkedInMenuItem).toBeVisible();
   await expect(shareToLinkedInMenuItem.locator("a")).toHaveAttribute(
     "href",
-    `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-      BASE_URL
-    )}%2Fstar-search%3Fprompt%3DWho%2Bare%2Bthe%2Bmost%2Bprevalent%2Bcontributors%2Bto%2Bthe%2BTypeScript%2Becosystem%253F`
+    `https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fdub.sh%2Fte9DaAI`
   );
   await expect(copyLinkMenuItem).toBeVisible();
 
@@ -168,9 +164,7 @@ test("StarSearch shared prompt (Logged Out Flow)", async ({ page, browserName })
   } else {
     // Ensure link was copied correctly
     await copyLinkMenuItem.click();
-    await expect(await page.evaluate("navigator.clipboard.readText()")).toEqual(
-      `${BASE_URL}/star-search?prompt=Who+are+the+most+prevalent+contributors+to+the+TypeScript+ecosystem%3F`
-    );
+    await expect(await page.evaluate("navigator.clipboard.readText()")).toEqual("https://dub.sh/te9DaAI");
   }
 
   await expect(sharePopupMenuTrigger).not.toHaveAttribute("aria-expanded");
