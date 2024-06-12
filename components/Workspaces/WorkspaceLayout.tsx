@@ -69,7 +69,7 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
             )}
           </ClientOnly>
         </div>
-        <div className={clsx("flex-col items-center grow", !banner && "pt-8 md:pt-12")}>
+        <div className={clsx("flex-col items-center grow")}>
           <ClientOnly>{banner}</ClientOnly>
           <div
             className={clsx(
