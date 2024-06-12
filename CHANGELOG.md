@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.35.0-beta.6](https://github.com/open-sauced/app/compare/v2.35.0-beta.5...v2.35.0-beta.6) (2024-06-12)
+
+
+### 🍕 Features
+
+* add Contributor Confidence stat to repo pages ([#3545](https://github.com/open-sauced/app/issues/3545)) ([bfdc334](https://github.com/open-sauced/app/commit/bfdc3345eabffab83db38a10210e622bcb96866c))
+
 ## [2.35.0-beta.5](https://github.com/open-sauced/app/compare/v2.35.0-beta.4...v2.35.0-beta.5) (2024-06-11)
 
 
