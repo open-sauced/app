@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.35.0-beta.8](https://github.com/open-sauced/app/compare/v2.35.0-beta.7...v2.35.0-beta.8) (2024-06-12)
+
+
+### ✅ Tests
+
+* fixed failing test for StarSearch share prompt ([#3560](https://github.com/open-sauced/app/issues/3560)) ([8dc3119](https://github.com/open-sauced/app/commit/8dc311909175653b945614f17df8f3d261a6d3e1))
+
 ## [2.35.0-beta.7](https://github.com/open-sauced/app/compare/v2.35.0-beta.6...v2.35.0-beta.7) (2024-06-12)
 
 
