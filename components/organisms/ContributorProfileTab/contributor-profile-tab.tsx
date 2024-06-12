@@ -36,6 +36,11 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useToast } from "lib/hooks/useToast";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { DayRangePicker } from "components/shared/DayRangePicker";
+import IssueCommentsTable from "components/Profiles/issue-comments-table";
+import ContributionsFilter, {
+  contributionsOptions,
+  useContributionsFilter,
+} from "components/Profiles/ContributionsFilter";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
@@ -99,6 +104,8 @@ const ContributorProfileTab = ({
 
   const hasHighlights = highlights ? highlights.length > 0 : false;
   const [inputVisible, setInputVisible] = useState(false);
+
+  const { showPRs, showIssueComments, setSelected } = useContributionsFilter();
 
   function onTabChange(value: string) {
     const tabValue = value as TabKey;
@@ -407,14 +414,25 @@ const ContributorProfileTab = ({
             <div>
               <CardRepoList limit={7} repoList={repoList} />
             </div>
-            <div className="mt-6">
-              <PullRequestTable
-                limit={15}
-                contributor={githubName}
-                topic={"*"}
-                repositories={undefined}
-                range={range}
-              />
+            <div className="mt-6 flex flex-col">
+              <div className="flex justify-end pb-2">
+                <ContributionsFilter options={contributionsOptions} handleSelect={setSelected} />
+              </div>
+
+              {showPRs && (
+                <PullRequestTable
+                  limit={15}
+                  contributor={githubName}
+                  topic={"*"}
+                  repositories={undefined}
+                  range={range}
+                />
+              )}
+              {showIssueComments && (
+                <div className="pt-2">
+                  <IssueCommentsTable contributor={githubName} limit={15} range={Number(range ?? 30)} />
+                </div>
+              )}
             </div>
             <div className="mt-8 text-sm text-light-slate-9">
               <p>The data for these contributions is from publicly available open source projects on GitHub.</p>

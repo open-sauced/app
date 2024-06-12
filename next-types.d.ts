@@ -184,6 +184,15 @@ interface DbRepoIssueEvents {
   readonly issue_reactions_eyes: number;
 }
 
+interface DbIssueComment {
+  readonly event_id: number;
+  readonly actor_login: string;
+  readonly event_time: string;
+  readonly repo_name: string;
+  readonly comment_body: string;
+  readonly comment_html_url: string;
+}
+
 interface DbPRContributor {
   readonly author_login: string;
   readonly username: string;
