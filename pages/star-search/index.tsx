@@ -8,11 +8,11 @@ import { StarSearchChat } from "components/StarSearch/StarSearchChat";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const searchParams = new URLSearchParams();
-  let sharedPrompt: string | null = null;
+  let sharedChatId: string | null = null;
 
-  if (context.query.prompt) {
-    sharedPrompt = context.query.prompt as string;
-    searchParams.set("prompt", sharedPrompt);
+  if (context.query.id) {
+    sharedChatId = context.query.id as string;
+    searchParams.set("id", sharedChatId);
   }
 
   const ogImageUrl = `${new URL(
@@ -20,15 +20,15 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
-  return { props: { ogImageUrl, sharedPrompt } };
+  return { props: { ogImageUrl, sharedChatId } };
 }
 
 type StarSearchPageProps = {
   ogImageUrl: string;
-  sharedPrompt: string | null;
+  sharedChatId: string | null;
 };
 
-export default function StarSearchPage({ ogImageUrl, sharedPrompt }: StarSearchPageProps) {
+export default function StarSearchPage({ ogImageUrl, sharedChatId }: StarSearchPageProps) {
   const { session } = useSession(true);
   const userId = session ? session.id : undefined;
   const { sessionToken: bearerToken } = useSupabaseAuth();
@@ -43,7 +43,7 @@ export default function StarSearchPage({ ogImageUrl, sharedPrompt }: StarSearchP
         twitterCard="summary_large_image"
       />
       <ProfileLayout showFooter={false}>
-        <StarSearchChat userId={userId} sharedPrompt={sharedPrompt} bearerToken={bearerToken} isMobile={isMobile} />
+        <StarSearchChat userId={userId} sharedChatId={sharedChatId} bearerToken={bearerToken} isMobile={isMobile} />
       </ProfileLayout>
     </>
   );
