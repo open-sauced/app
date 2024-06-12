@@ -100,7 +100,7 @@ export default function LotteryFactorChart({
         <header className="flex w-full justify-between items-center">
           <div className="flex gap-2 items-center">
             <HiOutlineTicket className="text-xl" />
-            <h3 className="text-sm font-semibold md:text-lg text-slate-800">Lottery Factor</h3>
+            <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Lottery Factor</h3>
             <InfoTooltip information="Identifies project risk due to dependency on top contributors. Indicates project vulnerability if 2 or fewer do >50% of the work." />
           </div>
           {error ? null : isLoading || !lotteryFactor ? (
@@ -125,7 +125,7 @@ export default function LotteryFactorChart({
         </header>
       </section>
 
-      <section className="w-full px-4 flex flex-col gap-4 text-sm">
+      <section className="w-full px-4 flex flex-col gap-4 text-xs xl:text-sm">
         {isLoading ? (
           <Skeleton height={32} />
         ) : (
@@ -196,7 +196,7 @@ export default function LotteryFactorChart({
       ) : null}
 
       {!isLoading && hasContributors ? (
-        <table className="table-fixed divide-y text-xs lg:text-sm text-slate-500 w-full px-4 border-separate border-spacing-y-2">
+        <table className="table-fixed divide-y text-xs xl:text-sm text-slate-500 w-full px-4 border-separate border-spacing-y-2">
           <thead>
             <tr>
               <th className="font-normal text-start">Contributor</th>
@@ -213,7 +213,13 @@ export default function LotteryFactorChart({
                   */}
                   <div className="flex items-center gap-2 text-light-slate-11">
                     <Link href={`/u/${name}`} className="rounded-full">
-                      <Avatar size={36} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
+                      <Avatar
+                        size={24}
+                        className="xl:w-9 xl:h-9"
+                        isCircle
+                        hasBorder={false}
+                        avatarURL={getAvatarByUsername(name)}
+                      />
                     </Link>
                     <div>
                       <h1 className="truncate text-light-slate-12">{name}</h1>
@@ -229,14 +235,16 @@ export default function LotteryFactorChart({
             {isLoading ? <Skeleton /> : null}
             {lotteryFactor?.all_contribs.length && lotteryFactor?.all_contribs.length > 4 ? (
               <tr className={`${hovered === "Other Contributors" ? "font-semibold bg-slate-100" : "font-normal"}`}>
-                <td className="flex gap-2 items-center py-4 pl-2">
+                <td className="flex gap-2 items-center pt-1 pb-2 xl:py-4 pl-2">
                   <StackedOwners
                     owners={lotteryFactor.all_contribs.slice(4, 7).map((contributor) => contributor.contributor)}
                   />
                   <p>Other contributors</p>
                 </td>
                 <td></td>
-                <td className="text-end py-4 pr-2 ">{sortedContributors.at(sortedContributors.length - 1)?.value}%</td>
+                <td className="text-end pt-1 pb-2 pr-2 xl:py-4">
+                  {sortedContributors.at(sortedContributors.length - 1)?.value}%
+                </td>
               </tr>
             ) : null}
           </tbody>
