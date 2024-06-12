@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.35.0-beta.7](https://github.com/open-sauced/app/compare/v2.35.0-beta.6...v2.35.0-beta.7) (2024-06-12)
+
+
+### 🐛 Bug Fixes
+
+* fixed contributor confidence percentage text alignment ([#3559](https://github.com/open-sauced/app/issues/3559)) ([091b204](https://github.com/open-sauced/app/commit/091b204e57edd30a2c7487664fe0fcfb4d6ef005))
+
 ## [2.35.0-beta.6](https://github.com/open-sauced/app/compare/v2.35.0-beta.5...v2.35.0-beta.6) (2024-06-12)
 
 
