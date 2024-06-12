@@ -42,14 +42,14 @@ export default function ContributorConfidenceChart({
 
   return (
     <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-fit items-center py-8`}>
-      <header className="flex w-full justify-between items-center px-4">
-        <div className="flex gap-2 items-center">
+      <header className="flex items-center justify-between w-full px-4">
+        <div className="flex items-center gap-2">
           <FaUserPlus className="text-xl" />
           <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Contributor Confidence</h3>
         </div>
         <a
           href="https://opensauced.pizza/docs"
-          className="text-sauced-orange text-xs xl:text-sm font-semibold hover:underline"
+          className="text-xs font-semibold text-sauced-orange xl:text-sm hover:underline"
         >
           Learn More
         </a>
@@ -58,7 +58,7 @@ export default function ContributorConfidenceChart({
       {!isError && (isLoading || !contributorConfidence) ? (
         <SkeletonWrapper width={300} height={100} />
       ) : (
-        <section className="flex lg:flex-col xl:flex-row gap-2 justify-between w-full h-fit max-h-24 lg:max-h-full xl:max-h-24">
+        <section className="flex justify-between w-full gap-2 lg:flex-col xl:flex-row h-fit max-h-24 lg:max-h-full xl:max-h-24">
           <div className="w-full !max-w-[14rem] lg:max-w-full lg:mx-auto h-full lg:max-h-24 xl:h-full">
             <ResponsiveContainer width="100%" height={150}>
               <PieChart>
@@ -68,15 +68,15 @@ export default function ContributorConfidenceChart({
                   ))}
                   <Label
                     value={`${percentage}%`}
-                    position="center"
-                    className="fill-black text-base xl:text-xl font-semibold"
+                    position="centerBottom"
+                    className="text-base font-semibold fill-black xl:text-xl"
                   />
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
           </div>
           <section className="flex flex-col gap-1 lg:text-center xl:text-start">
-            <h3 className="font-medium text-base lg:text-sm text-slate-700">This project {projectStatus}</h3>
+            <h3 className="text-base font-medium lg:text-sm text-slate-700">This project {projectStatus}</h3>
             <p className="text-base lg:text-sm text-slate-600">
               {projectDescription} stargazers and forkers come back later on to a meaningful contribution.
             </p>
