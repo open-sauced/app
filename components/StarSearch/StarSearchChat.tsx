@@ -105,6 +105,25 @@ export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: 
   const [sharePromptUrl, setSharePromptUrl] = useState<string | undefined>();
   const promptMessage = chat[0]?.content as string | undefined; // First message is always the prompt
   const [checkAuth, setCheckAuth] = useState(false);
+  const [chatId, setChatId] = useState<string | null>();
+
+  function chatError(resetChatId = true) {
+    setChat((history) => {
+      const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
+
+Need some ideas? Try hitting the **Need Inspiration?** button below!`;
+      const temp = [...history];
+
+      temp.push({ author: "StarSearch", content: cannedMessage });
+      return temp;
+    });
+    setIsRunning(false); // enables input
+    setCheckAuth(true);
+
+    if (resetChatId) {
+      setChatId(null);
+    }
+  }
 
   useEffect(() => {
     if (!promptMessage) {
@@ -211,7 +230,31 @@ export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: 
 
     // get ReadableStream from API
     const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
-    const response = await fetch(`${baseUrl}/star-search/stream`, {
+    let id = chatId;
+
+    if (!id) {
+      // Get new StarSearch conversation ID
+      const starSearchThreadResponse = await fetch(`${baseUrl}/star-search`, {
+        method: "POST",
+        body: "{}",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      });
+
+      if (starSearchThreadResponse.status !== 201) {
+        chatError(true);
+        return;
+      }
+
+      const payload = await starSearchThreadResponse.json();
+      id = payload.id;
+      setChatId(id);
+    }
+
+    const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
       method: "POST",
       body: JSON.stringify({
         query_text: prompt,
@@ -224,17 +267,7 @@ export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: 
     });
 
     if (response.status !== 200) {
-      setChat((history) => {
-        const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
-
-Need some ideas? Try hitting the **Need Inspiration?** button below!`;
-        const temp = [...history];
-
-        temp.push({ author: "StarSearch", content: cannedMessage });
-        return temp;
-      });
-      setIsRunning(false); // enables input
-      setCheckAuth(true);
+      chatError();
       return;
     }
 
@@ -458,6 +491,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                   onClick={() => {
                     setStarSearchState("initial");
                     setChat([]);
+                    setChatId(null);
                   }}
                 >
                   Clear chat history
