@@ -69,6 +69,7 @@ interface DbRepo {
   readonly issues_velocity_count?: number;
   readonly churnTotalCount?: number;
   readonly activity_ratio?: number;
+  readonly contributor_confidence?: number;
   readonly language: string;
   readonly stars: number;
   readonly description: string;

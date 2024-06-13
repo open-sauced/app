@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.35.0-beta.8](https://github.com/open-sauced/app/compare/v2.35.0-beta.7...v2.35.0-beta.8) (2024-06-12)
+
+
+### ✅ Tests
+
+* fixed failing test for StarSearch share prompt ([#3560](https://github.com/open-sauced/app/issues/3560)) ([8dc3119](https://github.com/open-sauced/app/commit/8dc311909175653b945614f17df8f3d261a6d3e1))
+
+## [2.35.0-beta.7](https://github.com/open-sauced/app/compare/v2.35.0-beta.6...v2.35.0-beta.7) (2024-06-12)
+
+
+### 🐛 Bug Fixes
+
+* fixed contributor confidence percentage text alignment ([#3559](https://github.com/open-sauced/app/issues/3559)) ([091b204](https://github.com/open-sauced/app/commit/091b204e57edd30a2c7487664fe0fcfb4d6ef005))
+
+## [2.35.0-beta.6](https://github.com/open-sauced/app/compare/v2.35.0-beta.5...v2.35.0-beta.6) (2024-06-12)
+
+
+### 🍕 Features
+
+* add Contributor Confidence stat to repo pages ([#3545](https://github.com/open-sauced/app/issues/3545)) ([bfdc334](https://github.com/open-sauced/app/commit/bfdc3345eabffab83db38a10210e622bcb96866c))
+
 ## [2.35.0-beta.5](https://github.com/open-sauced/app/compare/v2.35.0-beta.4...v2.35.0-beta.5) (2024-06-11)
 
 
