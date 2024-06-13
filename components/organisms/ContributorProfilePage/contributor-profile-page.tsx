@@ -19,10 +19,8 @@ import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
 import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import IssueCommentsTable from "components/Profiles/issue-comments-table";
-import ContributionsFilter, {
-  contributionsOptions,
-  useContributionsFilter,
-} from "components/Profiles/ContributionsFilter";
+import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
+import { SubTabsList } from "components/TabList/tab-list";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 
 const colorKeys = Object.keys(color);
@@ -113,7 +111,7 @@ const ContributorProfilePage = ({
 
   const totalPrs = chartData.reduce((total, curr) => total + curr.y, 0);
   const iscConnected = !!user?.is_open_sauced_member;
-  const { showPRs, showIssueComments, setSelected } = useContributionsFilter();
+  const { showPRs, showIssueComments, selected, setSelected } = useContributionsFilter();
 
   return (
     <div className="w-full ">
@@ -245,18 +243,26 @@ const ContributorProfilePage = ({
                     </div>
 
                     <div className="mt-6">
-                      <div className="flex justify-end pb-2">
-                        <ContributionsFilter options={contributionsOptions} handleSelect={setSelected} />
+                      <div className="pb-2">
+                        <SubTabsList
+                          label="Activity pages"
+                          textSize="small"
+                          tabList={contributionsOptions}
+                          selectedTab={selected.toLowerCase()}
+                          onSelect={(e) => setSelected(e.name)}
+                        />
                       </div>
 
                       {showPRs && (
-                        <PullRequestTable
-                          limit={15}
-                          contributor={githubName}
-                          topic={"*"}
-                          repositories={undefined}
-                          range={range}
-                        />
+                        <div className="pt-2">
+                          <PullRequestTable
+                            limit={15}
+                            contributor={githubName}
+                            topic={"*"}
+                            repositories={undefined}
+                            range={range}
+                          />
+                        </div>
                       )}
 
                       {showIssueComments && (

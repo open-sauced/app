@@ -18,6 +18,7 @@ interface TabListProps {
 interface SubTabsListProps extends TabListProps {
   label: string;
   textSize?: "small" | "regular";
+  onSelect?: (tab: TabItem) => void;
 }
 
 const TabList = ({ tabList, pageId, selectedTab }: TabListProps) => {
@@ -48,7 +49,7 @@ const TabList = ({ tabList, pageId, selectedTab }: TabListProps) => {
   );
 };
 
-export const SubTabsList = ({ tabList, pageId, selectedTab, label, textSize }: SubTabsListProps) => {
+export const SubTabsList = ({ tabList, pageId, selectedTab, label, textSize, onSelect }: SubTabsListProps) => {
   return (
     <nav
       role="tablist"
@@ -68,8 +69,9 @@ export const SubTabsList = ({ tabList, pageId, selectedTab, label, textSize }: S
             data-state={isSelected ? "active" : "inactive"}
             key={index}
             className={clsx(isSelected && "bg-white shadow", "rounded py-1 px-2", !isSelected && "text-light-slate-11")}
+            onClick={onSelect ? () => onSelect(tab) : undefined}
           >
-            <Link href={`${pageId ? `${pageId}/` : ""}${tab.path}`}>{tab.name}</Link>
+            {onSelect ? tab.name : <Link href={`${pageId ? `${pageId}/` : ""}${tab.path}`}>{tab.name}</Link>}
           </div>
         );
       })}

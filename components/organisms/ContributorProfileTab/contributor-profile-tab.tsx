@@ -37,10 +37,8 @@ import { useToast } from "lib/hooks/useToast";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import IssueCommentsTable from "components/Profiles/issue-comments-table";
-import ContributionsFilter, {
-  contributionsOptions,
-  useContributionsFilter,
-} from "components/Profiles/ContributionsFilter";
+import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
+import { SubTabsList } from "components/TabList/tab-list";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
@@ -105,7 +103,7 @@ const ContributorProfileTab = ({
   const hasHighlights = highlights ? highlights.length > 0 : false;
   const [inputVisible, setInputVisible] = useState(false);
 
-  const { showPRs, showIssueComments, setSelected } = useContributionsFilter();
+  const { showPRs, showIssueComments, selected, setSelected } = useContributionsFilter();
 
   function onTabChange(value: string) {
     const tabValue = value as TabKey;
@@ -415,18 +413,26 @@ const ContributorProfileTab = ({
               <CardRepoList limit={7} repoList={repoList} />
             </div>
             <div className="mt-6 flex flex-col">
-              <div className="flex justify-end pb-2">
-                <ContributionsFilter options={contributionsOptions} handleSelect={setSelected} />
+              <div className="pb-2">
+                <SubTabsList
+                  label="Contributions"
+                  textSize="small"
+                  tabList={contributionsOptions}
+                  selectedTab={selected.toLowerCase()}
+                  onSelect={(e) => setSelected(e.name)}
+                />
               </div>
 
               {showPRs && (
-                <PullRequestTable
-                  limit={15}
-                  contributor={githubName}
-                  topic={"*"}
-                  repositories={undefined}
-                  range={range}
-                />
+                <div className="pt-2">
+                  <PullRequestTable
+                    limit={15}
+                    contributor={githubName}
+                    topic={"*"}
+                    repositories={undefined}
+                    range={range}
+                  />
+                </div>
               )}
               {showIssueComments && (
                 <div className="pt-2">
