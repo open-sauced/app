@@ -133,17 +133,25 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, su
       if (done) {
         setIsRunning(false); // enables input
         setCheckAuth(true);
-        const [userPrompt, ...systemResponses] = chat;
+        setChat((chat) => {
+          // This is a bit of a hack.
+          //
+          // We're not changing the chat state, but we're using this as a way to capture the user prompt and the
+          // StarSearch response as an analytic.
+          const [userPrompt, ...systemResponses] = chat;
 
-        registerPrompt({
-          // userPrompt.content will always be a string, but the .toString() is we don't need to check the type of
-          // StarSearch message
-          promptContent: userPrompt.content.toString(),
-          promptResponse:
-            systemResponses
-              // There can be multiple responses because of widgets, so we need to serialize the widget data
-              .map((c) => (typeof c.content === "string" ? c.content : JSON.stringify(c.content)))
-              .join("\n") || "No response captured",
+          registerPrompt({
+            // userPrompt.content will always be a string, but the .toString() is we don't need to check
+            // the type of StarSearch message
+            promptContent: userPrompt.content.toString(),
+            promptResponse:
+              systemResponses
+                // There can be multiple responses because of widgets, so we need to serialize the widget data
+                .map((c) => (typeof c.content === "string" ? c.content : JSON.stringify(c.content)))
+                .join("\n") || "No response captured",
+          });
+
+          return chat;
         });
         return;
       }
