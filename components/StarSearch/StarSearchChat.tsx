@@ -96,7 +96,6 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile }: 
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  let promptMessage = chat[0]?.content as string | undefined; // First message is always the prompt
   const [checkAuth, setCheckAuth] = useState(false);
   const [chatId, setChatId] = useState<string | null>(sharedChatId);
   const {
@@ -150,12 +149,14 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile }: 
       if (done) {
         setIsRunning(false); // enables input
         setCheckAuth(true);
+        const [userPrompt, ...systemResponses] = chat;
 
         registerPrompt({
-          promptContent: prompt,
+          // userPrompt.content will always be a string, but the .toString() is we don't need to check the type of
+          // StarSearch message
+          promptContent: userPrompt.content.toString(),
           promptResponse:
-            chat
-              .slice(1)
+            systemResponses
               // There can be multiple responses because of widgets, so we need to serialize the widget data
               .map((c) => (typeof c.content === "string" ? c.content : JSON.stringify(c.content)))
               .join("\n") || "No response captured",
