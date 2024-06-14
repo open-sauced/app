@@ -113,10 +113,12 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile }: 
     }
 
     if (isError) {
-      setChat([]);
       chatError();
       return;
     }
+
+    // Reset chat as we're loading a shared chat
+    setChat([]);
 
     const stream = getThreadStream(threadHistory.thread_history);
     setStarSearchState("chat");
