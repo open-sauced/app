@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.36.0-beta.1](https://github.com/open-sauced/app/compare/v2.35.0...v2.36.0-beta.1) (2024-06-14)
+
+
+### 🍕 Features
+
+* now StarSearch uses the new StarSearch API endpoints for chat creation/updates ([#3565](https://github.com/open-sauced/app/issues/3565)) ([0ac0145](https://github.com/open-sauced/app/commit/0ac0145d85025307385452f7badcb6e19c543fd5))
+
 ## [2.35.0](https://github.com/open-sauced/app/compare/v2.34.0...v2.35.0) (2024-06-12)
 
 
