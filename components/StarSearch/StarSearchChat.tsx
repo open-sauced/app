@@ -107,7 +107,7 @@ export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: 
   const [checkAuth, setCheckAuth] = useState(false);
   const [chatId, setChatId] = useState<string | null>();
 
-  function chatError(resetChatId = true) {
+  function chatError(resetChatId = false) {
     setChat((history) => {
       const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
 
