@@ -29,25 +29,6 @@ const cannedMessage = `I am a chat bot that highlights open source contributors.
 
 Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
-const SUGGESTIONS = [
-  {
-    title: "Get information on contributor activity",
-    prompt: "What type of pull requests has @brandonroberts worked on?",
-  },
-  {
-    title: "Identify key contributors",
-    prompt: "Who are the most prevalent contributors to the TypeScript ecosystem?",
-  },
-  {
-    title: "Find contributors based on their work",
-    prompt: "Show me the lottery factor for contributors in the remix-run/react-router project?",
-  },
-  {
-    title: "Find experts",
-    prompt: "Who are the best developers that know Tailwind and are interested in Rust?",
-  },
-];
-
 const componentRegistry = new Map<string, React.ComponentType<any>>();
 
 async function updateComponentRegistry(name: string) {
@@ -83,9 +64,10 @@ type StarSearchChatProps = {
   sharedChatId: string | null;
   bearerToken: string | undefined | null;
   isMobile: boolean;
+  suggestions: { title: string; prompt: string }[];
 };
 
-export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile }: StarSearchChatProps) {
+export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, suggestions }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -456,7 +438,7 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile }: 
         return (
           <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
             <Header />
-            {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
+            {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />}
           </div>
         );
       case "chat":
@@ -609,7 +591,7 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile }: 
                   </button>
                 }
               >
-                <SuggestedPrompts addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
+                <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
               </Drawer>
             ) : (
               <>
@@ -641,7 +623,7 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile }: 
                   addPromptInput(prompt);
                   setShowSuggestions(false);
                 }}
-                suggestions={SUGGESTIONS}
+                suggestions={suggestions}
               />
             </div>
           )}
