@@ -42,9 +42,9 @@ export function ShareChatMenu({ shareUrl, copyLinkHandler, createLink }: ShareMe
 
       <DropdownMenuContent ref={dropdownRef} align="end" className="flex flex-col gap-1 py-2 rounded-lg">
         {createLink ? (
-          <DropdownMenuItem className="rounded-md">
+          <DropdownMenuItem className="pl-4 rounded-md">
             <button
-              className="flex items-center gap-1 w-fit"
+              className="flex items-center w-full gap-1"
               onClick={() => {
                 createLink();
               }}
