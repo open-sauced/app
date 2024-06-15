@@ -4,10 +4,20 @@ import type { Config } from "https://edge.netlify.com";
 import { getLocalAsset } from "../og-image-utils.ts";
 
 const MAX_CHARS = 130;
+const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
-  const prompt = searchParams.get("prompt");
+  const starSearchThreadId = searchParams.get("id");
+  let prompt: string | undefined = undefined;
+
+  try {
+    const response = await fetch(`${baseApiUrl}/star-search/${starSearchThreadId}`);
+    const thread = await response.json();
+    prompt = thread?.title;
+  } catch (e) {
+    // do nothing, we'll load the default image
+  }
 
   const logoImg = getLocalAsset(new URL("/assets/og-images/workspaces/open-sauced-logo.png", req.url));
   const interFontRegular = getLocalAsset(new URL("/assets/fonts/Inter-Regular.otf", req.url));
@@ -105,8 +115,9 @@ export default async function handler(req: Request) {
     height: "630px",
     headers: {
       // cache for 2 hours
+      "Cache-Control": "public, max-age=0, stale-while-revalidate",
       "Netlify-CDN-Cache-Control": "public, max-age=0, stale-while-revalidate=7200",
-      "Netlify-Vary": "query=prompt",
+      "Netlify-Vary": "query=id",
       "content-type": "image/png",
     },
 
