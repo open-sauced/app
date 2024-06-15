@@ -11,13 +11,13 @@ const UuidSchema = v.pipe(v.string(), v.uuid());
 
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
-  let prompt: string | undefined = undefined;
+  let title: string | undefined = undefined;
 
   try {
     const starSearchThreadId = v.parse(UuidSchema, searchParams.get("id"));
     const response = await fetch(`${baseApiUrl}/star-search/${starSearchThreadId}`);
     const thread = await response.json();
-    prompt = thread?.title;
+    title = thread?.title;
   } catch (e) {
     // fail silently as it's just an OG image and we'll return the default image
     // sinced the title is not set.
@@ -35,7 +35,7 @@ export default async function handler(req: Request) {
   let imageContents;
   const absTop = 171.5;
 
-  if (!prompt) {
+  if (!title) {
     imageContents = (
       <img src={`${new URL(`/assets/og-images/star-search-og-image.png`, req.url)}`} width="1200" height="630" />
     );
@@ -96,7 +96,7 @@ export default async function handler(req: Request) {
             wordBreak: "break-all",
           }}
         >
-          {prompt.length > MAX_CHARS ? `${prompt.slice(0, MAX_CHARS)}...` : prompt}
+          {title.length > MAX_CHARS ? `${title.slice(0, MAX_CHARS)}...` : title}
         </p>
         {/* eslint-disable-next-line @next/next/no-img-element  */}
         <img
