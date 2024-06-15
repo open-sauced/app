@@ -1,22 +1,26 @@
 import React from "react";
 import { ImageResponse } from "og_edge";
+import * as v from "valibot";
 import type { Config } from "https://edge.netlify.com";
 import { getLocalAsset } from "../og-image-utils.ts";
 
 const MAX_CHARS = 130;
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
+const UuidSchema = v.pipe(v.string(), v.uuid());
+
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
-  const starSearchThreadId = searchParams.get("id");
   let prompt: string | undefined = undefined;
 
   try {
+    const starSearchThreadId = v.parse(UuidSchema, searchParams.get("id"));
     const response = await fetch(`${baseApiUrl}/star-search/${starSearchThreadId}`);
     const thread = await response.json();
     prompt = thread?.title;
   } catch (e) {
-    // do nothing, we'll load the default image
+    // fail silently as it's just an OG image and we'll return the default image
+    // sinced the title is not set.
   }
 
   const logoImg = getLocalAsset(new URL("/assets/og-images/workspaces/open-sauced-logo.png", req.url));
