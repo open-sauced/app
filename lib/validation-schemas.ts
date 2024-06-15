@@ -1,5 +1,5 @@
-import * as v from "valibot";
+import { parse, pipe, string, uuid } from "valibot";
 
-export const parseSchema = v.parse;
+export const parseSchema = parse;
 
-export const UuidSchema = v.pipe(v.string(), v.uuid("The UUID is badly formatted."));
+export const UuidSchema = pipe(string(), uuid("The UUID is badly formatted."));

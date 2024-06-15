@@ -1,20 +1,20 @@
 import React from "react";
 import { ImageResponse } from "og_edge";
-import * as v from "valibot";
+import { parse, pipe, string, uuid } from "valibot";
 import type { Config } from "https://edge.netlify.com";
 import { getLocalAsset } from "../og-image-utils.ts";
 
 const MAX_CHARS = 130;
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
-const UuidSchema = v.pipe(v.string(), v.uuid());
+const UuidSchema = pipe(string(), uuid());
 
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
   let title: string | undefined = undefined;
 
   try {
-    const starSearchThreadId = v.parse(UuidSchema, searchParams.get("id"));
+    const starSearchThreadId = parse(UuidSchema, searchParams.get("id"));
     const response = await fetch(`${baseApiUrl}/star-search/${starSearchThreadId}`);
     const thread = await response.json();
     title = thread?.title;
