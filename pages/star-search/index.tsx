@@ -1,10 +1,12 @@
 import { GetServerSidePropsContext } from "next";
+import { captureException } from "@sentry/nextjs";
 import ProfileLayout from "layouts/profile";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useSession from "lib/hooks/useSession";
 import { StarSearchChat } from "components/StarSearch/StarSearchChat";
+import { UuidSchema, parseSchema } from "lib/validation-schemas";
 
 const SUGGESTIONS = [
   {
@@ -30,8 +32,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   let sharedChatId: string | null = null;
 
   if (context.query.id) {
-    sharedChatId = context.query.id as string;
-    searchParams.set("id", sharedChatId);
+    try {
+      sharedChatId = parseSchema(UuidSchema, context.query.id);
+      searchParams.set("id", sharedChatId);
+    } catch (error) {
+      captureException(new Error(`Failed to parse UUID for StarSearch. UUID: ${sharedChatId}`, { cause: error }));
+      throw new Error("Invalid shared Chat ID");
+    }
   }
 
   const ogImageUrl = `${new URL(

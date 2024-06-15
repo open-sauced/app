@@ -19,6 +19,7 @@ import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { useGetStarSearchThreadHistory } from "lib/hooks/api/useGetStarSearchThreadHistory";
 import { getThreadStream } from "lib/utils/star-search-utils";
+import { UuidSchema, parseSchema } from "lib/validation-schemas";
 import { ChatAvatar } from "./ChatAvatar";
 import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
@@ -417,6 +418,14 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, su
       setChatId(id);
     }
 
+    try {
+      parseSchema(UuidSchema, id);
+    } catch (error) {
+      captureException(new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error }));
+      chatError(true);
+      return;
+    }
+
     const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
       method: "POST",
       body: JSON.stringify({
@@ -533,6 +542,19 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, su
                         threadHistory?.is_publicly_viewable
                           ? undefined
                           : async () => {
+                              try {
+                                parseSchema(UuidSchema, chatId);
+                              } catch (error) {
+                                captureException(
+                                  new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error })
+                                );
+                                toast({
+                                  description: "Failed to create a share link",
+                                  variant: "danger",
+                                });
+                                return;
+                              }
+
                               const response = await fetch(
                                 `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
                                 {
