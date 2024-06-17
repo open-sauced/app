@@ -99,6 +99,7 @@ export function StarSearchChat({
   const router = useRouter();
 
   useEffect(() => {
+    // This is for legacy shared prompts. See https://github.com/open-sauced/app/pull/3324
     if (!sharedPrompt || ranOnce) {
       return;
     }
