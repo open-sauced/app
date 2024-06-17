@@ -84,25 +84,25 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
           <SkeletonWrapper width={100} height={24} />
         ) : (
           <>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
               <div className="flex gap-2 items-center w-fit">
                 <FaStar className="text-xl" />
                 <div className="flex gap-1 items-center">
-                  <h3 className="text-sm font-semibold md:text-lg text-slate-800">Stars</h3>
-                  <p className="text-sm md:text-base w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+                  <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Stars</h3>
+                  <p className="text-sm xl:text-base w-fit pl-2 text-slate-500 font-medium">{range} days</p>
                 </div>
               </div>
               <aside className="flex gap-8">
                 <div>
-                  <h3 className="text-xs lg:text-sm text-slate-500">Total</h3>
+                  <h3 className="text-xs xl:text-sm text-slate-500">Total</h3>
                   <p className="font-semibold text-lg lg:text-xl">{humanizeNumber(total)}</p>
                 </div>
                 <div>
-                  <h3 className="text-xs lg:text-sm text-slate-500">Over {range} days</h3>
+                  <h3 className="text-xs xl:text-sm text-slate-500">Over {range} days</h3>
                   <p className="font-semibold text-lg lg:text-xl">{starsRangedTotal}</p>
                 </div>
                 <div>
-                  <h3 className="text-xs lg:text-sm text-slate-500">Avg. per day</h3>
+                  <h3 className="text-xs xl:mtext-sm text-slate-500">Avg. per day</h3>
                   <p className="font-semibold text-lg lg:text-xl">{humanizeNumber(averageOverRange)}</p>
                 </div>
               </aside>

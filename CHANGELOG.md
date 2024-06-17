@@ -5,6 +5,84 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.36.0-beta.1](https://github.com/open-sauced/app/compare/v2.35.0...v2.36.0-beta.1) (2024-06-14)
+
+
+### 🍕 Features
+
+* now StarSearch uses the new StarSearch API endpoints for chat creation/updates ([#3565](https://github.com/open-sauced/app/issues/3565)) ([0ac0145](https://github.com/open-sauced/app/commit/0ac0145d85025307385452f7badcb6e19c543fd5))
+
+## [2.35.0](https://github.com/open-sauced/app/compare/v2.34.0...v2.35.0) (2024-06-12)
+
+
+### 🍕 Features
+
+* add Contributor Confidence stat to repo pages ([#3545](https://github.com/open-sauced/app/issues/3545)) ([bfdc334](https://github.com/open-sauced/app/commit/bfdc3345eabffab83db38a10210e622bcb96866c))
+* add posthog captures on creating workspace flow ([#3539](https://github.com/open-sauced/app/issues/3539)) ([54acb87](https://github.com/open-sauced/app/commit/54acb87432fb31b7fb2ecc48187cd3b82b220941))
+* add workspace sidebar to `/explore` ([#3540](https://github.com/open-sauced/app/issues/3540)) ([7928a48](https://github.com/open-sauced/app/commit/7928a489ec102a8472b84bb297b42cd221b7e54f))
+* add workspace sidebar to `/feed` ([#3541](https://github.com/open-sauced/app/issues/3541)) ([936d06d](https://github.com/open-sauced/app/commit/936d06d81284728d8792f01693839c32948f3cf7))
+* StarSearch as a standalone component ([#3538](https://github.com/open-sauced/app/issues/3538)) ([54b7a41](https://github.com/open-sauced/app/commit/54b7a41ed0e8abb8022c58caaeacfa8764c1f0d8))
+
+
+### 🐛 Bug Fixes
+
+* check for valid list id and redirect if invalid ([#3544](https://github.com/open-sauced/app/issues/3544)) ([fcad2e3](https://github.com/open-sauced/app/commit/fcad2e33b3c9940f4f2027da000abb01f06c6989))
+* fixed contributor confidence percentage text alignment ([#3559](https://github.com/open-sauced/app/issues/3559)) ([091b204](https://github.com/open-sauced/app/commit/091b204e57edd30a2c7487664fe0fcfb4d6ef005))
+
+
+### ✅ Tests
+
+* fixed failing test for StarSearch share prompt ([#3560](https://github.com/open-sauced/app/issues/3560)) ([8dc3119](https://github.com/open-sauced/app/commit/8dc311909175653b945614f17df8f3d261a6d3e1))
+
+## [2.35.0-beta.8](https://github.com/open-sauced/app/compare/v2.35.0-beta.7...v2.35.0-beta.8) (2024-06-12)
+
+
+### ✅ Tests
+
+* fixed failing test for StarSearch share prompt ([#3560](https://github.com/open-sauced/app/issues/3560)) ([8dc3119](https://github.com/open-sauced/app/commit/8dc311909175653b945614f17df8f3d261a6d3e1))
+
+## [2.35.0-beta.7](https://github.com/open-sauced/app/compare/v2.35.0-beta.6...v2.35.0-beta.7) (2024-06-12)
+
+
+### 🐛 Bug Fixes
+
+* fixed contributor confidence percentage text alignment ([#3559](https://github.com/open-sauced/app/issues/3559)) ([091b204](https://github.com/open-sauced/app/commit/091b204e57edd30a2c7487664fe0fcfb4d6ef005))
+
+## [2.35.0-beta.6](https://github.com/open-sauced/app/compare/v2.35.0-beta.5...v2.35.0-beta.6) (2024-06-12)
+
+
+### 🍕 Features
+
+* add Contributor Confidence stat to repo pages ([#3545](https://github.com/open-sauced/app/issues/3545)) ([bfdc334](https://github.com/open-sauced/app/commit/bfdc3345eabffab83db38a10210e622bcb96866c))
+
+## [2.35.0-beta.5](https://github.com/open-sauced/app/compare/v2.35.0-beta.4...v2.35.0-beta.5) (2024-06-11)
+
+
+### 🐛 Bug Fixes
+
+* check for valid list id and redirect if invalid ([#3544](https://github.com/open-sauced/app/issues/3544)) ([fcad2e3](https://github.com/open-sauced/app/commit/fcad2e33b3c9940f4f2027da000abb01f06c6989))
+
+## [2.35.0-beta.4](https://github.com/open-sauced/app/compare/v2.35.0-beta.3...v2.35.0-beta.4) (2024-06-11)
+
+
+### 🍕 Features
+
+* add workspace sidebar to `/feed` ([#3541](https://github.com/open-sauced/app/issues/3541)) ([936d06d](https://github.com/open-sauced/app/commit/936d06d81284728d8792f01693839c32948f3cf7))
+
+## [2.35.0-beta.3](https://github.com/open-sauced/app/compare/v2.35.0-beta.2...v2.35.0-beta.3) (2024-06-10)
+
+
+### 🍕 Features
+
+* add workspace sidebar to `/explore` ([#3540](https://github.com/open-sauced/app/issues/3540)) ([7928a48](https://github.com/open-sauced/app/commit/7928a489ec102a8472b84bb297b42cd221b7e54f))
+
+## [2.35.0-beta.2](https://github.com/open-sauced/app/compare/v2.35.0-beta.1...v2.35.0-beta.2) (2024-06-07)
+
+
+### 🍕 Features
+
+* add posthog captures on creating workspace flow ([#3539](https://github.com/open-sauced/app/issues/3539)) ([54acb87](https://github.com/open-sauced/app/commit/54acb87432fb31b7fb2ecc48187cd3b82b220941))
+
 ## [2.35.0-beta.1](https://github.com/open-sauced/app/compare/v2.34.0...v2.35.0-beta.1) (2024-06-07)
 
 

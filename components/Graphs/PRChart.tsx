@@ -51,30 +51,30 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
-          <div className="flex flex-col gap-4 xl:flex-row w-full items-start justify-between px-2">
+          <div className="flex flex-col gap-4 w-full items-start justify-between px-2">
             <div className="flex gap-1 items-center w-fit">
               <BiGitPullRequest className="text-xl" />
-              <h3 className="text-sm font-semibold lg:text-lg text-slate-800">Pull Requests</h3>
-              <p className="text-sm lg:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+              <h3 className="text-sm xl:text-lg font-semibold text-slate-800">Pull Requests</h3>
+              <p className="text-sm xl:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
             </div>
             <aside className="flex gap-4">
               <div>
-                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">
+                <h3 className="text-xs xl:text-sm !font-medium text-slate-500">
                   Opened
                   <span className={`w-2 h-2 rounded-full bg-[#16a34a] mx-1 inline-block`}></span>
                 </h3>
-                <p className="font-semibold text-xl lg:text-2xl xl:text-3xl">{humanizeNumber(openedRangedTotal)}</p>
+                <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(openedRangedTotal)}</p>
               </div>
               <div>
-                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">
+                <h3 className="text-xs xl:text-sm !font-medium text-slate-500">
                   Merged
                   <span className={`w-2 h-2 rounded-full bg-[#9333ea] mx-1 inline-block`}></span>
                 </h3>
-                <p className="font-semibold text-xl lg:text-2xl xl:text-3xl">{humanizeNumber(closedRangedTotal)}</p>
+                <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(closedRangedTotal)}</p>
               </div>
               <div>
                 <h3 className="text-xs lg:text-sm !font-medium text-slate-500">Velocity</h3>
-                <p className="font-semibold text-xl lg:text-2xl xl:text-3xl">
+                <p className="font-semibold text-xl xl:text-2xl">
                   {humanizeNumber(velocity)}
                   <span className="text-xl text-slate-500 pl-0.5">d</span>
                 </p>
@@ -83,7 +83,7 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
           </div>
         )}
       </section>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={220}>
         {isLoading ? (
           <SkeletonWrapper width={100} height={100} />
         ) : (
