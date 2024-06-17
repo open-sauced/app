@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { FaUserPlus } from "react-icons/fa";
-import { PieChart, Pie, Cell, ResponsiveContainer, Label } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Card from "components/atoms/Card/card";
 
@@ -20,8 +20,8 @@ export default function ContributorConfidenceChart({
   const percentage = Math.floor((contributorConfidence ?? 0) * 100);
   const data = useMemo(
     () => [
-      { name: "confidence", value: percentage },
-      { name: "difference", value: 50 - percentage },
+      { name: "confidence", value: percentage > 50 ? 50 : percentage },
+      { name: "difference", value: percentage > 50 ? 0 : 50 - percentage },
     ],
     [contributorConfidence]
   );
@@ -39,6 +39,15 @@ export default function ContributorConfidenceChart({
   });
 
   const projectDescription = getValueBasedOnPercentage({ low: "Few", med: "Some", high: "A lot of" });
+
+  const renderCustomLabel = ({ cx, cy }: { cx: number; cy: number }) => {
+    return (
+      <text x={cx} y={cy} dy={-1} textAnchor="middle" className="text-lg lg:text-2xl fill-black font-semibold">
+        {percentage}
+        <tspan className="text-xs lg:text-sm">%</tspan>
+      </text>
+    );
+  };
 
   return (
     <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-fit items-center py-8`}>
@@ -62,22 +71,26 @@ export default function ContributorConfidenceChart({
           <div className="w-full !max-w-[14rem] lg:max-w-full lg:mx-auto h-full lg:max-h-24 xl:h-full">
             <ResponsiveContainer width="100%" height={150}>
               <PieChart>
-                <Pie data={data} dataKey="value" startAngle={180} endAngle={0} innerRadius={40} paddingAngle={0}>
+                <Pie
+                  data={data}
+                  label={renderCustomLabel}
+                  labelLine={false}
+                  dataKey="value"
+                  startAngle={180}
+                  endAngle={0}
+                  innerRadius={40}
+                  paddingAngle={0}
+                >
                   {data.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.name === "confidence" ? pieColor : "#e2e8f0"} />
                   ))}
-                  <Label
-                    value={`${percentage}%`}
-                    position="centerBottom"
-                    className="text-base font-semibold fill-black xl:text-xl"
-                  />
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
           </div>
           <section className="flex flex-col gap-1 lg:text-center xl:text-start">
-            <h3 className="text-base font-medium lg:text-sm text-slate-700">This project {projectStatus}</h3>
-            <p className="text-base lg:text-sm text-slate-600">
+            <h3 className="font-medium text-sm text-slate-700">This project {projectStatus}</h3>
+            <p className="text-sm text-slate-600">
               {projectDescription} stargazers and forkers come back later on to a meaningful contribution.
             </p>
           </section>
