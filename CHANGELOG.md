@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.36.0-beta.3](https://github.com/open-sauced/app/compare/v2.36.0-beta.2...v2.36.0-beta.3) (2024-06-17)
+
+
+### 🐛 Bug Fixes
+
+* remove GitHub organization permissions request from authentication ([#3570](https://github.com/open-sauced/app/issues/3570)) ([673923c](https://github.com/open-sauced/app/commit/673923c227387304090e706267e560f5d7f51fdb))
+
 ## [2.36.0-beta.2](https://github.com/open-sauced/app/compare/v2.36.0-beta.1...v2.36.0-beta.2) (2024-06-17)
 
 
