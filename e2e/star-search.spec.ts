@@ -87,7 +87,16 @@ test("StarSearch OG image should exist", async ({ page }) => {
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
 });
 
-test("StarSearch shared prompt (Logged Out Flow)", async ({ page, browserName }) => {
+test("StarSearch shared prompt (legacy) (Logged Out Flow)", async ({ page, browserName }) => {
+  // This is to test support for legacy shared prompts. See https://github.com/open-sauced/app/pull/3324
+  await page.goto(
+    "/star-search?prompt=Show%20me%20the%20lottery%20factor%20for%20contributors%20in%20the%20remix-run%2Freact-router%20project"
+  );
+
+  await expect(page.getByRole("dialog", { name: "Login to try StarSearch", exact: true })).toBeVisible();
+});
+
+test("StarSearch shared conversation (Logged Out Flow)", async ({ page, browserName }) => {
   // Note: If this page fails to load at some point, the development database has been reset, and
   // new shared StarSearch conversations will need to be created.
   await page.goto("/star-search?share_id=900686cc-8926-47fd-a1d6-0e19da967f48");
