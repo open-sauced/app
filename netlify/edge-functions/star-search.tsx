@@ -14,7 +14,7 @@ export default async function handler(req: Request) {
   let title: string | undefined = undefined;
 
   try {
-    const starSearchThreadId = parse(UuidSchema, searchParams.get("id"));
+    const starSearchThreadId = parse(UuidSchema, searchParams.get("share_id"));
     const response = await fetch(`${baseApiUrl}/star-search/${starSearchThreadId}`);
     const thread = await response.json();
     title = thread?.title;
@@ -121,7 +121,7 @@ export default async function handler(req: Request) {
       // cache for 2 hours
       "Cache-Control": "public, max-age=0, stale-while-revalidate",
       "Netlify-CDN-Cache-Control": "public, max-age=0, stale-while-revalidate=7200",
-      "Netlify-Vary": "query=id",
+      "Netlify-Vary": "query=share_id",
       "content-type": "image/png",
     },
 
