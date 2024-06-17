@@ -46,11 +46,9 @@ const useSupabaseAuth = (loadSession = false) => {
         options: data.options
           ? {
               ...data.options,
-              scopes: "read:org",
             }
           : {
               redirectTo: process.env.NEXT_PUBLIC_BASE_URL ?? "/",
-              scopes: "read:org",
             },
       });
     },
