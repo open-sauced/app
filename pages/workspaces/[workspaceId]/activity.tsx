@@ -117,45 +117,47 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
           ) : null
         }
       >
-        <WorkspaceHeader workspace={workspace} />
-        <div className="grid sm:flex gap-4 pt-3 border-b">
-          <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
-        </div>
-        <div className="mt-6 grid gap-6">
-          <div className="grid md:flex justify-between gap-2 md:gap-4">
-            <SubTabsList
-              label="Activity pages"
-              textSize="small"
-              tabList={[
-                { name: "Pull Requests", path: "activity" },
-                { name: "Issues", path: "issues" },
-              ]}
-              selectedTab={"pull requests"}
-              pageId={`/workspaces/${workspace.id}`}
-            />
-            <div className="flex justify-end items-center gap-4">
-              <TrackedRepositoryFilter
-                options={filterOptions}
-                handleSelect={(selected: OptionKeys[]) => {
-                  setFilteredRepositories(selected);
-                  setQueryParams({ page: "1" });
-                }}
-              />
-              <DayRangePicker />
-              <LimitPicker />
-            </div>
+        <div className="px-4 py-8 lg:px-16 lg:py-12">
+          <WorkspaceHeader workspace={workspace} />
+          <div className="grid sm:flex gap-4 pt-3 border-b">
+            <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
           </div>
-          <ClientOnly>
-            <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />
-          </ClientOnly>
+          <div className="mt-6 grid gap-6">
+            <div className="grid md:flex justify-between gap-2 md:gap-4">
+              <SubTabsList
+                label="Activity pages"
+                textSize="small"
+                tabList={[
+                  { name: "Pull Requests", path: "activity" },
+                  { name: "Issues", path: "issues" },
+                ]}
+                selectedTab={"pull requests"}
+                pageId={`/workspaces/${workspace.id}`}
+              />
+              <div className="flex justify-end items-center gap-4">
+                <TrackedRepositoryFilter
+                  options={filterOptions}
+                  handleSelect={(selected: OptionKeys[]) => {
+                    setFilteredRepositories(selected);
+                    setQueryParams({ page: "1" });
+                  }}
+                />
+                <DayRangePicker />
+                <LimitPicker />
+              </div>
+            </div>
+            <ClientOnly>
+              <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />
+            </ClientOnly>
+          </div>
+          <InsightUpgradeModal
+            workspaceId={workspace.id}
+            variant="contributors"
+            isOpen={isInsightUpgradeModalOpen}
+            onClose={() => setIsInsightUpgradeModalOpen(false)}
+            overLimit={10}
+          />
         </div>
-        <InsightUpgradeModal
-          workspaceId={workspace.id}
-          variant="contributors"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={10}
-        />
       </WorkspaceLayout>
     </>
   );
