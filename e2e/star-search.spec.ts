@@ -90,7 +90,7 @@ test("StarSearch OG image should exist", async ({ page }) => {
 test("StarSearch shared prompt (Logged Out Flow)", async ({ page, browserName }) => {
   // Note: If this page fails to load at some point, the development database has been reset, and
   // new shared StarSearch conversations will need to be created.
-  await page.goto("/star-search?id=900686cc-8926-47fd-a1d6-0e19da967f48");
+  await page.goto("/star-search?share_id=900686cc-8926-47fd-a1d6-0e19da967f48");
 
   await expect(page.getByRole("list", { name: "suggested prompts" })).not.toBeVisible();
   // await expect(page.getByRole("heading", { name: "StarSearch" })).not.toBeVisible();
@@ -208,7 +208,7 @@ Additions/Deletions: +20/-1 across 3 files.
   await expect(copyLinkMenuItem).not.toBeVisible();
 
   // check for shared prompt OG image
-  const expectedUrl = `${BASE_URL}/og-images/star-search/?id=900686cc-8926-47fd-a1d6-0e19da967f48`;
+  const expectedUrl = `${BASE_URL}/og-images/star-search/?share_id=900686cc-8926-47fd-a1d6-0e19da967f48`;
 
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", expectedUrl);
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", expectedUrl);

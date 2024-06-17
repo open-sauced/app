@@ -31,10 +31,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const searchParams = new URLSearchParams();
   let sharedChatId: string | null = null;
 
-  if (context.query.id) {
+  if (context.query.share_id) {
     try {
-      sharedChatId = parseSchema(UuidSchema, context.query.id);
-      searchParams.set("id", sharedChatId);
+      sharedChatId = parseSchema(UuidSchema, context.query.share_id);
+      searchParams.set("share_id", sharedChatId);
     } catch (error) {
       captureException(new Error(`Failed to parse UUID for StarSearch. UUID: ${sharedChatId}`, { cause: error }));
       throw new Error("Invalid shared Chat ID");
