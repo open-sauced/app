@@ -6,6 +6,7 @@ import { BsArrowUpShort } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 import { captureException } from "@sentry/nextjs";
+import { useRouter } from "next/router";
 import { Drawer } from "components/shared/Drawer";
 import {
   StarSearchFeedbackAnalytic,
@@ -87,6 +88,7 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, su
     isLoading,
     mutate: mutateThreadHistory,
   } = useGetStarSearchThreadHistory(chatId);
+  const router = useRouter();
 
   useEffect(() => {
     // Prevents the thread history from running when a new thread has been created and is currently
@@ -454,8 +456,12 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, su
       case "initial":
         return (
           <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
-            <Header />
-            {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />}
+            {!sharedChatId ? (
+              <>
+                <Header />
+                {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />}
+              </>
+            ) : null}
           </div>
         );
       case "chat":
@@ -507,6 +513,10 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, su
                   type="button"
                   className="flex items-center gap-2 hover:text-sauced-orange"
                   onClick={() => {
+                    if (sharedChatId) {
+                      router.push("/star-search");
+                    }
+
                     setStarSearchState("initial");
                     setChat([]);
                     setChatId(null);
