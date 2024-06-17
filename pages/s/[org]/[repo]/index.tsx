@@ -215,8 +215,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="border-b">
+          </section>
+          <div className="border-b mb-4">
             <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
           </div>
           <ClientOnly>
@@ -286,10 +286,9 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   isLoading={isForksDataLoading}
                   className="lg:col-span-6 h-fit"
                 />
-                </section>
-              </div>
-            </ClientOnly>
-          </section>
+              </section>
+            </div>
+          </ClientOnly>
         </div>
       </WorkspaceLayout>
 
