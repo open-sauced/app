@@ -63,13 +63,21 @@ async function updateComponentRegistry(name: string) {
 
 type StarSearchChatProps = {
   userId: number | undefined;
+  sharedPrompt: string | null;
   sharedChatId: string | null;
   bearerToken: string | undefined | null;
   isMobile: boolean;
   suggestions: { title: string; prompt: string }[];
 };
 
-export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, suggestions }: StarSearchChatProps) {
+export function StarSearchChat({
+  userId,
+  sharedChatId,
+  sharedPrompt,
+  bearerToken,
+  isMobile,
+  suggestions,
+}: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -89,6 +97,23 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, su
     mutate: mutateThreadHistory,
   } = useGetStarSearchThreadHistory(chatId);
   const router = useRouter();
+
+  useEffect(() => {
+    if (!sharedPrompt || ranOnce) {
+      return;
+    }
+
+    if (bearerToken) {
+      setLoginModalOpen(false);
+    } else {
+      setLoginModalOpen(true);
+      return;
+    }
+
+    if (inputRef.current) {
+      addPromptInput(sharedPrompt);
+    }
+  }, [sharedPrompt, inputRef.current]);
 
   useEffect(() => {
     // Prevents the thread history from running when a new thread has been created and is currently
@@ -456,7 +481,7 @@ export function StarSearchChat({ userId, sharedChatId, bearerToken, isMobile, su
       case "initial":
         return (
           <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
-            {!sharedChatId ? (
+            {!(sharedChatId || sharedPrompt) ? (
               <>
                 <Header />
                 {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />}

@@ -30,6 +30,7 @@ const SUGGESTIONS = [
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const searchParams = new URLSearchParams();
   let sharedChatId: string | null = null;
+  let sharedPrompt: string | null = null;
 
   if (context.query.share_id) {
     try {
@@ -41,20 +42,25 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     }
   }
 
+  if (context.query.prompt) {
+    sharedPrompt = context.query.prompt as string;
+  }
+
   const ogImageUrl = `${new URL(
     `/og-images/star-search/?${searchParams}`,
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   )}`;
 
-  return { props: { ogImageUrl, sharedChatId } };
+  return { props: { ogImageUrl, sharedChatId, sharedPrompt } };
 }
 
 type StarSearchPageProps = {
   ogImageUrl: string;
   sharedChatId: string | null;
+  sharedPrompt: string | null;
 };
 
-export default function StarSearchPage({ ogImageUrl, sharedChatId }: StarSearchPageProps) {
+export default function StarSearchPage({ ogImageUrl, sharedChatId, sharedPrompt }: StarSearchPageProps) {
   const { session } = useSession(true);
   const userId = session ? session.id : undefined;
   const { sessionToken: bearerToken } = useSupabaseAuth();
@@ -72,6 +78,7 @@ export default function StarSearchPage({ ogImageUrl, sharedChatId }: StarSearchP
         <StarSearchChat
           userId={userId}
           sharedChatId={sharedChatId}
+          sharedPrompt={sharedPrompt}
           bearerToken={bearerToken}
           isMobile={isMobile}
           suggestions={SUGGESTIONS}
