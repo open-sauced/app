@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.36.0-beta.2](https://github.com/open-sauced/app/compare/v2.36.0-beta.1...v2.36.0-beta.2) (2024-06-17)
+
+
+### 🍕 Features
+
+* add workspace layout to user page ([#3537](https://github.com/open-sauced/app/issues/3537)) ([2504c34](https://github.com/open-sauced/app/commit/2504c347dfdf3372b9f5ee83011b5c622e7293d1))
+
 ## [2.36.0-beta.1](https://github.com/open-sauced/app/compare/v2.35.0...v2.36.0-beta.1) (2024-06-14)
 
 
