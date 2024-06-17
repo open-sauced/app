@@ -57,7 +57,7 @@ export default function ContributorConfidenceChart({
           <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Contributor Confidence</h3>
         </div>
         <a
-          href="https://opensauced.pizza/docs"
+          href="https://opensauced.pizza/docs/features/repo-pages/#insights-into-contributor-confidence"
           className="text-xs font-semibold text-sauced-orange xl:text-sm hover:underline"
         >
           Learn More
