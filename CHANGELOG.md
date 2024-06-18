@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.36.0-beta.7](https://github.com/open-sauced/app/compare/v2.36.0-beta.6...v2.36.0-beta.7) (2024-06-18)
+
+
+### 🍕 Features
+
+* add contributions filter to contributor profile ([#3556](https://github.com/open-sauced/app/issues/3556)) ([f588f9d](https://github.com/open-sauced/app/commit/f588f9d14c297286995c3ea184fb46f08def1ebf))
+
 ## [2.36.0-beta.6](https://github.com/open-sauced/app/compare/v2.36.0-beta.5...v2.36.0-beta.6) (2024-06-18)
 
 
