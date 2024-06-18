@@ -6,6 +6,7 @@ import { BsArrowUpShort } from "react-icons/bs";
 import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 import { captureException } from "@sentry/nextjs";
+import { useRouter } from "next/router";
 import { Drawer } from "components/shared/Drawer";
 import {
   StarSearchFeedbackAnalytic,
@@ -16,32 +17,20 @@ import { useToast } from "lib/hooks/useToast";
 import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
-import { shortenUrl } from "lib/utils/shorten-url";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { useGetStarSearchThreadHistory } from "lib/hooks/api/useGetStarSearchThreadHistory";
+import { getThreadStream } from "lib/utils/star-search-utils";
+import { UuidSchema, parseSchema } from "lib/validation-schemas";
+import Button from "components/shared/Button/button";
 import { ChatAvatar } from "./ChatAvatar";
 import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
 import { SuggestedPrompts } from "./SuggestedPrompts";
-import { SharePromptMenu } from "./SharePromptMenu";
+import { ShareChatMenu } from "./ShareChatMenu";
 
-const SUGGESTIONS = [
-  {
-    title: "Get information on contributor activity",
-    prompt: "What type of pull requests has @brandonroberts worked on?",
-  },
-  {
-    title: "Identify key contributors",
-    prompt: "Who are the most prevalent contributors to the TypeScript ecosystem?",
-  },
-  {
-    title: "Find contributors based on their work",
-    prompt: "Show me the lottery factor for contributors in the remix-run/react-router project?",
-  },
-  {
-    title: "Find experts",
-    prompt: "Who are the best developers that know Tailwind and are interested in Rust?",
-  },
-];
+const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
+
+Need some ideas? Try hitting the **Need Inspiration?** button below!`;
 
 const componentRegistry = new Map<string, React.ComponentType<any>>();
 
@@ -73,25 +62,23 @@ async function updateComponentRegistry(name: string) {
   }
 }
 
-function getSharedPromptUrl(promptMessage: string | undefined) {
-  if (!promptMessage) {
-    return;
-  }
-
-  const params = new URLSearchParams();
-  params.set("prompt", promptMessage);
-
-  return `${new URL(`/star-search?${params}`, process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000")}`;
-}
-
 type StarSearchChatProps = {
   userId: number | undefined;
   sharedPrompt: string | null;
+  sharedChatId: string | null;
   bearerToken: string | undefined | null;
   isMobile: boolean;
+  suggestions: { title: string; prompt: string }[];
 };
 
-export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: StarSearchChatProps) {
+export function StarSearchChat({
+  userId,
+  sharedChatId,
+  sharedPrompt,
+  bearerToken,
+  isMobile,
+  suggestions,
+}: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -102,16 +89,67 @@ export function StarSearchChat({ userId, sharedPrompt, bearerToken, isMobile }: 
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const [sharePromptUrl, setSharePromptUrl] = useState<string | undefined>();
-  const promptMessage = chat[0]?.content as string | undefined; // First message is always the prompt
   const [checkAuth, setCheckAuth] = useState(false);
-  const [chatId, setChatId] = useState<string | null>();
+  const [chatId, setChatId] = useState<string | null>(sharedChatId);
+  const {
+    data: threadHistory,
+    isError,
+    isLoading,
+    mutate: mutateThreadHistory,
+  } = useGetStarSearchThreadHistory(chatId);
+  const router = useRouter();
+
+  function clearChatHistory() {
+    if (sharedChatId) {
+      router.push("/star-search");
+    }
+
+    setStarSearchState("initial");
+    setChat([]);
+    setChatId(null);
+  }
+
+  useEffect(() => {
+    // This is for legacy shared prompts. See https://github.com/open-sauced/app/pull/3324
+    if (!sharedPrompt || ranOnce) {
+      return;
+    }
+
+    if (bearerToken) {
+      setLoginModalOpen(false);
+    } else {
+      setLoginModalOpen(true);
+      return;
+    }
+
+    if (inputRef.current) {
+      addPromptInput(sharedPrompt);
+    }
+  }, [sharedPrompt, inputRef.current]);
+
+  useEffect(() => {
+    // Prevents the thread history from running when a new thread has been created and is currently
+    // being used. This check is also to prevent the thread history from running multiple times.
+    if (!threadHistory || isLoading || !sharedChatId || (ranOnce && sharedChatId)) {
+      return;
+    }
+
+    if (isError) {
+      chatError();
+      return;
+    }
+
+    // Reset chat as we're loading a shared chat
+    setChat([]);
+
+    const stream = getThreadStream(threadHistory.thread_history);
+    setStarSearchState("chat");
+    processStream(stream.getReader());
+  }, [threadHistory, isError, isLoading, sharedChatId]);
 
   function chatError(resetChatId = false) {
+    setStarSearchState("chat");
     setChat((history) => {
-      const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
-
-Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       const temp = [...history];
 
       temp.push({ author: "StarSearch", content: cannedMessage });
@@ -119,174 +157,41 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
     });
     setIsRunning(false); // enables input
     setCheckAuth(true);
-
     if (resetChatId) {
       setChatId(null);
     }
   }
 
-  useEffect(() => {
-    if (!promptMessage) {
-      return;
-    }
-
-    setTimeout(async () => {
-      const promptUrl = getSharedPromptUrl(promptMessage);
-      const shortUrl = await shortenUrl(`${promptUrl}`);
-
-      setSharePromptUrl(shortUrl);
-    }, 0);
-  }, [promptMessage]);
-
-  function registerPrompt(promptInput: StarSearchPromptAnalytic) {
-    prompt({
-      promptContent: promptInput.promptContent,
-      promptResponse: promptInput.promptResponse,
-    });
-  }
-
-  function registerFeedback(feedbackType: StarSearchFeedbackAnalytic["feedback"]) {
-    feedback({
-      feedback: feedbackType,
-      promptContent: chat
-        .filter(({ author }) => author === "You")
-        .map(({ content }) => {
-          if (typeof content !== "string") {
-            return JSON.stringify(content);
-          }
-
-          return content;
-        }),
-      promptResponse: chat
-        .filter(({ author }) => author === "StarSearch")
-        .map(({ content }) => {
-          if (typeof content !== "string") {
-            return JSON.stringify(content);
-          }
-
-          return content;
-        }),
-    });
-    toast({ description: "Thank you for your feedback!", variant: "success" });
-  }
-
-  function addPromptInput(prompt: string) {
-    if (!inputRef.current?.form) {
-      return;
-    }
-
-    inputRef.current.value = prompt;
-    const { form } = inputRef.current;
-
-    setTimeout(() => {
-      if (typeof form.requestSubmit === "function") {
-        form.requestSubmit();
-      } else {
-        form.dispatchEvent(new Event("submit", { cancelable: true }));
-      }
-    });
-  }
-
-  useEffect(() => {
-    if (!sharedPrompt || ranOnce) {
-      return;
-    }
-
-    if (inputRef.current && !checkAuth) {
-      addPromptInput(sharedPrompt);
-      setShowSuggestions(false);
-    }
-  }, [sharedPrompt, inputRef.current, checkAuth]);
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat]);
-
-  const submitPrompt = async (prompt: string) => {
-    if ((checkAuth && sharedPrompt && !bearerToken) || (!bearerToken && !sharedPrompt)) {
-      setLoginModalOpen(true);
-      return;
-    }
-
-    if (isRunning) {
-      return;
-    }
-
-    if (!ranOnce) {
-      setRanOnce(true);
-    }
-
-    if (starSearchState === "initial") {
-      setStarSearchState("chat");
-    }
-    setIsRunning(true); // disables input
-
-    // add user prompt to history
-    setChat((history) => {
-      const temp = [...history];
-      temp.push({ author: "You", content: prompt });
-      return temp;
-    });
-
-    // get ReadableStream from API
-    const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
-    let id = chatId;
-
-    if (!id) {
-      // Get new StarSearch conversation ID
-      const starSearchThreadResponse = await fetch(`${baseUrl}/star-search`, {
-        method: "POST",
-        body: "{}",
-        headers: {
-          Accept: "*/*",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${bearerToken}`,
-        },
-      });
-
-      if (starSearchThreadResponse.status !== 201) {
-        chatError(true);
-        return;
-      }
-
-      const payload = await starSearchThreadResponse.json();
-      id = payload.id;
-      setChatId(id);
-    }
-
-    const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
-      method: "POST",
-      body: JSON.stringify({
-        query_text: prompt,
-      }),
-      headers: {
-        Accept: "*/*",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${bearerToken}`,
-      },
-    });
-
-    if (response.status !== 200) {
+  async function processStream(reader: ReadableStreamDefaultReader<string> | undefined) {
+    if (!reader) {
       chatError();
       return;
     }
 
-    const decoder = new TextDecoderStream();
-    const reader = response.body?.pipeThrough(decoder).getReader();
     while (true) {
       const { done, value } = await reader!.read();
       if (done) {
         setIsRunning(false); // enables input
         setCheckAuth(true);
+        setChat((chat) => {
+          // This is a bit of a hack.
+          //
+          // We're not changing the chat state, but we're using this as a way to capture the user prompt and the
+          // StarSearch response as an analytic.
+          const [userPrompt, ...systemResponses] = chat;
 
-        registerPrompt({
-          promptContent: prompt,
-          promptResponse:
-            chat
-              .slice(1)
-              // There can be multiple responses because of widgets, so we need to serialize the widget data
-              .map((c) => (typeof c.content === "string" ? c.content : JSON.stringify(c.content)))
-              .join("\n") || "No response captured",
+          registerPrompt({
+            // userPrompt.content will always be a string, but the .toString() is we don't need to check
+            // the type of StarSearch message
+            promptContent: userPrompt.content.toString(),
+            promptResponse:
+              systemResponses
+                // There can be multiple responses because of widgets, so we need to serialize the widget data
+                .map((c) => (typeof c.content === "string" ? c.content : JSON.stringify(c.content)))
+                .join("\n") || "No response captured",
+          });
+
+          return chat;
         });
         return;
       }
@@ -356,7 +261,13 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
             const { result } = matched.groups;
 
             // deserialize the json dump from the payload
-            const payload = JSON.parse(result) as StarSearchPayload;
+            let payload = JSON.parse(result) as StarSearchPayload;
+
+            // begin: temporary until John updates message column
+            if ("data" in payload) {
+              payload = payload.data as StarSearchPayload;
+            }
+            // end: temporary until John updates message column
 
             // skip over cases where the payload is somehow malformed or missing content altogether
             if (!payload || !payload.content || payload.content.parts.length === 0) {
@@ -387,7 +298,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
               setChat((chat) => {
                 const updatedChat = [...chat];
 
-                if (updatedChat.length === 1) {
+                if (updatedChat.length <= 1) {
                   updatedChat.push({
                     author: "StarSearch",
                     content: payload.content.parts[0],
@@ -417,6 +328,20 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 return updatedChat;
               });
             }
+
+            if (payload.content.type === "user_prompt") {
+              setChat((chat) => {
+                const updatedChat = [...chat];
+
+                updatedChat.push({
+                  // If this is a shared conversation, the author is StarSearch, otherwise it's the user
+                  author: sharedChatId ? "StarSearch" : "You",
+                  content: payload.content.parts[0],
+                });
+
+                return updatedChat;
+              });
+            }
           } catch (error) {
             captureException(new Error(`Failed to parse JSON for StarSearch. JSON payload: ${v}`, { cause: error }));
           }
@@ -425,6 +350,143 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
         }
       });
     }
+  }
+
+  function registerPrompt(promptInput: StarSearchPromptAnalytic) {
+    prompt({
+      promptContent: promptInput.promptContent,
+      promptResponse: promptInput.promptResponse,
+    });
+  }
+
+  function registerFeedback(feedbackType: StarSearchFeedbackAnalytic["feedback"]) {
+    feedback({
+      feedback: feedbackType,
+      promptContent: chat
+        .filter(({ author }) => author === "You")
+        .map(({ content }) => {
+          if (typeof content !== "string") {
+            return JSON.stringify(content);
+          }
+
+          return content;
+        }),
+      promptResponse: chat
+        .filter(({ author }) => author === "StarSearch")
+        .map(({ content }) => {
+          if (typeof content !== "string") {
+            return JSON.stringify(content);
+          }
+
+          return content;
+        }),
+    });
+    toast({ description: "Thank you for your feedback!", variant: "success" });
+  }
+
+  function addPromptInput(prompt: string) {
+    if (!inputRef.current?.form) {
+      return;
+    }
+
+    inputRef.current.value = prompt;
+    const { form } = inputRef.current;
+
+    setTimeout(() => {
+      if (typeof form.requestSubmit === "function") {
+        form.requestSubmit();
+      } else {
+        form.dispatchEvent(new Event("submit", { cancelable: true }));
+      }
+    });
+  }
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
+
+  const submitPrompt = async (prompt: string) => {
+    if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
+      setLoginModalOpen(true);
+      return;
+    }
+
+    if (isRunning) {
+      return;
+    }
+
+    if (!ranOnce) {
+      setRanOnce(true);
+    }
+
+    if (starSearchState === "initial") {
+      setStarSearchState("chat");
+    }
+    setIsRunning(true); // disables input
+
+    // add user prompt to history
+    setChat((history) => {
+      const temp = [...history];
+      temp.push({ author: "You", content: prompt });
+      return temp;
+    });
+
+    // get ReadableStream from API
+    const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
+
+    // Get new StarSearch conversation ID
+    let id = chatId;
+
+    if (!id) {
+      const starSearchThreadResponse = await fetch(`${baseUrl}/star-search`, {
+        method: "POST",
+        body: "{}",
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      });
+
+      if (starSearchThreadResponse.status !== 201) {
+        chatError(true);
+        return;
+      }
+
+      const payload = await starSearchThreadResponse.json();
+      id = payload.id;
+      setChatId(id);
+    }
+
+    try {
+      parseSchema(UuidSchema, id);
+    } catch (error) {
+      captureException(new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error }));
+      chatError(true);
+      return;
+    }
+
+    const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
+      method: "POST",
+      body: JSON.stringify({
+        query_text: prompt,
+      }),
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    });
+
+    if (response.status !== 200) {
+      chatError();
+      return;
+    }
+
+    const decoder = new TextDecoderStream();
+    const reader = response.body?.pipeThrough(decoder).getReader();
+
+    processStream(reader);
   };
 
   const renderState = () => {
@@ -432,12 +494,12 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
       case "initial":
         return (
           <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
-            {sharedPrompt && !ranOnce ? null : (
+            {!(sharedChatId || sharedPrompt) ? (
               <>
                 <Header />
-                {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />}
+                {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />}
               </>
-            )}
+            ) : null}
           </div>
         );
       case "chat":
@@ -488,11 +550,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                 <button
                   type="button"
                   className="flex items-center gap-2 hover:text-sauced-orange"
-                  onClick={() => {
-                    setStarSearchState("initial");
-                    setChat([]);
-                    setChatId(null);
-                  }}
+                  onClick={clearChatHistory}
                 >
                   Clear chat history
                   <TrashIcon width={18} height={18} />
@@ -518,17 +576,62 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
-                  {sharePromptUrl ? (
-                    <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
-                      <SharePromptMenu
-                        promptUrl={sharePromptUrl}
-                        copyLinkHandler={async (url: string) => {
-                          await writeToClipboard(url);
-                          toast({ description: "Link copied to clipboard", variant: "success" });
-                        }}
-                      />
-                    </div>
-                  ) : null}
+                  <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
+                    <ShareChatMenu
+                      createLink={
+                        threadHistory?.is_publicly_viewable
+                          ? undefined
+                          : async () => {
+                              try {
+                                parseSchema(UuidSchema, chatId);
+                              } catch (error) {
+                                captureException(
+                                  new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error })
+                                );
+                                toast({
+                                  description: "Failed to create a share link",
+                                  variant: "danger",
+                                });
+                                return;
+                              }
+
+                              const response = await fetch(
+                                `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
+                                {
+                                  body: "",
+                                  method: "POST",
+                                  headers: {
+                                    Authorization: `Bearer ${bearerToken}`,
+                                  },
+                                }
+                              );
+
+                              if (response.status == 201) {
+                                toast({
+                                  description: "Share link created",
+                                  variant: "success",
+                                });
+                                // Causes a re-fetch of the thread history so the hook reruns
+                                // and gets the public_link and is_publicly_viewable property updates
+                                mutateThreadHistory(undefined, true);
+                              } else {
+                                toast({
+                                  description: "Failed to create a share link",
+                                  variant: "danger",
+                                });
+                              }
+                            }
+                      }
+                      shareUrl={threadHistory?.public_link}
+                      copyLinkHandler={async (url: string) => {
+                        await writeToClipboard(url);
+                        toast({
+                          description: "Link copied to clipboard",
+                          variant: "success",
+                        });
+                      }}
+                    />
+                  </div>
                 </span>
               </div>
             </div>
@@ -558,7 +661,7 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                   </button>
                 }
               >
-                <SuggestedPrompts addPromptInput={addPromptInput} suggestions={SUGGESTIONS} />
+                <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
               </Drawer>
             ) : (
               <>
@@ -590,10 +693,18 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
                   addPromptInput(prompt);
                   setShowSuggestions(false);
                 }}
-                suggestions={SUGGESTIONS}
+                suggestions={suggestions}
               />
             </div>
           )}
+          {sharedChatId ? (
+            <div className="flex items-center justify-center gap-2 p-2">
+              <p>This is a shared conversation and cannot be added to.</p>
+              <Button variant="primary" onClick={clearChatHistory}>
+                Start a Conversation
+              </Button>
+            </div>
+          ) : null}
           <form
             onSubmit={(event) => {
               event.preventDefault();
@@ -609,16 +720,16 @@ Need some ideas? Try hitting the **Need Inspiration?** button below!`;
               type="text"
               name="prompt"
               ref={inputRef}
-              disabled={isRunning}
+              disabled={isRunning || !!sharedChatId}
               placeholder="Ask a question"
               className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
               onFocus={() => {
-                if ((checkAuth && sharedPrompt && !bearerToken) || (!bearerToken && !sharedPrompt)) {
+                if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
                   setLoginModalOpen(true);
                 }
               }}
             />
-            <button type="submit" disabled={isRunning} className="p-2 bg-white rounded-r-lg">
+            <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
               <span className="sr-only">Submit your question to StarSearch</span>
               <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
             </button>
