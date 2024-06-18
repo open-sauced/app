@@ -19,11 +19,11 @@ interface WorkspaceLayoutProps {
 }
 
 export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: WorkspaceLayoutProps) => {
+  const { user } = useSupabaseAuth();
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
-  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", isLargeScreen);
+  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", !user ? false : isLargeScreen);
   const hideSidebar = () => setShowingSidebar(false);
   const sidebarRef = useRef<HTMLSpanElement | null>(null);
-  const { user } = useSupabaseAuth();
   const [showingSignupNudge, setShowingSignupNudge] = useState(true);
 
   useOutsideClick(
