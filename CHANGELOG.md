@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.36.1-beta.1](https://github.com/open-sauced/app/compare/v2.36.0...v2.36.1-beta.1) (2024-06-18)
+
+
+### 🐛 Bug Fixes
+
+* now the title of a thread is set to the initial prompt of a StarSearch conversation ([#3581](https://github.com/open-sauced/app/issues/3581)) ([f0053ed](https://github.com/open-sauced/app/commit/f0053edef5018795ac03807ce428a70b6dadd281))
+
 ## [2.36.0](https://github.com/open-sauced/app/compare/v2.35.0...v2.36.0) (2024-06-18)
 
 
