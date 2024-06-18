@@ -323,7 +323,8 @@ export function StarSearchChat({
                 const updatedChat = [...chat];
 
                 updatedChat.push({
-                  author: "You",
+                  // If this is a shared conversation, the author is StarSearch, otherwise it's the user
+                  author: sharedChatId ? "StarSearch" : "You",
                   content: payload.content.parts[0],
                 });
 

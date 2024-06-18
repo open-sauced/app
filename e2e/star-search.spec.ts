@@ -118,7 +118,7 @@ test("StarSearch shared conversation (Logged Out Flow)", async ({ page, browserN
   // await expect(feed).toHaveAttribute("aria-busy", "true");
 
   const firstArticle = feed.locator("article").first();
-  await expect(firstArticle.getByRole("heading", { name: "You" })).toBeVisible();
+  await expect(firstArticle.getByRole("heading", { name: "StarSearch" })).toBeVisible();
   await expect(firstArticle.getByLabel("chat message")).toHaveText(
     "What type of pull requests has @brandonroberts worked on?"
   );
