@@ -185,6 +185,15 @@ interface DbRepoIssueEvents {
   readonly issue_reactions_eyes: number;
 }
 
+interface DbIssueComment {
+  readonly event_id: number;
+  readonly actor_login: string;
+  readonly event_time: string;
+  readonly repo_name: string;
+  readonly comment_body: string;
+  readonly comment_html_url: string;
+}
+
 interface DbPRContributor {
   readonly author_login: string;
   readonly username: string;
@@ -623,7 +632,34 @@ interface RepositoryLottoFactor {
 
 // sourced from open-sauced/api
 
-type StarSearchEvent = "content" | "final" | "function_call";
+type ThreadHistoryItem = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+  type: string;
+  message: string;
+  is_error: boolean;
+  error: string | null;
+  actor: string;
+  mood: number;
+  starsearch_thread_id: string;
+};
+
+interface StarSearchThread {
+  id: string;
+  title: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+  archived_at: string | null;
+  thread_summary: string | null;
+  is_publicly_viewable: boolean;
+  public_link: string | null;
+  thread_history: ThreadHistoryItem[];
+}
+
+type StarSearchEvent = "content" | "final" | "function_call" | "user_prompt";
 type StarSearchPayloadStatus = "in_progress" | "done";
 
 interface StarSearchContent {

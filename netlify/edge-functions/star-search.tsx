@@ -1,13 +1,27 @@
 import React from "react";
 import { ImageResponse } from "og_edge";
+import { parse, pipe, string, uuid } from "valibot";
 import type { Config } from "https://edge.netlify.com";
 import { getLocalAsset } from "../og-image-utils.ts";
 
 const MAX_CHARS = 130;
+const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
+
+const UuidSchema = pipe(string(), uuid());
 
 export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
-  const prompt = searchParams.get("prompt");
+  let title: string | undefined = undefined;
+
+  try {
+    const starSearchThreadId = parse(UuidSchema, searchParams.get("share_id"));
+    const response = await fetch(`${baseApiUrl}/star-search/${starSearchThreadId}`);
+    const thread = await response.json();
+    title = thread?.title;
+  } catch (e) {
+    // fail silently as it's just an OG image and we'll return the default image
+    // sinced the title is not set.
+  }
 
   const logoImg = getLocalAsset(new URL("/assets/og-images/workspaces/open-sauced-logo.png", req.url));
   const interFontRegular = getLocalAsset(new URL("/assets/fonts/Inter-Regular.otf", req.url));
@@ -21,7 +35,7 @@ export default async function handler(req: Request) {
   let imageContents;
   const absTop = 171.5;
 
-  if (!prompt) {
+  if (!title) {
     imageContents = (
       <img src={`${new URL(`/assets/og-images/star-search-og-image.png`, req.url)}`} width="1200" height="630" />
     );
@@ -82,7 +96,7 @@ export default async function handler(req: Request) {
             wordBreak: "break-all",
           }}
         >
-          {prompt.length > MAX_CHARS ? `${prompt.slice(0, MAX_CHARS)}...` : prompt}
+          {title.length > MAX_CHARS ? `${title.slice(0, MAX_CHARS)}...` : title}
         </p>
         {/* eslint-disable-next-line @next/next/no-img-element  */}
         <img
@@ -105,8 +119,9 @@ export default async function handler(req: Request) {
     height: "630px",
     headers: {
       // cache for 2 hours
+      "Cache-Control": "public, max-age=0, stale-while-revalidate",
       "Netlify-CDN-Cache-Control": "public, max-age=0, stale-while-revalidate=7200",
-      "Netlify-Vary": "query=prompt",
+      "Netlify-Vary": "query=share_id",
       "content-type": "image/png",
     },
 

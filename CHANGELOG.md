@@ -5,6 +5,56 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.36.0-beta.7](https://github.com/open-sauced/app/compare/v2.36.0-beta.6...v2.36.0-beta.7) (2024-06-18)
+
+
+### 🍕 Features
+
+* add contributions filter to contributor profile ([#3556](https://github.com/open-sauced/app/issues/3556)) ([f588f9d](https://github.com/open-sauced/app/commit/f588f9d14c297286995c3ea184fb46f08def1ebf))
+
+## [2.36.0-beta.6](https://github.com/open-sauced/app/compare/v2.36.0-beta.5...v2.36.0-beta.6) (2024-06-18)
+
+
+### 🍕 Features
+
+* enabled loading an existing conversation in StarSearch ([#3563](https://github.com/open-sauced/app/issues/3563)) ([cc34e7b](https://github.com/open-sauced/app/commit/cc34e7bf3f9152e632073586812c55b44a080c88))
+
+## [2.36.0-beta.5](https://github.com/open-sauced/app/compare/v2.36.0-beta.4...v2.36.0-beta.5) (2024-06-18)
+
+
+### 🍕 Features
+
+* Repo Pages - move devstats to top of mobile view ([#3574](https://github.com/open-sauced/app/issues/3574)) ([658b76a](https://github.com/open-sauced/app/commit/658b76a60585cdf234325c3d97c0fca5d67cc3ff))
+
+## [2.36.0-beta.4](https://github.com/open-sauced/app/compare/v2.36.0-beta.3...v2.36.0-beta.4) (2024-06-17)
+
+
+### 🐛 Bug Fixes
+
+* Contributor Confidence styling ([#3572](https://github.com/open-sauced/app/issues/3572)) ([3e7c4ed](https://github.com/open-sauced/app/commit/3e7c4ed05fe93d7cece9bd4c81b8b1d419af1001))
+* update user search to fallback to GitHub API on error and zero results ([#3569](https://github.com/open-sauced/app/issues/3569)) ([a5946d0](https://github.com/open-sauced/app/commit/a5946d04c8fb9b42ee8ef3bdac492a3d9a2c9481))
+
+## [2.36.0-beta.3](https://github.com/open-sauced/app/compare/v2.36.0-beta.2...v2.36.0-beta.3) (2024-06-17)
+
+
+### 🐛 Bug Fixes
+
+* remove GitHub organization permissions request from authentication ([#3570](https://github.com/open-sauced/app/issues/3570)) ([673923c](https://github.com/open-sauced/app/commit/673923c227387304090e706267e560f5d7f51fdb))
+
+## [2.36.0-beta.2](https://github.com/open-sauced/app/compare/v2.36.0-beta.1...v2.36.0-beta.2) (2024-06-17)
+
+
+### 🍕 Features
+
+* add workspace layout to user page ([#3537](https://github.com/open-sauced/app/issues/3537)) ([2504c34](https://github.com/open-sauced/app/commit/2504c347dfdf3372b9f5ee83011b5c622e7293d1))
+
+## [2.36.0-beta.1](https://github.com/open-sauced/app/compare/v2.35.0...v2.36.0-beta.1) (2024-06-14)
+
+
+### 🍕 Features
+
+* now StarSearch uses the new StarSearch API endpoints for chat creation/updates ([#3565](https://github.com/open-sauced/app/issues/3565)) ([0ac0145](https://github.com/open-sauced/app/commit/0ac0145d85025307385452f7badcb6e19c543fd5))
+
 ## [2.35.0](https://github.com/open-sauced/app/compare/v2.34.0...v2.35.0) (2024-06-12)
 
 

@@ -1,6 +1,7 @@
+import Image from "next/image";
+import Skeleton from "react-loading-skeleton";
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 
-import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import LatestPrTableHeader from "../LatestPrTableHeader/latest-pr-table-header";
 import LatestPrTableRow from "../LatestPrTableRow/latest-pr-table-row";
 
@@ -21,6 +22,27 @@ interface CardTableProps {
   isHoverCard?: boolean;
   range?: string;
 }
+
+const EmptyState = ({ range }: { range: number }) => {
+  return (
+    <>
+      <div className="flex flex-col justify-center mt-8 pt-8">
+        <div className="absolute sm:left-[20%] md:left-[52%]">
+          <div>
+            <Image src="/assets/images/magnifying-glass.png" alt="Magnifying Glass" width="400" height="400" />
+          </div>
+        </div>
+        <div className="grid w-max max-w-sm mx-auto">
+          <span className="text-center font-medium mb-2">No Pull Requests Found</span>
+          <p className="text-sm text-slate-600 text-center">
+            This contributor doesn&apos;t seem to have any Pull Requests data in the past{" "}
+            <span className="font-bold">{range} days</span>. Try changing the date range.
+          </p>
+        </div>
+      </div>
+    </>
+  );
+};
 
 const PullRequestTable = ({
   contributor,
@@ -82,7 +104,13 @@ const PullRequestTable = ({
       </div>
     </>
   ) : (
-    <div className="px-2 py-1">{isLoading ? <SkeletonWrapper height={20} /> : "There are currently no PRs..."}</div>
+    <div className="px-2 py-1">
+      {isLoading ? (
+        <Skeleton height={24} count={3} className="mt-4 mb-2" />
+      ) : (
+        <EmptyState range={Number(range ?? 30)} />
+      )}
+    </div>
   );
 };
 

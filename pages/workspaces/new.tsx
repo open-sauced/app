@@ -127,7 +127,7 @@ const NewWorkspace = () => {
         </AuthContentWrapper>
       }
     >
-      <div className="grid gap-6 max-w-4xl">
+      <div className="grid gap-6 max-w-4xl px-4 py-8 lg:pt-12 lg:px-16">
         <h1 className="border-b bottom pb-4 text-xl font-medium">Workspace Settings</h1>
         <form id="new-workspace" className="flex flex-col gap-6 mb-2" onSubmit={onCreateWorkspace}>
           <div>
