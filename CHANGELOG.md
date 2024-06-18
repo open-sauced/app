@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.36.0-beta.5](https://github.com/open-sauced/app/compare/v2.36.0-beta.4...v2.36.0-beta.5) (2024-06-18)
+
+
+### 🍕 Features
+
+* Repo Pages - move devstats to top of mobile view ([#3574](https://github.com/open-sauced/app/issues/3574)) ([658b76a](https://github.com/open-sauced/app/commit/658b76a60585cdf234325c3d97c0fca5d67cc3ff))
+
 ## [2.36.0-beta.4](https://github.com/open-sauced/app/compare/v2.36.0-beta.3...v2.36.0-beta.4) (2024-06-17)
 
 
