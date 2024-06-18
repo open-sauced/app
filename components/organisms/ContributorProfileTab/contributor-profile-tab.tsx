@@ -446,9 +446,9 @@ const ContributorProfileTab = ({
                   />
                 </div>
               )}
-              <div className="mt-8 text-sm text-light-slate-9">
-                <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
-              </div>
+            </div>
+            <div className="mt-8 text-sm text-light-slate-9">
+              <p>The data for these contributions is from publicly available open source projects on GitHub.</p>
             </div>
           </div>
         </div>
