@@ -58,16 +58,18 @@ const PullRequestTable = ({
     contributor,
     topic,
     repoIds: repositories,
-    limit,
+    limit: 50,
     range,
   });
 
-  const repos = data.filter((pr) => {
-    if (repo) {
-      return pr.repo_name === repo;
-    }
-    return true;
-  });
+  const repos = data
+    .filter((pr) => {
+      if (repo) {
+        return pr.repo_name === repo;
+      }
+      return true;
+    })
+    .slice(0, 15);
 
   return repos.length > 0 ? (
     <>

@@ -43,16 +43,18 @@ const IssueCommentsTable = ({ contributor, repos, repoFilter, limit, range = 30 
   const { data: issueComments, isLoading: issueCommentsLoading } = useContributorIssueComments({
     contributor,
     repos,
-    limit,
+    limit: 50,
     range,
   });
 
-  const issueCommentsFiltered = issueComments.filter((ic) => {
-    if (repoFilter) {
-      return ic.repo_name === repoFilter;
-    }
-    return true;
-  });
+  const issueCommentsFiltered = issueComments
+    .filter((ic) => {
+      if (repoFilter) {
+        return ic.repo_name === repoFilter;
+      }
+      return true;
+    })
+    .slice(0, limit);
 
   return (
     <>
