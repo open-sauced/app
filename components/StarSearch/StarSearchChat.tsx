@@ -455,15 +455,30 @@ export function StarSearchChat({
 
       const payload = await starSearchThreadResponse.json();
       id = payload.id;
-      setChatId(id);
-    }
 
-    try {
-      parseSchema(UuidSchema, id);
-    } catch (error) {
-      captureException(new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error }));
-      chatError(true);
-      return;
+      try {
+        parseSchema(UuidSchema, id);
+      } catch (error) {
+        captureException(new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error }));
+        chatError(true);
+        return;
+      }
+
+      const updateStarSearchThreadTitle = await fetch(`${baseUrl}/star-search/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ title: prompt }),
+        headers: {
+          Accept: "*/*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${bearerToken}`,
+        },
+      });
+
+      if (updateStarSearchThreadTitle.status !== 200) {
+        captureException(new Error(`Failed to update StarSearch thread title. UUID: ${id}`));
+      }
+
+      setChatId(id);
     }
 
     const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
