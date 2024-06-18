@@ -21,6 +21,7 @@ import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { useGetStarSearchThreadHistory } from "lib/hooks/api/useGetStarSearchThreadHistory";
 import { getThreadStream } from "lib/utils/star-search-utils";
 import { UuidSchema, parseSchema } from "lib/validation-schemas";
+import Button from "components/shared/Button/button";
 import { ChatAvatar } from "./ChatAvatar";
 import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
@@ -97,6 +98,16 @@ export function StarSearchChat({
     mutate: mutateThreadHistory,
   } = useGetStarSearchThreadHistory(chatId);
   const router = useRouter();
+
+  function clearChatHistory() {
+    if (sharedChatId) {
+      router.push("/star-search");
+    }
+
+    setStarSearchState("initial");
+    setChat([]);
+    setChatId(null);
+  }
 
   useEffect(() => {
     // This is for legacy shared prompts. See https://github.com/open-sauced/app/pull/3324
@@ -539,15 +550,7 @@ export function StarSearchChat({
                 <button
                   type="button"
                   className="flex items-center gap-2 hover:text-sauced-orange"
-                  onClick={() => {
-                    if (sharedChatId) {
-                      router.push("/star-search");
-                    }
-
-                    setStarSearchState("initial");
-                    setChat([]);
-                    setChatId(null);
-                  }}
+                  onClick={clearChatHistory}
                 >
                   Clear chat history
                   <TrashIcon width={18} height={18} />
@@ -694,6 +697,14 @@ export function StarSearchChat({
               />
             </div>
           )}
+          {sharedChatId ? (
+            <div className="flex items-center justify-center gap-2 p-2">
+              <p>This is a shared conversation and cannot be added to.</p>
+              <Button variant="primary" onClick={clearChatHistory}>
+                Start a Conversation
+              </Button>
+            </div>
+          ) : null}
           <form
             onSubmit={(event) => {
               event.preventDefault();
@@ -709,7 +720,7 @@ export function StarSearchChat({
               type="text"
               name="prompt"
               ref={inputRef}
-              disabled={isRunning}
+              disabled={isRunning || !!sharedChatId}
               placeholder="Ask a question"
               className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
               onFocus={() => {
@@ -718,7 +729,7 @@ export function StarSearchChat({
                 }
               }}
             />
-            <button type="submit" disabled={isRunning} className="p-2 bg-white rounded-r-lg">
+            <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
               <span className="sr-only">Submit your question to StarSearch</span>
               <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
             </button>

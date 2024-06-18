@@ -223,7 +223,15 @@ Additions/Deletions: +20/-1 across 3 files.
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", expectedUrl);
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
 
-  // // after the shared prompt runs for a logged out user, if they try to add their own prompt, it will be gated by a login dialog.
-  await page.getByRole("textbox", { name: "Ask a question", exact: true }).click();
+  const askAQuestionInput = page.getByRole("textbox", { name: "Ask a question", exact: true });
+  await expect(askAQuestionInput).toBeDisabled();
+  const newConversationButton = page.getByRole("button", { name: "Start a Conversation", exact: true });
+  await expect(newConversationButton).toBeVisible();
+
+  await newConversationButton.click();
+  await expect(page.getByRole("list", { name: "suggested prompts" })).toBeVisible();
+  await expect(askAQuestionInput).toBeEnabled();
+
+  await askAQuestionInput.click();
   await expect(page.getByRole("dialog", { name: "Login to try StarSearch", exact: true })).toBeVisible();
 });
