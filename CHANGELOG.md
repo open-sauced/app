@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.36.0-beta.6](https://github.com/open-sauced/app/compare/v2.36.0-beta.5...v2.36.0-beta.6) (2024-06-18)
+
+
+### 🍕 Features
+
+* enabled loading an existing conversation in StarSearch ([#3563](https://github.com/open-sauced/app/issues/3563)) ([cc34e7b](https://github.com/open-sauced/app/commit/cc34e7bf3f9152e632073586812c55b44a080c88))
+
 ## [2.36.0-beta.5](https://github.com/open-sauced/app/compare/v2.36.0-beta.4...v2.36.0-beta.5) (2024-06-18)
 
 
