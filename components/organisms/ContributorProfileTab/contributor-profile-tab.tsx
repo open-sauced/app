@@ -36,7 +36,7 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useToast } from "lib/hooks/useToast";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { DayRangePicker } from "components/shared/DayRangePicker";
-import IssueCommentsTable from "components/Profiles/issue-comments-table";
+import IssueCommentsTable from "components/Profiles/IssueCommentsTable/issue-comments-table";
 import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
 import { SubTabsList } from "components/TabList/tab-list";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";

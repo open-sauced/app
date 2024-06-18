@@ -18,7 +18,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
 import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
-import IssueCommentsTable from "components/Profiles/issue-comments-table";
+import IssueCommentsTable from "components/Profiles/IssueCommentsTable/issue-comments-table";
 import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
 import { SubTabsList } from "components/TabList/tab-list";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
@@ -164,7 +164,7 @@ const ContributorProfilePage = ({
             </>
           )}
         </div>
-        <div className="flex-1 mt-10 lg:mt-0">
+        <div className="flex-1 mt-10 lg:mt-0 lg:w-1/3">
           {loading ? (
             <SkeletonWrapper height={500} radius={12} />
           ) : (
