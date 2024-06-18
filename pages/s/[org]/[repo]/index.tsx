@@ -34,6 +34,8 @@ import IssuesChart from "components/Graphs/IssuesChart";
 import ContributorsChart from "components/Graphs/ContributorsChart";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
+import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
+import RossChart from "components/Repositories/RossChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -140,6 +142,15 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   } = useFetchMetricStats({
     repository: repoData.full_name,
     variant: "prs",
+    range,
+  });
+
+  const {
+    data: rossStats,
+    isLoading: isRossDataLoading,
+    error: rossError,
+  } = useRepositoryRoss({
+    repository: repoData.full_name,
     range,
   });
 
@@ -267,6 +278,16 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     isLoading={isLotteryFactorLoading}
                   />
                 </div>
+              </section>
+
+              <section>
+                <RossChart
+                  stats={rossStats}
+                  range={range}
+                  syncId={syncId}
+                  isLoading={isRossDataLoading}
+                  error={rossError}
+                />
               </section>
 
               <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
