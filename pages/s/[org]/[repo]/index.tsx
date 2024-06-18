@@ -222,7 +222,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
           <ClientOnly>
             <div className="flex flex-col gap-4">
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[48rem]">
-                <div className="lg:col-span-8 flex flex-col gap-4">
+                <div className="order-last lg:order-none lg:col-span-8 flex flex-col gap-4">
                   <ContributorsChart
                     stats={contributorStats}
                     range={range}
@@ -253,7 +253,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   </div>
                 </div>
 
-                <div className="lg:col-span-4 flex flex-col gap-4">
+                <div className="order-1 lg:order-none lg:col-span-4 flex flex-col gap-4">
                   <ContributorConfidenceChart
                     contributorConfidence={repoStats?.contributor_confidence}
                     isError={isError}
