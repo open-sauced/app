@@ -88,7 +88,7 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
 
   return (
     <WorkspaceLayout workspaceId={workspace.id}>
-      <div>
+      <div className="grid gap-6 max-w-4xl px-4 py-8 lg:px-16 lg:py-12">
         <nav className="items-center justify-between block py-4 sm:flex ">
           <div className="text-3xl leading-none mx-0">Contributor Insights</div>
         </nav>

@@ -85,83 +85,85 @@ const NewInsightPage = () => {
 
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
-      <div className="grid gap-6 max-w-4xl">
-        <h1 className="border-b bottom pb-4 text-xl font-medium">Create Repository Insight</h1>
-        <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateInsight}>
-          <div>
-            <h3 className="font-medium mb-2">
-              Insight Name <span className="text-red-600">*</span>
-            </h3>
-            <TextInput
-              name="name"
-              placeholder="Insight name"
-              className="!py-1.5 w-full text-sm"
-              required
-              disabled={loading}
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-          </div>
-          <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
-            <Button
-              variant="primary"
-              className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
-              disabled={loading}
-            >
-              Create Insight
-            </Button>
-          </div>
-        </form>
+      <div className="px-4 py-8 lg:px-16 lg:py-12">
+        <div className="grid gap-6 max-w-4xl">
+          <h1 className="border-b bottom pb-4 text-xl font-medium">Create Repository Insight</h1>
+          <form className="flex flex-col gap-6 mb-2" onSubmit={onCreateInsight}>
+            <div>
+              <h3 className="font-medium mb-2">
+                Insight Name <span className="text-red-600">*</span>
+              </h3>
+              <TextInput
+                name="name"
+                placeholder="Insight name"
+                className="!py-1.5 w-full text-sm"
+                required
+                disabled={loading}
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+              />
+            </div>
+            <div className="bg-white sticky-bottom fixed bottom-0 right-0 self-end m-6">
+              <Button
+                variant="primary"
+                className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
+                disabled={loading}
+              >
+                Create Insight
+              </Button>
+            </div>
+          </form>
 
-        <TrackedReposTable
-          disabled={loading}
-          repositories={trackedRepos}
-          onAddRepos={() => {
-            setTrackedReposModalOpen(true);
+          <TrackedReposTable
+            disabled={loading}
+            repositories={trackedRepos}
+            onAddRepos={() => {
+              setTrackedReposModalOpen(true);
+            }}
+            onRemoveTrackedRepo={(event) => {
+              const { repo } = event.currentTarget.dataset;
+
+              if (!repo) {
+                // eslint-disable-next-line no-console
+                console.error("The tracked repo to remove was not found");
+                return;
+              }
+
+              setTrackedRepos((trackedRepos) => {
+                const updates = new Map([...trackedRepos]);
+                updates.delete(repo);
+
+                return updates;
+              });
+            }}
+          />
+        </div>
+        <TrackedReposModal
+          isOpen={trackedReposModalOpen}
+          onClose={() => {
+            setTrackedReposModalOpen(false);
           }}
-          onRemoveTrackedRepo={(event) => {
-            const { repo } = event.currentTarget.dataset;
-
-            if (!repo) {
-              // eslint-disable-next-line no-console
-              console.error("The tracked repo to remove was not found");
-              return;
-            }
-
+          onAddToTrackingList={(repos: Map<string, boolean>) => {
+            setTrackedReposModalOpen(false);
             setTrackedRepos((trackedRepos) => {
               const updates = new Map([...trackedRepos]);
-              updates.delete(repo);
+
+              for (const [repo, checked] of repos) {
+                if (checked) {
+                  updates.set(repo, true);
+                } else {
+                  updates.delete(repo);
+                }
+              }
 
               return updates;
             });
           }}
+          onCancel={() => {
+            setTrackedReposModalOpen(false);
+          }}
         />
       </div>
-      <TrackedReposModal
-        isOpen={trackedReposModalOpen}
-        onClose={() => {
-          setTrackedReposModalOpen(false);
-        }}
-        onAddToTrackingList={(repos: Map<string, boolean>) => {
-          setTrackedReposModalOpen(false);
-          setTrackedRepos((trackedRepos) => {
-            const updates = new Map([...trackedRepos]);
-
-            for (const [repo, checked] of repos) {
-              if (checked) {
-                updates.set(repo, true);
-              } else {
-                updates.delete(repo);
-              }
-            }
-
-            return updates;
-          });
-        }}
-        onCancel={() => {
-          setTrackedReposModalOpen(false);
-        }}
-      />
     </WorkspaceLayout>
   );
 };

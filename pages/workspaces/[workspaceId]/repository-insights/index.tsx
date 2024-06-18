@@ -43,7 +43,7 @@ const RepositoryInsights = () => {
 
   return (
     <WorkspaceLayout workspaceId={workspaceId}>
-      <div>
+      <div className="px-4 py-8 lg:px-16 lg:py-12">
         <nav className="justify-between py-4 flex flex-col lg:flex-row lg:items-center gap-4">
           <div className="text-3xl leading-none mx-0">Repository Insights</div>
           <Button href={`/workspaces/${workspaceId}/repository-insights/new`} variant="primary" className="w-fit">

@@ -4,10 +4,8 @@ import { jsonLdScriptProps } from "react-schemaorg";
 import { Person } from "schema-dts";
 
 import { useRouter } from "next/router";
-import ProfileLayout from "layouts/profile";
 import SEO from "layouts/SEO/SEO";
 
-import { WithPageLayout } from "interfaces/with-page-layout";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import useRepoList from "lib/hooks/useRepoList";
@@ -17,6 +15,8 @@ import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velo
 import { useHasMounted } from "lib/hooks/useHasMounted";
 import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
 import { isValidUrlSlug } from "lib/utils/url-validators";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import useSession from "lib/hooks/useSession";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -26,10 +26,11 @@ export type ContributorSSRProps = {
   ogImage: string;
 };
 
-const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
+export default function Contributor({ username, user, ogImage }: ContributorSSRProps) {
   const router = useRouter();
   const range = (router.query.range as string) ?? "30";
   const hasMounted = useHasMounted();
+  const { session } = useSession(true);
 
   const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
     contributor: username,
@@ -83,7 +84,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           />
         )}
       </Head>
-      <div className="w-full">
+      <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <ContributorProfilePage
           prMerged={mergedPrs.length}
           error={isError}
@@ -98,13 +99,10 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           prVelocity={prVelocity}
           range={range}
         />
-      </div>
+      </WorkspaceLayout>
     </>
   );
-};
-
-Contributor.PageLayout = ProfileLayout;
-export default Contributor;
+}
 
 export const getServerSideProps = async (context: UserSSRPropsContext) => {
   const { username } = context.params ?? { username: "" };
