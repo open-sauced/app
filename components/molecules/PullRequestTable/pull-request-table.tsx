@@ -21,7 +21,7 @@ interface CardTableProps {
   limit?: number;
   isHoverCard?: boolean;
   range?: string;
-  repo?: string;
+  repoFilter?: string;
 }
 
 const EmptyState = ({ range }: { range: number }) => {
@@ -52,7 +52,7 @@ const PullRequestTable = ({
   limit,
   isHoverCard,
   range,
-  repo,
+  repoFilter,
 }: CardTableProps): JSX.Element => {
   const { data, isLoading } = useContributorPullRequests({
     contributor,
@@ -64,8 +64,8 @@ const PullRequestTable = ({
 
   const repos = data
     .filter((pr) => {
-      if (repo) {
-        return pr.repo_name === repo;
+      if (repoFilter) {
+        return pr.repo_name === repoFilter;
       }
       return true;
     })

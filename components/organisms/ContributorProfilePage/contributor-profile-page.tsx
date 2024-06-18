@@ -267,7 +267,7 @@ const ContributorProfilePage = ({
                             topic={"*"}
                             repositories={undefined}
                             range={range}
-                            repo={selectedRepo}
+                            repoFilter={selectedRepo}
                           />
                         </div>
                       )}
