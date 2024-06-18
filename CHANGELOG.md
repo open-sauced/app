@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.37.0](https://github.com/open-sauced/app/compare/v2.36.0...v2.37.0) (2024-06-18)
+
+
+### 🐛 Bug Fixes
+
+* now the title of a thread is set to the initial prompt of a StarSearch conversation ([#3581](https://github.com/open-sauced/app/issues/3581)) ([f0053ed](https://github.com/open-sauced/app/commit/f0053edef5018795ac03807ce428a70b6dadd281))
+
+
+### 🍕 Features
+
+* don't show sidebar by default for non-logged in user ([#3576](https://github.com/open-sauced/app/issues/3576)) ([6f440ca](https://github.com/open-sauced/app/commit/6f440caf82675a4f635ceb0221bde823cc7f3e43))
+
 ## [2.37.0-beta.1](https://github.com/open-sauced/app/compare/v2.36.1-beta.1...v2.37.0-beta.1) (2024-06-18)
 
 
