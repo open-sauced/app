@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.38.0-beta.2](https://github.com/open-sauced/app/compare/v2.38.0-beta.1...v2.38.0-beta.2) (2024-06-19)
+
+
+### 🐛 Bug Fixes
+
+* remove discord link from issue.yml ([#3593](https://github.com/open-sauced/app/issues/3593)) ([5d1b7a4](https://github.com/open-sauced/app/commit/5d1b7a4b54614695e8ac0ad67f1b7e1b41e01af9))
+
 ## [2.38.0-beta.1](https://github.com/open-sauced/app/compare/v2.37.0...v2.38.0-beta.1) (2024-06-19)
 
 
