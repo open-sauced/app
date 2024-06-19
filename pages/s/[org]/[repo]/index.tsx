@@ -31,7 +31,6 @@ import PRChart from "components/Graphs/PRChart";
 import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
 import IssuesChart from "components/Graphs/IssuesChart";
-import ContributorsChart from "components/Graphs/ContributorsChart";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
 import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
@@ -234,12 +233,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             <div className="flex flex-col gap-4">
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[48rem]">
                 <div className="order-last lg:order-none lg:col-span-8 flex flex-col gap-4">
-                  <ContributorsChart
-                    stats={contributorStats}
+                  <RossChart
+                    stats={rossStats}
                     range={range}
-                    rangedTotal={contributorRangedTotal!}
-                    syncId={syncId}
-                    isLoading={isContributorDataLoading}
+                    isLoading={isRossDataLoading}
+                    rangedTotal={contributorRangedTotal}
+                    error={rossError}
                     className="h-fit"
                   />
 
@@ -278,16 +277,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     isLoading={isLotteryFactorLoading}
                   />
                 </div>
-              </section>
-
-              <section>
-                <RossChart
-                  stats={rossStats}
-                  range={range}
-                  syncId={syncId}
-                  isLoading={isRossDataLoading}
-                  error={rossError}
-                />
               </section>
 
               <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
