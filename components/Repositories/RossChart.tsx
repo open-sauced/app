@@ -1,4 +1,3 @@
-
 import { FaUsers } from "react-icons/fa6";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
@@ -103,21 +102,21 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
         </section>
         <section className="flex justify-between">
           <p className="flex gap-2 items-center px-1 text-slate-500">
-            <span className={`w-2 h-2 rounded-full bg-[#9333ea] inline-block`}></span>
+            <span className={`w-2 h-2 rounded-full bg-[#60A5FA] inline-block`}></span>
             New:
           </p>
           <p className="font-medium pl-2">{payload[2]?.value}</p>
         </section>
         <section className="flex justify-between">
           <p className="flex gap-2 items-center px-1 text-slate-500">
-            <span className={`w-2 h-2 rounded-full bg-[#16a34a] inline-block`}></span>
+            <span className={`w-2 h-2 rounded-full bg-[#2563EB] inline-block`}></span>
             Recurring:
           </p>
           <p className="font-medium pl-2">{payload[1]?.value}</p>
         </section>
         <section className="flex justify-between">
           <p className="flex gap-2 items-center px-1 text-slate-500">
-            <span className={`w-2 h-2 rounded-full bg-[#9333ea] inline-block`}></span>
+            <span className={`w-2 h-2 rounded-full bg-[#1E3A8A] inline-block`}></span>
             Internal:
           </p>
           <p className="font-medium pl-2">{payload[0]?.value}</p>
