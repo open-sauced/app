@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.38.0-beta.3](https://github.com/open-sauced/app/compare/v2.38.0-beta.2...v2.38.0-beta.3) (2024-06-19)
+
+
+### 🍕 Features
+
+* added Swift to the explore page ([#3594](https://github.com/open-sauced/app/issues/3594)) ([ef05a87](https://github.com/open-sauced/app/commit/ef05a87a6a2daf042a4b52f82787d2c2b752996f))
+
 ## [2.38.0-beta.2](https://github.com/open-sauced/app/compare/v2.38.0-beta.1...v2.38.0-beta.2) (2024-06-19)
 
 
