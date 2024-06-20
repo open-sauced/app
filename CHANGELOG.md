@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.38.0-beta.6](https://github.com/open-sauced/app/compare/v2.38.0-beta.5...v2.38.0-beta.6) (2024-06-20)
+
+
+### 🍕 Features
+
+* ROSS chart in repo pages ([#3586](https://github.com/open-sauced/app/issues/3586)) ([f6772bf](https://github.com/open-sauced/app/commit/f6772bf173d60baf04c54e8dffd32766e2d86e59))
+
 ## [2.38.0-beta.5](https://github.com/open-sauced/app/compare/v2.38.0-beta.4...v2.38.0-beta.5) (2024-06-20)
 
 
