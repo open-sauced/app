@@ -4,7 +4,7 @@ import { NameType, ValueType } from "recharts/types/component/DefaultTooltipCont
 import { useMemo } from "react";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import { humanizeNumber } from "netlify/og-image-utils";
+import humanizeNumber from "lib/utils/humanizeNumber";
 
 type RossChartProps = {
   stats: RepositoryRoss | undefined;
@@ -19,21 +19,19 @@ export default function RossChart({ stats, rangedTotal, isLoading, error, range,
   const rangedAverage = useMemo(() => (rangedTotal / range).toPrecision(2), [rangedTotal, range]);
 
   const weeklyData = useMemo(() => {
-    const result: { bucket: string; new: number; returning: number; internal: number }[] = [];
-    stats?.contributors.reverse().map((week) => {
-      result.push({
+    const result = stats?.contributors.reverse().map((week) => {
+      return {
         ...week,
         bucket: new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
-      });
+      };
     });
 
     return result;
   }, [stats]);
 
   const bucketTicks = useMemo(() => {
-    const result: string[] = [];
-    stats?.contributors.reverse().map((week) => {
-      result.push(new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" }));
+    const result = stats?.contributors.reverse().map((week) => {
+      return new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" });
     });
 
     return result;
