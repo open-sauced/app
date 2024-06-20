@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.38.0-beta.5](https://github.com/open-sauced/app/compare/v2.38.0-beta.4...v2.38.0-beta.5) (2024-06-20)
+
+
+### 🍕 Features
+
+* created the StarSearch button CTA ([#3578](https://github.com/open-sauced/app/issues/3578)) ([90158f8](https://github.com/open-sauced/app/commit/90158f89eb3d4e4352e5c71f6d74714a8a076567))
+
 ## [2.38.0-beta.4](https://github.com/open-sauced/app/compare/v2.38.0-beta.3...v2.38.0-beta.4) (2024-06-20)
 
 
