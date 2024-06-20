@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.38.0-beta.7](https://github.com/open-sauced/app/compare/v2.38.0-beta.6...v2.38.0-beta.7) (2024-06-20)
+
+
+### 🐛 Bug Fixes
+
+* center highlights page ([#3604](https://github.com/open-sauced/app/issues/3604)) ([52667b6](https://github.com/open-sauced/app/commit/52667b63ef5d53091cfb54e011bde4deed351485))
+
 ## [2.38.0-beta.6](https://github.com/open-sauced/app/compare/v2.38.0-beta.5...v2.38.0-beta.6) (2024-06-20)
 
 
