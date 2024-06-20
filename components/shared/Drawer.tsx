@@ -13,7 +13,7 @@ interface DrawerProps {
   title?: React.ReactNode;
   description?: React.ReactNode;
   children: React.ReactNode;
-  trigger: React.ReactNode;
+  trigger?: React.ReactNode;
   showCloseButton?: boolean;
   asChild?: boolean;
   isOpen?: boolean;
