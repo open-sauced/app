@@ -25,6 +25,27 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { WorkspaceOgImage, getWorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
 import { useHasMounted } from "lib/hooks/useHasMounted";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
+
+const SUGGESTIONS = [
+  {
+    title: "Find experts in your contributor base",
+    prompt: "Are there any contributors that have worked with React Components in the last year?",
+  },
+  {
+    title: "Discover trends in your repositories",
+    prompt: "What were the fastest growing repositories in my workspace in the last 60 days?",
+  },
+  {
+    title: "Identify potential issues",
+    prompt: "Are there any repositories that have a very high lottery factor?",
+  },
+  {
+    title: "Uncover contributors to highlight",
+    prompt: "Are there contributors in my workspace that have been working on relevant contributions?",
+  },
+];
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
@@ -77,17 +98,35 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
-  return { props: { workspace: data, isOwner, overLimit: !!data?.exceeds_upgrade_limits, ogImage: `${ogImage.href}` } };
+  return {
+    props: {
+      workspace: data,
+      isOwner,
+      overLimit: !!data?.exceeds_upgrade_limits,
+      ogImage: `${ogImage.href}`,
+      bearerToken,
+      userId,
+    },
+  };
 };
 
 interface WorkspaceDashboardProps {
+  userId: number;
   workspace: Workspace;
   ogImage: string;
   isOwner: boolean;
   overLimit: boolean;
+  bearerToken: string;
 }
 
-const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: WorkspaceDashboardProps) => {
+const WorkspaceDashboard = ({
+  workspace,
+  ogImage,
+  isOwner,
+  overLimit,
+  bearerToken,
+  userId,
+}: WorkspaceDashboardProps) => {
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
   const hasMounted = useHasMounted();
 
@@ -116,6 +155,8 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
   const showBanner = isOwner && overLimit;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   useEffect(() => {
     setRepoIds(
       filteredRepositories.length > 0
@@ -141,9 +182,9 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
       >
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <WorkspaceHeader workspace={workspace} />
-          <div className="grid sm:flex gap-4 pt-3 border-b">
+          <div className="grid gap-4 pt-3 border-b sm:flex">
             <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
-            <div className="flex justify-end items-center gap-4">
+            <div className="flex items-center justify-end gap-4">
               <Button
                 variant="outline"
                 onClick={() => {
@@ -164,11 +205,11 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
               />
             </div>
           </div>
-          <div className="mt-6 grid gap-6">
+          <div className="grid gap-6 mt-6">
             <ClientOnly>
               {repoIds.length > 0 ? (
                 <>
-                  <div className="flex flex-col lg:flex-row gap-6">
+                  <div className="flex flex-col gap-6 lg:flex-row">
                     <RepositoryStatCard
                       type="pulls"
                       stats={stats?.data?.pull_requests}
@@ -222,6 +263,15 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
           />
         </div>
       </WorkspaceLayout>
+      <StarSearchEmbed
+        userId={userId}
+        bearerToken={bearerToken}
+        suggestions={SUGGESTIONS}
+        isMobile={isMobile}
+        // TODO: implement once we have shared chats in workspaces
+        sharedChatId={null}
+        tagline="Ask anything about your workspace"
+      />
     </>
   );
 };

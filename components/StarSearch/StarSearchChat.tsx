@@ -64,20 +64,24 @@ async function updateComponentRegistry(name: string) {
 
 type StarSearchChatProps = {
   userId: number | undefined;
-  sharedPrompt: string | null;
-  sharedChatId: string | null;
+  sharedPrompt?: string | null;
+  sharedChatId?: string | null;
   bearerToken: string | undefined | null;
   isMobile: boolean;
   suggestions: { title: string; prompt: string }[];
+  tagline?: string;
+  embedded?: boolean;
 };
 
 export function StarSearchChat({
   userId,
-  sharedChatId,
-  sharedPrompt,
+  sharedChatId = null,
+  sharedPrompt = null,
   bearerToken,
   isMobile,
   suggestions,
+  tagline = "Copilot, but for git history",
+  embedded = false,
 }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
@@ -511,7 +515,7 @@ export function StarSearchChat({
           <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
             {!(sharedChatId || sharedPrompt) ? (
               <>
-                <Header />
+                <Header tagline={tagline} />
                 {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />}
               </>
             ) : null}
@@ -526,10 +530,10 @@ export function StarSearchChat({
         );
 
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
-        let heightToRemove = 300;
+        let heightToRemove = 330;
 
         if (!isRunning && !isMobile && ranOnce && showSuggestions) {
-          heightToRemove = 370;
+          heightToRemove = 400;
         }
 
         return (
@@ -538,7 +542,9 @@ export function StarSearchChat({
               <ScrollArea
                 className="flex grow"
                 asChild={true}
-                style={{ maxHeight: `calc(100vh - ${heightToRemove}px)` }}
+                style={{
+                  maxHeight: `calc(100dvh - ${heightToRemove}px)`,
+                }}
               >
                 <section role="feed" aria-label="StarSearch conversation" aria-busy={isRunning} aria-setsize={-1}>
                   {chatMessagesToProcess.map((message, i, messages) => {
@@ -757,14 +763,16 @@ export function StarSearchChat({
             )}
           </p>
         </div>
-        <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]"></div>
+        {embedded ? null : (
+          <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
+        )}
       </div>
       <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
     </>
   );
 }
 
-function Header() {
+function Header({ tagline }: { tagline: string }) {
   return (
     <header className="flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
       <div className="flex items-center gap-2">
@@ -773,7 +781,7 @@ function Header() {
           StarSearch
         </h1>
       </div>
-      <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">Copilot, but for git history</h2>
+      <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">{tagline}</h2>
     </header>
   );
 }
