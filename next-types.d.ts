@@ -630,6 +630,16 @@ interface RepositoryLottoFactor {
   all_lotto_factor: LottoFactor;
 }
 
+interface RepositoryRoss {
+  ross: { bucket: string; index: number }[];
+  contributors: {
+    bucket: string;
+    new: number;
+    returning: number;
+    internal: number;
+  }[];
+}
+
 // sourced from open-sauced/api
 
 type ThreadHistoryItem = {

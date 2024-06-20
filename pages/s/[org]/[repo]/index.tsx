@@ -31,9 +31,10 @@ import PRChart from "components/Graphs/PRChart";
 import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
 import IssuesChart from "components/Graphs/IssuesChart";
-import ContributorsChart from "components/Graphs/ContributorsChart";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
+import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
+import RossChart from "components/Repositories/RossChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -143,6 +144,15 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     range,
   });
 
+  const {
+    data: rossStats,
+    isLoading: isRossDataLoading,
+    error: rossError,
+  } = useRepositoryRoss({
+    repository: repoData.full_name,
+    range,
+  });
+
   const contributorRangedTotal = contributorStats?.reduce((prev, curr) => prev + curr.contributor_count!, 0);
   const { data: repoStats, isError, isLoading } = useRepoStats({ repoFullName: repoData.full_name, range });
 
@@ -223,12 +233,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             <div className="flex flex-col gap-4">
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[48rem]">
                 <div className="order-last lg:order-none lg:col-span-8 flex flex-col gap-4">
-                  <ContributorsChart
-                    stats={contributorStats}
+                  <RossChart
+                    stats={rossStats}
                     range={range}
+                    isLoading={isRossDataLoading}
                     rangedTotal={contributorRangedTotal!}
-                    syncId={syncId}
-                    isLoading={isContributorDataLoading}
+                    error={rossError}
                     className="h-fit"
                   />
 

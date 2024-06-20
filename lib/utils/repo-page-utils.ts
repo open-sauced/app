@@ -3,14 +3,26 @@ import { DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 
 export type HistogramData = {
+  // DateTime string
   bucket: string;
+
+  // Stars, Forks, Contributors
   star_count?: number;
   forks_count?: number;
   contributor_count?: number;
+
+  // Issues
   opened_issues?: number;
   closed_issues?: number;
+
+  // PRS
   active_prs?: number;
   accepted_prs?: number;
+
+  // ROSS
+  new?: number;
+  recurring?: number;
+  internal?: number;
 };
 
 export function getTicks({ histogram, range }: { histogram: HistogramData[]; range: DayRange }): string[] {
