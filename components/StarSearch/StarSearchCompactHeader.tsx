@@ -11,7 +11,16 @@ interface StarSearchCompactHeaderProps {
   onShowHistory: OnClick;
   onClose: OnClick;
   view: "prompt" | "chat";
+  showCloseButton?: boolean;
 }
+
+const CloseButton = ({ onClick }: { onClick: OnClick }) => {
+  return (
+    <button onClick={onClick} className="hover:text-orange-500">
+      <XIcon />
+    </button>
+  );
+};
 
 export const StarSearchCompactHeader = ({
   onBack,
@@ -20,6 +29,7 @@ export const StarSearchCompactHeader = ({
   onShowHistory,
   onClose,
   view,
+  showCloseButton = true,
 }: StarSearchCompactHeaderProps) => {
   const buttonHoverStyle = "hover:text-orange-500";
 
@@ -44,16 +54,12 @@ export const StarSearchCompactHeader = ({
             <button onClick={onShowHistory} className={buttonHoverStyle}>
               <HistoryIcon />
             </button>
-            <button onClick={onClose} className={buttonHoverStyle}>
-              <XIcon />
-            </button>
+            {showCloseButton ? <CloseButton onClick={onClose} /> : null}
           </div>
         </div>
       ) : (
         <div className="flex items-center justify-end gap-2 [&_button]:text-slate-600 h-8 p-1">
-          <button onClick={onClose} className={buttonHoverStyle}>
-            <XIcon />
-          </button>
+          {showCloseButton ? <CloseButton onClick={onClose} /> : null}
         </div>
       )}
     </>
