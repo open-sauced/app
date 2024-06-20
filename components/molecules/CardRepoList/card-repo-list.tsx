@@ -18,6 +18,7 @@ interface CardRepoListProps {
   deletable?: boolean;
   onDelete?: (repoName: string) => void;
   onSelect?: (repoName: string) => void;
+  showCursor?: boolean;
 }
 
 const CardRepoList = ({
@@ -28,6 +29,7 @@ const CardRepoList = ({
   deletable = false,
   onDelete = () => {},
   onSelect = () => {},
+  showCursor = false,
 }: CardRepoListProps): JSX.Element => {
   // The repoList is paginated, the total is the complete count
   const repoTotal = total || repoList.length;
@@ -57,7 +59,11 @@ const CardRepoList = ({
                     <Tooltip content={`${repoOwner}/${repoName}`}>
                       <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
                         <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
-                        <span className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName}`}>
+                        <span
+                          className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName} ${
+                            showCursor && "cursor-pointer"
+                          }`}
+                        >
                           {repoName}
                         </span>
                         {deletable ? (

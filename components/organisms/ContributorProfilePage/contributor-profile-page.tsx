@@ -246,6 +246,7 @@ const ContributorProfilePage = ({
                         repoList={repoList}
                         total={repoList.length}
                         onSelect={(repo) => setSelectedRepo(repo)}
+                        showCursor={true}
                       />
                     </div>
 

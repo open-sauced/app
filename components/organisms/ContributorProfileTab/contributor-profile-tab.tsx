@@ -411,7 +411,12 @@ const ContributorProfileTab = ({
               <CardLineChart contributor={githubName} range={Number(range)} className="!h-36" repo={selectedRepo} />
             </div>
             <div>
-              <CardRepoList limit={7} repoList={repoList} onSelect={(repo) => setSelectedRepo(repo)} />
+              <CardRepoList
+                limit={7}
+                repoList={repoList}
+                onSelect={(repo) => setSelectedRepo(repo)}
+                showCursor={true}
+              />
             </div>
             <div className="mt-6 flex flex-col">
               <div className="pb-2">
