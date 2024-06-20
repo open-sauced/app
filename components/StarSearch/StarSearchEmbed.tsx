@@ -2,7 +2,6 @@ import { ComponentProps, useState } from "react";
 import { Drawer } from "components/shared/Drawer";
 import { StarSearchButton } from "./StarSearchButton";
 import { StarSearchChat } from "./StarSearchChat";
-import { StarSearchCompactHeader } from "./StarSearchCompactHeader";
 
 interface StarSearchEmbedProps extends Omit<ComponentProps<typeof StarSearchChat>, "sharedPrompt"> {}
 
@@ -14,43 +13,39 @@ export const StarSearchEmbed = ({
   isMobile,
   tagline,
 }: StarSearchEmbedProps) => {
-  const [view, setView] = useState<"prompt" | "chat">("prompt");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const onClose = () => setDrawerOpen(false);
 
   return (
     <>
       {true ? (
-        <Drawer
-          showCloseButton={false}
-          title={
-            <StarSearchCompactHeader
-              view={view}
-              onBack={() => {}}
-              onClose={() => {}}
-              onShare={() => {}}
-              onShowHistory={() => {}}
-              onNewChat={() => {
-                setView("prompt");
-              }}
-              showCloseButton={!isMobile}
+        <>
+          <Drawer
+            showCloseButton={false}
+            inheritBackground={true}
+            isOpen={drawerOpen}
+            onClose={onClose}
+            fullHeightDrawer={true}
+          >
+            <StarSearchChat
+              userId={userId}
+              sharedChatId={sharedChatId}
+              bearerToken={bearerToken}
+              isMobile={isMobile}
+              suggestions={suggestions}
+              tagline={tagline}
+              onClose={onClose}
+              embedded={true}
             />
-          }
-          inheritBackground={true}
-          trigger={
-            <div className="sticky bottom-0 flex justify-end p-2">
-              <StarSearchButton onOpen={() => {}} />
-            </div>
-          }
-        >
-          <StarSearchChat
-            userId={userId}
-            sharedChatId={sharedChatId}
-            bearerToken={bearerToken}
-            isMobile={isMobile}
-            suggestions={suggestions}
-            tagline={tagline}
-            embedded={true}
-          />
-        </Drawer>
+          </Drawer>
+          <div className="sticky bottom-0 flex justify-end p-2">
+            <StarSearchButton
+              onOpen={() => {
+                setDrawerOpen(true);
+              }}
+            />
+          </div>
+        </>
       ) : (
         <div className="sticky bottom-0 flex justify-end pb-2 pr-3">
           <StarSearchButton onOpen={() => {}} />
