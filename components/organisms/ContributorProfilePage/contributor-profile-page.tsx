@@ -237,6 +237,7 @@ const ContributorProfilePage = ({
                         contributor={githubName}
                         range={Number(range)}
                         className="!h-32"
+                        repo={selectedRepo}
                       />
                     </div>
                     <div>

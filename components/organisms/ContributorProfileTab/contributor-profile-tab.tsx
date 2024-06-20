@@ -408,7 +408,7 @@ const ContributorProfileTab = ({
               </div>
             </div>
             <div className="mt-2 h-36">
-              <CardLineChart contributor={githubName} range={Number(range)} className="!h-36" />
+              <CardLineChart contributor={githubName} range={Number(range)} className="!h-36" repo={selectedRepo} />
             </div>
             <div>
               <CardRepoList limit={7} repoList={repoList} onSelect={(repo) => setSelectedRepo(repo)} />
