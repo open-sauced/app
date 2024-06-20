@@ -10,14 +10,15 @@ import {
 } from "components/primitives/drawer-primitives";
 
 interface DrawerProps {
-  title: React.ReactNode;
-  description: React.ReactNode;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   children: React.ReactNode;
   trigger: React.ReactNode;
   showCloseButton?: boolean;
   asChild?: boolean;
   isOpen?: boolean;
   onClose?: () => void;
+  inheritBackground?: boolean;
 }
 
 export const Drawer = ({
@@ -29,15 +30,18 @@ export const Drawer = ({
   asChild = true,
   isOpen,
   onClose,
+  inheritBackground = false,
 }: DrawerProps) => {
   return (
     <InternalDrawer open={isOpen} onClose={onClose}>
       <DrawerTrigger asChild={asChild}>{trigger}</DrawerTrigger>
-      <DrawerContent className="bg-white">
-        <DrawerHeader>
-          <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
-        </DrawerHeader>
+      <DrawerContent className={inheritBackground ? "bg-inherit" : "bg-white"}>
+        {title || description ? (
+          <DrawerHeader>
+            {title ? <DrawerTitle>{title}</DrawerTitle> : null}
+            {description ? <DrawerDescription>{description}</DrawerDescription> : null}
+          </DrawerHeader>
+        ) : null}
         <DrawerFooter className="">{children}</DrawerFooter>
         {showCloseButton ? (
           <div className="border-t flex items-center justify-center">
