@@ -20,7 +20,7 @@ export default function RossChart({ stats, rangedTotal, isLoading, error, range,
 
   const weeklyData = useMemo(() => {
     const result: { bucket: string; new: number; returning: number; internal: number }[] = [];
-    stats?.contributors.map((week) => {
+    stats?.contributors.reverse().map((week) => {
       result.push({
         ...week,
         bucket: new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
@@ -32,7 +32,7 @@ export default function RossChart({ stats, rangedTotal, isLoading, error, range,
 
   const bucketTicks = useMemo(() => {
     const result: string[] = [];
-    stats?.contributors.map((week) => {
+    stats?.contributors.reverse().map((week) => {
       result.push(new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" }));
     });
 
