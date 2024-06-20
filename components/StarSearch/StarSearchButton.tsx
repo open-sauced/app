@@ -1,6 +1,6 @@
+import { useLocalStorage } from "react-use";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { StarSearchLogo } from "./StarSearchLogo";
-import { useLocalStorage } from "react-use";
 
 interface StarSearchButtonProps {
   onOpen: (e: React.MouseEvent<HTMLButtonElement>) => void;
