@@ -98,27 +98,33 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
           <p>Contributors</p>
           <p>{payload[0]?.payload.bucket}</p>
         </section>
-        <section className="flex justify-between">
-          <p className="flex gap-2 items-center px-1 text-slate-500">
-            <span className={`w-2 h-2 rounded-full bg-[#60A5FA] inline-block`}></span>
-            New:
-          </p>
-          <p className="font-medium pl-2">{payload[2]?.value}</p>
-        </section>
-        <section className="flex justify-between">
-          <p className="flex gap-2 items-center px-1 text-slate-500">
-            <span className={`w-2 h-2 rounded-full bg-[#2563EB] inline-block`}></span>
-            Recurring:
-          </p>
-          <p className="font-medium pl-2">{payload[1]?.value}</p>
-        </section>
-        <section className="flex justify-between">
-          <p className="flex gap-2 items-center px-1 text-slate-500">
-            <span className={`w-2 h-2 rounded-full bg-[#1E3A8A] inline-block`}></span>
-            Internal:
-          </p>
-          <p className="font-medium pl-2">{payload[0]?.value}</p>
-        </section>
+        {payload[2]?.value && (
+          <section className="flex justify-between">
+            <p className="flex gap-2 items-center px-1 text-slate-500">
+              <span className={`w-2 h-2 rounded-full bg-[#60A5FA] inline-block`}></span>
+              New:
+            </p>
+            <p className="font-medium pl-2">{payload[2]?.value}</p>
+          </section>
+        )}
+        {payload[1]?.value && (
+          <section className="flex justify-between">
+            <p className="flex gap-2 items-center px-1 text-slate-500">
+              <span className={`w-2 h-2 rounded-full bg-[#2563EB] inline-block`}></span>
+              Recurring:
+            </p>
+            <p className="font-medium pl-2">{payload[1]?.value}</p>
+          </section>
+        )}
+        {payload[0]?.value && (
+          <section className="flex justify-between">
+            <p className="flex gap-2 items-center px-1 text-slate-500">
+              <span className={`w-2 h-2 rounded-full bg-[#1E3A8A] inline-block`}></span>
+              Internal:
+            </p>
+            <p className="font-medium pl-2">{payload[0]?.value}</p>
+          </section>
+        )}
       </figcaption>
     );
   }
