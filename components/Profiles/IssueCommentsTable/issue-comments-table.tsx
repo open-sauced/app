@@ -65,7 +65,7 @@ const IssueCommentsTable = ({ contributor, repos, repoFilter, limit, range = 30 
           <EmptyState range={range} />
         </div>
       ) : (
-        <div className="flex flex-col gap-2.5">
+        <div className="w-full flex flex-col gap-2.5 max-w-lg md:max-w-full">
           <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-2 py-1 ">
             <div className="w-full">
               <Text className=" ">Latest Issue Comments</Text>
@@ -78,7 +78,7 @@ const IssueCommentsTable = ({ contributor, repos, repoFilter, limit, range = 30 
               </div>
             </IconContext.Provider>
           </div>
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col">
             {issueCommentsFiltered.map((issueComment) => {
               return (
                 <div className="flex gap-2 items-center px-2 py-1" key={issueComment.event_id}>
