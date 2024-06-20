@@ -511,8 +511,10 @@ export function StarSearchChat({
   const renderState = () => {
     switch (starSearchState) {
       case "initial":
+        const initialHeight = isMobile ? "h-[calc(100vh-270px)]" : "h-[calc(100vh-240px)]";
+
         return (
-          <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
+          <div className={`${initialHeight} md:h-fit grid place-content-center text-center items-center gap-4`}>
             {!(sharedChatId || sharedPrompt) ? (
               <>
                 <Header tagline={tagline} />
