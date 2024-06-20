@@ -27,6 +27,7 @@ import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
 import { SuggestedPrompts } from "./SuggestedPrompts";
 import { ShareChatMenu } from "./ShareChatMenu";
+import { StarSearchCompactHeader } from "./StarSearchCompactHeader";
 
 const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
 
@@ -71,6 +72,7 @@ type StarSearchChatProps = {
   suggestions: { title: string; prompt: string }[];
   tagline?: string;
   embedded?: boolean;
+  onClose?: () => void;
 };
 
 export function StarSearchChat({
@@ -81,6 +83,7 @@ export function StarSearchChat({
   isMobile,
   suggestions,
   tagline = "Copilot, but for git history",
+  onClose,
   embedded = false,
 }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
@@ -95,6 +98,15 @@ export function StarSearchChat({
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [checkAuth, setCheckAuth] = useState(false);
   const [chatId, setChatId] = useState<string | null>(sharedChatId);
+  const [view, setView] = useState<"prompt" | "chat">("prompt");
+
+  const onNewChat = () => {
+    setChatId(null);
+    setStarSearchState("initial");
+    setChat([]);
+    setView("prompt");
+  };
+
   const {
     data: threadHistory,
     isError,
@@ -108,9 +120,7 @@ export function StarSearchChat({
       router.push("/star-search");
     }
 
-    setStarSearchState("initial");
-    setChat([]);
-    setChatId(null);
+    onNewChat();
   }
 
   useEffect(() => {
@@ -410,6 +420,8 @@ export function StarSearchChat({
   }, [chat]);
 
   const submitPrompt = async (prompt: string) => {
+    setView("chat");
+
     if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
       setLoginModalOpen(true);
       return;
@@ -665,6 +677,19 @@ export function StarSearchChat({
 
   return (
     <>
+      {embedded ? (
+        <StarSearchCompactHeader
+          view={view}
+          onBack={onNewChat}
+          onClose={() => {
+            onClose?.();
+          }}
+          onShare={() => {}}
+          onShowHistory={() => {}}
+          onNewChat={onNewChat}
+          showCloseButton={!isMobile}
+        />
+      ) : null}
       <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
         {renderState()}
         <div className="sticky w-full bottom-2 md:bottom-4">
