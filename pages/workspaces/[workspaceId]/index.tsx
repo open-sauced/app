@@ -279,6 +279,7 @@ const WorkspaceDashboard = ({
           // TODO: implement once we have shared chats in workspaces
           sharedChatId={null}
           tagline="Ask anything about your workspace"
+          workspaceId={workspace.id}
         />
       </FeatureFlagged>
     </>

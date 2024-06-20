@@ -29,6 +29,7 @@ import { SuggestedPrompts } from "./SuggestedPrompts";
 import { ShareChatMenu } from "./ShareChatMenu";
 import { StarSearchCompactHeader } from "./StarSearchCompactHeader";
 
+const DEFAULT_STAR_SEARCH_API_BASE_URL = new URL(`${process.env.NEXT_PUBLIC_API_URL!}/star-search`);
 const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
 
 Need some ideas? Try hitting the **Need Inspiration?** button below!`;
@@ -73,6 +74,7 @@ type StarSearchChatProps = {
   tagline?: string;
   embedded?: boolean;
   onClose?: () => void;
+  baseApiStarSearchUrl?: URL;
 };
 
 export function StarSearchChat({
@@ -85,6 +87,7 @@ export function StarSearchChat({
   tagline = "Copilot, but for git history",
   onClose,
   embedded = false,
+  baseApiStarSearchUrl = DEFAULT_STAR_SEARCH_API_BASE_URL,
 }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
@@ -139,7 +142,7 @@ export function StarSearchChat({
     if (inputRef.current) {
       addPromptInput(sharedPrompt);
     }
-  }, [sharedPrompt, inputRef.current]);
+  }, [sharedPrompt, inputRef.current, bearerToken, ranOnce]);
 
   useEffect(() => {
     // Prevents the thread history from running when a new thread has been created and is currently
@@ -447,14 +450,11 @@ export function StarSearchChat({
       return temp;
     });
 
-    // get ReadableStream from API
-    const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
-
     // Get new StarSearch conversation ID
     let id = chatId;
 
     if (!id) {
-      const starSearchThreadResponse = await fetch(`${baseUrl}/star-search`, {
+      const starSearchThreadResponse = await fetch(baseApiStarSearchUrl, {
         method: "POST",
         body: "{}",
         headers: {
@@ -480,7 +480,7 @@ export function StarSearchChat({
         return;
       }
 
-      const updateStarSearchThreadTitle = await fetch(`${baseUrl}/star-search/${id}`, {
+      const updateStarSearchThreadTitle = await fetch(`${baseApiStarSearchUrl}/${id}`, {
         method: "PATCH",
         body: JSON.stringify({ title: prompt }),
         headers: {
@@ -497,7 +497,7 @@ export function StarSearchChat({
       setChatId(id);
     }
 
-    const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
+    const response = await fetch(`${baseApiStarSearchUrl}/${id}/stream`, {
       method: "POST",
       body: JSON.stringify({
         query_text: prompt,

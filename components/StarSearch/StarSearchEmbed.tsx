@@ -1,9 +1,13 @@
 import { ComponentProps, useState } from "react";
+import { captureException } from "@sentry/nextjs";
 import { Drawer } from "components/shared/Drawer";
+import { UuidSchema, parseSchema } from "lib/validation-schemas";
+import { useToast } from "lib/hooks/useToast";
 import { StarSearchButton } from "./StarSearchButton";
 import { StarSearchChat } from "./StarSearchChat";
-
-interface StarSearchEmbedProps extends Omit<ComponentProps<typeof StarSearchChat>, "sharedPrompt"> {}
+interface StarSearchEmbedProps extends Omit<ComponentProps<typeof StarSearchChat>, "sharedPrompt"> {
+  workspaceId?: string;
+}
 
 export const StarSearchEmbed = ({
   userId,
@@ -12,10 +16,25 @@ export const StarSearchEmbed = ({
   suggestions,
   isMobile,
   tagline,
+  workspaceId,
 }: StarSearchEmbedProps) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const onClose = () => setDrawerOpen(false);
+  const { toast } = useToast();
 
+  let validWorkspaceId = workspaceId;
+
+  try {
+    if (workspaceId) {
+      validWorkspaceId = parseSchema(UuidSchema, workspaceId);
+    }
+  } catch (error) {
+    captureException(new Error(`Invalid workspace ID: ${workspaceId}`, { cause: error }));
+    toast({ description: "Invalid workspace ID. Unable to load StarSearh for Workspaces", variant: "danger" });
+    return null;
+  }
+
+  /* TODO: implement non-mobile version */
   return (
     <>
       {true ? (
@@ -36,6 +55,11 @@ export const StarSearchEmbed = ({
               tagline={tagline}
               onClose={onClose}
               embedded={true}
+              baseApiStarSearchUrl={
+                validWorkspaceId
+                  ? new URL(`${process.env.NEXT_PUBLIC_API_URL!}/workspaces/${validWorkspaceId}/star-search`)
+                  : undefined
+              }
             />
           </Drawer>
           <div className="sticky bottom-0 flex justify-end p-2">
