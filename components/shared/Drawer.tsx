@@ -19,6 +19,7 @@ interface DrawerProps {
   isOpen?: boolean;
   onClose?: () => void;
   inheritBackground?: boolean;
+  fullHeightDrawer?: boolean;
 }
 
 export const Drawer = ({
@@ -31,11 +32,22 @@ export const Drawer = ({
   isOpen,
   onClose,
   inheritBackground = false,
+  fullHeightDrawer = false,
 }: DrawerProps) => {
   return (
     <InternalDrawer open={isOpen} onClose={onClose}>
       <DrawerTrigger asChild={asChild}>{trigger}</DrawerTrigger>
-      <DrawerContent className={inheritBackground ? "bg-inherit" : "bg-white"}>
+      <DrawerContent
+        className={inheritBackground ? "bg-inherit" : "bg-white"}
+        style={
+          fullHeightDrawer
+            ? {
+                height: "calc(100dvh - 1rem)",
+                maxHeight: "calc(100dvh - 1rem)",
+              }
+            : undefined
+        }
+      >
         {title || description ? (
           <DrawerHeader>
             {title ? <DrawerTitle>{title}</DrawerTitle> : null}
