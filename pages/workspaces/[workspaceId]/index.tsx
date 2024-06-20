@@ -29,25 +29,7 @@ import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
-
-const SUGGESTIONS = [
-  {
-    title: "Find experts in your contributor base",
-    prompt: "Are there any contributors that have worked with React Components in the last year?",
-  },
-  {
-    title: "Discover trends in your repositories",
-    prompt: "What were the fastest growing repositories in my workspace in the last 60 days?",
-  },
-  {
-    title: "Identify potential issues",
-    prompt: "Are there any repositories that have a very high lottery factor?",
-  },
-  {
-    title: "Uncover contributors to highlight",
-    prompt: "Are there contributors in my workspace that have been working on relevant contributions?",
-  },
-];
+import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
@@ -274,7 +256,7 @@ const WorkspaceDashboard = ({
         <StarSearchEmbed
           userId={userId}
           bearerToken={bearerToken}
-          suggestions={SUGGESTIONS}
+          suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
           isMobile={isMobile}
           // TODO: implement once we have shared chats in workspaces
           sharedChatId={null}
