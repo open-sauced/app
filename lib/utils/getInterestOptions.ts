@@ -20,6 +20,7 @@ export const interests = [
   "clojure",
   "kotlin",
   "android",
+  "swift",
 ] as const;
 export type InterestType = (typeof interests)[number];
 

@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from "next/image";
+import SwiftIcon from "img/icons/interests/swift.svg";
 import SvelteIcon from "img/icons/interests/svelte.svg";
 import JavascriptIcon from "img/icons/interests/javascript.svg";
 import ReactIcon from "/img/icons/interests/react.svg";
@@ -47,6 +48,7 @@ export const renderTopicIcon = (name: InterestType) => {
     clojure: CloJureIcon,
     kotlin: KotlinIcon,
     android: AndroidIcon,
+    swift: SwiftIcon,
   };
 
   return iconMap[name];
@@ -58,7 +60,7 @@ interface LanguagePillProps {
 
 export const LanguagePill = ({ topic }: LanguagePillProps) => {
   return (
-    <div className="flex items-center gap-1 text-xs rounded-3xl w-max py-2 px-4 bg-light-slate-6">
+    <div className="flex items-center gap-1 px-4 py-2 text-xs rounded-3xl w-max bg-light-slate-6">
       <Image src={renderTopicIcon(topic)} alt="" />
       <span className="font-normal capitalize">{topicNameFormatting(topic)}</span>
     </div>
