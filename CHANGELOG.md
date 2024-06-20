@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.38.0-beta.5](https://github.com/open-sauced/app/compare/v2.38.0-beta.4...v2.38.0-beta.5) (2024-06-20)
+
+
+### 🍕 Features
+
+* created the StarSearch button CTA ([#3578](https://github.com/open-sauced/app/issues/3578)) ([90158f8](https://github.com/open-sauced/app/commit/90158f89eb3d4e4352e5c71f6d74714a8a076567))
+
+## [2.38.0-beta.4](https://github.com/open-sauced/app/compare/v2.38.0-beta.3...v2.38.0-beta.4) (2024-06-20)
+
+
+### 🍕 Features
+
+* implemented the StarSearchCompactHeader component ([#3591](https://github.com/open-sauced/app/issues/3591)) ([bbb5e6c](https://github.com/open-sauced/app/commit/bbb5e6ce607770dd371ac03c3462ae3697215e8b))
+
+## [2.38.0-beta.3](https://github.com/open-sauced/app/compare/v2.38.0-beta.2...v2.38.0-beta.3) (2024-06-19)
+
+
+### 🍕 Features
+
+* added Swift to the explore page ([#3594](https://github.com/open-sauced/app/issues/3594)) ([ef05a87](https://github.com/open-sauced/app/commit/ef05a87a6a2daf042a4b52f82787d2c2b752996f))
+
+## [2.38.0-beta.2](https://github.com/open-sauced/app/compare/v2.38.0-beta.1...v2.38.0-beta.2) (2024-06-19)
+
+
+### 🐛 Bug Fixes
+
+* remove discord link from issue.yml ([#3593](https://github.com/open-sauced/app/issues/3593)) ([5d1b7a4](https://github.com/open-sauced/app/commit/5d1b7a4b54614695e8ac0ad67f1b7e1b41e01af9))
+
+## [2.38.0-beta.1](https://github.com/open-sauced/app/compare/v2.37.0...v2.38.0-beta.1) (2024-06-19)
+
+
+### 🍕 Features
+
+* added the starsearch-workspaces feature flag to the app ([#3590](https://github.com/open-sauced/app/issues/3590)) ([ae9d6b8](https://github.com/open-sauced/app/commit/ae9d6b8c986cd690faa94f4e1a3db4d66cd6b906))
+
 ## [2.37.0](https://github.com/open-sauced/app/compare/v2.36.0...v2.37.0) (2024-06-18)
 
 

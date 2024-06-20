@@ -1,3 +1,4 @@
+import swift from "img/topic-thumbnails/swift.svg";
 import angular from "img/topic-thumbnails/angular-new.svg";
 import javaScript from "img/topic-thumbnails/javascript.svg";
 import python from "img/topic-thumbnails/python.svg";
@@ -46,6 +47,7 @@ const topicThumbnails: Record<InterestType, string> = {
   clojure: clojure,
   kotlin: kotlin,
   android: android,
+  swift: swift,
 };
 
 const getTopicThumbnail = (topic: keyof typeof topicThumbnails) => {
