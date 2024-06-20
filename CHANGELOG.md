@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.38.0-beta.8](https://github.com/open-sauced/app/compare/v2.38.0-beta.7...v2.38.0-beta.8) (2024-06-20)
+
+
+### 🍕 Features
+
+* StarSearch for Workspaces ([#3597](https://github.com/open-sauced/app/issues/3597)) ([44b08f0](https://github.com/open-sauced/app/commit/44b08f091b3d4f31a9f12fb463f1e6065a8ad763))
+
 ## [2.38.0-beta.7](https://github.com/open-sauced/app/compare/v2.38.0-beta.6...v2.38.0-beta.7) (2024-06-20)
 
 
