@@ -25,6 +25,11 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { WorkspaceOgImage, getWorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
 import { useHasMounted } from "lib/hooks/useHasMounted";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { FeatureFlagged } from "components/shared/feature-flagged";
+import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
@@ -77,17 +82,40 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
-  return { props: { workspace: data, isOwner, overLimit: !!data?.exceeds_upgrade_limits, ogImage: `${ogImage.href}` } };
+  const featureFlags = await getAllFeatureFlags(userId);
+
+  return {
+    props: {
+      workspace: data,
+      isOwner,
+      overLimit: !!data?.exceeds_upgrade_limits,
+      ogImage: `${ogImage.href}`,
+      bearerToken,
+      userId,
+      featureFlags,
+    },
+  };
 };
 
 interface WorkspaceDashboardProps {
+  userId: number;
   workspace: Workspace;
   ogImage: string;
   isOwner: boolean;
   overLimit: boolean;
+  bearerToken: string;
+  featureFlags: Record<FeatureFlag, boolean>;
 }
 
-const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: WorkspaceDashboardProps) => {
+const WorkspaceDashboard = ({
+  workspace,
+  ogImage,
+  isOwner,
+  overLimit,
+  bearerToken,
+  userId,
+  featureFlags,
+}: WorkspaceDashboardProps) => {
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
   const hasMounted = useHasMounted();
 
@@ -116,6 +144,8 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
   const showBanner = isOwner && overLimit;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   useEffect(() => {
     setRepoIds(
       filteredRepositories.length > 0
@@ -141,9 +171,9 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
       >
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <WorkspaceHeader workspace={workspace} />
-          <div className="grid sm:flex gap-4 pt-3 border-b">
+          <div className="grid gap-4 pt-3 border-b sm:flex">
             <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
-            <div className="flex justify-end items-center gap-4">
+            <div className="flex items-center justify-end gap-4">
               <Button
                 variant="outline"
                 onClick={() => {
@@ -164,11 +194,11 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
               />
             </div>
           </div>
-          <div className="mt-6 grid gap-6">
+          <div className="grid gap-6 mt-6">
             <ClientOnly>
               {repoIds.length > 0 ? (
                 <>
-                  <div className="flex flex-col lg:flex-row gap-6">
+                  <div className="flex flex-col gap-6 lg:flex-row">
                     <RepositoryStatCard
                       type="pulls"
                       stats={stats?.data?.pull_requests}
@@ -222,6 +252,18 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
           />
         </div>
       </WorkspaceLayout>
+      <FeatureFlagged flag="starsearch-workspaces" featureFlags={featureFlags}>
+        <StarSearchEmbed
+          userId={userId}
+          bearerToken={bearerToken}
+          suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
+          isMobile={isMobile}
+          // TODO: implement once we have shared chats in workspaces
+          sharedChatId={null}
+          tagline="Ask anything about your workspace"
+          workspaceId={workspace.id}
+        />
+      </FeatureFlagged>
     </>
   );
 };

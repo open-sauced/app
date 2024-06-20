@@ -20,6 +20,11 @@ import { setQueryParams } from "lib/utils/query-params";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { SubTabsList } from "components/TabList/tab-list";
+import { FeatureFlagged } from "components/shared/feature-flagged";
+import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -59,19 +64,32 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   }
 
   setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
+  const featureFlags = await getAllFeatureFlags(userId);
 
-  return { props: { workspace: data, overLimit: !!data?.exceeds_upgrade_limits, isOwner } };
+  return {
+    props: { workspace: data, overLimit: !!data?.exceeds_upgrade_limits, isOwner, bearerToken, userId, featureFlags },
+  };
 };
 
 interface WorkspaceDashboardProps {
+  userId: number;
   workspace: Workspace;
   isOwner: boolean;
   overLimit: boolean;
+  bearerToken: string;
+  featureFlags: Record<FeatureFlag, boolean>;
 }
 
 type OrderDirection = "ASC" | "DESC";
 
-const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashboardProps) => {
+const WorkspaceActivityPage = ({
+  workspace,
+  isOwner,
+  overLimit,
+  bearerToken,
+  userId,
+  featureFlags,
+}: WorkspaceDashboardProps) => {
   const router = useRouter();
   const {
     limit = 10,
@@ -106,6 +124,7 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
 
   const showBanner = isOwner && overLimit;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
@@ -159,6 +178,18 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
           />
         </div>
       </WorkspaceLayout>
+      <FeatureFlagged flag="starsearch-workspaces" featureFlags={featureFlags}>
+        <StarSearchEmbed
+          userId={userId}
+          bearerToken={bearerToken}
+          suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
+          isMobile={isMobile}
+          // TODO: implement once we have shared chats in workspaces
+          sharedChatId={null}
+          tagline="Ask anything about your workspace"
+          workspaceId={workspace.id}
+        />
+      </FeatureFlagged>
     </>
   );
 };
