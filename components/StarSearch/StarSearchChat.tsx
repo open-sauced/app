@@ -75,6 +75,7 @@ type StarSearchChatProps = {
   embedded?: boolean;
   onClose?: () => void;
   baseApiStarSearchUrl?: URL;
+  sharingEnabled?: boolean;
 };
 
 export function StarSearchChat({
@@ -88,6 +89,7 @@ export function StarSearchChat({
   onClose,
   embedded = false,
   baseApiStarSearchUrl = DEFAULT_STAR_SEARCH_API_BASE_URL,
+  sharingEnabled = true,
 }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
@@ -615,62 +617,64 @@ export function StarSearchChat({
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
-                  <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
-                    <ShareChatMenu
-                      createLink={
-                        threadHistory?.is_publicly_viewable
-                          ? undefined
-                          : async () => {
-                              try {
-                                parseSchema(UuidSchema, chatId);
-                              } catch (error) {
-                                captureException(
-                                  new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error })
-                                );
-                                toast({
-                                  description: "Failed to create a share link",
-                                  variant: "danger",
-                                });
-                                return;
-                              }
-
-                              const response = await fetch(
-                                `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
-                                {
-                                  body: "",
-                                  method: "POST",
-                                  headers: {
-                                    Authorization: `Bearer ${bearerToken}`,
-                                  },
+                  {sharingEnabled ? (
+                    <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
+                      <ShareChatMenu
+                        createLink={
+                          threadHistory?.is_publicly_viewable
+                            ? undefined
+                            : async () => {
+                                try {
+                                  parseSchema(UuidSchema, chatId);
+                                } catch (error) {
+                                  captureException(
+                                    new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error })
+                                  );
+                                  toast({
+                                    description: "Failed to create a share link",
+                                    variant: "danger",
+                                  });
+                                  return;
                                 }
-                              );
 
-                              if (response.status == 201) {
-                                toast({
-                                  description: "Share link created",
-                                  variant: "success",
-                                });
-                                // Causes a re-fetch of the thread history so the hook reruns
-                                // and gets the public_link and is_publicly_viewable property updates
-                                mutateThreadHistory(undefined, true);
-                              } else {
-                                toast({
-                                  description: "Failed to create a share link",
-                                  variant: "danger",
-                                });
+                                const response = await fetch(
+                                  `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
+                                  {
+                                    body: "",
+                                    method: "POST",
+                                    headers: {
+                                      Authorization: `Bearer ${bearerToken}`,
+                                    },
+                                  }
+                                );
+
+                                if (response.status == 201) {
+                                  toast({
+                                    description: "Share link created",
+                                    variant: "success",
+                                  });
+                                  // Causes a re-fetch of the thread history so the hook reruns
+                                  // and gets the public_link and is_publicly_viewable property updates
+                                  mutateThreadHistory(undefined, true);
+                                } else {
+                                  toast({
+                                    description: "Failed to create a share link",
+                                    variant: "danger",
+                                  });
+                                }
                               }
-                            }
-                      }
-                      shareUrl={threadHistory?.public_link}
-                      copyLinkHandler={async (url: string) => {
-                        await writeToClipboard(url);
-                        toast({
-                          description: "Link copied to clipboard",
-                          variant: "success",
-                        });
-                      }}
-                    />
-                  </div>
+                        }
+                        shareUrl={threadHistory?.public_link}
+                        copyLinkHandler={async (url: string) => {
+                          await writeToClipboard(url);
+                          toast({
+                            description: "Link copied to clipboard",
+                            variant: "success",
+                          });
+                        }}
+                      />
+                    </div>
+                  ) : null}
                 </span>
               </div>
             </div>

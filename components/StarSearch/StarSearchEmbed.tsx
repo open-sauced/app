@@ -44,6 +44,7 @@ export const StarSearchEmbed = ({
       tagline={tagline}
       onClose={onClose}
       embedded={true}
+      sharingEnabled={false}
       baseApiStarSearchUrl={
         validWorkspaceId
           ? new URL(`${process.env.NEXT_PUBLIC_API_URL!}/workspaces/${validWorkspaceId}/star-search`)
