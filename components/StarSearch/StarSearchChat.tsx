@@ -532,7 +532,7 @@ export function StarSearchChat({
                 <Header tagline={tagline} />
                 {isMobile ? null : (
                   <div className="pb-8">
-                    <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
+                    <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} embedded={embedded} />
                   </div>
                 )}
               </>
