@@ -27,6 +27,8 @@ import { useHasMounted } from "lib/hooks/useHasMounted";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { FeatureFlagged } from "components/shared/feature-flagged";
+import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 const SUGGESTIONS = [
   {
@@ -98,6 +100,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
+  const featureFlags = await getAllFeatureFlags(userId);
+
   return {
     props: {
       workspace: data,
@@ -106,6 +110,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
       ogImage: `${ogImage.href}`,
       bearerToken,
       userId,
+      featureFlags,
     },
   };
 };
@@ -117,6 +122,7 @@ interface WorkspaceDashboardProps {
   isOwner: boolean;
   overLimit: boolean;
   bearerToken: string;
+  featureFlags: Record<FeatureFlag, boolean>;
 }
 
 const WorkspaceDashboard = ({
@@ -126,6 +132,7 @@ const WorkspaceDashboard = ({
   overLimit,
   bearerToken,
   userId,
+  featureFlags,
 }: WorkspaceDashboardProps) => {
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
   const hasMounted = useHasMounted();
@@ -263,15 +270,17 @@ const WorkspaceDashboard = ({
           />
         </div>
       </WorkspaceLayout>
-      <StarSearchEmbed
-        userId={userId}
-        bearerToken={bearerToken}
-        suggestions={SUGGESTIONS}
-        isMobile={isMobile}
-        // TODO: implement once we have shared chats in workspaces
-        sharedChatId={null}
-        tagline="Ask anything about your workspace"
-      />
+      <FeatureFlagged flag="starsearch-workspaces" featureFlags={featureFlags}>
+        <StarSearchEmbed
+          userId={userId}
+          bearerToken={bearerToken}
+          suggestions={SUGGESTIONS}
+          isMobile={isMobile}
+          // TODO: implement once we have shared chats in workspaces
+          sharedChatId={null}
+          tagline="Ask anything about your workspace"
+        />
+      </FeatureFlagged>
     </>
   );
 };
