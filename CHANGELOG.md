@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.39.0-beta.1](https://github.com/open-sauced/app/compare/v2.38.0...v2.39.0-beta.1) (2024-06-21)
+
+
+### 🍕 Features
+
+* add `showHoverCards` optional prop to `LotteryFactorChart` ([#3611](https://github.com/open-sauced/app/issues/3611)) ([9c7f7c7](https://github.com/open-sauced/app/commit/9c7f7c72775fc104681dfe663a60115d6f91c0f8))
+
 ## [2.38.0](https://github.com/open-sauced/app/compare/v2.37.0...v2.38.0) (2024-06-20)
 
 
