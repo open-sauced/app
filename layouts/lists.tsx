@@ -47,7 +47,7 @@ const ListPageLayout = ({
 
   return (
     <>
-      <div>
+      <div className="px-4 py-8 lg:px-16 lg:py-12">
         <Header classNames="px-0 md:px-0">
           {list && (
             <ListHeader
