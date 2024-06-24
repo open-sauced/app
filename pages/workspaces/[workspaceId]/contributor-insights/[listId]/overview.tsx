@@ -12,10 +12,10 @@ import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { useContributorsList } from "lib/hooks/api/useContributorList";
-import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import ContributorsTable from "components/Tables/ContributorsTable";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -102,6 +102,7 @@ const ListsOverview = ({
   const {
     isLoading,
     setPage,
+    error,
     data: { data: contributors, meta },
   } = useContributorsList({
     listId: list?.id,
@@ -213,13 +214,7 @@ const ListsOverview = ({
                   <ErrorBoundary
                     fallback={<div className="grid place-content-center">Error loading the list of contributors</div>}
                   >
-                    <ContributorsList
-                      contributors={contributors}
-                      meta={meta}
-                      isLoading={isLoading}
-                      setPage={setPage}
-                      range={String(range ?? "30")}
-                    />
+                    <ContributorsTable contributors={contributors} isLoading={isLoading} error={error} />
                   </ErrorBoundary>
                 )}
               </div>
