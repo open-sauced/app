@@ -5,19 +5,16 @@ import { getLocalAsset, getOrgUsernameAvatar, humanizeNumber } from "../og-image
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
-export const config: Config = {
-  path: "/og-images/lottery-factor/:org/:repo",
-  cache: "manual",
-};
-
 export default async function handler(req: Request) {
   const { searchParams, pathname } = new URL(req.url);
   const [org, repo] = pathname.split("/").slice(-2);
   const query = new URLSearchParams(searchParams);
   query.set("repos", [`${org}/${repo}`].toString());
 
+  /**
   const response = await fetch(`${baseApiUrl}/repos/lotto?${query}`);
   const lotteryFactorData = await response.json();
+  **/
 
   const logoImg = getLocalAsset(new URL("/assets/og-images/workspaces/open-sauced-logo.png", req.url));
   const interSemiBoldFont = getLocalAsset(new URL("/assets/card/Inter-SemiBold.ttf", req.url));
@@ -37,7 +34,7 @@ export default async function handler(req: Request) {
           fontSize: "1rem",
           fontWeight: 700,
           backgroundColor: "#ff3d00",
-          backgroundSize: "1980px 1400px",
+          backgroundSize: "1200px 630px",
           width: "100%",
           height: "100%",
           padding: "62px",
@@ -64,6 +61,7 @@ export default async function handler(req: Request) {
               width: "100%"
             }}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element  */}
             <img style={{ width: 24, height: 24 }} src={getOrgUsernameAvatar(org, 24)} />
             <p style={{ fontWeight: 700 }}>
               {org}/{repo}
@@ -74,6 +72,7 @@ export default async function handler(req: Request) {
               width: "100%"
             }}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element  */}
             <img
               alt="Open Sauced Logo"
               width="185"
@@ -83,10 +82,6 @@ export default async function handler(req: Request) {
             />
           </div>
         </section>
-
-        <main>
-
-        </main>
       </div>
     ),
     {
@@ -108,3 +103,8 @@ export default async function handler(req: Request) {
     }
   );
 }
+
+export const config: Config = {
+  path: "/og-images/lottery-factor/:org/:repo",
+  cache: "manual",
+};
