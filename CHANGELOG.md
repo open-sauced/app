@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.39.0-beta.2](https://github.com/open-sauced/app/compare/v2.39.0-beta.1...v2.39.0-beta.2) (2024-06-24)
+
+
+### 🐛 Bug Fixes
+
+* now workspace pages with StarSearch are scrollable ([#3619](https://github.com/open-sauced/app/issues/3619)) ([5e68639](https://github.com/open-sauced/app/commit/5e686393b1389481fbbcf0a9ca5ff3b5dd9a5b88))
+
 ## [2.39.0-beta.1](https://github.com/open-sauced/app/compare/v2.38.0...v2.39.0-beta.1) (2024-06-21)
 
 
