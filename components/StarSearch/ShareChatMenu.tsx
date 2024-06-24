@@ -35,7 +35,7 @@ export function ShareChatMenu({ shareUrl, copyLinkHandler, createLink }: ShareMe
   }
 
   return (
-    <DropdownMenu open={dropdownOpen} modal={false} onOpenChange={(open) => setDropdownOpen(open)}>
+    <DropdownMenu open={dropdownOpen} modal={false} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger aria-label="Share prompt options">
         <HiOutlineShare width={22} height={22} />
       </DropdownMenuTrigger>
