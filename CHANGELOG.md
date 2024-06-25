@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.39.0-beta.3](https://github.com/open-sauced/app/compare/v2.39.0-beta.2...v2.39.0-beta.3) (2024-06-25)
+
+
+### 🍕 Features
+
+* add fallback to GitHub API for repository search hook ([#3613](https://github.com/open-sauced/app/issues/3613)) ([8141092](https://github.com/open-sauced/app/commit/81410923e96054cef01362bb6a5dac114836734b))
+* redirect user to workspaces after onboarding ([#3621](https://github.com/open-sauced/app/issues/3621)) ([0e686dd](https://github.com/open-sauced/app/commit/0e686ddb5e9dbaf534d11957a7b79a0b23a6f3ef))
+
 ## [2.39.0-beta.2](https://github.com/open-sauced/app/compare/v2.39.0-beta.1...v2.39.0-beta.2) (2024-06-24)
 
 
