@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.39.0-beta.5](https://github.com/open-sauced/app/compare/v2.39.0-beta.4...v2.39.0-beta.5) (2024-06-25)
+
+
+### 🐛 Bug Fixes
+
+* Issue and PR charts velocity text sizing ([#3603](https://github.com/open-sauced/app/issues/3603)) ([82726a6](https://github.com/open-sauced/app/commit/82726a6a3ac85e0923be07b029f5f7324b5a88b2))
+
 ## [2.39.0-beta.4](https://github.com/open-sauced/app/compare/v2.39.0-beta.3...v2.39.0-beta.4) (2024-06-25)
 
 
