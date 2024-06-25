@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.39.0-beta.4](https://github.com/open-sauced/app/compare/v2.39.0-beta.3...v2.39.0-beta.4) (2024-06-25)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch compact header no longer cuts off StarSearch logo ([#3630](https://github.com/open-sauced/app/issues/3630)) ([b74a956](https://github.com/open-sauced/app/commit/b74a956284910b751bc7a80eacc9fd178444ab5a))
+* now widgets in StarSearch look good width wise when embedded ([#3628](https://github.com/open-sauced/app/issues/3628)) ([422096d](https://github.com/open-sauced/app/commit/422096d9a8214464ac7456a1dcc94458a04fd58c))
+
 ## [2.39.0-beta.3](https://github.com/open-sauced/app/compare/v2.39.0-beta.2...v2.39.0-beta.3) (2024-06-25)
 
 
