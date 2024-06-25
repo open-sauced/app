@@ -699,7 +699,10 @@ export function StarSearchChat({
             showCloseButton={!isMobile}
           />
         ) : null}
-        <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
+        <div
+          className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50"
+          data-is-embedded={embedded}
+        >
           {renderState()}
           <div className="sticky w-full bottom-2 md:bottom-4">
             {!isRunning &&
