@@ -43,7 +43,7 @@ const useFetchAllLists = (range = 30, shouldFetch = true) => {
   };
 };
 
-const useFetchListContributors = (id: string, range = 30) => {
+const useFetchListContributors = (workspaceId: string, lsitId: string, range = 30) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
@@ -52,10 +52,10 @@ const useFetchListContributors = (id: string, range = 30) => {
   query.set("page", `${page}`);
   query.set("limit", `${limit}`);
   query.set("range", `${range}`);
-  const endpointString = `lists/${id}/contributors?${query.toString()}`;
+  const endpointString = `workspaces/${workspaceId}/userLists/${lsitId}/contributors?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedListContributorsResponse, Error>(
-    id ? endpointString : null,
+    lsitId ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedListContributorsResponse, Error>
   );
 

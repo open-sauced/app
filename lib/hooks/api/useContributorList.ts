@@ -18,12 +18,14 @@ export function convertToContributors(rawContributors: DBListContributor[] = [])
 }
 
 export const useContributorsList = ({
+  workspaceId,
   listId,
   initialData,
   initialPage = 1,
   defaultLimit = 10,
   defaultRange = "30",
 }: {
+  workspaceId: string | undefined;
   listId: string | undefined;
   initialData?: {
     data: DbPRContributor[];
@@ -41,7 +43,7 @@ export const useContributorsList = ({
   query.append("range", defaultRange ?? "30");
 
   const { data, error, mutate } = useSWR<any>(
-    listId ? `lists/${listId}/contributors?${query}` : null,
+    listId ? (workspaceId ? `workspaces/${workspaceId}/userLists/${listId}/contributors?${query}` : null) : null,
     publicApiFetcher as Fetcher<PagedData<DBListContributor>, Error>,
     {
       fallbackData: initialData,
