@@ -27,7 +27,9 @@ import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
 import { SuggestedPrompts } from "./SuggestedPrompts";
 import { ShareChatMenu } from "./ShareChatMenu";
+import { StarSearchCompactHeader } from "./StarSearchCompactHeader";
 
+const DEFAULT_STAR_SEARCH_API_BASE_URL = new URL(`${process.env.NEXT_PUBLIC_API_URL!}/star-search`);
 const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
 
 Need some ideas? Try hitting the **Need Inspiration?** button below!`;
@@ -64,20 +66,30 @@ async function updateComponentRegistry(name: string) {
 
 type StarSearchChatProps = {
   userId: number | undefined;
-  sharedPrompt: string | null;
-  sharedChatId: string | null;
+  sharedPrompt?: string | null;
+  sharedChatId?: string | null;
   bearerToken: string | undefined | null;
   isMobile: boolean;
   suggestions: { title: string; prompt: string }[];
+  tagline?: string;
+  embedded?: boolean;
+  onClose?: () => void;
+  baseApiStarSearchUrl?: URL;
+  sharingEnabled?: boolean;
 };
 
 export function StarSearchChat({
   userId,
-  sharedChatId,
-  sharedPrompt,
+  sharedChatId = null,
+  sharedPrompt = null,
   bearerToken,
   isMobile,
   suggestions,
+  tagline = "Copilot, but for git history",
+  onClose,
+  embedded = false,
+  baseApiStarSearchUrl = DEFAULT_STAR_SEARCH_API_BASE_URL,
+  sharingEnabled = true,
 }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
@@ -91,6 +103,15 @@ export function StarSearchChat({
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [checkAuth, setCheckAuth] = useState(false);
   const [chatId, setChatId] = useState<string | null>(sharedChatId);
+  const [view, setView] = useState<"prompt" | "chat">("prompt");
+
+  const onNewChat = () => {
+    setChatId(null);
+    setStarSearchState("initial");
+    setChat([]);
+    setView("prompt");
+  };
+
   const {
     data: threadHistory,
     isError,
@@ -104,9 +125,7 @@ export function StarSearchChat({
       router.push("/star-search");
     }
 
-    setStarSearchState("initial");
-    setChat([]);
-    setChatId(null);
+    onNewChat();
   }
 
   useEffect(() => {
@@ -125,7 +144,7 @@ export function StarSearchChat({
     if (inputRef.current) {
       addPromptInput(sharedPrompt);
     }
-  }, [sharedPrompt, inputRef.current]);
+  }, [sharedPrompt, inputRef.current, bearerToken, ranOnce]);
 
   useEffect(() => {
     // Prevents the thread history from running when a new thread has been created and is currently
@@ -406,6 +425,8 @@ export function StarSearchChat({
   }, [chat]);
 
   const submitPrompt = async (prompt: string) => {
+    setView("chat");
+
     if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
       setLoginModalOpen(true);
       return;
@@ -431,14 +452,11 @@ export function StarSearchChat({
       return temp;
     });
 
-    // get ReadableStream from API
-    const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
-
     // Get new StarSearch conversation ID
     let id = chatId;
 
     if (!id) {
-      const starSearchThreadResponse = await fetch(`${baseUrl}/star-search`, {
+      const starSearchThreadResponse = await fetch(baseApiStarSearchUrl, {
         method: "POST",
         body: "{}",
         headers: {
@@ -464,7 +482,7 @@ export function StarSearchChat({
         return;
       }
 
-      const updateStarSearchThreadTitle = await fetch(`${baseUrl}/star-search/${id}`, {
+      const updateStarSearchThreadTitle = await fetch(`${baseApiStarSearchUrl}/${id}`, {
         method: "PATCH",
         body: JSON.stringify({ title: prompt }),
         headers: {
@@ -481,7 +499,7 @@ export function StarSearchChat({
       setChatId(id);
     }
 
-    const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
+    const response = await fetch(`${baseApiStarSearchUrl}/${id}/stream`, {
       method: "POST",
       body: JSON.stringify({
         query_text: prompt,
@@ -507,12 +525,18 @@ export function StarSearchChat({
   const renderState = () => {
     switch (starSearchState) {
       case "initial":
+        const initialHeight = isMobile ? "h-[calc(100vh-270px)]" : "h-[calc(100vh-240px)]";
+
         return (
-          <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
+          <div className={`${initialHeight} md:h-fit grid place-content-center text-center items-center gap-4`}>
             {!(sharedChatId || sharedPrompt) ? (
               <>
-                <Header />
-                {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />}
+                <Header tagline={tagline} />
+                {isMobile ? null : (
+                  <div className="pb-8">
+                    <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} embedded={embedded} />
+                  </div>
+                )}
               </>
             ) : null}
           </div>
@@ -526,10 +550,10 @@ export function StarSearchChat({
         );
 
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
-        let heightToRemove = 300;
+        let heightToRemove = 330;
 
         if (!isRunning && !isMobile && ranOnce && showSuggestions) {
-          heightToRemove = 370;
+          heightToRemove = 400;
         }
 
         return (
@@ -538,7 +562,9 @@ export function StarSearchChat({
               <ScrollArea
                 className="flex grow"
                 asChild={true}
-                style={{ maxHeight: `calc(100vh - ${heightToRemove}px)` }}
+                style={{
+                  maxHeight: `calc(100dvh - ${heightToRemove}px)`,
+                }}
               >
                 <section role="feed" aria-label="StarSearch conversation" aria-busy={isRunning} aria-setsize={-1}>
                   {chatMessagesToProcess.map((message, i, messages) => {
@@ -591,62 +617,64 @@ export function StarSearchChat({
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
-                  <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
-                    <ShareChatMenu
-                      createLink={
-                        threadHistory?.is_publicly_viewable
-                          ? undefined
-                          : async () => {
-                              try {
-                                parseSchema(UuidSchema, chatId);
-                              } catch (error) {
-                                captureException(
-                                  new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error })
-                                );
-                                toast({
-                                  description: "Failed to create a share link",
-                                  variant: "danger",
-                                });
-                                return;
-                              }
-
-                              const response = await fetch(
-                                `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
-                                {
-                                  body: "",
-                                  method: "POST",
-                                  headers: {
-                                    Authorization: `Bearer ${bearerToken}`,
-                                  },
+                  {sharingEnabled ? (
+                    <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
+                      <ShareChatMenu
+                        createLink={
+                          threadHistory?.is_publicly_viewable
+                            ? undefined
+                            : async () => {
+                                try {
+                                  parseSchema(UuidSchema, chatId);
+                                } catch (error) {
+                                  captureException(
+                                    new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error })
+                                  );
+                                  toast({
+                                    description: "Failed to create a share link",
+                                    variant: "danger",
+                                  });
+                                  return;
                                 }
-                              );
 
-                              if (response.status == 201) {
-                                toast({
-                                  description: "Share link created",
-                                  variant: "success",
-                                });
-                                // Causes a re-fetch of the thread history so the hook reruns
-                                // and gets the public_link and is_publicly_viewable property updates
-                                mutateThreadHistory(undefined, true);
-                              } else {
-                                toast({
-                                  description: "Failed to create a share link",
-                                  variant: "danger",
-                                });
+                                const response = await fetch(
+                                  `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
+                                  {
+                                    body: "",
+                                    method: "POST",
+                                    headers: {
+                                      Authorization: `Bearer ${bearerToken}`,
+                                    },
+                                  }
+                                );
+
+                                if (response.status == 201) {
+                                  toast({
+                                    description: "Share link created",
+                                    variant: "success",
+                                  });
+                                  // Causes a re-fetch of the thread history so the hook reruns
+                                  // and gets the public_link and is_publicly_viewable property updates
+                                  mutateThreadHistory(undefined, true);
+                                } else {
+                                  toast({
+                                    description: "Failed to create a share link",
+                                    variant: "danger",
+                                  });
+                                }
                               }
-                            }
-                      }
-                      shareUrl={threadHistory?.public_link}
-                      copyLinkHandler={async (url: string) => {
-                        await writeToClipboard(url);
-                        toast({
-                          description: "Link copied to clipboard",
-                          variant: "success",
-                        });
-                      }}
-                    />
-                  </div>
+                        }
+                        shareUrl={threadHistory?.public_link}
+                        copyLinkHandler={async (url: string) => {
+                          await writeToClipboard(url);
+                          toast({
+                            description: "Link copied to clipboard",
+                            variant: "success",
+                          });
+                        }}
+                      />
+                    </div>
+                  ) : null}
                 </span>
               </div>
             </div>
@@ -657,114 +685,134 @@ export function StarSearchChat({
 
   return (
     <>
-      <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
-        {renderState()}
-        <div className="sticky w-full bottom-2 md:bottom-4">
-          {!isRunning &&
-            (isMobile ? (
-              <Drawer
-                title="Choose a suggestion"
-                description="You can customize the prompt after selection"
-                showCloseButton
-                trigger={
-                  <button
-                    onClick={() => setShowSuggestions(!showSuggestions)}
-                    className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                  >
-                    Need inspiration?
-                    <BsArrowUpShort className="text-2xl" />
-                  </button>
-                }
-              >
-                <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
-              </Drawer>
-            ) : (
-              <>
-                {!showSuggestions && ranOnce && (
-                  <button
-                    onClick={() => setShowSuggestions(!showSuggestions)}
-                    className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                  >
-                    Need inspiration?
-                    <BsArrowUpShort className="text-2xl" />
-                  </button>
-                )}
-              </>
-            ))}
-          {!isMobile && showSuggestions && (
-            <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
-              <button
-                onClick={() => {
-                  setShowSuggestions(false);
-                  inputRef.current?.focus();
-                }}
-                className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
-              >
-                <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
-              </button>
-              <SuggestedPrompts
-                isHorizontal
-                addPromptInput={(prompt) => {
-                  addPromptInput(prompt);
-                  setShowSuggestions(false);
-                }}
-                suggestions={suggestions}
-              />
-            </div>
-          )}
-          {sharedChatId ? (
-            <div className="flex items-center justify-center gap-2 p-2">
-              <p>This is a shared conversation and cannot be added to.</p>
-              <Button variant="primary" onClick={clearChatHistory}>
-                Start a Conversation
-              </Button>
-            </div>
-          ) : null}
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              const form = event.currentTarget;
-              const formData = new FormData(form);
-              submitPrompt(formData.get("prompt") as string);
-              form.reset();
+      <div style={{ height: "calc(100dvh - 5rem)" }}>
+        {embedded ? (
+          <StarSearchCompactHeader
+            view={view}
+            onBack={onNewChat}
+            onClose={() => {
+              onClose?.();
             }}
-            className="bg-white flex justify-between mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
-          >
-            <input
-              required
-              type="text"
-              name="prompt"
-              ref={inputRef}
-              disabled={isRunning || !!sharedChatId}
-              placeholder="Ask a question"
-              className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
-              onFocus={() => {
-                if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
-                  setLoginModalOpen(true);
-                }
-              }}
-            />
-            <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
-              <span className="sr-only">Submit your question to StarSearch</span>
-              <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
-            </button>
-          </form>
-          <p className="py-2 text-sm text-center text-slate-400">
-            {isMobile ? (
-              <>StarSearch may generate incorrect responses</>
-            ) : (
-              <>StarSearch may generate incorrect responses, double check important information</>
+            onShare={() => {}}
+            onShowHistory={() => {}}
+            onNewChat={onNewChat}
+            showCloseButton={!isMobile}
+          />
+        ) : null}
+        <div
+          className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50"
+          data-is-embedded={embedded}
+        >
+          {renderState()}
+          <div className="sticky w-full bottom-2 md:bottom-4">
+            {!isRunning &&
+              (isMobile ? (
+                <Drawer
+                  title="Choose a suggestion"
+                  description="You can customize the prompt after selection"
+                  showCloseButton
+                  trigger={
+                    <button
+                      onClick={() => setShowSuggestions(!showSuggestions)}
+                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                    >
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  }
+                >
+                  <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
+                </Drawer>
+              ) : (
+                <>
+                  {!showSuggestions && ranOnce && (
+                    <button
+                      onClick={() => setShowSuggestions(!showSuggestions)}
+                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                    >
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  )}
+                </>
+              ))}
+            {!isMobile && showSuggestions && (
+              <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
+                <button
+                  onClick={() => {
+                    setShowSuggestions(false);
+                    inputRef.current?.focus();
+                  }}
+                  className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
+                >
+                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
+                </button>
+                <SuggestedPrompts
+                  isHorizontal
+                  addPromptInput={(prompt) => {
+                    addPromptInput(prompt);
+                    setShowSuggestions(false);
+                  }}
+                  suggestions={suggestions}
+                />
+              </div>
             )}
-          </p>
+            {sharedChatId ? (
+              <div className="flex items-center justify-center gap-2 p-2">
+                <p>This is a shared conversation and cannot be added to.</p>
+                <Button variant="primary" onClick={clearChatHistory}>
+                  Start a Conversation
+                </Button>
+              </div>
+            ) : null}
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                const form = event.currentTarget;
+                const formData = new FormData(form);
+                submitPrompt(formData.get("prompt") as string);
+                form.reset();
+              }}
+              className="bg-white flex justify-between mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
+            >
+              <input
+                required
+                type="text"
+                name="prompt"
+                ref={inputRef}
+                disabled={isRunning || !!sharedChatId}
+                placeholder="Ask a question"
+                className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
+                onFocus={() => {
+                  if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
+                    setLoginModalOpen(true);
+                  }
+                }}
+              />
+              <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
+                <span className="sr-only">Submit your question to StarSearch</span>
+                <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
+              </button>
+            </form>
+            <p className="py-2 text-sm text-center text-slate-400">
+              {isMobile ? (
+                <>StarSearch may generate incorrect responses</>
+              ) : (
+                <>StarSearch may generate incorrect responses, double check important information</>
+              )}
+            </p>
+          </div>
+          {embedded ? null : (
+            <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
+          )}
         </div>
-        <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]"></div>
       </div>
       <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
     </>
   );
 }
 
-function Header() {
+function Header({ tagline }: { tagline: string }) {
   return (
     <header className="flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
       <div className="flex items-center gap-2">
@@ -773,7 +821,7 @@ function Header() {
           StarSearch
         </h1>
       </div>
-      <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">Copilot, but for git history</h2>
+      <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">{tagline}</h2>
     </header>
   );
 }

@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import Link from "next/link";
+import * as HoverCard from "@radix-ui/react-hover-card";
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import { DayRange } from "components/shared/DayRangePicker";
@@ -12,6 +13,7 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Avatar from "components/atoms/Avatar/avatar";
 
 import { getAvatarByUsername } from "lib/utils/github";
+import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 type LotteryFactorChartProps = {
@@ -19,6 +21,7 @@ type LotteryFactorChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: DayRange;
+  showHoverCards?: boolean;
   className?: string;
 };
 
@@ -27,6 +30,7 @@ export default function LotteryFactorChart({
   isLoading,
   error,
   range,
+  showHoverCards,
   className,
 }: LotteryFactorChartProps) {
   const [hovered, setHovered] = useState<string | undefined>(undefined);
@@ -212,15 +216,36 @@ export default function LotteryFactorChart({
                     Temporarily copying the DevProfile JSX minus the desktop view to fix this issue https://github.com/open-sauced/app/pull/3373#issuecomment-2112399608
                   */}
                   <div className="flex items-center gap-2 text-light-slate-11">
-                    <Link href={`/u/${name}`} className="rounded-full">
-                      <Avatar
-                        size={24}
-                        className="xl:w-9 xl:h-9"
-                        isCircle
-                        hasBorder={false}
-                        avatarURL={getAvatarByUsername(name)}
-                      />
-                    </Link>
+                    {showHoverCards ? (
+                      <HoverCard.Root>
+                        <Link href={`/u/${name}`} className="rounded-full">
+                          <HoverCard.Trigger>
+                            <Avatar
+                              size={24}
+                              className="xl:w-9 xl:h-9"
+                              isCircle
+                              hasBorder={false}
+                              avatarURL={getAvatarByUsername(name)}
+                            />
+                          </HoverCard.Trigger>
+                        </Link>
+                        <HoverCard.Portal>
+                          <HoverCard.Content sideOffset={5}>
+                            <HoverCardWrapper username={name} />
+                          </HoverCard.Content>
+                        </HoverCard.Portal>
+                      </HoverCard.Root>
+                    ) : (
+                      <Link href={`/u/${name}`} className="rounded-full">
+                        <Avatar
+                          size={24}
+                          className="xl:w-9 xl:h-9"
+                          isCircle
+                          hasBorder={false}
+                          avatarURL={getAvatarByUsername(name)}
+                        />
+                      </Link>
+                    )}
                     <div>
                       <h1 className="truncate text-light-slate-12">{name}</h1>
                     </div>
