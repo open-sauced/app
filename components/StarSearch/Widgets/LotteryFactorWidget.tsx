@@ -15,7 +15,14 @@ const LotteryFactorWidget = ({ repoName }: LotteryFactorWidgetProps) => {
     throw error;
   }
 
-  return <LotteryFactorChart lotteryFactor={data} isLoading={isLoading} error={error} range={range} />;
+  return (
+    <div className="grid gap-2">
+      <a className="font-semibold" href={`/s/${repoName}`} style={{ color: "inherit" }} target="_blank">
+        {repoName}
+      </a>
+      <LotteryFactorChart lotteryFactor={data} isLoading={isLoading} error={error} range={range} />
+    </div>
+  );
 };
 
 export default LotteryFactorWidget;
