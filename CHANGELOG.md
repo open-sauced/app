@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.39.0-beta.6](https://github.com/open-sauced/app/compare/v2.39.0-beta.5...v2.39.0-beta.6) (2024-06-25)
+
+
+### 🍕 Features
+
+* added the repo name as a link above the lottery factor chart ([#3632](https://github.com/open-sauced/app/issues/3632)) ([329d5c4](https://github.com/open-sauced/app/commit/329d5c40199d73fe07dde1f25b31fe1f3a354b05))
+
 ## [2.39.0-beta.5](https://github.com/open-sauced/app/compare/v2.39.0-beta.4...v2.39.0-beta.5) (2024-06-25)
 
 
