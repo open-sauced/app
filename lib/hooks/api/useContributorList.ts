@@ -10,6 +10,7 @@ export function convertToContributors(rawContributors: DBListContributor[] = [])
           username: contributor.username,
           updated_at: contributor.created_at,
           user_id: contributor.id,
+          oscr: contributor.oscr,
         };
       })
     : [];
