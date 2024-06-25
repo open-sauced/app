@@ -35,7 +35,7 @@ export const StarSearchCompactHeader = ({
   return (
     <>
       {view === "chat" ? (
-        <div className="flex items-center justify-between gap-2 [&_button]:text-slate-600 h-8 p-1 bg-slate-50">
+        <div className="flex items-center justify-between gap-2 [&_button]:text-slate-600 h-9 p-1 bg-slate-50">
           <div className="flex items-center gap-2">
             <button onClick={onBack} className={buttonHoverStyle}>
               <ArrowLeftIcon />
