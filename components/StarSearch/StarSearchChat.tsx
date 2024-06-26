@@ -107,6 +107,7 @@ export function StarSearchChat({
   const [shareLinkError, setShareLinkError] = useState(false);
 
   const onNewChat = () => {
+    setIsRunning(false);
     setChatId(null);
     setStarSearchState("initial");
     setChat([]);
