@@ -116,7 +116,7 @@ const ContributorListTableRow = ({
             />
           )}
           <div className="w-[68%]">
-            <DevProfile username={login} hasBorder={!contributor.author_login} />
+            <DevProfile username={login} hasBorder={!contributor.author_login} oscrRating={contributor.oscr} />
           </div>
           <div className="w-[34%] text-normal text-light-slate-11  h-full">
             <div className="flex flex-col gap-x-3">
@@ -192,7 +192,7 @@ const ContributorListTableRow = ({
 
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
-          <DevProfile username={login} hasBorder={!contributor.author_login} />
+          <DevProfile username={login} hasBorder={!contributor.author_login} oscrRating={contributor.oscr} />
         </div>
 
         {/* Column Repositories */}
