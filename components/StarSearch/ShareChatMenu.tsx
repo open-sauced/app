@@ -1,7 +1,7 @@
 import { HiOutlineShare } from "react-icons/hi";
 import { BsLink45Deg, BsTwitterX } from "react-icons/bs";
 import { FiLinkedin } from "react-icons/fi";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LinkIcon } from "@primer/octicons-react";
 import {
   DropdownMenu,
@@ -15,12 +15,19 @@ interface ShareMenuProps {
   shareUrl: string | null | undefined;
   copyLinkHandler: (url: string) => Promise<void>;
   createLink?: () => void;
+  error: boolean;
 }
 
-export function ShareChatMenu({ shareUrl, copyLinkHandler, createLink }: ShareMenuProps) {
+export function ShareChatMenu({ shareUrl, copyLinkHandler, createLink, error }: ShareMenuProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isCreatingLink, setIsCreatingLink] = useState(false);
+  const [isCreatingLink, setIsCreatingLink] = useState(error);
+
+  useEffect(() => {
+    if (error) {
+      setIsCreatingLink(!error);
+    }
+  }, [error]);
 
   let twitterUrl = "https://twitter.com/intent/tweet";
   let linkedInUrl = "https://www.linkedin.com/sharing/share-offsite/";
