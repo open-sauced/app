@@ -73,10 +73,10 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
                 <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(closedRangedTotal)}</p>
               </div>
               <div>
-                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">Velocity</h3>
+                <h3 className="text-xs xl:text-sm !font-medium text-slate-500">Velocity</h3>
                 <p className="font-semibold text-xl xl:text-2xl">
                   {humanizeNumber(velocity)}
-                  <span className="text-xl text-slate-500 pl-0.5">d</span>
+                  <span className="text-lg xl:text-xl text-slate-500 pl-0.5">d</span>
                 </p>
               </div>
             </aside>
