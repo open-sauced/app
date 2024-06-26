@@ -104,6 +104,7 @@ export function StarSearchChat({
   const [checkAuth, setCheckAuth] = useState(false);
   const [chatId, setChatId] = useState<string | null>(sharedChatId);
   const [view, setView] = useState<"prompt" | "chat">("prompt");
+  const [shareLinkError, setShareLinkError] = useState(false);
 
   const onNewChat = () => {
     setChatId(null);
@@ -624,6 +625,8 @@ export function StarSearchChat({
                           threadHistory?.is_publicly_viewable
                             ? undefined
                             : async () => {
+                                setShareLinkError(false);
+
                                 try {
                                   parseSchema(UuidSchema, chatId);
                                 } catch (error) {
@@ -657,6 +660,7 @@ export function StarSearchChat({
                                   // and gets the public_link and is_publicly_viewable property updates
                                   mutateThreadHistory(undefined, true);
                                 } else {
+                                  setShareLinkError(true);
                                   toast({
                                     description: "Failed to create a share link",
                                     variant: "danger",
@@ -672,6 +676,7 @@ export function StarSearchChat({
                             variant: "success",
                           });
                         }}
+                        error={shareLinkError}
                       />
                     </div>
                   ) : null}
