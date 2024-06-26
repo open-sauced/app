@@ -9,6 +9,7 @@ interface PaginatedResponse {
 }
 
 type QueryObj = {
+  workspaceId: string;
   listId: string;
   location?: string;
   pr_velocity?: string;
@@ -42,7 +43,7 @@ const useFetchAllListContributors = (query: QueryObj, config?: SWRConfiguration,
     urlQuery.set("limit", `${limit}`);
   }
 
-  const baseEndpoint = `lists/${query.listId}/contributors`;
+  const baseEndpoint = `workspaces/${query.workspaceId}/userLists/${query.listId}/contributors`;
   const endpointString = `${baseEndpoint}?${urlQuery}`;
 
   const { data, error, mutate } = useSWR<PaginatedResponse, Error>(

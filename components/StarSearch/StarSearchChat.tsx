@@ -104,8 +104,12 @@ export function StarSearchChat({
   const [checkAuth, setCheckAuth] = useState(false);
   const [chatId, setChatId] = useState<string | null>(sharedChatId);
   const [view, setView] = useState<"prompt" | "chat">("prompt");
+  const [shareLinkError, setShareLinkError] = useState(false);
+  const streamRef = useRef<ReadableStreamDefaultReader<string>>();
 
   const onNewChat = () => {
+    streamRef.current?.cancel();
+    setIsRunning(false);
     setChatId(null);
     setStarSearchState("initial");
     setChat([]);
@@ -163,7 +167,8 @@ export function StarSearchChat({
 
     const stream = getThreadStream(threadHistory.thread_history);
     setStarSearchState("chat");
-    processStream(stream.getReader());
+    streamRef.current = stream.getReader();
+    processStream(streamRef.current);
   }, [threadHistory, isError, isLoading, sharedChatId]);
 
   function chatError(resetChatId = false) {
@@ -198,6 +203,12 @@ export function StarSearchChat({
           // We're not changing the chat state, but we're using this as a way to capture the user prompt and the
           // StarSearch response as an analytic.
           const [userPrompt, ...systemResponses] = chat;
+
+          if (!userPrompt) {
+            // the streamed response was cancelled by the user as they
+            // started a new conversation.
+            return chat;
+          }
 
           registerPrompt({
             // userPrompt.content will always be a string, but the .toString() is we don't need to check
@@ -517,9 +528,9 @@ export function StarSearchChat({
     }
 
     const decoder = new TextDecoderStream();
-    const reader = response.body?.pipeThrough(decoder).getReader();
+    streamRef.current = response.body?.pipeThrough(decoder).getReader();
 
-    processStream(reader);
+    processStream(streamRef.current);
   };
 
   const renderState = () => {
@@ -624,6 +635,8 @@ export function StarSearchChat({
                           threadHistory?.is_publicly_viewable
                             ? undefined
                             : async () => {
+                                setShareLinkError(false);
+
                                 try {
                                   parseSchema(UuidSchema, chatId);
                                 } catch (error) {
@@ -657,6 +670,7 @@ export function StarSearchChat({
                                   // and gets the public_link and is_publicly_viewable property updates
                                   mutateThreadHistory(undefined, true);
                                 } else {
+                                  setShareLinkError(true);
                                   toast({
                                     description: "Failed to create a share link",
                                     variant: "danger",
@@ -672,6 +686,7 @@ export function StarSearchChat({
                             variant: "success",
                           });
                         }}
+                        error={shareLinkError}
                       />
                     </div>
                   ) : null}
@@ -699,7 +714,10 @@ export function StarSearchChat({
             showCloseButton={!isMobile}
           />
         ) : null}
-        <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
+        <div
+          className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50"
+          data-is-embedded={embedded}
+        >
           {renderState()}
           <div className="sticky w-full bottom-2 md:bottom-4">
             {!isRunning &&

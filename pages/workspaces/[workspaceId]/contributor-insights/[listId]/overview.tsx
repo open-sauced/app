@@ -104,6 +104,7 @@ const ListsOverview = ({
     setPage,
     data: { data: contributors, meta },
   } = useContributorsList({
+    workspaceId,
     listId: list?.id,
     defaultRange: range ? (range as string) : "30",
     defaultLimit: limit ? (limit as unknown as number) : 10,

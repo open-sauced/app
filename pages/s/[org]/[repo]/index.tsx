@@ -275,6 +275,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     error={lotteryFactorError}
                     range={range}
                     isLoading={isLotteryFactorLoading}
+                    showHoverCards
                   />
                 </div>
               </section>

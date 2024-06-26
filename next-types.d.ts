@@ -133,6 +133,7 @@ interface DBListContributor {
   readonly public_repos: number;
   readonly receive_collaboration: boolean;
   readonly username: string;
+  readonly oscr: number;
 }
 
 interface DbRepoPREvents {
