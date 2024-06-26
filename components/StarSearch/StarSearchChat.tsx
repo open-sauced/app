@@ -105,8 +105,10 @@ export function StarSearchChat({
   const [chatId, setChatId] = useState<string | null>(sharedChatId);
   const [view, setView] = useState<"prompt" | "chat">("prompt");
   const [shareLinkError, setShareLinkError] = useState(false);
+  const streamRef = useRef<ReadableStreamDefaultReader<string>>();
 
   const onNewChat = () => {
+    streamRef.current?.cancel();
     setIsRunning(false);
     setChatId(null);
     setStarSearchState("initial");
@@ -165,7 +167,8 @@ export function StarSearchChat({
 
     const stream = getThreadStream(threadHistory.thread_history);
     setStarSearchState("chat");
-    processStream(stream.getReader());
+    streamRef.current = stream.getReader();
+    processStream(streamRef.current);
   }, [threadHistory, isError, isLoading, sharedChatId]);
 
   function chatError(resetChatId = false) {
@@ -200,6 +203,12 @@ export function StarSearchChat({
           // We're not changing the chat state, but we're using this as a way to capture the user prompt and the
           // StarSearch response as an analytic.
           const [userPrompt, ...systemResponses] = chat;
+
+          if (!userPrompt) {
+            // the streamed response was cancelled by the user as they
+            // started a new conversation.
+            return chat;
+          }
 
           registerPrompt({
             // userPrompt.content will always be a string, but the .toString() is we don't need to check
@@ -519,9 +528,9 @@ export function StarSearchChat({
     }
 
     const decoder = new TextDecoderStream();
-    const reader = response.body?.pipeThrough(decoder).getReader();
+    streamRef.current = response.body?.pipeThrough(decoder).getReader();
 
-    processStream(reader);
+    processStream(streamRef.current);
   };
 
   const renderState = () => {
