@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.39.0-beta.8](https://github.com/open-sauced/app/compare/v2.39.0-beta.7...v2.39.0-beta.8) (2024-06-26)
+
+
+### 🍕 Features
+
+* now StarSearch conversation share link button has a loading state ([#3638](https://github.com/open-sauced/app/issues/3638)) ([282ee04](https://github.com/open-sauced/app/commit/282ee042997efbe811babe081f9bf27859e32a91))
+
 ## [2.39.0-beta.7](https://github.com/open-sauced/app/compare/v2.39.0-beta.6...v2.39.0-beta.7) (2024-06-26)
 
 
