@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "components/atoms/Dropdown/dropdown";
+import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 
 interface ShareMenuProps {
   shareUrl: string | null | undefined;
@@ -19,6 +20,7 @@ interface ShareMenuProps {
 export function ShareChatMenu({ shareUrl, copyLinkHandler, createLink }: ShareMenuProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isCreatingLink, setIsCreatingLink] = useState(false);
 
   let twitterUrl = "https://twitter.com/intent/tweet";
   let linkedInUrl = "https://www.linkedin.com/sharing/share-offsite/";
@@ -44,13 +46,28 @@ export function ShareChatMenu({ shareUrl, copyLinkHandler, createLink }: ShareMe
         {createLink ? (
           <DropdownMenuItem className="pl-4 rounded-md">
             <button
-              className="flex items-center w-full gap-1"
+              className="flex items-center w-full gap-2"
               onClick={() => {
+                if (isCreatingLink) {
+                  return;
+                }
+
                 createLink();
+                setIsCreatingLink(true);
               }}
+              aria-disabled={isCreatingLink}
             >
-              <LinkIcon size={12} />
-              <span>Create Share Link</span>
+              {isCreatingLink ? (
+                <>
+                  <Spinner className="w-3 h-3 stroke-light-slate-12" />
+                  <span>Creating Share Link</span>
+                </>
+              ) : (
+                <>
+                  <LinkIcon size={12} />
+                  <span>Create Share Link</span>
+                </>
+              )}
             </button>
           </DropdownMenuItem>
         ) : (
