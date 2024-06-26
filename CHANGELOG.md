@@ -5,6 +5,35 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.39.0-beta.7](https://github.com/open-sauced/app/compare/v2.39.0-beta.6...v2.39.0-beta.7) (2024-06-26)
+
+
+### 🍕 Features
+
+* Remove deprecated v2/lists/:id/contributors endpoint ([#3635](https://github.com/open-sauced/app/issues/3635)) ([06f4235](https://github.com/open-sauced/app/commit/06f42350aad80385c5c7ce9b272cf942a3dde4fd))
+
+## [2.39.0-beta.6](https://github.com/open-sauced/app/compare/v2.39.0-beta.5...v2.39.0-beta.6) (2024-06-25)
+
+
+### 🍕 Features
+
+* added the repo name as a link above the lottery factor chart ([#3632](https://github.com/open-sauced/app/issues/3632)) ([329d5c4](https://github.com/open-sauced/app/commit/329d5c40199d73fe07dde1f25b31fe1f3a354b05))
+
+## [2.39.0-beta.5](https://github.com/open-sauced/app/compare/v2.39.0-beta.4...v2.39.0-beta.5) (2024-06-25)
+
+
+### 🐛 Bug Fixes
+
+* Issue and PR charts velocity text sizing ([#3603](https://github.com/open-sauced/app/issues/3603)) ([82726a6](https://github.com/open-sauced/app/commit/82726a6a3ac85e0923be07b029f5f7324b5a88b2))
+
+## [2.39.0-beta.4](https://github.com/open-sauced/app/compare/v2.39.0-beta.3...v2.39.0-beta.4) (2024-06-25)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch compact header no longer cuts off StarSearch logo ([#3630](https://github.com/open-sauced/app/issues/3630)) ([b74a956](https://github.com/open-sauced/app/commit/b74a956284910b751bc7a80eacc9fd178444ab5a))
+* now widgets in StarSearch look good width wise when embedded ([#3628](https://github.com/open-sauced/app/issues/3628)) ([422096d](https://github.com/open-sauced/app/commit/422096d9a8214464ac7456a1dcc94458a04fd58c))
+
 ## [2.39.0-beta.3](https://github.com/open-sauced/app/compare/v2.39.0-beta.2...v2.39.0-beta.3) (2024-06-25)
 
 

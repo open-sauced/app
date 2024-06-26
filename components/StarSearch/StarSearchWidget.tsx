@@ -35,7 +35,7 @@ export function StarSearchWidget({
   }
 
   return (
-    <div className="w-full pt-2 lg:w-1/2" style={{ maxWidth: "440px" }}>
+    <div className="w-full pt-2" style={{ maxWidth: "440px" }}>
       <Component {...widgetDefinition.arguments} />
     </div>
   );
