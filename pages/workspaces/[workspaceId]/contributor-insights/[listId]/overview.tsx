@@ -16,6 +16,7 @@ import ContributorsList from "components/organisms/ContributorsList/contributors
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -26,6 +27,7 @@ interface ListsOverviewProps {
   isError: boolean;
   workspaceId: string;
   owners: string[];
+  featureFlags: Record<string, boolean>;
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -75,6 +77,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   ).filter(Boolean);
 
   const isOwner = !!(workspaceData?.data || []).find((member) => member.role === "owner" && member.user_id === userId);
+  const featureFlags = await getAllFeatureFlags(userId);
 
   return {
     props: {
@@ -84,6 +87,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       isError: error || contributorListError,
       workspaceId,
       owners,
+      featureFlags,
     },
   };
 };
@@ -95,6 +99,7 @@ const ListsOverview = ({
   isError,
   workspaceId,
   owners,
+  featureFlags,
 }: ListsOverviewProps): JSX.Element => {
   const router = useRouter();
   const { listId, range, limit } = router.query;
@@ -108,6 +113,7 @@ const ListsOverview = ({
     listId: list?.id,
     defaultRange: range ? (range as string) : "30",
     defaultLimit: limit ? (limit as unknown as number) : 10,
+    featureFlags,
   });
 
   const {

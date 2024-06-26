@@ -2,7 +2,10 @@ import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
-export function convertToContributors(rawContributors: DBListContributor[] = []): DbPRContributor[] {
+export function convertToContributors(
+  rawContributors: DBListContributor[] = [],
+  oscrEnabled: boolean
+): DbPRContributor[] {
   const contributors = rawContributors
     ? rawContributors.map((contributor) => {
         return {
@@ -10,7 +13,7 @@ export function convertToContributors(rawContributors: DBListContributor[] = [])
           username: contributor.username,
           updated_at: contributor.created_at,
           user_id: contributor.id,
-          oscr: contributor.oscr,
+          oscr: oscrEnabled ? contributor.oscr : undefined,
         };
       })
     : [];
@@ -25,6 +28,7 @@ export const useContributorsList = ({
   initialPage = 1,
   defaultLimit = 10,
   defaultRange = "30",
+  featureFlags = {},
 }: {
   workspaceId: string | undefined;
   listId: string | undefined;
@@ -35,6 +39,7 @@ export const useContributorsList = ({
   initialPage?: number;
   defaultLimit?: number;
   defaultRange?: string;
+  featureFlags?: Record<string, boolean>;
 }) => {
   const [page, setPage] = useState(initialPage);
 
@@ -50,7 +55,9 @@ export const useContributorsList = ({
       fallbackData: initialData,
     }
   );
-  const contributors = convertToContributors(data?.data);
+
+  const oscrEnabled = featureFlags["oscr-rating"];
+  const contributors = convertToContributors(data?.data, oscrEnabled);
 
   return {
     setPage,
