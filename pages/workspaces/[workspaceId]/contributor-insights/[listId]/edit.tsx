@@ -81,7 +81,7 @@ export default function ContributorInsightEditPage({
 }: ContributorInsightEditPageProps) {
   const {
     data: { data: contributors },
-  } = useContributorsList({ listId: list?.id });
+  } = useContributorsList({ workspaceId, listId: list?.id });
   const initialTrackedContributors = new Map([
     ...contributors.map((contributor) => [contributor.author_login, true] as const),
   ]);
