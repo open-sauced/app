@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.39.0-beta.9](https://github.com/open-sauced/app/compare/v2.39.0-beta.8...v2.39.0-beta.9) (2024-06-26)
+
+
+### 🐛 Bug Fixes
+
+* now a new StarSearch chat can be started if one was in progress ([#3637](https://github.com/open-sauced/app/issues/3637)) ([c430f66](https://github.com/open-sauced/app/commit/c430f66b3776ff0ddaeb1b19de20ff495a4705b3))
+
 ## [2.39.0-beta.8](https://github.com/open-sauced/app/compare/v2.39.0-beta.7...v2.39.0-beta.8) (2024-06-26)
 
 
