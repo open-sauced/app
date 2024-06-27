@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.40.0-beta.1](https://github.com/open-sauced/app/compare/v2.39.0...v2.40.0-beta.1) (2024-06-27)
+
+
+### 🍕 Features
+
+* created the OSCR rating feature flag ([#3642](https://github.com/open-sauced/app/issues/3642)) ([2db70a2](https://github.com/open-sauced/app/commit/2db70a27db2cd5ca2f9838f273d8cf73c3defa05))
+
 ## [2.39.0](https://github.com/open-sauced/app/compare/v2.38.0...v2.39.0) (2024-06-26)
 
 
