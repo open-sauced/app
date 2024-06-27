@@ -28,6 +28,7 @@ interface ListsOverviewProps {
   workspaceId: string;
   owners: string[];
   featureFlags: Record<string, boolean>;
+  username: string;
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -66,6 +67,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = Number(session?.user.user_metadata.sub);
+  const username = session?.user.user_metadata.user_name;
 
   const owners: string[] = Array.from(
     workspaceData?.data || [],
@@ -88,6 +90,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       workspaceId,
       owners,
       featureFlags,
+      username,
     },
   };
 };
@@ -100,6 +103,7 @@ const ListsOverview = ({
   workspaceId,
   owners,
   featureFlags,
+  username,
 }: ListsOverviewProps): JSX.Element => {
   const router = useRouter();
   const { listId, range, limit } = router.query;
@@ -114,6 +118,7 @@ const ListsOverview = ({
     defaultRange: range ? (range as string) : "30",
     defaultLimit: limit ? (limit as unknown as number) : 10,
     featureFlags,
+    username,
   });
 
   const {
