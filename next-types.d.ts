@@ -197,6 +197,7 @@ interface DbIssueComment {
 
 interface DbPRContributor {
   readonly author_login: string;
+  readonly oscr?: number;
   readonly username: string;
   readonly updated_at: string;
   readonly user_id: number;
