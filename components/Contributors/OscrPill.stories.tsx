@@ -1,17 +1,17 @@
-import { OscrRating } from "components/Contributors/OscrRating";
+import { OscrPill } from "components/Contributors/OscrPill";
 import type { Meta, StoryObj } from "@storybook/react";
 
-type MetaData = Meta<typeof OscrRating>;
+type MetaData = Meta<typeof OscrPill>;
 
 const meta: MetaData = {
   title: "Components/Contributors/OscrRating",
-  component: OscrRating,
+  component: OscrPill,
   args: {
     rating: 0.5,
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof OscrRating>;
+type Story = StoryObj<typeof OscrPill>;
 
 export const Default: Story = {};

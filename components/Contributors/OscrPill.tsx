@@ -1,7 +1,7 @@
 import Pill from "components/atoms/Pill/pill";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
-export const OscrRating = ({ rating }: { rating: number }) => {
+export const OscrPill = ({ rating }: { rating: number }) => {
   const percentageRating = Math.floor(rating * 100);
 
   return (

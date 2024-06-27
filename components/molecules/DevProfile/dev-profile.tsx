@@ -5,7 +5,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 
 import { getAvatarByUsername } from "lib/utils/github";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
-import { OscrRating } from "components/Contributors/OscrRating";
+import { OscrPill } from "components/Contributors/OscrPill";
 
 interface DevProfileProps {
   username: string;
@@ -28,7 +28,7 @@ const DevProfile = ({ username, hasBorder, size = "small", truncate, oscrRating 
             avatarURL={getAvatarByUsername(username)}
           />
         </Link>
-        {typeof oscrRating !== "undefined" ? <OscrRating rating={oscrRating} /> : null}
+        {typeof oscrRating !== "undefined" ? <OscrPill rating={oscrRating} /> : null}
       </div>
       {/* Desktop */}
       <div className="hidden md:flex justify-items-center gap-2">
@@ -37,7 +37,7 @@ const DevProfile = ({ username, hasBorder, size = "small", truncate, oscrRating 
         </div>
         <div className="grid gap-1 items-center">
           <h1 className={`${truncate && "truncate"} text-light-slate-12`}>{username}</h1>
-          {typeof oscrRating !== "undefined" ? <OscrRating rating={oscrRating} /> : null}
+          {typeof oscrRating !== "undefined" ? <OscrPill rating={oscrRating} /> : null}
         </div>
       </div>
     </section>
