@@ -67,7 +67,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = Number(session?.user.user_metadata.sub);
-  const username = session?.user.user_metadata.user_name;
+  const username = session?.user.user_metadata.user_name ?? null;
 
   const owners: string[] = Array.from(
     workspaceData?.data || [],
