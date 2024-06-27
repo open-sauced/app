@@ -18,6 +18,7 @@ import Tooltip from "components/atoms/Tooltip/tooltip";
 import Icon from "components/atoms/Icon/icon";
 import ForkIcon from "img/icons/fork-icon.svg";
 import FirstPRIcon from "img/icons/first-pr-icon.svg";
+import { OscrPill } from "components/Contributors/OscrPill";
 
 interface ContributorCardProps {
   className?: string;
@@ -50,10 +51,11 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
             <div className="flex items-center gap-2">
               <Avatar size={40} avatarURL={githubAvatar ? githubAvatar : undefined} />
               <div>
-                <div>
-                  <Text className="!text-base !text-black  ">{contributor.author_login}</Text>
+                <div className="flex gap-2">
+                  <Text className="!text-base !text-black">{contributor.author_login}</Text>
+                  {contributor.oscr ? <OscrPill rating={contributor.oscr} /> : null}
                 </div>
-                <div className="flex gap-2 text-xs">
+                <div className="flex gap-2 text-xs mt-1">
                   <div className="flex items-center gap-1 text-xs text-light-slate-11">
                     {meta.itemCount !== undefined && (
                       <>
