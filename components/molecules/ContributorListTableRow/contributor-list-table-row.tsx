@@ -14,6 +14,7 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import { getTopContributorLanguages } from "lib/utils/contributor-utils";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
+import { OscrPill } from "components/Contributors/OscrPill";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
@@ -192,11 +193,16 @@ const ContributorListTableRow = ({
 
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
-          <DevProfile username={login} hasBorder={!contributor.author_login} oscrRating={contributor.oscr} />
+          <DevProfile username={login} hasBorder={!contributor.author_login} />
+        </div>
+
+        {/* Column: OSCR */}
+        <div className={clsx("flex-1 lg:max-w-[5rem] text-light-slate-11 justify-center   lg:flex ")}>
+          <div className="flex gap-x-3">{contributor.oscr ? <OscrPill rating={contributor.oscr} /> : "-"}</div>
         </div>
 
         {/* Column Repositories */}
-        <div className={clsx("flex-1 lg:max-w-[6.25rem]  flex justify-center ")}>
+        <div className={clsx("hidden flex-1 lg:max-w-[6.25rem]  flex justify-center ")}>
           {contributor.author_login ? repoList.length : "-"}
         </div>
 
@@ -221,13 +227,6 @@ const ContributorListTableRow = ({
               {secondContributorLanguage && `, ${getLanguageAbbreviation(secondContributorLanguage)}`}
             </p>
           )}
-        </div>
-
-        {/* Column: Time Zone */}
-        <div className={clsx("flex-1 hidden lg:max-w-[5rem] text-light-slate-11 justify-center   lg:flex ")}>
-          <div className="flex gap-x-3">
-            {contributor.author_login && user && user.timezone ? <p>{user.timezone}</p> : "-"}
-          </div>
         </div>
 
         {/* Column: Contributions */}

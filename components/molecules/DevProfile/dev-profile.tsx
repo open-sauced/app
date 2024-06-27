@@ -18,8 +18,8 @@ const DevProfile = ({ username, hasBorder, size = "small", truncate, oscrRating 
   return (
     <section className="flex items-center gap-2 text-light-slate-11">
       {/* Mobile */}
-      <div className="grid gap-1 md:hidden">
-        <Link href={`/u/${username}`} className="rounded-full">
+      <div className="flex gap-2 md:hidden">
+        <Link href={`/u/${username}`} className="flex items-center rounded-full">
           <Avatar
             className={hasBorder ? "ring-2 ring-orange-500" : ""}
             size={45}
@@ -28,7 +28,10 @@ const DevProfile = ({ username, hasBorder, size = "small", truncate, oscrRating 
             avatarURL={getAvatarByUsername(username)}
           />
         </Link>
-        {typeof oscrRating !== "undefined" ? <OscrPill rating={oscrRating} /> : null}
+        <div className="flex flex-col items-start gap-1">
+          <span className={`${truncate && "truncate"} text-light-slate-12 font-semibold`}>{username}</span>
+          {typeof oscrRating !== "undefined" ? <OscrPill rating={oscrRating} /> : null}
+        </div>
       </div>
       {/* Desktop */}
       <div className="hidden md:flex justify-items-center gap-2">
