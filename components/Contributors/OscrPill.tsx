@@ -6,7 +6,7 @@ export const OscrPill = ({ rating }: { rating: number }) => {
 
   return (
     <Tooltip direction="top" content="Open Source Contributor Rating (OSCR)">
-      <Pill color="purple" size="small" text={`OSCR: ${percentageRating}%`} />
+      <Pill color="purple" size="small" text={`OSCR: ${percentageRating}`} />
     </Tooltip>
   );
 };
