@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.40.0-beta.2](https://github.com/open-sauced/app/compare/v2.40.0-beta.1...v2.40.0-beta.2) (2024-06-27)
+
+
+### 🍕 Features
+
+* implemented Open Source Contributor Rating for contributor table ([#3643](https://github.com/open-sauced/app/issues/3643)) ([68e8494](https://github.com/open-sauced/app/commit/68e849458a971fe86b98f58f63035dc8007d199f))
+
 ## [2.40.0-beta.1](https://github.com/open-sauced/app/compare/v2.39.0...v2.40.0-beta.1) (2024-06-27)
 
 
