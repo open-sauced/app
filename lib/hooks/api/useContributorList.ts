@@ -64,7 +64,7 @@ export const useContributorsList = ({
     }
   );
 
-  const oscrEnabled = featureFlags["oscr-rating"];
+  const oscrEnabled = featureFlags ? featureFlags["oscr-rating"] : false;
   const contributors = convertToContributors({ rawContributors: data?.data, username, oscrEnabled });
 
   return {
