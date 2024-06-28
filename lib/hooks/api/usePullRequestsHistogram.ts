@@ -56,17 +56,19 @@ const usePullRequestsHistogram = ({
   width = 30,
   contributor = "",
   direction = "ASC",
+  repo,
 }: {
   repoIds?: number[];
   range?: number;
   width?: number;
   contributor?: string;
   direction?: string;
+  repo?: string;
 }) => {
   const router = useRouter();
   const { pageId, selectedFilter } = router.query;
   const topic = pageId as string;
-  const filterQuery = getFilterQuery(selectedFilter);
+  const filterQuery = getFilterQuery(selectedFilter || repo?.split("/"));
   const query = new URLSearchParams(filterQuery);
 
   if (Number.isNaN(Number(topic)) && topic !== undefined) {
