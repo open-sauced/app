@@ -62,9 +62,11 @@ const AuthSection: React.FC = ({}) => {
         key="settings"
         className="flex items-center px-4 py-2 text-lg transition rounded-md cursor-pointer group gap-x-3 hover:bg-light-orange-3"
       >
-        <div className="flex items-center justify-center w-5 h-5 bg-blue-100 rounded-full">
+        {user?(<div className="rounded-lg overflow-hidden">
+          <Image width={20} height={20} alt="Icon" src={user.user_metadata.avatar_url} />
+        </div>):(<div className="flex items-center justify-center w-5 h-5 bg-blue-100 rounded-full">
           <Image width={10} height={10} alt="Icon" src={PersonIcon} />
-        </div>
+        </div>)}
         <Text className="group-hover:text-light-orange-10">{user?.user_metadata.user_name}</Text>
       </Link>,
       <Link
