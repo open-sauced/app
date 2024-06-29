@@ -133,6 +133,7 @@ interface DBListContributor {
   readonly public_repos: number;
   readonly receive_collaboration: boolean;
   readonly username: string;
+  readonly oscr: number;
 }
 
 interface DbRepoPREvents {
@@ -196,6 +197,7 @@ interface DbIssueComment {
 
 interface DbPRContributor {
   readonly author_login: string;
+  readonly oscr?: number;
   readonly username: string;
   readonly updated_at: string;
   readonly user_id: number;
