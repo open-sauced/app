@@ -1,10 +1,18 @@
 import Link from "next/link";
 import * as HoverCard from "@radix-ui/react-hover-card";
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa6";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
+import { OscrPill } from "components/Contributors/OscrPill";
 
 type ContributorsTableProps = {
   contributors: DbPRContributor[];
@@ -17,6 +25,7 @@ export default function ContributorsTable({ contributors, isLoading, error }: Co
   const defaultColumns = [
     contributorsColumnHelper.accessor("author_login", {
       header: "Contributor",
+      sortingFn: "alphanumeric",
       cell: (info) => (
         <div className="w-fit">
           <HoverCard.Root>
@@ -41,12 +50,18 @@ export default function ContributorsTable({ contributors, isLoading, error }: Co
         </div>
       ),
     }),
+    contributorsColumnHelper.accessor("oscr", {
+      header: "Rating",
+      sortingFn: "basic",
+      cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
+    }),
   ];
 
   const table = useReactTable({
     columns: defaultColumns,
     data: contributors,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -56,7 +71,16 @@ export default function ContributorsTable({ contributors, isLoading, error }: Co
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <TableHead key={header.id}>
-                <p>{header.column.columnDef.header?.toString()}</p>
+                <button onClick={header.column.getToggleSortingHandler()} className="flex gap-2 w-fit items-center">
+                  <h2 className="font-semibold">{header.column.columnDef.header?.toString()}</h2>
+                  {header.column.getCanSort() && header.column.getNextSortingOrder() === "asc" ? (
+                    <FaSort />
+                  ) : header.column.getNextSortingOrder() === "desc" ? (
+                    <FaSortUp />
+                  ) : (
+                    <FaSortDown />
+                  )}
+                </button>
               </TableHead>
             ))}
           </TableRow>
