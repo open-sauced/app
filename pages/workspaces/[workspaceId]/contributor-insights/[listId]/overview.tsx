@@ -16,6 +16,7 @@ import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import ContributorsTable from "components/Tables/ContributorsTable";
+import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -26,6 +27,8 @@ interface ListsOverviewProps {
   isError: boolean;
   workspaceId: string;
   owners: string[];
+  featureFlags: Record<string, boolean>;
+  username: string;
 }
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
@@ -64,6 +67,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   const userId = Number(session?.user.user_metadata.sub);
+  const username = session?.user.user_metadata.user_name ?? null;
 
   const owners: string[] = Array.from(
     workspaceData?.data || [],
@@ -75,6 +79,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   ).filter(Boolean);
 
   const isOwner = !!(workspaceData?.data || []).find((member) => member.role === "owner" && member.user_id === userId);
+  const featureFlags = await getAllFeatureFlags(userId);
 
   return {
     props: {
@@ -84,6 +89,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       isError: error || contributorListError,
       workspaceId,
       owners,
+      featureFlags,
+      username,
     },
   };
 };
@@ -95,6 +102,8 @@ const ListsOverview = ({
   isError,
   workspaceId,
   owners,
+  featureFlags,
+  username,
 }: ListsOverviewProps): JSX.Element => {
   const router = useRouter();
   const { listId, range, limit } = router.query;
@@ -109,6 +118,8 @@ const ListsOverview = ({
     listId: list?.id,
     defaultRange: range ? (range as string) : "30",
     defaultLimit: limit ? (limit as unknown as number) : 10,
+    featureFlags,
+    username,
   });
 
   const {
