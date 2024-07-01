@@ -8,15 +8,31 @@ describe("[lib] validateEmail()", () => {
     expect(result).toBeTruthy();
   });
 
+  it("(regression #3271) #1 Should return true if string is a valid email", () => {
+    const testString = "self@bjoern-buettner.me";
+    const result = validateEmail(testString);
+
+    expect(result).toBeTruthy();
+  });
+
+  it("(regression #3271) #2 Should return true if string is a valid email", () => {
+    const testString = "self@bjoern-buettner.site";
+    const result = validateEmail(testString);
+
+    expect(result).toBeTruthy();
+  });
+
   it("Should return false if string is not a valid email", () => {
-    let testString = "ahmedatwayahoo.com";
-    let result = validateEmail(testString);
+    const testString = "ahmedatwayahoo.com";
+    const result = validateEmail(testString);
 
     expect(result).toBeFalsy();
+  });
 
-    testString = "ahmedatwa@yahoo";
+  it("Should return true even if string has an unusual domain", () => {
+    const testString = "ahmedatwa@yahoo";
+    const result = validateEmail(testString);
 
-    result = validateEmail(testString);
-    expect(result).toBeFalsy();
+    expect(result).toBeTruthy();
   });
 });
