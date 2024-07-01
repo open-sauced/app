@@ -4,6 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import * as HoverCard from "@radix-ui/react-hover-card";
+import { FaArrowRight, FaRegHandPeace } from "react-icons/fa6";
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import { DayRange } from "components/shared/DayRangePicker";
@@ -21,6 +22,7 @@ type LotteryFactorChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: DayRange;
+  yoloBannerOnClick?: () => void;
   showHoverCards?: boolean;
   className?: string;
 };
@@ -30,6 +32,7 @@ export default function LotteryFactorChart({
   isLoading,
   error,
   range,
+  yoloBannerOnClick,
   showHoverCards,
   className,
 }: LotteryFactorChartProps) {
@@ -128,6 +131,20 @@ export default function LotteryFactorChart({
           )}
         </header>
       </section>
+
+      {yoloBannerOnClick && (
+        <button
+          onClick={yoloBannerOnClick}
+          className="flex items-center w-full shadow-sm !border !border-slate-300 px-0.5 py-0.5 gap-2 text-[0.7rem] rounded-full"
+        >
+          <div className="flex items-center font-medium gap-1 px-2 py-0.5 rounded-2xl bg-light-red-4 text-light-red-11">
+            <FaRegHandPeace />
+            YOLO Coders
+          </div>
+          Pushing commits directly to main
+          <FaArrowRight />
+        </button>
+      )}
 
       <section className="w-full px-4 flex flex-col gap-4 text-xs xl:text-sm">
         {isLoading ? (

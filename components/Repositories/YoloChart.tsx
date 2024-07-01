@@ -1,12 +1,13 @@
 import * as HoverCard from "@radix-ui/react-hover-card";
 import Link from "next/link";
-import { FaRegHandPeace } from "react-icons/fa6";
+import { FaArrowLeft, FaRegHandPeace } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Card from "components/atoms/Card/card";
 import Avatar from "components/atoms/Avatar/avatar";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 import { getAvatarByUsername } from "lib/utils/github";
+import Button from "components/shared/Button/button";
 
 type YoloChartProps = {
   yoloStats: RepositoryYolo | undefined;
@@ -14,6 +15,7 @@ type YoloChartProps = {
   repository: string;
   isLoading: boolean;
   range: number;
+  backButtonOnClick?: () => void;
   showHoverCards?: boolean;
   className?: string;
 };
@@ -24,19 +26,27 @@ export default function YoloChart({
   repository,
   isLoading,
   range,
+  backButtonOnClick,
   showHoverCards,
   className,
 }: YoloChartProps) {
   return (
-    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-full items-center pt-8`}>
-      <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
-        <header className="flex w-full justify-between items-center">
-          <div className="flex gap-2 items-center">
-            <FaRegHandPeace className="text-xl" />
-            <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Lottery Factor</h3>
-          </div>
-        </header>
-      </section>
+    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-full items-center`}>
+      <div className="flex flex-col gap-2 items-start w-full">
+        {backButtonOnClick && (
+          <Button variant="text" onClick={backButtonOnClick} className="flex gap-2 text-sauced-orange">
+            <FaArrowLeft /> Back
+          </Button>
+        )}
+        <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
+          <header className="flex w-full justify-between items-center">
+            <div className="flex gap-2 items-center">
+              <FaRegHandPeace className="text-xl" />
+              <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Lottery Factor</h3>
+            </div>
+          </header>
+        </section>
+      </div>
 
       <section className="w-full px-4 flex flex-col gap-4 text-xs xl:text-sm">
         {isLoading ? (
@@ -73,7 +83,7 @@ export default function YoloChart({
           <thead>
             <tr>
               <th className="font-normal text-start">Contributor</th>
-              <th className="font-normal text-center w-fit">Sha</th>
+              <th className="font-normal text-end w-fit">Sha</th>
               <th className="font-normal text-end">Pushed</th>
             </tr>
           </thead>
@@ -120,11 +130,11 @@ export default function YoloChart({
                     </div>
                   </div>
                 </td>
-                <td className="text-center w-fit underline">
+                <td className="text-end w-fit underline">
                   <a href={`https://github.com/${repository}/commit/${sha}`}>{sha.substring(0, 7)}</a>
                 </td>
                 <td className="text-end pt-1 pb-2 pr-2">
-                  {push_num_commits} commit{push_num_commits > 0 && "s"}
+                  {push_num_commits} commit{push_num_commits > 1 && "s"}
                 </td>
               </tr>
             ))}
