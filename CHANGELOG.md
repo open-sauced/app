@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.40.1-beta.2](https://github.com/open-sauced/app/compare/v2.40.1-beta.1...v2.40.1-beta.2) (2024-07-01)
+
+
+### 🐛 Bug Fixes
+
+* workspace insight header paddings ([#3623](https://github.com/open-sauced/app/issues/3623)) ([10438b4](https://github.com/open-sauced/app/commit/10438b4935a2020bd2e1171c2e63c048e0be81cd))
+
 ## [2.40.1-beta.1](https://github.com/open-sauced/app/compare/v2.40.0...v2.40.1-beta.1) (2024-06-29)
 
 
