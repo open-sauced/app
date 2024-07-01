@@ -2,7 +2,7 @@ import { FiCopy } from "react-icons/fi";
 import { MdWorkspaces } from "react-icons/md";
 import { HiOutlineExternalLink } from "react-icons/hi";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { usePostHog } from "posthog-js/react";
@@ -35,6 +35,8 @@ import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
 import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
 import RossChart from "components/Repositories/RossChart";
+import { useRepositoryYolo } from "lib/hooks/api/useRepositoryYolo";
+import YoloChart from "components/Repositories/YoloChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -162,6 +164,24 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     isLoading: isLotteryFactorLoading,
   } = useRepositoryLottoFactor({ repository: repoData.full_name.toLowerCase(), range });
 
+  const {
+    data: yoloStats,
+    error: yoloStatsError,
+    isLoading: isYoloStatsLoading,
+  } = useRepositoryYolo({ repository: repoData.full_name.toLowerCase(), range });
+
+  const uniqueYoloCoders = useMemo(() => {
+    if (!yoloStats || !yoloStats.data) {
+      return new Set<string>();
+    }
+    const unique = new Set<string>();
+    yoloStats.data.forEach(({ actor_login }) => {
+      unique.add(actor_login);
+    });
+
+    return unique;
+  }, [yoloStats]);
+
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
     posthog!.capture("clicked: repo page share button", {
@@ -280,6 +300,14 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 </div>
               </section>
 
+              <YoloChart
+                yoloStats={yoloStats}
+                uniqueYoloCoders={uniqueYoloCoders}
+                repository={repoData.full_name}
+                isLoading={isYoloStatsLoading}
+                range={range}
+                showHoverCards
+              />
               <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
                 <StarsChart
                   stats={starsData}
