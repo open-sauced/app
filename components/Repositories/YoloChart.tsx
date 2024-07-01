@@ -42,7 +42,7 @@ export default function YoloChart({
           <header className="flex w-full justify-between items-center">
             <div className="flex gap-2 items-center">
               <FaRegHandPeace className="text-xl" />
-              <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Lottery Factor</h3>
+              <h3 className="text-sm font-semibold xl:text-lg text-slate-800">YOLO Coders</h3>
             </div>
           </header>
         </section>
@@ -88,7 +88,7 @@ export default function YoloChart({
             </tr>
           </thead>
           <tbody className="!text-small truncate [&_tr_td]:border-b-1">
-            {yoloStats.data.map(({ actor_login, sha, push_num_commits }) => (
+            {yoloStats.data.slice(0, 5).map(({ actor_login, sha, push_num_commits }) => (
               <tr key={actor_login} className="grow items-start">
                 <td className="pt-1 pb-2 pl-2">
                   {/*
