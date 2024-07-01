@@ -40,7 +40,7 @@ const HubPageLayout = ({
   return (
     <>
       <div>
-        <Header>
+        <Header classNames="px-0 md:px-0 pt-0">
           <ClientOnly>
             {isLoading ? (
               <div className="flex justify-between w-full h-46">
