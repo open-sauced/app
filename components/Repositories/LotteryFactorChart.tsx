@@ -137,7 +137,7 @@ export default function LotteryFactorChart({
       {yoloBannerOnClick && (
         <button
           onClick={yoloBannerOnClick}
-          className="flex items-center justify-between w-full text-slate-500 shadow-sm !border !border-slate-300 p-1 gap-2 text-[0.7rem] rounded-full"
+          className="flex items-center justify-between w-full text-slate-500 shadow-sm !border !border-slate-300 p-1 gap-2 text-sm rounded-full"
         >
           <div className="flex gap-2 items-center">
             <div className="flex items-center font-medium gap-1 px-2 py-0.5 rounded-2xl bg-light-red-4 text-light-red-11">
@@ -147,7 +147,7 @@ export default function LotteryFactorChart({
             Pushing commits directly to main
           </div>
 
-          <div className="flex gap-2 items-center mx-2">
+          <div className="flex gap-2 items-center ml-auto mr-3">
             <p>See more</p>
             <FaArrowRight />
           </div>
