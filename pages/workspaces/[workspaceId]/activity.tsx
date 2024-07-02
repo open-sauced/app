@@ -142,18 +142,21 @@ const WorkspaceActivityPage = ({
             <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
           </div>
           <div className="mt-6 grid gap-6">
-            <div className="grid md:flex justify-between gap-2 md:gap-4">
-              <SubTabsList
-                label="Activity pages"
-                textSize="small"
-                tabList={[
-                  { name: "Pull Requests", path: "activity" },
-                  { name: "Issues", path: "issues" },
-                ]}
-                selectedTab={"pull requests"}
-                pageId={`/workspaces/${workspace.id}`}
-              />
-              <div className="flex items-center justify-end gap-4 flex-wrap w-full mb-2">
+            <div className="grid md:flex gap-2 md:gap-4 w-full items-center mb-2">
+              <div className="flex items-center justify-between w-full md:w-fit">
+                <SubTabsList
+                  label="Activity pages"
+                  textSize="small"
+                  tabList={[
+                    { name: "Pull Requests", path: "activity" },
+                    { name: "Issues", path: "issues" },
+                  ]}
+                  selectedTab={"pull requests"}
+                  pageId={`/workspaces/${workspace.id}`}
+                />
+                {isMobile ? <DayRangePicker /> : null}
+              </div>
+              <div className="flex items-center justify-end gap-2 flex-wrap w-full">
                 <TrackedRepositoryFilter
                   options={filterOptions}
                   handleSelect={(selected: OptionKeys[]) => {
@@ -161,7 +164,7 @@ const WorkspaceActivityPage = ({
                     setQueryParams({ page: "1" });
                   }}
                 />
-                <DayRangePicker />
+                {isMobile ? null : <DayRangePicker />}
                 <LimitPicker />
               </div>
             </div>
