@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.40.1-beta.3](https://github.com/open-sauced/app/compare/v2.40.1-beta.2...v2.40.1-beta.3) (2024-07-02)
+
+
+### 🐛 Bug Fixes
+
+* now OSCR that is 0 gets rendered as a dash ([#3662](https://github.com/open-sauced/app/issues/3662)) ([5e12564](https://github.com/open-sauced/app/commit/5e1256491964dc6e443b0f6db5bef59a9b9c57e9))
+* remove dots from `IssueChart` & `PRChart` ([#3659](https://github.com/open-sauced/app/issues/3659)) ([deb24a0](https://github.com/open-sauced/app/commit/deb24a0be3b040883e4f03c31db50e48a90dbde1))
+
 ## [2.40.1-beta.2](https://github.com/open-sauced/app/compare/v2.40.1-beta.1...v2.40.1-beta.2) (2024-07-01)
 
 
