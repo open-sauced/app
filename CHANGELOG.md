@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.40.1-beta.4](https://github.com/open-sauced/app/compare/v2.40.1-beta.3...v2.40.1-beta.4) (2024-07-02)
+
+
+### 🐛 Bug Fixes
+
+* now workspace pages on smaller screens keep their layout in bounds ([#3664](https://github.com/open-sauced/app/issues/3664)) ([8b2a879](https://github.com/open-sauced/app/commit/8b2a8795f2d10a30cc187431cce2e199c4802d9b))
+
 ## [2.40.1-beta.3](https://github.com/open-sauced/app/compare/v2.40.1-beta.2...v2.40.1-beta.3) (2024-07-02)
 
 
