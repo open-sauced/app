@@ -88,9 +88,7 @@ export const SelectOrgReposStep = ({
           <Avatar contributor={organization} size="small" />
           <span className="flex align-middle">{organization}</span>
         </div>
-        <div className="flex justify-end">
-          <DayRangePicker onDayRangeChanged={(e) => setRange(Number(e))} />
-        </div>
+        <DayRangePicker onDayRangeChanged={(e) => setRange(Number(e))} />
       </div>
       <p>
         Select the organization repositories updated in the last <span className="font-bold">{range} days</span> that
