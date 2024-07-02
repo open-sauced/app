@@ -170,23 +170,25 @@ const WorkspaceDashboard = ({
         }
       >
         <div className="px-4 py-8 lg:px-16 lg:py-12">
-          <WorkspaceHeader workspace={workspace} />
+          <WorkspaceHeader workspace={workspace}>
+            <Button
+              variant="outline"
+              className="my-auto gap-2 items-center shrink-0"
+              onClick={() => {
+                if (overLimit) {
+                  setIsInsightUpgradeModalOpen(true);
+                  return;
+                }
+
+                router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
+              }}
+            >
+              Add repositories
+            </Button>
+          </WorkspaceHeader>
           <div className="grid gap-4 pt-3 border-b sm:flex">
             <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
-            <div className="flex items-center justify-end gap-4">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  if (overLimit) {
-                    setIsInsightUpgradeModalOpen(true);
-                    return;
-                  }
-
-                  router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
-                }}
-              >
-                Add repositories
-              </Button>
+            <div className="flex items-center justify-end gap-4 flex-wrap w-full mb-2">
               <DayRangePicker />
               <TrackedRepositoryFilter
                 options={filterOptions}
