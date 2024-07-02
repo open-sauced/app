@@ -412,6 +412,7 @@ interface GhOrg {
   id: number;
   name: string;
   full_name: string;
+  pushed_at: string;
   private: boolean;
 }
 
