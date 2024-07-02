@@ -137,14 +137,20 @@ export default function LotteryFactorChart({
       {yoloBannerOnClick && (
         <button
           onClick={yoloBannerOnClick}
-          className="flex items-center w-full shadow-sm !border !border-slate-300 px-0.5 py-0.5 gap-2 text-[0.7rem] rounded-full"
+          className="flex items-center justify-between w-full text-slate-500 shadow-sm !border !border-slate-300 p-1 gap-2 text-[0.7rem] rounded-full"
         >
-          <div className="flex items-center font-medium gap-1 px-2 py-0.5 rounded-2xl bg-light-red-4 text-light-red-11">
-            <FaRegHandPeace />
-            YOLO Coders
+          <div className="flex gap-2 items-center">
+            <div className="flex items-center font-medium gap-1 px-2 py-0.5 rounded-2xl bg-light-red-4 text-light-red-11">
+              <FaRegHandPeace />
+              YOLO Coders
+            </div>
+            Pushing commits directly to main
           </div>
-          Pushing commits directly to main
-          <FaArrowRight />
+
+          <div className="flex gap-2 items-center mx-2">
+            <p>See more</p>
+            <FaArrowRight />
+          </div>
         </button>
       )}
 
@@ -267,7 +273,11 @@ export default function LotteryFactorChart({
                     )}
                     <div className="flex gap-1 items-center">
                       <h1 className="truncate text-light-slate-12">{name}</h1>
-                      {uniqueYoloCoders.has(name) && <FaRegHandPeace />}
+                      {uniqueYoloCoders.has(name) && (
+                        <button onClick={yoloBannerOnClick}>
+                          <InfoTooltip icon={<FaRegHandPeace />} information="YOLO Coder" />
+                        </button>
+                      )}
                     </div>
                   </div>
                 </td>

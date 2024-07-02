@@ -48,7 +48,7 @@ export default function YoloChart({
         </section>
       </div>
 
-      <section className="w-full px-4 flex flex-col gap-4 text-xs xl:text-sm">
+      <section className="w-full px-4 flex flex-col gap-2 text-xs xl:text-sm">
         {isLoading ? (
           <Skeleton height={32} />
         ) : (
@@ -64,7 +64,7 @@ export default function YoloChart({
           </p>
         )}
 
-        <p>
+        <p className="text-slate-500">
           <a href="https://docs.opensauced.pizza" target="_blank" className="text-sauced-orange underline">
             Learn more
           </a>{" "}
