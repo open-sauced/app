@@ -22,6 +22,7 @@ type LotteryFactorChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: DayRange;
+  uniqueYoloCoders?: Set<string>;
   yoloBannerOnClick?: () => void;
   showHoverCards?: boolean;
   className?: string;
@@ -32,6 +33,7 @@ export default function LotteryFactorChart({
   isLoading,
   error,
   range,
+  uniqueYoloCoders = new Set<string>(),
   yoloBannerOnClick,
   showHoverCards,
   className,
@@ -263,8 +265,9 @@ export default function LotteryFactorChart({
                         />
                       </Link>
                     )}
-                    <div>
+                    <div className="flex gap-1 items-center">
                       <h1 className="truncate text-light-slate-12">{name}</h1>
+                      {uniqueYoloCoders.has(name) && <FaRegHandPeace />}
                     </div>
                   </div>
                 </td>
