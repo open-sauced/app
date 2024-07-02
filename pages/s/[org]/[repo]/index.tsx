@@ -2,7 +2,7 @@ import { FiCopy } from "react-icons/fi";
 import { MdWorkspaces } from "react-icons/md";
 import { HiOutlineExternalLink } from "react-icons/hi";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { usePostHog } from "posthog-js/react";
@@ -35,6 +35,8 @@ import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
 import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
 import RossChart from "components/Repositories/RossChart";
+import { useRepositoryYolo } from "lib/hooks/api/useRepositoryYolo";
+import YoloChart from "components/Repositories/YoloChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -85,6 +87,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const { session } = useSession(true);
   const isMobile = useMediaQuery("(max-width: 576px)");
   const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
+  const [lotteryState, setLotteryState] = useState<"lottery" | "yolo">("lottery");
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
   const tabList = [
     { name: "Overview", path: "" },
@@ -162,6 +165,24 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     isLoading: isLotteryFactorLoading,
   } = useRepositoryLottoFactor({ repository: repoData.full_name.toLowerCase(), range });
 
+  const {
+    data: yoloStats,
+    error: yoloStatsError,
+    isLoading: isYoloStatsLoading,
+  } = useRepositoryYolo({ repository: repoData.full_name.toLowerCase(), range });
+
+  const uniqueYoloCoders = useMemo(() => {
+    if (!yoloStats || !yoloStats.data) {
+      return new Set<string>();
+    }
+    const unique = new Set<string>();
+    yoloStats.data.forEach(({ actor_login }) => {
+      unique.add(actor_login);
+    });
+
+    return unique;
+  }, [yoloStats]);
+
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
     posthog!.capture("clicked: repo page share button", {
@@ -231,7 +252,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
           </div>
           <ClientOnly>
             <div className="flex flex-col gap-4">
-              <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[48rem]">
+              <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
                 <div className="order-last lg:order-none lg:col-span-8 flex flex-col gap-4">
                   <RossChart
                     stats={rossStats}
@@ -242,14 +263,14 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     className="h-fit"
                   />
 
-                  <div className="flex gap-4 flex-col lg:flex-row">
+                  <div className="flex gap-4 h-full flex-col lg:flex-row">
                     <IssuesChart
                       stats={issueStats}
                       range={range}
                       velocity={repoStats?.issues_velocity_count ?? 0}
                       syncId={syncId}
                       isLoading={isIssueDataLoading}
-                      className="h-fit"
+                      className="h-full"
                     />
 
                     <PRChart
@@ -258,7 +279,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       velocity={repoStats?.pr_velocity_count ?? 0}
                       syncId={syncId}
                       isLoading={isPrDataLoading}
-                      className="h-fit"
+                      className="h-full"
                     />
                   </div>
                 </div>
@@ -270,13 +291,27 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     isLoading={isLoading}
                   />
 
-                  <LotteryFactorChart
-                    lotteryFactor={lotteryFactor}
-                    error={lotteryFactorError}
-                    range={range}
-                    isLoading={isLotteryFactorLoading}
-                    showHoverCards
-                  />
+                  {lotteryState === "lottery" && (
+                    <LotteryFactorChart
+                      lotteryFactor={lotteryFactor}
+                      error={lotteryFactorError}
+                      range={range}
+                      isLoading={isLotteryFactorLoading}
+                      yoloBannerOnClick={uniqueYoloCoders ? () => setLotteryState("yolo") : undefined}
+                      showHoverCards
+                    />
+                  )}
+                  {lotteryState === "yolo" && (
+                    <YoloChart
+                      yoloStats={yoloStats}
+                      uniqueYoloCoders={uniqueYoloCoders}
+                      repository={repoData.full_name}
+                      isLoading={isYoloStatsLoading}
+                      range={range}
+                      backButtonOnClick={() => setLotteryState("lottery")}
+                      showHoverCards
+                    />
+                  )}
                 </div>
               </section>
 
