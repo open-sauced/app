@@ -198,7 +198,7 @@ const ContributorListTableRow = ({
 
         {/* Column: OSCR */}
         <div className={clsx("flex-1 lg:max-w-[5rem] text-light-slate-11 justify-center   lg:flex ")}>
-          <div className="flex gap-x-3">{contributor.oscr ? <OscrPill rating={contributor.oscr} /> : "-"}</div>
+          <div className="flex gap-x-3">{contributor.oscr ? <OscrPill rating={contributor.oscr} /> ?? "-" : "-"}</div>
         </div>
 
         {/* Column Repositories */}
