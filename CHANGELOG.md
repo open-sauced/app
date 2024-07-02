@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.41.0-beta.1](https://github.com/open-sauced/app/compare/v2.40.1-beta.4...v2.41.0-beta.1) (2024-07-02)
+
+
+### 🍕 Features
+
+* add range filter when importing GitHub repos for an org ([#3665](https://github.com/open-sauced/app/issues/3665)) ([89abf59](https://github.com/open-sauced/app/commit/89abf59f6770507ce7c659016ca88240e907f2da))
+
 ## [2.40.1-beta.4](https://github.com/open-sauced/app/compare/v2.40.1-beta.3...v2.40.1-beta.4) (2024-07-02)
 
 
