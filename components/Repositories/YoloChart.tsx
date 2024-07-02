@@ -68,7 +68,7 @@ export default function YoloChart({
           <a href="https://docs.opensauced.pizza" target="_blank" className="text-sauced-orange underline">
             Learn more
           </a>{" "}
-          about why this could be a problem.
+          about why pull requests are a better way to contribute.
         </p>
       </section>
 
