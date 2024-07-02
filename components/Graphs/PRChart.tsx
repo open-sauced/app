@@ -98,8 +98,8 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
             />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
-            <Line dataKey="active_prs" stroke="#16a34a" strokeWidth={2} />
-            <Line dataKey="accepted_prs" stroke="#9333ea" strokeWidth={2} />
+            <Line dataKey="active_prs" stroke="#16a34a" strokeWidth={2} dot={false} />
+            <Line dataKey="accepted_prs" stroke="#9333ea" strokeWidth={2} dot={false} />
           </LineChart>
         )}
       </ResponsiveContainer>
