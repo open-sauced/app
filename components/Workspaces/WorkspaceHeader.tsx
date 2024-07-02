@@ -11,9 +11,10 @@ import { writeToClipboard } from "lib/utils/write-to-clipboard";
 
 interface WorkspaceHeaderProps {
   workspace: Workspace;
+  children?: React.ReactNode;
 }
 
-export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
+export const WorkspaceHeader = ({ workspace, children }: WorkspaceHeaderProps) => {
   const { toast } = useToast();
   const posthog = usePostHog();
   const { userId } = useSupabaseAuth();
@@ -44,7 +45,8 @@ export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
         </span>
         <Pill className="font-medium" text={workspace.is_public ? "Public" : "Private"} />
       </h1>
-      <div className="flex gap-4">
+      <div className="flex gap-2 justify-end">
+        {children}
         <Button
           variant="outline"
           onClick={copyUrlToClipboard}
