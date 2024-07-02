@@ -65,7 +65,11 @@ export default function YoloChart({
         )}
 
         <p className="text-slate-500">
-          <a href="https://docs.opensauced.pizza" target="_blank" className="text-sauced-orange underline">
+          <a
+            href="https://opensauced.pizza/docs/welcome/glossary/#yolo-coders"
+            target="_blank"
+            className="text-sauced-orange underline"
+          >
             Learn more
           </a>{" "}
           about why pull requests are a better way to contribute.
