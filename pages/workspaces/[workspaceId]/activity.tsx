@@ -153,7 +153,7 @@ const WorkspaceActivityPage = ({
                 selectedTab={"pull requests"}
                 pageId={`/workspaces/${workspace.id}`}
               />
-              <div className="flex justify-end items-center gap-4">
+              <div className="flex items-center justify-end gap-4 flex-wrap w-full mb-2">
                 <TrackedRepositoryFilter
                   options={filterOptions}
                   handleSelect={(selected: OptionKeys[]) => {
