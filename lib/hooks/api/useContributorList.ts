@@ -34,7 +34,7 @@ export const useContributorsList = ({
   initialPage = 1,
   defaultLimit = 10,
   defaultRange = "30",
-  showOSCR = false,
+  showOscr = false,
   username,
 }: {
   workspaceId: string | undefined;
@@ -46,7 +46,7 @@ export const useContributorsList = ({
   initialPage?: number;
   defaultLimit?: number;
   defaultRange?: string;
-  showOSCR?: boolean;
+  showOscr?: boolean;
   username: string;
 }) => {
   const [page, setPage] = useState(initialPage);
@@ -64,7 +64,7 @@ export const useContributorsList = ({
     }
   );
 
-  const contributors = convertToContributors({ rawContributors: data?.data, username, oscrEnabled: showOSCR });
+  const contributors = convertToContributors({ rawContributors: data?.data, username, oscrEnabled: showOscr });
 
   return {
     setPage,

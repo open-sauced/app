@@ -90,10 +90,10 @@ export default function ContributorInsightEditPage({
   featureFlags,
   username,
 }: ContributorInsightEditPageProps) {
-  const showOSCR = featureFlags && featureFlags["oscr-rating"];
+  const showOscr = featureFlags && featureFlags["oscr-rating"];
   const {
     data: { data: contributors },
-  } = useContributorsList({ workspaceId, listId: list?.id, showOSCR, username });
+  } = useContributorsList({ workspaceId, listId: list?.id, showOscr, username });
   const initialTrackedContributors = new Map([
     ...contributors.map((contributor) => [contributor.author_login, true] as const),
   ]);
