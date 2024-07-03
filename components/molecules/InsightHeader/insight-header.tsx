@@ -17,6 +17,7 @@ import { setQueryParams } from "lib/utils/query-params";
 import StackedOwners from "components/Workspaces/StackedOwners";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
@@ -49,6 +50,8 @@ const InsightHeader = ({
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const { toast } = useToast();
   const posthog = usePostHog();
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const size = isMobile ? 80 : 120;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -74,7 +77,7 @@ const InsightHeader = ({
     <div className="relative flex flex-row justify-between w-full">
       <div className="flex flex-col md:flex-row ">
         <div className="header-image mr-2 p-2 min-w-[130px]">
-          <ContextThumbnail size={120} ContextThumbnailURL={""}></ContextThumbnail>
+          <ContextThumbnail size={size} ContextThumbnailURL={""}></ContextThumbnail>
         </div>
         <div className="flex flex-col justify-center p-2 header-info grow">
           <div className="flex gap-2">
