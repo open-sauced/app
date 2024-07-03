@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.41.1-beta.2](https://github.com/open-sauced/app/compare/v2.41.1-beta.1...v2.41.1-beta.2) (2024-07-03)
+
+
+### 🐛 Bug Fixes
+
+* now the contributor insights new/edit page fits in smaller screens ([#3679](https://github.com/open-sauced/app/issues/3679)) ([256af40](https://github.com/open-sauced/app/commit/256af405de326f9814330b72c938233f1e63da83))
+
+## [2.41.1-beta.1](https://github.com/open-sauced/app/compare/v2.41.0...v2.41.1-beta.1) (2024-07-03)
+
+
+### 🐛 Bug Fixes
+
+* now OSCR column is hidden if feature flag is not enabled for OSCR ([#3676](https://github.com/open-sauced/app/issues/3676)) ([061c590](https://github.com/open-sauced/app/commit/061c590e7be296f75b4812f552b0e33e3dcfad03))
+
 ## [2.41.0](https://github.com/open-sauced/app/compare/v2.40.0...v2.41.0) (2024-07-03)
 
 
