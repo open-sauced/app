@@ -105,7 +105,7 @@ export default function LotteryFactorChart({
           <div className="flex gap-2 items-center">
             <HiOutlineTicket className="text-xl" />
             <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Lottery Factor</h3>
-            <InfoTooltip information="Identifies project risk due to dependency on top contributors. Indicates project vulnerability if 2 or fewer do >50% of the work." />
+            <InfoTooltip information="Identifies reliance on top contributors. Indicates potential project vulnerability if 2 or fewer create >50% of the pull requests." />
           </div>
           {error ? null : isLoading || !lotteryFactor ? (
             <SkeletonWrapper width={42} height={24} radius={999} />
