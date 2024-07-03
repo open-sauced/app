@@ -54,7 +54,7 @@ const ContributorListTableHeaders = ({
           </div>
         ) : null}
 
-        <div className={clsx("flex-1 hidden lg:max-w-[6.25rem]  ")}>
+        <div className={clsx("flex-1 hidden lg:flex lg:max-w-[6.25rem]  ")}>
           <TableTitle>Repositories</TableTitle>
         </div>
         <div className={clsx("flex-1 lg:max-w-[8.1rem]  ")}>
