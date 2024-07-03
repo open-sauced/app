@@ -2,7 +2,7 @@ import { FiCopy } from "react-icons/fi";
 import { MdWorkspaces } from "react-icons/md";
 import { HiOutlineExternalLink } from "react-icons/hi";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { usePostHog } from "posthog-js/react";
@@ -82,21 +82,28 @@ interface RepoPageProps {
 }
 
 export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
+  const syncId = repoData.id;
+  const router = useRouter();
   const { toast } = useToast();
   const posthog = usePostHog();
   const { session } = useSession(true);
   const isMobile = useMediaQuery("(max-width: 576px)");
   const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const [lotteryState, setLotteryState] = useState<"lottery" | "yolo">("lottery");
+  const [yoloIncludeBots, setYoloIncludeBots] = useState(
+    router.query.includeBots ? (router.query.includeBots === "true" ? true : false) : false
+  );
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
+  const range = (router.query.range ? Number(router.query.range) : 30) as Range;
   const tabList = [
     { name: "Overview", path: "" },
     { name: "Contributors", path: "contributors" },
   ];
 
-  const syncId = repoData.id;
-  const router = useRouter();
-  const range = (router.query.range ? Number(router.query.range) : 30) as Range;
+  useEffect(() => {
+    router.push({ query: { ...router.query, includeBots: yoloIncludeBots } });
+  }, [yoloIncludeBots]);
+
   const {
     data: starsData,
     isLoading: isStarsDataLoading,
@@ -169,7 +176,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     data: yoloStats,
     error: yoloStatsError,
     isLoading: isYoloStatsLoading,
-  } = useRepositoryYolo({ repository: repoData.full_name.toLowerCase(), range });
+  } = useRepositoryYolo({
+    repository: repoData.full_name.toLowerCase(),
+    range,
+    includeBots: yoloIncludeBots,
+  });
 
   const uniqueYoloCoders = useMemo(() => {
     if (!yoloStats || !yoloStats.data) {
@@ -306,6 +317,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     <YoloChart
                       yoloStats={yoloStats}
                       uniqueYoloCoders={uniqueYoloCoders}
+                      yoloIncludeBots={yoloIncludeBots}
+                      setYoloIncludeBots={setYoloIncludeBots}
                       repository={repoData.full_name}
                       isLoading={isYoloStatsLoading}
                       range={range}

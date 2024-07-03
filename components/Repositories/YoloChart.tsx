@@ -8,6 +8,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 import { getAvatarByUsername } from "lib/utils/github";
 import Button from "components/shared/Button/button";
+import ToggleSwitch from "components/atoms/ToggleSwitch/toggle-switch";
 
 type YoloChartProps = {
   yoloStats: RepositoryYolo | undefined;
@@ -15,6 +16,8 @@ type YoloChartProps = {
   repository: string;
   isLoading: boolean;
   range: number;
+  yoloIncludeBots: boolean;
+  setYoloIncludeBots: (yoloIncludeBots: boolean) => void;
   backButtonOnClick?: () => void;
   showHoverCards?: boolean;
   className?: string;
@@ -26,6 +29,8 @@ export default function YoloChart({
   repository,
   isLoading,
   range,
+  yoloIncludeBots,
+  setYoloIncludeBots,
   backButtonOnClick,
   showHoverCards,
   className,
@@ -38,13 +43,24 @@ export default function YoloChart({
             <FaArrowLeft /> Back
           </Button>
         )}
-        <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 lg:justify-between px-4">
+        <section className="flex flex-col lg:flex-row w-full items-start lg:items-center gap-4 justify-between px-4">
           <header className="flex w-full justify-between items-center">
             <div className="flex gap-2 items-center">
               <FaRegHandPeace className="text-xl" />
               <h3 className="text-sm font-semibold xl:text-lg text-slate-800">YOLO Coders</h3>
             </div>
           </header>
+
+          <aside className="flex gap-2 w-full text-xs items-center justify-end">
+            <p>Hide Bots</p>
+            <ToggleSwitch
+              name="Hide Bots"
+              size="sm"
+              checked={yoloIncludeBots}
+              handleToggle={() => setYoloIncludeBots(!yoloIncludeBots)}
+              ariaLabel="YOLO Coders Hide Bots Toggle"
+            />
+          </aside>
         </section>
       </div>
 
@@ -93,7 +109,7 @@ export default function YoloChart({
           </thead>
           <tbody className="!text-small truncate [&_tr_td]:border-b-1">
             {yoloStats.data.slice(0, 5).map(({ actor_login, sha, push_num_commits }) => (
-              <tr key={actor_login} className="grow items-start">
+              <tr key={sha} className="grow items-start">
                 <td className="pt-1 pb-2 pl-2">
                   {/*
                     Temporarily copying the DevProfile JSX minus the desktop view to fix this issue https://github.com/open-sauced/app/pull/3373#issuecomment-2112399608
