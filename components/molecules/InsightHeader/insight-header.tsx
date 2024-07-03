@@ -77,7 +77,7 @@ const InsightHeader = ({
     <div className="relative flex flex-row justify-between w-full">
       <div className="flex flex-col md:flex-row ">
         <div className="header-image mr-2 p-2 min-w-[130px]">
-          <ContextThumbnail size={size} ContextThumbnailURL={""}></ContextThumbnail>
+          <ContextThumbnail size={size} ContextThumbnailURL={""} />
         </div>
         <div className="flex flex-col justify-center p-2 header-info grow">
           <div className="flex gap-2">
