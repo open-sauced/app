@@ -57,7 +57,7 @@ const LatestPrTableRow = ({
           </IconContext.Provider>
         )}
         <Text title="updated date">{calcDistanceFromToday(new Date(prUpdatedTime))}</Text>
-        <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-72 !truncate">
+        <Text title={prName} className="!text-light-slate-12 !w-32 md:!w-96 !truncate">
           <a href={`https://github.com/${repoFullName}/pull/${prNumber}`} target="_blank">
             {prName}
           </a>

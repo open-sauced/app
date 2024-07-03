@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { StaticImageData } from "next/image";
 import { ImCross } from "react-icons/im";
+import { useState } from "react";
 import Icon from "components/atoms/Icon/icon";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 
@@ -17,6 +17,8 @@ interface CardRepoListProps {
   total?: number;
   deletable?: boolean;
   onDelete?: (repoName: string) => void;
+  onSelect?: (repoName: string) => void;
+  showCursor?: boolean;
 }
 
 const CardRepoList = ({
@@ -26,10 +28,13 @@ const CardRepoList = ({
   total,
   deletable = false,
   onDelete = () => {},
+  onSelect = () => {},
+  showCursor = false,
 }: CardRepoListProps): JSX.Element => {
   // The repoList is paginated, the total is the complete count
   const repoTotal = total || repoList.length;
   const sanitizedRepoList = [...new Map(repoList.map((item) => [item["repoName"], item])).values()];
+  const [selectedRepo, setSelectedRepo] = useState<string>("");
 
   return (
     <div className="flex gap-1 items-center max-w[175px] truncate flex-wrap text-xs text-light-slate-9">
@@ -39,15 +44,32 @@ const CardRepoList = ({
             .filter((_, arrCount) => arrCount < limit)
             .map(({ repoOwner, repoName, repoIcon }, index) => {
               return (
-                <div key={`repo_${index}`}>
+                <div
+                  key={`repo_${index}`}
+                  onClick={() => {
+                    if (!selectedRepo) {
+                      onSelect(`${repoOwner}/${repoName}`);
+                      setSelectedRepo(`${repoOwner}/${repoName}`);
+                    } else {
+                      onSelect("");
+                      setSelectedRepo("");
+                    }
+                  }}
+                >
                   {repoName && repoIcon ? (
-                    <Tooltip content={repoName}>
-                      <div className="flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12">
+                    <Tooltip content={`${repoOwner}/${repoName}`}>
+                      <div
+                        className={`flex gap-1  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12 ${
+                          selectedRepo === `${repoOwner}/${repoName}` && "border-orange-500"
+                        }`}
+                      >
                         <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
-                        <span className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName}`}>
-                          <Link href={`/s/${repoOwner}/${repoName}`} target="_blank">
-                            {repoName}
-                          </Link>
+                        <span
+                          className={`max-w-[45px] md:max-w-[100px] truncate ${fontSizeClassName} ${
+                            showCursor && "cursor-pointer"
+                          }`}
+                        >
+                          {repoName}
                         </span>
                         {deletable ? (
                           <button

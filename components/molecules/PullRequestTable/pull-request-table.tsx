@@ -21,6 +21,7 @@ interface CardTableProps {
   limit?: number;
   isHoverCard?: boolean;
   range?: string;
+  repoFilter?: string;
 }
 
 const EmptyState = ({ range }: { range: number }) => {
@@ -51,21 +52,31 @@ const PullRequestTable = ({
   limit,
   isHoverCard,
   range,
+  repoFilter,
 }: CardTableProps): JSX.Element => {
   const { data, isLoading } = useContributorPullRequests({
     contributor,
     topic,
     repoIds: repositories,
-    limit,
+    limit: 50,
     range,
   });
 
-  return data.length > 0 ? (
+  const repos = data
+    .filter((pr) => {
+      if (repoFilter) {
+        return pr.repo_name === repoFilter;
+      }
+      return true;
+    })
+    .slice(0, 15);
+
+  return repos.length > 0 ? (
     <>
       <div className="flex flex-col">
         <LatestPrTableHeader isHoverCard={isHoverCard} />
         <div className="flex flex-col gap-0.5">
-          {data.map(
+          {repos.map(
             (
               {
                 pr_title: prName,
