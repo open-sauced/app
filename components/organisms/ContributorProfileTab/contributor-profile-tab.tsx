@@ -430,7 +430,7 @@ const ContributorProfileTab = ({
               </div>
 
               {showPRs && (
-                <div className="pt-2 min-h-[550px]">
+                <div className="pt-2 min-h-[275px] md:min-h-[550px]">
                   <PullRequestTable
                     limit={15}
                     contributor={githubName}
@@ -442,7 +442,7 @@ const ContributorProfileTab = ({
                 </div>
               )}
               {showIssueComments && (
-                <div className="pt-2 min-h-[550px]">
+                <div className="pt-2 min-h-[275px] md:min-h-[550px]">
                   <IssueCommentsTable
                     contributor={githubName}
                     limit={15}

@@ -34,7 +34,6 @@ const CardRepoList = ({
   // The repoList is paginated, the total is the complete count
   const repoTotal = total || repoList.length;
   const sanitizedRepoList = [...new Map(repoList.map((item) => [item["repoName"], item])).values()];
-  const [selected, setSelected] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState<string>("");
 
   return (
@@ -48,14 +47,13 @@ const CardRepoList = ({
                 <div
                   key={`repo_${index}`}
                   onClick={() => {
-                    if (selected) {
+                    if (!selectedRepo) {
                       onSelect(`${repoOwner}/${repoName}`);
                       setSelectedRepo(`${repoOwner}/${repoName}`);
                     } else {
                       onSelect("");
                       setSelectedRepo("");
                     }
-                    setSelected(!selected);
                   }}
                 >
                   {repoName && repoIcon ? (
