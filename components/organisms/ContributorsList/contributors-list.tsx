@@ -14,6 +14,7 @@ interface ContributorsListProps {
   meta: Meta;
   setPage: (page: number) => void;
   range: string;
+  showOscr?: boolean;
 }
 
 interface ContributorCardListProps {
@@ -32,7 +33,14 @@ const ContributorCardList = ({ contributors = [], topic, range }: ContributorCar
   );
 };
 
-const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: ContributorsListProps) => {
+const ContributorsList = ({
+  contributors,
+  isLoading,
+  meta,
+  setPage,
+  range,
+  showOscr = false,
+}: ContributorsListProps) => {
   const [layout, setLayout] = useState<ToggleValue>("list");
 
   return (
@@ -48,8 +56,14 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range }: Con
       <ClientOnly>
         {layout !== "grid" ? (
           <>
-            <ContributorListTableHeaders />
-            <ContributorTable loading={isLoading} topic={"*"} contributors={contributors} range={range ?? 30} />
+            <ContributorListTableHeaders showOscr={showOscr} />
+            <ContributorTable
+              loading={isLoading}
+              topic={"*"}
+              contributors={contributors}
+              range={range ?? 30}
+              showOscr={showOscr}
+            />
           </>
         ) : (
           <ContributorCardList contributors={contributors} topic={"*"} range={range ?? 30} />

@@ -98,8 +98,8 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
             />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
-            <Line dataKey="opened_issues" stroke="#16a34a" strokeWidth={2} />
-            <Line dataKey="closed_issues" stroke="#9333ea" strokeWidth={2} />
+            <Line dataKey="opened_issues" stroke="#16a34a" strokeWidth={2} dot={false} />
+            <Line dataKey="closed_issues" stroke="#9333ea" strokeWidth={2} dot={false} />
           </LineChart>
         )}
       </ResponsiveContainer>
