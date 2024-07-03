@@ -133,6 +133,7 @@ interface DBListContributor {
   readonly public_repos: number;
   readonly receive_collaboration: boolean;
   readonly username: string;
+  readonly oscr: number;
 }
 
 interface DbRepoPREvents {
@@ -196,6 +197,7 @@ interface DbIssueComment {
 
 interface DbPRContributor {
   readonly author_login: string;
+  readonly oscr?: number;
   readonly username: string;
   readonly updated_at: string;
   readonly user_id: number;
@@ -628,6 +630,16 @@ interface ContributorLottoFactor {
 interface RepositoryLottoFactor {
   all_contribs: ContributorLottoFactor[];
   all_lotto_factor: LottoFactor;
+}
+
+interface RepositoryRoss {
+  ross: { bucket: string; index: number }[];
+  contributors: {
+    bucket: string;
+    new: number;
+    returning: number;
+    internal: number;
+  }[];
 }
 
 // sourced from open-sauced/api

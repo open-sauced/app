@@ -18,7 +18,7 @@ interface ListCardProps {
   user: User | null;
 }
 const ListCard = ({ list, handleOnDeleteClick, workspaceId, user }: ListCardProps) => {
-  const { data: contributors, meta } = useFetchListContributors(list.id);
+  const { data: contributors, meta } = useFetchListContributors(workspaceId!, list.id);
 
   const contributorsAvatar: Contributor[] = contributors?.map((contributor) => ({
     host_login: contributor.login || contributor.username,

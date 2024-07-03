@@ -37,6 +37,7 @@ const DeleteListPageModal: FC<ModalProps> = ({
   const handleOnConfirm = async () => {
     if (input !== listName) return;
     await onConfirm();
+    setInput("");
   };
 
   const disabled = input !== listName || submitted;
