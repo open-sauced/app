@@ -94,7 +94,7 @@ const InsightHeader = ({
           </div>
         </div>
       </div>
-      <div className="absolute right-0 bottom-0 top-0 flex flex-col items-end gap-3 py-2 md:items-center md:flex-row md:static">
+      <div className="flex gap-2 items-center">
         <Button
           onClick={() => handleCopyToClipboard(insightPageLink)}
           className="px-6 py-2 bg-white w-max"

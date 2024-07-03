@@ -5,6 +5,43 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.41.0-beta.1](https://github.com/open-sauced/app/compare/v2.40.1-beta.4...v2.41.0-beta.1) (2024-07-02)
+
+
+### 🍕 Features
+
+* add range filter when importing GitHub repos for an org ([#3665](https://github.com/open-sauced/app/issues/3665)) ([89abf59](https://github.com/open-sauced/app/commit/89abf59f6770507ce7c659016ca88240e907f2da))
+
+## [2.40.1-beta.4](https://github.com/open-sauced/app/compare/v2.40.1-beta.3...v2.40.1-beta.4) (2024-07-02)
+
+
+### 🐛 Bug Fixes
+
+* now workspace pages on smaller screens keep their layout in bounds ([#3664](https://github.com/open-sauced/app/issues/3664)) ([8b2a879](https://github.com/open-sauced/app/commit/8b2a8795f2d10a30cc187431cce2e199c4802d9b))
+
+## [2.40.1-beta.3](https://github.com/open-sauced/app/compare/v2.40.1-beta.2...v2.40.1-beta.3) (2024-07-02)
+
+
+### 🐛 Bug Fixes
+
+* now OSCR that is 0 gets rendered as a dash ([#3662](https://github.com/open-sauced/app/issues/3662)) ([5e12564](https://github.com/open-sauced/app/commit/5e1256491964dc6e443b0f6db5bef59a9b9c57e9))
+* remove dots from `IssueChart` & `PRChart` ([#3659](https://github.com/open-sauced/app/issues/3659)) ([deb24a0](https://github.com/open-sauced/app/commit/deb24a0be3b040883e4f03c31db50e48a90dbde1))
+
+## [2.40.1-beta.2](https://github.com/open-sauced/app/compare/v2.40.1-beta.1...v2.40.1-beta.2) (2024-07-01)
+
+
+### 🐛 Bug Fixes
+
+* workspace insight header paddings ([#3623](https://github.com/open-sauced/app/issues/3623)) ([10438b4](https://github.com/open-sauced/app/commit/10438b4935a2020bd2e1171c2e63c048e0be81cd))
+
+## [2.40.1-beta.1](https://github.com/open-sauced/app/compare/v2.40.0...v2.40.1-beta.1) (2024-06-29)
+
+
+### 🐛 Bug Fixes
+
+* reset input after deleting contributor insight list ([#3600](https://github.com/open-sauced/app/issues/3600)) ([2a2ac76](https://github.com/open-sauced/app/commit/2a2ac7653bfe61914a950edb0cbe7d419d1ee2df))
+* reset input after deleting contributor insight list([#3553](https://github.com/open-sauced/app/issues/3553)) ([e436e8d](https://github.com/open-sauced/app/commit/e436e8d1f5fccb4ca6e640b85a889dfd53132907))
+
 ## [2.40.0](https://github.com/open-sauced/app/compare/v2.39.0...v2.40.0) (2024-06-27)
 
 

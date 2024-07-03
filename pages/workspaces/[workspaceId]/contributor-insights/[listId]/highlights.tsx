@@ -171,143 +171,140 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
         ) : null
       }
     >
-      <div className="px-4 py-8 lg:px-16 lg:py-12">
-        <ListPageLayout
-          showRangeFilter={false}
-          list={list}
-          workspaceId={workspaceId}
-          numberOfContributors={numberOfContributors}
-          isOwner={isOwner}
-          owners={owners}
-          overLimit={showBanner}
+      <ListPageLayout
+        showRangeFilter={false}
+        list={list}
+        workspaceId={workspaceId}
+        numberOfContributors={numberOfContributors}
+        isOwner={isOwner}
+        owners={owners}
+        overLimit={showBanner}
+      >
+        <div
+          ref={topRef}
+          className="flex flex-col justify-center w-full gap-x-10 pt-4 md:mt-0 md:items-start md:justify-start md:flex-row"
         >
-          <div
-            ref={topRef}
-            className="flex flex-col justify-center w-full gap-x-10 pt-4 md:mt-0 md:items-start md:justify-start md:flex-row"
-          >
-            <div className="xl:sticky lg:top-14 xl:flex flex-none w-full md:w-max">
-              <div className="w-full min-w-max border shadow-sm rounded-lg px-5 py-6 flex flex-col gap-4">
-                <Search
-                  value={contributor}
-                  onChange={(value) => {
-                    onSearch(value);
-                  }}
-                  isDisabled={data.length === 0 && !contributor}
-                  placeholder="Search contributors"
-                  className="!w-full"
-                  name="helo"
-                />
+          <div className="xl:sticky lg:top-14 xl:flex flex-none w-full md:w-max">
+            <div className="w-full min-w-max border shadow-sm rounded-lg px-5 py-6 flex flex-col gap-4">
+              <Search
+                value={contributor}
+                onChange={(value) => {
+                  onSearch(value);
+                }}
+                isDisabled={data.length === 0 && !contributor}
+                placeholder="Search contributors"
+                className="!w-full"
+                name="helo"
+              />
 
-                {taggedRepos && taggedRepos.length > 0 ? (
-                  <ClientOnly>
-                    <div className="flex flex-col gap-2">
-                      <span className="text-sm text-light-slate-9">Tagged Repositories</span>
-                      {filterOptions &&
-                        filterOptions.length > 0 &&
-                        filterOptions.map(({ full_name, repoIcon, repoName }) => (
-                          <div
-                            onClick={() => handleRepoFilter(full_name)}
-                            key={full_name as string}
-                            className={`${
-                              selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
-                            } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}
-                          >
-                            <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
-                            <span className="max-w-[45px] md:max-w-[100px] truncate text-xs ">{repoName}</span>
-                          </div>
-                        ))}
-                    </div>
-                  </ClientOnly>
-                ) : null}
-              </div>
-            </div>
-            <div className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem] flex flex-col gap-10">
-              {isLoading ? (
+              {taggedRepos && taggedRepos.length > 0 ? (
                 <ClientOnly>
-                  <div className="flex flex-col gap-3">
-                    <div className="flex gap-3">
-                      <SkeletonWrapper radius={100} width={40} height={40} />{" "}
-                      <SkeletonWrapper width={200} height={40} />
-                    </div>
-                    <SkeletonWrapper height={300} />
+                  <div className="flex flex-col gap-2">
+                    <span className="text-sm text-light-slate-9">Tagged Repositories</span>
+                    {filterOptions &&
+                      filterOptions.length > 0 &&
+                      filterOptions.map(({ full_name, repoIcon, repoName }) => (
+                        <div
+                          onClick={() => handleRepoFilter(full_name)}
+                          key={full_name as string}
+                          className={`${
+                            selectedFilter === full_name ? "border-orange-600 bg-orange-200" : ""
+                          } flex hover:border-orange-600 hover:bg-orange-200 cursor-pointer gap-1 w-max  p-1 pr-2 border-[1px] border-light-slate-6 rounded-lg text-light-slate-12`}
+                        >
+                          <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
+                          <span className="max-w-[45px] md:max-w-[100px] truncate text-xs ">{repoName}</span>
+                        </div>
+                      ))}
                   </div>
                 </ClientOnly>
               ) : null}
-
-              {!isLoading && data && data.length === 0 ? (
-                <DashContainer className="lg:max-w-[33rem]">
-                  <p> No highlights published in the past {range} days</p>
-                </DashContainer>
-              ) : null}
-
-              {data && data.length > 0
-                ? data.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (
-                    <div key={id} className="flex flex-col gap-6 px-1 w-full">
-                      <div className="flex items-center gap-3">
-                        <ClientOnly>
-                          <Link href={`/u/${login}`} className="flex items-center gap-3">
-                            <Avatar
-                              alt="user profile avatar"
-                              isCircle
-                              size="sm"
-                              avatarURL={`https://www.github.com/${login}.png?size=300`}
-                            />
-                            <strong>{login}</strong>
-                          </Link>
-                          <Link href={`/feed/${id}`}>
-                            <span className="text-xs font-normal text-light-slate-11">
-                              {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
-                            </span>
-                          </Link>
-                        </ClientOnly>
-                      </div>
-                      <div className="w-full p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 lg:max-w-[33rem] sm:py-3 xs:py-2 rounded-xl">
-                        <ClientOnly>
-                          <ContributorHighlightCard
-                            title={title}
-                            desc={highlight}
-                            highlightLink={url}
-                            shipped_date={shipped_at}
-                            user={login}
-                            id={id}
-                            type={type}
-                            taggedRepos={tagged_repos}
-                            emojis={emojis}
-                          />
-                        </ClientOnly>
-                      </div>
-                    </div>
-                  ))
-                : null}
-
-              {meta.pageCount > 1 && (
-                <div className="flex items-center justify-between max-w-3xl mt-4 xl:pr-24">
-                  <div className="flex items-center w-max gap-x-4">
-                    <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
-                  </div>
-                  <Pagination
-                    pages={[]}
-                    totalPage={meta.pageCount}
-                    page={meta.page}
-                    pageSize={meta.itemCount}
-                    goToPage
-                    hasNextPage={meta.hasNextPage}
-                    hasPreviousPage={meta.hasPreviousPage}
-                    onPageChange={function (page: number): void {
-                      setQueryParams({ page: `${page}` });
-                      if (topRef.current) {
-                        topRef.current.scrollIntoView({
-                          behavior: "smooth",
-                        });
-                      }
-                    }}
-                  />
-                </div>
-              )}
             </div>
           </div>
-        </ListPageLayout>
-      </div>
+          <div className="w-full 2xl:max-w-[40rem] xl:max-w-[33rem] flex flex-col gap-10">
+            {isLoading ? (
+              <ClientOnly>
+                <div className="flex flex-col gap-3">
+                  <div className="flex gap-3">
+                    <SkeletonWrapper radius={100} width={40} height={40} /> <SkeletonWrapper width={200} height={40} />
+                  </div>
+                  <SkeletonWrapper height={300} />
+                </div>
+              </ClientOnly>
+            ) : null}
+
+            {!isLoading && data && data.length === 0 ? (
+              <DashContainer className="lg:max-w-[33rem]">
+                <p> No highlights published in the past {range} days</p>
+              </DashContainer>
+            ) : null}
+
+            {data && data.length > 0
+              ? data.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (
+                  <div key={id} className="flex flex-col gap-6 px-1 w-full">
+                    <div className="flex items-center gap-3">
+                      <ClientOnly>
+                        <Link href={`/u/${login}`} className="flex items-center gap-3">
+                          <Avatar
+                            alt="user profile avatar"
+                            isCircle
+                            size="sm"
+                            avatarURL={`https://www.github.com/${login}.png?size=300`}
+                          />
+                          <strong>{login}</strong>
+                        </Link>
+                        <Link href={`/feed/${id}`}>
+                          <span className="text-xs font-normal text-light-slate-11">
+                            {formatDistanceToNowStrict(new Date(created_at), { addSuffix: true })}
+                          </span>
+                        </Link>
+                      </ClientOnly>
+                    </div>
+                    <div className="w-full p-4 border bg-light-slate-1 md:px-6 lg:px-9 lg:py-5 lg:max-w-[33rem] sm:py-3 xs:py-2 rounded-xl">
+                      <ClientOnly>
+                        <ContributorHighlightCard
+                          title={title}
+                          desc={highlight}
+                          highlightLink={url}
+                          shipped_date={shipped_at}
+                          user={login}
+                          id={id}
+                          type={type}
+                          taggedRepos={tagged_repos}
+                          emojis={emojis}
+                        />
+                      </ClientOnly>
+                    </div>
+                  </div>
+                ))
+              : null}
+
+            {meta.pageCount > 1 && (
+              <div className="flex items-center justify-between max-w-3xl mt-4 xl:pr-24">
+                <div className="flex items-center w-max gap-x-4">
+                  <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+                </div>
+                <Pagination
+                  pages={[]}
+                  totalPage={meta.pageCount}
+                  page={meta.page}
+                  pageSize={meta.itemCount}
+                  goToPage
+                  hasNextPage={meta.hasNextPage}
+                  hasPreviousPage={meta.hasPreviousPage}
+                  onPageChange={function (page: number): void {
+                    setQueryParams({ page: `${page}` });
+                    if (topRef.current) {
+                      topRef.current.scrollIntoView({
+                        behavior: "smooth",
+                      });
+                    }
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </ListPageLayout>
       <InsightUpgradeModal
         workspaceId={workspaceId}
         variant="contributors"
