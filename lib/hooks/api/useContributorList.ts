@@ -34,7 +34,7 @@ export const useContributorsList = ({
   initialPage = 1,
   defaultLimit = 10,
   defaultRange = "30",
-  featureFlags = {},
+  showOSCR = false,
   username,
 }: {
   workspaceId: string | undefined;
@@ -46,7 +46,7 @@ export const useContributorsList = ({
   initialPage?: number;
   defaultLimit?: number;
   defaultRange?: string;
-  featureFlags?: Record<string, boolean>;
+  showOSCR?: boolean;
   username: string;
 }) => {
   const [page, setPage] = useState(initialPage);
@@ -64,8 +64,7 @@ export const useContributorsList = ({
     }
   );
 
-  const oscrEnabled = featureFlags ? featureFlags["oscr-rating"] : false;
-  const contributors = convertToContributors({ rawContributors: data?.data, username, oscrEnabled });
+  const contributors = convertToContributors({ rawContributors: data?.data, username, oscrEnabled: showOSCR });
 
   return {
     setPage,
