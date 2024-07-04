@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.42.0-beta.2](https://github.com/open-sauced/app/compare/v2.42.0-beta.1...v2.42.0-beta.2) (2024-07-04)
+
+
+### 🐛 Bug Fixes
+
+* lottery factor copy ([#3682](https://github.com/open-sauced/app/issues/3682)) ([baac008](https://github.com/open-sauced/app/commit/baac00867e9f4ce2a8d0126656df3250c092c40a))
+
 ## [2.42.0-beta.1](https://github.com/open-sauced/app/compare/v2.41.1-beta.2...v2.42.0-beta.1) (2024-07-03)
 
 
