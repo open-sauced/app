@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.42.0-beta.1](https://github.com/open-sauced/app/compare/v2.41.1-beta.2...v2.42.0-beta.1) (2024-07-03)
+
+
+### 🍕 Features
+
+* add repo filtering to contributions tables on contributor profile ([#3580](https://github.com/open-sauced/app/issues/3580)) ([a2e49ef](https://github.com/open-sauced/app/commit/a2e49ef2f18cfd8347af1676631b10eb0542adad))
+
 ## [2.41.1-beta.2](https://github.com/open-sauced/app/compare/v2.41.1-beta.1...v2.41.1-beta.2) (2024-07-03)
 
 
