@@ -57,7 +57,7 @@ export const TrackedReposTable = ({
 }: TrackedReposTableProps) => {
   return (
     <div className="grid gap-4">
-      <div className="flex justify-between flex-wrap">
+      <div className="flex justify-between flex-wrap gap-2">
         <div>
           <h2 className="flex gap-1 font-medium mb-2 text-md">Repositories Tracked</h2>
           <p className="text-sm text-slate-600">Select the organizations or repositories you want to track</p>
