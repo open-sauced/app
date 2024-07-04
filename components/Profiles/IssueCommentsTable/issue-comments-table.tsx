@@ -15,6 +15,7 @@ interface IssueCommentsTableProps {
   repos?: string[];
   limit?: number;
   range?: number;
+  repoFilter?: string;
 }
 
 const EmptyState = ({ range }: { range: number }) => {
@@ -38,24 +39,33 @@ const EmptyState = ({ range }: { range: number }) => {
   );
 };
 
-const IssueCommentsTable = ({ contributor, repos, limit, range = 30 }: IssueCommentsTableProps) => {
+const IssueCommentsTable = ({ contributor, repos, repoFilter, limit, range = 30 }: IssueCommentsTableProps) => {
   const { data: issueComments, isLoading: issueCommentsLoading } = useContributorIssueComments({
     contributor,
     repos,
-    limit,
+    limit: 50,
     range,
   });
+
+  const issueCommentsFiltered = issueComments
+    .filter((ic) => {
+      if (repoFilter) {
+        return ic.repo_name === repoFilter;
+      }
+      return true;
+    })
+    .slice(0, limit);
 
   return (
     <>
       {issueCommentsLoading ? (
         <Skeleton height={24} count={3} className="mt-4 mb-2" />
-      ) : !issueCommentsLoading && issueComments.length === 0 ? (
+      ) : !issueCommentsLoading && issueCommentsFiltered.length === 0 ? (
         <div className="grip gap-4">
           <EmptyState range={range} />
         </div>
       ) : (
-        <div className="flex flex-col gap-2.5">
+        <div className="w-full flex flex-col gap-2.5 max-w-lg md:max-w-full">
           <div className="flex gap-2 items-center bg-light-slate-3 rounded-md px-2 py-1 ">
             <div className="w-full">
               <Text className=" ">Latest Issue Comments</Text>
@@ -68,8 +78,8 @@ const IssueCommentsTable = ({ contributor, repos, limit, range = 30 }: IssueComm
               </div>
             </IconContext.Provider>
           </div>
-          <div className="flex flex-col w-full">
-            {issueComments.map((issueComment) => {
+          <div className="flex flex-col">
+            {issueCommentsFiltered.map((issueComment) => {
               return (
                 <div className="flex gap-2 items-center px-2 py-1" key={issueComment.event_id}>
                   <div>
