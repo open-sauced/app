@@ -25,10 +25,7 @@ export function Chatbox({
     return (
       <div className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
         <ChatAvatar author={userId ? message.author : "Guest"} userId={userId} />
-        <Card
-          className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline"
-          focusable
-        >
+        <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl" focusable>
           <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
           <div aria-label="chat message">
             <Markdown
@@ -53,7 +50,7 @@ export function Chatbox({
                   return <a {...props} />;
                 },
               }}
-              className="prose break-words"
+              className="star-search-chat-box prose break-words"
             >
               {message.content}
             </Markdown>
