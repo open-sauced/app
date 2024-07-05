@@ -590,102 +590,104 @@ export function StarSearchChat({
                       );
                     }
                   })}
+                  <div className={clsx("text-slate-600 flex gap-4 items-center justify-end", isRunning && "invisible")}>
+                    <button
+                      type="button"
+                      className="flex items-center gap-2 hover:text-sauced-orange"
+                      onClick={clearChatHistory}
+                    >
+                      Clear chat history
+                      <TrashIcon width={18} height={18} />
+                    </button>
+                    <span className="flex gap-1">
+                      <button
+                        type="button"
+                        className="flex items-center gap-2 hover:text-sauced-orange"
+                        onClick={() => {
+                          registerFeedback("positive");
+                        }}
+                      >
+                        <span className="sr-only">Thumbs up</span>
+                        <ThumbsupIcon size={16} />
+                      </button>
+                      <button
+                        type="button"
+                        className="flex items-center gap-2 hover:text-sauced-orange"
+                        onClick={() => {
+                          registerFeedback("negative");
+                        }}
+                      >
+                        <span className="sr-only">Thumbs down</span>
+                        <ThumbsdownIcon size={16} />
+                      </button>
+                      {sharingEnabled ? (
+                        <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
+                          <ShareChatMenu
+                            createLink={
+                              threadHistory?.is_publicly_viewable
+                                ? undefined
+                                : async () => {
+                                    setShareLinkError(false);
+
+                                    try {
+                                      parseSchema(UuidSchema, chatId);
+                                    } catch (error) {
+                                      captureException(
+                                        new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, {
+                                          cause: error,
+                                        })
+                                      );
+                                      toast({
+                                        description: "Failed to create a share link",
+                                        variant: "danger",
+                                      });
+                                      return;
+                                    }
+
+                                    const response = await fetch(
+                                      `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
+                                      {
+                                        body: "",
+                                        method: "POST",
+                                        headers: {
+                                          Authorization: `Bearer ${bearerToken}`,
+                                        },
+                                      }
+                                    );
+
+                                    if (response.status == 201) {
+                                      toast({
+                                        description: "Share link created",
+                                        variant: "success",
+                                      });
+                                      // Causes a re-fetch of the thread history so the hook reruns
+                                      // and gets the public_link and is_publicly_viewable property updates
+                                      mutateThreadHistory(undefined, true);
+                                    } else {
+                                      setShareLinkError(true);
+                                      toast({
+                                        description: "Failed to create a share link",
+                                        variant: "danger",
+                                      });
+                                    }
+                                  }
+                            }
+                            shareUrl={threadHistory?.public_link}
+                            copyLinkHandler={async (url: string) => {
+                              await writeToClipboard(url);
+                              toast({
+                                description: "Link copied to clipboard",
+                                variant: "success",
+                              });
+                            }}
+                            error={shareLinkError}
+                          />
+                        </div>
+                      ) : null}
+                    </span>
+                  </div>
                 </section>
               </ScrollArea>
-              <div className={clsx("text-slate-600 flex gap-4 items-center self-end", isRunning && "invisible")}>
-                <button
-                  type="button"
-                  className="flex items-center gap-2 hover:text-sauced-orange"
-                  onClick={clearChatHistory}
-                >
-                  Clear chat history
-                  <TrashIcon width={18} height={18} />
-                </button>
-                <span className="flex gap-1">
-                  <button
-                    type="button"
-                    className="flex items-center gap-2 hover:text-sauced-orange"
-                    onClick={() => {
-                      registerFeedback("positive");
-                    }}
-                  >
-                    <span className="sr-only">Thumbs up</span>
-                    <ThumbsupIcon size={16} />
-                  </button>
-                  <button
-                    type="button"
-                    className="flex items-center gap-2 hover:text-sauced-orange"
-                    onClick={() => {
-                      registerFeedback("negative");
-                    }}
-                  >
-                    <span className="sr-only">Thumbs down</span>
-                    <ThumbsdownIcon size={16} />
-                  </button>
-                  {sharingEnabled ? (
-                    <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
-                      <ShareChatMenu
-                        createLink={
-                          threadHistory?.is_publicly_viewable
-                            ? undefined
-                            : async () => {
-                                setShareLinkError(false);
-
-                                try {
-                                  parseSchema(UuidSchema, chatId);
-                                } catch (error) {
-                                  captureException(
-                                    new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error })
-                                  );
-                                  toast({
-                                    description: "Failed to create a share link",
-                                    variant: "danger",
-                                  });
-                                  return;
-                                }
-
-                                const response = await fetch(
-                                  `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
-                                  {
-                                    body: "",
-                                    method: "POST",
-                                    headers: {
-                                      Authorization: `Bearer ${bearerToken}`,
-                                    },
-                                  }
-                                );
-
-                                if (response.status == 201) {
-                                  toast({
-                                    description: "Share link created",
-                                    variant: "success",
-                                  });
-                                  // Causes a re-fetch of the thread history so the hook reruns
-                                  // and gets the public_link and is_publicly_viewable property updates
-                                  mutateThreadHistory(undefined, true);
-                                } else {
-                                  setShareLinkError(true);
-                                  toast({
-                                    description: "Failed to create a share link",
-                                    variant: "danger",
-                                  });
-                                }
-                              }
-                        }
-                        shareUrl={threadHistory?.public_link}
-                        copyLinkHandler={async (url: string) => {
-                          await writeToClipboard(url);
-                          toast({
-                            description: "Link copied to clipboard",
-                            variant: "success",
-                          });
-                        }}
-                        error={shareLinkError}
-                      />
-                    </div>
-                  ) : null}
-                </span>
-              </div>
             </div>
           </>
         );
