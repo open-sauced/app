@@ -24,9 +24,9 @@ export function Chatbox({
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     return (
-      <div className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
+      <div className="grid items-start gap-2 my-4 md:flex md:justify-center min-w-[398px] max-w-[398px] w-[398px] md:min-w-[685px] md:max-w-[685px] md:w-[685px]">
         <ChatAvatar author={userId ? message.author : "Guest"} userId={userId} />
-        <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl" focusable>
+        <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full" focusable>
           <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
           <div aria-label="chat message">
             <Markdown
