@@ -144,12 +144,14 @@ export default function LotteryFactorChart({
               <FaRegHandPeace />
               YOLO Coders
             </div>
-            <p className="hidden xl:block">Pushing commits directly to main</p>
+            <p className="block lg:hidden 2xl:block">
+              Pushing commits <span className="xs:hidden sm:inline-block">directly</span> to main
+            </p>
           </div>
 
-          <div className="flex gap-2 items-center ml-auto mr-3">
-            <p>See more</p>
-            <FaArrowRight />
+          <div className="hidden xs:flex gap-2 items-center ml-auto mr-3">
+            <p className="hidden sm:inline-block">See more</p>
+            <FaArrowRight className="hidden xs:inline-block" />
           </div>
         </button>
       )}
