@@ -33,40 +33,37 @@ export function Chatbox({
               remarkPlugins={[remarkGfm]}
               components={{
                 a(props) {
-                  switch (true) {
-                    case typeof props.children === "string" && props.children.startsWith("@"): {
-                      return (
-                        <span className="inline-flex items-baseline self-center gap-1">
-                          <span className="self-center">
-                            <AvatarHoverCard
-                              contributor={props.children.replace("@", "")}
-                              repositories={[]}
-                              size="xsmall"
-                            />
-                          </span>
-                          <a {...props} />
+                  if (typeof props.children === "string" && props.children.startsWith("@")) {
+                    return (
+                      <span className="inline-flex items-baseline self-center gap-1">
+                        <span className="self-center">
+                          <AvatarHoverCard
+                            contributor={props.children.replace("@", "")}
+                            repositories={[]}
+                            size="xsmall"
+                          />
                         </span>
-                      );
-                    }
-
-                    // a repo page URL
-                    case props.href && /s\/[^\/]+\/[^\/]+/.test(new URL(props.href).pathname): {
-                      return (
-                        <a
-                          {...props}
-                          className={clsx(props.className, "relative inline-flex items-baseline self-center gap-1")}
-                        >
-                          <span className="absolute" style={{ top: 6 }}>
-                            <Avatar contributor={new URL(props.href).pathname.split("/")[2]} size="xxsmall" />
-                          </span>
-                          <span className="ml-5 ">{props.children}</span>
-                        </a>
-                      );
-                    }
-
-                    default:
-                      return <a {...props} />;
+                        <a {...props} />
+                      </span>
+                    );
                   }
+
+                  // a repo page URL
+                  if (props.href && /s\/[^\/]+\/[^\/]+/.test(new URL(props.href).pathname)) {
+                    return (
+                      <a
+                        {...props}
+                        className={clsx(props.className, "relative inline-flex items-baseline self-center gap-1")}
+                      >
+                        <span className="absolute" style={{ top: 6 }}>
+                          <Avatar contributor={new URL(props.href).pathname.split("/")[2]} size="xxsmall" />
+                        </span>
+                        <span className="ml-5 ">{props.children}</span>
+                      </a>
+                    );
+                  }
+
+                  return <a {...props} />;
                 },
               }}
               className="star-search-chat-box prose break-words"
