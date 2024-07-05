@@ -14,7 +14,6 @@ import {
   useStarSearchFeedback,
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
-import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
@@ -531,10 +530,13 @@ export function StarSearchChat({
   const renderState = () => {
     switch (starSearchState) {
       case "initial":
-        const initialHeight = isMobile ? "h-[calc(100vh-270px)]" : "h-[calc(100vh-240px)]";
-
         return (
-          <div className={`${initialHeight} md:h-fit grid place-content-center text-center items-center gap-4`}>
+          <div
+            className={clsx(
+              isMobile && "h-[calc(100vh-270px)]",
+              "md:h-fit grid place-content-center text-center items-center gap-4 overflow-hidden"
+            )}
+          >
             {!(sharedChatId || sharedPrompt) ? (
               <>
                 <Header tagline={tagline} />
@@ -556,138 +558,127 @@ export function StarSearchChat({
         );
 
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
-        let heightToRemove = 330;
-
-        if (!isRunning && !isMobile && ranOnce && showSuggestions) {
-          heightToRemove = 400;
-        }
 
         return (
           <>
-            <div className="flex flex-col w-full max-w-xl mx-auto mb-4 lg:max-w-5xl lg:px-8">
-              <ScrollArea
-                className="flex grow"
-                asChild={true}
-                style={{
-                  maxHeight: `calc(100dvh - ${heightToRemove}px)`,
-                }}
-              >
-                <section role="feed" aria-label="StarSearch conversation" aria-busy={isRunning} aria-setsize={-1}>
-                  {chatMessagesToProcess.map((message, i, messages) => {
-                    if (loaderIndex === i && isRunning && messages.length - 1 === i) {
-                      return (
-                        <Fragment key={i}>
-                          <Chatbox userId={userId} message={message} componentRegistry={componentRegistry} />
-                          <div className="flex items-center gap-2 my-4 w-max">
-                            <ChatAvatar author="StarSearch" userId={userId} />
-                            <StarSearchLoader />
-                          </div>
-                        </Fragment>
-                      );
-                    } else {
-                      return (
-                        <Chatbox key={i} userId={userId} message={message} componentRegistry={componentRegistry} />
-                      );
-                    }
-                  })}
-                  <div className={clsx("text-slate-600 flex gap-4 items-center justify-end", isRunning && "invisible")}>
-                    <button
-                      type="button"
-                      className="flex items-center gap-2 hover:text-sauced-orange"
-                      onClick={clearChatHistory}
-                    >
-                      Clear chat history
-                      <TrashIcon width={18} height={18} />
-                    </button>
-                    <span className="flex gap-1">
-                      <button
-                        type="button"
-                        className="flex items-center gap-2 hover:text-sauced-orange"
-                        onClick={() => {
-                          registerFeedback("positive");
-                        }}
-                      >
-                        <span className="sr-only">Thumbs up</span>
-                        <ThumbsupIcon size={16} />
-                      </button>
-                      <button
-                        type="button"
-                        className="flex items-center gap-2 hover:text-sauced-orange"
-                        onClick={() => {
-                          registerFeedback("negative");
-                        }}
-                      >
-                        <span className="sr-only">Thumbs down</span>
-                        <ThumbsdownIcon size={16} />
-                      </button>
-                      {sharingEnabled ? (
-                        <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
-                          <ShareChatMenu
-                            createLink={
-                              threadHistory?.is_publicly_viewable
-                                ? undefined
-                                : async () => {
-                                    setShareLinkError(false);
+            <div
+              role="feed"
+              aria-label="StarSearch conversation"
+              aria-busy={isRunning}
+              aria-setsize={-1}
+              className="w-full max-w-xl mx-auto mb-4 lg:max-w-5xl pb-[175px] md:pb-[250px]"
+            >
+              {chatMessagesToProcess.map((message, i, messages) => {
+                if (loaderIndex === i && isRunning && messages.length - 1 === i) {
+                  return (
+                    <Fragment key={i}>
+                      <Chatbox userId={userId} message={message} componentRegistry={componentRegistry} />
+                      <div className="flex items-center gap-2 my-4 w-max">
+                        <ChatAvatar author="StarSearch" userId={userId} />
+                        <StarSearchLoader />
+                      </div>
+                    </Fragment>
+                  );
+                } else {
+                  return <Chatbox key={i} userId={userId} message={message} componentRegistry={componentRegistry} />;
+                }
+              })}
+              <div className={clsx("text-slate-600 flex gap-4 items-center justify-end", isRunning && "invisible")}>
+                <button
+                  type="button"
+                  className="flex items-center gap-2 hover:text-sauced-orange"
+                  onClick={clearChatHistory}
+                >
+                  Clear chat history
+                  <TrashIcon width={18} height={18} />
+                </button>
+                <span className="flex gap-1">
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 hover:text-sauced-orange"
+                    onClick={() => {
+                      registerFeedback("positive");
+                    }}
+                  >
+                    <span className="sr-only">Thumbs up</span>
+                    <ThumbsupIcon size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 hover:text-sauced-orange"
+                    onClick={() => {
+                      registerFeedback("negative");
+                    }}
+                  >
+                    <span className="sr-only">Thumbs down</span>
+                    <ThumbsdownIcon size={16} />
+                  </button>
+                  {sharingEnabled ? (
+                    <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
+                      <ShareChatMenu
+                        createLink={
+                          threadHistory?.is_publicly_viewable
+                            ? undefined
+                            : async () => {
+                                setShareLinkError(false);
 
-                                    try {
-                                      parseSchema(UuidSchema, chatId);
-                                    } catch (error) {
-                                      captureException(
-                                        new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, {
-                                          cause: error,
-                                        })
-                                      );
-                                      toast({
-                                        description: "Failed to create a share link",
-                                        variant: "danger",
-                                      });
-                                      return;
-                                    }
+                                try {
+                                  parseSchema(UuidSchema, chatId);
+                                } catch (error) {
+                                  captureException(
+                                    new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, {
+                                      cause: error,
+                                    })
+                                  );
+                                  toast({
+                                    description: "Failed to create a share link",
+                                    variant: "danger",
+                                  });
+                                  return;
+                                }
 
-                                    const response = await fetch(
-                                      `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
-                                      {
-                                        body: "",
-                                        method: "POST",
-                                        headers: {
-                                          Authorization: `Bearer ${bearerToken}`,
-                                        },
-                                      }
-                                    );
-
-                                    if (response.status == 201) {
-                                      toast({
-                                        description: "Share link created",
-                                        variant: "success",
-                                      });
-                                      // Causes a re-fetch of the thread history so the hook reruns
-                                      // and gets the public_link and is_publicly_viewable property updates
-                                      mutateThreadHistory(undefined, true);
-                                    } else {
-                                      setShareLinkError(true);
-                                      toast({
-                                        description: "Failed to create a share link",
-                                        variant: "danger",
-                                      });
-                                    }
+                                const response = await fetch(
+                                  `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
+                                  {
+                                    body: "",
+                                    method: "POST",
+                                    headers: {
+                                      Authorization: `Bearer ${bearerToken}`,
+                                    },
                                   }
-                            }
-                            shareUrl={threadHistory?.public_link}
-                            copyLinkHandler={async (url: string) => {
-                              await writeToClipboard(url);
-                              toast({
-                                description: "Link copied to clipboard",
-                                variant: "success",
-                              });
-                            }}
-                            error={shareLinkError}
-                          />
-                        </div>
-                      ) : null}
-                    </span>
-                  </div>
-                </section>
-              </ScrollArea>
+                                );
+
+                                if (response.status == 201) {
+                                  toast({
+                                    description: "Share link created",
+                                    variant: "success",
+                                  });
+                                  // Causes a re-fetch of the thread history so the hook reruns
+                                  // and gets the public_link and is_publicly_viewable property updates
+                                  mutateThreadHistory(undefined, true);
+                                } else {
+                                  setShareLinkError(true);
+                                  toast({
+                                    description: "Failed to create a share link",
+                                    variant: "danger",
+                                  });
+                                }
+                              }
+                        }
+                        shareUrl={threadHistory?.public_link}
+                        copyLinkHandler={async (url: string) => {
+                          await writeToClipboard(url);
+                          toast({
+                            description: "Link copied to clipboard",
+                            variant: "success",
+                          });
+                        }}
+                        error={shareLinkError}
+                      />
+                    </div>
+                  ) : null}
+                </span>
+              </div>
             </div>
           </>
         );
@@ -696,7 +687,7 @@ export function StarSearchChat({
 
   return (
     <>
-      <div style={{ height: "calc(100dvh - 5rem)" }}>
+      <div>
         {embedded ? (
           <StarSearchCompactHeader
             view={view}
@@ -715,108 +706,109 @@ export function StarSearchChat({
           data-is-embedded={embedded}
         >
           {renderState()}
-          <div className="sticky w-full bottom-2 md:bottom-4">
-            {!isRunning &&
-              (isMobile ? (
-                <Drawer
-                  title="Choose a suggestion"
-                  description="You can customize the prompt after selection"
-                  showCloseButton
-                  trigger={
-                    <button
-                      onClick={() => setShowSuggestions(!showSuggestions)}
-                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                    >
-                      Need inspiration?
-                      <BsArrowUpShort className="text-2xl" />
-                    </button>
-                  }
-                >
-                  <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
-                </Drawer>
-              ) : (
-                <>
-                  {!showSuggestions && ranOnce && (
-                    <button
-                      onClick={() => setShowSuggestions(!showSuggestions)}
-                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                    >
-                      Need inspiration?
-                      <BsArrowUpShort className="text-2xl" />
-                    </button>
-                  )}
-                </>
-              ))}
-            {!isMobile && showSuggestions && (
-              <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
-                <button
-                  onClick={() => {
-                    setShowSuggestions(false);
-                    inputRef.current?.focus();
-                  }}
-                  className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
-                >
-                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
-                </button>
-                <SuggestedPrompts
-                  isHorizontal
-                  addPromptInput={(prompt) => {
-                    addPromptInput(prompt);
-                    setShowSuggestions(false);
-                  }}
-                  suggestions={suggestions}
-                />
-              </div>
-            )}
-            {sharedChatId ? (
-              <div className="flex items-center justify-center gap-2 p-2">
-                <p>This is a shared conversation and cannot be added to.</p>
-                <Button variant="primary" onClick={clearChatHistory}>
-                  Start a Conversation
-                </Button>
-              </div>
-            ) : null}
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                const form = event.currentTarget;
-                const formData = new FormData(form);
-                submitPrompt(formData.get("prompt") as string);
-                form.reset();
-              }}
-              className="bg-white flex justify-between mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
-            >
-              <input
-                required
-                type="text"
-                name="prompt"
-                ref={inputRef}
-                disabled={isRunning || !!sharedChatId}
-                placeholder="Ask a question"
-                className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
-                onFocus={() => {
-                  if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
-                    setLoginModalOpen(true);
-                  }
-                }}
-              />
-              <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
-                <span className="sr-only">Submit your question to StarSearch</span>
-                <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
-              </button>
-            </form>
-            <p className="py-2 text-sm text-center text-slate-400">
-              {isMobile ? (
-                <>StarSearch may generate incorrect responses</>
-              ) : (
-                <>StarSearch may generate incorrect responses, double check important information</>
-              )}
-            </p>
-          </div>
-          {embedded ? null : (
-            <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
-          )}
         </div>
+        {embedded ? null : (
+          <div className="fixed inset-x-0 top-20 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
+        )}
+      </div>
+      <div className="fixed w-full bottom-0 pb-4 bg-inherit">
+        <div className="h-4 bg-gradient-to-t from-inherit to-transparent" />
+        {!isRunning &&
+          (isMobile ? (
+            <Drawer
+              title="Choose a suggestion"
+              description="You can customize the prompt after selection"
+              showCloseButton
+              trigger={
+                <button
+                  onClick={() => setShowSuggestions(!showSuggestions)}
+                  className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                >
+                  Need inspiration?
+                  <BsArrowUpShort className="text-2xl" />
+                </button>
+              }
+            >
+              <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
+            </Drawer>
+          ) : (
+            <>
+              {!showSuggestions && ranOnce && (
+                <button
+                  onClick={() => setShowSuggestions(!showSuggestions)}
+                  className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                >
+                  Need inspiration?
+                  <BsArrowUpShort className="text-2xl" />
+                </button>
+              )}
+            </>
+          ))}
+        {!isMobile && showSuggestions && (
+          <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
+            <button
+              onClick={() => {
+                setShowSuggestions(false);
+                inputRef.current?.focus();
+              }}
+              className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
+            >
+              <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
+            </button>
+            <SuggestedPrompts
+              isHorizontal
+              addPromptInput={(prompt) => {
+                addPromptInput(prompt);
+                setShowSuggestions(false);
+              }}
+              suggestions={suggestions}
+            />
+          </div>
+        )}
+        {sharedChatId ? (
+          <div className="flex items-center justify-center gap-2 p-2">
+            <p>This is a shared conversation and cannot be added to.</p>
+            <Button variant="primary" onClick={clearChatHistory}>
+              Start a Conversation
+            </Button>
+          </div>
+        ) : null}
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const formData = new FormData(form);
+            submitPrompt(formData.get("prompt") as string);
+            form.reset();
+          }}
+          className="bg-white flex justify-between mx-1 md:mx-4 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
+        >
+          <input
+            required
+            type="text"
+            name="prompt"
+            ref={inputRef}
+            disabled={isRunning || !!sharedChatId}
+            placeholder="Ask a question"
+            className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
+            onFocus={() => {
+              if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
+                setLoginModalOpen(true);
+              }
+            }}
+          />
+          <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
+            <span className="sr-only">Submit your question to StarSearch</span>
+            <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
+          </button>
+        </form>
+        <p className="py-2 text-sm text-center text-slate-400">
+          {isMobile ? (
+            <>StarSearch may generate incorrect responses</>
+          ) : (
+            <>StarSearch may generate incorrect responses, double check important information</>
+          )}
+        </p>
       </div>
       <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
     </>
@@ -825,7 +817,7 @@ export function StarSearchChat({
 
 function Header({ tagline }: { tagline: string }) {
   return (
-    <header className="flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
+    <header className="mt-4 flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
       <div className="flex items-center gap-2">
         <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
         <h1 className="text-3xl font-bold text-transparent lg:text-4xl bg-clip-text bg-gradient-to-r from-sauced-orange to-amber-400">
