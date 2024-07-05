@@ -701,15 +701,15 @@ export function StarSearchChat({
             showCloseButton={!isMobile}
           />
         ) : null}
+        {embedded ? null : (
+          <div className="fixed inset-x-0 top-20 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
+        )}
         <div
-          className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50"
+          className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow"
           data-is-embedded={embedded}
         >
           {renderState()}
         </div>
-        {embedded ? null : (
-          <div className="fixed inset-x-0 top-20 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
-        )}
       </div>
       <div className="fixed w-full bottom-0 h-fit">
         <div className="h-8 bg-gradient-to-t from-light-slate-2 to-transparent" />
