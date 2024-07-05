@@ -782,7 +782,7 @@ export function StarSearchChat({
               submitPrompt(formData.get("prompt") as string);
               form.reset();
             }}
-            className="bg-white flex justify-between mx-1 md:mx-4 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
+            className="bg-white flex justify-between mx-1 md:mx-4 lg:mx-auto lg:max-w-3xl p-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
           >
             <input
               required
