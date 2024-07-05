@@ -109,7 +109,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
           <section className="flex justify-between">
             <p className="flex gap-2 items-center px-1 text-slate-500">
               <span className={`w-2 h-2 rounded-full bg-[#60A5FA] inline-block`}></span>
-              New:
+              Outside:
             </p>
             <p className="font-medium pl-2">{payload[2]?.value}</p>
           </section>
