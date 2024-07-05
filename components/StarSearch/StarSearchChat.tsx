@@ -566,7 +566,7 @@ export function StarSearchChat({
               aria-label="StarSearch conversation"
               aria-busy={isRunning}
               aria-setsize={-1}
-              className="w-full max-w-xl mx-auto mb-4 lg:max-w-5xl pb-[175px] md:pb-[250px]"
+              className="w-full max-w-xl mx-auto lg:max-w-5xl pb-[210px] md:pb-[285px]"
             >
               {chatMessagesToProcess.map((message, i, messages) => {
                 if (loaderIndex === i && isRunning && messages.length - 1 === i) {
@@ -711,104 +711,106 @@ export function StarSearchChat({
           <div className="fixed inset-x-0 top-20 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
         )}
       </div>
-      <div className="fixed w-full bottom-0 pb-4 bg-inherit">
-        <div className="h-4 bg-gradient-to-t from-inherit to-transparent" />
-        {!isRunning &&
-          (isMobile ? (
-            <Drawer
-              title="Choose a suggestion"
-              description="You can customize the prompt after selection"
-              showCloseButton
-              trigger={
-                <button
-                  onClick={() => setShowSuggestions(!showSuggestions)}
-                  className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                >
-                  Need inspiration?
-                  <BsArrowUpShort className="text-2xl" />
-                </button>
-              }
-            >
-              <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
-            </Drawer>
-          ) : (
-            <>
-              {!showSuggestions && ranOnce && (
-                <button
-                  onClick={() => setShowSuggestions(!showSuggestions)}
-                  className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                >
-                  Need inspiration?
-                  <BsArrowUpShort className="text-2xl" />
-                </button>
-              )}
-            </>
-          ))}
-        {!isMobile && showSuggestions && (
-          <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
-            <button
-              onClick={() => {
-                setShowSuggestions(false);
-                inputRef.current?.focus();
-              }}
-              className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
-            >
-              <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
-            </button>
-            <SuggestedPrompts
-              isHorizontal
-              addPromptInput={(prompt) => {
-                addPromptInput(prompt);
-                setShowSuggestions(false);
-              }}
-              suggestions={suggestions}
-            />
-          </div>
-        )}
-        {sharedChatId ? (
-          <div className="flex items-center justify-center gap-2 p-2">
-            <p>This is a shared conversation and cannot be added to.</p>
-            <Button variant="primary" onClick={clearChatHistory}>
-              Start a Conversation
-            </Button>
-          </div>
-        ) : null}
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            const form = event.currentTarget;
-            const formData = new FormData(form);
-            submitPrompt(formData.get("prompt") as string);
-            form.reset();
-          }}
-          className="bg-white flex justify-between mx-1 md:mx-4 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
-        >
-          <input
-            required
-            type="text"
-            name="prompt"
-            ref={inputRef}
-            disabled={isRunning || !!sharedChatId}
-            placeholder="Ask a question"
-            className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
-            onFocus={() => {
-              if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
-                setLoginModalOpen(true);
-              }
-            }}
-          />
-          <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
-            <span className="sr-only">Submit your question to StarSearch</span>
-            <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
-          </button>
-        </form>
-        <p className="py-2 text-sm text-center text-slate-400">
-          {isMobile ? (
-            <>StarSearch may generate incorrect responses</>
-          ) : (
-            <>StarSearch may generate incorrect responses, double check important information</>
+      <div className="fixed w-full bottom-0 h-fit">
+        <div className="h-8 bg-gradient-to-t from-light-slate-2 to-transparent" />
+        <div className="bg-light-slate-2">
+          {!isRunning &&
+            (isMobile ? (
+              <Drawer
+                title="Choose a suggestion"
+                description="You can customize the prompt after selection"
+                showCloseButton
+                trigger={
+                  <button
+                    onClick={() => setShowSuggestions(!showSuggestions)}
+                    className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                  >
+                    Need inspiration?
+                    <BsArrowUpShort className="text-2xl" />
+                  </button>
+                }
+              >
+                <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
+              </Drawer>
+            ) : (
+              <>
+                {!showSuggestions && ranOnce && (
+                  <button
+                    onClick={() => setShowSuggestions(!showSuggestions)}
+                    className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                  >
+                    Need inspiration?
+                    <BsArrowUpShort className="text-2xl" />
+                  </button>
+                )}
+              </>
+            ))}
+          {!isMobile && showSuggestions && (
+            <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
+              <button
+                onClick={() => {
+                  setShowSuggestions(false);
+                  inputRef.current?.focus();
+                }}
+                className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
+              >
+                <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
+              </button>
+              <SuggestedPrompts
+                isHorizontal
+                addPromptInput={(prompt) => {
+                  addPromptInput(prompt);
+                  setShowSuggestions(false);
+                }}
+                suggestions={suggestions}
+              />
+            </div>
           )}
-        </p>
+          {sharedChatId ? (
+            <div className="flex items-center justify-center gap-2 p-2">
+              <p>This is a shared conversation and cannot be added to.</p>
+              <Button variant="primary" onClick={clearChatHistory}>
+                Start a Conversation
+              </Button>
+            </div>
+          ) : null}
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              const form = event.currentTarget;
+              const formData = new FormData(form);
+              submitPrompt(formData.get("prompt") as string);
+              form.reset();
+            }}
+            className="bg-white flex justify-between mx-1 md:mx-4 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
+          >
+            <input
+              required
+              type="text"
+              name="prompt"
+              ref={inputRef}
+              disabled={isRunning || !!sharedChatId}
+              placeholder="Ask a question"
+              className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
+              onFocus={() => {
+                if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
+                  setLoginModalOpen(true);
+                }
+              }}
+            />
+            <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
+              <span className="sr-only">Submit your question to StarSearch</span>
+              <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
+            </button>
+          </form>
+          <p className="py-2 text-sm text-center text-slate-400">
+            {isMobile ? (
+              <>StarSearch may generate incorrect responses</>
+            ) : (
+              <>StarSearch may generate incorrect responses, double check important information</>
+            )}
+          </p>
+        </div>
       </div>
       <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
     </>
