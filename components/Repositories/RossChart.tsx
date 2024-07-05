@@ -17,6 +17,9 @@ type RossChartProps = {
 
 export default function RossChart({ stats, rangedTotal, isLoading, error, range, className }: RossChartProps) {
   const rangedAverage = useMemo(() => (rangedTotal / range).toPrecision(2), [rangedTotal, range]);
+  const outsideTotal = useMemo(() => {
+    return stats?.contributors.reduce((prev, curr) => (prev += curr.new), 0);
+  }, [stats]);
 
   const weeklyData = useMemo(() => {
     const result = stats?.contributors.reverse().map((week) => {
@@ -59,6 +62,10 @@ export default function RossChart({ stats, rangedTotal, isLoading, error, range,
               <div>
                 <h3 className="text-xs xl:text-sm text-slate-500">Average per day</h3>
                 <p className="font-semibold text-xl xl:text-3xl">{humanizeNumber(rangedAverage)}</p>
+              </div>
+              <div>
+                <h3 className="text-xs xl:text-sm text-slate-500">Outside Contributors</h3>
+                <p className="font-semibold text-xl xl:text-3xl">{outsideTotal}</p>
               </div>
             </aside>
           </>
