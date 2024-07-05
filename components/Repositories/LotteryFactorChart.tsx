@@ -110,7 +110,7 @@ export default function LotteryFactorChart({
           <div className="flex gap-2 items-center">
             <HiOutlineTicket className="text-xl" />
             <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Lottery Factor</h3>
-            <InfoTooltip information="Identifies project risk due to dependency on top contributors. Indicates project vulnerability if 2 or fewer do >50% of the work." />
+            <InfoTooltip information="Identifies reliance on top contributors. Indicates potential project vulnerability if 2 or fewer create >50% of the pull requests." />
           </div>
           {error ? null : isLoading || !lotteryFactor ? (
             <SkeletonWrapper width={42} height={24} radius={999} />
@@ -167,12 +167,12 @@ export default function LotteryFactorChart({
                 {summary.count > 1 ? <span className="font-semibold text-black">{`${summary.count} `}</span> : null}
                 contributor{summary.count > 1 && "s"} of this repository {summary.count > 1 ? "have" : "has"} made{" "}
                 <span className="font-semibold text-black">{summary.percentage}% </span>
-                of all commits in the past <span className="font-semibold text-black">{range}</span> days.
+                of all pull requests in the past <span className="font-semibold text-black">{range}</span> days.
               </>
             ) : (
               <>
                 {error ? (
-                  <>This repository doesn&apos;t have enough commit data to calculate the Lottery Factor.</>
+                  <>This repository doesn&apos;t have enough pull request data to calculate the Lottery Factor.</>
                 ) : (
                   <>
                     No one has contributed to the repository in the past{" "}
@@ -231,7 +231,7 @@ export default function LotteryFactorChart({
           <thead>
             <tr>
               <th className="font-normal text-start">Contributor</th>
-              <th className="font-normal text-end w-fit">Commits</th>
+              <th className="font-normal text-end w-fit">Pull Requests</th>
               <th className="font-normal text-end">% of Total</th>
             </tr>
           </thead>
