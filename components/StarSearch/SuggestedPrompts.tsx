@@ -52,7 +52,7 @@ export function SuggestedPrompts({
             aria-describedby={`prompt-description-${i}`}
             className="w-full h-full"
           >
-            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
+            <Card className="shadow-md border-none text-start !p-6 text-slate-600 hover:shadow-lg hover:scale-[1.025] transition-all duration-75">
               <span id={`prompt-label-${i}`} className="text-sm font-semibold lg:text-base">
                 {suggestion.title}
               </span>
