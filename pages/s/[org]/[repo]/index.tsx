@@ -17,6 +17,9 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
+import { useRepositoryYolo } from "lib/hooks/api/useRepositoryYolo";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/shared/Button/button";
@@ -31,11 +34,8 @@ import PRChart from "components/Graphs/PRChart";
 import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
 import IssuesChart from "components/Graphs/IssuesChart";
-import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
-import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
 import RossChart from "components/Repositories/RossChart";
-import { useRepositoryYolo } from "lib/hooks/api/useRepositoryYolo";
 import YoloChart from "components/Repositories/YoloChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
@@ -90,8 +90,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const isMobile = useMediaQuery("(max-width: 576px)");
   const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const [lotteryState, setLotteryState] = useState<"lottery" | "yolo">("lottery");
-  const [yoloIncludeBots, setYoloIncludeBots] = useState(
-    router.query.includeBots ? (router.query.includeBots === "true" ? true : false) : false
+  const [yoloHideBots, setYoloHideBots] = useState(
+    router.query.hideBots ? (router.query.hideBots === "true" ? true : false) : false
   );
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
   const range = (router.query.range ? Number(router.query.range) : 30) as Range;
@@ -101,8 +101,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   ];
 
   useEffect(() => {
-    router.push({ query: { ...router.query, includeBots: yoloIncludeBots } });
-  }, [yoloIncludeBots]);
+    router.push({ query: { ...router.query, hideBots: yoloHideBots } });
+  }, [yoloHideBots]);
 
   const {
     data: starsData,
@@ -179,7 +179,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   } = useRepositoryYolo({
     repository: repoData.full_name.toLowerCase(),
     range,
-    includeBots: yoloIncludeBots,
+    includeBots: !yoloHideBots,
   });
 
   const uniqueYoloCoders = useMemo(() => {
@@ -317,8 +317,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     <YoloChart
                       yoloStats={yoloStats}
                       uniqueYoloCoders={uniqueYoloCoders}
-                      yoloIncludeBots={yoloIncludeBots}
-                      setYoloIncludeBots={setYoloIncludeBots}
+                      yoloHideBots={yoloHideBots}
+                      setYoloHideBots={setYoloHideBots}
                       repository={repoData.full_name}
                       isLoading={isYoloStatsLoading}
                       range={range}

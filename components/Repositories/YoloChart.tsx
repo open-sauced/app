@@ -16,8 +16,8 @@ type YoloChartProps = {
   repository: string;
   isLoading: boolean;
   range: number;
-  yoloIncludeBots: boolean;
-  setYoloIncludeBots: (yoloIncludeBots: boolean) => void;
+  yoloHideBots: boolean;
+  setYoloHideBots: (yoloHideBots: boolean) => void;
   backButtonOnClick?: () => void;
   showHoverCards?: boolean;
   className?: string;
@@ -29,8 +29,8 @@ export default function YoloChart({
   repository,
   isLoading,
   range,
-  yoloIncludeBots,
-  setYoloIncludeBots,
+  yoloHideBots,
+  setYoloHideBots,
   backButtonOnClick,
   showHoverCards,
   className,
@@ -56,8 +56,8 @@ export default function YoloChart({
             <ToggleSwitch
               name="Hide Bots"
               size="sm"
-              checked={yoloIncludeBots}
-              handleToggle={() => setYoloIncludeBots(!yoloIncludeBots)}
+              checked={yoloHideBots}
+              handleToggle={() => setYoloHideBots(!yoloHideBots)}
               ariaLabel="YOLO Coders Hide Bots Toggle"
             />
           </aside>
