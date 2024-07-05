@@ -782,7 +782,7 @@ export function StarSearchChat({
               submitPrompt(formData.get("prompt") as string);
               form.reset();
             }}
-            className="bg-white flex justify-between mx-1 md:mx-4 lg:mx-auto lg:max-w-3xl p-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
+            className="bg-white flex justify-between mx-1 md:mx-4 lg:mx-auto lg:max-w-3xl p-[3px] rounded-[11px] bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
           >
             <input
               required
@@ -791,7 +791,7 @@ export function StarSearchChat({
               ref={inputRef}
               disabled={isRunning || !!sharedChatId}
               placeholder="Ask a question"
-              className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
+              className="-m-[0.5px] p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
               onFocus={() => {
                 if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
                   setLoginModalOpen(true);
@@ -800,7 +800,7 @@ export function StarSearchChat({
             />
             <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
               <span className="sr-only">Submit your question to StarSearch</span>
-              <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
+              <MdOutlineSubdirectoryArrowRight className="-mt-[0.5px] w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
             </button>
           </form>
           <p className="py-2 text-sm text-center text-slate-400">
