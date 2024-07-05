@@ -1,8 +1,9 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ErrorBoundary } from "@sentry/nextjs";
+import clsx from "clsx";
 import Card from "components/atoms/Card/card";
-import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import AvatarHoverCard, { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import { ChatAvatar } from "./ChatAvatar";
 import { StarSearchWidget, WidgetDefinition } from "./StarSearchWidget";
 
@@ -32,22 +33,40 @@ export function Chatbox({
               remarkPlugins={[remarkGfm]}
               components={{
                 a(props) {
-                  if (typeof props.children === "string" && props.children.startsWith("@")) {
-                    return (
-                      <span className="inline-flex items-baseline self-center gap-1">
-                        <span className="self-center">
-                          <AvatarHoverCard
-                            contributor={props.children.replace("@", "")}
-                            repositories={[]}
-                            size="xsmall"
-                          />
+                  switch (true) {
+                    case typeof props.children === "string" && props.children.startsWith("@"): {
+                      return (
+                        <span className="inline-flex items-baseline self-center gap-1">
+                          <span className="self-center">
+                            <AvatarHoverCard
+                              contributor={props.children.replace("@", "")}
+                              repositories={[]}
+                              size="xsmall"
+                            />
+                          </span>
+                          <a {...props} />
                         </span>
-                        <a {...props} />
-                      </span>
-                    );
-                  }
+                      );
+                    }
 
-                  return <a {...props} />;
+                    // a repo page URL
+                    case props.href && /s\/[^\/]+\/[^\/]+/.test(new URL(props.href).pathname): {
+                      return (
+                        <a
+                          {...props}
+                          className={clsx(props.className, "relative inline-flex items-baseline self-center gap-1")}
+                        >
+                          <span className="absolute" style={{ top: 6 }}>
+                            <Avatar contributor={new URL(props.href).pathname.split("/")[2]} size="xxsmall" />
+                          </span>
+                          <span className="ml-5 ">{props.children}</span>
+                        </a>
+                      );
+                    }
+
+                    default:
+                      return <a {...props} />;
+                  }
                 },
               }}
               className="star-search-chat-box prose break-words"

@@ -9,7 +9,7 @@ import { getAvatarByUsername } from "lib/utils/github";
 
 declare interface AvatarProps {
   contributor: string;
-  size?: "xsmall" | "small" | "medium" | "large";
+  size?: "xxsmall" | "xsmall" | "small" | "medium" | "large";
 }
 
 type AvatarHoverCard = AvatarProps & {
@@ -21,6 +21,10 @@ export const Avatar = ({ contributor, size = "large" }: AvatarProps): JSX.Elemen
   let height = 500;
 
   switch (size) {
+    case "xxsmall":
+      width = 18;
+      height = 18;
+      break;
     case "xsmall":
       width = 24;
       height = 24;
