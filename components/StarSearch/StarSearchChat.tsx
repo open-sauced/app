@@ -97,7 +97,6 @@ export function StarSearchChat({
   const [isRunning, setIsRunning] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [ranOnce, setRanOnce] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const { feedback, prompt } = useStarSearchFeedback();
   const { toast } = useToast();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -431,10 +430,6 @@ export function StarSearchChat({
     });
   }
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat]);
-
   const submitPrompt = async (prompt: string) => {
     setView("chat");
 
@@ -596,7 +591,6 @@ export function StarSearchChat({
                     }
                   })}
                 </section>
-                <div ref={scrollRef} />
               </ScrollArea>
               <div className={clsx("text-slate-600 flex gap-4 items-center self-end", isRunning && "invisible")}>
                 <button
