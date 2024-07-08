@@ -53,10 +53,16 @@ export const StarSearchEmbed = ({
     />
   );
 
-  /* TODO: implement non-mobile version */
   return (
     <>
       <>
+        <div className="fixed bottom-0 right-0 flex justify-end p-2">
+          <StarSearchButton
+            onOpen={() => {
+              setDrawerOpen(true);
+            }}
+          />
+        </div>
         {isMobile ? (
           <Drawer
             showCloseButton={false}
@@ -73,7 +79,7 @@ export const StarSearchEmbed = ({
             aria-hidden={drawerOpen}
             className={clsx(
               drawerOpen ? "fixed" : "hidden",
-              `bg-slate-50 right-0 shadow-lg transform transition-transform duration-300 ease-in-out border-l flex flex-col gap-8 justify-between lg:w-2/3 max-w-xl border-slate-200 z-50`
+              `bg-slate-50 right-0 shadow-lg transform transition-transform duration-300 ease-in-out border-l flex flex-col lg:w-2/3 max-w-xl border-slate-200`
             )}
             style={{
               top: "var(--top-nav-height)",
@@ -83,13 +89,6 @@ export const StarSearchEmbed = ({
             {chat}
           </div>
         )}
-        <div className="sticky bottom-0 flex justify-end p-2">
-          <StarSearchButton
-            onOpen={() => {
-              setDrawerOpen(true);
-            }}
-          />
-        </div>
       </>
     </>
   );

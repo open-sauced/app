@@ -15,16 +15,25 @@ export function Chatbox({
   message,
   userId,
   componentRegistry,
+  embedded,
 }: {
   message: StarSearchChatMessage;
   userId?: number;
   componentRegistry: Map<string, React.ComponentType<any>>;
+  embedded?: boolean;
 }) {
   if (typeof message.content == "string") {
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     return (
-      <div className="grid items-start gap-2 my-4 md:flex md:justify-center min-w-[398px] max-w-[398px] w-[398px] md:min-w-[685px] md:max-w-[685px] md:w-[685px]">
+      <div
+        className={clsx(
+          "grid items-start gap-2 my-4 md:flex md:justify-center",
+          embedded
+            ? "min-w-[560px] max-w-[560px] w-[560px]"
+            : "min-w-[398px] max-w-[398px] w-[398px] md:min-w-[685px] md:max-w-[685px] md:w-[685px]"
+        )}
+      >
         <ChatAvatar author={userId ? message.author : "Guest"} userId={userId} />
         <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full" focusable>
           <h3 className="font-semibold text-sauced-orange">{message.author}</h3>

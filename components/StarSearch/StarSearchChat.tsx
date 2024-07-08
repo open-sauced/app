@@ -566,13 +566,18 @@ export function StarSearchChat({
               aria-label="StarSearch conversation"
               aria-busy={isRunning}
               aria-setsize={-1}
-              className="w-full max-w-xl mx-auto lg:max-w-5xl pb-[210px] md:pb-[285px]"
+              className={clsx("w-full max-w-xl mx-auto lg:max-w-5xl pb-[210px] md:pb-[285px]")}
             >
               {chatMessagesToProcess.map((message, i, messages) => {
                 if (loaderIndex === i && isRunning && messages.length - 1 === i) {
                   return (
                     <Fragment key={i}>
-                      <Chatbox userId={userId} message={message} componentRegistry={componentRegistry} />
+                      <Chatbox
+                        userId={userId}
+                        message={message}
+                        componentRegistry={componentRegistry}
+                        embedded={embedded}
+                      />
                       <div className="flex items-center gap-2 my-4 w-max">
                         <ChatAvatar author="StarSearch" userId={userId} />
                         <StarSearchLoader />
@@ -580,7 +585,15 @@ export function StarSearchChat({
                     </Fragment>
                   );
                 } else {
-                  return <Chatbox key={i} userId={userId} message={message} componentRegistry={componentRegistry} />;
+                  return (
+                    <Chatbox
+                      key={i}
+                      userId={userId}
+                      message={message}
+                      componentRegistry={componentRegistry}
+                      embedded={embedded}
+                    />
+                  );
                 }
               })}
               <div className={clsx("text-slate-600 flex gap-4 items-center justify-end", isRunning && "invisible")}>
@@ -687,20 +700,20 @@ export function StarSearchChat({
 
   return (
     <>
-      <div>
-        {embedded ? (
-          <StarSearchCompactHeader
-            view={view}
-            onBack={onNewChat}
-            onClose={() => {
-              onClose?.();
-            }}
-            onShare={() => {}}
-            onShowHistory={() => {}}
-            onNewChat={onNewChat}
-            showCloseButton={!isMobile}
-          />
-        ) : null}
+      {embedded ? (
+        <StarSearchCompactHeader
+          view={view}
+          onBack={onNewChat}
+          onClose={() => {
+            onClose?.();
+          }}
+          onShare={() => {}}
+          onShowHistory={() => {}}
+          onNewChat={onNewChat}
+          showCloseButton={!isMobile}
+        />
+      ) : null}
+      <div className={clsx(embedded && "overflow-y-auto overflow-x-hidden self-start")}>
         {embedded ? null : (
           <div className="fixed inset-x-0 top-20 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
         )}
