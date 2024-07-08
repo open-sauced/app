@@ -60,6 +60,7 @@ export default function RossChart({ stats, isLoading, error, range, className }:
 
   function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
     if (active && payload) {
+      const legend = payload.reverse();
       return (
         <figcaption className="flex flex-col gap-1 text-sm bg-white px-4 py-3 rounded-lg border w-fit">
           <section className="flex gap-2 font-medium text-slate-500 items-center text-xs w-fit">
@@ -68,9 +69,8 @@ export default function RossChart({ stats, isLoading, error, range, className }:
             <p>{payload[0]?.payload.bucket}</p>
           </section>
 
-          {/* eslint-disable-next-line */}
-          {payload.toReversed().map((data) => (
-            <section key={`${data.bucket}_${data.name}`} className="flex justify-between">
+          {legend.map((data) => (
+            <section key={`${data.payload.bucket}_${data.name}`} className="flex justify-between">
               <p className="flex gap-2 items-center px-1 text-slate-500 capitalize">
                 <span
                   className={`w-2 h-2 rounded-full bg-[${CONTRIBUTOR_COLORS[data.name || "new"]}] inline-block`}
