@@ -150,7 +150,7 @@ export default function LotteryFactorChart({
           </div>
 
           <div className="hidden xs:flex gap-2 items-center ml-auto mr-3">
-            <p className="hidden sm:inline-block">See more</p>
+            <p className="hidden sm:inline-block xl:hidden min-[1650px]:inline-block">See more</p>
             <FaArrowRight className="hidden xs:inline-block" />
           </div>
         </button>

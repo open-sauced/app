@@ -309,7 +309,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       range={range}
                       isLoading={isLotteryFactorLoading}
                       uniqueYoloCoders={uniqueYoloCoders}
-                      yoloBannerOnClick={uniqueYoloCoders ? () => setLotteryState("yolo") : undefined}
+                      yoloBannerOnClick={uniqueYoloCoders.size > 0 ? () => setLotteryState("yolo") : undefined}
                       showHoverCards
                     />
                   )}
