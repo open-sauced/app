@@ -48,7 +48,6 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
       <div
         className="grid"
         style={{
-          "--top-nav-height": "3.3rem",
           gridTemplateRows: "var(--top-nav-height) auto 1fr",
           minHeight: "calc(100vh - var(--top-nav-height))",
         }}
