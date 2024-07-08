@@ -214,7 +214,7 @@ export default function Feeds(props: HighlightSSRProps) {
           {singleHighlight && (
             <Dialog
               open={openSingleHighlight}
-              onOpenChange={(open) => {
+              onOpenChange={(open: boolean) => {
                 if (openSingleHighlight && !open) {
                   if (shouldAllowDialogCloseAction) {
                     setOpenSingleHighlight(false);
