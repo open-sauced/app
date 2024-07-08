@@ -52,6 +52,38 @@ export default function RossChart({ stats, isLoading, error, range, className }:
     });
   }, [stats]);
 
+  const CONTRIBUTOR_COLORS: Record<string, string> = {
+    internal: "#1E3A8A",
+    recurring: "#2563EB",
+    new: "#60A5FA",
+  };
+
+  function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
+    if (active && payload) {
+      return (
+        <figcaption className="flex flex-col gap-1 text-sm bg-white px-4 py-3 rounded-lg border w-fit">
+          <section className="flex gap-2 font-medium text-slate-500 items-center text-xs w-fit">
+            <FaUsers className="fill-slate-500" />
+            <p>Contributors</p>
+            <p>{payload[0]?.payload.bucket}</p>
+          </section>
+
+          {payload.toReversed().map((data) => (
+            <section key={`${data.bucket}_${data.name}`} className="flex justify-between">
+              <p className="flex gap-2 items-center px-1 text-slate-500 capitalize">
+                <span
+                  className={`w-2 h-2 rounded-full bg-[${CONTRIBUTOR_COLORS[data.name || "new"]}] inline-block`}
+                ></span>
+                {data.name === "new" ? "Outside" : data.name}:
+              </p>
+              <p className="font-medium pl-2">{data.value}</p>
+            </section>
+          ))}
+        </figcaption>
+      );
+    }
+  }
+
   return (
     <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center !px-6 !py-8`}>
       <section className="flex flex-col lg:flex-row w-full items-start lg:items-start gap-4 lg:justify-between px-2">
@@ -118,47 +150,6 @@ export default function RossChart({ stats, isLoading, error, range, className }:
       </section>
     </Card>
   );
-}
-
-function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
-  if (active && payload) {
-    return (
-      <figcaption className="flex flex-col gap-1 text-sm bg-white px-4 py-3 rounded-lg border w-fit">
-        <section className="flex gap-2 font-medium text-slate-500 items-center text-xs w-fit">
-          <FaUsers className="fill-slate-500" />
-          <p>Contributors</p>
-          <p>{payload[0]?.payload.bucket}</p>
-        </section>
-        {payload[2]?.value && (
-          <section className="flex justify-between">
-            <p className="flex gap-2 items-center px-1 text-slate-500">
-              <span className={`w-2 h-2 rounded-full bg-[#60A5FA] inline-block`}></span>
-              Outside:
-            </p>
-            <p className="font-medium pl-2">{payload[2]?.value}</p>
-          </section>
-        )}
-        {payload[1]?.value && (
-          <section className="flex justify-between">
-            <p className="flex gap-2 items-center px-1 text-slate-500">
-              <span className={`w-2 h-2 rounded-full bg-[#2563EB] inline-block`}></span>
-              Recurring:
-            </p>
-            <p className="font-medium pl-2">{payload[1]?.value}</p>
-          </section>
-        )}
-        {payload[0]?.value && (
-          <section className="flex justify-between">
-            <p className="flex gap-2 items-center px-1 text-slate-500">
-              <span className={`w-2 h-2 rounded-full bg-[#1E3A8A] inline-block`}></span>
-              Internal:
-            </p>
-            <p className="font-medium pl-2">{payload[0]?.value}</p>
-          </section>
-        )}
-      </figcaption>
-    );
-  }
 }
 
 function CustomTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
