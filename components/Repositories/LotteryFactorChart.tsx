@@ -4,6 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import * as HoverCard from "@radix-ui/react-hover-card";
+import { FaArrowRight, FaRegHandPeace } from "react-icons/fa6";
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import { DayRange } from "components/shared/DayRangePicker";
@@ -21,6 +22,8 @@ type LotteryFactorChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: DayRange;
+  uniqueYoloCoders?: Set<string>;
+  yoloBannerOnClick?: () => void;
   showHoverCards?: boolean;
   className?: string;
 };
@@ -30,6 +33,8 @@ export default function LotteryFactorChart({
   isLoading,
   error,
   range,
+  uniqueYoloCoders = new Set<string>(),
+  yoloBannerOnClick,
   showHoverCards,
   className,
 }: LotteryFactorChartProps) {
@@ -128,6 +133,28 @@ export default function LotteryFactorChart({
           )}
         </header>
       </section>
+
+      {yoloBannerOnClick && (
+        <button
+          onClick={yoloBannerOnClick}
+          className="flex items-center justify-between w-full text-slate-500 shadow-sm !border !border-slate-300 p-1 gap-2 text-sm rounded-full"
+        >
+          <div className="flex gap-2 items-center">
+            <div className="flex items-center font-medium gap-1 px-2 py-0.5 rounded-2xl bg-light-red-4 text-light-red-11">
+              <FaRegHandPeace />
+              YOLO Coders
+            </div>
+            <p className="block lg:hidden 2xl:block">
+              Pushing commits <span className="xs:hidden sm:inline-block">directly</span> to main
+            </p>
+          </div>
+
+          <div className="hidden xs:flex gap-2 items-center ml-auto mr-3">
+            <p className="hidden sm:inline-block xl:hidden min-[1650px]:inline-block">See more</p>
+            <FaArrowRight className="hidden xs:inline-block" />
+          </div>
+        </button>
+      )}
 
       <section className="w-full px-4 flex flex-col gap-4 text-xs xl:text-sm">
         {isLoading ? (
@@ -246,8 +273,13 @@ export default function LotteryFactorChart({
                         />
                       </Link>
                     )}
-                    <div>
+                    <div className="flex gap-1 items-center">
                       <h1 className="truncate text-light-slate-12">{name}</h1>
+                      {uniqueYoloCoders.has(name) && (
+                        <button onClick={yoloBannerOnClick}>
+                          <InfoTooltip icon={<FaRegHandPeace />} information="YOLO Coder" />
+                        </button>
+                      )}
                     </div>
                   </div>
                 </td>
