@@ -40,7 +40,7 @@ export function SuggestedPrompts({
     <ul
       aria-label="suggested prompts"
       className={clsx(
-        `grid w-full max-w-3xl grid-cols-1 gap-2 place-content-center lg:gap-4`,
+        `grid w-full max-w-3xl grid-cols-1 gap-2 place-content-center lg:gap-4 p-1`,
         embedded ? "" : "lg:grid-cols-2"
       )}
     >
