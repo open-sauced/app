@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import humanizeNumber from "lib/utils/humanizeNumber";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 
 type RossChartProps = {
   stats: RepositoryRoss | undefined;
@@ -134,21 +135,20 @@ export default function RossChart({ stats, isLoading, error, range, className }:
         )}
       </ResponsiveContainer>
 
-      <section className="flex gap-4 w-full px-4 justify-center items-center text-sm">
-        <h3>Filter:</h3>
-        <label className="flex gap-2">
-          <input type="checkbox" checked={filterOutside} onChange={() => setFilterOutside(!filterOutside)} />
-          Outside
-        </label>
-        <label className="flex gap-2">
-          <input type="checkbox" checked={filterRecurring} onChange={() => setFilterRecurring(!filterRecurring)} />
-          Recurring
-        </label>
-        <label className="flex gap-2">
-          <input type="checkbox" checked={filterInternal} onChange={() => setFilterInternal(!filterInternal)} />
-          Internal
-        </label>
-      </section>
+      <fieldset className="flex flex-row gap-4 w-fit text-sm mx-auto">
+        <h3>Filter by:</h3>
+        <Checkbox label="Outside" checked={filterOutside} onCheckedChange={() => setFilterOutside(!filterOutside)} />
+        <Checkbox
+          label="Recurring"
+          checked={filterRecurring}
+          onCheckedChange={() => setFilterRecurring(!filterRecurring)}
+        />
+        <Checkbox
+          label="Internal"
+          checked={filterInternal}
+          onCheckedChange={() => setFilterInternal(!filterInternal)}
+        />
+      </fieldset>
     </Card>
   );
 }
