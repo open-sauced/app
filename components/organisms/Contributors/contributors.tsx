@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { LuFileText } from "react-icons/lu";
 
@@ -44,7 +44,11 @@ const Contributors = ({ repositories, title, defaultLayout = "list" }: Contribut
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
 
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 576px)");
+
+  useLayoutEffect(() => {
+    setLayout(isMobile ? "grid" : defaultLayout);
+  }, [isMobile]);
 
   const onSelectContributor = (state: boolean, contributor: DbPRContributor) => {
     if (state) {
