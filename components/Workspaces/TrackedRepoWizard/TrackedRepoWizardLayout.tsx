@@ -19,7 +19,7 @@ export const TrackedRepoWizardLayout = ({
   children,
 }: TrackedRepoWizardLayoutProps) => {
   return (
-    <Card className="!p-0 sm:w-96 md:w-max max-w-3xl">
+    <Card className="!p-0 sm:w-96 md:w-max max-w-3xl mx-1">
       {/* Using !p-0 for now as the Card component has explicit padding of p-3. We can revisit. */}
       <section className="flex w-full justify-between">
         <button
