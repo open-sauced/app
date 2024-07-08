@@ -237,7 +237,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     stats={rossStats}
                     range={range}
                     isLoading={isRossDataLoading}
-                    rangedTotal={contributorRangedTotal!}
                     error={rossError}
                     className="h-fit"
                   />

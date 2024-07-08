@@ -1,7 +1,7 @@
 import { FaUsers } from "react-icons/fa6";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import humanizeNumber from "lib/utils/humanizeNumber";
@@ -11,30 +11,45 @@ type RossChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: number;
-  rangedTotal: number;
   className?: string;
 };
 
-export default function RossChart({ stats, rangedTotal, isLoading, error, range, className }: RossChartProps) {
-  const rangedAverage = useMemo(() => (rangedTotal / range).toPrecision(2), [rangedTotal, range]);
+export default function RossChart({ stats, isLoading, error, range, className }: RossChartProps) {
+  const [filterOutside, setFilterOutside] = useState(true);
+  const [filterRecurring, setFilterRecurring] = useState(true);
+  const [filterInternal, setFilterInternal] = useState(true);
+
+  const filteredTotal = useMemo(() => {
+    return (
+      stats?.contributors.reduce((prev, curr) => {
+        return (prev +=
+          (filterOutside ? curr.new : 0) +
+          (filterRecurring ? curr.recurring : 0) +
+          (filterInternal ? curr.internal : 0));
+      }, 0) || 0
+    );
+  }, [stats, filterOutside, filterRecurring, filterInternal]);
+
+  const rangedAverage = useMemo(
+    () => (filteredTotal / (stats ? stats.contributors.length : 1)).toPrecision(2),
+    [filteredTotal, stats]
+  );
 
   const weeklyData = useMemo(() => {
-    const result = stats?.contributors.reverse().map((week) => {
+    return stats?.contributors.reverse().map((week) => {
       return {
-        ...week,
+        new: filterOutside ? week.new : 0,
+        recurring: filterRecurring ? week.recurring : 0,
+        internal: filterInternal ? week.internal : 0,
         bucket: new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
       };
     });
-
-    return result;
-  }, [stats]);
+  }, [stats, filterOutside, filterRecurring, filterInternal]);
 
   const bucketTicks = useMemo(() => {
-    const result = stats?.contributors.reverse().map((week) => {
+    return stats?.contributors.reverse().map((week) => {
       return new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" });
     });
-
-    return result;
   }, [stats]);
 
   return (
@@ -54,10 +69,10 @@ export default function RossChart({ stats, rangedTotal, isLoading, error, range,
             <aside className="flex gap-8">
               <div>
                 <h3 className="text-xs xl:text-sm text-slate-500">Total {range} days</h3>
-                <p className="font-semibold text-xl xl:text-3xl">{rangedTotal}</p>
+                <p className="font-semibold text-xl xl:text-3xl">{filteredTotal}</p>
               </div>
               <div>
-                <h3 className="text-xs xl:text-sm text-slate-500">Average per day</h3>
+                <h3 className="text-xs xl:text-sm text-slate-500">Average per week</h3>
                 <p className="font-semibold text-xl xl:text-3xl">{humanizeNumber(rangedAverage)}</p>
               </div>
             </aside>
@@ -79,12 +94,28 @@ export default function RossChart({ stats, rangedTotal, isLoading, error, range,
             />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
-            <Bar dataKey="internal" stackId="a" fill="#1E3A8A" />
-            <Bar dataKey="recurring" stackId="a" fill="#2563EB" />
-            <Bar dataKey="new" stackId="a" fill="#60A5FA" />
+            {filterInternal && <Bar dataKey="internal" stackId="a" fill="#1E3A8A" />}
+            {filterRecurring && <Bar dataKey="recurring" stackId="a" fill="#2563EB" />}
+            {filterOutside && <Bar dataKey="new" stackId="a" fill="#60A5FA" />}
           </BarChart>
         )}
       </ResponsiveContainer>
+
+      <section className="flex gap-4 w-full px-4 justify-center items-center text-sm">
+        <h3>Filter:</h3>
+        <label className="flex gap-2">
+          <input type="checkbox" checked={filterOutside} onChange={() => setFilterOutside(!filterOutside)} />
+          Outside
+        </label>
+        <label className="flex gap-2">
+          <input type="checkbox" checked={filterRecurring} onChange={() => setFilterRecurring(!filterRecurring)} />
+          Recurring
+        </label>
+        <label className="flex gap-2">
+          <input type="checkbox" checked={filterInternal} onChange={() => setFilterInternal(!filterInternal)} />
+          Internal
+        </label>
+      </section>
     </Card>
   );
 }
@@ -102,7 +133,7 @@ function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
           <section className="flex justify-between">
             <p className="flex gap-2 items-center px-1 text-slate-500">
               <span className={`w-2 h-2 rounded-full bg-[#60A5FA] inline-block`}></span>
-              New:
+              Outside:
             </p>
             <p className="font-medium pl-2">{payload[2]?.value}</p>
           </section>
