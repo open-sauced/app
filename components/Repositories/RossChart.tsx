@@ -68,6 +68,7 @@ export default function RossChart({ stats, isLoading, error, range, className }:
             <p>{payload[0]?.payload.bucket}</p>
           </section>
 
+          {/* eslint-disable-next-line */}
           {payload.toReversed().map((data) => (
             <section key={`${data.bucket}_${data.name}`} className="flex justify-between">
               <p className="flex gap-2 items-center px-1 text-slate-500 capitalize">
