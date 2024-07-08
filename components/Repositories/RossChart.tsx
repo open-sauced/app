@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import humanizeNumber from "lib/utils/humanizeNumber";
+import InfoTooltip from "components/shared/InfoTooltip";
 
 type RossChartProps = {
   stats: RepositoryRoss | undefined;
@@ -64,7 +65,10 @@ export default function RossChart({ stats, rangedTotal, isLoading, error, range,
                 <p className="font-semibold text-xl xl:text-3xl">{humanizeNumber(rangedAverage)}</p>
               </div>
               <div>
-                <h3 className="text-xs xl:text-sm text-slate-500">Outside Contributors</h3>
+                <div className="flex gap-2 items-center">
+                  <h3 className="text-xs xl:text-sm text-slate-500">Outside Contributors</h3>
+                  <InfoTooltip information="NEEDS COPY" />
+                </div>
                 <p className="font-semibold text-xl xl:text-3xl">{outsideTotal}</p>
               </div>
             </aside>
