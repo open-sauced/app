@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.42.1-beta.1](https://github.com/open-sauced/app/compare/v2.42.0...v2.42.1-beta.1) (2024-07-05)
+
+
+### 🐛 Bug Fixes
+
+* now app sidebar menu items have the same font weight ([#3690](https://github.com/open-sauced/app/issues/3690)) ([3647252](https://github.com/open-sauced/app/commit/36472521749d04843275edf33387e7a156556291))
+
 ## [2.42.0](https://github.com/open-sauced/app/compare/v2.41.0...v2.42.0) (2024-07-04)
 
 
