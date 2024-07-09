@@ -20,7 +20,7 @@ export const EmptyState = ({ onAddRepos, disabled }: { onAddRepos: () => void; d
   return (
     <div className="grid place-content-center gap-5 my-8">
       <BiBarChartAlt2 className="border rounded-lg p-2 w-11 h-11 mx-auto fill-slate-600 shadow-xs" />
-      <div className="grid w-max max-w-sm mx-auto">
+      <div className="grid lg:w-max max-w-sm mx-auto px-2">
         <span className="text-center font-medium mb-2">Add repositories to track</span>
         <p className="text-sm text-slate-600 text-center">
           Search and select the repositories you want to track and get insights on your entire GitHub ecosystem
@@ -57,7 +57,7 @@ export const TrackedReposTable = ({
 }: TrackedReposTableProps) => {
   return (
     <div className="grid gap-4">
-      <div className="flex justify-between">
+      <div className="flex justify-between flex-wrap gap-2">
         <div>
           <h2 className="flex gap-1 font-medium mb-2 text-md">Repositories Tracked</h2>
           <p className="text-sm text-slate-600">Select the organizations or repositories you want to track</p>
