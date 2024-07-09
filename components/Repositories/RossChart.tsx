@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import humanizeNumber from "lib/utils/humanizeNumber";
-import Checkbox from "components/atoms/Checkbox/checkbox";
 
 type RossChartProps = {
   stats: RepositoryRoss | undefined;
@@ -87,7 +86,7 @@ export default function RossChart({ stats, isLoading, error, range, className }:
   }
 
   return (
-    <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center !px-6 !py-8`}>
+    <Card className={`${className ?? ""} flex flex-col gap-6 w-full h-full items-center !px-6 !py-8`}>
       <section className="flex flex-col lg:flex-row w-full items-start lg:items-start gap-4 lg:justify-between px-2">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
@@ -128,26 +127,43 @@ export default function RossChart({ stats, isLoading, error, range, className }:
             />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
-            {filterInternal && <Bar dataKey="internal" stackId="a" fill="#1E3A8A" />}
-            {filterRecurring && <Bar dataKey="recurring" stackId="a" fill="#2563EB" />}
-            {filterOutside && <Bar dataKey="new" stackId="a" fill="#60A5FA" />}
+            {filterInternal && <Bar dataKey="internal" stackId="a" fill={CONTRIBUTOR_COLORS["internal"]} />}
+            {filterRecurring && <Bar dataKey="recurring" stackId="a" fill={CONTRIBUTOR_COLORS["recurring"]} />}
+            {filterOutside && <Bar dataKey="new" stackId="a" fill={CONTRIBUTOR_COLORS["new"]} />}
           </BarChart>
         )}
       </ResponsiveContainer>
 
-      <fieldset className="flex flex-row gap-4 w-fit text-sm mx-auto">
-        <h3>Filter by:</h3>
-        <Checkbox label="Outside" checked={filterOutside} onCheckedChange={() => setFilterOutside(!filterOutside)} />
-        <Checkbox
-          label="Recurring"
-          checked={filterRecurring}
-          onCheckedChange={() => setFilterRecurring(!filterRecurring)}
-        />
-        <Checkbox
-          label="Internal"
-          checked={filterInternal}
-          onCheckedChange={() => setFilterInternal(!filterInternal)}
-        />
+      <fieldset className="flex flex-row gap-4 w-fit text-sm mx-auto p-0">
+        <button
+          onClick={() => setFilterOutside(!filterOutside)}
+          className={`flex gap-2 h-full items-center text-slate-700 ${
+            !filterOutside && "opacity-60"
+          } transition-all duration-300 hover:bg-slate-100 rounded-lg px-2 py-1`}
+        >
+          <span className={`w-4 h-4 rounded-sm bg-[#60A5FA] inline-block`} />
+          Outside
+        </button>
+
+        <button
+          onClick={() => setFilterRecurring(!filterRecurring)}
+          className={`flex gap-2 h-full items-center text-slate-700 ${
+            !filterRecurring && "opacity-60"
+          } transition-all duration-300 hover:bg-slate-100 rounded-lg px-2 py-1`}
+        >
+          <span className={`w-4 h-4 rounded-sm bg-[#2563EB] inline-block`} />
+          Recurring
+        </button>
+
+        <button
+          onClick={() => setFilterInternal(!filterInternal)}
+          className={`flex gap-2 h-full items-center text-slate-700 ${
+            !filterInternal && "opacity-60"
+          } transition-all duration-300 hover:bg-slate-100 rounded-lg px-2 py-1`}
+        >
+          <span className={`w-4 h-4 rounded-sm bg-[#1E3A8A] inline-block`} />
+          Internal
+        </button>
       </fieldset>
     </Card>
   );
