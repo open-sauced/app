@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.43.0-beta.2](https://github.com/open-sauced/app/compare/v2.43.0-beta.1...v2.43.0-beta.2) (2024-07-09)
+
+
+### 🐛 Bug Fixes
+
+* use explore page with typescript topic as fallback instead of feed page ([#3691](https://github.com/open-sauced/app/issues/3691)) ([a50e34a](https://github.com/open-sauced/app/commit/a50e34aa56812e463c8f956062b06f8fb8f40885))
+
 ## [2.43.0-beta.1](https://github.com/open-sauced/app/compare/v2.42.1-beta.2...v2.43.0-beta.1) (2024-07-08)
 
 
