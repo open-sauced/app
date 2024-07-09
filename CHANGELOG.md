@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.43.0-beta.1](https://github.com/open-sauced/app/compare/v2.42.1-beta.2...v2.43.0-beta.1) (2024-07-08)
+
+
+### 🍕 Features
+
+* `YoloChart` in repo pages ([#3658](https://github.com/open-sauced/app/issues/3658)) ([9462519](https://github.com/open-sauced/app/commit/94625196853928735a49095d01bc580187ad2aec))
+
+## [2.42.1-beta.2](https://github.com/open-sauced/app/compare/v2.42.1-beta.1...v2.42.1-beta.2) (2024-07-08)
+
+
+### 🐛 Bug Fixes
+
+* now the repository insights pages header looks good on smaller screens ([#3687](https://github.com/open-sauced/app/issues/3687)) ([8a47e17](https://github.com/open-sauced/app/commit/8a47e17b690dedcaf02453a8ee683ede0b8d27b3))
+
 ## [2.42.1-beta.1](https://github.com/open-sauced/app/compare/v2.42.0...v2.42.1-beta.1) (2024-07-05)
 
 
