@@ -5,6 +5,129 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.43.0](https://github.com/open-sauced/app/compare/v2.42.0...v2.43.0) (2024-07-09)
+
+
+### 🍕 Features
+
+* `YoloChart` in repo pages ([#3658](https://github.com/open-sauced/app/issues/3658)) ([9462519](https://github.com/open-sauced/app/commit/94625196853928735a49095d01bc580187ad2aec))
+
+
+### 🐛 Bug Fixes
+
+* now app sidebar menu items have the same font weight ([#3690](https://github.com/open-sauced/app/issues/3690)) ([3647252](https://github.com/open-sauced/app/commit/36472521749d04843275edf33387e7a156556291))
+* now the repository insights pages header looks good on smaller screens ([#3687](https://github.com/open-sauced/app/issues/3687)) ([8a47e17](https://github.com/open-sauced/app/commit/8a47e17b690dedcaf02453a8ee683ede0b8d27b3))
+* use explore page with typescript topic as fallback instead of feed page ([#3691](https://github.com/open-sauced/app/issues/3691)) ([a50e34a](https://github.com/open-sauced/app/commit/a50e34aa56812e463c8f956062b06f8fb8f40885))
+
+## [2.43.0-beta.2](https://github.com/open-sauced/app/compare/v2.43.0-beta.1...v2.43.0-beta.2) (2024-07-09)
+
+
+### 🐛 Bug Fixes
+
+* use explore page with typescript topic as fallback instead of feed page ([#3691](https://github.com/open-sauced/app/issues/3691)) ([a50e34a](https://github.com/open-sauced/app/commit/a50e34aa56812e463c8f956062b06f8fb8f40885))
+
+## [2.43.0-beta.1](https://github.com/open-sauced/app/compare/v2.42.1-beta.2...v2.43.0-beta.1) (2024-07-08)
+
+
+### 🍕 Features
+
+* `YoloChart` in repo pages ([#3658](https://github.com/open-sauced/app/issues/3658)) ([9462519](https://github.com/open-sauced/app/commit/94625196853928735a49095d01bc580187ad2aec))
+
+## [2.42.1-beta.2](https://github.com/open-sauced/app/compare/v2.42.1-beta.1...v2.42.1-beta.2) (2024-07-08)
+
+
+### 🐛 Bug Fixes
+
+* now the repository insights pages header looks good on smaller screens ([#3687](https://github.com/open-sauced/app/issues/3687)) ([8a47e17](https://github.com/open-sauced/app/commit/8a47e17b690dedcaf02453a8ee683ede0b8d27b3))
+
+## [2.42.1-beta.1](https://github.com/open-sauced/app/compare/v2.42.0...v2.42.1-beta.1) (2024-07-05)
+
+
+### 🐛 Bug Fixes
+
+* now app sidebar menu items have the same font weight ([#3690](https://github.com/open-sauced/app/issues/3690)) ([3647252](https://github.com/open-sauced/app/commit/36472521749d04843275edf33387e7a156556291))
+
+## [2.42.0](https://github.com/open-sauced/app/compare/v2.41.0...v2.42.0) (2024-07-04)
+
+
+### 🍕 Features
+
+* add repo filtering to contributions tables on contributor profile ([#3580](https://github.com/open-sauced/app/issues/3580)) ([a2e49ef](https://github.com/open-sauced/app/commit/a2e49ef2f18cfd8347af1676631b10eb0542adad))
+
+
+### 🐛 Bug Fixes
+
+* lottery factor copy ([#3682](https://github.com/open-sauced/app/issues/3682)) ([baac008](https://github.com/open-sauced/app/commit/baac00867e9f4ce2a8d0126656df3250c092c40a))
+* now OSCR column is hidden if feature flag is not enabled for OSCR ([#3676](https://github.com/open-sauced/app/issues/3676)) ([061c590](https://github.com/open-sauced/app/commit/061c590e7be296f75b4812f552b0e33e3dcfad03))
+* now the contributor insights new/edit page fits in smaller screens ([#3679](https://github.com/open-sauced/app/issues/3679)) ([256af40](https://github.com/open-sauced/app/commit/256af405de326f9814330b72c938233f1e63da83))
+
+## [2.42.0-beta.2](https://github.com/open-sauced/app/compare/v2.42.0-beta.1...v2.42.0-beta.2) (2024-07-04)
+
+
+### 🐛 Bug Fixes
+
+* lottery factor copy ([#3682](https://github.com/open-sauced/app/issues/3682)) ([baac008](https://github.com/open-sauced/app/commit/baac00867e9f4ce2a8d0126656df3250c092c40a))
+
+## [2.42.0-beta.1](https://github.com/open-sauced/app/compare/v2.41.1-beta.2...v2.42.0-beta.1) (2024-07-03)
+
+
+### 🍕 Features
+
+* add repo filtering to contributions tables on contributor profile ([#3580](https://github.com/open-sauced/app/issues/3580)) ([a2e49ef](https://github.com/open-sauced/app/commit/a2e49ef2f18cfd8347af1676631b10eb0542adad))
+
+## [2.41.1-beta.2](https://github.com/open-sauced/app/compare/v2.41.1-beta.1...v2.41.1-beta.2) (2024-07-03)
+
+
+### 🐛 Bug Fixes
+
+* now the contributor insights new/edit page fits in smaller screens ([#3679](https://github.com/open-sauced/app/issues/3679)) ([256af40](https://github.com/open-sauced/app/commit/256af405de326f9814330b72c938233f1e63da83))
+
+## [2.41.1-beta.1](https://github.com/open-sauced/app/compare/v2.41.0...v2.41.1-beta.1) (2024-07-03)
+
+
+### 🐛 Bug Fixes
+
+* now OSCR column is hidden if feature flag is not enabled for OSCR ([#3676](https://github.com/open-sauced/app/issues/3676)) ([061c590](https://github.com/open-sauced/app/commit/061c590e7be296f75b4812f552b0e33e3dcfad03))
+
+## [2.41.0](https://github.com/open-sauced/app/compare/v2.40.0...v2.41.0) (2024-07-03)
+
+
+### 🐛 Bug Fixes
+
+* now OSCR that is 0 gets rendered as a dash ([#3662](https://github.com/open-sauced/app/issues/3662)) ([5e12564](https://github.com/open-sauced/app/commit/5e1256491964dc6e443b0f6db5bef59a9b9c57e9))
+* now workspace pages on smaller screens keep their layout in bounds ([#3664](https://github.com/open-sauced/app/issues/3664)) ([8b2a879](https://github.com/open-sauced/app/commit/8b2a8795f2d10a30cc187431cce2e199c4802d9b))
+* remove dots from `IssueChart` & `PRChart` ([#3659](https://github.com/open-sauced/app/issues/3659)) ([deb24a0](https://github.com/open-sauced/app/commit/deb24a0be3b040883e4f03c31db50e48a90dbde1))
+* reset input after deleting contributor insight list ([#3600](https://github.com/open-sauced/app/issues/3600)) ([2a2ac76](https://github.com/open-sauced/app/commit/2a2ac7653bfe61914a950edb0cbe7d419d1ee2df))
+* reset input after deleting contributor insight list([#3553](https://github.com/open-sauced/app/issues/3553)) ([e436e8d](https://github.com/open-sauced/app/commit/e436e8d1f5fccb4ca6e640b85a889dfd53132907))
+* workspace insight header paddings ([#3623](https://github.com/open-sauced/app/issues/3623)) ([10438b4](https://github.com/open-sauced/app/commit/10438b4935a2020bd2e1171c2e63c048e0be81cd))
+
+
+### 🍕 Features
+
+* add range filter when importing GitHub repos for an org ([#3665](https://github.com/open-sauced/app/issues/3665)) ([89abf59](https://github.com/open-sauced/app/commit/89abf59f6770507ce7c659016ca88240e907f2da))
+
+## [2.41.0-beta.1](https://github.com/open-sauced/app/compare/v2.40.1-beta.4...v2.41.0-beta.1) (2024-07-02)
+
+
+### 🍕 Features
+
+* add range filter when importing GitHub repos for an org ([#3665](https://github.com/open-sauced/app/issues/3665)) ([89abf59](https://github.com/open-sauced/app/commit/89abf59f6770507ce7c659016ca88240e907f2da))
+
+## [2.40.1-beta.4](https://github.com/open-sauced/app/compare/v2.40.1-beta.3...v2.40.1-beta.4) (2024-07-02)
+
+
+### 🐛 Bug Fixes
+
+* now workspace pages on smaller screens keep their layout in bounds ([#3664](https://github.com/open-sauced/app/issues/3664)) ([8b2a879](https://github.com/open-sauced/app/commit/8b2a8795f2d10a30cc187431cce2e199c4802d9b))
+
+## [2.40.1-beta.3](https://github.com/open-sauced/app/compare/v2.40.1-beta.2...v2.40.1-beta.3) (2024-07-02)
+
+
+### 🐛 Bug Fixes
+
+* now OSCR that is 0 gets rendered as a dash ([#3662](https://github.com/open-sauced/app/issues/3662)) ([5e12564](https://github.com/open-sauced/app/commit/5e1256491964dc6e443b0f6db5bef59a9b9c57e9))
+* remove dots from `IssueChart` & `PRChart` ([#3659](https://github.com/open-sauced/app/issues/3659)) ([deb24a0](https://github.com/open-sauced/app/commit/deb24a0be3b040883e4f03c31db50e48a90dbde1))
+
 ## [2.40.1-beta.2](https://github.com/open-sauced/app/compare/v2.40.1-beta.1...v2.40.1-beta.2) (2024-07-01)
 
 
