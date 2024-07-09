@@ -52,7 +52,12 @@ export default function Repositories({ repositories, showSearch = true }: Reposi
   };
 
   const handleOnAddtoInsights = () => {
-    if (user) {
+    if (!workspaceId) {
+      router.push({
+        pathname: `/workspaces/new`,
+        query: { repos: JSON.stringify(selectedRepos.map((repo) => repo.full_name)) },
+      });
+    } else if (user) {
       router.push({
         pathname: `/workspaces/${workspaceId}/repository-insights/new`,
         query: { repos: JSON.stringify(selectedRepos.map((repo) => repo.full_name)) },
@@ -146,7 +151,7 @@ export default function Repositories({ repositories, showSearch = true }: Reposi
             <div className="flex justify-between p-3 px-6 items-center border-b-2 text-light-slate-11">
               <div>{selectedRepos.length} Repositories selected</div>
               <Button onClick={handleOnAddtoInsights} variant="primary">
-                Add to Insight Page
+                {workspaceId ? "Add to Insight Page" : "Add to Workspace"}
               </Button>
             </div>
           )}
