@@ -105,6 +105,7 @@ const ListsOverview = ({
   featureFlags,
   username,
 }: ListsOverviewProps): JSX.Element => {
+  const showOscr = featureFlags && featureFlags["oscr-rating"];
   const router = useRouter();
   const { listId, range, limit } = router.query;
 
@@ -118,7 +119,7 @@ const ListsOverview = ({
     listId: list?.id,
     defaultRange: range ? (range as string) : "30",
     defaultLimit: limit ? (limit as unknown as number) : 10,
-    featureFlags,
+    showOscr,
     username,
   });
 

@@ -17,6 +17,7 @@ import { setQueryParams } from "lib/utils/query-params";
 import StackedOwners from "components/Workspaces/StackedOwners";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import ComponentDateFilter from "../ComponentDateFilter/component-date-filter";
 
@@ -49,6 +50,8 @@ const InsightHeader = ({
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const { toast } = useToast();
   const posthog = usePostHog();
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const size = isMobile ? 80 : 120;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -71,12 +74,58 @@ const InsightHeader = ({
   };
 
   return (
-    <div className="relative flex flex-row justify-between w-full">
-      <div className="flex flex-col md:flex-row ">
-        <div className="header-image mr-2 p-2 min-w-[130px]">
-          <ContextThumbnail size={120} ContextThumbnailURL={""}></ContextThumbnail>
+    <>
+      <div className="grid gap-2 w-full">
+        <div className="relative flex justify-between">
+          <div className="grid md:flex">
+            <div className="header-image mr-2 p-2 min-w-[130px]">
+              <ContextThumbnail size={size} ContextThumbnailURL={""} />
+            </div>
+            <div className="md:flex md:flex-col md:justify-center p-2 header-info grow hidden">
+              <div className="flex gap-2">
+                <Title level={1} className="!text-2xl font-semibold text-slate-900">
+                  {(insight && truncateString(insight.name, 30)) || "Insights"}
+                </Title>
+              </div>
+              <div className="flex items-center gap-2 mt-4">
+                {owners && (
+                  <div className="flex gap-2 items-center">
+                    <StackedOwners owners={owners} /> |
+                  </div>
+                )}
+                {insight && insight.repos && insight.repos.length > 0 && (
+                  <CardRepoList limit={2} repoList={repoList} total={repoMeta.itemCount} />
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => handleCopyToClipboard(insightPageLink)}
+              className="px-6 py-2 bg-white w-max"
+              variant="text"
+            >
+              <FiCopy className="mt-1 mr-2" /> Share
+            </Button>
+            {canEdit && (
+              <Button
+                className="text-xs w-max"
+                variant="primary"
+                onClick={() => {
+                  if (overLimit) {
+                    setIsInsightUpgradeModalOpen(true);
+                    return;
+                  }
+
+                  router.push(`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`);
+                }}
+              >
+                <FaEdit className="mr-2" /> Edit
+              </Button>
+            )}
+          </div>
         </div>
-        <div className="flex flex-col justify-center p-2 header-info grow">
+        <div className="flex flex-col justify-center p-2 header-info grow md:hidden">
           <div className="flex gap-2">
             <Title level={1} className="!text-2xl font-semibold text-slate-900">
               {(insight && truncateString(insight.name, 30)) || "Insights"}
@@ -93,32 +142,7 @@ const InsightHeader = ({
             )}
           </div>
         </div>
-      </div>
-      <div className="absolute right-0 bottom-0 top-0 flex flex-col items-end gap-3 py-2 md:items-center md:flex-row md:static">
-        <Button
-          onClick={() => handleCopyToClipboard(insightPageLink)}
-          className="px-6 py-2 bg-white w-max"
-          variant="text"
-        >
-          <FiCopy className="mt-1 mr-2" /> Share
-        </Button>
-        {canEdit && (
-          <Button
-            className="text-xs w-max"
-            variant="primary"
-            onClick={() => {
-              if (overLimit) {
-                setIsInsightUpgradeModalOpen(true);
-                return;
-              }
-
-              router.push(`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`);
-            }}
-          >
-            <FaEdit className="mr-2" /> Edit
-          </Button>
-        )}
-        <div className=" md:hidden mt-auto">
+        <div className=" md:hidden mt-auto flex justify-end">
           <ComponentDateFilter
             setRangeFilter={(selectedRange) => {
               setQueryParams({ range: `${selectedRange}` });
@@ -126,17 +150,17 @@ const InsightHeader = ({
             defaultRange={Number(range)}
           />
         </div>
+        {workspaceId && (
+          <InsightUpgradeModal
+            workspaceId={workspaceId}
+            variant="all"
+            isOpen={isInsightUpgradeModalOpen}
+            onClose={() => setIsInsightUpgradeModalOpen(false)}
+            overLimit={0}
+          />
+        )}
       </div>
-      {workspaceId && (
-        <InsightUpgradeModal
-          workspaceId={workspaceId}
-          variant="all"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={0}
-        />
-      )}
-    </div>
+    </>
   );
 };
 

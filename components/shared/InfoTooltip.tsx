@@ -2,14 +2,14 @@ import { useState } from "react";
 import { TooltipTrigger, TooltipPortal, Tooltip, TooltipContent, TooltipArrow } from "@radix-ui/react-tooltip";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 
-export default function InfoTooltip({ information }: { information: string }) {
+export default function InfoTooltip({ information, icon }: { information: string; icon?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
 
   return (
     <Tooltip open={open}>
       <TooltipTrigger asChild>
         <button onMouseOver={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onClick={() => setOpen(!open)}>
-          <HiOutlineInformationCircle className="text-slate-500" />
+          {icon ? icon : <HiOutlineInformationCircle className="text-slate-500" />}
         </button>
       </TooltipTrigger>
       <TooltipPortal>

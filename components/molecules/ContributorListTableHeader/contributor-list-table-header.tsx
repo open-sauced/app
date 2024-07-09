@@ -8,9 +8,14 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 interface ContributorListTableHeadersProps {
   selected?: boolean;
   handleOnSelectAllContributor?: (checked: boolean) => void;
+  showOscr?: boolean;
 }
 
-const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }: ContributorListTableHeadersProps) => {
+const ContributorListTableHeaders = ({
+  selected,
+  handleOnSelectAllContributor,
+  showOscr = false,
+}: ContributorListTableHeadersProps) => {
   const router = useRouter();
   const { range } = router.query;
 
@@ -43,11 +48,13 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
           <TableTitle>Contributor</TableTitle>
         </div>
 
-        <div className={clsx("flex-1 lg:flex justify-center lg:max-w-[5rem]")}>
-          <TableTitle>Rating</TableTitle>
-        </div>
+        {showOscr ? (
+          <div className={clsx("flex-1 lg:flex justify-center lg:max-w-[5rem]")}>
+            <TableTitle>Rating</TableTitle>
+          </div>
+        ) : null}
 
-        <div className={clsx("flex-1 hidden lg:max-w-[6.25rem]  ")}>
+        <div className={clsx("flex-1 hidden lg:flex lg:max-w-[6.25rem]  ")}>
           <TableTitle>Repositories</TableTitle>
         </div>
         <div className={clsx("flex-1 lg:max-w-[8.1rem]  ")}>
