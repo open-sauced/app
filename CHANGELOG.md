@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.44.0-beta.3](https://github.com/open-sauced/app/compare/v2.44.0-beta.2...v2.44.0-beta.3) (2024-07-10)
+
+
+### 🐛 Bug Fixes
+
+* now a contributor insight can be deleted if one was deleted in the same page session ([#3246](https://github.com/open-sauced/app/issues/3246)) ([8dd1ee2](https://github.com/open-sauced/app/commit/8dd1ee25d4bfbee7d78191609e205e0cb62f7213))
+
 ## [2.44.0-beta.2](https://github.com/open-sauced/app/compare/v2.44.0-beta.1...v2.44.0-beta.2) (2024-07-10)
 
 
