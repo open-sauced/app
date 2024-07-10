@@ -1,6 +1,8 @@
 import { FiCopy } from "react-icons/fi";
 import { MdWorkspaces } from "react-icons/md";
 import { HiOutlineExternalLink } from "react-icons/hi";
+import { FaBalanceScale } from "react-icons/fa";
+import { FaCode, FaRegClock } from "react-icons/fa6";
 
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
@@ -14,17 +16,18 @@ import { shortenUrl } from "lib/utils/shorten-url";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAvatarByUsername } from "lib/utils/github";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { useRepoStats } from "lib/hooks/api/useRepoStats";
-import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
-import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
 import { useRepositoryYolo } from "lib/hooks/api/useRepositoryYolo";
+import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
+import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/shared/Button/button";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
+import Pill from "components/atoms/Pill/pill";
 import TabList from "components/TabList/tab-list";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
@@ -256,6 +259,15 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   <DayRangePicker />
                 </div>
               </div>
+            </div>
+            <div className="flex gap-2">
+              <Pill text={repoData.license} icon={<FaBalanceScale />} />
+              <Pill text={repoData.language} icon={<FaCode />} />
+              <Pill
+                text={`Last Updated: ${new Date(repoData.updated_at).toLocaleDateString()}`}
+                icon={<FaRegClock />}
+                className="!px-2"
+              />
             </div>
           </section>
           <div className="border-b mb-4">

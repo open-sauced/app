@@ -73,6 +73,8 @@ interface DbRepo {
   readonly language: string;
   readonly stars: number;
   readonly description: string;
+  readonly license?: string;
+  readonly updated_at?: string;
 }
 
 interface DbRecommendedInsightsRepo {
