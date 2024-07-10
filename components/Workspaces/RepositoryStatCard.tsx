@@ -1,5 +1,8 @@
+import { FaStar } from "react-icons/fa6";
+import { BiGitRepoForked } from "react-icons/bi";
 import { ArrowTrendingDownIcon, ArrowTrendingUpIcon, MinusSmallIcon } from "@heroicons/react/24/solid";
 import { GitPullRequestIcon, HeartIcon, IssueOpenedIcon } from "@primer/octicons-react";
+
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
@@ -11,15 +14,23 @@ type RepositoryStatCardProps = {
 } & (
   | {
       type: "pulls";
-      stats: { opened: number; merged: number; velocity: number } | undefined;
+      stats: { opened: number; merged: number; velocity: number; range?: number } | undefined;
     }
   | {
       type: "issues";
-      stats: { opened: number; closed: number; velocity: number } | undefined;
+      stats: { opened: number; closed: number; velocity: number; range?: number } | undefined;
     }
   | {
       type: "engagement";
       stats: { stars: number; forks: number; activity_ratio: number } | undefined;
+    }
+  | {
+      type: "stars";
+      stats: { total: number; range: number; over_range: number; average_over_range: number } | undefined;
+    }
+  | {
+      type: "forks";
+      stats: { total: number; range: number; over_range: number; average_over_range: number } | undefined;
     }
 );
 
@@ -27,6 +38,8 @@ const titles = {
   pulls: "Pull Requests",
   issues: "Issues",
   engagement: "Engagement",
+  stars: "Stars",
+  forks: "Forks",
 } as const;
 
 type CardType = RepositoryStatCardProps["type"];
@@ -39,6 +52,10 @@ function getIcon(type: CardType) {
       return <IssueOpenedIcon size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
     case "engagement":
       return <HeartIcon size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
+    case "stars":
+      return <FaStar size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
+    case "forks":
+      return <BiGitRepoForked size={18} className="text-slate-600 border-1 rounded-md p-2 h-8 w-8 shadow-xs" />;
   }
 }
 
@@ -50,6 +67,9 @@ function getStatPropertiesByType(type: CardType) {
       return ["opened", "closed", "velocity"];
     case "engagement":
       return ["stars", "forks", "activity_ratio"];
+    case "forks":
+    case "stars":
+      return ["total", "over_range", "average_over_range"];
     default:
       throw new Error("Invalid repository stat card type");
   }
@@ -72,7 +92,9 @@ const getPillChart = (total?: number, loading?: boolean) => {
     );
   }
 
-  return <Pill icon={<ArrowTrendingDownIcon color="red" className="w-6 h-6 lg:w-4 lg:h-4" />} text="Low" color="red" />;
+  return (
+    <Pill icon={<ArrowTrendingDownIcon color="slate" className="w-6 h-6 lg:w-4 lg:h-4" />} text="Low" color="slate" />
+  );
 };
 
 const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) => {
@@ -93,7 +115,7 @@ const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) =
           {getStatPropertiesByType(type).map((stat) => (
             <tr key={stat} className="flex flex-col">
               <th className="capitalize font-normal text-sm text-light-slate-11 text-left">{stat}</th>
-              <td className="font-medium text-2xl mt-1">
+              <td className="font-medium text-3xl lg:text-2xl">
                 <SkeletonWrapper width={40} height={20} />
               </td>
             </tr>
@@ -107,6 +129,7 @@ const EmptyState = ({ type, hasError }: { type: CardType; hasError: boolean }) =
 export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: RepositoryStatCardProps) => {
   const loadEmptyState = isLoading || hasError || !stats;
 
+  const rangeText = (type === "pulls" || type === "issues") && stats?.range ? `(${stats?.range} days)` : "";
   return (
     <Card className="w-full">
       {loadEmptyState ? (
@@ -115,7 +138,10 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
         <table className="grid gap-4 p-2">
           <caption className="flex items-center gap-1.5 lg:text-sm font-medium">
             {getIcon(type)}
-            <span className="text-slate-700">{titles[type]}</span>
+            <span className="flex gap-1 items-center text-slate-700">
+              {titles[type]}
+              {rangeText && <span className="text-slate-500">{rangeText}</span>}
+            </span>
           </caption>
           <tbody className="grid grid-cols-3 items center">
             {Object.entries(stats)
@@ -123,8 +149,14 @@ export const RepositoryStatCard = ({ stats, type, isLoading, hasError }: Reposit
               .map(([stat, value]) => {
                 return (
                   <tr key={stat} className="flex flex-col">
-                    <th scope="row" className="capitalize font-normal text-lg lg:text-sm text-light-slate-12 text-left">
-                      {stat.replace("_", " ")}
+                    <th scope="row" className="capitalize font-normal text-xs lg:text-sm text-light-slate-12 text-left">
+                      {type === "stars" || type === "forks"
+                        ? stat === "over_range"
+                          ? `Over ${stats.range} Days`
+                          : stat === "average_over_range"
+                          ? `Avg. per day`
+                          : stat.replace("_", " ")
+                        : stat.replace("_", " ")}
                       <span
                         className={`w-2 h-2 rounded-full ml-1  ${
                           stat === "opened"

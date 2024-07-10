@@ -41,7 +41,7 @@ export const Avatar = ({ contributor, size = "large" }: AvatarProps): JSX.Elemen
   return (
     <Image
       alt={contributor}
-      className="border rounded-full"
+      className="border rounded-full not-prose"
       height={width}
       src={getAvatarByUsername(contributor, 40)}
       width={height}
@@ -52,7 +52,7 @@ export const Avatar = ({ contributor, size = "large" }: AvatarProps): JSX.Elemen
 const AvatarHoverCard = ({ contributor, repositories, size = "large" }: AvatarHoverCard): JSX.Element => {
   return (
     <HoverCard.Root>
-      <Link href={`/user/${contributor}`} as={`/user/${contributor}`}>
+      <Link href={`/u/${contributor}`} as={`/u/${contributor}`}>
         <HoverCard.Trigger>
           <Avatar contributor={contributor} size={size} />
         </HoverCard.Trigger>

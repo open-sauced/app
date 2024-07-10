@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import InvalidImage from "img/icons/fallback-image-disabled-square.svg";
+import { isValidUrlSlug } from "lib/utils/url-validators";
 interface DevToSocialImgProps {
   blogLink: string;
   className?: string;
@@ -10,6 +11,10 @@ const DevToSocialImg = ({ blogLink, className }: DevToSocialImgProps): JSX.Eleme
   const devToUrl = new URL(trimmedUrl.includes("https://") ? trimmedUrl : `https://${trimmedUrl}`);
   const { pathname } = devToUrl;
   const [, username, slug] = pathname.split("/");
+
+  if (!isValidUrlSlug(username) || !isValidUrlSlug(slug)) {
+    throw new Error("Invalid input");
+  }
 
   const [socialImage, setSocialImage] = useState("");
   const [isValid, setIsValid] = useState(false);

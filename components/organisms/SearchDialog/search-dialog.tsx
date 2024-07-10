@@ -87,8 +87,6 @@ const SearchDialog = () => {
       return <SearchResult cursor={cursor} result={userSearchResult?.data} />;
     } else if (!isSearchError && isSearching) {
       return <SearchLoading />;
-    } else if (isSearchError && !isSearching) {
-      return <SearchError variant="users" />;
     }
   };
 
@@ -98,9 +96,6 @@ const SearchDialog = () => {
     }
     if (repoDataLoading) {
       return <SearchLoading />;
-    }
-    if (repoDataError || repoData.length === 0) {
-      return <SearchError variant="repositories" />;
     }
     if (repoData.length > 0) {
       return (
@@ -169,6 +164,11 @@ const SearchDialog = () => {
         <div className="w-full h-full flex flex-col items-center">
           {searchTerm.length < 3 ? (
             <SearchInfo />
+          ) : isSearchError && !isSearching && (repoDataError || repoData.length === 0) ? (
+            <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
+              <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
+              We couldn&apos;t find any users or repositories with that name
+            </Text>
           ) : (
             <>
               <section className="flex flex-col w-full">{renderUserSearchState()}</section>
@@ -200,7 +200,9 @@ const SearchDialogTrigger = () => {
   return (
     <>
       <div
-        className="hidden sm:flex justify-between p-1 pl-3 h-fit w-56 ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden"
+        className={`hidden sm:flex justify-between p-1 pl-3 h-fit ${
+          isMac ? "w-56" : "w-64"
+        } ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden`}
         onClick={() => setOpenSearch(true)}
       >
         <div className="flex items-center">
@@ -234,10 +236,10 @@ const SearchLoading = () => (
   </div>
 );
 
-const SearchError = ({ variant }: { variant: "users" | "repositories" }) => (
+const SearchError = () => (
   <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
     <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
-    We couldn&apos;t find any {variant} with that name
+    We couldn&apos;t find any users or repositories with that name
   </Text>
 );
 
@@ -270,7 +272,7 @@ const UserResultCard = ({ login, active }: UserResultCardProps) => {
 
   return (
     <Link
-      href={`/user/${login}`}
+      href={`/u/${login}`}
       className={clsx(
         active && "_cursorActive bg-slate-100",
         "w-full flex items-center py-2 p-4 gap-2 hover:bg-slate-100 cursor-pointer"

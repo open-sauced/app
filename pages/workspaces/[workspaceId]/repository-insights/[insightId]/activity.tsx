@@ -4,7 +4,6 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import SEO from "layouts/SEO/SEO";
-import fetchSocialCard from "lib/utils/fetch-social-card";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import HubPageLayout from "layouts/hub-page";
 import Activity from "components/organisms/Activity/activity";
@@ -26,7 +25,7 @@ interface InsightPageProps {
 const HubPage = ({ insight, ogImage, workspaceId, owners, isOwner }: InsightPageProps) => {
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded && repositories.length > 100;
+  const showBanner = isOwner && !isWorkspaceUpgraded;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const hasMounted = useHasMounted();
 
@@ -57,16 +56,18 @@ const HubPage = ({ insight, ogImage, workspaceId, owners, isOwner }: InsightPage
           ) : null
         }
       >
-        <HubPageLayout page="activity" owners={owners}>
-          <Activity repositories={repositories} />
-        </HubPageLayout>
-        <InsightUpgradeModal
-          workspaceId={workspaceId}
-          variant="repositories"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={repositories.length}
-        />
+        <div className="px-4 py-8 lg:px-16 lg:py-12">
+          <HubPageLayout page="activity" owners={owners} overLimit={showBanner}>
+            <Activity repositories={repositories} />
+          </HubPageLayout>
+          <InsightUpgradeModal
+            workspaceId={workspaceId}
+            variant="all"
+            isOpen={isInsightUpgradeModalOpen}
+            onClose={() => setIsInsightUpgradeModalOpen(false)}
+            overLimit={repositories.length}
+          />
+        </div>
       </WorkspaceLayout>
     </>
   );
@@ -98,7 +99,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   // Keeping this here so we are sure the page is not private before we fetch the social card.
-  const ogImage = await fetchSocialCard(`insights/${insightId}`);
+  const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/insights/${insightId}`;
 
   const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
     path: `workspaces/${workspaceId}/members`,
@@ -115,7 +116,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         return member.member.login;
       }
     }
-  );
+  ).filter(Boolean);
 
   const isOwner = !!(workspaceMembers?.data || []).find(
     (member) => member.role === "owner" && member.user_id === userId

@@ -1,10 +1,14 @@
 import { useLocalStorage } from "react-use";
 import { LuArrowRightToLine } from "react-icons/lu";
 import { useOutsideClick } from "rooks";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import clsx from "clsx";
+import Link from "next/link";
+import { IoClose } from "react-icons/io5";
 import TopNav from "components/organisms/TopNav/top-nav";
 import { AppSideBar } from "components/shared/AppSidebar/AppSidebar";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 
 interface WorkspaceLayoutProps {
@@ -15,10 +19,13 @@ interface WorkspaceLayoutProps {
 }
 
 export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: WorkspaceLayoutProps) => {
+  const { user } = useSupabaseAuth();
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
-  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", isLargeScreen);
+  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", !user ? false : isLargeScreen);
   const hideSidebar = () => setShowingSidebar(false);
   const sidebarRef = useRef<HTMLSpanElement | null>(null);
+  const [showingSignupNudge, setShowingSignupNudge] = useState(true);
+
   useOutsideClick(
     sidebarRef,
     (event) => {
@@ -62,14 +69,27 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
             )}
           </ClientOnly>
         </div>
-        <div className="relative flex flex-col items-center grow pt-8 md:pt-14 lg:pt-20">
+        <div className="flex-col w-full items-center grow">
           <ClientOnly>{banner}</ClientOnly>
-          <div className="px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px] pb-20">{children}</div>
+          <div className={clsx("w-full min-w-screen min-h-[100px] pb-20", banner && "md:mt-9")}>{children}</div>
         </div>
       </div>
       {footer ? (
         <div className="sticky bottom-0 bg-light-slate-2 border-t h-16 pr-3 flex flex-col justify-center items-end">
           <div className="border-t flex">{footer}</div>
+        </div>
+      ) : null}
+      {!user && showingSignupNudge ? (
+        <div className="sticky w-full min-w-screen bottom-0 bg-light-slate-2 border-t h-16 pr-3 grid place-content-center grid-flow-col gap-4 px-4 md:hidden">
+          <span>
+            <Link href="/start" className="text-sauced-orange hover:underline">
+              Sign up
+            </Link>{" "}
+            to start tracking your projects!
+          </span>
+          <button onClick={() => setShowingSignupNudge(false)}>
+            <IoClose className="w-4 h-4" />
+          </button>
         </div>
       ) : null}
     </>

@@ -14,9 +14,12 @@ import Title from "components/atoms/Typography/title";
 import TextInput from "components/atoms/TextInput/text-input";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
+import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
+import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 const TrackedContributorsModal = dynamic(import("components/Workspaces/TrackedContributorsModal"));
 const DeleteListPageModal = dynamic(import("components/organisms/ListPage/DeleteListPageModal"));
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -50,6 +53,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   });
 
   const userId = Number(session?.user.user_metadata.sub);
+  const username = session?.user.user_metadata.user_name;
+
+  const featureFlags = await getAllFeatureFlags(userId);
+
   const isOwner = !!(workspaceMembers?.data || []).find(
     (member) => member.role === "owner" && member.user_id === userId
   );
@@ -60,6 +67,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       bearerToken,
       list,
       isOwner,
+      featureFlags,
+      username,
     },
   };
 }
@@ -69,6 +78,8 @@ type ContributorInsightEditPageProps = {
   bearerToken: string;
   list: DbUserList;
   isOwner: boolean;
+  featureFlags: Record<string, boolean>;
+  username: string;
 };
 
 export default function ContributorInsightEditPage({
@@ -76,10 +87,13 @@ export default function ContributorInsightEditPage({
   bearerToken,
   list,
   isOwner,
+  featureFlags,
+  username,
 }: ContributorInsightEditPageProps) {
+  const showOscr = featureFlags && featureFlags["oscr-rating"];
   const {
     data: { data: contributors },
-  } = useContributorsList({ listId: list?.id });
+  } = useContributorsList({ workspaceId, listId: list?.id, showOscr, username });
   const initialTrackedContributors = new Map([
     ...contributors.map((contributor) => [contributor.author_login, true] as const),
   ]);
@@ -90,6 +104,9 @@ export default function ContributorInsightEditPage({
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(initialTrackedContributors);
   const [isTrackedContributorsModalOpen, setIsTrackedContributorsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
+  const overLimit = isOwner && !isWorkspaceUpgraded;
 
   const updateInsight = async () => {
     const { error: updateError } = await updateWorkspaceContributorInsight({
@@ -143,7 +160,7 @@ export default function ContributorInsightEditPage({
         </Button>
       }
     >
-      <div className="grid gap-6 max-w-4xl">
+      <div className="grid gap-6 max-w-4xl px-4 py-8 lg:px-16 lg:py-12">
         <h1 className="border-b bottom pb-4 text-xl font-medium">Edit Contributor Insight</h1>
         <section className="flex flex-col gap-6 mb-2">
           <div>
@@ -165,7 +182,14 @@ export default function ContributorInsightEditPage({
         <TrackedContributorsTable
           disabled={loading}
           contributors={trackedContributors}
-          onAddContributors={() => setIsTrackedContributorsModalOpen(true)}
+          onAddContributors={() => {
+            if (overLimit) {
+              setIsInsightUpgradeModalOpen(true);
+              return;
+            }
+
+            setIsTrackedContributorsModalOpen(true);
+          }}
           onRemoveTrackedContributor={(event) => {
             const { contributor } = event.currentTarget.dataset;
 
@@ -187,12 +211,14 @@ export default function ContributorInsightEditPage({
         {isOwner && (
           <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
             <Title className="!text-1xl !leading-none !border-light-slate-8 border-b pb-4" level={4}>
-              Delete Workspace
+              Delete Contributor Insight
             </Title>
-            <Text className="my-4">Once you delete a workspace, you&apos;re past the point of no return.</Text>
+            <Text className="my-4">
+              Once you delete a Contributor Insight, you&apos;re past the point of no return.
+            </Text>
 
             <Button onClick={() => setIsDeleteModalOpen(true)} variant="destructive" className="w-fit">
-              Delete workspace
+              Delete Insight
             </Button>
           </div>
         )}
@@ -228,6 +254,15 @@ export default function ContributorInsightEditPage({
         onConfirm={deleteInsight}
         onClose={() => setIsDeleteModalOpen(false)}
       />
+      {isOwner ? (
+        <InsightUpgradeModal
+          workspaceId={workspaceId}
+          variant="all"
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          overLimit={trackedContributors.size}
+        />
+      ) : null}
     </WorkspaceLayout>
   );
 }

@@ -29,7 +29,7 @@ const MultiSelect = ({
   selected,
   handleSelect,
   className,
-  placeholder,
+  placeholder = "Select Items",
   handleKeyDown,
   inputPlaceholder,
   setSelected,
@@ -51,7 +51,8 @@ const MultiSelect = ({
             aria-controls="select-menu-list"
             role="combobox"
             aria-expanded={open}
-            className="flex items-center justify-between text-foreground"
+            className="flex items-center justify-between text-foreground before:content-[attr(data-inset-label)] before:mr-1 before:font-normal before:text-slate-500"
+            data-inset-label={placeholder}
           >
             {selected.length > 0 ? (
               <span className="truncate">
@@ -59,7 +60,7 @@ const MultiSelect = ({
                 {selected.length > 1 ? `, +${selected.length - 1}` : null}
               </span>
             ) : (
-              <span className="opacity-50">{placeholder ?? "Select Items"}</span>
+              <span className="sr-only">{placeholder}</span>
             )}
 
             {selected.length > 0 ? (

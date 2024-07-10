@@ -36,6 +36,7 @@ const useRepositoryPullRequests = ({
 
   if (query.get("repo")) {
     query.delete("topic");
+    query.delete("filter");
   }
 
   query.set("page", "1");

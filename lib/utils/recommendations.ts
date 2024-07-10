@@ -22,6 +22,7 @@ const recommendations: Record<InterestType, string[]> = {
   svelte: ["sveltejs/svelte"],
   android: ["android/architecture-samples"],
   kotlin: ["Kotlin/kotlinx.coroutines"],
+  swift: ["apple/swift"],
 };
 
 export default recommendations;

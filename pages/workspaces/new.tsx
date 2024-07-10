@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { ComponentProps, useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { usePostHog } from "posthog-js/react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -32,6 +33,7 @@ const NewWorkspace = () => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
+  const posthog = usePostHog();
   const nameQuery = router.query.name as string;
   const descriptionQuery = router.query.description as string;
   const reposQuery = router.query.repos as string;
@@ -71,6 +73,7 @@ const NewWorkspace = () => {
 
   const onCreateWorkspace: ComponentProps<"form">["onSubmit"] = async (event) => {
     event.preventDefault();
+    posthog.capture("clicked: finish Create Workspace");
     setIsSaving(true);
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
@@ -124,7 +127,7 @@ const NewWorkspace = () => {
         </AuthContentWrapper>
       }
     >
-      <div className="grid gap-6 max-w-4xl">
+      <div className="grid gap-6 max-w-4xl px-4 py-8 lg:pt-12 lg:px-16">
         <h1 className="border-b bottom pb-4 text-xl font-medium">Workspace Settings</h1>
         <form id="new-workspace" className="flex flex-col gap-6 mb-2" onSubmit={onCreateWorkspace}>
           <div>
@@ -155,6 +158,7 @@ const NewWorkspace = () => {
         <TrackedReposTable
           repositories={trackedRepos}
           onAddRepos={() => {
+            posthog.capture("clicked: Add Repositories (Create workspace)");
             setTrackedReposModalOpen(true);
           }}
           onRemoveTrackedRepo={(event) => {

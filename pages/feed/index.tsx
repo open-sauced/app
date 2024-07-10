@@ -15,8 +15,6 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import { useFetchFeaturedHighlights } from "lib/hooks/useFetchFeaturedHighlights";
 import { setQueryParams } from "lib/utils/query-params";
 
-import { WithPageLayout } from "interfaces/with-page-layout";
-import ProfileLayout from "layouts/profile";
 import SEO from "layouts/SEO/SEO";
 
 import { Dialog, DialogCloseButton, DialogContent } from "components/molecules/Dialog/dialog";
@@ -36,6 +34,8 @@ import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPane
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import repoTofilterList, { HighlightReposType } from "lib/utils/repo-to-filter-list";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import useSession from "lib/hooks/useSession";
 
 type ActiveTabType = "home" | "following";
 
@@ -44,8 +44,9 @@ interface HighlightSSRProps {
   referer: string;
 }
 
-const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
+export default function Feeds(props: HighlightSSRProps) {
   const { user, signIn } = useSupabaseAuth();
+  const { session } = useSession(true);
   const { data: repos } = useFetchHighlightRepos();
 
   const [host, setHost] = useState("");
@@ -175,193 +176,192 @@ const Feeds: WithPageLayout<HighlightSSRProps> = (props: HighlightSSRProps) => {
         twitterCard="summary_large_image"
       />
 
-      <div
-        className="container flex flex-col justify-center w-full gap-12 px-2 pt-4 md:items-start md:px-16 md:flex-row"
-        ref={topRef}
-      >
-        <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-1/5`}>
-          <div className="flex flex-col w-full gap-6 mt-12">
-            {user && (
-              <div className="w-full">
-                <UserCard
-                  loading={loggedInUserLoading}
-                  username={loggedInUser?.login as string}
-                  meta={userMetaArray as MetaObj[]}
-                  name={loggedInUser?.name as string}
+      <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
+        <div
+          className="container flex flex-col justify-center w-full gap-12 px-2 pt-4 pb-14 md:items-start md:px-16 md:flex-row mx-auto"
+          ref={topRef}
+        >
+          <div className={`sticky ${user ? "top-16" : "top-8"} xl:flex hidden flex-none w-1/5`}>
+            <div className="flex flex-col w-full gap-6 mt-12">
+              {user && (
+                <div className="w-full">
+                  <UserCard
+                    loading={loggedInUserLoading}
+                    username={loggedInUser?.login as string}
+                    meta={userMetaArray as MetaObj[]}
+                    name={loggedInUser?.name as string}
+                  />
+                </div>
+              )}
+              {isDesktop && (
+                <TopContributorsPanel
+                  loggedInUserLogin={loggedInUser?.login ?? ""}
+                  loggedInUserId={loggedInUser?.id ?? undefined}
+                  refreshLoggedInUser={refreshLoggedInUser}
                 />
-              </div>
-            )}
-            {isDesktop && (
-              <TopContributorsPanel
-                loggedInUserLogin={loggedInUser?.login ?? ""}
-                loggedInUserId={loggedInUser?.id ?? undefined}
-                refreshLoggedInUser={refreshLoggedInUser}
-              />
-            )}
-            <AnnouncementCard
-              title="Track your project with Workspaces!"
-              description={
-                "Set up your Workspace to get you and your team access to information about pull requests, issues, and contributors for all your repositories."
-              }
-              bannerSrc={"/try-workspaces.png"}
-              url={"/workspaces/new?welcome=true"}
-              cta={"Try it"}
-            />
-          </div>
-        </div>
-        {singleHighlight && (
-          <Dialog
-            open={openSingleHighlight}
-            onOpenChange={(open) => {
-              if (openSingleHighlight && !open) {
-                if (shouldAllowDialogCloseAction) {
-                  setOpenSingleHighlight(false);
-                  router.replace("/feed");
-                } else {
-                  router.back();
+              )}
+              <AnnouncementCard
+                title="Introducing StarSearch!"
+                description={
+                  "Start using StarSearch, our AI-powered feature that allows you to ask questions and get answers with in-depth insights into contributor history and activities, bringing a new depth of knowledge about open source projects."
                 }
-              }
-            }}
-          >
-            <DialogContent className="sm:max-h-screen">
-              <div className="flex flex-col gap-8 mx-auto mt-10">
-                <div className="flex flex-col gap-6 px-3">
-                  <div className="flex items-center gap-3">
-                    <Link href={`/user/${singleHighlight.login}`} className="flex items-center gap-3">
-                      <Avatar
-                        alt="user profile avatar"
-                        isCircle
-                        size="sm"
-                        avatarURL={`https://www.github.com/${singleHighlight.login}.png?size=300`}
-                      />
-                      <strong>{singleHighlight.login}</strong>
-                    </Link>
-                    <span className="text-xs font-normal text-light-slate-11">
-                      {formatDistanceToNowStrict(new Date(singleHighlight.created_at), {
-                        addSuffix: true,
-                      })}
-                    </span>
-                    {shouldAllowDialogCloseAction ? (
-                      <DialogCloseButton onClick={() => router.replace("/feed")} />
-                    ) : (
-                      <Button
-                        variant="text"
-                        onClick={() => router.back()}
-                        className="!p-0 !border-0 absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100"
-                      >
-                        <AiOutlineClose size={20} />
-                        <span className="sr-only">Close</span>
-                      </Button>
-                    )}
-                  </div>
-
-                  <div className="w-full px-2 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
-                    <ContributorHighlightCard
-                      emojis={emojis}
-                      title={singleHighlight.title}
-                      desc={singleHighlight.highlight}
-                      highlightLink={singleHighlight.url}
-                      user={singleHighlight.login}
-                      id={singleHighlight.id}
-                      shipped_date={singleHighlight.shipped_at}
-                      type={singleHighlight.type}
-                      refreshCallBack={mutate}
-                      taggedRepos={singleHighlight.tagged_repos}
-                    />
-                  </div>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-        )}
-        <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-2xl xl:max-w-lg">
-          <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
-            <TabsTrigger
-              className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"
-              value="home"
-            >
-              Home
-            </TabsTrigger>
-            <TabsTrigger
-              className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-lg"
-              value="following"
-            >
-              Following
-            </TabsTrigger>
-          </TabsList>
-
-          {user && (
-            <div className="flex max-w-3xl px-1 pt-4 lg:gap-x-3">
-              <div className="hidden lg:inline-flex pt-[0.4rem]">
-                <Avatar
-                  alt="user profile avatar"
-                  isCircle
-                  size="sm"
-                  avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
-                />
-              </div>
-
-              <HighlightInputForm refreshCallback={mutate} />
+                bannerSrc={"/assets/images/anouncement-cards/star-search-announcement-card.png"}
+                url={"/star-search"}
+                cta={"Try It Now!"}
+              />
             </div>
-          )}
-          <TabsContent value="home">
-            <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
-            {meta.pageCount > 1 && (
-              <div className="flex items-center justify-between max-w-3xl px-2 mt-10">
-                <div className="flex items-center w-max gap-x-4">
-                  <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
-                </div>
-                <Pagination
-                  pages={[]}
-                  totalPage={meta.pageCount}
-                  page={meta.page}
-                  pageSize={meta.itemCount}
-                  goToPage
-                  hasNextPage={meta.hasNextPage}
-                  hasPreviousPage={meta.hasPreviousPage}
-                  onPageChange={function (page: number): void {
-                    setPage(page);
-                    if (topRef.current) {
-                      topRef.current.scrollIntoView({
-                        behavior: "smooth",
-                      });
-                    }
-                  }}
-                />
-              </div>
-            )}
-          </TabsContent>
-          <TabsContent value="following">
-            <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
-          </TabsContent>
-        </Tabs>
-        <div className="sticky flex-col flex-none hidden w-1/3 gap-6 mt-10 xl:w-1/4 lg:flex top-20">
-          {repoList && repoList.length > 0 && (
-            <HighlightsFilterCard
-              setSelected={(repo) => {
-                if (!openSingleHighlight) {
-                  if (repo) {
-                    setQueryParams({ repo });
+          </div>
+          {singleHighlight && (
+            <Dialog
+              open={openSingleHighlight}
+              onOpenChange={(open) => {
+                if (openSingleHighlight && !open) {
+                  if (shouldAllowDialogCloseAction) {
+                    setOpenSingleHighlight(false);
+                    router.replace("/feed");
                   } else {
-                    setQueryParams({}, ["repo"]);
+                    router.back();
                   }
-                  setPage(1);
                 }
               }}
-              repos={repoList}
-              selectedFilter={selectedRepo}
-            />
-          )}
+            >
+              <DialogContent className="sm:max-h-screen">
+                <div className="flex flex-col gap-8 mx-auto mt-10">
+                  <div className="flex flex-col gap-6 px-3">
+                    <div className="flex items-center gap-3">
+                      <Link href={`/u/${singleHighlight.login}`} className="flex items-center gap-3">
+                        <Avatar
+                          alt="user profile avatar"
+                          isCircle
+                          size="sm"
+                          avatarURL={`https://www.github.com/${singleHighlight.login}.png?size=300`}
+                        />
+                        <strong>{singleHighlight.login}</strong>
+                      </Link>
+                      <span className="text-xs font-normal text-light-slate-11">
+                        {formatDistanceToNowStrict(new Date(singleHighlight.created_at), {
+                          addSuffix: true,
+                        })}
+                      </span>
+                      {shouldAllowDialogCloseAction ? (
+                        <DialogCloseButton onClick={() => router.replace("/feed")} />
+                      ) : (
+                        <Button
+                          variant="text"
+                          onClick={() => router.back()}
+                          className="!p-0 !border-0 absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100"
+                        >
+                          <AiOutlineClose size={20} />
+                          <span className="sr-only">Close</span>
+                        </Button>
+                      )}
+                    </div>
 
-          {featuredHighlights && featuredHighlights.length > 0 && (
-            <FeaturedHighlightsPanel highlights={featuredHighlights} />
+                    <div className="w-full px-2 py-6 border bg-light-slate-1 md:px-6 lg:px-12 rounded-xl">
+                      <ContributorHighlightCard
+                        emojis={emojis}
+                        title={singleHighlight.title}
+                        desc={singleHighlight.highlight}
+                        highlightLink={singleHighlight.url}
+                        user={singleHighlight.login}
+                        id={singleHighlight.id}
+                        shipped_date={singleHighlight.shipped_at}
+                        type={singleHighlight.type}
+                        refreshCallBack={mutate}
+                        taggedRepos={singleHighlight.tagged_repos}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           )}
-          <NewsletterForm />
+          <Tabs onValueChange={onTabChange} defaultValue="home" className="w-full 2xl:max-w-2xl xl:max-w-lg">
+            <TabsList className={clsx("justify-start  w-full border-b", !user && "hidden")}>
+              <TabsTrigger
+                className="data-[state=active]:border-sauced-orange data-[state=active]:border-b-2 text-lg"
+                value="home"
+              >
+                Home
+              </TabsTrigger>
+              <TabsTrigger
+                className="data-[state=active]:border-sauced-orange  data-[state=active]:border-b-2 text-lg"
+                value="following"
+              >
+                Following
+              </TabsTrigger>
+            </TabsList>
+
+            {user && (
+              <div className="flex max-w-3xl px-1 pt-4 lg:gap-x-3">
+                <div className="hidden lg:inline-flex pt-[0.4rem]">
+                  <Avatar
+                    alt="user profile avatar"
+                    isCircle
+                    size="sm"
+                    avatarURL={`https://www.github.com/${user?.user_metadata.user_name}.png?size=300`}
+                  />
+                </div>
+
+                <HighlightInputForm refreshCallback={mutate} />
+              </div>
+            )}
+            <TabsContent value="home">
+              <HomeHighlightsWrapper emojis={emojis} mutate={mutate} highlights={data} loading={isLoading} />
+              {meta.pageCount > 1 && (
+                <div className="flex items-center justify-between max-w-3xl px-2 mt-10">
+                  <div className="flex items-center w-max gap-x-4">
+                    <PaginationResults metaInfo={meta} total={meta.itemCount} entity={"highlights"} />
+                  </div>
+                  <Pagination
+                    pages={[]}
+                    totalPage={meta.pageCount}
+                    page={meta.page}
+                    pageSize={meta.itemCount}
+                    goToPage
+                    hasNextPage={meta.hasNextPage}
+                    hasPreviousPage={meta.hasPreviousPage}
+                    onPageChange={function (page: number): void {
+                      setPage(page);
+                      if (topRef.current) {
+                        topRef.current.scrollIntoView({
+                          behavior: "smooth",
+                        });
+                      }
+                    }}
+                  />
+                </div>
+              )}
+            </TabsContent>
+            <TabsContent value="following">
+              <FollowingHighlightWrapper selectedFilter={selectedRepo} emojis={emojis} />
+            </TabsContent>
+          </Tabs>
+          <div className="sticky flex-col flex-none hidden w-1/3 gap-6 mt-10 xl:w-1/4 lg:flex top-20">
+            {repoList && repoList.length > 0 && (
+              <HighlightsFilterCard
+                setSelected={(repo) => {
+                  if (!openSingleHighlight) {
+                    if (repo) {
+                      setQueryParams({ repo });
+                    } else {
+                      setQueryParams({}, ["repo"]);
+                    }
+                    setPage(1);
+                  }
+                }}
+                repos={repoList}
+                selectedFilter={selectedRepo}
+              />
+            )}
+
+            {featuredHighlights && featuredHighlights.length > 0 && (
+              <FeaturedHighlightsPanel highlights={featuredHighlights} />
+            )}
+            <NewsletterForm />
+          </div>
         </div>
-      </div>
+      </WorkspaceLayout>
     </>
   );
-};
-
-Feeds.PageLayout = ProfileLayout;
-export default Feeds;
+}

@@ -3,9 +3,26 @@ import { DayRange } from "components/shared/DayRangePicker";
 import { type StatsType } from "lib/hooks/api/useFetchMetricStats";
 
 export type HistogramData = {
+  // DateTime string
   bucket: string;
+
+  // Stars, Forks, Contributors
   star_count?: number;
   forks_count?: number;
+  contributor_count?: number;
+
+  // Issues
+  opened_issues?: number;
+  closed_issues?: number;
+
+  // PRS
+  active_prs?: number;
+  accepted_prs?: number;
+
+  // ROSS
+  new?: number;
+  recurring?: number;
+  internal?: number;
 };
 
 export function getTicks({ histogram, range }: { histogram: HistogramData[]; range: DayRange }): string[] {
@@ -291,5 +308,193 @@ export function getHistoryForksHistogramToDays({
   }
   result.reverse();
 
+  return result;
+}
+
+// adds empty days in between those given by the histogram API endpoint
+export function getDailyContributorHistogramToDays({
+  stats,
+  range,
+}: {
+  stats: StatsType[] | undefined;
+  range: number;
+}): HistogramData[] {
+  let previousCount = 0;
+  const allDays = stats?.reverse().reduce((days: { [count: number]: StatsType }, current: StatsType) => {
+    const today = new Date();
+    const count = differenceInDays(today, new Date(current.bucket));
+
+    if (days[count]) {
+      days[count].contributor_count! += current.contributor_count!;
+    } else {
+      const newDay = new Date();
+      if (count - previousCount > 1) {
+        for (let missed = 1; missed < count - previousCount; missed++) {
+          const missingDay = new Date(today);
+          missingDay.setDate(today.getDate() - (missed + previousCount));
+          days[previousCount + missed] = {
+            bucket: missingDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+            contributor_count: 0,
+          };
+        }
+      }
+
+      newDay.setDate(today.getDate() - count);
+      days[count] = {
+        bucket: newDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+        contributor_count: current.contributor_count!,
+      };
+    }
+
+    previousCount = count;
+    return days;
+  }, {});
+
+  // convert to array
+  const result: StatsType[] = [];
+  for (let i = 0; i < range; i++) {
+    let temp = allDays?.[i];
+    if (!temp) {
+      const today = new Date();
+      temp = {
+        bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(undefined, {
+          month: "numeric",
+          day: "numeric",
+        }),
+        contributor_count: 0,
+      };
+    }
+    result.push(temp);
+  }
+
+  result.reverse();
+  return result;
+}
+
+// adds empty days in between those given by the histogram API endpoint
+export function getDailyIssuesHistogramToDays({
+  stats,
+  range,
+}: {
+  stats: StatsType[] | undefined;
+  range: number;
+}): HistogramData[] {
+  let previousCount = 0;
+  const allDays = stats?.reverse().reduce((days: { [count: number]: StatsType }, current: StatsType) => {
+    const today = new Date();
+    const count = differenceInDays(today, new Date(current.bucket));
+
+    if (days[count]) {
+      days[count].opened_issues! += current.opened_issues!;
+      days[count].closed_issues! += current.closed_issues!;
+    } else {
+      const newDay = new Date();
+      if (count - previousCount > 1) {
+        for (let missed = 1; missed < count - previousCount; missed++) {
+          const missingDay = new Date(today);
+          missingDay.setDate(today.getDate() - (missed + previousCount));
+          days[previousCount + missed] = {
+            bucket: missingDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+            opened_issues: 0,
+            closed_issues: 0,
+          };
+        }
+      }
+
+      newDay.setDate(today.getDate() - count);
+      days[count] = {
+        bucket: newDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+        opened_issues: current.opened_issues!,
+        closed_issues: current.closed_issues!,
+      };
+    }
+
+    previousCount = count;
+    return days;
+  }, {});
+
+  // convert to array
+  const result: StatsType[] = [];
+  for (let i = 0; i < range; i++) {
+    let temp = allDays?.[i];
+    if (!temp) {
+      const today = new Date();
+      temp = {
+        bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(undefined, {
+          month: "numeric",
+          day: "numeric",
+        }),
+        opened_issues: 0,
+        closed_issues: 0,
+      };
+    }
+    result.push(temp);
+  }
+
+  result.reverse();
+  return result;
+}
+
+// adds empty days in between those given by the histogram API endpoint
+export function getDailyPullRequestsHistogramToDays({
+  stats,
+  range,
+}: {
+  stats: StatsType[] | undefined;
+  range: number;
+}): HistogramData[] {
+  let previousCount = 0;
+  const allDays = stats?.reverse().reduce((days: { [count: number]: StatsType }, current: StatsType) => {
+    const today = new Date();
+    const count = differenceInDays(today, new Date(current.bucket));
+
+    if (days[count]) {
+      days[count].active_prs! += current.active_prs!;
+      days[count].accepted_prs! += current.accepted_prs!;
+    } else {
+      const newDay = new Date();
+      if (count - previousCount > 1) {
+        for (let missed = 1; missed < count - previousCount; missed++) {
+          const missingDay = new Date(today);
+          missingDay.setDate(today.getDate() - (missed + previousCount));
+          days[previousCount + missed] = {
+            bucket: missingDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+            active_prs: 0,
+            accepted_prs: 0,
+          };
+        }
+      }
+
+      newDay.setDate(today.getDate() - count);
+      days[count] = {
+        bucket: newDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+        active_prs: current.active_prs!,
+        accepted_prs: current.accepted_prs!,
+      };
+    }
+
+    previousCount = count;
+    return days;
+  }, {});
+
+  // convert to array
+  const result: StatsType[] = [];
+  for (let i = 0; i < range; i++) {
+    let temp = allDays?.[i];
+    if (!temp) {
+      const today = new Date();
+      temp = {
+        bucket: new Date(today.setDate(today.getDate() - i)).toLocaleDateString(undefined, {
+          month: "numeric",
+          day: "numeric",
+        }),
+        active_prs: 0,
+        accepted_prs: 0,
+      };
+    }
+    result.push(temp);
+  }
+
+  result.reverse();
   return result;
 }

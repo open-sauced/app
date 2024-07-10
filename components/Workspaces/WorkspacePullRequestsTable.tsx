@@ -157,7 +157,7 @@ const mobileColumns = [
               </Link>{" "}
               <span>opened</span> <relative-time datetime={info.row.original.pr_created_at}></relative-time> by{" "}
               <Link
-                href={`/user/${author}`}
+                href={`/u/${author}`}
                 title={`User profile for ${author}`}
                 className="text-orange-700 underline hover:no-underline"
                 aria-hidden="true"

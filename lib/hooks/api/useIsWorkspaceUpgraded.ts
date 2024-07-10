@@ -7,5 +7,5 @@ export function useIsWorkspaceUpgraded({ workspaceId }: { workspaceId: string })
     publicApiFetcher as Fetcher<Workspace, Error>
   );
 
-  return { data: data?.payee_user_id !== null, error };
+  return { data: data?.exceeds_upgrade_limits === false, error };
 }

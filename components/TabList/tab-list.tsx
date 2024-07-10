@@ -1,26 +1,32 @@
 import React from "react";
 
+import Link from "next/link";
+import clsx from "clsx";
 import TabListItem from "./tab-list-item";
 
 type TabItem = {
   name: string;
   path: string;
-  numOf?: number;
 };
 
-interface NavProps {
+interface TabListProps {
   tabList: TabItem[];
   selectedTab: string;
   pageId?: string;
 }
 
-const TabList: React.FC<NavProps> = ({ tabList, pageId, selectedTab }) => {
+interface SubTabsListProps extends TabListProps {
+  label: string;
+  textSize?: "small" | "regular";
+  onSelect?: (tab: TabItem) => void;
+}
+
+const TabList = ({ tabList, pageId, selectedTab }: TabListProps) => {
   return (
     <nav
       role="tablist"
       aria-orientation="horizontal"
       aria-label="Browse the tools"
-      tabIndex={0}
       className="tool-list-nav flex w-full overflow-x-auto overflow-y-hidden gap-2"
     >
       {tabList.map((tab, index) => (
@@ -39,6 +45,36 @@ const TabList: React.FC<NavProps> = ({ tabList, pageId, selectedTab }) => {
           <TabListItem tab={tab} pageLink={`${pageId ? `${pageId}/` : ""}${tab.path}`} selectedTab={selectedTab} />
         </div>
       ))}
+    </nav>
+  );
+};
+
+export const SubTabsList = ({ tabList, pageId, selectedTab, label, textSize, onSelect }: SubTabsListProps) => {
+  return (
+    <nav
+      role="tablist"
+      aria-label={label}
+      className={clsx(
+        "flex items-center w-max overflow-x-auto overflow-y-hidden gap-2 bg-light-slate-3 p-1 rounded",
+        textSize === "small" && "text-sm"
+      )}
+    >
+      {tabList.map((tab, index) => {
+        const isSelected = selectedTab === tab.name.toLowerCase();
+
+        return (
+          <div
+            role="tab"
+            aria-selected={isSelected ? "true" : "false"}
+            data-state={isSelected ? "active" : "inactive"}
+            key={index}
+            className={clsx(isSelected && "bg-white shadow", "rounded py-1 px-2", !isSelected && "text-light-slate-11")}
+            onClick={onSelect ? () => onSelect(tab) : undefined}
+          >
+            {onSelect ? tab.name : <Link href={`${pageId ? `${pageId}/` : ""}${tab.path}`}>{tab.name}</Link>}
+          </div>
+        );
+      })}
     </nav>
   );
 };

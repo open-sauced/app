@@ -96,7 +96,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     if (member.role === "owner") {
       return member.member.login;
     }
-  });
+  }).filter(Boolean);
 
   const isOwner = !!(workspaceMembers?.data || []).find(
     (member) => member.role === "owner" && member.user_id === userId
@@ -140,7 +140,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
   const [contributor, setContributor] = useState("");
   const debouncedSearchTerm = useDebounceTerm(contributor, 300);
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded && numberOfContributors > 10;
+  const showBanner = isOwner && !isWorkspaceUpgraded;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   const { data, isLoading, meta } = useFetchListContributorsHighlights({
@@ -178,6 +178,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
         numberOfContributors={numberOfContributors}
         isOwner={isOwner}
         owners={owners}
+        overLimit={showBanner}
       >
         <div
           ref={topRef}
@@ -242,7 +243,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
                   <div key={id} className="flex flex-col gap-6 px-1 w-full">
                     <div className="flex items-center gap-3">
                       <ClientOnly>
-                        <Link href={`/user/${login}`} className="flex items-center gap-3">
+                        <Link href={`/u/${login}`} className="flex items-center gap-3">
                           <Avatar
                             alt="user profile avatar"
                             isCircle

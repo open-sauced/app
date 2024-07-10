@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
+import { DayRangePicker } from "components/shared/DayRangePicker";
 import { SearchedReposTable } from "../SearchReposTable";
 
 interface SearchByReposStepProps {
@@ -53,6 +55,9 @@ export const SelectOrgReposStep = ({
   hasError,
 }: SearchByReposStepProps) => {
   const [filteredRepositories, setFilteredRepositories] = useState<Map<string, boolean>>(repositories);
+  const router = useRouter();
+  const initialRange = router.query.range as string;
+  const [range, setRange] = useState(initialRange ? Number(initialRange) : 30);
 
   useEffect(() => {
     const lowercasedOrg = organization.toLowerCase();
@@ -78,11 +83,17 @@ export const SelectOrgReposStep = ({
 
   return (
     <div className="flex flex-col gap-4 h-96 max-h-96">
-      <div className="flex items-center gap-2 font-semibold">
-        <Avatar contributor={organization} size="xsmall" />
-        <span>{organization}</span>
+      <div className="flex w-full justify-between gap-2 font-semibold">
+        <div className="flex gap-2 justify-start align-middle">
+          <Avatar contributor={organization} size="small" />
+          <span className="flex align-middle">{organization}</span>
+        </div>
+        <DayRangePicker onDayRangeChanged={(e) => setRange(Number(e))} />
       </div>
-      <p>Select the organization repositories that you want to track.</p>
+      <p>
+        Select the organization repositories updated in the last <span className="font-bold">{range} days</span> that
+        you want to track.
+      </p>
       <SearchedReposTable
         type="by-org"
         repositories={filteredRepositories}

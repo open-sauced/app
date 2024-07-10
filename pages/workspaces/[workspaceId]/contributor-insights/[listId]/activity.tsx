@@ -2,7 +2,7 @@ import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NodeMouseEventHandler } from "@nivo/treemap";
 import { useRef } from "react";
 import ContributionsEvolutionByType from "components/molecules/ContributionsEvolutionByTypeCard/contributions-evolution-by-type-card";
@@ -22,6 +22,7 @@ import { OnToggleResizeEventType } from "components/Graphs/shared/graph-resizer"
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import { OptionKeys } from "components/atoms/Select/multi-select";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -71,7 +72,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }),
   ]);
 
-  if (error?.status === 404 || error?.status === 401) {
+  if (error?.status === 404 || error?.status === 401 || !list?.id) {
     return {
       notFound: true,
     };
@@ -84,7 +85,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     if (member.role === "owner") {
       return member.member.login;
     }
-  });
+  }).filter(Boolean);
 
   const isOwner = !!(workspaceMembers?.data || []).find(
     (member) => member.role === "owner" && member.user_id === userId
@@ -178,23 +179,6 @@ const ListActivityPage = ({
   const router = useRouter();
   const range = router.query.range as string;
   const {
-    data: contributorStats,
-    isLoading,
-    isError: isMostActiveError,
-    setContributorType,
-    contributorType,
-  } = useMostActiveContributors({ listId: list!.id });
-  const [currentOrgName, setCurrentOrgName] = useState<string | null>(null);
-  const {
-    setRepoName,
-    error,
-    data: projectContributionsByUser,
-    repoName,
-    isLoading: isLoadingProjectContributionsByUser,
-  } = useContributorsByProject(list!.id, Number(range ?? "30"));
-  const [projectId, setProjectId] = useState<string | null>(null);
-
-  const {
     data: projectData = [],
     error: projectDataError,
     isLoading: isTreemapLoading,
@@ -202,6 +186,29 @@ const ListActivityPage = ({
     listId: list!.id,
     range: Number(range ?? "30"),
   });
+  const [filteredRepositories, setFilteredRepositories] = useState<OptionKeys[]>(
+    projectData.map((pd) => ({ label: pd.repo_name, value: pd.repo_name }))
+  );
+  const filteredRepos = filteredRepositories.map(({ label }) => label);
+  const filterOptions = projectData.map(({ repo_name }) => {
+    return { label: repo_name, value: repo_name };
+  });
+  const {
+    data: contributorStats,
+    isLoading,
+    isError: isMostActiveError,
+    setContributorType,
+    contributorType,
+  } = useMostActiveContributors({ listId: list!.id, repos: filteredRepos });
+  const [currentOrgName, setCurrentOrgName] = useState<string | null>(null);
+  const {
+    setRepoName,
+    error,
+    data: projectContributionsByUser,
+    repoName,
+    isLoading: isLoadingProjectContributionsByUser,
+  } = useContributorsByProject(list!.id, Number(range ?? "30"), filteredRepos);
+  const [projectId, setProjectId] = useState<string | null>(null);
 
   const onDrillDown: NodeMouseEventHandler<{ orgName: null; repoName: null; id: string | null }> = (node) => {
     if (currentOrgName === null) {
@@ -221,19 +228,29 @@ const ListActivityPage = ({
       setCurrentOrgName(null);
     }
   };
+  const filteredProjectData = filteredRepos.length
+    ? projectData.filter(({ repo_name }) => {
+        return filteredRepos.includes(repo_name);
+      })
+    : projectData;
 
-  const treemapData = getTreemapData({ currentOrgName, repoName, projectData, projectContributionsByUser });
+  const treemapData = getTreemapData({
+    currentOrgName,
+    repoName,
+    projectData: filteredProjectData,
+    projectContributionsByUser,
+  });
 
   const {
     data: evolutionData,
     isError: evolutionError,
     isLoading: isLoadingEvolution,
-  } = useContributionsEvolutionByType({ listId: list!.id, range: Number(range ?? "30") });
+  } = useContributionsEvolutionByType({ listId: list!.id, range: Number(range ?? "30"), repos: filteredRepos });
   const treemapRef = useRef<HTMLSpanElement>(null);
   const mostActiveRef = useRef<HTMLSpanElement>(null);
   const graphResizerLookup = new Map();
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded && numberOfContributors > 10;
+  const showBanner = isOwner && !isWorkspaceUpgraded;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   if (treemapRef.current) {
@@ -255,6 +272,10 @@ const ListActivityPage = ({
     treemap.style.gridRow = checked ? "1 / span 2" : "";
   };
 
+  useEffect(() => {
+    setFilteredRepositories(projectData.map(({ repo_name }) => ({ label: repo_name, value: repo_name })));
+  }, [projectData]);
+
   return (
     <WorkspaceLayout
       workspaceId={workspaceId}
@@ -270,6 +291,10 @@ const ListActivityPage = ({
         numberOfContributors={numberOfContributors}
         isOwner={isOwner}
         owners={owners}
+        repoFilter={true}
+        repoFilterOptions={filterOptions}
+        repoFilterSelect={setFilteredRepositories}
+        overLimit={showBanner}
       >
         {isError ? (
           <Error errorMessage="Unable to load list activity" />
@@ -303,7 +328,7 @@ const ListActivityPage = ({
       </ListPageLayout>
       <InsightUpgradeModal
         workspaceId={workspaceId}
-        variant="contributors"
+        variant="all"
         isOpen={isInsightUpgradeModalOpen}
         onClose={() => setIsInsightUpgradeModalOpen(false)}
         overLimit={numberOfContributors}

@@ -43,7 +43,7 @@ const FollowingHighlightWrapper = ({ emojis, selectedFilter }: HighlightWrapperP
           data.map(({ id, url, title, created_at, highlight, shipped_at, login, type, tagged_repos }) => (
             <div key={id} className="flex flex-col gap-6 px-1">
               <div className="flex items-center gap-3">
-                <Link href={`/user/${login}`} className="flex items-center gap-3">
+                <Link href={`/u/${login}`} className="flex items-center gap-3">
                   <Avatar
                     alt="user profile avatar"
                     isCircle

@@ -66,7 +66,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
 
   useEffect(() => {
     if (onboarded) {
-      router.push(`/user/${user?.user_metadata.user_name}`);
+      router.push("/workspaces");
     } else if (onboarded === false && user && providerToken) {
       setQueryParams({ step: "2" } satisfies QueryParams);
     }
@@ -74,7 +74,10 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
 
   const handleGitHubAuth = async () => {
     // Redirect user to GitHub to authenticate
-    await signIn({ provider: "github" });
+    await signIn({
+      provider: "github",
+      options: { redirectTo: `${window.location.origin}/start?step=2` },
+    });
   };
 
   return (
@@ -244,7 +247,7 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
 
       if (data.ok) {
         store.onboardUser();
-        router.push(`/user/${user?.user_metadata.user_name}`);
+        router.push("/workspaces");
       } else {
         setLoading(false);
         // eslint-disable-next-line no-console
@@ -328,9 +331,7 @@ const Login: WithPageLayout = () => {
   const [interests, setInterests] = useState<string[]>([]);
 
   useEffect(() => {
-    if (!step) {
-      setQueryParams({ step: "1" } satisfies QueryParams);
-    } else {
+    if (step) {
       setCurrentLoginStep(Number(step));
     }
   }, [step]);
@@ -343,7 +344,7 @@ const Login: WithPageLayout = () => {
             <ProgressPie
               percentage={currentLoginStep === 1 ? 0 : currentLoginStep === 2 ? 33 : currentLoginStep === 3 ? 66 : 100}
             />
-            <Title className="!text-2xl">Let‘s get started</Title>
+            <Title className="!text-2xl">Let&apos;s get started</Title>
           </div>
           <div className="mb-8">
             <Text className="!text-sm">

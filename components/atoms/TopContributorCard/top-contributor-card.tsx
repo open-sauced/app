@@ -45,7 +45,7 @@ const TopContributorCard = ({ login, refreshLoggedInUser }: TopContributorCardPr
 
   return (
     <div className="flex items-center justify-between w-full gap-4 bg-light-slate-1">
-      <Link className="overflow-hidden" href={`/user/${login}`}>
+      <Link className="overflow-hidden" href={`/u/${login}`}>
         <div className="flex items-center gap-2">
           <Avatar className="flex-none" isCircle size={35} avatarURL={getAvatarByUsername(login)} />
           <p title={login} className="text-sm font-semibold truncate text-light-slate-12">
