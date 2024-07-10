@@ -1,6 +1,7 @@
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useRef, useState } from "react";
 import { captureException } from "@sentry/nextjs";
 import clsx from "clsx";
+import { useOutsideClick } from "rooks";
 import { Drawer } from "components/shared/Drawer";
 import { UuidSchema, parseSchema } from "lib/validation-schemas";
 import { useToast } from "lib/hooks/useToast";
@@ -23,6 +24,23 @@ export const StarSearchEmbed = ({
   const onClose = () => setDrawerOpen(false);
   const { toast } = useToast();
   let validWorkspaceId = workspaceId;
+
+  const starSearchPanelRef = useRef<HTMLDivElement | null>(null);
+
+  useOutsideClick(
+    starSearchPanelRef,
+    (event) => {
+      if (
+        event.target instanceof HTMLElement &&
+        // for some reason opening the workspaces dropdown has the event.target as the html element
+        // so checking to avoid closing the sidebar when the dropdown is used
+        event.target.tagName !== "HTML"
+      ) {
+        setDrawerOpen(false);
+      }
+    },
+    Boolean(starSearchPanelRef.current)
+  );
 
   try {
     if (workspaceId) {
@@ -74,6 +92,7 @@ export const StarSearchEmbed = ({
         </Drawer>
       ) : (
         <div
+          ref={starSearchPanelRef}
           aria-hidden={!drawerOpen}
           className={clsx(
             !drawerOpen && "translate-x-full",
