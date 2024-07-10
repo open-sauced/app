@@ -726,6 +726,7 @@ export function StarSearchChat({
         <div className="h-8 bg-gradient-to-t from-light-slate-2 to-transparent" />
         <div className="bg-light-slate-2">
           {!isRunning &&
+            starSearchState !== "initial" &&
             (isMobile ? (
               <Drawer
                 title="Choose a suggestion"
