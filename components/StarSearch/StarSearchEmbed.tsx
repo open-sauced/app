@@ -55,41 +55,38 @@ export const StarSearchEmbed = ({
 
   return (
     <>
-      <>
-        <div className="fixed bottom-0 right-0 flex justify-end p-2">
-          <StarSearchButton
-            onOpen={() => {
-              setDrawerOpen(true);
-            }}
-          />
+      <div className="fixed bottom-0 right-0 flex justify-end p-2">
+        <StarSearchButton
+          onOpen={() => {
+            setDrawerOpen(true);
+          }}
+        />
+      </div>
+      {isMobile ? (
+        <Drawer
+          showCloseButton={false}
+          inheritBackground={true}
+          isOpen={drawerOpen}
+          onClose={onClose}
+          fullHeightDrawer={true}
+        >
+          {chat}
+        </Drawer>
+      ) : (
+        <div
+          aria-hidden={!drawerOpen}
+          className={clsx(
+            !drawerOpen && "translate-x-full",
+            `fixed border-r bg-slate-50 right-0 shadow-lg transform transition-transform duration-300 ease-in-out border-l flex flex-col lg:w-2/3 max-w-xl border-slate-200`
+          )}
+          style={{
+            top: "var(--top-nav-height)",
+            height: "calc(100dvh - var(--top-nav-height))",
+          }}
+        >
+          {chat}
         </div>
-        {isMobile ? (
-          <Drawer
-            showCloseButton={false}
-            inheritBackground={true}
-            isOpen={drawerOpen}
-            onClose={onClose}
-            fullHeightDrawer={true}
-          >
-            {chat}
-          </Drawer>
-        ) : (
-          <div
-            // ${drawerOpen ? "-translate-x-full" : ""}
-            aria-hidden={drawerOpen}
-            className={clsx(
-              drawerOpen ? "fixed" : "hidden",
-              `bg-slate-50 right-0 shadow-lg transform transition-transform duration-300 ease-in-out border-l flex flex-col lg:w-2/3 max-w-xl border-slate-200`
-            )}
-            style={{
-              top: "var(--top-nav-height)",
-              height: "calc(100dvh - var(--top-nav-height))",
-            }}
-          >
-            {chat}
-          </div>
-        )}
-      </>
+      )}
     </>
   );
 };
