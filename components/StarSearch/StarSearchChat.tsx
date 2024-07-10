@@ -540,11 +540,9 @@ export function StarSearchChat({
             {!(sharedChatId || sharedPrompt) ? (
               <>
                 <Header tagline={tagline} />
-                {isMobile ? null : (
-                  <div className="pb-8">
-                    <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} embedded={embedded} />
-                  </div>
-                )}
+                <div className="pb-8">
+                  <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} embedded={embedded} />
+                </div>
               </>
             ) : null}
           </div>
