@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.44.0-beta.1](https://github.com/open-sauced/app/compare/v2.43.0...v2.44.0-beta.1) (2024-07-10)
+
+
+### 🍕 Features
+
+* implemented the Radar chart component ([#3704](https://github.com/open-sauced/app/issues/3704)) ([8579f41](https://github.com/open-sauced/app/commit/8579f416f3077108631d04d88833a47d43896e17))
+
 ## [2.43.0](https://github.com/open-sauced/app/compare/v2.42.0...v2.43.0) (2024-07-09)
 
 
