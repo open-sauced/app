@@ -35,7 +35,7 @@ const TextInput = ({
     if (fieldRef?.current) {
       fieldRef.current!.value = "";
     } else if (inputRef.current) {
-      inputRef.current!.value = "";
+      inputRef.current.value = "";
     }
   };
 
