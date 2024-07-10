@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.44.0-beta.2](https://github.com/open-sauced/app/compare/v2.44.0-beta.1...v2.44.0-beta.2) (2024-07-10)
+
+
+### 🐛 Bug Fixes
+
+* now the contributions tab is the first tab on the user profile page ([#3709](https://github.com/open-sauced/app/issues/3709)) ([87d0ee9](https://github.com/open-sauced/app/commit/87d0ee9f72a002de2cffb0df1d335add01303330))
+
 ## [2.44.0-beta.1](https://github.com/open-sauced/app/compare/v2.43.0...v2.44.0-beta.1) (2024-07-10)
 
 
