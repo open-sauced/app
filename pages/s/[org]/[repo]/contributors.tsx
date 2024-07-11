@@ -146,8 +146,10 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
             <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
           </div>
           <ClientOnly>
-            <Activity repositories={[repoData.id]} />
-            <Contributors repositories={[repoData.id]} defaultLayout="grid" />
+            <div className="flex flex-col gap-8">
+              <Activity repositories={[repoData.id]} />
+              <Contributors repositories={[repoData.id]} defaultLayout="grid" />
+            </div>
           </ClientOnly>
         </div>
       </WorkspaceLayout>
