@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.44.0-beta.6](https://github.com/open-sauced/app/compare/v2.44.0-beta.5...v2.44.0-beta.6) (2024-07-11)
+
+
+### 🍕 Features
+
+* filter `RossChart` by contributor type ([#3698](https://github.com/open-sauced/app/issues/3698)) ([d48e8ac](https://github.com/open-sauced/app/commit/d48e8ac55e34136540277c1f7bb9dac2881d984c))
+
+
+### 🐛 Bug Fixes
+
+* allow repos and contributors to be added to workspaces from explore page ([#3700](https://github.com/open-sauced/app/issues/3700)) ([3271dd4](https://github.com/open-sauced/app/commit/3271dd4f086df90b79a8ad5a704ea49a1f528602))
+
 ## [2.44.0-beta.5](https://github.com/open-sauced/app/compare/v2.44.0-beta.4...v2.44.0-beta.5) (2024-07-11)
 
 
