@@ -279,3 +279,7 @@ body:has([data-star-search-mobile]) {
   @apply overflow-x-hidden;
   @apply overflow-y-auto;
 }
+
+body:has([data-star-search-mobile]) .top-nav-container {
+  @apply fixed;
+}
