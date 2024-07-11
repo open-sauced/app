@@ -20,6 +20,7 @@ import TabList from "components/TabList/tab-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useSession from "lib/hooks/useSession";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import Activity from "components/organisms/Activity/activity";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -142,6 +143,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
               <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
             </div>
             <ClientOnly>
+              <Activity repositories={[repoData.id]} />
               <Contributors repositories={[repoData.id]} defaultLayout="grid" />
             </ClientOnly>
           </section>
