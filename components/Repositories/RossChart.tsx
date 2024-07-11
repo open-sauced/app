@@ -35,9 +35,9 @@ export default function RossChart({ stats, isLoading, error, range, className }:
     () => (filteredTotal / (stats ? stats.contributors.length : 1)).toPrecision(2),
     [filteredTotal, stats]
   );
-  
+
   const outsideTotal = useMemo(() => {
-    return stats?.contributors.reduce((prev, curr) => (prev += curr.new), 0);
+    return stats?.contributors.reduce((prev, curr) => (prev += curr.new + curr.recurring), 0);
   }, [stats]);
 
   const weeklyData = useMemo(() => {
