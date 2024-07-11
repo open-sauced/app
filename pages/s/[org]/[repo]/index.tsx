@@ -260,13 +260,13 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 </div>
               </div>
             </div>
-            <div className="flex gap-2">
-              <Pill text={repoData.license} icon={<FaBalanceScale />} />
-              <Pill text={repoData.language} icon={<FaCode />} />
+            <div className="flex w-fit max-w-xs lg:max-w-full gap-2 overflow-x-scroll">
+              <Pill text={repoData.license} icon={<FaBalanceScale />} className="whitespace-nowrap" />
+              <Pill text={repoData.language} icon={<FaCode />} className="whitespace-nowrap" />
               <Pill
                 text={`Last Updated: ${new Date(repoData.updated_at).toLocaleDateString()}`}
                 icon={<FaRegClock />}
-                className="!px-2"
+                className="!px-2 whitespace-nowrap"
               />
             </div>
           </section>
