@@ -69,6 +69,7 @@ type StarSearchChatProps = {
   sharedChatId?: string | null;
   bearerToken: string | undefined | null;
   isMobile: boolean;
+  showTopNavigation?: boolean;
   suggestions: { title: string; prompt: string }[];
   tagline?: string;
   embedded?: boolean;
@@ -89,6 +90,7 @@ export function StarSearchChat({
   embedded = false,
   baseApiStarSearchUrl = DEFAULT_STAR_SEARCH_API_BASE_URL,
   sharingEnabled = true,
+  showTopNavigation = false,
 }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
@@ -698,7 +700,7 @@ export function StarSearchChat({
 
   return (
     <>
-      {embedded ? (
+      {showTopNavigation ? (
         <StarSearchCompactHeader
           view={view}
           onBack={onNewChat}
@@ -712,7 +714,7 @@ export function StarSearchChat({
         />
       ) : null}
       <div className={clsx(embedded && "overflow-y-auto overflow-x-hidden self-start")}>
-        {embedded ? null : (
+        {showTopNavigation ? null : (
           <div className="fixed inset-x-0 top-20 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
         )}
         <div

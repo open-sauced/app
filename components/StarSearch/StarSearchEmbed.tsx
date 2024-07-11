@@ -2,7 +2,6 @@ import { ComponentProps, useRef, useState } from "react";
 import { captureException } from "@sentry/nextjs";
 import clsx from "clsx";
 import { useOutsideClick } from "rooks";
-import { Drawer } from "components/shared/Drawer";
 import { UuidSchema, parseSchema } from "lib/validation-schemas";
 import { useToast } from "lib/hooks/useToast";
 import { StarSearchButton } from "./StarSearchButton";
@@ -52,25 +51,6 @@ export const StarSearchEmbed = ({
     return null;
   }
 
-  const chat = (
-    <StarSearchChat
-      userId={userId}
-      sharedChatId={sharedChatId}
-      bearerToken={bearerToken}
-      isMobile={isMobile}
-      suggestions={suggestions}
-      tagline={tagline}
-      onClose={onClose}
-      embedded={true}
-      sharingEnabled={false}
-      baseApiStarSearchUrl={
-        validWorkspaceId
-          ? new URL(`${process.env.NEXT_PUBLIC_API_URL!}/workspaces/${validWorkspaceId}/star-search`)
-          : undefined
-      }
-    />
-  );
-
   return (
     <>
       <div className="fixed bottom-0 right-0 flex justify-end p-2">
@@ -80,32 +60,38 @@ export const StarSearchEmbed = ({
           }}
         />
       </div>
-      {isMobile ? (
-        <Drawer
-          showCloseButton={false}
-          inheritBackground={true}
-          isOpen={drawerOpen}
+      <div
+        ref={starSearchPanelRef}
+        aria-hidden={!drawerOpen}
+        data-star-search-mobile={isMobile}
+        className={clsx(
+          !isMobile && !drawerOpen && "translate-x-full",
+          isMobile ? "w-full" : "max-w-xl",
+          `fixed border-r bg-slate-50 right-0 shadow-lg transform transition-transform duration-300 ease-in-out border-l flex flex-col lg:w-2/3 border-slate-200`
+        )}
+        style={{
+          top: "var(--top-nav-height)",
+          height: "calc(100dvh - var(--top-nav-height))",
+        }}
+      >
+        <StarSearchChat
+          userId={userId}
+          sharedChatId={sharedChatId}
+          bearerToken={bearerToken}
+          isMobile={isMobile}
+          suggestions={suggestions}
+          tagline={tagline}
           onClose={onClose}
-          fullHeightDrawer={true}
-        >
-          {chat}
-        </Drawer>
-      ) : (
-        <div
-          ref={starSearchPanelRef}
-          aria-hidden={!drawerOpen}
-          className={clsx(
-            !drawerOpen && "translate-x-full",
-            `fixed border-r bg-slate-50 right-0 shadow-lg transform transition-transform duration-300 ease-in-out border-l flex flex-col lg:w-2/3 max-w-xl border-slate-200`
-          )}
-          style={{
-            top: "var(--top-nav-height)",
-            height: "calc(100dvh - var(--top-nav-height))",
-          }}
-        >
-          {chat}
-        </div>
-      )}
+          showTopNavigation={true}
+          embedded={!isMobile}
+          sharingEnabled={false}
+          baseApiStarSearchUrl={
+            validWorkspaceId
+              ? new URL(`${process.env.NEXT_PUBLIC_API_URL!}/workspaces/${validWorkspaceId}/star-search`)
+              : undefined
+          }
+        />
+      </div>
     </>
   );
 };

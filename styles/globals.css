@@ -274,3 +274,8 @@ but never configured it. */
   @apply tracking-tight;
   text-wrap: balance;
 }
+
+body:has([data-star-search-mobile]) {
+  @apply overflow-x-hidden;
+  @apply overflow-y-auto;
+}
