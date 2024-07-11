@@ -643,6 +643,17 @@ interface RepositoryRoss {
   }[];
 }
 
+interface RepositoryYolo {
+  num_yolo_pushes: number;
+  num_yolo_pushed_commits: number;
+  data: {
+    actor_login: string;
+    event_time: string;
+    sha: string;
+    push_num_commits: number;
+  }[];
+}
+
 // sourced from open-sauced/api
 
 type ThreadHistoryItem = {

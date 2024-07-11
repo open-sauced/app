@@ -28,7 +28,7 @@ const Toast = React.forwardRef<
   return (
     <ToastPrimitives.Root
       ref={ref}
-      className={clsx(className, "bg-light-slate-2 rounded-lg border border-light-slate-6 p-2 text-center")}
+      className={clsx(className, "bg-light-slate-2 rounded-lg border border-light-slate-6 p-2 text-center m-1")}
       {...props}
     />
   );
