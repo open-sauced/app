@@ -2,7 +2,7 @@ import { FiCopy } from "react-icons/fi";
 import { MdWorkspaces } from "react-icons/md";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import { FaBalanceScale } from "react-icons/fa";
-import { FaCode, FaRegClock } from "react-icons/fa6";
+import { FaRegClock } from "react-icons/fa6";
 
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { usePostHog } from "posthog-js/react";
 import { GetServerSidePropsContext } from "next";
 
+import Link from "next/link";
 import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
@@ -40,6 +41,7 @@ import IssuesChart from "components/Graphs/IssuesChart";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
 import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
+import { LanguagePill } from "components/shared/LanguagePill/LanguagePill";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -261,11 +263,17 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               </div>
             </div>
             <div className="flex w-fit max-w-xs lg:max-w-full gap-2 overflow-x-scroll">
-              <Pill text={repoData.license} icon={<FaBalanceScale />} className="whitespace-nowrap" />
-              <Pill text={repoData.language} icon={<FaCode />} className="whitespace-nowrap" />
+              <Link href={`/explore/topic/${repoData.language}/dashboard`}>
+                <LanguagePill
+                  topic={repoData.language.toLowerCase()}
+                  className="!bg-light-slate-3 !text-light-slate-11 hover:"
+                />
+              </Link>
+              <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
               <Pill
                 text={`Last Updated: ${new Date(repoData.updated_at).toLocaleDateString()}`}
                 icon={<FaRegClock />}
+                size="xsmall"
                 className="!px-2 whitespace-nowrap"
               />
             </div>

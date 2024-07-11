@@ -1,5 +1,4 @@
 import { Root, Thumb } from "@radix-ui/react-switch";
-import Image from "next/image";
 import { InterestType } from "lib/utils/getInterestOptions";
 import topicNameFormatting from "lib/utils/topic-name-formatting";
 import { renderTopicIcon } from "../LanguagePill/LanguagePill";
@@ -23,7 +22,7 @@ export const LanguageSwitch = ({ topic, checked, onClick }: LanguageSwitchProps)
     >
       <Thumb>
         <div className="flex items-center gap-1">
-          <Image src={renderTopicIcon(topic)} alt="" />
+          {renderTopicIcon(topic)}
           <span className="font-normal capitalize">{topicNameFormatting(topic)}</span>
         </div>
       </Thumb>

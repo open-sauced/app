@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from "next/image";
+import { FaCode } from "react-icons/fa6";
 import SwiftIcon from "img/icons/interests/swift.svg";
 import SvelteIcon from "img/icons/interests/svelte.svg";
 import JavascriptIcon from "img/icons/interests/javascript.svg";
@@ -23,9 +24,9 @@ import KotlinIcon from "img/icons/interests/kotlin.svg";
 import AndroidIcon from "img/icons/interests/android.svg";
 
 import topicNameFormatting from "lib/utils/topic-name-formatting";
-import { InterestType } from "lib/utils/getInterestOptions";
+import { InterestType, interests } from "lib/utils/getInterestOptions";
 
-export const renderTopicIcon = (name: InterestType) => {
+export const renderTopicIcon = (name: string) => {
   const iconMap: Record<InterestType, StaticImageData> = {
     react: ReactIcon,
     rust: RustIcon,
@@ -51,17 +52,22 @@ export const renderTopicIcon = (name: InterestType) => {
     swift: SwiftIcon,
   };
 
-  return iconMap[name];
+  if (!interests.find((language) => language === name.toLowerCase())) {
+    return <FaCode />;
+  }
+
+  return <Image src={iconMap[name as InterestType]} alt="" />;
 };
 
 interface LanguagePillProps {
-  topic: InterestType;
+  topic: string;
+  className?: string;
 }
 
-export const LanguagePill = ({ topic }: LanguagePillProps) => {
+export const LanguagePill = ({ topic, className }: LanguagePillProps) => {
   return (
-    <div className="flex items-center gap-1 px-4 py-2 text-xs rounded-3xl w-max bg-light-slate-6">
-      <Image src={renderTopicIcon(topic)} alt="" />
+    <div className={`flex items-center gap-1 px-4 py-2 text-xs rounded-3xl w-max bg-light-slate-6 ${className}`}>
+      {renderTopicIcon(topic)}
       <span className="font-normal capitalize">{topicNameFormatting(topic)}</span>
     </div>
   );
