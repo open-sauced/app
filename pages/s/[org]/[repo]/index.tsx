@@ -264,14 +264,13 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
           </div>
 
           <ClientOnly>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-8">
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
                 <div className="order-last lg:order-none lg:col-span-8 flex flex-col gap-4">
                   <RossChart
                     stats={rossStats}
                     range={range}
                     isLoading={isRossDataLoading}
-                    rangedTotal={contributorRangedTotal!}
                     error={rossError}
                     className="h-fit"
                   />
