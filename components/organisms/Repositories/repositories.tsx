@@ -148,7 +148,13 @@ export default function Repositories({ repositories, showSearch = true }: Reposi
           </div>
 
           {selectedRepos.length > 0 && (
-            <div className="flex justify-between p-3 px-6 items-center border-b-2 text-light-slate-11">
+            <div
+              aria-hidden={selectedRepos.length === 0}
+              className={clsx(
+                selectedRepos.length > 0 ? "flex" : "hidden",
+                `justify-between p-3 px-6 items-center border-b-2 text-light-slate-11`
+              )}
+            >
               <div>{selectedRepos.length} Repositories selected</div>
               <Button onClick={handleOnAddtoInsights} variant="primary">
                 {workspaceId ? "Add to Insight Page" : "Add to Workspace"}
