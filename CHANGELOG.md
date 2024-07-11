@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.44.0-beta.4](https://github.com/open-sauced/app/compare/v2.44.0-beta.3...v2.44.0-beta.4) (2024-07-11)
+
+
+### 🍕 Features
+
+* allow input and display of GitHub releases as highlights ([#3705](https://github.com/open-sauced/app/issues/3705)) ([8aa0177](https://github.com/open-sauced/app/commit/8aa01775eb4f93491459bbcd571293bf207e66e4))
+
 ## [2.44.0-beta.3](https://github.com/open-sauced/app/compare/v2.44.0-beta.2...v2.44.0-beta.3) (2024-07-10)
 
 
