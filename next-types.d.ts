@@ -638,8 +638,19 @@ interface RepositoryRoss {
   contributors: {
     bucket: string;
     new: number;
-    returning: number;
+    recurring: number;
     internal: number;
+  }[];
+}
+
+interface RepositoryYolo {
+  num_yolo_pushes: number;
+  num_yolo_pushed_commits: number;
+  data: {
+    actor_login: string;
+    event_time: string;
+    sha: string;
+    push_num_commits: number;
   }[];
 }
 

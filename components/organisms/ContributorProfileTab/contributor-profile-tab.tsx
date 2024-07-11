@@ -62,8 +62,8 @@ interface QueryParams {
 }
 
 const tabs: Record<TabKey, string> = {
-  highlights: "Highlights",
   contributions: "Contributions",
+  highlights: "Highlights",
   recommendations: "Recommendations",
 };
 
