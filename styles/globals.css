@@ -275,9 +275,8 @@ but never configured it. */
   text-wrap: balance;
 }
 
-body:has([data-star-search-mobile]) {
-  @apply overflow-x-hidden;
-  @apply overflow-y-auto;
+body:has([aria-hidden="false"][data-star-search-mobile]) {
+  @apply overflow-hidden;
 }
 
 body:has([data-star-search-mobile]) .top-nav-container {

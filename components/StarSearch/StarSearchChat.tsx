@@ -713,7 +713,12 @@ export function StarSearchChat({
           showCloseButton={!isMobile}
         />
       ) : null}
-      <div className={clsx(embedded && "overflow-y-auto overflow-x-hidden self-start")}>
+      <div
+        className={clsx(
+          isMobile && showTopNavigation && "overflow-y-auto",
+          embedded && "overflow-y-auto overflow-x-hidden self-start"
+        )}
+      >
         {showTopNavigation ? null : (
           <div className="fixed inset-x-0 top-20 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
         )}
