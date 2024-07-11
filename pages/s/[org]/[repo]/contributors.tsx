@@ -20,6 +20,7 @@ import TabList from "components/TabList/tab-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useSession from "lib/hooks/useSession";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import Activity from "components/organisms/Activity/activity";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -91,6 +92,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
       console.log(error);
     }
   };
+
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
@@ -99,7 +101,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
           <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
             <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
               <header className="flex items-center gap-4">
-                <Avatar size={96} avatarURL={avatarUrl} />
+                <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
                 <div className="flex flex-col gap-2">
                   <a
                     href={`https://github.com/${repoData.full_name}`}
@@ -109,9 +111,10 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                     <h1>{repoData.full_name}</h1>
                     <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
                   </a>
-                  <p className="md:text-xl">{repoData.description}</p>
+                  <p>{repoData.description}</p>
                 </div>
               </header>
+
               <div className="self-end flex flex-col gap-2 items-end">
                 {isMobile ? (
                   <AddToWorkspaceDrawer repository={repoData.full_name} />
@@ -138,13 +141,16 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                 </div>
               </div>
             </div>
-            <div className="border-b">
-              <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
-            </div>
-            <ClientOnly>
-              <Contributors repositories={[repoData.id]} defaultLayout="grid" />
-            </ClientOnly>
           </section>
+          <div className="border-b mb-4">
+            <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
+          </div>
+          <ClientOnly>
+            <div className="flex flex-col gap-8">
+              <Activity repositories={[repoData.id]} />
+              <Contributors repositories={[repoData.id]} defaultLayout="grid" />
+            </div>
+          </ClientOnly>
         </div>
       </WorkspaceLayout>
 

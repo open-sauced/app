@@ -5,6 +5,53 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.44.0-beta.6](https://github.com/open-sauced/app/compare/v2.44.0-beta.5...v2.44.0-beta.6) (2024-07-11)
+
+
+### 🍕 Features
+
+* filter `RossChart` by contributor type ([#3698](https://github.com/open-sauced/app/issues/3698)) ([d48e8ac](https://github.com/open-sauced/app/commit/d48e8ac55e34136540277c1f7bb9dac2881d984c))
+
+
+### 🐛 Bug Fixes
+
+* allow repos and contributors to be added to workspaces from explore page ([#3700](https://github.com/open-sauced/app/issues/3700)) ([3271dd4](https://github.com/open-sauced/app/commit/3271dd4f086df90b79a8ad5a704ea49a1f528602))
+
+## [2.44.0-beta.5](https://github.com/open-sauced/app/compare/v2.44.0-beta.4...v2.44.0-beta.5) (2024-07-11)
+
+
+### 🍕 Features
+
+* add Contributor Distribution to repo page ([#3712](https://github.com/open-sauced/app/issues/3712)) ([a53c7cd](https://github.com/open-sauced/app/commit/a53c7cd57652c75ecc52a9650a8aed9dbc9ac9c7))
+
+## [2.44.0-beta.4](https://github.com/open-sauced/app/compare/v2.44.0-beta.3...v2.44.0-beta.4) (2024-07-11)
+
+
+### 🍕 Features
+
+* allow input and display of GitHub releases as highlights ([#3705](https://github.com/open-sauced/app/issues/3705)) ([8aa0177](https://github.com/open-sauced/app/commit/8aa01775eb4f93491459bbcd571293bf207e66e4))
+
+## [2.44.0-beta.3](https://github.com/open-sauced/app/compare/v2.44.0-beta.2...v2.44.0-beta.3) (2024-07-10)
+
+
+### 🐛 Bug Fixes
+
+* now a contributor insight can be deleted if one was deleted in the same page session ([#3246](https://github.com/open-sauced/app/issues/3246)) ([8dd1ee2](https://github.com/open-sauced/app/commit/8dd1ee25d4bfbee7d78191609e205e0cb62f7213))
+
+## [2.44.0-beta.2](https://github.com/open-sauced/app/compare/v2.44.0-beta.1...v2.44.0-beta.2) (2024-07-10)
+
+
+### 🐛 Bug Fixes
+
+* now the contributions tab is the first tab on the user profile page ([#3709](https://github.com/open-sauced/app/issues/3709)) ([87d0ee9](https://github.com/open-sauced/app/commit/87d0ee9f72a002de2cffb0df1d335add01303330))
+
+## [2.44.0-beta.1](https://github.com/open-sauced/app/compare/v2.43.0...v2.44.0-beta.1) (2024-07-10)
+
+
+### 🍕 Features
+
+* implemented the Radar chart component ([#3704](https://github.com/open-sauced/app/issues/3704)) ([8579f41](https://github.com/open-sauced/app/commit/8579f416f3077108631d04d88833a47d43896e17))
+
 ## [2.43.0](https://github.com/open-sauced/app/compare/v2.42.0...v2.43.0) (2024-07-09)
 
 

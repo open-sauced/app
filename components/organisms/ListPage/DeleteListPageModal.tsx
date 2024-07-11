@@ -15,15 +15,7 @@ interface ModalProps {
   isLoading?: boolean;
 }
 
-const DeleteListPageModal: FC<ModalProps> = ({
-  open = false,
-  setOpen,
-  submitted = false,
-  listName,
-  onConfirm,
-  onClose,
-  isLoading,
-}) => {
+const DeleteListPageModal: FC<ModalProps> = ({ open = false, setOpen, listName, onConfirm, onClose, isLoading }) => {
   const [input, setInput] = useState("");
 
   const handleOnNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +32,7 @@ const DeleteListPageModal: FC<ModalProps> = ({
     setInput("");
   };
 
-  const disabled = input !== listName || submitted;
+  const disabled = input !== listName;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
