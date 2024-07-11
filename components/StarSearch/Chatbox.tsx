@@ -29,9 +29,7 @@ export function Chatbox({
       <div
         className={clsx(
           "grid items-start gap-2 my-4 md:flex md:justify-center",
-          embedded
-            ? "min-w-[560px] max-w-[560px] w-[560px]"
-            : "min-w-[398px] max-w-[398px] w-[398px] md:min-w-[685px] md:max-w-[685px] md:w-[685px]"
+          embedded ? "min-w-[560px] max-w-[560px] w-[560px]" : "w-full w-max-[440px]"
         )}
       >
         <ChatAvatar author={userId ? message.author : "Guest"} userId={userId} />
