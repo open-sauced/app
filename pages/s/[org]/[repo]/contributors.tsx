@@ -5,6 +5,8 @@ import { MdWorkspaces } from "react-icons/md";
 import { FiCopy } from "react-icons/fi";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { FaCode, FaRegClock } from "react-icons/fa6";
+import { FaBalanceScale } from "react-icons/fa";
 import { fetchApiData } from "helpers/fetchApiData";
 import { RepositoryOgImage, getRepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -20,6 +22,7 @@ import TabList from "components/TabList/tab-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useSession from "lib/hooks/useSession";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import Pill from "components/atoms/Pill/pill";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -138,13 +141,24 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                 </div>
               </div>
             </div>
-            <div className="border-b">
-              <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
+            <div className="flex w-fit max-w-xs lg:max-w-full gap-2 overflow-x-scroll">
+              <Pill text={repoData.license} icon={<FaBalanceScale />} className="whitespace-nowrap" />
+              <Pill text={repoData.language} icon={<FaCode />} className="whitespace-nowrap" />
+              <Pill
+                text={`Last Updated: ${new Date(repoData.updated_at).toLocaleDateString()}`}
+                icon={<FaRegClock />}
+                className="!px-2 whitespace-nowrap"
+              />
             </div>
-            <ClientOnly>
-              <Contributors repositories={[repoData.id]} defaultLayout="grid" />
-            </ClientOnly>
           </section>
+          <div className="border-b">
+            <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
+          </div>
+          <ClientOnly>
+            <div className="p-4 lg:p-8">
+              <Contributors repositories={[repoData.id]} defaultLayout="grid" />
+            </div>
+          </ClientOnly>
         </div>
       </WorkspaceLayout>
 
