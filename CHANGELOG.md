@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.44.0-beta.5](https://github.com/open-sauced/app/compare/v2.44.0-beta.4...v2.44.0-beta.5) (2024-07-11)
+
+
+### 🍕 Features
+
+* add Contributor Distribution to repo page ([#3712](https://github.com/open-sauced/app/issues/3712)) ([a53c7cd](https://github.com/open-sauced/app/commit/a53c7cd57652c75ecc52a9650a8aed9dbc9ac9c7))
+
 ## [2.44.0-beta.4](https://github.com/open-sauced/app/compare/v2.44.0-beta.3...v2.44.0-beta.4) (2024-07-11)
 
 
