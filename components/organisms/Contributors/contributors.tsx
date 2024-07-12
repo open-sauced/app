@@ -22,6 +22,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { setQueryParams } from "lib/utils/query-params";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import ContributorCard from "../ContributorCard/contributor-card";
 import ContributorTable from "../ContributorsTable/contributors-table";
 
@@ -29,9 +30,15 @@ interface ContributorProps {
   repositories?: number[];
   title?: string;
   defaultLayout?: ToggleValue;
+  personalWorkspaceId?: string;
 }
 
-const Contributors = ({ repositories, title, defaultLayout = "list" }: ContributorProps): JSX.Element => {
+const Contributors = ({
+  repositories,
+  title,
+  defaultLayout = "list",
+  personalWorkspaceId,
+}: ContributorProps): JSX.Element => {
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
@@ -39,6 +46,7 @@ const Contributors = ({ repositories, title, defaultLayout = "list" }: Contribut
 
   const { data, meta, setPage, isError, isLoading } = useContributors(Number(limit ?? 10), repositories);
   const { toast } = useToast();
+  const { user, signIn } = useSupabaseAuth();
   const [layout, setLayout] = useState<ToggleValue>(defaultLayout);
   const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
@@ -80,21 +88,22 @@ const Contributors = ({ repositories, title, defaultLayout = "list" }: Contribut
         selectedListIds.map((listIds) =>
           addListContributor(
             listIds,
-            selectedContributors.map((contributor) => ({ id: contributor.user_id }))
+            selectedContributors.map((contributor) => ({ id: contributor.user_id })),
+            workspaceId || personalWorkspaceId
           )
         )
       );
       response
         .then((res) => {
           toast({
-            description: `Successfully added ${selectedContributors.length} contributors to ${selectedListIds.length} lists!`,
+            description: `Successfully added ${selectedContributors.length} contributors to ${selectedListIds.length} insights!`,
             variant: "success",
           });
         })
         .catch((res) => {
           toast({
             description: `
-            An error occurred while adding contributors to lists. Please try again.
+            An error occurred while adding contributors to an insight. Please try again.
           `,
             variant: "danger",
           });
@@ -139,8 +148,9 @@ const Contributors = ({ repositories, title, defaultLayout = "list" }: Contribut
         <div className="flex items-center gap-4">
           <Button
             onClick={() => {
+              const urlWorkspaceId = workspaceId || personalWorkspaceId;
               router.push({
-                pathname: `/workspaces/${workspaceId}/contributor-insights/new`,
+                pathname: `/workspaces/${urlWorkspaceId}/contributor-insights/new`,
                 query: {
                   title: title ? `${title} Contributors` : "",
                   contributors: JSON.stringify(
@@ -152,7 +162,7 @@ const Contributors = ({ repositories, title, defaultLayout = "list" }: Contribut
             variant="text"
             className="py-1 flex-1"
           >
-            New list
+            New Insight
           </Button>
           <Button
             loading={loading}
@@ -161,7 +171,7 @@ const Contributors = ({ repositories, title, defaultLayout = "list" }: Contribut
             variant="primary"
             className="py-1 flex-1"
           >
-            Add to list
+            Add to Insight
           </Button>
         </div>
       </PopoverContent>
@@ -198,11 +208,20 @@ const Contributors = ({ repositories, title, defaultLayout = "list" }: Contribut
               <Popover
                 open={popoverOpen}
                 onOpenChange={(value) => {
-                  setPopoverOpen(value);
+                  if (!user) {
+                    signIn({
+                      provider: "github",
+                      options: {
+                        redirectTo: `${window.location.href}`,
+                      },
+                    });
+                  } else {
+                    setPopoverOpen(value);
+                  }
                 }}
               >
                 <PopoverTrigger>
-                  <Button variant="primary">Add to list</Button>
+                  <Button variant="primary">{!user ? "Connect with GitHub" : "Add to Insight"}</Button>
                 </PopoverTrigger>
                 {popoverOpen && <PopOverListContent workspaceId={workspaceId} />}
               </Popover>
