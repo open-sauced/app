@@ -262,7 +262,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 </div>
               </div>
             </div>
-            <div className="flex w-fit max-w-xs lg:max-w-full gap-2 overflow-x-scroll">
+            <div className="flex w-fit max-w-xs lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
               <Link href={`/explore/topic/${repoData.language}/dashboard`}>
                 <LanguagePill
                   topic={repoData.language.toLowerCase()}
