@@ -640,7 +640,7 @@ interface RepositoryRoss {
   contributors: {
     bucket: string;
     new: number;
-    returning: number;
+    recurring: number;
     internal: number;
   }[];
 }
