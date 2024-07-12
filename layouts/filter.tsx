@@ -18,13 +18,15 @@ const FilterLayout = ({ children }: { children: React.ReactNode }) => {
       <Header>
         <FilterHeader />
       </Header>
-      <Nav
-        toolList={toolList}
-        selectedTool={selectedTool && selectedTool.toString()}
-        filterName={filterName}
-        selectedFilter={selectedFilter}
-        username={userOrg}
-      />
+      <div className="px-4 lg:px-16">
+        <Nav
+          toolList={toolList}
+          selectedTool={selectedTool && selectedTool.toString()}
+          filterName={filterName}
+          selectedFilter={selectedFilter}
+          username={userOrg}
+        />
+      </div>
       <main className="flex w-full flex-1 flex-col items-center  py-8 bg-light-slate-2">
         <div className="container mx-auto px-2 md:px-16">{children}</div>
       </main>
