@@ -41,7 +41,7 @@ import IssuesChart from "components/Graphs/IssuesChart";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
 import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
-import { LanguagePill } from "components/shared/LanguagePill/LanguagePill";
+import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -263,11 +263,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               </div>
             </div>
             <div className="flex w-fit max-w-xs lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
-              <Link href={`/explore/topic/${repoData.language}/dashboard`}>
-                <LanguagePill
-                  topic={repoData.language.toLowerCase()}
-                  className="!bg-light-slate-3 !text-light-slate-11 hover:"
-                />
+              <Link href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}>
+                <LanguagePill language={repoData.language.toLowerCase()} />
               </Link>
               <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
               <Pill
