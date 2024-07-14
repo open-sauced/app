@@ -535,7 +535,8 @@ export function StarSearchChat({
         return (
           <div
             className={clsx(
-              isMobile && "h-[calc(100vh-270px)]",
+              isMobile && !showTopNavigation && "h-[calc(100vh-270px)]",
+              isMobile && showTopNavigation && "h-[calc(100vh-145)]",
               "md:h-fit grid place-content-center text-center items-center gap-4 overflow-hidden"
             )}
           >
