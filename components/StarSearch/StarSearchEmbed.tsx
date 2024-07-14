@@ -33,7 +33,8 @@ export const StarSearchEmbed = ({
         event.target instanceof HTMLElement &&
         // for some reason opening the workspaces dropdown has the event.target as the html element
         // so checking to avoid closing the sidebar when the dropdown is used
-        event.target.tagName !== "HTML"
+        event.target.tagName !== "HTML" &&
+        !event.target.closest("[role=dialog]")
       ) {
         setDrawerOpen(false);
       }
