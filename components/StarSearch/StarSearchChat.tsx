@@ -710,7 +710,6 @@ export function StarSearchChat({
           onShare={() => {}}
           onShowHistory={() => {}}
           onNewChat={onNewChat}
-          showCloseButton={!isMobile}
         />
       ) : null}
       <div

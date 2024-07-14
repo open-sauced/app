@@ -65,7 +65,7 @@ export const StarSearchEmbed = ({
         aria-hidden={!drawerOpen}
         data-star-search-mobile={isMobile}
         className={clsx(
-          !isMobile && !drawerOpen && "translate-x-full",
+          !drawerOpen && "translate-x-full",
           isMobile ? "w-full" : "max-w-xl",
           `fixed border-r bg-slate-50 right-0 shadow-lg transform transition-transform duration-300 ease-in-out border-l flex flex-col lg:w-2/3 border-slate-200`
         )}
