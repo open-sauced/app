@@ -116,7 +116,7 @@ export default function RossChart({ stats, isLoading, error, range, className }:
               <div>
                 <div className="flex gap-2 items-center">
                   <h3 className="text-xs xl:text-sm text-slate-500">Outside Contributors</h3>
-                  <InfoTooltip information="NEEDS COPY" />
+                  <InfoTooltip information="Outside contributors are not part of the core team managing the repository. This number represents their contributions" />
                 </div>
                 <p className="font-semibold text-xl xl:text-3xl">{outsideTotal}</p>
               </div>
