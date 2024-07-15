@@ -263,10 +263,14 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               </div>
             </div>
             <div className="flex w-fit max-w-xs lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
-              <Link href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}>
-                <LanguagePill language={repoData.language.toLowerCase()} />
-              </Link>
-              <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
+              {repoData.language && (
+                <Link href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}>
+                  <LanguagePill language={repoData.language.toLowerCase()} />
+                </Link>
+              )}
+              {repoData.license && (
+                <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
+              )}
               <Pill
                 text={`Last Updated: ${new Date(repoData.updated_at).toLocaleDateString()}`}
                 icon={<FaRegClock />}

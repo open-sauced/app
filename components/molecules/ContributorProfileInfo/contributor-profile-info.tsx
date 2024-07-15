@@ -182,7 +182,7 @@ const ContributorProfileInfo = ({
               <div className="flex gap-1.5 flex-wrap">
                 {interestArray.map((interest, index) => (
                   <Link href={`/explore/topic/${interest}/dashboard/filter/recent`} key={index} className="rounded-3xl">
-                    <LanguagePill topic={interest} />
+                    <LanguagePill language={interest} />
                   </Link>
                 ))}
               </div>
