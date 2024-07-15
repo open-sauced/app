@@ -12,7 +12,7 @@ import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { getFormattedDate } from "lib/utils/date-utils";
 import { InterestType } from "lib/utils/getInterestOptions";
-import { LanguagePill } from "components/shared/LanguagePill/LanguagePill";
+import LanguagePill from "components/shared/LanguagePill/LanguagePill";
 
 interface ContributorProfileInfoProps {
   githubName: string;
