@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.44.1-beta.1](https://github.com/open-sauced/app/compare/v2.44.0...v2.44.1-beta.1) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* add padding to explore tabs ([#3718](https://github.com/open-sauced/app/issues/3718)) ([2b3fb90](https://github.com/open-sauced/app/commit/2b3fb9058503ff06124d686a3dd17601c7e6a9e7))
+
 ## [2.44.0](https://github.com/open-sauced/app/compare/v2.43.0...v2.44.0) (2024-07-11)
 
 
