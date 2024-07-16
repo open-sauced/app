@@ -261,7 +261,14 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     <FiCopy />
                     Share
                   </Button>
-                  <DayRangePicker />
+                  <DayRangePicker
+                    onDayRangeChanged={(value: string) =>
+                      posthog.capture("Repo Pages: changed range", {
+                        repository: repoData.full_name,
+                        range: Number(value),
+                      })
+                    }
+                  />
                 </div>
               </div>
             </div>
