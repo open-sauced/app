@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.45.0-beta.1](https://github.com/open-sauced/app/compare/v2.44.1-beta.2...v2.45.0-beta.1) (2024-07-16)
+
+
+### 🍕 Features
+
+* show total Outside Contributors in `RossChart` ([#3694](https://github.com/open-sauced/app/issues/3694)) ([1e00a24](https://github.com/open-sauced/app/commit/1e00a2430380a09f23fe304f24936bb229f73780))
+
 ## [2.44.1-beta.2](https://github.com/open-sauced/app/compare/v2.44.1-beta.1...v2.44.1-beta.2) (2024-07-16)
 
 
