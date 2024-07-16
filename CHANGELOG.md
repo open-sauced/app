@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.44.1-beta.2](https://github.com/open-sauced/app/compare/v2.44.1-beta.1...v2.44.1-beta.2) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* maintain selected date across dashboard tabs ([#3660](https://github.com/open-sauced/app/issues/3660)) ([cf641f1](https://github.com/open-sauced/app/commit/cf641f1baae7912dcfd86477f685eafbede23c45))
+* maintain selected date range when switching between tabs ([3528397](https://github.com/open-sauced/app/commit/35283974768b527a0cabde196caf25efe340da1c))
+
 ## [2.44.1-beta.1](https://github.com/open-sauced/app/compare/v2.44.0...v2.44.1-beta.1) (2024-07-16)
 
 
