@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.45.0-beta.3](https://github.com/open-sauced/app/compare/v2.45.0-beta.2...v2.45.0-beta.3) (2024-07-16)
+
+
+### 🍕 Features
+
+* now userprofile pages are cached for 60 seconds ([#3721](https://github.com/open-sauced/app/issues/3721)) ([dd8243b](https://github.com/open-sauced/app/commit/dd8243b7c5998f71490a719fb487b444a3b28507))
+
 ## [2.45.0-beta.2](https://github.com/open-sauced/app/compare/v2.45.0-beta.1...v2.45.0-beta.2) (2024-07-16)
 
 

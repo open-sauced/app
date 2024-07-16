@@ -5,6 +5,9 @@ import { MdWorkspaces } from "react-icons/md";
 import { FiCopy } from "react-icons/fi";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { FaRegClock } from "react-icons/fa6";
+import { FaBalanceScale } from "react-icons/fa";
 import { fetchApiData } from "helpers/fetchApiData";
 import { RepositoryOgImage, getRepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -20,7 +23,9 @@ import TabList from "components/TabList/tab-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useSession from "lib/hooks/useSession";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import Pill from "components/atoms/Pill/pill";
 import Activity from "components/organisms/Activity/activity";
+import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -141,12 +146,24 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                 </div>
               </div>
             </div>
+            <div className="flex w-fit max-w-xs lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
+              <Link href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}>
+                <LanguagePill language={repoData.language.toLowerCase()} />
+              </Link>
+              <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
+              <Pill
+                text={`Last Updated: ${new Date(repoData.updated_at).toLocaleDateString()}`}
+                icon={<FaRegClock />}
+                size="xsmall"
+                className="!px-2 whitespace-nowrap"
+              />
+            </div>
           </section>
-          <div className="border-b mb-4">
+          <div className="border-b">
             <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
           </div>
           <ClientOnly>
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-8 p-4 lg:p-8">
               <Activity repositories={[repoData.id]} />
               <Contributors repositories={[repoData.id]} defaultLayout="grid" />
             </div>
