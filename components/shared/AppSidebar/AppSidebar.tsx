@@ -97,7 +97,6 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
         sidebarCollapsed ? "-translate-x-full" : ""
       } bg-white flex flex-col gap-8 justify-between max-w-xs  border-r border-slate-200 z-50`}
       style={{
-        "--top-nav-height": "3.3rem",
         top: "var(--top-nav-height)",
         height: "calc(100dvh - var(--top-nav-height))",
       }}
