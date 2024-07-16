@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.45.0-beta.5](https://github.com/open-sauced/app/compare/v2.45.0-beta.4...v2.45.0-beta.5) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* now user menu opens in the top nav ([#3725](https://github.com/open-sauced/app/issues/3725)) ([5732d08](https://github.com/open-sauced/app/commit/5732d08ff2d6c40d70c49ee719f3c2595a691d96))
+
 ## [2.45.0-beta.4](https://github.com/open-sauced/app/compare/v2.45.0-beta.3...v2.45.0-beta.4) (2024-07-16)
 
 
