@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import Card from "components/atoms/Card/card";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import humanizeNumber from "lib/utils/humanizeNumber";
+import InfoTooltip from "components/shared/InfoTooltip";
 
 type RossChartProps = {
   stats: RepositoryRoss | undefined;
@@ -34,6 +35,10 @@ export default function RossChart({ stats, isLoading, error, range, className }:
     () => (filteredTotal / (stats ? stats.contributors.length : 1)).toPrecision(2),
     [filteredTotal, stats]
   );
+
+  const outsideTotal = useMemo(() => {
+    return stats?.contributors.reduce((prev, curr) => (prev += curr.new + curr.recurring), 0);
+  }, [stats]);
 
   const weeklyData = useMemo(() => {
     return stats?.contributors.reverse().map((week) => {
@@ -107,6 +112,13 @@ export default function RossChart({ stats, isLoading, error, range, className }:
               <div>
                 <h3 className="text-xs xl:text-sm text-slate-500">Average per week</h3>
                 <p className="font-semibold text-xl xl:text-3xl">{humanizeNumber(rangedAverage)}</p>
+              </div>
+              <div>
+                <div className="flex gap-2 items-center">
+                  <h3 className="text-xs xl:text-sm text-slate-500">Outside Contributors</h3>
+                  <InfoTooltip information="Outside contributors are not part of the core team managing the repository. This number represents their contributions" />
+                </div>
+                <p className="font-semibold text-xl xl:text-3xl">{outsideTotal}</p>
               </div>
             </aside>
           </>
