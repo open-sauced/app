@@ -242,7 +242,10 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 ) : (
                   <Button
                     variant="primary"
-                    onClick={() => setIsAddToWorkspaceModalOpen(true)}
+                    onClick={() => {
+                      posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
+                      setIsAddToWorkspaceModalOpen(true);
+                    }}
                     className="shrink-0 items-center gap-3 w-fit"
                   >
                     <MdWorkspaces />

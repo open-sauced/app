@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
+import { posthog } from "posthog-js";
 import Card from "components/atoms/Card/card";
 import SingleSelect from "components/atoms/Select/single-select";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
@@ -32,6 +33,10 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }
   }, []);
 
   const addRepositoryToWorkspace = async () => {
+    posthog.capture(`Repo Pages: added to ${workspaceId === "new" ? "a new" : "existing"} workspace`, {
+      repository,
+      workspaceId,
+    });
     if (workspaceId === "new") {
       router.push(`/workspaces/new?repos=${JSON.stringify([repository])}`);
       return;
