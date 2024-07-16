@@ -1,6 +1,8 @@
 import { FiCopy } from "react-icons/fi";
 import { MdWorkspaces } from "react-icons/md";
 import { HiOutlineExternalLink } from "react-icons/hi";
+import { FaBalanceScale } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa6";
 
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
@@ -8,23 +10,25 @@ import { useRouter } from "next/router";
 import { usePostHog } from "posthog-js/react";
 import { GetServerSidePropsContext } from "next";
 
+import Link from "next/link";
 import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAvatarByUsername } from "lib/utils/github";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { useRepoStats } from "lib/hooks/api/useRepoStats";
-import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
-import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
 import { useRepositoryYolo } from "lib/hooks/api/useRepositoryYolo";
+import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
+import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/shared/Button/button";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
+import Pill from "components/atoms/Pill/pill";
 import TabList from "components/TabList/tab-list";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
@@ -37,6 +41,7 @@ import IssuesChart from "components/Graphs/IssuesChart";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
 import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
+import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -256,6 +261,24 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   <DayRangePicker />
                 </div>
               </div>
+            </div>
+            <div className="relative flex w-fit max-w-[21rem] lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
+              {repoData.language && (
+                <Link href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}>
+                  <LanguagePill language={repoData.language.toLowerCase()} />
+                </Link>
+              )}
+              {repoData.license && (
+                <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
+              )}
+              <Pill
+                text={`Last Updated: ${new Date(repoData.pushed_at).toLocaleDateString()}`}
+                icon={<FaRegClock />}
+                size="xsmall"
+                className="!px-2 whitespace-nowrap"
+              />
+
+              <span className="fixed rounded-r-full right-8 lg:hidden w-12 h-8 bg-gradient-to-l from-light-slate-3 to-transparent" />
             </div>
           </section>
 

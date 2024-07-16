@@ -1,68 +1,129 @@
-import Image, { StaticImageData } from "next/image";
-import SwiftIcon from "img/icons/interests/swift.svg";
-import SvelteIcon from "img/icons/interests/svelte.svg";
-import JavascriptIcon from "img/icons/interests/javascript.svg";
-import ReactIcon from "/img/icons/interests/react.svg";
-import PythonIcon from "/img/icons/interests/python.svg";
-import AIIcon from "/img/icons/interests/ai.svg";
-import MLIcon from "/img/icons/interests/machine-learning.svg";
-import RustIcon from "/img/icons/interests/rust.svg";
-import PhpIcon from "/img/icons/interests/php.svg";
-import CsharpIcon from "/img/icons/interests/c-sharp.svg";
-import CIcon from "/img/icons/interests/c.svg";
-import CppIcon from "/img/icons/interests/c-plus.svg";
-import TypeScriptIcon from "/img/icons/interests/typescript.svg";
-import AngularIcon from "/img/icons/interests/angular-new.svg";
-import RubyIcon from "/img/icons/interests/ruby.svg";
-import JavaIcon from "/img/icons/interests/java.svg";
-import GolangIcon from "img/icons/interests/golang.svg";
-import VueIcon from "img/icons/interests/vuejs.svg";
+import Image from "next/image";
+import { DiClojure } from "react-icons/di";
+import {
+  TbBrandAndroid,
+  TbBrandAngular,
+  TbBrandCSharp,
+  TbBrandCpp,
+  TbBrandGolang,
+  TbBrandJavascript,
+  TbBrandKotlin,
+  TbBrandPhp,
+  TbBrandPython,
+  TbBrandReact,
+  TbBrandRust,
+  TbBrandSketch,
+  TbBrandSvelte,
+  TbBrandSwift,
+  TbBrandTypescript,
+  TbBrandVue,
+  TbCode,
+  TbCoffee,
+  TbLetterC,
+  TbRobot,
+  TbVectorTriangle,
+} from "react-icons/tb";
 import KubernetesIcon from "img/icons/interests/kubernetes.svg";
-import CloJureIcon from "img/icons/interests/clojure.svg";
-import KotlinIcon from "img/icons/interests/kotlin.svg";
-import AndroidIcon from "img/icons/interests/android.svg";
 
-import topicNameFormatting from "lib/utils/topic-name-formatting";
-import { InterestType } from "lib/utils/getInterestOptions";
+export function getLanguageTopic(language: string) {
+  switch (language) {
+    case "go":
+      return "golang";
 
-export const renderTopicIcon = (name: InterestType) => {
-  const iconMap: Record<InterestType, StaticImageData> = {
-    react: ReactIcon,
-    rust: RustIcon,
-    javascript: JavascriptIcon,
-    ai: AIIcon,
-    ml: MLIcon,
-    python: PythonIcon,
-    svelte: SvelteIcon,
-    typescript: TypeScriptIcon,
-    angular: AngularIcon,
-    csharp: CsharpIcon,
-    cpp: CppIcon,
-    php: PhpIcon,
-    c: CIcon,
-    ruby: RubyIcon,
-    java: JavaIcon,
-    golang: GolangIcon,
-    vue: VueIcon,
-    kubernetes: KubernetesIcon,
-    clojure: CloJureIcon,
-    kotlin: KotlinIcon,
-    android: AndroidIcon,
-    swift: SwiftIcon,
-  };
+    case "c++":
+      return "cpp";
 
-  return iconMap[name];
-};
+    case "c#":
+      return "csharp";
 
-interface LanguagePillProps {
-  topic: InterestType;
+    default:
+      return language.toLowerCase();
+  }
 }
 
-export const LanguagePill = ({ topic }: LanguagePillProps) => {
+export function renderLanguageIcon(language: string) {
+  switch (language) {
+    case "go":
+    case "golang":
+      return <TbBrandGolang />;
+
+    case "c++":
+    case "cpp":
+      return <TbBrandCpp />;
+
+    case "c#":
+    case "csharp":
+      return <TbBrandCSharp />;
+
+    case "react":
+      return <TbBrandReact />;
+
+    case "rust":
+      return <TbBrandRust />;
+
+    case "javascript":
+      return <TbBrandJavascript />;
+
+    case "ml":
+      return <TbVectorTriangle />;
+
+    case "ai":
+      return <TbRobot />;
+
+    case "python":
+      return <TbBrandPython />;
+
+    case "svelte":
+      return <TbBrandSvelte />;
+
+    case "typescript":
+      return <TbBrandTypescript />;
+
+    case "angular":
+      return <TbBrandAngular />;
+
+    case "php":
+      return <TbBrandPhp />;
+
+    case "c":
+      return <TbLetterC />;
+
+    case "ruby":
+      return <TbBrandSketch />;
+
+    case "java":
+      return <TbCoffee />;
+
+    case "vue":
+      return <TbBrandVue />;
+
+    case "kubernetes":
+      return <Image src={KubernetesIcon} alt="Kubernetes" />;
+
+    case "clojure":
+      return <DiClojure />;
+
+    case "kotlin":
+      return <TbBrandKotlin />;
+
+    case "android":
+      return <TbBrandAndroid />;
+
+    case "swift":
+      return <TbBrandSwift />;
+
+    default:
+      return <TbCode />;
+  }
+}
+
+export default function LanguagePill({ language, className }: { language: string; className?: string }) {
   return (
-    <div className="flex items-center gap-1 px-4 py-2 text-xs rounded-3xl w-max bg-light-slate-6">
-      <Image src={renderTopicIcon(topic)} alt="" />
-      <span className="font-normal capitalize">{topicNameFormatting(topic)}</span>
+    <div
+      className={`flex items-center gap-1 px-4 py-2 text-xs rounded-3xl w-max bg-light-slate-3 text-light-slate-11 ${className}`}
+    >
+      <div className="text-sm text-black">{renderLanguageIcon(language)}</div>
+      <span className="font-normal capitalize">{language}</span>
     </div>
   );
-};
+}
