@@ -534,18 +534,28 @@ export function StarSearchChat({
       case "initial":
         return (
           <div
+            style={{
+              height:
+                isMobile && !showTopNavigation
+                  ? "calc(100vh - 215px)"
+                  : isMobile && showTopNavigation
+                  ? "calc(100vh - 225px)"
+                  : undefined,
+            }}
             className={clsx(
-              isMobile && !showTopNavigation && "h-[calc(100vh-270px)]",
-              isMobile && showTopNavigation && "h-[calc(100vh-145)]",
-              "md:h-fit grid place-content-center text-center items-center gap-4 overflow-hidden"
+              isMobile && showTopNavigation && "mt-2",
+              isMobile && !showTopNavigation && "mt-8",
+              "grid place-content-center text-center items-center gap-4 overflow-hidden"
             )}
           >
             {!(sharedChatId || sharedPrompt) ? (
               <>
                 <Header tagline={tagline} />
-                <div className="pb-8">
-                  <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} embedded={embedded} />
-                </div>
+                {isMobile ? null : (
+                  <div className="pb-8">
+                    <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} embedded={embedded} />
+                  </div>
+                )}
               </>
             ) : null}
           </div>
@@ -733,7 +743,6 @@ export function StarSearchChat({
         <div className="h-8 bg-gradient-to-t from-light-slate-2 to-transparent" />
         <div className="bg-light-slate-2">
           {!isRunning &&
-            starSearchState !== "initial" &&
             (isMobile ? (
               <Drawer
                 title="Choose a suggestion"
