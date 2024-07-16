@@ -70,12 +70,19 @@ const useFetchListContributors = (workspaceId: string, listId: string, range = 3
   };
 };
 
-const addListContributor = async (listId: string, contributors: { id: number; login?: string }[]) => {
+const addListContributor = async (
+  listId: string,
+  contributors: { id: number; login?: string }[],
+  workspaceId?: string
+) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists/${listId}/contributors`, {
+    const requestUrl = workspaceId
+      ? `workspaces/${workspaceId}/userLists/${listId}/contributors`
+      : `lists/${listId}/contributors`;
+    const response = await fetch(requestUrl, {
       method: "POST",
       body: JSON.stringify({ contributors }),
       headers: {
