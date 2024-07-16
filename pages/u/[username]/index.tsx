@@ -6,7 +6,6 @@ import { Person } from "schema-dts";
 import { useRouter } from "next/router";
 import SEO from "layouts/SEO/SEO";
 
-
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import useRepoList from "lib/hooks/useRepoList";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -123,6 +122,11 @@ export const getServerSideProps = async (context: UserSSRPropsContext) => {
 
   const userData = (await req.json()) as DbUser;
   const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/users/${username}`;
+
+  // Cache page for 60 seconds
+  context.res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
+  context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=0, stale-while-revalidate=60");
+  context.res.setHeader("Cache-Tag", `user-profiles,user-profile-${username}`);
 
   return {
     props: { username, user: userData, ogImage },
