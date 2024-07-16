@@ -272,7 +272,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
               )}
               <Pill
-                text={`Last Updated: ${new Date(repoData.updated_at).toLocaleDateString()}`}
+                text={`Last Updated: ${new Date(repoData.pushed_at).toLocaleDateString()}`}
                 icon={<FaRegClock />}
                 size="xsmall"
                 className="!px-2 whitespace-nowrap"

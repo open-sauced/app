@@ -43,6 +43,7 @@ interface DbRepoInfo {
   readonly description: string;
   readonly language: string;
   readonly license: string;
+  readonly pushed_at: string;
   readonly url: string;
   readonly homepage: string;
   readonly topics: string[];
