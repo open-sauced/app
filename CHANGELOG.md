@@ -5,6 +5,24 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.45.0](https://github.com/open-sauced/app/compare/v2.44.0...v2.45.0) (2024-07-16)
+
+
+### 🍕 Features
+
+* display "license, language, and last updated at" in repo pages ([#3710](https://github.com/open-sauced/app/issues/3710)) ([d286741](https://github.com/open-sauced/app/commit/d286741ee94e767cfa0e324e92fa4c211a74d4de))
+* now userprofile pages are cached for 60 seconds ([#3721](https://github.com/open-sauced/app/issues/3721)) ([dd8243b](https://github.com/open-sauced/app/commit/dd8243b7c5998f71490a719fb487b444a3b28507))
+* show total Outside Contributors in `RossChart` ([#3694](https://github.com/open-sauced/app/issues/3694)) ([1e00a24](https://github.com/open-sauced/app/commit/1e00a2430380a09f23fe304f24936bb229f73780))
+
+
+### 🐛 Bug Fixes
+
+* add padding to explore tabs ([#3718](https://github.com/open-sauced/app/issues/3718)) ([2b3fb90](https://github.com/open-sauced/app/commit/2b3fb9058503ff06124d686a3dd17601c7e6a9e7))
+* fixed several UI/UX issues for StarSearch ([#3692](https://github.com/open-sauced/app/issues/3692)) ([d06ea60](https://github.com/open-sauced/app/commit/d06ea607c5c6e43ca07b5583e293a58c2b0810cb))
+* maintain selected date across dashboard tabs ([#3660](https://github.com/open-sauced/app/issues/3660)) ([cf641f1](https://github.com/open-sauced/app/commit/cf641f1baae7912dcfd86477f685eafbede23c45))
+* maintain selected date range when switching between tabs ([3528397](https://github.com/open-sauced/app/commit/35283974768b527a0cabde196caf25efe340da1c))
+* now user menu opens in the top nav ([#3725](https://github.com/open-sauced/app/issues/3725)) ([5732d08](https://github.com/open-sauced/app/commit/5732d08ff2d6c40d70c49ee719f3c2595a691d96))
+
 ## [2.45.0-beta.5](https://github.com/open-sauced/app/compare/v2.45.0-beta.4...v2.45.0-beta.5) (2024-07-16)
 
 
