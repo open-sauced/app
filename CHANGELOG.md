@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.45.0-beta.4](https://github.com/open-sauced/app/compare/v2.45.0-beta.3...v2.45.0-beta.4) (2024-07-16)
+
+
+### 🍕 Features
+
+* display "license, language, and last updated at" in repo pages ([#3710](https://github.com/open-sauced/app/issues/3710)) ([d286741](https://github.com/open-sauced/app/commit/d286741ee94e767cfa0e324e92fa4c211a74d4de))
+
 ## [2.45.0-beta.3](https://github.com/open-sauced/app/compare/v2.45.0-beta.2...v2.45.0-beta.3) (2024-07-16)
 
 
