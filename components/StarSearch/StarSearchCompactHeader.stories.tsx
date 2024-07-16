@@ -11,7 +11,6 @@ const meta: Meta<typeof StarSearchCompactHeader> = {
     onNewChat: () => action("onNewChat")(),
     onShowHistory: () => action("onShowHistory")(),
     onClose: () => action("onClose")(),
-    showCloseButton: true,
   },
   decorators: [(story) => <div className="max-w-md ">{story()}</div>],
 };
@@ -29,12 +28,5 @@ export const PromptView: Story = {
 export const ChatView: Story = {
   args: {
     view: "chat",
-  },
-};
-
-export const CloseButtonHidden: Story = {
-  args: {
-    view: "chat",
-    showCloseButton: false,
   },
 };

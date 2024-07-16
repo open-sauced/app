@@ -40,7 +40,7 @@ export function SuggestedPrompts({
     <ul
       aria-label="suggested prompts"
       className={clsx(
-        `grid w-full max-w-3xl grid-cols-1 gap-2 place-content-center lg:gap-4`,
+        `grid w-full max-w-3xl grid-cols-1 gap-2 place-content-center lg:gap-4 p-1`,
         embedded ? "" : "lg:grid-cols-2"
       )}
     >
@@ -52,7 +52,7 @@ export function SuggestedPrompts({
             aria-describedby={`prompt-description-${i}`}
             className="w-full h-full"
           >
-            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
+            <Card className="shadow-md border-none text-start !p-6 text-slate-600 hover:shadow-lg hover:scale-[1.025] transition-all duration-75">
               <span id={`prompt-label-${i}`} className="text-sm font-semibold lg:text-base">
                 {suggestion.title}
               </span>

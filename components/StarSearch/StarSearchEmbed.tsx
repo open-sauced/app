@@ -1,7 +1,7 @@
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useRef, useState } from "react";
 import { captureException } from "@sentry/nextjs";
 import clsx from "clsx";
-import { Drawer } from "components/shared/Drawer";
+import { useOutsideClick } from "rooks";
 import { UuidSchema, parseSchema } from "lib/validation-schemas";
 import { useToast } from "lib/hooks/useToast";
 import { StarSearchButton } from "./StarSearchButton";
@@ -24,6 +24,24 @@ export const StarSearchEmbed = ({
   const { toast } = useToast();
   let validWorkspaceId = workspaceId;
 
+  const starSearchPanelRef = useRef<HTMLDivElement | null>(null);
+
+  useOutsideClick(
+    starSearchPanelRef,
+    (event) => {
+      if (
+        event.target instanceof HTMLElement &&
+        // for some reason opening the workspaces dropdown has the event.target as the html element
+        // so checking to avoid closing the sidebar when the dropdown is used
+        event.target.tagName !== "HTML" &&
+        !event.target.closest("[role=dialog]")
+      ) {
+        setDrawerOpen(false);
+      }
+    },
+    Boolean(starSearchPanelRef.current)
+  );
+
   try {
     if (workspaceId) {
       validWorkspaceId = parseSchema(UuidSchema, workspaceId);
@@ -34,64 +52,47 @@ export const StarSearchEmbed = ({
     return null;
   }
 
-  const chat = (
-    <StarSearchChat
-      userId={userId}
-      sharedChatId={sharedChatId}
-      bearerToken={bearerToken}
-      isMobile={isMobile}
-      suggestions={suggestions}
-      tagline={tagline}
-      onClose={onClose}
-      embedded={true}
-      sharingEnabled={false}
-      baseApiStarSearchUrl={
-        validWorkspaceId
-          ? new URL(`${process.env.NEXT_PUBLIC_API_URL!}/workspaces/${validWorkspaceId}/star-search`)
-          : undefined
-      }
-    />
-  );
-
-  /* TODO: implement non-mobile version */
   return (
     <>
-      <>
-        {isMobile ? (
-          <Drawer
-            showCloseButton={false}
-            inheritBackground={true}
-            isOpen={drawerOpen}
-            onClose={onClose}
-            fullHeightDrawer={true}
-          >
-            {chat}
-          </Drawer>
-        ) : (
-          <div
-            // ${drawerOpen ? "-translate-x-full" : ""}
-            aria-hidden={drawerOpen}
-            className={clsx(
-              drawerOpen ? "fixed" : "hidden",
-              `right-0 shadow-lg transform transition-transform duration-300 ease-in-out border-l flex flex-col gap-8 justify-between lg:w-2/3 max-w-xl border-slate-200 z-50`
-            )}
-            style={{
-              "--top-nav-height": "3.3rem",
-              top: "var(--top-nav-height)",
-              height: "calc(100dvh - var(--top-nav-height))",
-            }}
-          >
-            {chat}
-          </div>
+      <div className="fixed bottom-0 right-0 flex justify-end p-2">
+        <StarSearchButton
+          onOpen={() => {
+            setDrawerOpen(true);
+          }}
+        />
+      </div>
+      <div
+        ref={starSearchPanelRef}
+        aria-hidden={!drawerOpen}
+        data-star-search-mobile={isMobile}
+        className={clsx(
+          !drawerOpen && "translate-x-full",
+          isMobile ? "w-full" : "max-w-xl",
+          `fixed border-r bg-slate-50 right-0 shadow-lg transform transition-transform duration-300 ease-in-out border-l flex flex-col lg:w-2/3 border-slate-200`
         )}
-        <div className="sticky bottom-0 flex justify-end p-2">
-          <StarSearchButton
-            onOpen={() => {
-              setDrawerOpen(true);
-            }}
-          />
-        </div>
-      </>
+        style={{
+          top: "var(--top-nav-height)",
+          height: "calc(100dvh - var(--top-nav-height))",
+        }}
+      >
+        <StarSearchChat
+          userId={userId}
+          sharedChatId={sharedChatId}
+          bearerToken={bearerToken}
+          isMobile={isMobile}
+          suggestions={suggestions}
+          tagline={tagline}
+          onClose={onClose}
+          showTopNavigation={true}
+          embedded={!isMobile}
+          sharingEnabled={false}
+          baseApiStarSearchUrl={
+            validWorkspaceId
+              ? new URL(`${process.env.NEXT_PUBLIC_API_URL!}/workspaces/${validWorkspaceId}/star-search`)
+              : undefined
+          }
+        />
+      </div>
     </>
   );
 };
