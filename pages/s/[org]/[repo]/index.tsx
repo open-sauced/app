@@ -274,7 +274,15 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </div>
             <div className="relative flex w-fit max-w-[21rem] lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
               {repoData.language && (
-                <Link href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}>
+                <Link
+                  href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}
+                  onClick={() =>
+                    posthog.capture("Repo Pages: clicked language pill", {
+                      repository: repoData.full_name,
+                      language: repoData.language,
+                    })
+                  }
+                >
                   <LanguagePill language={repoData.language.toLowerCase()} />
                 </Link>
               )}
