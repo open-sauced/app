@@ -262,7 +262,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 </div>
               </div>
             </div>
-            <div className="flex w-fit max-w-xs lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
+            <div className="relative flex w-fit max-w-[21rem] lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
               {repoData.language && (
                 <Link href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}>
                   <LanguagePill language={repoData.language.toLowerCase()} />
@@ -277,6 +277,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 size="xsmall"
                 className="!px-2 whitespace-nowrap"
               />
+
+              <span className="fixed rounded-r-full right-8 lg:hidden w-12 h-8 bg-gradient-to-l from-light-slate-3 to-transparent" />
             </div>
           </section>
 
