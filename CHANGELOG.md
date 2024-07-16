@@ -5,6 +5,35 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.45.0-beta.2](https://github.com/open-sauced/app/compare/v2.45.0-beta.1...v2.45.0-beta.2) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* fixed several UI/UX issues for StarSearch ([#3692](https://github.com/open-sauced/app/issues/3692)) ([d06ea60](https://github.com/open-sauced/app/commit/d06ea607c5c6e43ca07b5583e293a58c2b0810cb))
+
+## [2.45.0-beta.1](https://github.com/open-sauced/app/compare/v2.44.1-beta.2...v2.45.0-beta.1) (2024-07-16)
+
+
+### 🍕 Features
+
+* show total Outside Contributors in `RossChart` ([#3694](https://github.com/open-sauced/app/issues/3694)) ([1e00a24](https://github.com/open-sauced/app/commit/1e00a2430380a09f23fe304f24936bb229f73780))
+
+## [2.44.1-beta.2](https://github.com/open-sauced/app/compare/v2.44.1-beta.1...v2.44.1-beta.2) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* maintain selected date across dashboard tabs ([#3660](https://github.com/open-sauced/app/issues/3660)) ([cf641f1](https://github.com/open-sauced/app/commit/cf641f1baae7912dcfd86477f685eafbede23c45))
+* maintain selected date range when switching between tabs ([3528397](https://github.com/open-sauced/app/commit/35283974768b527a0cabde196caf25efe340da1c))
+
+## [2.44.1-beta.1](https://github.com/open-sauced/app/compare/v2.44.0...v2.44.1-beta.1) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* add padding to explore tabs ([#3718](https://github.com/open-sauced/app/issues/3718)) ([2b3fb90](https://github.com/open-sauced/app/commit/2b3fb9058503ff06124d686a3dd17601c7e6a9e7))
+
 ## [2.44.0](https://github.com/open-sauced/app/compare/v2.43.0...v2.44.0) (2024-07-11)
 
 
