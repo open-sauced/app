@@ -126,7 +126,7 @@ export default function YoloChart({
                   <div className="flex items-center gap-2 text-light-slate-11">
                     {showHoverCards ? (
                       <HoverCard.Root>
-                        <Link href={`/u/${actor_login}`} className="rounded-full">
+                        <Link href={`/u/${actor_login}`} className="rounded-full" onClick={onProfileClick}>
                           <HoverCard.Trigger>
                             <Avatar
                               size={24}
@@ -144,7 +144,7 @@ export default function YoloChart({
                         </HoverCard.Portal>
                       </HoverCard.Root>
                     ) : (
-                      <Link href={`/u/${actor_login}`} className="rounded-full">
+                      <Link href={`/u/${actor_login}`} className="rounded-full" onClick={onProfileClick}>
                         <Avatar
                           size={24}
                           className="xl:w-9 xl:h-9"
