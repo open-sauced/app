@@ -404,6 +404,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   range={range}
                   syncId={syncId}
                   isLoading={isStarsDataLoading}
+                  onCategoryClick={(category) =>
+                    posthog.capture("Repo Pages: clicked Stars Chart category", {
+                      repository: repoData.full_name,
+                      category,
+                    })
+                  }
                   className="lg:col-span-6 h-fit"
                 />
                 <ForksChart
@@ -412,6 +418,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   range={range}
                   syncId={syncId}
                   isLoading={isForksDataLoading}
+                  onCategoryClick={(category) =>
+                    posthog.capture("Repo Pages: clicked Forks Chart category", {
+                      repository: repoData.full_name,
+                      category,
+                    })
+                  }
                   className="lg:col-span-6 h-fit"
                 />
               </section>
