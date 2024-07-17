@@ -313,6 +313,13 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     range={range}
                     isLoading={isRossDataLoading}
                     error={rossError}
+                    onFilterClick={(category, value) =>
+                      posthog.capture(`Repo Data: toggled ROSS filter`, {
+                        repository: repoData.full_name,
+                        category,
+                        value,
+                      })
+                    }
                     className="h-fit"
                   />
 
