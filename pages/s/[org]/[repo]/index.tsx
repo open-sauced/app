@@ -350,9 +350,23 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       error={lotteryFactorError}
                       range={range}
                       isLoading={isLotteryFactorLoading}
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloBannerOnClick={uniqueYoloCoders.size > 0 ? () => setLotteryState("yolo") : undefined}
                       showHoverCards
+                      uniqueYoloCoders={uniqueYoloCoders}
+                      yoloBannerOnClick={
+                        uniqueYoloCoders.size > 0
+                          ? () => {
+                              setLotteryState("yolo");
+                              posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
+                            }
+                          : undefined
+                      }
+                      onYoloIconClick={() => {
+                        setLotteryState("yolo");
+                        posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                      }}
+                      onProfileClick={() => {
+                        posthog.capture(`Repo Pages: Lottery Factor user clicked`, { repository: repoData.full_name });
+                      }}
                     />
                   )}
                   {lotteryState === "yolo" && (
