@@ -119,14 +119,16 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                   <p>{repoData.description}</p>
                 </div>
               </header>
-
               <div className="self-end flex flex-col gap-2 items-end">
                 {isMobile ? (
                   <AddToWorkspaceDrawer repository={repoData.full_name} />
                 ) : (
                   <Button
                     variant="primary"
-                    onClick={() => setIsAddToWorkspaceModalOpen(true)}
+                    onClick={() => {
+                      posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
+                      setIsAddToWorkspaceModalOpen(true);
+                    }}
                     className="shrink-0 items-center gap-3 w-fit"
                   >
                     <MdWorkspaces />
@@ -142,26 +144,49 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                     <FiCopy />
                     Share
                   </Button>
-                  <DayRangePicker />
+                  <DayRangePicker
+                    onDayRangeChanged={(value: string) =>
+                      posthog.capture("Repo Pages: changed range", {
+                        repository: repoData.full_name,
+                        range: Number(value),
+                      })
+                    }
+                  />
                 </div>
               </div>
             </div>
-            <div className="flex w-fit max-w-xs lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
-              <Link href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}>
-                <LanguagePill language={repoData.language.toLowerCase()} />
-              </Link>
-              <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
+            <div className="relative flex w-fit max-w-[21rem] lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
+              {repoData.language && (
+                <Link
+                  href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}
+                  onClick={() =>
+                    posthog.capture("Repo Pages: clicked language pill", {
+                      repository: repoData.full_name,
+                      language: repoData.language,
+                    })
+                  }
+                >
+                  <LanguagePill language={repoData.language.toLowerCase()} />
+                </Link>
+              )}
+              {repoData.license && (
+                <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
+              )}
               <Pill
-                text={`Last Updated: ${new Date(repoData.updated_at).toLocaleDateString()}`}
+                text={`Last Updated: ${new Date(repoData.pushed_at).toLocaleDateString()}`}
                 icon={<FaRegClock />}
                 size="xsmall"
                 className="!px-2 whitespace-nowrap"
               />
+
+              <span className="fixed rounded-r-full right-8 lg:hidden w-12 h-8 bg-gradient-to-l from-light-slate-3 to-transparent" />
             </div>
           </section>
+
           <div className="border-b">
             <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
           </div>
+
           <ClientOnly>
             <div className="flex flex-col gap-8 p-4 lg:p-8">
               <Activity repositories={[repoData.id]} />
