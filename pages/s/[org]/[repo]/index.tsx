@@ -349,6 +349,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     contributorConfidence={repoStats?.contributor_confidence}
                     isError={isError}
                     isLoading={isLoading}
+                    onLearnMoreClick={() =>
+                      posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                        repository: repoData.full_name,
+                      })
+                    }
                   />
 
                   {lotteryState === "lottery" && (
