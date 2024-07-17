@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.46.0-beta.1](https://github.com/open-sauced/app/compare/v2.45.0...v2.46.0-beta.1) (2024-07-17)
+
+
+### 🍕 Features
+
+* Track Repo Pages (Header) ([#3728](https://github.com/open-sauced/app/issues/3728)) ([2dede76](https://github.com/open-sauced/app/commit/2dede76509a7a489c63829e644a8c9cb219be36a))
+
 ## [2.45.0](https://github.com/open-sauced/app/compare/v2.44.0...v2.45.0) (2024-07-16)
 
 
