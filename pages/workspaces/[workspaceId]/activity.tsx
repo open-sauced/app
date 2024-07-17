@@ -20,7 +20,6 @@ import { setQueryParams } from "lib/utils/query-params";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { SubTabsList } from "components/TabList/tab-list";
-import { FeatureFlagged } from "components/shared/feature-flagged";
 import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
@@ -181,18 +180,16 @@ const WorkspaceActivityPage = ({
           />
         </div>
       </WorkspaceLayout>
-      <FeatureFlagged flag="starsearch-workspaces" featureFlags={featureFlags}>
-        <StarSearchEmbed
-          userId={userId}
-          bearerToken={bearerToken}
-          suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
-          isMobile={isMobile}
-          // TODO: implement once we have shared chats in workspaces
-          sharedChatId={null}
-          tagline="Ask anything about your workspace"
-          workspaceId={workspace.id}
-        />
-      </FeatureFlagged>
+      <StarSearchEmbed
+        userId={userId}
+        bearerToken={bearerToken}
+        suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
+        isMobile={isMobile}
+        // TODO: implement once we have shared chats in workspaces
+        sharedChatId={null}
+        tagline="Ask anything about your workspace"
+        workspaceId={workspace.id}
+      />
     </>
   );
 };

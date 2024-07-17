@@ -27,7 +27,6 @@ import { useHasMounted } from "lib/hooks/useHasMounted";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
 
@@ -254,18 +253,16 @@ const WorkspaceDashboard = ({
           />
         </div>
       </WorkspaceLayout>
-      <FeatureFlagged flag="starsearch-workspaces" featureFlags={featureFlags}>
-        <StarSearchEmbed
-          userId={userId}
-          bearerToken={bearerToken}
-          suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
-          isMobile={isMobile}
-          // TODO: implement once we have shared chats in workspaces
-          sharedChatId={null}
-          tagline="Ask anything about your workspace"
-          workspaceId={workspace.id}
-        />
-      </FeatureFlagged>
+      <StarSearchEmbed
+        userId={userId}
+        bearerToken={bearerToken}
+        suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
+        isMobile={isMobile}
+        // TODO: implement once we have shared chats in workspaces
+        sharedChatId={null}
+        tagline="Ask anything about your workspace"
+        workspaceId={workspace.id}
+      />
     </>
   );
 };
