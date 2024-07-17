@@ -19,6 +19,9 @@ type YoloChartProps = {
   yoloHideBots: boolean;
   setYoloHideBots: (yoloHideBots: boolean) => void;
   backButtonOnClick?: () => void;
+  onShaClick?: () => void;
+  onProfileClick?: () => void;
+  onHideBotsToggle?: (checked: boolean) => void;
   showHoverCards?: boolean;
   className?: string;
 };
@@ -32,6 +35,9 @@ export default function YoloChart({
   yoloHideBots,
   setYoloHideBots,
   backButtonOnClick,
+  onShaClick,
+  onProfileClick,
+  onHideBotsToggle,
   showHoverCards,
   className,
 }: YoloChartProps) {
@@ -57,7 +63,10 @@ export default function YoloChart({
               name="Hide Bots"
               size="sm"
               checked={yoloHideBots}
-              handleToggle={() => setYoloHideBots(!yoloHideBots)}
+              handleToggle={() => {
+                setYoloHideBots(!yoloHideBots);
+                onHideBotsToggle && onHideBotsToggle(yoloHideBots);
+              }}
               ariaLabel="YOLO Coders Hide Bots Toggle"
             />
           </aside>
