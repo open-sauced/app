@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
-import { posthog } from "posthog-js";
+import { usePostHog } from "posthog-js/react";
 import Card from "components/atoms/Card/card";
 import SingleSelect from "components/atoms/Select/single-select";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
@@ -21,6 +21,7 @@ type AddToWorkspaceModalProps = {
 export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }: AddToWorkspaceModalProps) {
   const { toast } = useToast();
   const router = useRouter();
+  const posthog = usePostHog();
   const { signIn, user, sessionToken } = useSupabaseAuth();
   const [workspaceId, setWorkspaceId] = useState("new");
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ load: !!user, limit: 100 });
