@@ -160,7 +160,9 @@ export default function YoloChart({
                   </div>
                 </td>
                 <td className="text-end w-fit underline">
-                  <a href={`https://github.com/${repository}/commit/${sha}`}>{sha.substring(0, 7)}</a>
+                  <a href={`https://github.com/${repository}/commit/${sha}`} onClick={onShaClick}>
+                    {sha.substring(0, 7)}
+                  </a>
                 </td>
                 <td className="text-end pt-1 pb-2 pr-2">
                   {push_num_commits} commit{push_num_commits > 1 && "s"}
