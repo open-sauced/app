@@ -22,8 +22,9 @@ import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { SubTabsList } from "components/TabList/tab-list";
 import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -40,18 +41,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     pathValidator: () => true,
   });
 
-  const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
-    path: `workspaces/${workspaceId}/members`,
-    bearerToken,
-    pathValidator: () => true,
-  });
-
-  const userId = Number(session?.user.user_metadata.sub);
-
-  const isOwner = !!(workspaceMembers?.data || []).find(
-    (member) => member.role === "owner" && member.user_id === userId
-  );
-
   if (error) {
     deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
@@ -63,32 +52,36 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   }
 
   setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
-  const featureFlags = await getAllFeatureFlags(userId);
 
   return {
-    props: { workspace: data, overLimit: !!data?.exceeds_upgrade_limits, isOwner, bearerToken, userId, featureFlags },
+    props: {
+      workspace: data,
+      overLimit: !!data?.exceeds_upgrade_limits,
+    },
   };
 };
 
 interface WorkspaceDashboardProps {
-  userId: number;
   workspace: Workspace;
-  isOwner: boolean;
   overLimit: boolean;
-  bearerToken: string;
-  featureFlags: Record<FeatureFlag, boolean>;
 }
 
 type OrderDirection = "ASC" | "DESC";
 
-const WorkspaceActivityPage = ({
-  workspace,
-  isOwner,
-  overLimit,
-  bearerToken,
-  userId,
-  featureFlags,
-}: WorkspaceDashboardProps) => {
+const WorkspaceActivityPage = ({ workspace, overLimit }: WorkspaceDashboardProps) => {
+  const { sessionToken, signIn, userId } = useSupabaseAuth();
+  const {
+    data: workspaceMembers = [],
+    isLoading: isLoadingMembers,
+    isError: isMembersError,
+  } = useWorkspaceMembers({ workspaceId: workspace.id, limit: 1000 });
+  const workspaceMember =
+    !isLoadingMembers && !isMembersError
+      ? (workspaceMembers || []).find((member) => member.user_id === Number(userId))
+      : null;
+  const isOwner = workspaceMember?.role === "owner";
+  const isEditor = isOwner || workspaceMember?.role === "editor";
+
   const router = useRouter();
   const {
     limit = 10,
@@ -182,13 +175,22 @@ const WorkspaceActivityPage = ({
       </WorkspaceLayout>
       <StarSearchEmbed
         userId={userId}
-        bearerToken={bearerToken}
+        isEditor={isEditor}
+        bearerToken={sessionToken}
         suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
         isMobile={isMobile}
         // TODO: implement once we have shared chats in workspaces
         sharedChatId={null}
         tagline="Ask anything about your workspace"
         workspaceId={workspace.id}
+        signInHandler={() =>
+          signIn({
+            provider: "github",
+            options: {
+              redirectTo: window.location.href,
+            },
+          })
+        }
       />
     </>
   );

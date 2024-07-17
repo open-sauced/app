@@ -8,6 +8,8 @@ import { StarSearchButton } from "./StarSearchButton";
 import { StarSearchChat } from "./StarSearchChat";
 interface StarSearchEmbedProps extends Omit<ComponentProps<typeof StarSearchChat>, "sharedPrompt"> {
   workspaceId?: string;
+  isEditor?: boolean;
+  signInHandler: () => void;
 }
 
 export const StarSearchEmbed = ({
@@ -18,6 +20,8 @@ export const StarSearchEmbed = ({
   isMobile,
   tagline,
   workspaceId,
+  isEditor = false,
+  signInHandler,
 }: StarSearchEmbedProps) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const onClose = () => setDrawerOpen(false);
@@ -52,13 +56,29 @@ export const StarSearchEmbed = ({
     return null;
   }
 
+  const isStarSearchEnabled = !!((isEditor && workspaceId) || !workspaceId);
+
+  const tooltipText = isStarSearchEnabled
+    ? "Search your workspace with StarSearch"
+    : userId
+    ? "You need to be an editor to use StarSearch"
+    : "Sign in to use StarSearch";
+
   return (
     <>
       <div className="fixed bottom-0 right-0 flex justify-end p-2">
         <StarSearchButton
           onOpen={() => {
-            setDrawerOpen(true);
+            if (!userId) {
+              signInHandler();
+            }
+
+            if (isStarSearchEnabled) {
+              setDrawerOpen(true);
+            }
           }}
+          tooltipText={tooltipText}
+          enabled={!userId || (isStarSearchEnabled && !!userId)}
         />
       </div>
       <div
