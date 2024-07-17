@@ -220,34 +220,35 @@ const WorkspaceDashboard = ({ workspace, ogImage, overLimit }: WorkspaceDashboar
               )}
             </ClientOnly>
           </div>
-
-          <WorkspaceWelcomeModal
-            isOpen={showWelcome!}
-            onClose={() => {
-              setShowWelcome(false);
-            }}
-          />
-          <InsightUpgradeModal
-            workspaceId={workspace.id}
-            variant="contributors"
-            isOpen={isInsightUpgradeModalOpen}
-            onClose={() => setIsInsightUpgradeModalOpen(false)}
-            overLimit={10}
-          />
         </div>
       </WorkspaceLayout>
-      <StarSearchEmbed
-        userId={userId}
-        isEditor={isEditor}
-        bearerToken={sessionToken}
-        suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
-        isMobile={isMobile}
-        // TODO: implement once we have shared chats in workspaces
-        sharedChatId={null}
-        tagline="Ask anything about your workspace"
-        workspaceId={workspace.id}
-        signInHandler={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}
-      />
+      <ClientOnly>
+        <StarSearchEmbed
+          userId={userId}
+          isEditor={isEditor}
+          bearerToken={sessionToken}
+          suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
+          isMobile={isMobile}
+          // TODO: implement once we have shared chats in workspaces
+          sharedChatId={null}
+          tagline="Ask anything about your workspace"
+          workspaceId={workspace.id}
+          signInHandler={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}
+        />
+        <WorkspaceWelcomeModal
+          isOpen={showWelcome!}
+          onClose={() => {
+            setShowWelcome(false);
+          }}
+        />
+        <InsightUpgradeModal
+          workspaceId={workspace.id}
+          variant="contributors"
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          overLimit={10}
+        />
+      </ClientOnly>
     </>
   );
 };

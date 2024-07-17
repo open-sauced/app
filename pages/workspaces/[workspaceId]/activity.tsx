@@ -26,7 +26,9 @@ import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"), {
+  ssr: false,
+});
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -146,7 +148,7 @@ const WorkspaceActivityPage = ({ workspace, overLimit }: WorkspaceDashboardProps
                   selectedTab={"pull requests"}
                   pageId={`/workspaces/${workspace.id}`}
                 />
-                {isMobile ? <DayRangePicker /> : null}
+                <ClientOnly>{isMobile ? <DayRangePicker /> : null}</ClientOnly>
               </div>
               <div className="flex items-center justify-end gap-2 flex-wrap w-full">
                 <TrackedRepositoryFilter
@@ -156,7 +158,7 @@ const WorkspaceActivityPage = ({ workspace, overLimit }: WorkspaceDashboardProps
                     setQueryParams({ page: "1" });
                   }}
                 />
-                {isMobile ? null : <DayRangePicker />}
+                <ClientOnly>{isMobile ? <DayRangePicker /> : null}</ClientOnly>
                 <LimitPicker />
               </div>
             </div>
@@ -164,33 +166,28 @@ const WorkspaceActivityPage = ({ workspace, overLimit }: WorkspaceDashboardProps
               <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />
             </ClientOnly>
           </div>
-          <InsightUpgradeModal
-            workspaceId={workspace.id}
-            variant="contributors"
-            isOpen={isInsightUpgradeModalOpen}
-            onClose={() => setIsInsightUpgradeModalOpen(false)}
-            overLimit={10}
-          />
         </div>
       </WorkspaceLayout>
-      <StarSearchEmbed
-        userId={userId}
-        isEditor={isEditor}
-        bearerToken={sessionToken}
-        suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
-        isMobile={isMobile}
-        // TODO: implement once we have shared chats in workspaces
-        sharedChatId={null}
-        tagline="Ask anything about your workspace"
+      <ClientOnly>
+        <StarSearchEmbed
+          userId={userId}
+          isEditor={isEditor}
+          bearerToken={sessionToken}
+          suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
+          isMobile={isMobile}
+          // TODO: implement once we have shared chats in workspaces
+          sharedChatId={null}
+          tagline="Ask anything about your workspace"
+          workspaceId={workspace.id}
+          signInHandler={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}
+        />
+      </ClientOnly>
+      <InsightUpgradeModal
         workspaceId={workspace.id}
-        signInHandler={() =>
-          signIn({
-            provider: "github",
-            options: {
-              redirectTo: window.location.href,
-            },
-          })
-        }
+        variant="contributors"
+        isOpen={isInsightUpgradeModalOpen}
+        onClose={() => setIsInsightUpgradeModalOpen(false)}
+        overLimit={10}
       />
     </>
   );
