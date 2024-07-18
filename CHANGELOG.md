@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.46.0-beta.4](https://github.com/open-sauced/app/compare/v2.46.0-beta.3...v2.46.0-beta.4) (2024-07-18)
+
+
+### 🍕 Features
+
+* Tracking Repo Pages (YOLO Chart) ([#3736](https://github.com/open-sauced/app/issues/3736)) ([5edfe8a](https://github.com/open-sauced/app/commit/5edfe8ac5cbefd04ca36e0fbbda85bdc330c5f1d))
+
 ## [2.46.0-beta.3](https://github.com/open-sauced/app/compare/v2.46.0-beta.2...v2.46.0-beta.3) (2024-07-18)
 
 
