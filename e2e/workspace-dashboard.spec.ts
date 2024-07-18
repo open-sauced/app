@@ -14,7 +14,7 @@ test("workspace dashboard page loads", async ({ page }) => {
   // The welcome modal should be visible
   const dialog = await page.getByRole("dialog", { name: "Welcome to Workspaces", exact: true });
 
-  // In case the this screen size test runs first and the welcome modal no longer loads
+  // In case this screen size test runs first and the welcome modal no longer loads because the local storage is set to no longer show it.
   if (await dialog.isVisible()) {
     await dialog.getByRole("button", { name: "Continue", exact: true }).click();
   }
@@ -38,7 +38,7 @@ test.describe("{ width: 640, height: 1136 }", () => {
     // The welcome modal should be visible
     const dialog = await page.getByRole("dialog", { name: "Welcome to Workspaces", exact: true });
 
-    // In case the this screen size test runs first and the welcome modal no longer loads
+    // In case this screen size test runs first and the welcome modal no longer loads because the local storage is set to no longer show it.
     if (await dialog.isVisible()) {
       await dialog.getByRole("button", { name: "Close", exact: true }).click();
     }
