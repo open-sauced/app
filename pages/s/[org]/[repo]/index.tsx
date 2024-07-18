@@ -313,6 +313,13 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     range={range}
                     isLoading={isRossDataLoading}
                     error={rossError}
+                    onFilterClick={(category, value) =>
+                      posthog.capture(`Repo Data: toggled ROSS filter`, {
+                        repository: repoData.full_name,
+                        category,
+                        value,
+                      })
+                    }
                     className="h-fit"
                   />
 
@@ -342,6 +349,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     contributorConfidence={repoStats?.contributor_confidence}
                     isError={isError}
                     isLoading={isLoading}
+                    onLearnMoreClick={() =>
+                      posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                        repository: repoData.full_name,
+                      })
+                    }
                   />
 
                   {lotteryState === "lottery" && (
@@ -392,6 +404,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   range={range}
                   syncId={syncId}
                   isLoading={isStarsDataLoading}
+                  onCategoryClick={(category) =>
+                    posthog.capture("Repo Pages: clicked Stars Chart category", {
+                      repository: repoData.full_name,
+                      category,
+                    })
+                  }
                   className="lg:col-span-6 h-fit"
                 />
                 <ForksChart
@@ -400,6 +418,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   range={range}
                   syncId={syncId}
                   isLoading={isForksDataLoading}
+                  onCategoryClick={(category) =>
+                    posthog.capture("Repo Pages: clicked Forks Chart category", {
+                      repository: repoData.full_name,
+                      category,
+                    })
+                  }
                   className="lg:col-span-6 h-fit"
                 />
               </section>

@@ -28,10 +28,19 @@ type StarsChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  onCategoryClick?: (category: string) => void;
   className?: string;
 };
 
-export default function StarsChart({ stats, total, syncId, range = 30, isLoading, className }: StarsChartProps) {
+export default function StarsChart({
+  stats,
+  total,
+  syncId,
+  range = 30,
+  isLoading,
+  onCategoryClick,
+  className,
+}: StarsChartProps) {
   const [category, setCategory] = useState<"daily" | "history">("daily");
   const dailyData = useMemo(() => getDailyStarsHistogramToDays({ stats, range }), [stats, range]);
   const historyData = useMemo(() => getHistoryStarsHistogramToDays({ stats, total, range }), [stats, total, range]);
@@ -108,10 +117,22 @@ export default function StarsChart({ stats, total, syncId, range = 30, isLoading
               </aside>
             </div>
             <div className="flex gap-2 items-center lg:self-start">
-              <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
+              <Button
+                variant={category === "daily" ? "outline" : "default"}
+                onClick={() => {
+                  setCategory("daily");
+                  onCategoryClick && onCategoryClick("daily");
+                }}
+              >
                 Daily
               </Button>
-              <Button variant={category === "history" ? "outline" : "default"} onClick={() => setCategory("history")}>
+              <Button
+                variant={category === "history" ? "outline" : "default"}
+                onClick={() => {
+                  setCategory("history");
+                  onCategoryClick && onCategoryClick("history");
+                }}
+              >
                 History
               </Button>
             </div>

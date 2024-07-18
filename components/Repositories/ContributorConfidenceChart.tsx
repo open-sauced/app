@@ -8,6 +8,7 @@ type ContributorConfidenceChartProps = {
   contributorConfidence: number | undefined;
   isLoading: boolean;
   isError: boolean;
+  onLearnMoreClick?: () => void;
   className?: string;
 };
 
@@ -15,6 +16,7 @@ export default function ContributorConfidenceChart({
   contributorConfidence,
   isLoading,
   isError,
+  onLearnMoreClick,
   className,
 }: ContributorConfidenceChartProps) {
   const percentage = Math.floor((contributorConfidence ?? 0) * 100);
@@ -58,6 +60,7 @@ export default function ContributorConfidenceChart({
         </div>
         <a
           href="https://opensauced.pizza/docs/features/repo-pages/#insights-into-contributor-confidence"
+          onClick={onLearnMoreClick}
           className="text-xs font-semibold text-sauced-orange xl:text-sm hover:underline"
         >
           Learn More
