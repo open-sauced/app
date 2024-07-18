@@ -19,6 +19,9 @@ type YoloChartProps = {
   yoloHideBots: boolean;
   setYoloHideBots: (yoloHideBots: boolean) => void;
   backButtonOnClick?: () => void;
+  onShaClick?: () => void;
+  onProfileClick?: () => void;
+  onHideBotsToggle?: (checked: boolean) => void;
   showHoverCards?: boolean;
   className?: string;
 };
@@ -32,6 +35,9 @@ export default function YoloChart({
   yoloHideBots,
   setYoloHideBots,
   backButtonOnClick,
+  onShaClick,
+  onProfileClick,
+  onHideBotsToggle,
   showHoverCards,
   className,
 }: YoloChartProps) {
@@ -57,7 +63,10 @@ export default function YoloChart({
               name="Hide Bots"
               size="sm"
               checked={yoloHideBots}
-              handleToggle={() => setYoloHideBots(!yoloHideBots)}
+              handleToggle={() => {
+                setYoloHideBots(!yoloHideBots);
+                onHideBotsToggle && onHideBotsToggle(yoloHideBots);
+              }}
               ariaLabel="YOLO Coders Hide Bots Toggle"
             />
           </aside>
@@ -117,7 +126,7 @@ export default function YoloChart({
                   <div className="flex items-center gap-2 text-light-slate-11">
                     {showHoverCards ? (
                       <HoverCard.Root>
-                        <Link href={`/u/${actor_login}`} className="rounded-full">
+                        <Link href={`/u/${actor_login}`} className="rounded-full" onClick={onProfileClick}>
                           <HoverCard.Trigger>
                             <Avatar
                               size={24}
@@ -135,7 +144,7 @@ export default function YoloChart({
                         </HoverCard.Portal>
                       </HoverCard.Root>
                     ) : (
-                      <Link href={`/u/${actor_login}`} className="rounded-full">
+                      <Link href={`/u/${actor_login}`} className="rounded-full" onClick={onProfileClick}>
                         <Avatar
                           size={24}
                           className="xl:w-9 xl:h-9"
@@ -151,7 +160,9 @@ export default function YoloChart({
                   </div>
                 </td>
                 <td className="text-end w-fit underline">
-                  <a href={`https://github.com/${repository}/commit/${sha}`}>{sha.substring(0, 7)}</a>
+                  <a href={`https://github.com/${repository}/commit/${sha}`} onClick={onShaClick}>
+                    {sha.substring(0, 7)}
+                  </a>
                 </td>
                 <td className="text-end pt-1 pb-2 pr-2">
                   {push_num_commits} commit{push_num_commits > 1 && "s"}

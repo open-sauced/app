@@ -391,6 +391,20 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       isLoading={isYoloStatsLoading}
                       range={range}
                       backButtonOnClick={() => setLotteryState("lottery")}
+                      onShaClick={() =>
+                        posthog.capture("Repo Pages: clicked SHA link", { repository: repoData.full_name })
+                      }
+                      onProfileClick={() =>
+                        posthog.capture("Repo Pages: clicked YOLO coder (YOLO Chart)", {
+                          repository: repoData.full_name,
+                        })
+                      }
+                      onHideBotsToggle={(checked) =>
+                        posthog.capture("Repo Pages: toggled YOLO hide bots", {
+                          repository: repoData.full_name,
+                          checked,
+                        })
+                      }
                       showHoverCards
                     />
                   )}
