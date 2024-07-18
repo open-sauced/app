@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
@@ -18,6 +19,9 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
 import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
+import IssueCommentsTable from "components/Profiles/IssueCommentsTable/issue-comments-table";
+import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
+import { SubTabsList } from "components/TabList/tab-list";
 import ContributorProfileTab from "../ContributorProfileTab/contributor-profile-tab";
 
 const colorKeys = Object.keys(color);
@@ -105,9 +109,10 @@ const ContributorProfilePage = ({
   });
 
   const chartData = getPullRequestsHistogramToDays(histogramData, Number(range));
-
+  const [selectedRepo, setSelectedRepo] = useState("");
   const totalPrs = chartData.reduce((total, curr) => total + curr.y, 0);
   const iscConnected = !!user?.is_open_sauced_member;
+  const { showPRs, showIssueComments, selected, setSelected } = useContributionsFilter();
 
   return (
     <div className="w-full ">
@@ -160,7 +165,7 @@ const ContributorProfilePage = ({
             </>
           )}
         </div>
-        <div className="flex-1 mt-10 lg:mt-0">
+        <div className="flex-1 mt-10 lg:mt-0 lg:w-1/3">
           {loading ? (
             <SkeletonWrapper height={500} radius={12} />
           ) : (
@@ -232,20 +237,48 @@ const ContributorProfilePage = ({
                         contributor={githubName}
                         range={Number(range)}
                         className="!h-32"
+                        repo={selectedRepo}
                       />
                     </div>
                     <div>
-                      <CardRepoList limit={7} repoList={repoList} total={repoList.length} />
+                      <CardRepoList
+                        limit={7}
+                        repoList={repoList}
+                        total={repoList.length}
+                        onSelect={(repo) => setSelectedRepo(repo)}
+                        showCursor={true}
+                      />
                     </div>
 
                     <div className="mt-6">
-                      <PullRequestTable
-                        limit={15}
-                        contributor={githubName}
-                        topic={"*"}
-                        repositories={undefined}
-                        range={range}
-                      />
+                      <div className="pb-2">
+                        <SubTabsList
+                          label="Activity pages"
+                          textSize="small"
+                          tabList={contributionsOptions}
+                          selectedTab={selected.toLowerCase()}
+                          onSelect={(e) => setSelected(e.name)}
+                        />
+                      </div>
+
+                      {showPRs && (
+                        <div className="pt-2 min-h-[550px]">
+                          <PullRequestTable
+                            limit={15}
+                            contributor={githubName}
+                            topic={"*"}
+                            repositories={undefined}
+                            range={range}
+                            repoFilter={selectedRepo}
+                          />
+                        </div>
+                      )}
+
+                      {showIssueComments && (
+                        <div className="pt-2 min-h-[550px]">
+                          <IssueCommentsTable contributor={githubName} limit={15} range={Number(range)} />
+                        </div>
+                      )}
                     </div>
                     <div className="mt-8 text-sm text-light-slate-9">
                       <p>The data for these contributions is from publicly available open source projects on GitHub.</p>

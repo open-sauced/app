@@ -7,12 +7,14 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { useToast } from "lib/hooks/useToast";
 import Pill from "components/atoms/Pill/pill";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
 
 interface WorkspaceHeaderProps {
   workspace: Workspace;
+  children?: React.ReactNode;
 }
 
-export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
+export const WorkspaceHeader = ({ workspace, children }: WorkspaceHeaderProps) => {
   const { toast } = useToast();
   const posthog = usePostHog();
   const { userId } = useSupabaseAuth();
@@ -25,7 +27,7 @@ export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
 
     try {
       const shortUrl = await shortenUrl(url);
-      await navigator.clipboard.writeText(shortUrl);
+      writeToClipboard(shortUrl);
       toast({ description: "Copied to clipboard.", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -43,7 +45,8 @@ export const WorkspaceHeader = ({ workspace }: WorkspaceHeaderProps) => {
         </span>
         <Pill className="font-medium" text={workspace.is_public ? "Public" : "Private"} />
       </h1>
-      <div className="flex gap-4">
+      <div className="flex gap-2 justify-end">
+        {children}
         <Button
           variant="outline"
           onClick={copyUrlToClipboard}

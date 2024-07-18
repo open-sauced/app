@@ -10,13 +10,16 @@ import {
 } from "components/primitives/drawer-primitives";
 
 interface DrawerProps {
-  title: React.ReactNode;
-  description: React.ReactNode;
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   children: React.ReactNode;
-  trigger: React.ReactNode;
+  trigger?: React.ReactNode;
   showCloseButton?: boolean;
   asChild?: boolean;
+  isOpen?: boolean;
   onClose?: () => void;
+  inheritBackground?: boolean;
+  fullHeightDrawer?: boolean;
 }
 
 export const Drawer = ({
@@ -26,16 +29,31 @@ export const Drawer = ({
   showCloseButton = true,
   trigger,
   asChild = true,
+  isOpen,
   onClose,
+  inheritBackground = false,
+  fullHeightDrawer = false,
 }: DrawerProps) => {
   return (
-    <InternalDrawer>
+    <InternalDrawer open={isOpen} onClose={onClose}>
       <DrawerTrigger asChild={asChild}>{trigger}</DrawerTrigger>
-      <DrawerContent className="bg-white">
-        <DrawerHeader>
-          <DrawerTitle>{title}</DrawerTitle>
-          <DrawerDescription>{description}</DrawerDescription>
-        </DrawerHeader>
+      <DrawerContent
+        className={inheritBackground ? "bg-inherit" : "bg-white"}
+        style={
+          fullHeightDrawer
+            ? {
+                height: "calc(100dvh - 1rem)",
+                maxHeight: "calc(100dvh - 1rem)",
+              }
+            : undefined
+        }
+      >
+        {title || description ? (
+          <DrawerHeader>
+            {title ? <DrawerTitle>{title}</DrawerTitle> : null}
+            {description ? <DrawerDescription>{description}</DrawerDescription> : null}
+          </DrawerHeader>
+        ) : null}
         <DrawerFooter className="">{children}</DrawerFooter>
         {showCloseButton ? (
           <div className="border-t flex items-center justify-center">

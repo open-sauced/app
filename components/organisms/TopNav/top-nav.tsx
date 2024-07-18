@@ -17,8 +17,13 @@ const TopNav = () => {
   const { onboarded } = useSession();
 
   return (
-    <header className="top-nav-container w-full sm:fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b px-2">
-      <div className="flex gap-2 justify-between items-center mx-auto px-2">
+    <header
+      className="top-nav-container w-full sm:fixed top-0 left-0 z-50 py-0.5 bg-light-slate-2 border-b px-2"
+      style={{
+        maxHeight: "var(--top-nav-height)",
+      }}
+    >
+      <div className="flex gap-2 justify-between items-center mx-auto px-2 -my-2 sm:my-auto">
         <div className="flex gap-3 md:gap-8 items-center">
           <HeaderLogo textIsBlack />
           <Nav className="flex" />

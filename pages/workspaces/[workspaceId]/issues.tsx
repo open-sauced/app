@@ -20,6 +20,7 @@ import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { OrderIssuesBy, useGetWorkspaceIssues } from "lib/hooks/api/useGetWorkspaceIssues";
 import { WorkspaceIssueTable } from "components/Workspaces/WorkspaceIssuesTable";
 import { SubTabsList } from "components/TabList/tab-list";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -106,6 +107,7 @@ const WorkspaceIssuesPage = ({ workspace, isOwner, overLimit }: WorkspaceDashboa
 
   const showBanner = isOwner && overLimit;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
@@ -117,45 +119,50 @@ const WorkspaceIssuesPage = ({ workspace, isOwner, overLimit }: WorkspaceDashboa
           ) : null
         }
       >
-        <WorkspaceHeader workspace={workspace} />
-        <div className="grid sm:flex gap-4 pt-3">
-          <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
-        </div>
-        <div className="mt-6 grid gap-6">
-          <div className="grid md:flex justify-between gap-2 md:gap-4">
-            <SubTabsList
-              label="Activity pages"
-              textSize="small"
-              tabList={[
-                { name: "Pull Requests", path: "activity" },
-                { name: "Issues", path: "issues" },
-              ]}
-              selectedTab={"issues"}
-              pageId={`/workspaces/${workspace.id}`}
-            />
-            <div className="flex justify-end items-center gap-4">
-              <TrackedRepositoryFilter
-                options={filterOptions}
-                handleSelect={(selected: OptionKeys[]) => {
-                  setFilteredRepositories(selected);
-                  setQueryParams({ page: "1" });
-                }}
-              />
-              <DayRangePicker />
-              <LimitPicker />
-            </div>
+        <div className="px-4 py-8 lg:px-16 lg:py-12">
+          <WorkspaceHeader workspace={workspace} />
+          <div className="grid sm:flex gap-4 pt-3">
+            <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
           </div>
-          <ClientOnly>
-            <WorkspaceIssueTable isLoading={isLoading} data={issues} meta={meta} />
-          </ClientOnly>
+          <div className="mt-6 grid gap-6">
+            <div className="grid md:flex gap-2 md:gap-4 w-full items-center mb-2">
+              <div className="flex items-center justify-between w-full md:w-fit">
+                <SubTabsList
+                  label="Activity pages"
+                  textSize="small"
+                  tabList={[
+                    { name: "Pull Requests", path: "activity" },
+                    { name: "Issues", path: "issues" },
+                  ]}
+                  selectedTab={"issues"}
+                  pageId={`/workspaces/${workspace.id}`}
+                />
+                {isMobile ? <DayRangePicker /> : null}
+              </div>
+              <div className="flex items-center justify-end gap-2 flex-wrap w-full">
+                <TrackedRepositoryFilter
+                  options={filterOptions}
+                  handleSelect={(selected: OptionKeys[]) => {
+                    setFilteredRepositories(selected);
+                    setQueryParams({ page: "1" });
+                  }}
+                />
+                {isMobile ? null : <DayRangePicker />}
+                <LimitPicker />
+              </div>
+            </div>
+            <ClientOnly>
+              <WorkspaceIssueTable isLoading={isLoading} data={issues} meta={meta} />
+            </ClientOnly>
+          </div>
+          <InsightUpgradeModal
+            workspaceId={workspace.id}
+            variant="contributors"
+            isOpen={isInsightUpgradeModalOpen}
+            onClose={() => setIsInsightUpgradeModalOpen(false)}
+            overLimit={10}
+          />
         </div>
-        <InsightUpgradeModal
-          workspaceId={workspace.id}
-          variant="contributors"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={10}
-        />
       </WorkspaceLayout>
     </>
   );

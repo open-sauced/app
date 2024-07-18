@@ -178,6 +178,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
         numberOfContributors={numberOfContributors}
         isOwner={isOwner}
         owners={owners}
+        overLimit={showBanner}
       >
         <div
           ref={topRef}
@@ -242,7 +243,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
                   <div key={id} className="flex flex-col gap-6 px-1 w-full">
                     <div className="flex items-center gap-3">
                       <ClientOnly>
-                        <Link href={`/user/${login}`} className="flex items-center gap-3">
+                        <Link href={`/u/${login}`} className="flex items-center gap-3">
                           <Avatar
                             alt="user profile avatar"
                             isCircle

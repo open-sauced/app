@@ -31,20 +31,35 @@ export const ButtonTypes: ComponentStory<typeof Button> = (args) => (
 export const Default = ButtonTemplate.bind({});
 Default.args = { variant: "default" };
 
+export const DefaultDisabled = ButtonTemplate.bind({});
+DefaultDisabled.args = { variant: "default", disabled: true };
+
 export const Primary = ButtonTemplate.bind({});
 Primary.args = { variant: "primary" };
+
+export const PrimaryDisabled = ButtonTemplate.bind({});
+PrimaryDisabled.args = { variant: "primary", disabled: true };
 
 export const Dark = ButtonTemplate.bind({});
 Dark.args = { variant: "dark" };
 
+export const DarkDisabled = ButtonTemplate.bind({});
+DarkDisabled.args = { variant: "dark", disabled: true };
+
 export const Outline = ButtonTemplate.bind({});
 Outline.args = { variant: "outline" };
+
+export const OutlineDisabled = ButtonTemplate.bind({});
+OutlineDisabled.args = { variant: "outline", disabled: true };
 
 export const Link = ButtonTemplate.bind({});
 Link.args = { variant: "link" };
 
 export const Destructive = ButtonTemplate.bind({});
 Destructive.args = { variant: "destructive" };
+
+export const DestructiveDisabled = ButtonTemplate.bind({});
+DestructiveDisabled.args = { variant: "destructive", disabled: true };
 
 export const IsLoading = ButtonTemplate.bind({});
 IsLoading.args = { variant: "primary", loading: true };

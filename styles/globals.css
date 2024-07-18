@@ -21,6 +21,8 @@ h4,
 h5,
 h6 {
   @apply tracking-tight;
+  @apply font-semibold;
+  @apply text-slate-900;
   text-wrap: balance;
 }
 button:not([role]) {
@@ -247,42 +249,36 @@ but never configured it. */
   text-wrap: balance;
 }
 
-.markdown a {
+.star-search-chat-box a {
   @apply text-sauced-orange;
+  @apply no-underline;
 }
 
-.markdown a:hover {
+.star-search-chat-box a:hover {
   @apply underline;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply font-semibold;
-  @apply text-slate-900;
-}
-
-.markdown h1 {
+.star-search-chat-box h1 {
   @apply text-2xl;
 }
 
-.markdown h2 {
+.star-search-chat-box h2 {
   @apply text-xl;
 }
 
-.markdown h3 {
+.star-search-chat-box h3 {
   @apply text-lg;
 }
 
-.markdown ul {
-  @apply ml-4;
-  @apply list-disc;
+.star-search-chat-box strong {
+  @apply tracking-tight;
+  text-wrap: balance;
 }
 
-.markdown ol {
-  @apply ml-4;
-  @apply list-decimal;
+body:has([aria-hidden="false"][data-star-search-mobile]) {
+  @apply overflow-hidden;
+}
+
+body:has([data-star-search-mobile]) .top-nav-container {
+  @apply fixed;
 }

@@ -1,4 +1,5 @@
 import { supabase } from "./supabase";
+import { isValidUrlNumber, isValidUrlSlug } from "./url-validators";
 
 /**
  * This method replaces the `getAvatarLink` method
@@ -93,6 +94,10 @@ const getPullRequestCommitMessageFromUrl = async (url: string): Promise<string[]
   const githubToken = sessionResponse?.data.session?.provider_token;
   const [, , , owner, repoName, , pullRequestNumber] = url.split("/");
 
+  if (!isValidUrlSlug(owner) || !isValidUrlSlug(repoName) || !isValidUrlNumber(pullRequestNumber)) {
+    throw new Error("Invalid input");
+  }
+
   const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/pulls/${pullRequestNumber}/commits`;
 
   const response = await fetch(apiUrl, {
@@ -116,6 +121,10 @@ const getGithubIssueDetails = async (url: string): Promise<any> => {
   const githubToken = sessionResponse?.data.session?.provider_token;
   const [, , , owner, repoName, , issueNumber] = url.split("/");
 
+  if (!isValidUrlSlug(owner) || !isValidUrlSlug(repoName) || !isValidUrlNumber(issueNumber)) {
+    throw new Error("Invalid input");
+  }
+
   const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/issues/${issueNumber}`;
 
   const response = await fetch(apiUrl, {
@@ -138,6 +147,10 @@ const getGithubIssueComments = async (url: string): Promise<any> => {
   const githubToken = sessionResponse?.data.session?.provider_token;
   const [, , , owner, repoName, , issueNumber] = url.split("/");
 
+  if (!isValidUrlSlug(owner) || !isValidUrlSlug(repoName) || !isValidUrlNumber(issueNumber)) {
+    throw new Error("Invalid input");
+  }
+
   const apiUrl = `https://api.github.com/repos/${owner}/${repoName}/issues/${issueNumber}/comments`;
 
   const response = await fetch(apiUrl, {
@@ -159,6 +172,10 @@ const isValidIssueUrl = (url: string): boolean => {
   return url.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/issues\/[0-9]+)/) ? true : false;
 };
 
+const isValidReleaseUrl = (url: string): boolean => {
+  return url.match(/((https?:\/\/)?(www\.)?github\.com\/[^\/]+\/[^\/]+\/releases\/tag+)/) ? true : false;
+};
+
 const getOwnerAndRepoNameFromUrl = (url: string): { owner: string; repoName: string } => {
   const [, , , owner, repoName] = url.split("/");
 
@@ -175,6 +192,7 @@ export {
   generateGhOgImage,
   isValidPullRequestUrl,
   isValidIssueUrl,
+  isValidReleaseUrl,
   getPullRequestCommitMessageFromUrl,
   getGithubIssueDetails,
   getGithubIssueComments,

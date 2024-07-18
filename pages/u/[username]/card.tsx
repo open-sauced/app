@@ -17,6 +17,7 @@ import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
+import { isValidUrlSlug } from "lib/utils/url-validators";
 import TwitterIcon from "../../../img/icons/social-twitter.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -43,6 +44,10 @@ interface Params extends ParsedUrlQuery {
 }
 
 async function fetchUserData(username: string) {
+  if (!isValidUrlSlug(username)) {
+    throw new Error("Invalid input");
+  }
+
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
     headers: {
       accept: "application/json",
@@ -204,7 +209,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
                         className="h-full max-h-full group-hover:blur-sm transition-all z-10 relative"
                         width={1555}
                         height={938}
-                        src={`/user/${username}`}
+                        src={`/u/${username}`}
                         style={{
                           pointerEvents: "none",
                           aspectRatio: "1555 / 938",
@@ -213,7 +218,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
                         }}
                       ></iframe>
                     </div>
-                    <a className="absolute w-full h-full grid place-content-center z-20" href={`/user/${username}`}>
+                    <a className="absolute w-full h-full grid place-content-center z-20" href={`/u/${username}`}>
                       <Button
                         variant="primary"
                         className="justify-center self-center opacity-0 group-hover:opacity-100 transition-all"
@@ -232,7 +237,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
             <SocialButtons username={username} summary={socialSummary} />
           ) : (
             <div className="flex flex-col gap-2">
-              <Button variant="primary" className="justify-center" href={`/user/${selectedUserName}`}>
+              <Button variant="primary" className="justify-center" href={`/u/${selectedUserName}`}>
                 See Full Profile
               </Button>
               <Button variant="dark" className="justify-center" href="/start">

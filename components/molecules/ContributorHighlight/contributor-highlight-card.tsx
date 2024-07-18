@@ -3,6 +3,7 @@ import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiMoreAlt } from "react-icons/tfi";
 import { FiEdit, FiLinkedin } from "react-icons/fi";
 import { BsCalendar2Event, BsLink45Deg, BsTagFill } from "react-icons/bs";
+import { GoTag } from "react-icons/go";
 import { FaXTwitter } from "react-icons/fa6";
 import { GrFlag } from "react-icons/gr";
 import Emoji from "react-emoji-render";
@@ -47,6 +48,7 @@ import { fetchDevToBlogInfo } from "lib/hooks/fetchDevToBlogInfo";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 import { shortenUrl } from "lib/utils/shorten-url";
+import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import GhOpenGraphImg from "../GhOpenGraphImg/gh-open-graph-img";
 import GenericBlogOpenGraphImg from "../GenericBlogOpenGraphImg/generic-blog-open-graph-img";
 import {
@@ -84,7 +86,7 @@ interface ContributorHighlightCardProps {
   type?: HighlightType;
   taggedRepos: string[];
 }
-export type HighlightType = "pull_request" | "issue" | "blog_post";
+export type HighlightType = "pull_request" | "issue" | "blog_post" | "release";
 
 const ContributorHighlightCard = ({
   title,
@@ -247,7 +249,7 @@ const ContributorHighlightCard = ({
 
     try {
       const shortUrl = await shortenUrl(url);
-      await navigator.clipboard.writeText(shortUrl);
+      writeToClipboard(shortUrl);
       toast({ description: "Copied to clipboard", variant: "success" });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -277,6 +279,8 @@ const ContributorHighlightCard = ({
 
   const getHighlightTypePreset = (type: HighlightType): { text: string; icon?: React.ReactElement } => {
     switch (type) {
+      case "release":
+        return { text: "Release", icon: <GoTag className="text-md md:text-lg" /> };
       case "pull_request":
         return { text: "Pull request", icon: <BiGitPullRequest className="text-md md:text-lg" /> };
       case "blog_post":

@@ -1,10 +1,12 @@
 import React from "react";
 
+export type PillColor = "slate" | "green" | "yellow" | "red" | "purple";
+
 export interface PillProps {
   className?: string;
   text: string | number;
   color?: "slate" | "green" | "yellow" | "red" | "purple";
-  size?: "base" | "small";
+  size?: "base" | "small" | "xsmall";
   icon?: JSX.Element;
 }
 
@@ -23,12 +25,12 @@ const Pill: React.FC<PillProps> = ({ className, text, color = "slate", size = "b
             ? "bg-purple-200"
             : "bg-light-slate-3 "
         }
-        ${size === "small" ? "py-1 px-1.5  " : "py-1.5 px-2 "}
-        inline-flex items-center rounded-full gap-1 ${className}`}
+        ${size === "small" ? "py-1 px-1.5" : "py-1.5 px-2 "}
+        inline-flex items-center rounded-full w-fit gap-1 ${className}`}
     >
       {icon}
 
-      <div
+      <p
         className={`
         ${
           color === "green"
@@ -41,10 +43,12 @@ const Pill: React.FC<PillProps> = ({ className, text, color = "slate", size = "b
             ? "text-purple-600"
             : "text-light-slate-11"
         }
-            text-sm leading-none`}
+        ${size === "xsmall" ? "text-xs" : "text-sm"}
+        leading-none
+        `}
       >
         {text}
-      </div>
+      </p>
     </div>
   );
 };

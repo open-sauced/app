@@ -43,7 +43,7 @@ const useFetchAllLists = (range = 30, shouldFetch = true) => {
   };
 };
 
-const useFetchListContributors = (id: string, range = 30) => {
+const useFetchListContributors = (workspaceId: string, listId: string, range = 30) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
@@ -52,10 +52,10 @@ const useFetchListContributors = (id: string, range = 30) => {
   query.set("page", `${page}`);
   query.set("limit", `${limit}`);
   query.set("range", `${range}`);
-  const endpointString = `lists/${id}/contributors?${query.toString()}`;
+  const endpointString = `workspaces/${workspaceId}/userLists/${listId}/contributors?${query.toString()}`;
 
   const { data, error, mutate } = useSWR<PaginatedListContributorsResponse, Error>(
-    id ? endpointString : null,
+    listId ? endpointString : null,
     publicApiFetcher as Fetcher<PaginatedListContributorsResponse, Error>
   );
 
@@ -70,12 +70,19 @@ const useFetchListContributors = (id: string, range = 30) => {
   };
 };
 
-const addListContributor = async (listId: string, contributors: { id: number; login?: string }[]) => {
+const addListContributor = async (
+  listId: string,
+  contributors: { id: number; login?: string }[],
+  workspaceId?: string
+) => {
   const sessionResponse = await supabase.auth.getSession();
   const sessionToken = sessionResponse?.data.session?.access_token;
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/lists/${listId}/contributors`, {
+    const requestUrl = workspaceId
+      ? `workspaces/${workspaceId}/userLists/${listId}/contributors`
+      : `lists/${listId}/contributors`;
+    const response = await fetch(requestUrl, {
       method: "POST",
       body: JSON.stringify({ contributors }),
       headers: {

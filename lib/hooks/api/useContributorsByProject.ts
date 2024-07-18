@@ -8,7 +8,7 @@ export const useContributorsByProject = (listId: string, range = 30, repos?: str
   const query = new URLSearchParams();
 
   if (repoName) {
-    query.set("repo_name", `${repoName}`);
+    query.set("repos", `${repoName}`);
   }
 
   if (repos && repos.length > 0) {

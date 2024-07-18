@@ -1,5 +1,8 @@
 import useSWR, { Fetcher } from "swr";
+import { useRouter } from "next/router";
 import { supabase } from "lib/utils/supabase";
+import { calcDaysFromToday } from "lib/utils/date-utils";
+import { useIsWorkspaceUpgraded } from "./api/useIsWorkspaceUpgraded";
 
 const baseUrl = "https://api.github.com";
 
@@ -29,9 +32,13 @@ const githubApiRepoFetcher: Fetcher = async (apiUrl: string) => {
     throw error;
   }
 
+  const requestUrl = new URL(apiUrl, baseUrl);
+  const upgraded = requestUrl.searchParams.get("upgraded");
   const linkHeader = res.headers.get("link");
 
-  if (linkHeader && linkHeader.includes('rel="last"')) {
+  const responses = [res];
+
+  if (linkHeader && linkHeader.includes('rel="last"') && upgraded === "true") {
     // @ts-expect-error the regex group will exist as the link header is present as per https://docs.github.com/en/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28#using-link-headers
     const groups = /page=(?<lastPage>\d+)>;\s+rel="last"/.exec(linkHeader).groups as { lastPage: string };
 
@@ -44,16 +51,16 @@ const githubApiRepoFetcher: Fetcher = async (apiUrl: string) => {
       return url.toString();
     });
 
-    const responses = await Promise.all(
+    const resolvedResponses = await Promise.all(
       pageUrls.map((url) =>
         fetch(url, {
           headers,
-        })
+        }).catch(() => new Response(JSON.stringify({})))
       )
     );
 
     // add the initial request's reponse to the start of the array of paged data responses
-    responses.unshift(res);
+    responses.push(...resolvedResponses);
 
     const data = await Promise.all(responses.map((response) => response.json()));
 
@@ -64,11 +71,16 @@ const githubApiRepoFetcher: Fetcher = async (apiUrl: string) => {
 };
 
 export const useGetOrgRepos = ({ organization, limit = 100 }: { organization: string | undefined; limit?: number }) => {
+  const router = useRouter();
+  const workspaceId = router.query.workspaceId as string;
+  const range = router.query.range as string;
+  const { data: exceededLimit } = useIsWorkspaceUpgraded({ workspaceId });
   const query = new URLSearchParams();
   query.set("per_page", `${limit}`);
   query.set("type", "public");
-  query.set("sort", "full_name");
-  query.set("direction", "asc");
+  query.set("sort", "pushed");
+  query.set("direction", "desc");
+  query.set("upgraded", !exceededLimit ? "true" : "false");
 
   const endpointString = organization ? `orgs/${organization}/repos?${query}` : null;
 
@@ -78,7 +90,10 @@ export const useGetOrgRepos = ({ organization, limit = 100 }: { organization: st
   );
 
   return {
-    data: data?.map((item) => item.full_name) ?? [],
+    data:
+      data
+        ?.filter((item) => calcDaysFromToday(new Date(item.pushed_at)) <= Number(range ?? 30))
+        .map((item) => item.full_name) ?? [],
     isLoading: !error && !data,
     isError: !!error,
     mutate,

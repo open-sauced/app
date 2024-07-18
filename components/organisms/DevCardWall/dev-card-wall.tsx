@@ -237,7 +237,7 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
       >
         <DevCard key="card" isInteractive={i === activeCardIndex} hideProfileButton {...cardProps} />
         <animated.div key="button" className={"grid place-content-center"} style={{ ...buttonSpring }}>
-          <Button variant="primary" href={`/user/${cardProps.username}`}>
+          <Button variant="primary" href={`/u/${cardProps.username}`}>
             View Profile
           </Button>
         </animated.div>

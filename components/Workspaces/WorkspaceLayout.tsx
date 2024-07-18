@@ -19,11 +19,11 @@ interface WorkspaceLayoutProps {
 }
 
 export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: WorkspaceLayoutProps) => {
+  const { user } = useSupabaseAuth();
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
-  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", isLargeScreen);
+  const [showingSidebar, setShowingSidebar] = useLocalStorage("showingSidebar", !user ? false : isLargeScreen);
   const hideSidebar = () => setShowingSidebar(false);
   const sidebarRef = useRef<HTMLSpanElement | null>(null);
-  const { user } = useSupabaseAuth();
   const [showingSignupNudge, setShowingSignupNudge] = useState(true);
 
   useOutsideClick(
@@ -48,7 +48,6 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
       <div
         className="grid"
         style={{
-          "--top-nav-height": "3.3rem",
           gridTemplateRows: "var(--top-nav-height) auto 1fr",
           minHeight: "calc(100vh - var(--top-nav-height))",
         }}
@@ -62,23 +61,16 @@ export const WorkspaceLayout = ({ workspaceId, banner, children, footer }: Works
             {!showingSidebar && (
               <button
                 onClick={() => setShowingSidebar(true)}
-                className="fixed z-50 border-8 border-solid border-black inset-x-0 top-16 w-fit bg-white rounded-r-md shadow-lg p-2"
+                className="fixed z-50 border-8 border-solid border-black inset-x-0 top-24 w-fit bg-white rounded-r-md shadow-lg p-2"
               >
                 <LuArrowRightToLine className="w-4 h-4 text-gray-500" />
               </button>
             )}
           </ClientOnly>
         </div>
-        <div className={clsx("flex-col items-center grow", !banner && "pt-8 md:pt-12")}>
+        <div className="flex-col w-full items-center grow">
           <ClientOnly>{banner}</ClientOnly>
-          <div
-            className={clsx(
-              "mx-auto px-1 sm:px-2 md:px-4 xl:px-16 container w-full min-h-[100px] pb-20",
-              banner && "md:mt-9"
-            )}
-          >
-            {children}
-          </div>
+          <div className={clsx("w-full min-w-screen min-h-[100px] pb-20", banner && "md:mt-9")}>{children}</div>
         </div>
       </div>
       {footer ? (

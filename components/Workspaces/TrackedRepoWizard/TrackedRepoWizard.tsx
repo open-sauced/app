@@ -1,5 +1,6 @@
 import { useLocalStorage } from "react-use";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useSearchRepos } from "lib/hooks/useSearchRepos";
 import { useUserOrganizations } from "lib/hooks/useUserOrganizations";
 import { useGetOrgRepos } from "lib/hooks/useGetOrgRepos";
@@ -33,10 +34,12 @@ async function organizationExists(orgSearchTerm: string) {
 }
 
 export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal }: TrackedReposWizardProps) => {
+  const router = useRouter();
+  const range = router.query.range as string;
+  const initialOrg = router.query.organization as string;
   const [step, setStep] = useState<TrackedReposStep>("pickReposOrOrg");
-  const [organization, setOrganization] = useState<string | undefined>();
+  const [organization, setOrganization] = useState<string | undefined>(initialOrg);
   const [currentTrackedRepositories, setCurrentTrackedRepositories] = useState<Map<string, boolean>>(new Map());
-
   const suggestedRepos: any[] = [];
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
   const [orgSearchTerm, setOrgSearchTerm] = useState<string | undefined>();
@@ -74,7 +77,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal
     // passing it as a dependency will cause an infinite loop though as the reference to it
     // keeps changing. This is a workaround to avoid that.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [organization, isOrgReposError, isLoadingOrgRepos]);
+  }, [organization, isOrgReposError, isLoadingOrgRepos, range]);
 
   useEffect(() => {
     if (rawUserOrgs) {
@@ -149,6 +152,11 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal
         break;
     }
   }
+  useEffect(() => {
+    if (organization) {
+      setStep("pickOrgRepos");
+    }
+  }, [range, organization]);
 
   function onSearchRepos(searchTerm?: string) {
     if (searchTerm && searchTerm.length > 2) {
@@ -204,6 +212,7 @@ export const TrackedReposWizard = ({ onAddToTrackingList, onCancel, onCloseModal
           <SearchOrgStep
             onSelectOrg={(org) => {
               setOrganization(org);
+              router.push({ query: { ...router.query, organization: org, range: range } });
               setStep("pickOrgRepos");
             }}
             onSearch={(searchTerm) => {

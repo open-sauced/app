@@ -56,16 +56,18 @@ const HubPage = ({ insight, ogImage, workspaceId, owners, isOwner }: InsightPage
           ) : null
         }
       >
-        <HubPageLayout page="activity" owners={owners}>
-          <Activity repositories={repositories} />
-        </HubPageLayout>
-        <InsightUpgradeModal
-          workspaceId={workspaceId}
-          variant="repositories"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={repositories.length}
-        />
+        <div className="px-4 py-8 lg:px-16 lg:py-12">
+          <HubPageLayout page="activity" owners={owners} overLimit={showBanner}>
+            <Activity repositories={repositories} />
+          </HubPageLayout>
+          <InsightUpgradeModal
+            workspaceId={workspaceId}
+            variant="all"
+            isOpen={isInsightUpgradeModalOpen}
+            onClose={() => setIsInsightUpgradeModalOpen(false)}
+            overLimit={repositories.length}
+          />
+        </div>
       </WorkspaceLayout>
     </>
   );

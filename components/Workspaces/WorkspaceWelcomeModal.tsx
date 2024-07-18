@@ -13,6 +13,20 @@ interface WorkspaceWelcomeModalProps {
   onClose: () => void;
 }
 
+const EmbeddedVideo = () => {
+  return (
+    <iframe
+      width="100%"
+      className="shadow-md rounded-lg mb-4 aspect-video"
+      src="https://www.youtube-nocookie.com/embed/xpxIyR4-rRc?si=UwT2Ukmjc08hFjU-"
+      title="Welcome to Workspaces"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerPolicy="strict-origin-when-cross-origin"
+      allowFullScreen
+    ></iframe>
+  );
+};
+
 const TITLE = "Welcome to Workspaces";
 export default function WorkspaceWelcomeModal({ isOpen, onClose }: WorkspaceWelcomeModalProps) {
   const description = (
@@ -43,11 +57,7 @@ export default function WorkspaceWelcomeModal({ isOpen, onClose }: WorkspaceWelc
       title={TITLE}
       description={
         <div className="text-center flex flex-col items-center justify-between gap-4 !p-8">
-          <img
-            src="/assets/workspace_overview.png"
-            alt="Workspace screenshot from documentation"
-            className="border-2 border-light-orange-9 shadow-md rounded-lg mb-4"
-          />
+          <EmbeddedVideo />
           {description}
         </div>
       }
@@ -73,12 +83,7 @@ export default function WorkspaceWelcomeModal({ isOpen, onClose }: WorkspaceWelc
     <Dialog open={isOpen}>
       <DialogContent autoStyle={false} onEscapeKeyDown={onClose} onPointerDownOutside={onClose}>
         <Card className="sm:w-96 md:w-max max-w-xl text-center flex flex-col items-center justify-between gap-4 !p-8">
-          {/* Using !p-8 for now as the Card component has explicit padding of p-3. We can revisit. */}
-          <img
-            src="/assets/workspace_overview.png"
-            alt="Workspace screenshot from documentation"
-            className="border-2 border-light-orange-9 shadow-md rounded-lg mb-4"
-          />
+          <EmbeddedVideo />
           <DialogTitle>
             <Title level={2}>Welcome to Workspaces</Title>
           </DialogTitle>
