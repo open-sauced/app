@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.46.0-beta.6](https://github.com/open-sauced/app/compare/v2.46.0-beta.5...v2.46.0-beta.6) (2024-07-18)
+
+
+### 🍕 Features
+
+* added posthog analytics for StarSearch for Workspaces ([#3748](https://github.com/open-sauced/app/issues/3748)) ([72d7c23](https://github.com/open-sauced/app/commit/72d7c2335867b8cafb2ac79189ad312ef2f7569b))
+
 ## [2.46.0-beta.5](https://github.com/open-sauced/app/compare/v2.46.0-beta.4...v2.46.0-beta.5) (2024-07-18)
 
 
