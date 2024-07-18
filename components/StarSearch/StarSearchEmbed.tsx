@@ -2,6 +2,7 @@ import { ComponentProps, useRef, useState } from "react";
 import { captureException } from "@sentry/nextjs";
 import clsx from "clsx";
 import { useOutsideClick } from "rooks";
+import { usePostHog } from "posthog-js/react";
 import { UuidSchema, parseSchema } from "lib/validation-schemas";
 import { useToast } from "lib/hooks/useToast";
 import { StarSearchButton } from "./StarSearchButton";
@@ -10,6 +11,10 @@ interface StarSearchEmbedProps extends Omit<ComponentProps<typeof StarSearchChat
   workspaceId?: string;
   isEditor?: boolean;
   signInHandler: () => void;
+}
+
+interface StarSearchCtaClickType {
+  type: "sign_in" | "can_access" | "no_access";
 }
 
 export const StarSearchEmbed = ({
@@ -23,6 +28,7 @@ export const StarSearchEmbed = ({
   isEditor = false,
   signInHandler,
 }: StarSearchEmbedProps) => {
+  const posthog = usePostHog();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const onClose = () => setDrawerOpen(false);
   const { toast } = useToast();
@@ -70,12 +76,20 @@ export const StarSearchEmbed = ({
         <StarSearchButton
           onOpen={() => {
             if (!userId) {
+              posthog.capture("star_search_workspace_cta_click", { type: "sign_in" } satisfies StarSearchCtaClickType);
               signInHandler();
+              return;
             }
 
             if (isStarSearchEnabled) {
+              posthog.capture("star_search_workspace_cta_click", {
+                type: "can_access",
+              } satisfies StarSearchCtaClickType);
               setDrawerOpen(true);
+              return;
             }
+
+            posthog.capture("star_search_workspace_cta_click", { type: "no_access" } satisfies StarSearchCtaClickType);
           }}
           tooltipText={tooltipText}
           enabled={!userId || (isStarSearchEnabled && !!userId)}
@@ -97,6 +111,7 @@ export const StarSearchEmbed = ({
         }}
       >
         <StarSearchChat
+          isWorkspace={!!validWorkspaceId}
           userId={userId}
           sharedChatId={sharedChatId}
           bearerToken={bearerToken}
