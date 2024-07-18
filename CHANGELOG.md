@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.46.0-beta.3](https://github.com/open-sauced/app/compare/v2.46.0-beta.2...v2.46.0-beta.3) (2024-07-18)
+
+
+### 🍕 Features
+
+* Tracking Repo Pages (Miscellaneous) ([#3739](https://github.com/open-sauced/app/issues/3739)) ([5530beb](https://github.com/open-sauced/app/commit/5530beb1868d925c67a9390e8b924289d36d6e58))
+
+## [2.46.0-beta.2](https://github.com/open-sauced/app/compare/v2.46.0-beta.1...v2.46.0-beta.2) (2024-07-17)
+
+
+### 🍕 Features
+
+* removed StarSearch feature flagging ([#3730](https://github.com/open-sauced/app/issues/3730)) ([701a95a](https://github.com/open-sauced/app/commit/701a95a3294c81ef878b4ed6dee6db380bdf9c47))
+* Tracking Repo Pages (Lottery Factor Chart) ([#3734](https://github.com/open-sauced/app/issues/3734)) ([be5c72e](https://github.com/open-sauced/app/commit/be5c72e203c9406128fe30b90d355584e5de1354))
+
 ## [2.46.0-beta.1](https://github.com/open-sauced/app/compare/v2.45.0...v2.46.0-beta.1) (2024-07-17)
 
 

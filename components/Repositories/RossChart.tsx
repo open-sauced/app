@@ -12,10 +12,11 @@ type RossChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: number;
+  onFilterClick?: (category: string, value: boolean) => void;
   className?: string;
 };
 
-export default function RossChart({ stats, isLoading, error, range, className }: RossChartProps) {
+export default function RossChart({ stats, isLoading, error, range, onFilterClick, className }: RossChartProps) {
   const [filterOutside, setFilterOutside] = useState(true);
   const [filterRecurring, setFilterRecurring] = useState(true);
   const [filterInternal, setFilterInternal] = useState(true);
@@ -148,7 +149,10 @@ export default function RossChart({ stats, isLoading, error, range, className }:
 
       <fieldset className="flex flex-row gap-4 w-fit text-sm mx-auto p-0">
         <button
-          onClick={() => setFilterOutside(!filterOutside)}
+          onClick={() => {
+            setFilterOutside(!filterOutside);
+            onFilterClick && onFilterClick("outside", filterOutside);
+          }}
           className={`flex gap-2 h-full items-center text-slate-700 ${
             !filterOutside && "opacity-60"
           } transition-all duration-300 hover:bg-slate-100 rounded-lg px-2 py-1`}
@@ -158,7 +162,10 @@ export default function RossChart({ stats, isLoading, error, range, className }:
         </button>
 
         <button
-          onClick={() => setFilterRecurring(!filterRecurring)}
+          onClick={() => {
+            setFilterRecurring(!filterRecurring);
+            onFilterClick && onFilterClick("recurring", filterRecurring);
+          }}
           className={`flex gap-2 h-full items-center text-slate-700 ${
             !filterRecurring && "opacity-60"
           } transition-all duration-300 hover:bg-slate-100 rounded-lg px-2 py-1`}
@@ -168,7 +175,10 @@ export default function RossChart({ stats, isLoading, error, range, className }:
         </button>
 
         <button
-          onClick={() => setFilterInternal(!filterInternal)}
+          onClick={() => {
+            setFilterInternal(!filterInternal);
+            onFilterClick && onFilterClick("internal", filterInternal);
+          }}
           className={`flex gap-2 h-full items-center text-slate-700 ${
             !filterInternal && "opacity-60"
           } transition-all duration-300 hover:bg-slate-100 rounded-lg px-2 py-1`}
