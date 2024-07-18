@@ -64,7 +64,7 @@ async function updateComponentRegistry(name: string) {
 }
 
 type StarSearchChatProps = {
-  userId: number | undefined;
+  userId: number | null | undefined;
   sharedPrompt?: string | null;
   sharedChatId?: string | null;
   bearerToken: string | undefined | null;
