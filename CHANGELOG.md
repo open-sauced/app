@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.46.0-beta.5](https://github.com/open-sauced/app/compare/v2.46.0-beta.4...v2.46.0-beta.5) (2024-07-18)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch for workspaces only works for editors ([#3733](https://github.com/open-sauced/app/issues/3733)) ([4aeb220](https://github.com/open-sauced/app/commit/4aeb220dec334e37629537b61d5959e5b1cb73f2))
+
 ## [2.46.0-beta.4](https://github.com/open-sauced/app/compare/v2.46.0-beta.3...v2.46.0-beta.4) (2024-07-18)
 
 
