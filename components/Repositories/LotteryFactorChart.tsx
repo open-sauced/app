@@ -22,9 +22,11 @@ type LotteryFactorChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: DayRange;
+  showHoverCards?: boolean;
   uniqueYoloCoders?: Set<string>;
   yoloBannerOnClick?: () => void;
-  showHoverCards?: boolean;
+  onProfileClick?: () => void;
+  onYoloIconClick?: () => void;
   className?: string;
 };
 
@@ -33,9 +35,11 @@ export default function LotteryFactorChart({
   isLoading,
   error,
   range,
+  showHoverCards,
   uniqueYoloCoders = new Set<string>(),
   yoloBannerOnClick,
-  showHoverCards,
+  onProfileClick,
+  onYoloIconClick,
   className,
 }: LotteryFactorChartProps) {
   const [hovered, setHovered] = useState<string | undefined>(undefined);
@@ -245,7 +249,7 @@ export default function LotteryFactorChart({
                   <div className="flex items-center gap-2 text-light-slate-11">
                     {showHoverCards ? (
                       <HoverCard.Root>
-                        <Link href={`/u/${name}`} className="rounded-full">
+                        <Link href={`/u/${name}`} className="rounded-full" onClick={onProfileClick}>
                           <HoverCard.Trigger>
                             <Avatar
                               size={24}
@@ -263,7 +267,7 @@ export default function LotteryFactorChart({
                         </HoverCard.Portal>
                       </HoverCard.Root>
                     ) : (
-                      <Link href={`/u/${name}`} className="rounded-full">
+                      <Link href={`/u/${name}`} className="rounded-full" onClick={onProfileClick}>
                         <Avatar
                           size={24}
                           className="xl:w-9 xl:h-9"
@@ -276,7 +280,7 @@ export default function LotteryFactorChart({
                     <div className="flex gap-1 items-center">
                       <h1 className="truncate text-light-slate-12">{name}</h1>
                       {uniqueYoloCoders.has(name) && (
-                        <button onClick={yoloBannerOnClick}>
+                        <button onClick={onYoloIconClick}>
                           <InfoTooltip icon={<FaRegHandPeace />} information="YOLO Coder" />
                         </button>
                       )}

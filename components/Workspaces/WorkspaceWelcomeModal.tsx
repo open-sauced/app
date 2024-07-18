@@ -81,7 +81,7 @@ export default function WorkspaceWelcomeModal({ isOpen, onClose }: WorkspaceWelc
     </Drawer>
   ) : (
     <Dialog open={isOpen}>
-      <DialogContent autoStyle={false} onEscapeKeyDown={onClose} onPointerDownOutside={onClose}>
+      <DialogContent aria-label={TITLE} autoStyle={false} onEscapeKeyDown={onClose} onPointerDownOutside={onClose}>
         <Card className="sm:w-96 md:w-max max-w-xl text-center flex flex-col items-center justify-between gap-4 !p-8">
           <EmbeddedVideo />
           <DialogTitle>

@@ -28,10 +28,19 @@ type ForksChartProps = {
   syncId: number;
   range: DayRange;
   isLoading: boolean;
+  onCategoryClick?: (category: string) => void;
   className?: string;
 };
 
-export default function ForksChart({ stats, total, syncId, range = 30, isLoading, className }: ForksChartProps) {
+export default function ForksChart({
+  stats,
+  total,
+  syncId,
+  range = 30,
+  isLoading,
+  onCategoryClick,
+  className,
+}: ForksChartProps) {
   const [category, setCategory] = useState<"daily" | "history">("daily");
   const dailyData = useMemo(() => getDailyForksHistogramToDays({ stats, range }), [stats, range]);
   const historyData = useMemo(() => getHistoryForksHistogramToDays({ stats, total, range }), [stats, total, range]);
@@ -108,10 +117,22 @@ export default function ForksChart({ stats, total, syncId, range = 30, isLoading
               </aside>
             </div>
             <div className="flex gap-2 items-center w-fit lg:self-start">
-              <Button variant={category === "daily" ? "outline" : "default"} onClick={() => setCategory("daily")}>
+              <Button
+                variant={category === "daily" ? "outline" : "default"}
+                onClick={() => {
+                  setCategory("daily");
+                  onCategoryClick && onCategoryClick("daily");
+                }}
+              >
                 Daily
               </Button>
-              <Button variant={category === "history" ? "outline" : "default"} onClick={() => setCategory("history")}>
+              <Button
+                variant={category === "history" ? "outline" : "default"}
+                onClick={() => {
+                  setCategory("history");
+                  onCategoryClick && onCategoryClick("history");
+                }}
+              >
                 History
               </Button>
             </div>

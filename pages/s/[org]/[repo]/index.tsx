@@ -242,7 +242,10 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 ) : (
                   <Button
                     variant="primary"
-                    onClick={() => setIsAddToWorkspaceModalOpen(true)}
+                    onClick={() => {
+                      posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
+                      setIsAddToWorkspaceModalOpen(true);
+                    }}
                     className="shrink-0 items-center gap-3 w-fit"
                   >
                     <MdWorkspaces />
@@ -258,13 +261,28 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     <FiCopy />
                     Share
                   </Button>
-                  <DayRangePicker />
+                  <DayRangePicker
+                    onDayRangeChanged={(value: string) =>
+                      posthog.capture("Repo Pages: changed range", {
+                        repository: repoData.full_name,
+                        range: Number(value),
+                      })
+                    }
+                  />
                 </div>
               </div>
             </div>
             <div className="relative flex w-fit max-w-[21rem] lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
               {repoData.language && (
-                <Link href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}>
+                <Link
+                  href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}
+                  onClick={() =>
+                    posthog.capture("Repo Pages: clicked language pill", {
+                      repository: repoData.full_name,
+                      language: repoData.language,
+                    })
+                  }
+                >
                   <LanguagePill language={repoData.language.toLowerCase()} />
                 </Link>
               )}
@@ -295,6 +313,13 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     range={range}
                     isLoading={isRossDataLoading}
                     error={rossError}
+                    onFilterClick={(category, value) =>
+                      posthog.capture(`Repo Data: toggled ROSS filter`, {
+                        repository: repoData.full_name,
+                        category,
+                        value,
+                      })
+                    }
                     className="h-fit"
                   />
 
@@ -324,6 +349,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     contributorConfidence={repoStats?.contributor_confidence}
                     isError={isError}
                     isLoading={isLoading}
+                    onLearnMoreClick={() =>
+                      posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                        repository: repoData.full_name,
+                      })
+                    }
                   />
 
                   {lotteryState === "lottery" && (
@@ -332,9 +362,23 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       error={lotteryFactorError}
                       range={range}
                       isLoading={isLotteryFactorLoading}
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloBannerOnClick={uniqueYoloCoders.size > 0 ? () => setLotteryState("yolo") : undefined}
                       showHoverCards
+                      uniqueYoloCoders={uniqueYoloCoders}
+                      yoloBannerOnClick={
+                        uniqueYoloCoders.size > 0
+                          ? () => {
+                              setLotteryState("yolo");
+                              posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
+                            }
+                          : undefined
+                      }
+                      onYoloIconClick={() => {
+                        setLotteryState("yolo");
+                        posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                      }}
+                      onProfileClick={() => {
+                        posthog.capture(`Repo Pages: Lottery Factor user clicked`, { repository: repoData.full_name });
+                      }}
                     />
                   )}
                   {lotteryState === "yolo" && (
@@ -347,6 +391,20 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       isLoading={isYoloStatsLoading}
                       range={range}
                       backButtonOnClick={() => setLotteryState("lottery")}
+                      onShaClick={() =>
+                        posthog.capture("Repo Pages: clicked SHA link", { repository: repoData.full_name })
+                      }
+                      onProfileClick={() =>
+                        posthog.capture("Repo Pages: clicked YOLO coder (YOLO Chart)", {
+                          repository: repoData.full_name,
+                        })
+                      }
+                      onHideBotsToggle={(checked) =>
+                        posthog.capture("Repo Pages: toggled YOLO hide bots", {
+                          repository: repoData.full_name,
+                          checked,
+                        })
+                      }
                       showHoverCards
                     />
                   )}
@@ -360,6 +418,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   range={range}
                   syncId={syncId}
                   isLoading={isStarsDataLoading}
+                  onCategoryClick={(category) =>
+                    posthog.capture("Repo Pages: clicked Stars Chart category", {
+                      repository: repoData.full_name,
+                      category,
+                    })
+                  }
                   className="lg:col-span-6 h-fit"
                 />
                 <ForksChart
@@ -368,6 +432,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   range={range}
                   syncId={syncId}
                   isLoading={isForksDataLoading}
+                  onCategoryClick={(category) =>
+                    posthog.capture("Repo Pages: clicked Forks Chart category", {
+                      repository: repoData.full_name,
+                      category,
+                    })
+                  }
                   className="lg:col-span-6 h-fit"
                 />
               </section>
