@@ -80,7 +80,7 @@ const StarSearchHistory = ({ history, onLoadConversation }: StarSearchHistoryPro
         {history.map((item) => (
           <li
             key={item.id}
-            className="grid grid-cols-[1fr,18px] w-full gap-4 p-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 hover:bg-light-slate-3 rounded-md"
+            className="grid grid-cols-[1fr,18px] w-full gap-4 p-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md"
           >
             <button
               onClick={(event) => {
@@ -91,7 +91,13 @@ const StarSearchHistory = ({ history, onLoadConversation }: StarSearchHistoryPro
             >
               {item.title}
             </button>
-            <button data-delete className="p-2 rounded-md">
+            <button
+              data-delete
+              className="p-2 rounded-md"
+              onClick={(event) => {
+                event.currentTarget.dataset.id && onDeleteConversation?.(event.currentTarget.dataset.id);
+              }}
+            >
               <span className="sr-only">Delete conversation</span>
               <TrashIcon width={18} height={18} />
             </button>
@@ -185,6 +191,10 @@ export function StarSearchChat({
     }
 
     onNewChat();
+  }
+
+  function deleteConversation(conversationId: string) {
+    toast({ description: "Conversation deleted", variant: "success" });
   }
 
   useEffect(() => {
