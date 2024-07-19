@@ -111,7 +111,7 @@ export const StarSearchEmbed = ({
         }}
       >
         <StarSearchChat
-          isWorkspace={!!validWorkspaceId}
+          workspaceId={validWorkspaceId}
           userId={userId}
           sharedChatId={sharedChatId}
           bearerToken={bearerToken}
