@@ -15,8 +15,8 @@ import { useContributorsList } from "lib/hooks/api/useContributorList";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
-import ContributorsTable from "components/Tables/ContributorsTable";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -227,7 +227,14 @@ const ListsOverview = ({
                   <ErrorBoundary
                     fallback={<div className="grid place-content-center">Error loading the list of contributors</div>}
                   >
-                    <ContributorsTable contributors={contributors} isLoading={isLoading} error={error} />
+                    <ContributorsList
+                      contributors={contributors}
+                      meta={meta}
+                      isLoading={isLoading}
+                      setPage={setPage}
+                      range={String(range ?? "30")}
+                      showOscr={showOscr}
+                    />
                   </ErrorBoundary>
                 )}
               </div>

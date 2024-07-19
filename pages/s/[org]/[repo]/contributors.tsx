@@ -18,14 +18,13 @@ import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/shared/Button/button";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-import Contributors from "components/organisms/Contributors/contributors";
 import TabList from "components/TabList/tab-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useSession from "lib/hooks/useSession";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import Pill from "components/atoms/Pill/pill";
-import Activity from "components/organisms/Activity/activity";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
+import ContributorsTable from "components/Tables/ContributorsTable";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -189,8 +188,8 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
 
           <ClientOnly>
             <div className="flex flex-col gap-8 p-4 lg:p-8">
-              <Activity repositories={[repoData.id]} />
-              <Contributors repositories={[repoData.id]} defaultLayout="grid" />
+              {/** <Activity repositories={[repoData.id]} /> **/}
+              <ContributorsTable />
             </div>
           </ClientOnly>
         </div>
