@@ -65,6 +65,7 @@ export default function ContributorsTable() {
     }),
     contributorsColumnHelper.accessor("tags", {
       header: "Tags",
+      enableSorting: false,
       cell: (info) => (
         <div className="flex gap-2">
           {info.row.original.tags.map((tag) => (
@@ -75,6 +76,7 @@ export default function ContributorsTable() {
     }),
     contributorsColumnHelper.accessor("repositories", {
       header: "Repositories",
+      enableSorting: false,
       cell: (info) => (
         <div className="flex gap-2">
           <CardRepoList
@@ -124,13 +126,14 @@ export default function ContributorsTable() {
               <TableHead key={header.id}>
                 <button onClick={header.column.getToggleSortingHandler()} className="flex gap-2 w-fit items-center">
                   <h2 className="font-semibold">{header.column.columnDef.header?.toString()}</h2>
-                  {header.column.getCanSort() && header.column.getNextSortingOrder() === "asc" ? (
-                    <FaSort />
-                  ) : header.column.getNextSortingOrder() === "desc" ? (
-                    <FaSortUp />
-                  ) : (
-                    <FaSortDown />
-                  )}
+                  {header.column.getCanSort() &&
+                    (header.column.getNextSortingOrder() === "asc" ? (
+                      <FaSort />
+                    ) : header.column.getNextSortingOrder() === "desc" ? (
+                      <FaSortUp />
+                    ) : (
+                      <FaSortDown />
+                    ))}
                 </button>
               </TableHead>
             ))}
@@ -151,15 +154,56 @@ export default function ContributorsTable() {
   );
 }
 
+// TODO: REMOVE mock data and utils
 const fakeData: ContributorRow[] = [
   {
     login: "zeucapua",
-    oscr: 0.84,
-    repositories: [{ name: "app", full_name: "open-sauced/app" }],
+    oscr: Number(Math.random().toFixed(2)),
+    repositories: [
+      { name: "app", full_name: "open-sauced/app" },
+      { name: "gust", full_name: "zeucapua/gust" },
+    ],
     tags: ["internal", "lottery"],
     company: "OpenSauced",
-    location: "Los Angeles",
-    total_contributions: 34,
-    last_contributed: "2024-07-19T16:55:26Z",
+    location: "Disneyland",
+    total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
+    last_contributed: generateRandomDOB(),
+  },
+  {
+    login: "nickytonline",
+    oscr: Number(Math.random().toFixed(2)),
+    repositories: [
+      { name: "app", full_name: "open-sauced/app" },
+      { name: "forem", full_name: "forem" },
+    ],
+    tags: ["internal", "lottery"],
+    company: "OpenSauced",
+    location: "Canada",
+    total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
+    last_contributed: generateRandomDOB(),
+  },
+  {
+    login: "brandonroberts",
+    oscr: Number(Math.random().toFixed(2)),
+    repositories: [
+      { name: "app", full_name: "open-sauced/app" },
+      { name: "analog", full_name: "analogjs/analog" },
+    ],
+    tags: ["internal", "lottery", "yolo"],
+    company: "OpenSauced",
+    location: "United States",
+    total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
+    last_contributed: generateRandomDOB(),
   },
 ];
+
+function generateRandomDOB(): string {
+  const random = getRandomDate(new Date("2018-02-12T01:57:45.271Z"), new Date("2024-06-18T01:57:45.271Z"));
+  return random.toISOString();
+}
+
+function getRandomDate(from: Date, to: Date) {
+  const fromTime = from.getTime();
+  const toTime = to.getTime();
+  return new Date(fromTime + Math.random() * (toTime - fromTime));
+}
