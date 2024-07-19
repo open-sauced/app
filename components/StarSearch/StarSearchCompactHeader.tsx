@@ -1,15 +1,15 @@
-import { ArrowLeftIcon, PlusIcon, XIcon } from "@primer/octicons-react";
+import { ArrowLeftIcon, HistoryIcon, PlusIcon, XIcon } from "@primer/octicons-react";
+import { HiOutlineShare } from "react-icons/hi";
 import { StarSearchLogo } from "./StarSearchLogo";
 
 type OnClick = (e: React.MouseEvent<HTMLButtonElement>) => void;
 
 interface StarSearchCompactHeaderProps {
   onBack: OnClick;
-  onShare: OnClick;
+  onShare?: OnClick;
   onNewChat: OnClick;
   onShowHistory: OnClick;
   onClose: OnClick;
-  view: "prompt" | "chat";
 }
 
 const CloseButton = ({ onClick }: { onClick: OnClick }) => {
@@ -26,40 +26,32 @@ export const StarSearchCompactHeader = ({
   onNewChat,
   onShowHistory,
   onClose,
-  view,
 }: StarSearchCompactHeaderProps) => {
   const buttonHoverStyle = "hover:text-orange-500";
 
   return (
-    <>
-      {view === "chat" ? (
-        <div className="flex items-center justify-between gap-2 [&_button]:text-slate-600 h-9 p-1 bg-slate-50">
-          <div className="flex items-center gap-2">
-            <button onClick={onBack} className={buttonHoverStyle}>
-              <ArrowLeftIcon />
-            </button>
-            <StarSearchLogo size="small" />
-            <span className="font-semibold text-slate-800">StarSearch</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button onClick={onNewChat} className={buttonHoverStyle}>
-              <PlusIcon />
-            </button>
-            {/* TODO: implement share and history for StarSearch conversations for workspaces */}
-            {/* <button onClick={onShare} className={buttonHoverStyle}>
-              <HiOutlineShare />
-            </button>
-            <button onClick={onShowHistory} className={buttonHoverStyle}>
-              <HistoryIcon />
-            </button> */}
-            {onClose ? <CloseButton onClick={onClose} /> : null}
-          </div>
-        </div>
-      ) : (
-        <div className="flex items-center justify-end gap-2 [&_button]:text-slate-600 h-8 p-1 bg-slate-50">
-          {onClose ? <CloseButton onClick={onClose} /> : null}
-        </div>
-      )}
-    </>
+    <div className="flex items-center justify-between gap-2 [&_button]:text-slate-600 h-9 p-1 bg-slate-50">
+      <div className="flex items-center gap-2">
+        <button onClick={onBack} className={buttonHoverStyle}>
+          <ArrowLeftIcon />
+        </button>
+        <StarSearchLogo size="small" />
+        <span className="font-semibold text-slate-800">StarSearch</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <button onClick={onNewChat} className={buttonHoverStyle}>
+          <PlusIcon />
+        </button>
+        {onShare ? (
+          <button onClick={onShare} className={buttonHoverStyle}>
+            <HiOutlineShare />
+          </button>
+        ) : null}
+        <button onClick={onShowHistory} className={buttonHoverStyle}>
+          <HistoryIcon />
+        </button>
+        {onClose ? <CloseButton onClick={onClose} /> : null}
+      </div>
+    </div>
   );
 };

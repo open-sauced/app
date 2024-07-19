@@ -19,14 +19,4 @@ export default meta;
 
 type Story = StoryObj<typeof StarSearchCompactHeader>;
 
-export const PromptView: Story = {
-  args: {
-    view: "prompt",
-  },
-};
-
-export const ChatView: Story = {
-  args: {
-    view: "chat",
-  },
-};
+export const Default: Story = {};

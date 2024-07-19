@@ -21,6 +21,10 @@ import { useGetStarSearchThreadHistory } from "lib/hooks/api/useGetStarSearchThr
 import { getThreadStream } from "lib/utils/star-search-utils";
 import { UuidSchema, parseSchema } from "lib/validation-schemas";
 import Button from "components/shared/Button/button";
+import {
+  StarSearchHistoryItem,
+  useGetStarSearchWorkspaceHistory,
+} from "lib/hooks/api/useGetStarSearchWorkspaceHistory";
 import { ChatAvatar } from "./ChatAvatar";
 import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
@@ -63,8 +67,43 @@ async function updateComponentRegistry(name: string) {
   }
 }
 
+interface StarSearchHistoryProps {
+  history: StarSearchHistoryItem[];
+  onLoadConversation: (conversationId: string) => void;
+}
+
+const StarSearchHistory = ({ history, onLoadConversation }: StarSearchHistoryProps) => {
+  return (
+    <div className="flex flex-col gap-2 p-4">
+      <h2 className="text-xl font-bold text-slate-600">StarSearch History</h2>
+      <ul className="grid gap-2 pt-6">
+        {history.map((item) => (
+          <li
+            key={item.id}
+            className="grid grid-cols-[1fr,18px] gap-4 p-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 hover:bg-light-slate-3 rounded-md"
+          >
+            <button
+              onClick={(event) => {
+                event.currentTarget.dataset.id && onLoadConversation(event.currentTarget.dataset.id);
+              }}
+              data-id={item.id}
+              className="p-2 text-left [&:focus_+_[data-delete]]:not-sr-only rounded-md"
+            >
+              {item.title}
+            </button>
+            <button data-delete className="p-2 rounded-md">
+              <span className="sr-only">Delete conversation</span>
+              <TrashIcon width={18} height={18} />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 type StarSearchChatProps = {
-  userId: number | null | undefined;
+  userId?: number | null;
   sharedPrompt?: string | null;
   sharedChatId?: string | null;
   bearerToken: string | undefined | null;
@@ -78,6 +117,8 @@ type StarSearchChatProps = {
   sharingEnabled?: boolean;
   workspaceId?: string;
 };
+
+type StarSearchState = "initial" | "chat" | "history";
 
 export function StarSearchChat({
   userId,
@@ -94,7 +135,7 @@ export function StarSearchChat({
   showTopNavigation = false,
   workspaceId,
 }: StarSearchChatProps) {
-  const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
+  const [starSearchState, setStarSearchState] = useState<StarSearchState>("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
@@ -105,7 +146,6 @@ export function StarSearchChat({
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [checkAuth, setCheckAuth] = useState(false);
   const [chatId, setChatId] = useState<string | null>(sharedChatId);
-  const [view, setView] = useState<"prompt" | "chat">("prompt");
   const [shareLinkError, setShareLinkError] = useState(false);
   const streamRef = useRef<ReadableStreamDefaultReader<string>>();
 
@@ -117,13 +157,18 @@ export function StarSearchChat({
     onNewChat();
   }, [workspaceId]);
 
+  const {
+    data: starSearchHistory,
+    isError: isHistoryError,
+    isLoading: isLoadingHistory,
+  } = useGetStarSearchWorkspaceHistory(workspaceId);
+
   const onNewChat = () => {
     streamRef.current?.cancel();
     setIsRunning(false);
     setChatId(null);
     setStarSearchState("initial");
     setChat([]);
-    setView("prompt");
   };
 
   const {
@@ -131,7 +176,7 @@ export function StarSearchChat({
     isError,
     isLoading,
     mutate: mutateThreadHistory,
-  } = useGetStarSearchThreadHistory(chatId);
+  } = useGetStarSearchThreadHistory(chatId, workspaceId);
   const router = useRouter();
 
   function clearChatHistory() {
@@ -163,7 +208,8 @@ export function StarSearchChat({
   useEffect(() => {
     // Prevents the thread history from running when a new thread has been created and is currently
     // being used. This check is also to prevent the thread history from running multiple times.
-    if (!threadHistory || isLoading || !sharedChatId || (ranOnce && sharedChatId)) {
+    if (!threadHistory || isLoading) {
+      //} || !sharedChatId || (ranOnce && sharedChatId)) {
       return;
     }
 
@@ -442,8 +488,6 @@ export function StarSearchChat({
   }
 
   const submitPrompt = async (prompt: string) => {
-    setView("chat");
-
     if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
       setLoginModalOpen(true);
       return;
@@ -618,14 +662,16 @@ export function StarSearchChat({
                 }
               })}
               <div className={clsx("text-slate-600 flex gap-4 items-center justify-end", isRunning && "invisible")}>
-                <button
-                  type="button"
-                  className="flex items-center gap-2 hover:text-sauced-orange"
-                  onClick={clearChatHistory}
-                >
-                  Clear chat history
-                  <TrashIcon width={18} height={18} />
-                </button>
+                {workspaceId ? null : (
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 hover:text-sauced-orange"
+                    onClick={clearChatHistory}
+                  >
+                    Clear chat history
+                    <TrashIcon width={18} height={18} />
+                  </button>
+                )}
                 <span className="flex gap-1">
                   <button
                     type="button"
@@ -716,6 +762,20 @@ export function StarSearchChat({
             </div>
           </>
         );
+
+      case "history":
+        return (
+          <StarSearchHistory
+            history={starSearchHistory}
+            onLoadConversation={(conversationId) => {
+              setStarSearchState("chat");
+              setChatId(conversationId);
+            }}
+          />
+        );
+
+      default:
+        throw new Error(`Invalid StarSearch state: ${starSearchState}`);
     }
   };
 
@@ -723,13 +783,13 @@ export function StarSearchChat({
     <>
       {showTopNavigation ? (
         <StarSearchCompactHeader
-          view={view}
           onBack={onNewChat}
           onClose={() => {
             onClose?.();
           }}
-          onShare={() => {}}
-          onShowHistory={() => {}}
+          onShowHistory={() => {
+            setStarSearchState("history");
+          }}
           onNewChat={onNewChat}
         />
       ) : null}
@@ -751,107 +811,109 @@ export function StarSearchChat({
       </div>
       <div className="fixed w-full bottom-0 h-fit">
         <div className="h-8 bg-gradient-to-t from-light-slate-2 to-transparent" />
-        <div className="bg-light-slate-2">
-          {!isRunning &&
-            (isMobile ? (
-              <Drawer
-                title="Choose a suggestion"
-                description="You can customize the prompt after selection"
-                showCloseButton
-                trigger={
-                  <button
-                    onClick={() => setShowSuggestions(!showSuggestions)}
-                    className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                  >
-                    Need inspiration?
-                    <BsArrowUpShort className="text-2xl" />
-                  </button>
-                }
-              >
-                <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
-              </Drawer>
-            ) : (
-              <>
-                {!showSuggestions && ranOnce && (
-                  <button
-                    onClick={() => setShowSuggestions(!showSuggestions)}
-                    className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                  >
-                    Need inspiration?
-                    <BsArrowUpShort className="text-2xl" />
-                  </button>
-                )}
-              </>
-            ))}
-          {!isMobile && showSuggestions && (
-            <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
-              <button
-                onClick={() => {
-                  setShowSuggestions(false);
-                  inputRef.current?.focus();
-                }}
-                className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
-              >
-                <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
-              </button>
-              <SuggestedPrompts
-                isHorizontal
-                addPromptInput={(prompt) => {
-                  addPromptInput(prompt);
-                  setShowSuggestions(false);
-                }}
-                suggestions={suggestions}
-              />
-            </div>
-          )}
-          {sharedChatId ? (
-            <div className="flex items-center justify-center gap-2 p-2">
-              <p>This is a shared conversation and cannot be added to.</p>
-              <Button variant="primary" onClick={clearChatHistory}>
-                Start a Conversation
-              </Button>
-            </div>
-          ) : null}
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              const form = event.currentTarget;
-              const formData = new FormData(form);
-              submitPrompt(formData.get("prompt") as string);
-              form.reset();
-            }}
-            className={clsx(
-              "bg-white flex justify-between mx-1 lg:max-w-3xl p-[3px] rounded-[11px] bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange",
-              embedded ? "mx-1" : "md:mx-4 lg:mx-auto"
+        {starSearchState === "history" ? null : (
+          <div className="bg-light-slate-2">
+            {!isRunning &&
+              (isMobile ? (
+                <Drawer
+                  title="Choose a suggestion"
+                  description="You can customize the prompt after selection"
+                  showCloseButton
+                  trigger={
+                    <button
+                      onClick={() => setShowSuggestions(!showSuggestions)}
+                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                    >
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  }
+                >
+                  <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
+                </Drawer>
+              ) : (
+                <>
+                  {!showSuggestions && ranOnce && (
+                    <button
+                      onClick={() => setShowSuggestions(!showSuggestions)}
+                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                    >
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  )}
+                </>
+              ))}
+            {!isMobile && showSuggestions && (
+              <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
+                <button
+                  onClick={() => {
+                    setShowSuggestions(false);
+                    inputRef.current?.focus();
+                  }}
+                  className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
+                >
+                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
+                </button>
+                <SuggestedPrompts
+                  isHorizontal
+                  addPromptInput={(prompt) => {
+                    addPromptInput(prompt);
+                    setShowSuggestions(false);
+                  }}
+                  suggestions={suggestions}
+                />
+              </div>
             )}
-          >
-            <input
-              required
-              type="text"
-              name="prompt"
-              ref={inputRef}
-              disabled={isRunning || !!sharedChatId}
-              placeholder="Ask a question"
-              className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
-              onFocus={() => {
-                if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
-                  setLoginModalOpen(true);
-                }
+            {sharedChatId ? (
+              <div className="flex items-center justify-center gap-2 p-2">
+                <p>This is a shared conversation and cannot be added to.</p>
+                <Button variant="primary" onClick={clearChatHistory}>
+                  Start a Conversation
+                </Button>
+              </div>
+            ) : null}
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                const form = event.currentTarget;
+                const formData = new FormData(form);
+                submitPrompt(formData.get("prompt") as string);
+                form.reset();
               }}
-            />
-            <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
-              <span className="sr-only">Submit your question to StarSearch</span>
-              <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
-            </button>
-          </form>
-          <p className="py-2 text-sm text-center text-slate-400">
-            {isMobile ? (
-              <>StarSearch may generate incorrect responses</>
-            ) : (
-              <>StarSearch may generate incorrect responses, double check important information</>
-            )}
-          </p>
-        </div>
+              className={clsx(
+                "bg-white flex justify-between mx-1 lg:max-w-3xl p-[3px] rounded-[11px] bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange",
+                embedded ? "mx-1" : "md:mx-4 lg:mx-auto"
+              )}
+            >
+              <input
+                required
+                type="text"
+                name="prompt"
+                ref={inputRef}
+                disabled={isRunning || !!sharedChatId}
+                placeholder="Ask a question"
+                className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
+                onFocus={() => {
+                  if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
+                    setLoginModalOpen(true);
+                  }
+                }}
+              />
+              <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
+                <span className="sr-only">Submit your question to StarSearch</span>
+                <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
+              </button>
+            </form>
+            <p className="py-2 text-sm text-center text-slate-400">
+              {isMobile ? (
+                <>StarSearch may generate incorrect responses</>
+              ) : (
+                <>StarSearch may generate incorrect responses, double check important information</>
+              )}
+            </p>
+          </div>
+        )}
       </div>
       <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
     </>

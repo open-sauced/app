@@ -1,9 +1,9 @@
 import useSWR, { Fetcher } from "swr";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
-export const useGetStarSearchThreadHistory = (threadId: string | null) => {
+export const useGetStarSearchThreadHistory = (threadId: string | null, workspaceId?: string) => {
   const { data, error, isLoading, mutate } = useSWR<StarSearchThread, Error>(
-    !threadId ? null : `star-search/${threadId}`,
+    !threadId ? null : workspaceId ? `workspaces/${workspaceId}/star-search/${threadId}` : `star-search/${threadId}`,
     publicApiFetcher as Fetcher<StarSearchThread, Error>
   );
 
