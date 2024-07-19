@@ -7,6 +7,7 @@ import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-reac
 import clsx from "clsx";
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
+import { BiConversation } from "react-icons/bi";
 import { Drawer } from "components/shared/Drawer";
 import {
   StarSearchFeedbackAnalytic,
@@ -18,7 +19,7 @@ import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { useGetStarSearchThreadHistory } from "lib/hooks/api/useGetStarSearchThreadHistory";
-import { getThreadStream } from "lib/utils/star-search-utils";
+import { deleteWorkspaceStarSearchThread, getThreadStream } from "lib/utils/star-search-utils";
 import { UuidSchema, parseSchema } from "lib/validation-schemas";
 import Button from "components/shared/Button/button";
 import {
@@ -69,41 +70,56 @@ async function updateComponentRegistry(name: string) {
 
 interface StarSearchHistoryProps {
   history: StarSearchHistoryItem[];
-  onLoadConversation: (conversationId: string) => void;
+  onLoadThread: (conversationId: string) => void;
+  onNewChat: () => void;
+  onDeleteThread?: (conversationId: string) => void;
 }
 
-const StarSearchHistory = ({ history, onLoadConversation }: StarSearchHistoryProps) => {
+const StarSearchHistory = ({ history, onNewChat, onLoadThread, onDeleteThread }: StarSearchHistoryProps) => {
   return (
-    <div className="flex flex-col gap-2 p-4">
-      <h2 className="text-xl font-bold text-slate-600">StarSearch History</h2>
-      <ul className="grid gap-2 pt-6">
-        {history.map((item) => (
-          <li
-            key={item.id}
-            className="grid grid-cols-[1fr,18px] w-full gap-4 p-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md"
-          >
-            <button
-              onClick={(event) => {
-                event.currentTarget.dataset.id && onLoadConversation(event.currentTarget.dataset.id);
-              }}
-              data-id={item.id}
-              className="p-2 text-left [&:focus_+_[data-delete]]:not-sr-only rounded-md"
+    <div className="flex flex-col gap-2 w-full px-2">
+      <h2 className="fixed text-slate-800 font-semibold w-full bg-light-slate-2 pt-2">StarSearch History</h2>
+      {history.length === 0 ? (
+        <div className="flex flex-col items-center gap-4 pt-10 ">
+          <p>No previous conversations with StarSearch. Start a new conversation</p>
+          <Button variant="primary" onClick={() => onNewChat()} className="flex gap-2 items-center">
+            <BiConversation size={18} />
+            <span>Start a new conversation</span>
+          </Button>
+        </div>
+      ) : (
+        <ul className="grid gap-2 pt-10 [&_li]:p-2">
+          {history.map((item) => (
+            <li
+              key={item.id}
+              className="grid grid-cols-[1fr,18px] w-full gap-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md"
+              data-star-search-thread-id={item.id}
             >
-              {item.title}
-            </button>
-            <button
-              data-delete
-              className="p-2 rounded-md"
-              onClick={(event) => {
-                event.currentTarget.dataset.id && onDeleteConversation?.(event.currentTarget.dataset.id);
-              }}
-            >
-              <span className="sr-only">Delete conversation</span>
-              <TrashIcon width={18} height={18} />
-            </button>
-          </li>
-        ))}
-      </ul>
+              <button
+                onClick={(event) => {
+                  const starSearchThreadId = event.currentTarget.parentElement?.dataset.starSearchThreadId;
+                  starSearchThreadId && onLoadThread(starSearchThreadId);
+                }}
+                className="p-2 text-left [&:focus_+_[data-delete]]:not-sr-only rounded-md"
+              >
+                {item.title}
+              </button>
+              <button
+                data-delete
+                data-id={item.id}
+                className="p-2 rounded-md"
+                onClick={(event) => {
+                  const starSearchThreadId = event.currentTarget.parentElement?.dataset.starSearchThreadId;
+                  starSearchThreadId && onDeleteThread?.(starSearchThreadId);
+                }}
+              >
+                <span className="sr-only">Delete conversation</span>
+                <TrashIcon width={18} height={18} />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
@@ -167,7 +183,8 @@ export function StarSearchChat({
     data: starSearchHistory,
     isError: isHistoryError,
     isLoading: isLoadingHistory,
-  } = useGetStarSearchWorkspaceHistory(workspaceId);
+    mutate: mutateStarSearchHistory,
+  } = useGetStarSearchWorkspaceHistory({ workspaceId });
 
   const onNewChat = () => {
     streamRef.current?.cancel();
@@ -193,7 +210,25 @@ export function StarSearchChat({
     onNewChat();
   }
 
-  function deleteConversation(conversationId: string) {
+  async function deleteStarSearchThread(threadId: string) {
+    if (!bearerToken) {
+      setLoginModalOpen(true);
+      return;
+    }
+
+    const { error } = await deleteWorkspaceStarSearchThread({
+      workspaceId,
+      threadId,
+      bearerToken,
+    });
+
+    if (error) {
+      toast({ description: "Failed to delete conversation", variant: "danger" });
+      return;
+    }
+
+    mutateStarSearchHistory();
+
     toast({ description: "Conversation deleted", variant: "success" });
   }
 
@@ -777,10 +812,12 @@ export function StarSearchChat({
         return (
           <StarSearchHistory
             history={starSearchHistory}
-            onLoadConversation={(conversationId) => {
+            onLoadThread={(conversationId) => {
               setStarSearchState("chat");
               setChatId(conversationId);
             }}
+            onDeleteThread={deleteStarSearchThread}
+            onNewChat={onNewChat}
           />
         );
 
@@ -806,7 +843,7 @@ export function StarSearchChat({
       <div
         className={clsx(
           isMobile && showTopNavigation && "overflow-y-auto",
-          embedded && "overflow-y-auto overflow-x-hidden self-start"
+          embedded && "overflow-y-auto overflow-x-hidden self-start w-full"
         )}
       >
         {showTopNavigation ? null : (

@@ -18,9 +18,20 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-export const useGetStarSearchWorkspaceHistory = (workspaceId: string | undefined) => {
+export const useGetStarSearchWorkspaceHistory = ({
+  workspaceId,
+  // TODO: temporarily set to 1000 to avoid pagination
+  // I'll be adding TanStack Virtual Window to handle pagination
+  // https://tanstack.com/virtual/v3/docs/framework/react/examples/window
+  limit = 1000,
+}: {
+  workspaceId: string | undefined;
+  limit?: number;
+}) => {
   const baseEndpoint = `workspaces/${workspaceId}/star-search`;
   const query = new URLSearchParams();
+
+  query.set("limit", `${limit}`);
 
   const { data, error, mutate, isLoading } = useSWR<PaginatedResponse, Error>(
     `${baseEndpoint}?${query}`,
