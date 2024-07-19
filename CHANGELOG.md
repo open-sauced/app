@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.46.1-beta.1](https://github.com/open-sauced/app/compare/v2.46.0...v2.46.1-beta.1) (2024-07-19)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch for Workspaces resets when changing workspaces ([#3757](https://github.com/open-sauced/app/issues/3757)) ([7183b33](https://github.com/open-sauced/app/commit/7183b3374330b07312a50a076986b7e7932afaf7))
+
 ## [2.46.0](https://github.com/open-sauced/app/compare/v2.45.0...v2.46.0) (2024-07-18)
 
 
