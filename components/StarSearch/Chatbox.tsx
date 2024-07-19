@@ -1,8 +1,9 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ErrorBoundary } from "@sentry/nextjs";
+import clsx from "clsx";
 import Card from "components/atoms/Card/card";
-import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import AvatarHoverCard, { Avatar } from "components/atoms/Avatar/avatar-hover-card";
 import { ChatAvatar } from "./ChatAvatar";
 import { StarSearchWidget, WidgetDefinition } from "./StarSearchWidget";
 
@@ -14,21 +15,25 @@ export function Chatbox({
   message,
   userId,
   componentRegistry,
+  embedded,
 }: {
   message: StarSearchChatMessage;
-  userId?: number;
+  userId?: number | null;
   componentRegistry: Map<string, React.ComponentType<any>>;
+  embedded?: boolean;
 }) {
   if (typeof message.content == "string") {
     // Breaking all words so that the rendered markdown doesn't overflow the container
     // in certain cases where the content is a long string.
     return (
-      <div className="grid items-start w-full gap-2 my-4 md:flex md:justify-center">
+      <div
+        className={clsx(
+          "grid items-start gap-2 my-4 md:flex md:justify-center",
+          embedded ? "min-w-[560px] max-w-[560px] w-[560px]" : "w-full w-max-[440px]"
+        )}
+      >
         <ChatAvatar author={userId ? message.author : "Guest"} userId={userId} />
-        <Card
-          className="flex flex-col grow bg-white p-2 lg:p-4 w-full max-w-xl lg:max-w-5xl [&_a]:text-sauced-orange [&_a:hover]:underline"
-          focusable
-        >
+        <Card className="flex flex-col grow bg-white p-2 lg:p-4 w-full" focusable>
           <h3 className="font-semibold text-sauced-orange">{message.author}</h3>
           <div aria-label="chat message">
             <Markdown
@@ -50,10 +55,25 @@ export function Chatbox({
                     );
                   }
 
+                  // a repo page URL
+                  if (props.href && /s\/[^\/]+\/[^\/]+/.test(new URL(props.href).pathname)) {
+                    return (
+                      <a
+                        {...props}
+                        className={clsx(props.className, "relative inline-flex items-baseline self-center gap-1")}
+                      >
+                        <span className="absolute" style={{ top: 6 }}>
+                          <Avatar contributor={new URL(props.href).pathname.split("/")[2]} size="xxsmall" />
+                        </span>
+                        <span className="ml-5 ">{props.children}</span>
+                      </a>
+                    );
+                  }
+
                   return <a {...props} />;
                 },
               }}
-              className="prose break-words"
+              className="star-search-chat-box prose break-words"
             >
               {message.content}
             </Markdown>

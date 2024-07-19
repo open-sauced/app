@@ -5,6 +5,9 @@ import { MdWorkspaces } from "react-icons/md";
 import { FiCopy } from "react-icons/fi";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { FaRegClock } from "react-icons/fa6";
+import { FaBalanceScale } from "react-icons/fa";
 import { fetchApiData } from "helpers/fetchApiData";
 import { RepositoryOgImage, getRepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -20,6 +23,9 @@ import TabList from "components/TabList/tab-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useSession from "lib/hooks/useSession";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import Pill from "components/atoms/Pill/pill";
+import Activity from "components/organisms/Activity/activity";
+import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -91,6 +97,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
       console.log(error);
     }
   };
+
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
@@ -99,7 +106,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
           <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
             <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
               <header className="flex items-center gap-4">
-                <Avatar size={96} avatarURL={avatarUrl} />
+                <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
                 <div className="flex flex-col gap-2">
                   <a
                     href={`https://github.com/${repoData.full_name}`}
@@ -109,7 +116,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                     <h1>{repoData.full_name}</h1>
                     <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
                   </a>
-                  <p className="md:text-xl">{repoData.description}</p>
+                  <p>{repoData.description}</p>
                 </div>
               </header>
               <div className="self-end flex flex-col gap-2 items-end">
@@ -118,7 +125,10 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                 ) : (
                   <Button
                     variant="primary"
-                    onClick={() => setIsAddToWorkspaceModalOpen(true)}
+                    onClick={() => {
+                      posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
+                      setIsAddToWorkspaceModalOpen(true);
+                    }}
                     className="shrink-0 items-center gap-3 w-fit"
                   >
                     <MdWorkspaces />
@@ -134,17 +144,55 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                     <FiCopy />
                     Share
                   </Button>
-                  <DayRangePicker />
+                  <DayRangePicker
+                    onDayRangeChanged={(value: string) =>
+                      posthog.capture("Repo Pages: changed range", {
+                        repository: repoData.full_name,
+                        range: Number(value),
+                      })
+                    }
+                  />
                 </div>
               </div>
             </div>
-            <div className="border-b">
-              <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
+            <div className="relative flex w-fit max-w-[21rem] lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
+              {repoData.language && (
+                <Link
+                  href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}
+                  onClick={() =>
+                    posthog.capture("Repo Pages: clicked language pill", {
+                      repository: repoData.full_name,
+                      language: repoData.language,
+                    })
+                  }
+                >
+                  <LanguagePill language={repoData.language.toLowerCase()} />
+                </Link>
+              )}
+              {repoData.license && (
+                <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
+              )}
+              <Pill
+                text={`Last Updated: ${new Date(repoData.pushed_at).toLocaleDateString()}`}
+                icon={<FaRegClock />}
+                size="xsmall"
+                className="!px-2 whitespace-nowrap"
+              />
+
+              <span className="fixed rounded-r-full right-8 lg:hidden w-12 h-8 bg-gradient-to-l from-light-slate-3 to-transparent" />
             </div>
-            <ClientOnly>
-              <Contributors repositories={[repoData.id]} defaultLayout="grid" />
-            </ClientOnly>
           </section>
+
+          <div className="border-b">
+            <TabList tabList={tabList} selectedTab={"contributors"} pageId={`/s/${repoData.full_name}`} />
+          </div>
+
+          <ClientOnly>
+            <div className="flex flex-col gap-8 p-4 lg:p-8">
+              <Activity repositories={[repoData.id]} />
+              <Contributors repositories={[repoData.id]} defaultLayout="grid" />
+            </div>
+          </ClientOnly>
         </div>
       </WorkspaceLayout>
 

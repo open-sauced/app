@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useRouter } from "next/router";
 import Link from "next/link";
 import clsx from "clsx";
 import TabListItem from "./tab-list-item";
@@ -22,6 +23,8 @@ interface SubTabsListProps extends TabListProps {
 }
 
 const TabList = ({ tabList, pageId, selectedTab }: TabListProps) => {
+  const router = useRouter();
+  const range = router.query.range ? Number(router.query.range) : 30;
   return (
     <nav
       role="tablist"
@@ -42,7 +45,11 @@ const TabList = ({ tabList, pageId, selectedTab }: TabListProps) => {
               : "border-transparent hover:border-light-slate-8"
           }`}
         >
-          <TabListItem tab={tab} pageLink={`${pageId ? `${pageId}/` : ""}${tab.path}`} selectedTab={selectedTab} />
+          <TabListItem
+            tab={tab}
+            pageLink={`${pageId ? `${pageId}/` : ""}${tab.path}?range=${range}`}
+            selectedTab={selectedTab}
+          />
         </div>
       ))}
     </nav>

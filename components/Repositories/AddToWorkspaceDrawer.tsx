@@ -2,6 +2,7 @@ import { MdWorkspaces } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
+import { usePostHog } from "posthog-js/react";
 import Button from "components/shared/Button/button";
 import { Drawer } from "components/shared/Drawer";
 import { useToast } from "lib/hooks/useToast";
@@ -13,6 +14,7 @@ import Text from "components/atoms/Typography/text";
 
 export default function AddToWorkspaceDrawer({ repository }: { repository: string }) {
   const router = useRouter();
+  const posthog = usePostHog();
   const { toast } = useToast();
   const { signIn, user, sessionToken } = useSupabaseAuth();
   const [workspaceId, setWorkspaceId] = useState("new");
@@ -26,6 +28,10 @@ export default function AddToWorkspaceDrawer({ repository }: { repository: strin
   }, []);
 
   const addRepositoryToWorkspace = async () => {
+    posthog.capture(`Repo Pages: added to ${workspaceId === "new" ? "a new" : "existing"} workspace`, {
+      repository,
+      workspaceId,
+    });
     if (workspaceId === "new") {
       router.push(`/workspaces/new?repos=${JSON.stringify([repository])}`);
       return;
