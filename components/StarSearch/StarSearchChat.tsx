@@ -80,7 +80,7 @@ const StarSearchHistory = ({ history, onLoadConversation }: StarSearchHistoryPro
         {history.map((item) => (
           <li
             key={item.id}
-            className="grid grid-cols-[1fr,18px] gap-4 p-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 hover:bg-light-slate-3 rounded-md"
+            className="grid grid-cols-[1fr,18px] w-full gap-4 p-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 hover:bg-light-slate-3 rounded-md"
           >
             <button
               onClick={(event) => {
