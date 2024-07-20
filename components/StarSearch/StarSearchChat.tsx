@@ -32,6 +32,7 @@ import { Chatbox, StarSearchChatMessage } from "./Chatbox";
 import { SuggestedPrompts } from "./SuggestedPrompts";
 import { ShareChatMenu } from "./ShareChatMenu";
 import { StarSearchCompactHeader } from "./StarSearchCompactHeader";
+import "@github/relative-time-element";
 
 const DEFAULT_STAR_SEARCH_API_BASE_URL = new URL(`${process.env.NEXT_PUBLIC_API_URL!}/star-search`);
 const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
@@ -88,34 +89,42 @@ const StarSearchHistory = ({ history, onNewChat, onLoadThread, onDeleteThread }:
           </Button>
         </div>
       ) : (
-        <ul className="grid gap-2 pt-10 [&_li]:p-2">
+        <ul className="grid gap-2 pt-10 [&_li]:p-2" aria-label="StarSearch History">
           {history.map((item) => (
             <li
               key={item.id}
-              className="grid grid-cols-[1fr,18px] w-full gap-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md"
-              data-star-search-thread-id={item.id}
+              className="flex justify-between items-center w-full gap-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md hover:text-orange-700"
             >
-              <button
-                onClick={(event) => {
-                  const starSearchThreadId = event.currentTarget.parentElement?.dataset.starSearchThreadId;
-                  starSearchThreadId && onLoadThread(starSearchThreadId);
-                }}
-                className="p-2 text-left [&:focus_+_[data-delete]]:not-sr-only rounded-md"
-              >
-                {item.title}
-              </button>
-              <button
-                data-delete
-                data-id={item.id}
-                className="p-2 rounded-md"
-                onClick={(event) => {
-                  const starSearchThreadId = event.currentTarget.parentElement?.dataset.starSearchThreadId;
-                  starSearchThreadId && onDeleteThread?.(starSearchThreadId);
-                }}
-              >
-                <span className="sr-only">Delete conversation</span>
-                <TrashIcon width={18} height={18} />
-              </button>
+              <div className="grid">
+                <button
+                  onClick={(event) => {
+                    const { starSearchThreadId } = event.currentTarget.dataset;
+                    starSearchThreadId && onLoadThread(starSearchThreadId);
+                  }}
+                  className="p-2 text-left [&:focus_+_[data-delete]]:not-sr-only rounded-md"
+                  data-star-search-thread-id={item.id}
+                >
+                  {item.title}
+                </button>
+                <div className="px-2 text-sm text-light-slate-10">
+                  <relative-time datetime={item.updated_at ?? item.created_at} />
+                </div>
+              </div>
+              <div className="grid place-content-center">
+                <button
+                  data-delete
+                  data-id={item.id}
+                  className="p-2 rounded-md"
+                  onClick={(event) => {
+                    const { starSearchThreadId } = event.currentTarget.dataset;
+                    starSearchThreadId && onDeleteThread?.(starSearchThreadId);
+                  }}
+                  data-star-search-thread-id={item.id}
+                >
+                  <span className="sr-only">Delete conversation</span>
+                  <TrashIcon width={18} height={18} />
+                </button>
+              </div>
             </li>
           ))}
         </ul>
