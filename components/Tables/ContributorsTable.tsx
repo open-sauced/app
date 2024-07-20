@@ -8,6 +8,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa6";
+import { useState } from "react";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -15,6 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "c
 import { OscrPill } from "components/Contributors/OscrPill";
 import Pill from "components/atoms/Pill/pill";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
+import Search from "components/atoms/Search/search";
 
 // TODO: proposed type, needs real data once api/#959
 type ContributorRow = {
@@ -29,6 +31,16 @@ type ContributorRow = {
 };
 
 export default function ContributorsTable() {
+  const [searchTerm, setSearchTerm] = useState<string | undefined>();
+
+  function onSearchContributors(searchTerm?: string) {
+    if (searchTerm && searchTerm.length > 2) {
+      setSearchTerm(searchTerm);
+    } else {
+      setSearchTerm(undefined);
+    }
+  }
+
   const contributorsColumnHelper = createColumnHelper<ContributorRow>();
   const defaultColumns = [
     contributorsColumnHelper.accessor("login", {
@@ -106,6 +118,7 @@ export default function ContributorsTable() {
     contributorsColumnHelper.accessor("last_contributed", {
       header: "Last Contributed",
       sortingFn: "datetime",
+      // TODO: change to relative time duration (eg "4 hours ago")
       cell: (info) => <p>{new Date(info.row.original.last_contributed).toLocaleString()}</p>,
     }),
   ];
@@ -118,39 +131,47 @@ export default function ContributorsTable() {
   });
 
   return (
-    <Table>
-      <TableHeader>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <TableHead key={header.id}>
-                <button onClick={header.column.getToggleSortingHandler()} className="flex gap-2 w-fit items-center">
-                  <h2 className="font-semibold">{header.column.columnDef.header?.toString()}</h2>
-                  {header.column.getCanSort() &&
-                    (header.column.getNextSortingOrder() === "asc" ? (
-                      <FaSort />
-                    ) : header.column.getNextSortingOrder() === "desc" ? (
-                      <FaSortUp />
-                    ) : (
-                      <FaSortDown />
-                    ))}
-                </button>
-              </TableHead>
-            ))}
-          </TableRow>
-        ))}
-      </TableHeader>
+    <div className="flex flex-col gap-4">
+      <Search
+        name="Search contributors"
+        placeholder="Search contributors"
+        onSearch={onSearchContributors}
+        className="w-full lg:max-w-xs"
+      />
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  <button onClick={header.column.getToggleSortingHandler()} className="flex gap-2 w-fit items-center">
+                    <h2 className="font-semibold">{header.column.columnDef.header?.toString()}</h2>
+                    {header.column.getCanSort() &&
+                      (header.column.getNextSortingOrder() === "asc" ? (
+                        <FaSort />
+                      ) : header.column.getNextSortingOrder() === "desc" ? (
+                        <FaSortUp />
+                      ) : (
+                        <FaSortDown />
+                      ))}
+                  </button>
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
 
-      <TableBody>
-        {table.getRowModel().rows.map((row) => (
-          <TableRow key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        <TableBody>
+          {table.getRowModel().rows.map((row) => (
+            <TableRow key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
 
