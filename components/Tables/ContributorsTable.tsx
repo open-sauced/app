@@ -20,6 +20,7 @@ import { OscrPill } from "components/Contributors/OscrPill";
 import Pill from "components/atoms/Pill/pill";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import Search from "components/atoms/Search/search";
+import { calcDistanceFromToday } from "lib/utils/date-utils";
 
 // TODO: proposed type, needs real data once api/#959
 type ContributorRow = {
@@ -153,8 +154,7 @@ export default function ContributorsTable() {
       header: "Last Contributed",
       sortingFn: "datetime",
       enableGlobalFilter: false,
-      // TODO: change to relative time duration (eg "4 hours ago")
-      cell: (info) => <p>{new Date(info.row.original.last_contributed).toLocaleString()}</p>,
+      cell: (info) => <p>{calcDistanceFromToday(new Date(info.row.original.last_contributed))}</p>,
     }),
   ];
 
@@ -259,7 +259,7 @@ const fakeData: ContributorRow[] = [
 ];
 
 function generateRandomDOB(): string {
-  const random = getRandomDate(new Date("2018-02-12T01:57:45.271Z"), new Date("2024-06-18T01:57:45.271Z"));
+  const random = getRandomDate(new Date("2024-07-01T01:57:45.271Z"), new Date());
   return random.toISOString();
 }
 
