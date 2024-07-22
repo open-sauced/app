@@ -283,7 +283,7 @@ const ContributorProfileHeader = ({
                 }}
                 variant="primary"
               >
-                Invite to opensauced
+                Invite to OpenSauced
               </Button>
             )}
           </div>
