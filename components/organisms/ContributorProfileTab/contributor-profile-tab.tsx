@@ -221,7 +221,7 @@ const ContributorProfileTab = ({
                 className="max-md:w-full md:w-40 flex justify-center"
                 variant="primary"
               >
-                Invite to opensauced
+                Invite to OpenSauced
               </Button>
             )}
 
