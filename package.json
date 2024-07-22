@@ -80,6 +80,7 @@
     "@supabase/supabase-js": "^2.26.0",
     "@supabase/ui": "^0.36.5",
     "@tanstack/react-table": "^8.15.3",
+    "@tanstack/react-virtual": "^3.8.3",
     "@use-gesture/react": "^10.2.27",
     "@vercel/og": "^0.5.8",
     "clsx": "^1.2.1",
