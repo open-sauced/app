@@ -5,7 +5,7 @@ type Author = "You" | "StarSearch" | "Guest";
 
 interface ChatAvatarProps {
   author: Author;
-  userId?: number;
+  userId?: number | null;
 }
 
 export function ChatAvatar({ author, userId }: ChatAvatarProps) {

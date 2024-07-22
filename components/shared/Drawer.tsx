@@ -38,6 +38,7 @@ export const Drawer = ({
     <InternalDrawer open={isOpen} onClose={onClose}>
       <DrawerTrigger asChild={asChild}>{trigger}</DrawerTrigger>
       <DrawerContent
+        aria-label={title && typeof title === "string" ? title : "drawer"}
         className={inheritBackground ? "bg-inherit" : "bg-white"}
         style={
           fullHeightDrawer

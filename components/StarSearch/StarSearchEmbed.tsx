@@ -2,12 +2,19 @@ import { ComponentProps, useRef, useState } from "react";
 import { captureException } from "@sentry/nextjs";
 import clsx from "clsx";
 import { useOutsideClick } from "rooks";
+import { usePostHog } from "posthog-js/react";
 import { UuidSchema, parseSchema } from "lib/validation-schemas";
 import { useToast } from "lib/hooks/useToast";
 import { StarSearchButton } from "./StarSearchButton";
 import { StarSearchChat } from "./StarSearchChat";
 interface StarSearchEmbedProps extends Omit<ComponentProps<typeof StarSearchChat>, "sharedPrompt"> {
   workspaceId?: string;
+  isEditor?: boolean;
+  signInHandler: () => void;
+}
+
+interface StarSearchCtaClickType {
+  type: "sign_in" | "can_access" | "no_access";
 }
 
 export const StarSearchEmbed = ({
@@ -18,7 +25,10 @@ export const StarSearchEmbed = ({
   isMobile,
   tagline,
   workspaceId,
+  isEditor = false,
+  signInHandler,
 }: StarSearchEmbedProps) => {
+  const posthog = usePostHog();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const onClose = () => setDrawerOpen(false);
   const { toast } = useToast();
@@ -52,13 +62,37 @@ export const StarSearchEmbed = ({
     return null;
   }
 
+  const isStarSearchEnabled = !!((isEditor && workspaceId) || !workspaceId);
+
+  const tooltipText = isStarSearchEnabled
+    ? "Search your workspace with StarSearch"
+    : userId
+    ? "You need to be an editor to use StarSearch"
+    : "Sign in to use StarSearch";
+
   return (
     <>
       <div className="fixed bottom-0 right-0 flex justify-end p-2">
         <StarSearchButton
           onOpen={() => {
-            setDrawerOpen(true);
+            if (!userId) {
+              posthog.capture("star_search_workspace_cta_click", { type: "sign_in" } satisfies StarSearchCtaClickType);
+              signInHandler();
+              return;
+            }
+
+            if (isStarSearchEnabled) {
+              posthog.capture("star_search_workspace_cta_click", {
+                type: "can_access",
+              } satisfies StarSearchCtaClickType);
+              setDrawerOpen(true);
+              return;
+            }
+
+            posthog.capture("star_search_workspace_cta_click", { type: "no_access" } satisfies StarSearchCtaClickType);
           }}
+          tooltipText={tooltipText}
+          enabled={!userId || (isStarSearchEnabled && !!userId)}
         />
       </div>
       <div
@@ -73,9 +107,11 @@ export const StarSearchEmbed = ({
         style={{
           top: "var(--top-nav-height)",
           height: "calc(100dvh - var(--top-nav-height))",
+          zIndex: 1,
         }}
       >
         <StarSearchChat
+          workspaceId={validWorkspaceId}
           userId={userId}
           sharedChatId={sharedChatId}
           bearerToken={bearerToken}
