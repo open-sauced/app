@@ -176,6 +176,7 @@ export default function ContributorsTable() {
         name="Search contributors"
         placeholder="Search contributors"
         onSearch={onSearchContributors}
+        onChange={onSearchContributors}
         className="w-full lg:max-w-xs"
       />
       <Table>
