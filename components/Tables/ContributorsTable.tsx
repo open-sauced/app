@@ -6,9 +6,12 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
+  FilterFn,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa6";
 import { useState } from "react";
+import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -30,6 +33,30 @@ type ContributorRow = {
   last_contributed: string; // date time string;
 };
 
+declare module "@tanstack/react-table" {
+  //add fuzzy filter to the filterFns
+  interface FilterFns {
+    fuzzy: FilterFn<unknown>;
+  }
+  interface FilterMeta {
+    itemRank: RankingInfo;
+  }
+}
+
+// Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
+const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+  // Rank the item
+  const itemRank = rankItem(row.getValue(columnId), value);
+
+  // Store the itemRank info
+  addMeta({
+    itemRank,
+  });
+
+  // Return if the item should be filtered in/out
+  return itemRank.passed;
+};
+
 export default function ContributorsTable() {
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
 
@@ -46,6 +73,7 @@ export default function ContributorsTable() {
     contributorsColumnHelper.accessor("login", {
       header: "Contributor",
       sortingFn: "alphanumeric",
+      filterFn: "includesString",
       cell: (info) => (
         <div className="w-fit">
           <HoverCard.Root>
@@ -73,11 +101,13 @@ export default function ContributorsTable() {
     contributorsColumnHelper.accessor("oscr", {
       header: "Rating",
       sortingFn: "basic",
+      enableGlobalFilter: false,
       cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
     }),
     contributorsColumnHelper.accessor("tags", {
       header: "Tags",
       enableSorting: false,
+      enableGlobalFilter: false,
       cell: (info) => (
         <div className="flex gap-2">
           {info.row.original.tags.map((tag) => (
@@ -89,6 +119,7 @@ export default function ContributorsTable() {
     contributorsColumnHelper.accessor("repositories", {
       header: "Repositories",
       enableSorting: false,
+      filterFn: "includesString",
       cell: (info) => (
         <div className="flex gap-2">
           <CardRepoList
@@ -106,18 +137,22 @@ export default function ContributorsTable() {
     contributorsColumnHelper.accessor("company", {
       header: "Company",
       sortingFn: "alphanumeric",
+      filterFn: "includesString",
     }),
     contributorsColumnHelper.accessor("location", {
       header: "Location",
       sortingFn: "alphanumeric",
+      filterFn: "includesString",
     }),
     contributorsColumnHelper.accessor("total_contributions", {
       header: "Contributions",
       sortingFn: "basic",
+      enableGlobalFilter: false,
     }),
     contributorsColumnHelper.accessor("last_contributed", {
       header: "Last Contributed",
       sortingFn: "datetime",
+      enableGlobalFilter: false,
       // TODO: change to relative time duration (eg "4 hours ago")
       cell: (info) => <p>{new Date(info.row.original.last_contributed).toLocaleString()}</p>,
     }),
@@ -128,6 +163,11 @@ export default function ContributorsTable() {
     data: fakeData, // TODO: get real data!
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    filterFns: { fuzzy: fuzzyFilter },
+    globalFilterFn: "fuzzy",
+    onGlobalFilterChange: setSearchTerm,
+    state: { globalFilter: searchTerm },
   });
 
   return (
