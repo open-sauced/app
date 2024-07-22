@@ -12,6 +12,7 @@ import {
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa6";
 import { useState } from "react";
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
+import { useRouter } from "next/router";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -59,6 +60,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 };
 
 export default function ContributorsTable() {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
 
   function onSearchContributors(searchTerm?: string) {
@@ -112,7 +114,7 @@ export default function ContributorsTable() {
       cell: (info) => (
         <div className="flex gap-2">
           {info.row.original.tags.map((tag) => (
-            <Pill key={`${info.row.id}_${tag}`} text={tag} />
+            <Pill key={`${info.row.id}_${tag}`} text={tag} className="capitalize" />
           ))}
         </div>
       ),
@@ -120,7 +122,7 @@ export default function ContributorsTable() {
     contributorsColumnHelper.accessor("repositories", {
       header: "Repositories",
       enableSorting: false,
-      filterFn: "includesString",
+      filterFn: "fuzzy",
       cell: (info) => (
         <div className="flex gap-2">
           <CardRepoList
@@ -131,6 +133,8 @@ export default function ContributorsTable() {
                 repoIcon: getAvatarByUsername(repository.full_name.split("/")[0]),
               };
             })}
+            onSelect={(repoName) => router.push(`/s/${repoName}`)}
+            showCursor
           />
         </div>
       ),
@@ -172,13 +176,15 @@ export default function ContributorsTable() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Search
-        name="Search contributors"
-        placeholder="Search contributors"
-        onSearch={onSearchContributors}
-        onChange={onSearchContributors}
-        className="w-full lg:max-w-xs"
-      />
+      <div className="flex gap-4 w-full justify-end">
+        <Search
+          name="Search contributors"
+          placeholder="Search contributors"
+          onSearch={onSearchContributors}
+          onChange={onSearchContributors}
+          className="w-full lg:max-w-[10rem]"
+        />
+      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
