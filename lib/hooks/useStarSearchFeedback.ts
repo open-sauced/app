@@ -11,18 +11,18 @@ export interface StarSearchPromptAnalytic {
   promptResponse: string;
 }
 
-export const useStarSearchFeedback = () => {
+export const useStarSearchFeedback = (isWorkspace: boolean) => {
   const posthog = usePostHog();
 
   const prompt = ({ promptContent, promptResponse }: StarSearchPromptAnalytic) => {
-    posthog.capture("star_search_prompt", {
+    posthog.capture(isWorkspace ? "star_search_workspace_prompt" : "star_search_prompt", {
       promptContent,
       promptResponse,
     } satisfies StarSearchPromptAnalytic);
   };
 
   const feedback = ({ feedback, promptContent, promptResponse }: StarSearchFeedbackAnalytic) => {
-    posthog.capture("star_search_feedback", {
+    posthog.capture(isWorkspace ? "star_search_workspace_feedback" : "star_search_feedback", {
       feedback,
       promptContent,
       promptResponse,

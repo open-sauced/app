@@ -1,6 +1,8 @@
 import { FiCopy } from "react-icons/fi";
 import { MdWorkspaces } from "react-icons/md";
 import { HiOutlineExternalLink } from "react-icons/hi";
+import { FaBalanceScale } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa6";
 
 import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
@@ -8,23 +10,25 @@ import { useRouter } from "next/router";
 import { usePostHog } from "posthog-js/react";
 import { GetServerSidePropsContext } from "next";
 
+import Link from "next/link";
 import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAvatarByUsername } from "lib/utils/github";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
-import { useRepoStats } from "lib/hooks/api/useRepoStats";
-import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
-import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
+import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
 import { useRepositoryYolo } from "lib/hooks/api/useRepositoryYolo";
+import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
+import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
 
 import Avatar from "components/atoms/Avatar/avatar";
 import Button from "components/shared/Button/button";
-import ClientOnly from "components/atoms/ClientOnly/client-only";
+import Pill from "components/atoms/Pill/pill";
 import TabList from "components/TabList/tab-list";
+import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
@@ -37,6 +41,7 @@ import IssuesChart from "components/Graphs/IssuesChart";
 import ContributorConfidenceChart from "components/Repositories/ContributorConfidenceChart";
 import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
+import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -237,7 +242,10 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 ) : (
                   <Button
                     variant="primary"
-                    onClick={() => setIsAddToWorkspaceModalOpen(true)}
+                    onClick={() => {
+                      posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
+                      setIsAddToWorkspaceModalOpen(true);
+                    }}
                     className="shrink-0 items-center gap-3 w-fit"
                   >
                     <MdWorkspaces />
@@ -253,9 +261,42 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     <FiCopy />
                     Share
                   </Button>
-                  <DayRangePicker />
+                  <DayRangePicker
+                    onDayRangeChanged={(value: string) =>
+                      posthog.capture("Repo Pages: changed range", {
+                        repository: repoData.full_name,
+                        range: Number(value),
+                      })
+                    }
+                  />
                 </div>
               </div>
+            </div>
+            <div className="relative flex w-fit max-w-[21rem] lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
+              {repoData.language && (
+                <Link
+                  href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}
+                  onClick={() =>
+                    posthog.capture("Repo Pages: clicked language pill", {
+                      repository: repoData.full_name,
+                      language: repoData.language,
+                    })
+                  }
+                >
+                  <LanguagePill language={repoData.language.toLowerCase()} />
+                </Link>
+              )}
+              {repoData.license && (
+                <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
+              )}
+              <Pill
+                text={`Last Updated: ${new Date(repoData.pushed_at).toLocaleDateString()}`}
+                icon={<FaRegClock />}
+                size="xsmall"
+                className="!px-2 whitespace-nowrap"
+              />
+
+              <span className="fixed rounded-r-full right-8 lg:hidden w-12 h-8 bg-gradient-to-l from-light-slate-3 to-transparent" />
             </div>
           </section>
 
@@ -272,6 +313,13 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     range={range}
                     isLoading={isRossDataLoading}
                     error={rossError}
+                    onFilterClick={(category, value) =>
+                      posthog.capture(`Repo Data: toggled ROSS filter`, {
+                        repository: repoData.full_name,
+                        category,
+                        value,
+                      })
+                    }
                     className="h-fit"
                   />
 
@@ -301,6 +349,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     contributorConfidence={repoStats?.contributor_confidence}
                     isError={isError}
                     isLoading={isLoading}
+                    onLearnMoreClick={() =>
+                      posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                        repository: repoData.full_name,
+                      })
+                    }
                   />
 
                   {lotteryState === "lottery" && (
@@ -309,9 +362,23 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       error={lotteryFactorError}
                       range={range}
                       isLoading={isLotteryFactorLoading}
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloBannerOnClick={uniqueYoloCoders.size > 0 ? () => setLotteryState("yolo") : undefined}
                       showHoverCards
+                      uniqueYoloCoders={uniqueYoloCoders}
+                      yoloBannerOnClick={
+                        uniqueYoloCoders.size > 0
+                          ? () => {
+                              setLotteryState("yolo");
+                              posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
+                            }
+                          : undefined
+                      }
+                      onYoloIconClick={() => {
+                        setLotteryState("yolo");
+                        posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                      }}
+                      onProfileClick={() => {
+                        posthog.capture(`Repo Pages: Lottery Factor user clicked`, { repository: repoData.full_name });
+                      }}
                     />
                   )}
                   {lotteryState === "yolo" && (
@@ -324,6 +391,20 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       isLoading={isYoloStatsLoading}
                       range={range}
                       backButtonOnClick={() => setLotteryState("lottery")}
+                      onShaClick={() =>
+                        posthog.capture("Repo Pages: clicked SHA link", { repository: repoData.full_name })
+                      }
+                      onProfileClick={() =>
+                        posthog.capture("Repo Pages: clicked YOLO coder (YOLO Chart)", {
+                          repository: repoData.full_name,
+                        })
+                      }
+                      onHideBotsToggle={(checked) =>
+                        posthog.capture("Repo Pages: toggled YOLO hide bots", {
+                          repository: repoData.full_name,
+                          checked,
+                        })
+                      }
                       showHoverCards
                     />
                   )}
@@ -337,6 +418,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   range={range}
                   syncId={syncId}
                   isLoading={isStarsDataLoading}
+                  onCategoryClick={(category) =>
+                    posthog.capture("Repo Pages: clicked Stars Chart category", {
+                      repository: repoData.full_name,
+                      category,
+                    })
+                  }
                   className="lg:col-span-6 h-fit"
                 />
                 <ForksChart
@@ -345,6 +432,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   range={range}
                   syncId={syncId}
                   isLoading={isForksDataLoading}
+                  onCategoryClick={(category) =>
+                    posthog.capture("Repo Pages: clicked Forks Chart category", {
+                      repository: repoData.full_name,
+                      category,
+                    })
+                  }
                   className="lg:col-span-6 h-fit"
                 />
               </section>

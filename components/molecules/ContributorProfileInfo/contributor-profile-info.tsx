@@ -12,7 +12,7 @@ import { getTimeByTimezone, getTimezone } from "lib/utils/timezones";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { getFormattedDate } from "lib/utils/date-utils";
 import { InterestType } from "lib/utils/getInterestOptions";
-import { LanguagePill } from "components/shared/LanguagePill/LanguagePill";
+import LanguagePill from "components/shared/LanguagePill/LanguagePill";
 
 interface ContributorProfileInfoProps {
   githubName: string;
@@ -182,7 +182,7 @@ const ContributorProfileInfo = ({
               <div className="flex gap-1.5 flex-wrap">
                 {interestArray.map((interest, index) => (
                   <Link href={`/explore/topic/${interest}/dashboard/filter/recent`} key={index} className="rounded-3xl">
-                    <LanguagePill topic={interest} />
+                    <LanguagePill language={interest} />
                   </Link>
                 ))}
               </div>

@@ -18,7 +18,7 @@ export function Chatbox({
   embedded,
 }: {
   message: StarSearchChatMessage;
-  userId?: number;
+  userId?: number | null;
   componentRegistry: Map<string, React.ComponentType<any>>;
   embedded?: boolean;
 }) {

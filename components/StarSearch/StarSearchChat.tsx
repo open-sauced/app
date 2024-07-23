@@ -64,7 +64,7 @@ async function updateComponentRegistry(name: string) {
 }
 
 type StarSearchChatProps = {
-  userId: number | undefined;
+  userId: number | null | undefined;
   sharedPrompt?: string | null;
   sharedChatId?: string | null;
   bearerToken: string | undefined | null;
@@ -76,6 +76,7 @@ type StarSearchChatProps = {
   onClose?: () => void;
   baseApiStarSearchUrl?: URL;
   sharingEnabled?: boolean;
+  workspaceId?: string;
 };
 
 export function StarSearchChat({
@@ -91,6 +92,7 @@ export function StarSearchChat({
   baseApiStarSearchUrl = DEFAULT_STAR_SEARCH_API_BASE_URL,
   sharingEnabled = true,
   showTopNavigation = false,
+  workspaceId,
 }: StarSearchChatProps) {
   const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
@@ -98,7 +100,7 @@ export function StarSearchChat({
   const [isRunning, setIsRunning] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [ranOnce, setRanOnce] = useState(false);
-  const { feedback, prompt } = useStarSearchFeedback();
+  const { feedback, prompt } = useStarSearchFeedback(!!workspaceId);
   const { toast } = useToast();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [checkAuth, setCheckAuth] = useState(false);
@@ -106,6 +108,14 @@ export function StarSearchChat({
   const [view, setView] = useState<"prompt" | "chat">("prompt");
   const [shareLinkError, setShareLinkError] = useState(false);
   const streamRef = useRef<ReadableStreamDefaultReader<string>>();
+
+  useEffect(() => {
+    if (!workspaceId) {
+      return;
+    }
+
+    onNewChat();
+  }, [workspaceId]);
 
   const onNewChat = () => {
     streamRef.current?.cancel();
