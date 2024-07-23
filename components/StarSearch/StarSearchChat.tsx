@@ -307,6 +307,9 @@ export function StarSearchChat({
       if (done) {
         setIsRunning(false); // enables input
         setCheckAuth(true);
+
+        // Since this is a new conversation, have the StarSearch history update.
+        mutateStarSearchHistory();
         setChat((chat) => {
           // This is a bit of a hack.
           //
@@ -626,6 +629,11 @@ export function StarSearchChat({
       },
     });
 
+    // This updates the StarSearch history with the new conversation
+    // This gets called when the stream completes as well, but we want to update
+    // the StarSearch history here as well in case they cancel the conversation.
+    mutateStarSearchHistory();
+
     if (response.status !== 200) {
       chatError();
       return;
@@ -633,7 +641,6 @@ export function StarSearchChat({
 
     const decoder = new TextDecoderStream();
     streamRef.current = response.body?.pipeThrough(decoder).getReader();
-
     processStream(streamRef.current);
   };
 
