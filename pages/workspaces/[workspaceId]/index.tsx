@@ -30,6 +30,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
+import useSession from "lib/hooks/useSession";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
@@ -118,7 +119,7 @@ const WorkspaceDashboard = ({
 }: WorkspaceDashboardProps) => {
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
   const hasMounted = useHasMounted();
-
+  const { session } = useSession(true);
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
   const { data: repositories, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
@@ -220,7 +221,11 @@ const WorkspaceDashboard = ({
                       hasError={isStatsError}
                     />
                   </div>
-                  <Repositories repositories={repoIds} showSearch={false} />
+                  <Repositories
+                    repositories={repoIds}
+                    personalWorkspaceId={isOwner ? undefined : (session as DbUser)?.personal_workspace_id}
+                    showSearch={false}
+                  />
                 </>
               ) : (
                 <Card className="bg-transparent">
