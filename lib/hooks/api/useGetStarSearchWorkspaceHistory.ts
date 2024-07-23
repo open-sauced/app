@@ -1,4 +1,5 @@
 import useSWR, { Fetcher } from "swr";
+import { useEffect, useState } from "react";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 export interface StarSearchHistoryItem {
@@ -20,29 +21,35 @@ interface PaginatedResponse {
 
 export const useGetStarSearchWorkspaceHistory = ({
   workspaceId,
-  // TODO: temporarily set to 1000 to avoid pagination
-  // I'll be adding TanStack Virtual Window to handle pagination
-  // https://tanstack.com/virtual/v3/docs/framework/react/examples/window
-  limit = 1000,
+  limit = 30,
 }: {
   workspaceId: string | undefined;
   limit?: number;
 }) => {
+  const [page, setPage] = useState(1);
+  const [history, setHistory] = useState<StarSearchHistoryItem[]>([]);
   const baseEndpoint = `workspaces/${workspaceId}/star-search`;
   const query = new URLSearchParams();
 
   query.set("limit", `${limit}`);
+  query.set("page", `${page}`);
 
   const { data, error, mutate, isLoading } = useSWR<PaginatedResponse, Error>(
     `${baseEndpoint}?${query}`,
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
+  useEffect(() => {
+    if (data) {
+      setHistory((prevHistory) => [...prevHistory, ...data.data]);
+    }
+  }, [data]);
+
   return {
-    data: data?.data ?? [],
-    meta: data?.meta ?? { itemCount: 0, limit: 0, page: 0, hasNextPage: false, hasPreviousPage: false, pageCount: 0 },
+    data: history,
     isLoading: !error && !data,
     isError: !!error,
     mutate,
+    loadMore: data?.meta.hasNextPage ? () => setPage(page + 1) : undefined,
   };
 };

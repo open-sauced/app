@@ -74,9 +74,10 @@ interface StarSearchHistoryProps {
   onLoadThread: (conversationId: string) => void;
   onNewChat: () => void;
   onDeleteThread?: (conversationId: string) => void;
+  loadMore?: () => void;
 }
 
-const StarSearchHistory = ({ history, onNewChat, onLoadThread, onDeleteThread }: StarSearchHistoryProps) => {
+const StarSearchHistory = ({ history, onNewChat, onLoadThread, onDeleteThread, loadMore }: StarSearchHistoryProps) => {
   return (
     <div className="flex flex-col gap-2 w-full px-2">
       <h2 className="fixed text-slate-800 font-semibold w-full bg-light-slate-2 pt-2">StarSearch History</h2>
@@ -89,45 +90,54 @@ const StarSearchHistory = ({ history, onNewChat, onLoadThread, onDeleteThread }:
           </Button>
         </div>
       ) : (
-        <ul className="grid gap-2 pt-10 [&_li]:p-2" aria-label="StarSearch History">
-          {history.map((item) => (
-            <li
-              key={item.id}
-              className="flex justify-between items-center w-full gap-2 [&:focus-within_[data-delete]]:border-1 [&:focus-within_[data-delete]]:text-inherit focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md hover:text-orange-700 [&_[data-delete]]:hover:text-orange-700"
-            >
-              <div className="grid">
-                <button
-                  onClick={(event) => {
-                    const { starSearchThreadId } = event.currentTarget.dataset;
-                    starSearchThreadId && onLoadThread(starSearchThreadId);
-                  }}
-                  className="p-2 text-left rounded-md"
-                  data-star-search-thread-id={item.id}
-                >
-                  {item.title}
-                </button>
-                <div className="px-2 text-sm text-light-slate-10">
-                  <relative-time datetime={item.updated_at ?? item.created_at} />
+        <div className="pb-20">
+          <ul className="grid gap-2 pt-10 [&_li]:p-2" aria-label="StarSearch History">
+            {history.map((item) => (
+              <li
+                key={item.id}
+                className="flex justify-between items-center w-full gap-2 [&:focus-within_[data-delete]]:border-1 [&:focus-within_[data-delete]]:text-inherit focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md hover:text-orange-700 [&_[data-delete]]:hover:text-orange-700"
+              >
+                <div className="grid">
+                  <button
+                    onClick={(event) => {
+                      const { starSearchThreadId } = event.currentTarget.dataset;
+                      starSearchThreadId && onLoadThread(starSearchThreadId);
+                    }}
+                    className="p-2 text-left rounded-md"
+                    data-star-search-thread-id={item.id}
+                  >
+                    {item.title}
+                  </button>
+                  <div className="px-2 text-sm text-light-slate-10">
+                    <relative-time datetime={item.updated_at ?? item.created_at} />
+                  </div>
                 </div>
-              </div>
-              <div className="grid place-content-center">
-                <button
-                  data-delete
-                  data-id={item.id}
-                  className="p-2 rounded-md text-light-slate-8"
-                  onClick={(event) => {
-                    const { starSearchThreadId } = event.currentTarget.dataset;
-                    starSearchThreadId && onDeleteThread?.(starSearchThreadId);
-                  }}
-                  data-star-search-thread-id={item.id}
-                >
-                  <span className="sr-only">Delete conversation</span>
-                  <TrashIcon width={18} height={18} />
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div className="grid place-content-center">
+                  <button
+                    data-delete
+                    data-id={item.id}
+                    className="p-2 rounded-md text-light-slate-8"
+                    onClick={(event) => {
+                      const { starSearchThreadId } = event.currentTarget.dataset;
+                      starSearchThreadId && onDeleteThread?.(starSearchThreadId);
+                    }}
+                    data-star-search-thread-id={item.id}
+                  >
+                    <span className="sr-only">Delete conversation</span>
+                    <TrashIcon width={18} height={18} />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {loadMore ? (
+            <div className="grid place-content-center">
+              <Button variant="default" onClick={loadMore} className="flex gap-2 items-center justify-center w-fit">
+                Load more...
+              </Button>
+            </div>
+          ) : null}
+        </div>
       )}
     </div>
   );
@@ -193,6 +203,7 @@ export function StarSearchChat({
     isError: isHistoryError,
     isLoading: isLoadingHistory,
     mutate: mutateStarSearchHistory,
+    loadMore,
   } = useGetStarSearchWorkspaceHistory({ workspaceId });
 
   const onNewChat = () => {
@@ -834,6 +845,7 @@ export function StarSearchChat({
             }}
             onDeleteThread={deleteStarSearchThread}
             onNewChat={onNewChat}
+            loadMore={loadMore}
           />
         );
 
