@@ -8,11 +8,14 @@ import {
   useReactTable,
   FilterFn,
   getFilteredRowModel,
+  Row,
+  getExpandedRowModel,
 } from "@tanstack/react-table";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa6";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import { useRouter } from "next/router";
+import { BsArrowsCollapse, BsArrowsExpand } from "react-icons/bs";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -22,6 +25,8 @@ import Pill from "components/atoms/Pill/pill";
 import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import Search from "components/atoms/Search/search";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
+import RepositoryBadge from "components/shared/RepositoryBadge";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
 // TODO: proposed type, needs real data once api/#959
 type ContributorRow = {
@@ -32,7 +37,10 @@ type ContributorRow = {
   company: string;
   location: string;
   total_contributions: number; // total = PRs, issues, commits, etc.
-  last_contributed: string; // date time string;
+  last_contributed: {
+    repository: string; // full name
+    contributed_at: string; // date time
+  };
 };
 
 declare module "@tanstack/react-table" {
@@ -59,8 +67,10 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
+// TODO: add props for data
 export default function ContributorsTable() {
   const router = useRouter();
+  const isMobile = useMediaQuery("(max-width: 640px)");
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
 
   function onSearchContributors(searchTerm?: string) {
@@ -158,16 +168,75 @@ export default function ContributorsTable() {
       header: "Last Contributed",
       sortingFn: "datetime",
       enableGlobalFilter: false,
-      cell: (info) => <p>{calcDistanceFromToday(new Date(info.row.original.last_contributed))}</p>,
+      cell: (info) => (
+        <div className="flex flex-col gap-2">
+          <p>{calcDistanceFromToday(new Date(info.getValue().contributed_at))}</p>
+          <Link href={`/s/${info.getValue().repository}`}>
+            <RepositoryBadge repository={info.getValue().repository} />
+          </Link>
+        </div>
+      ),
+    }),
+  ];
+
+  const mobileColumns = [
+    {
+      id: "expand",
+      header: "",
+      cell: ({ row }: { row: Row<ContributorRow> }) => {
+        return (
+          row.getCanExpand() && (
+            <button onClick={row.getToggleExpandedHandler()}>
+              {row.getIsExpanded() ? <BsArrowsCollapse /> : <BsArrowsExpand />}
+            </button>
+          )
+        );
+      },
+    },
+    contributorsColumnHelper.accessor("login", {
+      header: "Contributor",
+      sortingFn: "alphanumeric",
+      filterFn: "includesString",
+      cell: (info) => (
+        <div className="w-fit">
+          <HoverCard.Root>
+            <Link href={`/u/${info.row.original.login}`} className="rounded-full">
+              <HoverCard.Trigger className="flex gap-4 items-center">
+                <Avatar
+                  size={24}
+                  className="xl:w-9 xl:h-9"
+                  isCircle
+                  hasBorder={false}
+                  avatarURL={getAvatarByUsername(info.row.original.login)}
+                />
+                <p>{info.row.original.login}</p>
+              </HoverCard.Trigger>
+            </Link>
+            <HoverCard.Portal>
+              <HoverCard.Content sideOffset={5}>
+                <HoverCardWrapper username={info.row.original.login} />
+              </HoverCard.Content>
+            </HoverCard.Portal>
+          </HoverCard.Root>
+        </div>
+      ),
+    }),
+    contributorsColumnHelper.accessor("oscr", {
+      header: "Rating",
+      sortingFn: "basic",
+      enableGlobalFilter: false,
+      cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
     }),
   ];
 
   const table = useReactTable({
-    columns: defaultColumns,
+    columns: useMemo(() => (isMobile ? mobileColumns : defaultColumns), [isMobile]),
     data: fakeData, // TODO: get real data!
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getRowCanExpand: () => isMobile,
+    getExpandedRowModel: getExpandedRowModel(),
     filterFns: { fuzzy: fuzzyFilter },
     globalFilterFn: "fuzzy",
     onGlobalFilterChange: setSearchTerm,
@@ -176,13 +245,13 @@ export default function ContributorsTable() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex gap-4 w-full justify-end">
+      <div className="flex gap-4 w-full lg:justify-end">
         <Search
           name="Search contributors"
           placeholder="Search contributors"
           onSearch={onSearchContributors}
           onChange={onSearchContributors}
-          className="w-full lg:max-w-[10rem]"
+          className="w-full max-w-[10rem]"
         />
       </div>
       <Table>
@@ -210,11 +279,29 @@ export default function ContributorsTable() {
 
         <TableBody>
           {table.getRowModel().rows.map((row) => (
-            <TableRow key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-              ))}
-            </TableRow>
+            <>
+              <TableRow key={row.id} className={`${row.getIsExpanded() && "border border-orange-500"}`}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                ))}
+              </TableRow>
+              {row.getIsExpanded() && (
+                <div className="flex flex-col gap-2 w-full">
+                  <section className="flex w-full justify-between">
+                    <h3>Tags</h3>
+                    <div className="flex gap-2">
+                      {row.original.tags.map((tag) => (
+                        <Pill key={`${row.id}_${tag}`} text={tag} className="capitalize" />
+                      ))}
+                    </div>
+                  </section>
+                  <section className="flex w-full justify-between">
+                    <h3>Company</h3>
+                    <p>{row.original.company}</p>
+                  </section>
+                </div>
+              )}
+            </>
           ))}
         </TableBody>
       </Table>
@@ -235,7 +322,10 @@ const fakeData: ContributorRow[] = [
     company: "OpenSauced",
     location: "Disneyland",
     total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
-    last_contributed: generateRandomDOB(),
+    last_contributed: {
+      repository: "open-sauced/app",
+      contributed_at: generateRandomDOB(),
+    },
   },
   {
     login: "nickytonline",
@@ -248,7 +338,10 @@ const fakeData: ContributorRow[] = [
     company: "OpenSauced",
     location: "Canada",
     total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
-    last_contributed: generateRandomDOB(),
+    last_contributed: {
+      repository: "forem/forem",
+      contributed_at: generateRandomDOB(),
+    },
   },
   {
     login: "brandonroberts",
@@ -261,12 +354,15 @@ const fakeData: ContributorRow[] = [
     company: "OpenSauced",
     location: "United States",
     total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
-    last_contributed: generateRandomDOB(),
+    last_contributed: {
+      repository: "analogjs/analog",
+      contributed_at: generateRandomDOB(),
+    },
   },
 ];
 
 function generateRandomDOB(): string {
-  const random = getRandomDate(new Date("2024-07-01T01:57:45.271Z"), new Date());
+  const random = getRandomDate(new Date("2024-07-20T01:57:45.271Z"), new Date());
   return random.toISOString();
 }
 
