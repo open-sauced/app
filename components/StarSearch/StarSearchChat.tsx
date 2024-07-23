@@ -93,7 +93,7 @@ const StarSearchHistory = ({ history, onNewChat, onLoadThread, onDeleteThread }:
           {history.map((item) => (
             <li
               key={item.id}
-              className="flex justify-between items-center w-full gap-2 [&_[data-delete]]:sr-only [&:hover_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:not-sr-only [&:focus-within_[data-delete]]:border-1 focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md hover:text-orange-700"
+              className="flex justify-between items-center w-full gap-2 [&:focus-within_[data-delete]]:border-1 [&:focus-within_[data-delete]]:text-inherit focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md hover:text-orange-700 [&_[data-delete]]:hover:text-orange-700"
             >
               <div className="grid">
                 <button
@@ -101,7 +101,7 @@ const StarSearchHistory = ({ history, onNewChat, onLoadThread, onDeleteThread }:
                     const { starSearchThreadId } = event.currentTarget.dataset;
                     starSearchThreadId && onLoadThread(starSearchThreadId);
                   }}
-                  className="p-2 text-left [&:focus_+_[data-delete]]:not-sr-only rounded-md"
+                  className="p-2 text-left rounded-md"
                   data-star-search-thread-id={item.id}
                 >
                   {item.title}
@@ -114,7 +114,7 @@ const StarSearchHistory = ({ history, onNewChat, onLoadThread, onDeleteThread }:
                 <button
                   data-delete
                   data-id={item.id}
-                  className="p-2 rounded-md"
+                  className="p-2 rounded-md text-light-slate-8"
                   onClick={(event) => {
                     const { starSearchThreadId } = event.currentTarget.dataset;
                     starSearchThreadId && onDeleteThread?.(starSearchThreadId);
