@@ -5,6 +5,27 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.46.1-beta.3](https://github.com/open-sauced/app/compare/v2.46.1-beta.2...v2.46.1-beta.3) (2024-07-24)
+
+
+### 🐛 Bug Fixes
+
+* use personal workspace for creating repository insights from non-owner workspaces ([#3763](https://github.com/open-sauced/app/issues/3763)) ([0d1ec38](https://github.com/open-sauced/app/commit/0d1ec3825dd0b8cfccd17988551a181947b742f3))
+
+## [2.46.1-beta.2](https://github.com/open-sauced/app/compare/v2.46.1-beta.1...v2.46.1-beta.2) (2024-07-22)
+
+
+### 🐛 Bug Fixes
+
+* changed OpenSauced text to proper casing ([#3759](https://github.com/open-sauced/app/issues/3759)) ([dd9e5e4](https://github.com/open-sauced/app/commit/dd9e5e4ac43a35022d0b55a4feccd025e50717c2))
+
+## [2.46.1-beta.1](https://github.com/open-sauced/app/compare/v2.46.0...v2.46.1-beta.1) (2024-07-19)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch for Workspaces resets when changing workspaces ([#3757](https://github.com/open-sauced/app/issues/3757)) ([7183b33](https://github.com/open-sauced/app/commit/7183b3374330b07312a50a076986b7e7932afaf7))
+
 ## [2.46.0](https://github.com/open-sauced/app/compare/v2.45.0...v2.46.0) (2024-07-18)
 
 
