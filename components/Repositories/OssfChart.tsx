@@ -13,7 +13,7 @@ type OssfData = {
 };
 
 type OssfChartProps = {
-  ossfData: OssfData;
+  ossfData: OssfData | undefined;
   isLoading: boolean;
   isError: boolean;
   onLearnMoreClick?: () => void;
@@ -23,13 +23,14 @@ type OssfChartProps = {
 export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreClick, className }: OssfChartProps) {
   const data = useMemo(
     () => [
-      { name: "totalScore", value: ossfData.totalScore },
-      { name: "difference", value: 10 - ossfData.totalScore },
+      { name: "totalScore", value: ossfData?.totalScore ?? 0 },
+      { name: "difference", value: 10 - (ossfData?.totalScore ?? 0) },
     ],
     [ossfData]
   );
 
   const getValueBasedOnPercentage = ({ low, med, high }: { low: string; med: string; high: string }) => {
+    if (!ossfData) return low;
     return ossfData.totalScore < 4 ? low : ossfData.totalScore < 8 ? med : high;
   };
 
@@ -46,7 +47,7 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
   const renderCustomLabel = ({ cx, cy }: { cx: number; cy: number }) => {
     return (
       <text x={cx} y={cy} dy={-1} textAnchor="middle" className="text-lg lg:text-2xl fill-black font-semibold">
-        {ossfData.totalScore}
+        {ossfData?.totalScore ?? 0}
         <tspan className="text-xs"> / 10</tspan>
       </text>
     );

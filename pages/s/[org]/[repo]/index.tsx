@@ -42,7 +42,6 @@ import ContributorConfidenceChart from "components/Repositories/ContributorConfi
 import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
-import OssfChart from "components/Repositories/OssfChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -307,17 +306,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
           <ClientOnly>
             <div className="flex flex-col gap-8">
-              <OssfChart
-                // TODO: use API data
-                ossfData={{
-                  totalScore: 7.8,
-                  dependencyUpdateScore: 0.0,
-                  fuzzingScore: 0.0,
-                  maintainedScore: 10.0,
-                }}
-                isError={false}
-                isLoading={false}
-              />
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
                 <div className="order-last lg:order-none lg:col-span-8 flex flex-col gap-4">
                   <RossChart
