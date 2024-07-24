@@ -27,6 +27,7 @@ import Pill from "components/atoms/Pill/pill";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 import ContributorsTable from "components/Tables/ContributorsTable";
 import useRepositoryContributors from "lib/hooks/api/useRepositoryContributors";
+import Activity from "components/organisms/Activity/activity";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -212,7 +213,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
 
           <ClientOnly>
             <div className="flex flex-col gap-8 px-2 py-4 lg:p-8">
-              {/** <Activity repositories={[repoData.id]} /> **/}
+              <Activity repositories={[repoData.id]} />
               <ContributorsTable
                 contributors={contributors}
                 meta={meta}

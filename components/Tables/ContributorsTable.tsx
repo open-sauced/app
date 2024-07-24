@@ -80,50 +80,55 @@ export default function ContributorsTable({ contributors, meta, isLoading, isErr
 
   const mobileColumns = [
     {
-      id: "expand",
+      id: "mobileContributor",
       header: "",
-      cell: ({ row }: { row: Row<DbRepoContributor> }) => {
-        return (
-          row.getCanExpand() && (
-            <button onClick={row.getToggleExpandedHandler()}>
-              {row.getIsExpanded() ? <BsArrowsCollapse /> : <BsArrowsExpand />}
-            </button>
-          )
-        );
-      },
+      columns: [
+        {
+          id: "expand",
+          header: "",
+          cell: ({ row }: { row: Row<DbRepoContributor> }) => {
+            return (
+              row.getCanExpand() && (
+                <button onClick={row.getToggleExpandedHandler()}>
+                  {row.getIsExpanded() ? <BsArrowsCollapse /> : <BsArrowsExpand />}
+                </button>
+              )
+            );
+          },
+        },
+        contributorsColumnHelper.accessor("login", {
+          header: "Contributor",
+          cell: (info) => (
+            <div className="w-fit">
+              <HoverCard.Root>
+                <Link href={`/u/${info.row.original.login}`} className="rounded-full">
+                  <HoverCard.Trigger className="flex gap-4 items-center">
+                    <Avatar
+                      size={24}
+                      className="xl:w-9 xl:h-9"
+                      isCircle
+                      hasBorder={false}
+                      avatarURL={info.row.original.avatar_url}
+                    />
+                    <p>{info.row.original.login}</p>
+                  </HoverCard.Trigger>
+                </Link>
+                <HoverCard.Portal>
+                  <HoverCard.Content sideOffset={5}>
+                    <HoverCardWrapper username={info.row.original.login} />
+                  </HoverCard.Content>
+                </HoverCard.Portal>
+              </HoverCard.Root>
+            </div>
+          ),
+        }),
+        contributorsColumnHelper.accessor("oscr", {
+          header: "Rating",
+          enableSorting: true,
+          cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
+        }),
+      ],
     },
-    contributorsColumnHelper.accessor("login", {
-      header: "Contributor",
-      enableSorting: true,
-      cell: (info) => (
-        <div className="w-fit">
-          <HoverCard.Root>
-            <Link href={`/u/${info.row.original.login}`} className="rounded-full">
-              <HoverCard.Trigger className="flex gap-4 items-center">
-                <Avatar
-                  size={24}
-                  className="xl:w-9 xl:h-9"
-                  isCircle
-                  hasBorder={false}
-                  avatarURL={info.row.original.avatar_url}
-                />
-                <p>{info.row.original.login}</p>
-              </HoverCard.Trigger>
-            </Link>
-            <HoverCard.Portal>
-              <HoverCard.Content sideOffset={5}>
-                <HoverCardWrapper username={info.row.original.login} />
-              </HoverCard.Content>
-            </HoverCard.Portal>
-          </HoverCard.Root>
-        </div>
-      ),
-    }),
-    contributorsColumnHelper.accessor("oscr", {
-      header: "Rating",
-      enableSorting: true,
-      cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
-    }),
   ];
 
   const table = useReactTable({
@@ -186,18 +191,30 @@ export default function ContributorsTable({ contributors, meta, isLoading, isErr
         <TableBody>
           {table.getRowModel().rows.map((row) => (
             <>
-              <TableRow key={row.id} className={`${row.getIsExpanded() && "border border-orange-500"}`}>
+              <TableRow key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                 ))}
               </TableRow>
               {row.getIsExpanded() && (
-                <div className="flex flex-col gap-2 w-full">
-                  <section className="flex w-full justify-between">
-                    <h3>Company</h3>
-                    <p>{row.original.company}</p>
-                  </section>
-                </div>
+                <TableRow key={`expanded_${row.id}`}>
+                  <TableCell colSpan={row.getVisibleCells().length}>
+                    <div className="flex flex-col gap-2 divide-y-2">
+                      <p className="flex justify-between font-semibold">
+                        Contributions:
+                        <span className="font-normal">{row.original.total_contributions}</span>
+                      </p>
+                      <p className="flex justify-between font-semibold pt-2">
+                        Company:
+                        <span className="font-normal">{row.original.company}</span>
+                      </p>
+                      <p className="flex justify-between font-semibold pt-2">
+                        Location:
+                        <span className="font-normal">{row.original.location}</span>
+                      </p>
+                    </div>
+                  </TableCell>
+                </TableRow>
               )}
             </>
           ))}
