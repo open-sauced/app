@@ -4,12 +4,12 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
-  getSortedRowModel,
   useReactTable,
   Row,
   getExpandedRowModel,
+  TableState,
 } from "@tanstack/react-table";
-import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa6";
+import { FaSortDown, FaSortUp } from "react-icons/fa6";
 import { useMemo, useState } from "react";
 import { BsArrowsCollapse, BsArrowsExpand } from "react-icons/bs";
 import Avatar from "components/atoms/Avatar/avatar";
@@ -30,22 +30,13 @@ type ContributorsTableProps = {
 
 export default function ContributorsTable({ contributors, meta, isLoading, isError }: ContributorsTableProps) {
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const [searchTerm, setSearchTerm] = useState<string | undefined>();
 
-  function onSearchContributors(searchTerm?: string) {
-    if (searchTerm && searchTerm.length > 2) {
-      setSearchTerm(searchTerm);
-    } else {
-      setSearchTerm(undefined);
-    }
-  }
+  const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: true }]);
 
   const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
   const defaultColumns = [
     contributorsColumnHelper.accessor("login", {
       header: "Contributor",
-      sortingFn: "alphanumeric",
-      filterFn: "includesString",
       cell: (info) => (
         <div className="w-fit">
           <HoverCard.Root>
@@ -72,24 +63,18 @@ export default function ContributorsTable({ contributors, meta, isLoading, isErr
     }),
     contributorsColumnHelper.accessor("oscr", {
       header: "Rating",
-      sortingFn: "basic",
+      enableSorting: true,
       enableGlobalFilter: false,
       cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
     }),
     contributorsColumnHelper.accessor("company", {
       header: "Company",
-      sortingFn: "alphanumeric",
-      filterFn: "includesString",
     }),
     contributorsColumnHelper.accessor("location", {
       header: "Location",
-      sortingFn: "alphanumeric",
-      filterFn: "includesString",
     }),
     contributorsColumnHelper.accessor("total_contributions", {
       header: "Contributions",
-      sortingFn: "basic",
-      enableGlobalFilter: false,
     }),
   ];
 
@@ -109,8 +94,7 @@ export default function ContributorsTable({ contributors, meta, isLoading, isErr
     },
     contributorsColumnHelper.accessor("login", {
       header: "Contributor",
-      sortingFn: "alphanumeric",
-      filterFn: "includesString",
+      enableSorting: true,
       cell: (info) => (
         <div className="w-fit">
           <HoverCard.Root>
@@ -137,8 +121,7 @@ export default function ContributorsTable({ contributors, meta, isLoading, isErr
     }),
     contributorsColumnHelper.accessor("oscr", {
       header: "Rating",
-      sortingFn: "basic",
-      enableGlobalFilter: false,
+      enableSorting: true,
       cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
     }),
   ];
@@ -146,12 +129,12 @@ export default function ContributorsTable({ contributors, meta, isLoading, isErr
   const table = useReactTable({
     columns: useMemo(() => (isMobile ? mobileColumns : defaultColumns), [isMobile]),
     data: contributors ?? [],
+    manualSorting: true,
+    manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     getRowCanExpand: () => isMobile,
     getExpandedRowModel: getExpandedRowModel(),
-    onGlobalFilterChange: setSearchTerm,
-    state: { globalFilter: searchTerm },
+    state: { sorting },
   });
 
   return (
@@ -162,12 +145,33 @@ export default function ContributorsTable({ contributors, meta, isLoading, isErr
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <TableHead key={header.id}>
-                  <button onClick={header.column.getToggleSortingHandler()} className="flex gap-2 w-fit items-center">
+                  <button
+                    onClick={() => {
+                      const { enableSorting } = header.column.columnDef;
+                      const isAscending = Boolean(sorting.find((item) => item.id === header.id && !item.desc));
+
+                      if (enableSorting) {
+                        setQueryParams({ orderDirection: isAscending ? "DESC" : "ASC" });
+                        setSorting((currentState) => {
+                          const state = currentState
+                            .filter((item) => item.id !== header.id)
+                            .map(({ id }) => ({ id, desc: false }));
+
+                          return [
+                            ...state,
+                            {
+                              id: header.id,
+                              desc: isAscending,
+                            },
+                          ];
+                        });
+                      }
+                    }}
+                    className="flex gap-2 w-fit items-center"
+                  >
                     <h2 className="font-semibold">{header.column.columnDef.header?.toString()}</h2>
-                    {header.column.getCanSort() &&
-                      (header.column.getNextSortingOrder() === "asc" ? (
-                        <FaSort />
-                      ) : header.column.getNextSortingOrder() === "desc" ? (
+                    {header.column.columnDef.enableSorting &&
+                      (Boolean(sorting.find((item) => item.id === header.id && !item.desc)) ? (
                         <FaSortUp />
                       ) : (
                         <FaSortDown />
@@ -200,20 +204,22 @@ export default function ContributorsTable({ contributors, meta, isLoading, isErr
         </TableBody>
       </Table>
 
-      {meta ? (
-        <Pagination
-          showPages={!isMobile}
-          showTotalPages={true}
-          onPageChange={(page) => {
-            setQueryParams({ page: `${page}` });
-          }}
-          hasNextPage={meta.hasNextPage}
-          hasPreviousPage={meta.hasPreviousPage}
-          totalPage={meta.pageCount}
-          page={meta.page}
-          goToPage={true}
-        />
-      ) : null}
+      {meta && (
+        <div className="self-end">
+          <Pagination
+            showPages={!isMobile}
+            showTotalPages={true}
+            onPageChange={(page) => {
+              setQueryParams({ page: `${page}` });
+            }}
+            hasNextPage={meta.hasNextPage}
+            hasPreviousPage={meta.hasPreviousPage}
+            totalPage={meta.pageCount}
+            page={meta.page}
+            goToPage={true}
+          />
+        </div>
+      )}
     </div>
   );
 }
