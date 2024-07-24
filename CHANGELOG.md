@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.46.1-beta.3](https://github.com/open-sauced/app/compare/v2.46.1-beta.2...v2.46.1-beta.3) (2024-07-24)
+
+
+### 🐛 Bug Fixes
+
+* use personal workspace for creating repository insights from non-owner workspaces ([#3763](https://github.com/open-sauced/app/issues/3763)) ([0d1ec38](https://github.com/open-sauced/app/commit/0d1ec3825dd0b8cfccd17988551a181947b742f3))
+
 ## [2.46.1-beta.2](https://github.com/open-sauced/app/compare/v2.46.1-beta.1...v2.46.1-beta.2) (2024-07-22)
 
 
