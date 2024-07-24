@@ -21,32 +21,14 @@ import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { OscrPill } from "components/Contributors/OscrPill";
-import Pill from "components/atoms/Pill/pill";
-import CardRepoList from "components/molecules/CardRepoList/card-repo-list";
 import Search from "components/atoms/Search/search";
-import { calcDistanceFromToday } from "lib/utils/date-utils";
-import RepositoryBadge from "components/shared/RepositoryBadge";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 
-// TODO: proposed type, needs real data once api/#959
-type ContributorRow = {
-  login: string;
-  oscr: number;
-  repositories: { name: string; full_name: string }[];
-  tags: string[]; // YOLO, internal, outsider, recurring, lottery
-  company: string;
-  location: string;
-  total_contributions: number; // total = PRs, issues, commits, etc.
-  last_contributed: {
-    repository: string; // full name
-    contributed_at: string; // date time
-  };
-};
-
 declare module "@tanstack/react-table" {
-  //add fuzzy filter to the filterFns
+  // add fuzzy filter to the filterFns
+  // optional
   interface FilterFns {
-    fuzzy: FilterFn<unknown>;
+    fuzzy?: FilterFn<unknown>;
   }
   interface FilterMeta {
     itemRank: RankingInfo;
@@ -81,7 +63,7 @@ export default function ContributorsTable() {
     }
   }
 
-  const contributorsColumnHelper = createColumnHelper<ContributorRow>();
+  const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
   const defaultColumns = [
     contributorsColumnHelper.accessor("login", {
       header: "Contributor",
@@ -117,38 +99,6 @@ export default function ContributorsTable() {
       enableGlobalFilter: false,
       cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
     }),
-    contributorsColumnHelper.accessor("tags", {
-      header: "Tags",
-      enableSorting: false,
-      enableGlobalFilter: false,
-      cell: (info) => (
-        <div className="flex gap-2">
-          {info.row.original.tags.map((tag) => (
-            <Pill key={`${info.row.id}_${tag}`} text={tag} className="capitalize" />
-          ))}
-        </div>
-      ),
-    }),
-    contributorsColumnHelper.accessor("repositories", {
-      header: "Repositories",
-      enableSorting: false,
-      filterFn: "fuzzy",
-      cell: (info) => (
-        <div className="flex gap-2">
-          <CardRepoList
-            repoList={info.row.original.repositories.map((repository) => {
-              return {
-                repoOwner: repository.full_name.split("/")[0],
-                repoName: repository.name,
-                repoIcon: getAvatarByUsername(repository.full_name.split("/")[0]),
-              };
-            })}
-            onSelect={(repoName) => router.push(`/s/${repoName}`)}
-            showCursor
-          />
-        </div>
-      ),
-    }),
     contributorsColumnHelper.accessor("company", {
       header: "Company",
       sortingFn: "alphanumeric",
@@ -164,26 +114,13 @@ export default function ContributorsTable() {
       sortingFn: "basic",
       enableGlobalFilter: false,
     }),
-    contributorsColumnHelper.accessor("last_contributed", {
-      header: "Last Contributed",
-      sortingFn: "datetime",
-      enableGlobalFilter: false,
-      cell: (info) => (
-        <div className="flex flex-col gap-2">
-          <p>{calcDistanceFromToday(new Date(info.getValue().contributed_at))}</p>
-          <Link href={`/s/${info.getValue().repository}`}>
-            <RepositoryBadge repository={info.getValue().repository} />
-          </Link>
-        </div>
-      ),
-    }),
   ];
 
   const mobileColumns = [
     {
       id: "expand",
       header: "",
-      cell: ({ row }: { row: Row<ContributorRow> }) => {
+      cell: ({ row }: { row: Row<DbRepoContributor> }) => {
         return (
           row.getCanExpand() && (
             <button onClick={row.getToggleExpandedHandler()}>
@@ -207,7 +144,7 @@ export default function ContributorsTable() {
                   className="xl:w-9 xl:h-9"
                   isCircle
                   hasBorder={false}
-                  avatarURL={getAvatarByUsername(info.row.original.login)}
+                  avatarURL={info.row.original.avatar_url}
                 />
                 <p>{info.row.original.login}</p>
               </HoverCard.Trigger>
@@ -288,14 +225,6 @@ export default function ContributorsTable() {
               {row.getIsExpanded() && (
                 <div className="flex flex-col gap-2 w-full">
                   <section className="flex w-full justify-between">
-                    <h3>Tags</h3>
-                    <div className="flex gap-2">
-                      {row.original.tags.map((tag) => (
-                        <Pill key={`${row.id}_${tag}`} text={tag} className="capitalize" />
-                      ))}
-                    </div>
-                  </section>
-                  <section className="flex w-full justify-between">
                     <h3>Company</h3>
                     <p>{row.original.company}</p>
                   </section>
@@ -310,64 +239,50 @@ export default function ContributorsTable() {
 }
 
 // TODO: REMOVE mock data and utils
-const fakeData: ContributorRow[] = [
+const fakeData: DbRepoContributor[] = [
   {
+    id: 0,
     login: "zeucapua",
+    avatar_url: getAvatarByUsername("zeucapua"),
     oscr: Number(Math.random().toFixed(2)),
-    repositories: [
-      { name: "app", full_name: "open-sauced/app" },
-      { name: "gust", full_name: "zeucapua/gust" },
-    ],
-    tags: ["internal", "lottery"],
     company: "OpenSauced",
     location: "Disneyland",
     total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
-    last_contributed: {
-      repository: "open-sauced/app",
-      contributed_at: generateRandomDOB(),
-    },
+    commits: 0,
+    prs_created: 0,
+    issues_created: 0,
+    issue_comments: 0,
+    commit_comments: 0,
+    pr_review_comments: 0,
   },
   {
+    id: 1,
     login: "nickytonline",
+    avatar_url: getAvatarByUsername("nickytonline"),
     oscr: Number(Math.random().toFixed(2)),
-    repositories: [
-      { name: "app", full_name: "open-sauced/app" },
-      { name: "forem", full_name: "forem" },
-    ],
-    tags: ["internal", "lottery"],
     company: "OpenSauced",
     location: "Canada",
     total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
-    last_contributed: {
-      repository: "forem/forem",
-      contributed_at: generateRandomDOB(),
-    },
+    commits: 0,
+    prs_created: 0,
+    issues_created: 0,
+    issue_comments: 0,
+    commit_comments: 0,
+    pr_review_comments: 0,
   },
   {
+    id: 2,
     login: "brandonroberts",
+    avatar_url: getAvatarByUsername("brandonroberts"),
     oscr: Number(Math.random().toFixed(2)),
-    repositories: [
-      { name: "app", full_name: "open-sauced/app" },
-      { name: "analog", full_name: "analogjs/analog" },
-    ],
-    tags: ["internal", "lottery", "yolo"],
     company: "OpenSauced",
     location: "United States",
     total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
-    last_contributed: {
-      repository: "analogjs/analog",
-      contributed_at: generateRandomDOB(),
-    },
+    commits: 0,
+    prs_created: 0,
+    issues_created: 0,
+    issue_comments: 0,
+    commit_comments: 0,
+    pr_review_comments: 0,
   },
 ];
-
-function generateRandomDOB(): string {
-  const random = getRandomDate(new Date("2024-07-20T01:57:45.271Z"), new Date());
-  return random.toISOString();
-}
-
-function getRandomDate(from: Date, to: Date) {
-  const fromTime = from.getTime();
-  const toTime = to.getTime();
-  return new Date(fromTime + Math.random() * (toTime - fromTime));
-}
