@@ -29,20 +29,24 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
     [ossfData]
   );
 
-  const getValueBasedOnPercentage = ({ low, med, high }: { low: string; med: string; high: string }) => {
+  const getValueBasedOnScore = ({ low, med, high }: { low: string; med: string; high: string }) => {
     if (!ossfData) return low;
     return ossfData.totalScore < 4 ? low : ossfData.totalScore < 8 ? med : high;
   };
 
-  const pieColor = getValueBasedOnPercentage({ low: "#f59e0b", med: "#2563eb", high: "#22c55e" });
+  const pieColor = getValueBasedOnScore({ low: "#f59e0b", med: "#2563eb", high: "#22c55e" });
 
-  const projectStatus = getValueBasedOnPercentage({
+  const projectStatus = getValueBasedOnScore({
     low: "can be intimidating",
     med: "can be initimidating",
-    high: "is approachable!",
+    high: "is safe to use!",
   });
 
-  const projectDescription = getValueBasedOnPercentage({ low: "Few", med: "Some", high: "A lot of" });
+  const projectDescription = getValueBasedOnScore({
+    low: "Few",
+    med: "Some",
+    high: "passes almost every check with a high score",
+  });
 
   const renderCustomLabel = ({ cx, cy }: { cx: number; cy: number }) => {
     return (
@@ -95,9 +99,7 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
           </div>
           <section className="flex flex-col gap-1 lg:text-center xl:text-start">
             <h3 className="font-medium text-sm text-slate-700">This project {projectStatus}</h3>
-            <p className="text-sm text-slate-600">
-              {projectDescription} stargazers and forkers come back later on to a meaningful contribution.
-            </p>
+            <p className="text-sm text-slate-600">It {projectDescription} in the OpenSSF checklist.</p>
           </section>
         </section>
       )}
