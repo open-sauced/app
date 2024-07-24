@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { FaRegClock } from "react-icons/fa6";
 import { FaBalanceScale } from "react-icons/fa";
+import { useRouter } from "next/router";
 import { fetchApiData } from "helpers/fetchApiData";
 import { RepositoryOgImage, getRepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 import { getAvatarByUsername } from "lib/utils/github";
@@ -25,6 +26,7 @@ import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import Pill from "components/atoms/Pill/pill";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 import ContributorsTable from "components/Tables/ContributorsTable";
+import useRepositoryContributors from "lib/hooks/api/useRepositoryContributors";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -63,6 +65,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 type Range = 30 | 7 | 90 | 180 | 360;
+type OrderDirection = "ASC" | "DESC";
 
 interface RepoPageProps {
   repoData: DbRepoInfo;
@@ -80,6 +83,27 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
     { name: "Overview", path: "" },
     { name: "Contributors", path: "contributors" },
   ];
+
+  const router = useRouter();
+  const {
+    limit = 10,
+    range: rawRange = 30,
+    page = 1,
+    orderDirection = "",
+  } = router.query as { limit: string; range: string; page: string; orderDirection: OrderDirection; orderBy: string };
+
+  const {
+    meta,
+    data: contributors,
+    isLoading: isContributorsLoading,
+    isError: isContributorsError,
+  } = useRepositoryContributors({
+    repository: repoData.full_name,
+    range: Number(rawRange ?? 30),
+    page: Number(page),
+    limit: Number(limit),
+    orderDirection: orderDirection as OrderDirection,
+  });
 
   const copyUrlToClipboard = async () => {
     const url = new URL(window.location.href).toString();
@@ -189,7 +213,12 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
           <ClientOnly>
             <div className="flex flex-col gap-8 px-2 py-4 lg:p-8">
               {/** <Activity repositories={[repoData.id]} /> **/}
-              <ContributorsTable />
+              <ContributorsTable
+                contributors={contributors}
+                meta={meta}
+                isLoading={isContributorsLoading}
+                isError={isContributorsError}
+              />
             </div>
           </ClientOnly>
         </div>

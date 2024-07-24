@@ -6,52 +6,29 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
-  FilterFn,
-  getFilteredRowModel,
   Row,
   getExpandedRowModel,
 } from "@tanstack/react-table";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa6";
 import { useMemo, useState } from "react";
-import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
-import { useRouter } from "next/router";
 import { BsArrowsCollapse, BsArrowsExpand } from "react-icons/bs";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { OscrPill } from "components/Contributors/OscrPill";
-import Search from "components/atoms/Search/search";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { setQueryParams } from "lib/utils/query-params";
+import Pagination from "components/molecules/Pagination/pagination";
 
-declare module "@tanstack/react-table" {
-  // add fuzzy filter to the filterFns
-  // optional
-  interface FilterFns {
-    fuzzy?: FilterFn<unknown>;
-  }
-  interface FilterMeta {
-    itemRank: RankingInfo;
-  }
-}
-
-// Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-  // Rank the item
-  const itemRank = rankItem(row.getValue(columnId), value);
-
-  // Store the itemRank info
-  addMeta({
-    itemRank,
-  });
-
-  // Return if the item should be filtered in/out
-  return itemRank.passed;
+type ContributorsTableProps = {
+  contributors: DbRepoContributor[] | undefined;
+  meta: Meta | null;
+  isLoading: boolean;
+  isError: boolean;
 };
 
-// TODO: add props for data
-export default function ContributorsTable() {
-  const router = useRouter();
+export default function ContributorsTable({ contributors, meta, isLoading, isError }: ContributorsTableProps) {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const [searchTerm, setSearchTerm] = useState<string | undefined>();
 
@@ -168,29 +145,17 @@ export default function ContributorsTable() {
 
   const table = useReactTable({
     columns: useMemo(() => (isMobile ? mobileColumns : defaultColumns), [isMobile]),
-    data: fakeData, // TODO: get real data!
+    data: contributors ?? [],
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     getRowCanExpand: () => isMobile,
     getExpandedRowModel: getExpandedRowModel(),
-    filterFns: { fuzzy: fuzzyFilter },
-    globalFilterFn: "fuzzy",
     onGlobalFilterChange: setSearchTerm,
     state: { globalFilter: searchTerm },
   });
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex gap-4 w-full lg:justify-end">
-        <Search
-          name="Search contributors"
-          placeholder="Search contributors"
-          onSearch={onSearchContributors}
-          onChange={onSearchContributors}
-          className="w-full max-w-[10rem]"
-        />
-      </div>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -234,55 +199,21 @@ export default function ContributorsTable() {
           ))}
         </TableBody>
       </Table>
+
+      {meta ? (
+        <Pagination
+          showPages={!isMobile}
+          showTotalPages={true}
+          onPageChange={(page) => {
+            setQueryParams({ page: `${page}` });
+          }}
+          hasNextPage={meta.hasNextPage}
+          hasPreviousPage={meta.hasPreviousPage}
+          totalPage={meta.pageCount}
+          page={meta.page}
+          goToPage={true}
+        />
+      ) : null}
     </div>
   );
 }
-
-// TODO: REMOVE mock data and utils
-const fakeData: DbRepoContributor[] = [
-  {
-    id: 0,
-    login: "zeucapua",
-    avatar_url: getAvatarByUsername("zeucapua"),
-    oscr: Number(Math.random().toFixed(2)),
-    company: "OpenSauced",
-    location: "Disneyland",
-    total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
-    commits: 0,
-    prs_created: 0,
-    issues_created: 0,
-    issue_comments: 0,
-    commit_comments: 0,
-    pr_review_comments: 0,
-  },
-  {
-    id: 1,
-    login: "nickytonline",
-    avatar_url: getAvatarByUsername("nickytonline"),
-    oscr: Number(Math.random().toFixed(2)),
-    company: "OpenSauced",
-    location: "Canada",
-    total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
-    commits: 0,
-    prs_created: 0,
-    issues_created: 0,
-    issue_comments: 0,
-    commit_comments: 0,
-    pr_review_comments: 0,
-  },
-  {
-    id: 2,
-    login: "brandonroberts",
-    avatar_url: getAvatarByUsername("brandonroberts"),
-    oscr: Number(Math.random().toFixed(2)),
-    company: "OpenSauced",
-    location: "United States",
-    total_contributions: 1 + Number((Math.random() * 100).toPrecision(2)),
-    commits: 0,
-    prs_created: 0,
-    issues_created: 0,
-    issue_comments: 0,
-    commit_comments: 0,
-    pr_review_comments: 0,
-  },
-];

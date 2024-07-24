@@ -176,7 +176,7 @@ export const WorkspaceIssueTable = ({ data, meta, isLoading }: WorkspaceIssueTab
   const table = useReactTable({
     columns: useMemo(() => (isMobile ? mobileColumns : columns), [isMobile]),
     data: isLoading ? new Array(10).fill({}) : data || [],
-    // we're manually sorting and paging becuase the API handles the sorting server-side.
+    // we're manually sorting and paging because the API handles the sorting server-side.
     manualSorting: true,
     manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
