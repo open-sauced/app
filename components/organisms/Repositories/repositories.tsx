@@ -21,9 +21,10 @@ import RepoNotIndexed from "./repository-not-indexed";
 interface RepositoriesProps {
   repositories?: number[];
   showSearch?: boolean;
+  personalWorkspaceId?: string;
 }
 
-export default function Repositories({ repositories, showSearch = true }: RepositoriesProps) {
+export default function Repositories({ repositories, showSearch = true, personalWorkspaceId }: RepositoriesProps) {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
   const workspaceId = router.query.workspaceId as string;
@@ -59,18 +60,16 @@ export default function Repositories({ repositories, showSearch = true }: Reposi
       });
     } else if (user) {
       router.push({
-        pathname: `/workspaces/${workspaceId}/repository-insights/new`,
+        pathname: `/workspaces/${personalWorkspaceId ?? workspaceId}/repository-insights/new`,
         query: { repos: JSON.stringify(selectedRepos.map((repo) => repo.full_name)) },
       });
     } else {
       signIn({
         provider: "github",
         options: {
-          redirectTo: `${
-            window.location.origin
-          }/workspaces/${workspaceId}/repository-insights/new?repos=${JSON.stringify(
-            selectedRepos.map((repo) => repo.full_name)
-          )}&login=true&`,
+          redirectTo: `${window.location.origin}/workspaces/${
+            personalWorkspaceId ?? workspaceId
+          }/repository-insights/new?repos=${JSON.stringify(selectedRepos.map((repo) => repo.full_name))}&login=true&`,
         },
       });
     }
