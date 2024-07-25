@@ -48,7 +48,7 @@ export const LoadingState: Story = {
 
 export const ErrorState: Story = {
   args: {
-    ossfData: null,
+    ossfData: undefined,
     isLoading: false,
     isError: true,
   },

@@ -31,22 +31,26 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
 
   const getValueBasedOnScore = ({ low, med, high }: { low: string; med: string; high: string }) => {
     if (!ossfData) return low;
-    return ossfData.totalScore < 4 ? low : ossfData.totalScore < 8 ? med : high;
+    return ossfData.totalScore < 5 ? low : ossfData.totalScore < 8 ? med : high;
   };
 
   const pieColor = getValueBasedOnScore({ low: "#f59e0b", med: "#2563eb", high: "#22c55e" });
 
-  const projectStatus = getValueBasedOnScore({
-    low: "can be intimidating",
-    med: "can be initimidating",
-    high: "is safe to use!",
-  });
+  const projectStatus = isError
+    ? "There has been an error."
+    : getValueBasedOnScore({
+        low: "might not be safe to use",
+        med: "is safe to use",
+        high: "is safe to use",
+      });
 
-  const projectDescription = getValueBasedOnScore({
-    low: "Few",
-    med: "Some",
-    high: "passes almost every check with a high score",
-  });
+  const projectDescription = isError
+    ? ""
+    : getValueBasedOnScore({
+        low: "It might not pass all checks in the OpenSSF software security checklist. ",
+        med: "It passes almost all checks in the OpenSSF software security checklist. ",
+        high: "It passes almost all checks in the OpenSSF software security checklist with a high score. ",
+      });
 
   const renderCustomLabel = ({ cx, cy }: { cx: number; cy: number }) => {
     return (
@@ -65,7 +69,7 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
           <h3 className="text-sm font-semibold xl:text-lg text-slate-800">OpenSSF Score</h3>
         </div>
         <a
-          href="" // TODO: Link to OpenSSF docs
+          href="" // TODO: Link to OpenSauced docs about OpenSSF
           onClick={onLearnMoreClick}
           className="text-xs font-semibold text-sauced-orange xl:text-sm hover:underline"
         >
@@ -99,7 +103,18 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
           </div>
           <section className="flex flex-col gap-1 lg:text-center xl:text-start">
             <h3 className="font-medium text-sm text-slate-700">This project {projectStatus}</h3>
-            <p className="text-sm text-slate-600">It {projectDescription} in the OpenSSF checklist.</p>
+            <p className="text-sm text-slate-600">
+              {projectDescription}
+              You can run the full test{" "}
+              <a
+                href="https://github.com/ossf/scorecard?tab=readme-ov-file#view-a-projects-score"
+                target="_blank"
+                className="text-orange-500"
+              >
+                here
+              </a>
+              .
+            </p>
           </section>
         </section>
       )}
