@@ -6,10 +6,10 @@ import Card from "components/atoms/Card/card";
 
 // TODO: change schema to the one returned from the API once `api/#962` is implemented
 type OssfData = {
-  totalScore: number;
-  dependencyUpdateScore: number;
-  fuzzingScore: number;
-  maintainedScore: number;
+  totalScore: number | null;
+  dependencyUpdateScore: number | null;
+  fuzzingScore: number | null;
+  maintainedScore: number | null;
 };
 
 type OssfChartProps = {
@@ -29,33 +29,42 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
     [ossfData]
   );
 
-  const getValueBasedOnScore = ({ low, med, high }: { low: string; med: string; high: string }) => {
-    if (!ossfData) return low;
+  const getValueBasedOnScore = ({
+    low,
+    med,
+    high,
+    error,
+  }: {
+    low: string;
+    med: string;
+    high: string;
+    error: string;
+  }) => {
+    if (isError) return error;
+    if (!ossfData || !ossfData.totalScore) return low;
     return ossfData.totalScore < 5 ? low : ossfData.totalScore < 8 ? med : high;
   };
 
-  const pieColor = getValueBasedOnScore({ low: "#f59e0b", med: "#2563eb", high: "#22c55e" });
+  const pieColor = getValueBasedOnScore({ low: "#f59e0b", med: "#2563eb", high: "#22c55e", error: "#dc2626" });
 
-  const projectStatus = isError
-    ? "There has been an error."
-    : getValueBasedOnScore({
-        low: "might not be safe to use",
-        med: "is safe to use",
-        high: "is safe to use",
-      });
+  const projectStatus = getValueBasedOnScore({
+    low: "might not be safe to use",
+    med: "is safe to use",
+    high: "is safe to use",
+    error: "hasn't been calculated yet.",
+  });
 
-  const projectDescription = isError
-    ? ""
-    : getValueBasedOnScore({
-        low: "It might not pass all checks in the OpenSSF software security checklist. ",
-        med: "It passes almost all checks in the OpenSSF software security checklist. ",
-        high: "It passes almost all checks in the OpenSSF software security checklist with a high score. ",
-      });
+  const projectDescription = getValueBasedOnScore({
+    low: "It might not pass all checks in the OpenSSF software security checklist. ",
+    med: "It passes almost all checks in the OpenSSF software security checklist. ",
+    high: "It passes almost all checks in the OpenSSF software security checklist with a high score. ",
+    error: "No checks haven't been tested from the OpenSSF software security checklist. ",
+  });
 
   const renderCustomLabel = ({ cx, cy }: { cx: number; cy: number }) => {
     return (
       <text x={cx} y={cy} dy={-1} textAnchor="middle" className="text-lg lg:text-2xl fill-black font-semibold">
-        {ossfData?.totalScore ?? 0}
+        {ossfData?.totalScore ?? "X"}
         <tspan className="text-xs"> / 10</tspan>
       </text>
     );
@@ -95,7 +104,10 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
                   paddingAngle={0}
                 >
                   {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.name === "totalScore" ? pieColor : "#e2e8f0"} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.name === "totalScore" ? pieColor : isError ? "#dc2626" : "#e2e8f0"}
+                    />
                   ))}
                 </Pie>
               </PieChart>
