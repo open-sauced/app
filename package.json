@@ -79,7 +79,6 @@
     "@supabase/gotrue-js": "^1.22.22",
     "@supabase/supabase-js": "^2.26.0",
     "@supabase/ui": "^0.36.5",
-    "@tanstack/match-sorter-utils": "^8.15.1",
     "@tanstack/react-table": "^8.15.3",
     "@use-gesture/react": "^10.2.27",
     "@vercel/og": "^0.5.8",

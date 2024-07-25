@@ -12,11 +12,11 @@ import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { useContributorsList } from "lib/hooks/api/useContributorList";
+import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
-import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -112,7 +112,6 @@ const ListsOverview = ({
   const {
     isLoading,
     setPage,
-    error,
     data: { data: contributors, meta },
   } = useContributorsList({
     workspaceId,

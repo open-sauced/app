@@ -71,7 +71,6 @@ export const useContributorsList = ({
     data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
     isLoading: !error && !data,
     isError: !!error,
-    error: error,
     mutate,
   };
 };
