@@ -1,5 +1,6 @@
+import { safeParse } from "valibot";
 import { fetchApiData } from "helpers/fetchApiData";
-import { safeParse, UuidSchema } from "lib/validation-schemas";
+import { UuidSchema } from "lib/validation-schemas";
 
 export function getThreadStream(threadHistory: ThreadHistoryItem[], intervalInMillis = 250) {
   return new ReadableStream({
