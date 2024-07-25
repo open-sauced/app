@@ -7,10 +7,12 @@ const meta: Meta<typeof StarSearchCompactHeader> = {
   component: StarSearchCompactHeader,
   args: {
     onBack: () => action("onBack")(),
-    onShare: () => action("onShare")(),
     onNewChat: () => action("onNewChat")(),
     onShowHistory: () => action("onShowHistory")(),
     onClose: () => action("onClose")(),
+    // Not sure why I have to explicitly set this to undefined.
+    // Without this the share button appears for the default story.
+    onShare: undefined,
   },
   decorators: [(story) => <div className="max-w-md ">{story()}</div>],
 };
@@ -20,3 +22,9 @@ export default meta;
 type Story = StoryObj<typeof StarSearchCompactHeader>;
 
 export const Default: Story = {};
+
+export const WithShare: Story = {
+  args: {
+    onShare: () => action("onShare")(),
+  },
+};
