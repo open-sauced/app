@@ -28,6 +28,7 @@ import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
+import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 
@@ -100,7 +101,7 @@ const WorkspaceDashboard = ({ workspace, ogImage, overLimit }: WorkspaceDashboar
 
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
   const hasMounted = useHasMounted();
-
+  const { session } = useSession(true);
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
   const { data: repositories, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
@@ -202,7 +203,11 @@ const WorkspaceDashboard = ({ workspace, ogImage, overLimit }: WorkspaceDashboar
                       hasError={isStatsError}
                     />
                   </div>
-                  <Repositories repositories={repoIds} showSearch={false} />
+                  <Repositories
+                    repositories={repoIds}
+                    personalWorkspaceId={isOwner ? undefined : (session as DbUser)?.personal_workspace_id}
+                    showSearch={false}
+                  />
                 </>
               ) : (
                 <Card className="bg-transparent">

@@ -10,6 +10,7 @@ import Dashboard from "components/organisms/Dashboard/dashboard";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import useSession from "lib/hooks/useSession";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -24,6 +25,7 @@ interface InsightPageProps {
 const HubPage = ({ insight, isOwner, ogImage, workspaceId, owners }: InsightPageProps) => {
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const [hydrated, setHydrated] = useState(false);
+  const { session } = useSession(true);
 
   const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
   const showBanner = isOwner && !isWorkspaceUpgraded;
@@ -64,7 +66,10 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId, owners }: InsightPage
       >
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <HubPageLayout page="dashboard" owners={owners} overLimit={showBanner}>
-            <Dashboard repositories={repositories} />
+            <Dashboard
+              repositories={repositories}
+              personalWorkspaceId={isOwner ? undefined : (session as DbUser)?.personal_workspace_id}
+            />
           </HubPageLayout>
           <InsightUpgradeModal
             workspaceId={workspaceId}
