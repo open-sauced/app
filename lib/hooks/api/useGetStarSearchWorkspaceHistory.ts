@@ -19,6 +19,8 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
+type Mutation = ReturnType<typeof useSWR<PaginatedResponse, Error>>["mutate"];
+
 export const useGetStarSearchWorkspaceHistory = ({
   workspaceId,
   limit = 30,
@@ -26,6 +28,7 @@ export const useGetStarSearchWorkspaceHistory = ({
   workspaceId: string | undefined;
   limit?: number;
 }) => {
+  const [mutations, setMutations] = useState<Mutation[]>([]);
   const [page, setPage] = useState(1);
   const [history, setHistory] = useState<StarSearchHistoryItem[]>([]);
   const baseEndpoint = `workspaces/${workspaceId}/star-search`;
@@ -40,6 +43,14 @@ export const useGetStarSearchWorkspaceHistory = ({
   );
 
   useEffect(() => {
+    if (page === 1) {
+      setMutations([mutate]);
+    } else {
+      setMutations((prevMutations) => [...prevMutations, mutate]);
+    }
+  }, [page]);
+
+  useEffect(() => {
     if (data) {
       setHistory((prevHistory) => [...prevHistory, ...data.data]);
     }
@@ -49,7 +60,25 @@ export const useGetStarSearchWorkspaceHistory = ({
     data: history,
     isLoading: !error && !data,
     isError: !!error,
-    mutate,
+    mutate: async () => {
+      const updates = await Promise.all(mutations.map((mutate) => mutate()));
+
+      setHistory((prev) => {
+        return updates.reduce(
+          (acc, update) => {
+            const historyUpdate = update?.data;
+
+            if (historyUpdate) {
+              // mutating so as to avoid generating a new array reference
+              acc.push(...historyUpdate);
+            }
+
+            return acc;
+          },
+          [] as PaginatedResponse["data"]
+        );
+      });
+    },
     loadMore: data?.meta.hasNextPage ? () => setPage(page + 1) : undefined,
   };
 };
