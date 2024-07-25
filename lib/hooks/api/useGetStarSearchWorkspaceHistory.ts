@@ -28,6 +28,7 @@ export const useGetStarSearchWorkspaceHistory = ({
   workspaceId: string | undefined;
   limit?: number;
 }) => {
+  // Contains the mutate functions for each page of data
   const [mutations, setMutations] = useState<Mutation[]>([]);
   const [page, setPage] = useState(1);
   const [history, setHistory] = useState<StarSearchHistoryItem[]>([]);
@@ -42,6 +43,11 @@ export const useGetStarSearchWorkspaceHistory = ({
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
+  /**
+   * When the page changes, we need to add the new mutate function to the list of mutations
+   * so that we can call all of them and ensure that the history is up to date since we're
+   * concatenating the data from each page.
+   */
   useEffect(() => {
     if (page === 1) {
       setMutations([mutate]);
@@ -61,9 +67,11 @@ export const useGetStarSearchWorkspaceHistory = ({
     isLoading: !error && !data,
     isError: !!error,
     mutate: async () => {
+      // Calls all the mutate functions to ensure that the SWR cache is up to date
       const updates = await Promise.all(mutations.map((mutate) => mutate()));
 
       setHistory((prev) => {
+        // Update the StarSearch thread history with the freshly cached SWR data.
         return updates.reduce(
           (acc, update) => {
             const historyUpdate = update?.data;
