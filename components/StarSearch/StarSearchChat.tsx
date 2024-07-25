@@ -273,7 +273,7 @@ export function StarSearchChat({
   useEffect(() => {
     // Prevents the thread history from running when a new thread has been created and is currently
     // being used. This check is also to prevent the thread history from running multiple times.
-    if (!threadHistory || isLoading || !sharedChatId || (ranOnce && sharedChatId)) {
+    if (isRunning || !threadHistory || isLoading || (!threadHistory && (!sharedChatId || (ranOnce && sharedChatId)))) {
       return;
     }
 
