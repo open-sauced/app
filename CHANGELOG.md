@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.47.0-beta.1](https://github.com/open-sauced/app/compare/v2.46.1-beta.3...v2.47.0-beta.1) (2024-07-25)
+
+
+### 🍕 Features
+
+* StarSearch history for workspaces ([#3753](https://github.com/open-sauced/app/issues/3753)) ([9fd3fb8](https://github.com/open-sauced/app/commit/9fd3fb8eee90d4e653f0790609379b2383638797))
+
 ## [2.46.1-beta.3](https://github.com/open-sauced/app/compare/v2.46.1-beta.2...v2.46.1-beta.3) (2024-07-24)
 
 
