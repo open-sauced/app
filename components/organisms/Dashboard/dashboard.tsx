@@ -12,9 +12,10 @@ export type PrStatusFilter = "open" | "closed" | "all";
 
 interface DashboardProps {
   repositories?: number[];
+  personalWorkspaceId?: string;
 }
 
-const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
+const Dashboard = ({ repositories, personalWorkspaceId }: DashboardProps): JSX.Element => {
   const { data: insightsData, isLoading } = usePullRequestsHistogram({ repoIds: repositories });
   const { data: contributorData, meta: contributorMeta } = useContributors(undefined, repositories);
   const router = useRouter();
@@ -85,7 +86,7 @@ const Dashboard = ({ repositories }: DashboardProps): JSX.Element => {
       </aside>
 
       <section className="flex flex-col max-w-full gap-4 my-6">
-        <Repositories repositories={repositories} />
+        <Repositories repositories={repositories} personalWorkspaceId={personalWorkspaceId} />
       </section>
     </div>
   );

@@ -8,7 +8,6 @@ import { useToast } from "lib/hooks/useToast";
 import { StarSearchButton } from "./StarSearchButton";
 import { StarSearchChat } from "./StarSearchChat";
 interface StarSearchEmbedProps extends Omit<ComponentProps<typeof StarSearchChat>, "sharedPrompt"> {
-  workspaceId?: string;
   isEditor?: boolean;
   signInHandler: () => void;
 }
@@ -111,7 +110,7 @@ export const StarSearchEmbed = ({
         }}
       >
         <StarSearchChat
-          isWorkspace={!!validWorkspaceId}
+          workspaceId={validWorkspaceId}
           userId={userId}
           sharedChatId={sharedChatId}
           bearerToken={bearerToken}
