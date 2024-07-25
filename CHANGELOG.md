@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.47.0-beta.2](https://github.com/open-sauced/app/compare/v2.47.0-beta.1...v2.47.0-beta.2) (2024-07-25)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch history resets if workspace changes ([#3780](https://github.com/open-sauced/app/issues/3780)) ([26fe731](https://github.com/open-sauced/app/commit/26fe73110231612dfee6c3aed66789cc675a69d2))
+
 ## [2.47.0-beta.1](https://github.com/open-sauced/app/compare/v2.46.1-beta.3...v2.47.0-beta.1) (2024-07-25)
 
 
