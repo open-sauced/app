@@ -21,17 +21,28 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { setQueryParams } from "lib/utils/query-params";
 import Pagination from "components/molecules/Pagination/pagination";
 
+type OrderDirection = "ASC" | "DESC";
+
 type ContributorsTableProps = {
   contributors: DbRepoContributor[] | undefined;
   meta: Meta | null;
   isLoading: boolean;
   isError: boolean;
+  oscrSorting: OrderDirection;
+  setOscrSorting: (value: OrderDirection) => void;
 };
 
-export default function ContributorsTable({ contributors, meta, isLoading, isError }: ContributorsTableProps) {
+export default function ContributorsTable({
+  contributors,
+  meta,
+  oscrSorting,
+  setOscrSorting,
+  isLoading,
+  isError,
+}: ContributorsTableProps) {
   const isMobile = useMediaQuery("(max-width: 640px)");
 
-  const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: true }]);
+  const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
 
   const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
   const defaultColumns = [
@@ -156,8 +167,10 @@ export default function ContributorsTable({ contributors, meta, isLoading, isErr
                       const isAscending = Boolean(sorting.find((item) => item.id === header.id && !item.desc));
 
                       if (enableSorting) {
-                        setQueryParams({ orderDirection: isAscending ? "DESC" : "ASC" });
+                        setOscrSorting(isAscending ? "ASC" : "DESC");
+
                         setSorting((currentState) => {
+                          // future-proof, set other column sorting to false
                           const state = currentState
                             .filter((item) => item.id !== header.id)
                             .map(({ id }) => ({ id, desc: false }));
