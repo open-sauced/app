@@ -839,6 +839,7 @@ export function StarSearchChat({
           <StarSearchHistory
             history={starSearchHistory}
             onLoadThread={(conversationId) => {
+              onNewChat();
               setStarSearchState("chat");
               setChatId(conversationId);
             }}
