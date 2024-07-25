@@ -20,13 +20,13 @@ export const StarSearchCompactHeader = ({
   onShowHistory,
   onClose,
 }: StarSearchCompactHeaderProps) => {
-  const buttonHoverStyle = "hover:text-orange-500";
+  const menuButtonStyle = "hover:text-orange-500 grid place-content-center";
 
   return (
     <div className="flex items-center justify-between gap-2 [&_button]:text-slate-600 h-9 p-1 bg-slate-50">
       <div className="flex items-center gap-2">
         <Tooltip direction="top" className="text-center w-36" content="Back">
-          <button onClick={onBack} className={buttonHoverStyle}>
+          <button onClick={onBack} className={menuButtonStyle}>
             <ArrowLeftIcon />
           </button>
         </Tooltip>
@@ -35,21 +35,21 @@ export const StarSearchCompactHeader = ({
       </div>
       <div className="flex items-center gap-2">
         <Tooltip direction="top" className="text-center w-36" content="New Chat">
-          <button onClick={onNewChat} className={buttonHoverStyle}>
+          <button onClick={onNewChat} className={menuButtonStyle}>
             <span className="sr-only">New Chat</span>
             <PlusIcon />
           </button>
         </Tooltip>
         {onShare ? (
           <Tooltip direction="top" className="text-center w-36" content="Share current conversation">
-            <button onClick={onShare} className={buttonHoverStyle}>
+            <button onClick={onShare} className={menuButtonStyle}>
               <span className="sr-only">Share current conversation</span>
               <HiOutlineShare />
             </button>
           </Tooltip>
         ) : null}
         <Tooltip direction="top" className="text-center w-36" content="Chat history">
-          <button onClick={onShowHistory} className={buttonHoverStyle}>
+          <button onClick={onShowHistory} className={menuButtonStyle}>
             <span className="sr-only">Chat history</span>
             <HistoryIcon />
           </button>
@@ -58,7 +58,7 @@ export const StarSearchCompactHeader = ({
           <Tooltip direction="top" className="text-center w-36" content="Close StarSearch">
             <button onClick={onClose} className="hover:text-orange-500">
               <span className="sr-only">Close StarSearch</span>
-              <XIcon />
+              <XIcon size={18} />
             </button>
           </Tooltip>
         ) : null}
