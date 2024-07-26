@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.1](https://github.com/open-sauced/app/compare/v2.47.1-beta.1...v2.48.0-beta.1) (2024-07-26)
+
+
+### 🍕 Features
+
+* MVP `OssfChart` component ([#3766](https://github.com/open-sauced/app/issues/3766)) ([d7827a3](https://github.com/open-sauced/app/commit/d7827a39cb990d103857df92291c1d22c8f22183))
+
 ## [2.47.1-beta.1](https://github.com/open-sauced/app/compare/v2.47.0...v2.47.1-beta.1) (2024-07-26)
 
 
