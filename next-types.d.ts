@@ -366,6 +366,7 @@ interface DbUser {
   readonly coupon_code: string;
   readonly receive_product_updates: boolean;
   readonly personal_workspace_id: string;
+  readonly oscr: number;
 }
 
 interface DbHighlight {
