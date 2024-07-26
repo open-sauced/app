@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.47.1-beta.1](https://github.com/open-sauced/app/compare/v2.47.0...v2.47.1-beta.1) (2024-07-26)
+
+
+### 🐛 Bug Fixes
+
+* now pinned table columns only get pinned when embedded StarSearch is closed ([#3783](https://github.com/open-sauced/app/issues/3783)) ([c1535ac](https://github.com/open-sauced/app/commit/c1535ac8222973b8614aa5d41d1925f925e90706))
+* round 'Other Contributors' to avoid overflow ([#3784](https://github.com/open-sauced/app/issues/3784)) ([62ac24d](https://github.com/open-sauced/app/commit/62ac24de665bfe80930faa7df4b4adc51a56e1ad))
+
 ## [2.47.0](https://github.com/open-sauced/app/compare/v2.46.0...v2.47.0) (2024-07-25)
 
 
