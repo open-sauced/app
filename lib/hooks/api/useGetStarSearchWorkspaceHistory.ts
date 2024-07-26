@@ -43,6 +43,10 @@ export const useGetStarSearchWorkspaceHistory = ({
     publicApiFetcher as Fetcher<PaginatedResponse, Error>
   );
 
+  useEffect(() => {
+    setHistory([]);
+  }, [workspaceId]);
+
   /**
    * When the page changes, we need to add the new mutate function to the list of mutations
    * so that we can call all of them and ensure that the history is up to date since we're
