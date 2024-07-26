@@ -5,6 +5,36 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.47.1-beta.1](https://github.com/open-sauced/app/compare/v2.47.0...v2.47.1-beta.1) (2024-07-26)
+
+
+### 🐛 Bug Fixes
+
+* now pinned table columns only get pinned when embedded StarSearch is closed ([#3783](https://github.com/open-sauced/app/issues/3783)) ([c1535ac](https://github.com/open-sauced/app/commit/c1535ac8222973b8614aa5d41d1925f925e90706))
+* round 'Other Contributors' to avoid overflow ([#3784](https://github.com/open-sauced/app/issues/3784)) ([62ac24d](https://github.com/open-sauced/app/commit/62ac24de665bfe80930faa7df4b4adc51a56e1ad))
+
+## [2.47.0](https://github.com/open-sauced/app/compare/v2.46.0...v2.47.0) (2024-07-25)
+
+
+### 🍕 Features
+
+* StarSearch history for workspaces ([#3753](https://github.com/open-sauced/app/issues/3753)) ([9fd3fb8](https://github.com/open-sauced/app/commit/9fd3fb8eee90d4e653f0790609379b2383638797))
+
+
+### 🐛 Bug Fixes
+
+* changed OpenSauced text to proper casing ([#3759](https://github.com/open-sauced/app/issues/3759)) ([dd9e5e4](https://github.com/open-sauced/app/commit/dd9e5e4ac43a35022d0b55a4feccd025e50717c2))
+* now StarSearch for Workspaces resets when changing workspaces ([#3757](https://github.com/open-sauced/app/issues/3757)) ([7183b33](https://github.com/open-sauced/app/commit/7183b3374330b07312a50a076986b7e7932afaf7))
+* now StarSearch history resets if workspace changes ([#3780](https://github.com/open-sauced/app/issues/3780)) ([26fe731](https://github.com/open-sauced/app/commit/26fe73110231612dfee6c3aed66789cc675a69d2))
+* use personal workspace for creating repository insights from non-owner workspaces ([#3763](https://github.com/open-sauced/app/issues/3763)) ([0d1ec38](https://github.com/open-sauced/app/commit/0d1ec3825dd0b8cfccd17988551a181947b742f3))
+
+## [2.47.0-beta.2](https://github.com/open-sauced/app/compare/v2.47.0-beta.1...v2.47.0-beta.2) (2024-07-25)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch history resets if workspace changes ([#3780](https://github.com/open-sauced/app/issues/3780)) ([26fe731](https://github.com/open-sauced/app/commit/26fe73110231612dfee6c3aed66789cc675a69d2))
+
 ## [2.47.0-beta.1](https://github.com/open-sauced/app/compare/v2.46.1-beta.3...v2.47.0-beta.1) (2024-07-25)
 
 

@@ -282,3 +282,12 @@ body:has([aria-hidden="false"][data-star-search-mobile]) {
 body:has([data-star-search-mobile]) .top-nav-container {
   @apply fixed;
 }
+
+/**
+  * The pinned-table-column CSS class is for our tables that have pinned columns.
+  * When embedded StarSearch is open, we want to ensure that the columns unpin so they
+  * don't leak throug the embedded StarSearch panel.
+  */
+body:not(:has([data-star-search-mobile][aria-hidden="false"])) .pinned-table-column {
+  z-index: 1;
+}
