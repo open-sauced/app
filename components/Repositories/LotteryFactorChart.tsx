@@ -69,7 +69,7 @@ export default function LotteryFactorChart({
       result.push({
         name: "Other Contributors",
         count: 0,
-        value: 100 - topFourPercentage,
+        value: Number((100 - topFourPercentage).toPrecision(2)),
         factor: "Other Contributors",
       });
     }
