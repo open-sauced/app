@@ -41,11 +41,11 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
     error: string;
   }) => {
     if (isError) return error;
-    if (!ossfData || !ossfData.totalScore) return low;
+    if (!ossfData || !ossfData.totalScore) return error;
     return ossfData.totalScore < 5 ? low : ossfData.totalScore < 8 ? med : high;
   };
 
-  const pieColor = getValueBasedOnScore({ low: "#f59e0b", med: "#2563eb", high: "#22c55e", error: "#dc2626" });
+  const pieColor = getValueBasedOnScore({ low: "#f59e0b", med: "#2563eb", high: "#22c55e", error: "#e2e8f0" });
 
   const projectStatus = getValueBasedOnScore({
     low: "might not be safe to use",
@@ -58,13 +58,13 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
     low: "It might not pass all checks in the OpenSSF software security checklist. ",
     med: "It passes almost all checks in the OpenSSF software security checklist. ",
     high: "It passes almost all checks in the OpenSSF software security checklist with a high score. ",
-    error: "No checks haven't been tested from the OpenSSF software security checklist. ",
+    error: "No checks have been tested from the OpenSSF software security checklist. ",
   });
 
   const renderCustomLabel = ({ cx, cy }: { cx: number; cy: number }) => {
     return (
       <text x={cx} y={cy} dy={-1} textAnchor="middle" className="text-lg lg:text-2xl fill-black font-semibold">
-        {ossfData?.totalScore ?? "X"}
+        {ossfData?.totalScore ?? "—"}
         <tspan className="text-xs"> / 10</tspan>
       </text>
     );
@@ -104,10 +104,7 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
                   paddingAngle={0}
                 >
                   {data.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={entry.name === "totalScore" ? pieColor : isError ? "#dc2626" : "#e2e8f0"}
-                    />
+                    <Cell key={`cell-${index}`} fill={entry.name === "totalScore" ? pieColor : "#e2e8f0"} />
                   ))}
                 </Pie>
               </PieChart>
