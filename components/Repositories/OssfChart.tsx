@@ -4,29 +4,33 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Card from "components/atoms/Card/card";
 
-// TODO: change schema to the one returned from the API once `api/#962` is implemented
-type OssfData = {
+type OssfChartProps = {
   totalScore: number | null;
   dependencyUpdateScore: number | null;
   fuzzingScore: number | null;
   maintainedScore: number | null;
-};
-
-type OssfChartProps = {
-  ossfData: OssfData | undefined;
   isLoading: boolean;
   isError: boolean;
   onLearnMoreClick?: () => void;
   className?: string;
 };
 
-export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreClick, className }: OssfChartProps) {
+export default function OssfChart({
+  totalScore,
+  dependencyUpdateScore,
+  fuzzingScore,
+  maintainedScore,
+  isLoading,
+  isError,
+  onLearnMoreClick,
+  className,
+}: OssfChartProps) {
   const data = useMemo(
     () => [
-      { name: "totalScore", value: ossfData?.totalScore ?? 0 },
-      { name: "difference", value: 10 - (ossfData?.totalScore ?? 0) },
+      { name: "totalScore", value: totalScore ?? 0 },
+      { name: "difference", value: 10 - (totalScore ?? 0) },
     ],
-    [ossfData]
+    [totalScore]
   );
 
   const getValueBasedOnScore = ({
@@ -41,8 +45,8 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
     error: string;
   }) => {
     if (isError) return error;
-    if (!ossfData || !ossfData.totalScore) return error;
-    return ossfData.totalScore < 5 ? low : ossfData.totalScore < 8 ? med : high;
+    if (!totalScore) return error;
+    return totalScore < 5 ? low : totalScore < 8 ? med : high;
   };
 
   const pieColor = getValueBasedOnScore({ low: "#f59e0b", med: "#2563eb", high: "#22c55e", error: "#e2e8f0" });
@@ -64,7 +68,7 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
   const renderCustomLabel = ({ cx, cy }: { cx: number; cy: number }) => {
     return (
       <text x={cx} y={cy} dy={-1} textAnchor="middle" className="text-lg lg:text-2xl fill-black font-semibold">
-        {ossfData?.totalScore ?? "—"}
+        {totalScore ?? "—"}
         <tspan className="text-xs"> / 10</tspan>
       </text>
     );
@@ -86,7 +90,7 @@ export default function OssfChart({ ossfData, isLoading, isError, onLearnMoreCli
         </a>
       </header>
 
-      {!isError && (isLoading || !ossfData) ? (
+      {!isError && (isLoading || !totalScore) ? ( // check if other scores are null
         <SkeletonWrapper width={300} height={100} />
       ) : (
         <section className="flex justify-between w-full gap-2 lg:flex-col xl:flex-row h-fit max-h-24 lg:max-h-full xl:max-h-24">

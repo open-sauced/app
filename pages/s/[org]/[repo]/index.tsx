@@ -42,6 +42,7 @@ import ContributorConfidenceChart from "components/Repositories/ContributorConfi
 import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
+import OssfChart from "components/Repositories/OssfChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -307,7 +308,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
           <ClientOnly>
             <div className="flex flex-col gap-8">
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
-                <div className="order-last lg:order-none lg:col-span-8 flex flex-col gap-4">
+                <div className="lg:col-span-8 flex flex-col gap-4">
                   <div className="flex gap-4 h-full flex-col lg:flex-row">
                     <ContributorConfidenceChart
                       contributorConfidence={repoStats?.contributor_confidence}
@@ -318,6 +319,14 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                           repository: repoData.full_name,
                         })
                       }
+                    />
+                    <OssfChart
+                      totalScore={repoData.ossf_scorecard_total_score}
+                      dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
+                      maintainedScore={repoData.ossf_scorecard_maintained_score}
+                      fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
+                      isLoading={false}
+                      isError={!repoData.ossf_scorecard_total_score}
                     />
                   </div>
 
@@ -337,7 +346,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   />
                 </div>
 
-                <div className="order-1 lg:order-none lg:col-span-4 flex flex-col gap-4">
+                <div className="lg:col-span-4 flex flex-col gap-4">
                   {lotteryState === "lottery" && (
                     <LotteryFactorChart
                       lotteryFactor={lotteryFactor}
