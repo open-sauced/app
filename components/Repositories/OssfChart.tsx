@@ -68,7 +68,7 @@ export default function OssfChart({
   const renderCustomLabel = ({ cx, cy }: { cx: number; cy: number }) => {
     return (
       <text x={cx} y={cy} dy={-1} textAnchor="middle" className="text-lg lg:text-2xl fill-black font-semibold">
-        {totalScore ?? "—"}
+        {totalScore ?? "-"}
         <tspan className="text-xs"> / 10</tspan>
       </text>
     );
@@ -116,7 +116,7 @@ export default function OssfChart({
           </div>
           <section className="flex flex-col gap-1 lg:text-center xl:text-start">
             <h3 className="font-medium text-sm text-slate-700">This project {projectStatus}</h3>
-            <p className="text-sm text-slate-600">
+            <p className="text-xs text-slate-600">
               {projectDescription}
               You can run the full test{" "}
               <a
