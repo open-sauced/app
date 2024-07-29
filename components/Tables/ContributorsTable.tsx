@@ -24,6 +24,7 @@ import { setQueryParams } from "lib/utils/query-params";
 import Pagination from "components/molecules/Pagination/pagination";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/shared/Button/button";
+import InfoTooltip from "components/shared/InfoTooltip";
 
 const AddToContributorInsightModal = dynamic(() => import("components/Contributors/AddToContributorInsightModal"), {
   ssr: false,
@@ -118,7 +119,12 @@ export default function ContributorsTable({
       header: "Location",
     }),
     contributorsColumnHelper.accessor("total_contributions", {
-      header: "Contributions",
+      header: () => (
+        <div className="flex gap-2 w-fit items-center">
+          <h2>Contributions</h2>
+          <InfoTooltip information="A total of PR, issue, and commit contributions" />
+        </div>
+      ),
     }),
   ];
 
@@ -211,10 +217,7 @@ export default function ContributorsTable({
         <div className="flex justify-between">
           <p>{Object.keys(selectedContributors).length} selected</p>
           {isMobile ? (
-            <>
-              <p>AYOOOOOO</p>
-              <AddToContributorInsightDrawer repository={repository} contributors={Object.keys(selectedContributors)} />
-            </>
+            <AddToContributorInsightDrawer repository={repository} contributors={Object.keys(selectedContributors)} />
           ) : (
             <Button variant="primary" onClick={() => setIsAddToContributorInsightModalOpen(true)}>
               Add to Insight
@@ -285,10 +288,13 @@ export default function ContributorsTable({
                 <TableRow key={`expanded_${row.id}`}>
                   <TableCell colSpan={row.getVisibleCells().length}>
                     <div className="flex flex-col gap-2 divide-y-2">
-                      <p className="flex justify-between font-semibold">
-                        Contributions:
+                      <div className="flex justify-between font-semibold">
+                        <div className="flex gap-2 w-fit items-center">
+                          <h2>Contributions</h2>
+                          <InfoTooltip information="A total of PR, issue, and commit contributions" />
+                        </div>
                         <span className="font-normal">{row.original.total_contributions}</span>
-                      </p>
+                      </div>
                       <p className="flex justify-between font-semibold pt-2">
                         Company:
                         <span className="font-normal">{row.original.company}</span>
