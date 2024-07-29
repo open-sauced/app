@@ -6,7 +6,7 @@ import Image from "next/image";
 import cntl from "cntl";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
-import DevCardCarousel, { DevCardCarouselProps } from "components/organisms/DevCardCarousel/dev-card-carousel";
+import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
 import { getAvatarByUsername } from "lib/utils/github";
 import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
@@ -36,7 +36,7 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
 
 interface CardProps {
   username: string;
-  cards: DevCardCarouselProps["cards"];
+  cards: DevCardProps[];
 }
 
 interface Params extends ParsedUrlQuery {
@@ -71,6 +71,7 @@ async function fetchInitialCardData(username: string): Promise<DevCardProps> {
     name: user.name || username,
     bio: user.bio,
     age: ageInDays,
+    oscr: Math.floor(user.oscr * 100),
     isLoading: true,
   };
 }
@@ -121,7 +122,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
   });
 
-  const [fullCardsData, setFullCardsData] = useState<DevCardCarouselProps["cards"]>(cards);
+  const [fullCardsData, setFullCardsData] = useState<DevCardProps[]>(cards);
   const firstCard = fullCardsData.find((card) => card.username === username);
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
