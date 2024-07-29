@@ -105,7 +105,6 @@ export default function AddToContributorInsightModal({
                   onClick={() => {
                     signIn({
                       provider: "github",
-                      options: { redirectTo: `${host}/workspaces/new?repos=${JSON.stringify([repository])}` },
                     });
                   }}
                 >
@@ -135,23 +134,24 @@ export default function AddToContributorInsightModal({
                   />
                 )}
 
-                {selectedInsight === "new" && workspacesLoading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <SingleSelect
-                    options={[
-                      ...workspaces.map(({ id, name }) => ({
-                        label: name,
-                        value: id,
-                      })),
-                    ]}
-                    value={workspaceId}
-                    placeholder="Select a workspace"
-                    onValueChange={(value) => {
-                      setWorkspaceId(value);
-                    }}
-                  />
-                )}
+                {selectedInsight === "new" &&
+                  (workspacesLoading ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <SingleSelect
+                      options={[
+                        ...workspaces.map(({ id, name }) => ({
+                          label: name,
+                          value: id,
+                        })),
+                      ]}
+                      value={workspaceId}
+                      placeholder="Select a workspace"
+                      onValueChange={(value) => {
+                        setWorkspaceId(value);
+                      }}
+                    />
+                  ))}
 
                 <Button
                   onClick={selectedInsight === "new" ? createContributorInsight : addToContributorInsight}
