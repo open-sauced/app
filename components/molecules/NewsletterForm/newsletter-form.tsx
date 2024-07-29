@@ -47,8 +47,7 @@ const NewsletterForm = () => {
 
   const handleChange = (value: string) => {
     setEmail(value);
-    const isValidEmail = validateEmail(email);
-    setIsValidEmail(!!isValidEmail);
+    setIsValidEmail(validateEmail(email));
   };
 
   useEffect(() => {
