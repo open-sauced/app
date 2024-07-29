@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.2](https://github.com/open-sauced/app/compare/v2.48.0-beta.1...v2.48.0-beta.2) (2024-07-26)
+
+
+### 🍕 Features
+
+* implement OSCR on devcards ([#3791](https://github.com/open-sauced/app/issues/3791)) ([9f2d7d2](https://github.com/open-sauced/app/commit/9f2d7d2966139278840033a0311e688d975dd0f1))
+
+## [2.48.0-beta.1](https://github.com/open-sauced/app/compare/v2.47.1-beta.1...v2.48.0-beta.1) (2024-07-26)
+
+
+### 🍕 Features
+
+* MVP `OssfChart` component ([#3766](https://github.com/open-sauced/app/issues/3766)) ([d7827a3](https://github.com/open-sauced/app/commit/d7827a39cb990d103857df92291c1d22c8f22183))
+
 ## [2.47.1-beta.1](https://github.com/open-sauced/app/compare/v2.47.0...v2.47.1-beta.1) (2024-07-26)
 
 
