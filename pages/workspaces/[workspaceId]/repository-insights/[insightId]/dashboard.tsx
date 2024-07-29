@@ -110,7 +110,10 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   // Keeping this here so we are sure the page is not private before we fetch the social card.
-  const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/insights/${insightId}`;
+  const ogImage = `${new URL(
+    `/og-images/insight/${insightId}/30`,
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+  )}`;
 
   const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
     path: `workspaces/${workspaceId}/members`,
