@@ -1,7 +1,7 @@
 export const WORKSPACE_STARSEARCH_SUGGESTIONS = [
   {
-    title: "Find experts in your contributor base",
-    prompt: "Are there any contributors that have worked with React Components in the last year?",
+    title: "Find your project maintainers",
+    prompt: "Who are the maintainers in my projects? List them per project.",
   },
   {
     title: "Discover trends in your repositories",
