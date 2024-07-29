@@ -8,6 +8,7 @@ import {
   Row,
   getExpandedRowModel,
   TableState,
+  ColumnDef,
 } from "@tanstack/react-table";
 import { FaSortDown, FaSortUp } from "react-icons/fa6";
 import { useMemo, useState } from "react";
@@ -44,21 +45,24 @@ export default function ContributorsTable({
   const isMobile = useMediaQuery("(max-width: 640px)");
 
   const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
-  const [selectedContributors, setSelectedContributors] = useState<Set<string>>(new Set([]));
+  const [selectedContributors, setSelectedContributors] = useState({});
 
   const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
-  const defaultColumns = [
+  const defaultColumns: ColumnDef<DbRepoContributor, any>[] = [
     {
       id: "selector",
-      header: "",
+      header: ({ table }) => (
+        <Checkbox
+          key={"selector_all"}
+          checked={table.getIsAllRowsSelected()}
+          onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
+        />
+      ),
       cell: ({ row }: { row: Row<DbRepoContributor> }) => (
         <Checkbox
           key={row.id}
-          onCheckedChange={(checked) => {
-            const updatedSelected = selectedContributors;
-            checked.valueOf() ? updatedSelected.add(row.original.login) : updatedSelected.delete(row.original.login);
-            setSelectedContributors(updatedSelected);
-          }}
+          checked={row.getIsSelected()}
+          onCheckedChange={(checked) => row.toggleSelected(Boolean(checked.valueOf()))}
         />
       ),
     },
@@ -105,24 +109,25 @@ export default function ContributorsTable({
     }),
   ];
 
-  const mobileColumns = [
+  const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
     {
       id: "mobileContributor",
       header: "",
       columns: [
         {
           id: "selector",
-          header: "",
+          header: ({ table }) => (
+            <Checkbox
+              key={"selector_all"}
+              checked={table.getIsAllRowsSelected()}
+              onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
+            />
+          ),
           cell: ({ row }: { row: Row<DbRepoContributor> }) => (
             <Checkbox
               key={row.id}
-              onCheckedChange={(checked) => {
-                const updatedSelected = selectedContributors;
-                checked.valueOf()
-                  ? updatedSelected.add(row.original.login)
-                  : updatedSelected.delete(row.original.login);
-                setSelectedContributors(updatedSelected);
-              }}
+              checked={row.getIsSelected()}
+              onCheckedChange={(checked) => row.toggleSelected(Boolean(checked.valueOf()))}
             />
           ),
         },
@@ -181,8 +186,10 @@ export default function ContributorsTable({
     manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
     getRowCanExpand: () => isMobile,
+    onRowSelectionChange: setSelectedContributors,
     getExpandedRowModel: getExpandedRowModel(),
-    state: { sorting },
+    getRowId: (row) => row.login,
+    state: { sorting, rowSelection: selectedContributors },
   });
 
   return (
@@ -192,41 +199,45 @@ export default function ContributorsTable({
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
-                  <button
-                    onClick={() => {
-                      const { enableSorting } = header.column.columnDef;
-                      const isAscending = Boolean(sorting.find((item) => item.id === header.id && !item.desc));
+                <TableHead key={header.id} className="font-semibold">
+                  {header.column.columnDef.enableSorting ? (
+                    <button
+                      onClick={() => {
+                        const { enableSorting } = header.column.columnDef;
+                        const isAscending = Boolean(sorting.find((item) => item.id === header.id && !item.desc));
 
-                      if (enableSorting) {
-                        setOscrSorting(isAscending ? "ASC" : "DESC");
+                        if (enableSorting) {
+                          setOscrSorting(isAscending ? "ASC" : "DESC");
 
-                        setSorting((currentState) => {
-                          // future-proof, set other column sorting to false
-                          const state = currentState
-                            .filter((item) => item.id !== header.id)
-                            .map(({ id }) => ({ id, desc: false }));
+                          setSorting((currentState) => {
+                            // future-proof, set other column sorting to false
+                            const state = currentState
+                              .filter((item) => item.id !== header.id)
+                              .map(({ id }) => ({ id, desc: false }));
 
-                          return [
-                            ...state,
-                            {
-                              id: header.id,
-                              desc: isAscending,
-                            },
-                          ];
-                        });
-                      }
-                    }}
-                    className="flex gap-2 w-fit items-center"
-                  >
-                    <h2 className="font-semibold">{header.column.columnDef.header?.toString()}</h2>
-                    {header.column.columnDef.enableSorting &&
-                      (Boolean(sorting.find((item) => item.id === header.id && !item.desc)) ? (
-                        <FaSortUp />
-                      ) : (
-                        <FaSortDown />
-                      ))}
-                  </button>
+                            return [
+                              ...state,
+                              {
+                                id: header.id,
+                                desc: isAscending,
+                              },
+                            ];
+                          });
+                        }
+                      }}
+                      className="flex gap-2 w-fit items-center"
+                    >
+                      <h2 className="font-semibold">{header.column.columnDef.header?.toString()}</h2>
+                      {header.column.columnDef.enableSorting &&
+                        (Boolean(sorting.find((item) => item.id === header.id && !item.desc)) ? (
+                          <FaSortUp />
+                        ) : (
+                          <FaSortDown />
+                        ))}
+                    </button>
+                  ) : (
+                    <>{flexRender(header.column.columnDef.header, header.getContext())}</>
+                  )}
                 </TableHead>
               ))}
             </TableRow>
