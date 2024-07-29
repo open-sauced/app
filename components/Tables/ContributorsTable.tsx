@@ -20,6 +20,7 @@ import { OscrPill } from "components/Contributors/OscrPill";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { setQueryParams } from "lib/utils/query-params";
 import Pagination from "components/molecules/Pagination/pagination";
+import Checkbox from "components/atoms/Checkbox/checkbox";
 
 type OrderDirection = "ASC" | "DESC";
 
@@ -43,9 +44,24 @@ export default function ContributorsTable({
   const isMobile = useMediaQuery("(max-width: 640px)");
 
   const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
+  const [selectedContributors, setSelectedContributors] = useState<Set<string>>(new Set([]));
 
   const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
   const defaultColumns = [
+    {
+      id: "selector",
+      header: "",
+      cell: ({ row }: { row: Row<DbRepoContributor> }) => (
+        <Checkbox
+          key={row.id}
+          onCheckedChange={(checked) => {
+            const updatedSelected = selectedContributors;
+            checked.valueOf() ? updatedSelected.add(row.original.login) : updatedSelected.delete(row.original.login);
+            setSelectedContributors(updatedSelected);
+          }}
+        />
+      ),
+    },
     contributorsColumnHelper.accessor("login", {
       header: "Contributor",
       cell: (info) => (
@@ -95,17 +111,20 @@ export default function ContributorsTable({
       header: "",
       columns: [
         {
-          id: "expand",
+          id: "selector",
           header: "",
-          cell: ({ row }: { row: Row<DbRepoContributor> }) => {
-            return (
-              row.getCanExpand() && (
-                <button onClick={row.getToggleExpandedHandler()}>
-                  {row.getIsExpanded() ? <BsArrowsCollapse /> : <BsArrowsExpand />}
-                </button>
-              )
-            );
-          },
+          cell: ({ row }: { row: Row<DbRepoContributor> }) => (
+            <Checkbox
+              key={row.id}
+              onCheckedChange={(checked) => {
+                const updatedSelected = selectedContributors;
+                checked.valueOf()
+                  ? updatedSelected.add(row.original.login)
+                  : updatedSelected.delete(row.original.login);
+                setSelectedContributors(updatedSelected);
+              }}
+            />
+          ),
         },
         contributorsColumnHelper.accessor("login", {
           header: "Contributor",
@@ -138,6 +157,19 @@ export default function ContributorsTable({
           enableSorting: true,
           cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
         }),
+        {
+          id: "expand",
+          header: "",
+          cell: ({ row }: { row: Row<DbRepoContributor> }) => {
+            return (
+              row.getCanExpand() && (
+                <button onClick={row.getToggleExpandedHandler()}>
+                  {row.getIsExpanded() ? <BsArrowsCollapse /> : <BsArrowsExpand />}
+                </button>
+              )
+            );
+          },
+        },
       ],
     },
   ];
