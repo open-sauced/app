@@ -191,7 +191,6 @@ const getCommonPinningStyles = (column: Column<DbRepoPREvents>): CSSProperties =
     right: isPinned === "right" ? `${column.getAfter("right")}px` : undefined,
     position: isPinned ? "sticky" : "relative",
     width: column.getSize(),
-    zIndex: isPinned ? 1 : 0,
   };
 };
 
@@ -235,7 +234,11 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
                   <TableHead
                     key={header.id}
                     style={{ ...getCommonPinningStyles(header.column), width: header.column.getSize() }}
-                    className={clsx(header.column.getIsPinned(), "bg-light-slate-3")}
+                    className={clsx(
+                      header.column.getIsPinned(),
+                      "bg-light-slate-3",
+                      header.column.getIsPinned() && "pinned-table-column"
+                    )}
                   >
                     {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     {enableSorting ? (
@@ -291,7 +294,11 @@ export const WorkspacePullRequestTable = ({ data, meta, isLoading }: WorkspacePu
                     <TableCell
                       key={cell.id}
                       style={{ ...getCommonPinningStyles(cell.column), width: cell.column.getSize() }}
-                      className={clsx(cell.column.getIsPinned(), "bg-white")}
+                      className={clsx(
+                        cell.column.getIsPinned(),
+                        "bg-white",
+                        cell.column.getIsPinned() && "pinned-table-column"
+                      )}
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
