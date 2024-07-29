@@ -211,6 +211,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
             <div className="flex flex-col gap-8 px-2 py-4 lg:p-8">
               <Activity repositories={[repoData.id]} />
               <ContributorsTable
+                repository={repoData.full_name}
                 contributors={contributors}
                 meta={meta}
                 isLoading={isContributorsLoading}

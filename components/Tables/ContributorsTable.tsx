@@ -13,6 +13,7 @@ import {
 import { FaSortDown, FaSortUp } from "react-icons/fa6";
 import { useMemo, useState } from "react";
 import { BsArrowsCollapse, BsArrowsExpand } from "react-icons/bs";
+import dynamic from "next/dynamic";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -24,9 +25,14 @@ import Pagination from "components/molecules/Pagination/pagination";
 import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/shared/Button/button";
 
+const AddToContributorInsightModal = dynamic(() => import("components/Contributors/AddToContributorInsightModal"), {
+  ssr: false,
+});
+
 type OrderDirection = "ASC" | "DESC";
 
 type ContributorsTableProps = {
+  repository: string;
   contributors: DbRepoContributor[] | undefined;
   meta: Meta | null;
   isLoading: boolean;
@@ -36,6 +42,7 @@ type ContributorsTableProps = {
 };
 
 export default function ContributorsTable({
+  repository,
   contributors,
   meta,
   oscrSorting,
@@ -45,6 +52,7 @@ export default function ContributorsTable({
 }: ContributorsTableProps) {
   const isMobile = useMediaQuery("(max-width: 640px)");
 
+  const [isAddToContributorInsightModalOpen, setIsAddToContributorInsightModalOpen] = useState(false);
   const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
   const [selectedContributors, setSelectedContributors] = useState<Record<string, boolean>>({});
 
@@ -198,7 +206,9 @@ export default function ContributorsTable({
       {Object.keys(selectedContributors).length > 0 && (
         <div className="flex justify-between">
           <p>{Object.keys(selectedContributors).length} selected</p>
-          <Button variant="primary">Add to Insight</Button>
+          <Button variant="primary" onClick={() => setIsAddToContributorInsightModalOpen(true)}>
+            Add to Insight
+          </Button>
         </div>
       )}
 
@@ -301,6 +311,13 @@ export default function ContributorsTable({
           />
         </div>
       )}
+
+      <AddToContributorInsightModal
+        repository={repository}
+        contributors={Object.keys(selectedContributors)}
+        isOpen={isAddToContributorInsightModalOpen}
+        onCloseModal={() => setIsAddToContributorInsightModalOpen(false)}
+      />
     </div>
   );
 }
