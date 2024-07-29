@@ -15,15 +15,11 @@ import { Drawer } from "components/shared/Drawer";
 type AddToContributorInsightDrawerProps = {
   repository: string;
   contributors: string[];
-  isOpen: boolean;
-  onCloseModal: () => void;
 };
 
 export default function AddToContributorInsightDrawer({
   repository,
   contributors,
-  isOpen,
-  onCloseModal,
 }: AddToContributorInsightDrawerProps) {
   const { toast } = useToast();
   const router = useRouter();
@@ -64,7 +60,6 @@ export default function AddToContributorInsightDrawer({
       toast({ description: `Error adding contributors to the insight. Please try again`, variant: "danger" });
     } else {
       toast({ description: `Added contributors successfully`, variant: "success" });
-      onCloseModal();
     }
   };
 
@@ -80,8 +75,8 @@ export default function AddToContributorInsightDrawer({
 
   return (
     <Drawer
-      title="Add repository to Workspace"
-      description="Create a new workspace or add to an existing one."
+      title="Add contributors to insight"
+      description="Create a new contributor insight or add to an existing one."
       showCloseButton
       trigger={
         <Button variant="primary" className="shrink-0 items-center gap-3 w-fit">
@@ -89,59 +84,58 @@ export default function AddToContributorInsightDrawer({
         </Button>
       }
     >
-      <div className="flex flex-col gap-4 w-[32rem] h-full px-8 py-4">
-        {!user ? (
-          <div className="flex flex-col gap-4 text-center">
-            <img
-              src="/assets/workspace_overview.png"
-              alt="Workspace screenshot from documentation"
-              className="border-2 border-light-orange-9 shadow-md rounded-lg"
-            />
-            <Text>
-              Keep track of repositories and contributors easily with our new feature
-              <span className="font-semibold"> Workspaces!</span> If you&apos;ve used OpenSauced before, your insights
-              and lists are now part of your personal workspace.
-            </Text>
-            <p className="font-medium text-light-orange-10">
-              Create a new contributor insight on a workspace and explore open source like never before!
-            </p>
-            <Button
-              variant="primary"
-              className="w-fit gap-2 self-center"
-              onClick={() => {
-                signIn({
-                  provider: "github",
-                  options: { redirectTo: `${host}/workspaces/new?repos=${JSON.stringify([repository])}` },
-                });
+      {!user ? (
+        <div className="flex flex-col gap-4 text-center">
+          <img
+            src="/assets/workspace_overview.png"
+            alt="Workspace screenshot from documentation"
+            className="border-2 border-light-orange-9 shadow-md rounded-lg"
+          />
+          <Text>
+            Keep track of repositories and contributors easily with our new feature
+            <span className="font-semibold"> Workspaces!</span> If you&apos;ve used OpenSauced before, your insights and
+            lists are now part of your personal workspace.
+          </Text>
+          <p className="font-medium text-light-orange-10">
+            Create a new contributor insight on a workspace and explore open source like never before!
+          </p>
+          <Button
+            variant="primary"
+            className="w-fit gap-2 self-center"
+            onClick={() => {
+              signIn({
+                provider: "github",
+                options: { redirectTo: `${host}/workspaces/new?repos=${JSON.stringify([repository])}` },
+              });
+            }}
+          >
+            <BsGithub className="w-5 h-5" />
+            Connect with GitHub
+          </Button>
+        </div>
+      ) : (
+        <>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <SingleSelect
+              options={[
+                { label: "Create new insight...", value: "new" },
+                ...contributorInsights.map(({ id, name }) => ({
+                  label: name,
+                  value: id,
+                })),
+              ]}
+              value={selectedInsight ?? "new"}
+              placeholder="Select a workspace"
+              onValueChange={(value) => {
+                setSelectedInsight(value);
               }}
-            >
-              <BsGithub className="w-5 h-5" />
-              Connect with GitHub
-            </Button>
-          </div>
-        ) : (
-          <>
-            <p>Create a new contributor insight or add to an existing one.</p>
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <SingleSelect
-                options={[
-                  { label: "Create new insight...", value: "new" },
-                  ...contributorInsights.map(({ id, name }) => ({
-                    label: name,
-                    value: id,
-                  })),
-                ]}
-                value={selectedInsight ?? "new"}
-                placeholder="Select a workspace"
-                onValueChange={(value) => {
-                  setSelectedInsight(value);
-                }}
-              />
-            )}
+            />
+          )}
 
-            {selectedInsight === "new" && workspacesLoading ? (
+          {selectedInsight === "new" &&
+            (workspacesLoading ? (
               <p>Loading...</p>
             ) : (
               <SingleSelect
@@ -157,18 +151,17 @@ export default function AddToContributorInsightDrawer({
                   setWorkspaceId(value);
                 }}
               />
-            )}
+            ))}
 
-            <Button
-              onClick={selectedInsight === "new" ? createContributorInsight : addToContributorInsight}
-              variant="primary"
-              className="w-fit self-end"
-            >
-              Confirm
-            </Button>
-          </>
-        )}
-      </div>
+          <Button
+            onClick={selectedInsight === "new" ? createContributorInsight : addToContributorInsight}
+            variant="primary"
+            className="w-fit self-end"
+          >
+            Confirm
+          </Button>
+        </>
+      )}
     </Drawer>
   );
 }

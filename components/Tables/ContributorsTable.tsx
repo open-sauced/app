@@ -29,6 +29,10 @@ const AddToContributorInsightModal = dynamic(() => import("components/Contributo
   ssr: false,
 });
 
+const AddToContributorInsightDrawer = dynamic(() => import("components/Contributors/AddToContributorInsightDrawer"), {
+  ssr: false,
+});
+
 type OrderDirection = "ASC" | "DESC";
 
 type ContributorsTableProps = {
@@ -206,9 +210,16 @@ export default function ContributorsTable({
       {Object.keys(selectedContributors).length > 0 && (
         <div className="flex justify-between">
           <p>{Object.keys(selectedContributors).length} selected</p>
-          <Button variant="primary" onClick={() => setIsAddToContributorInsightModalOpen(true)}>
-            Add to Insight
-          </Button>
+          {isMobile ? (
+            <>
+              <p>AYOOOOOO</p>
+              <AddToContributorInsightDrawer repository={repository} contributors={Object.keys(selectedContributors)} />
+            </>
+          ) : (
+            <Button variant="primary" onClick={() => setIsAddToContributorInsightModalOpen(true)}>
+              Add to Insight
+            </Button>
+          )}
         </div>
       )}
 
