@@ -22,6 +22,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { setQueryParams } from "lib/utils/query-params";
 import Pagination from "components/molecules/Pagination/pagination";
 import Checkbox from "components/atoms/Checkbox/checkbox";
+import Button from "components/shared/Button/button";
 
 type OrderDirection = "ASC" | "DESC";
 
@@ -45,7 +46,7 @@ export default function ContributorsTable({
   const isMobile = useMediaQuery("(max-width: 640px)");
 
   const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
-  const [selectedContributors, setSelectedContributors] = useState({});
+  const [selectedContributors, setSelectedContributors] = useState<Record<string, boolean>>({});
 
   const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
   const defaultColumns: ColumnDef<DbRepoContributor, any>[] = [
@@ -194,6 +195,13 @@ export default function ContributorsTable({
 
   return (
     <div className="flex flex-col gap-4">
+      {Object.keys(selectedContributors).length > 0 && (
+        <div className="flex justify-between">
+          <p>{Object.keys(selectedContributors).length} selected</p>
+          <Button variant="primary">Add to Insight</Button>
+        </div>
+      )}
+
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
