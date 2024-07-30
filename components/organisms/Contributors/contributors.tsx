@@ -39,6 +39,8 @@ const Contributors = ({
   defaultLayout = "list",
   personalWorkspaceId,
 }: ContributorProps): JSX.Element => {
+  const { userId } = useSupabaseAuth();
+  const loggedIn = Boolean(userId);
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
@@ -196,12 +198,18 @@ const Contributors = ({
           {!isLoading &&
             !isError &&
             data.map((contributor, index) => (
-              <ContributorCard key={index} contributor={contributor} topic={topic} repositories={repositories} />
+              <ContributorCard
+                key={index}
+                contributor={contributor}
+                topic={topic}
+                repositories={repositories}
+                showOscr={loggedIn}
+              />
             ))}
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} />
+          <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} showOscr={false} />
           {selectedContributors.length > 0 && (
             <div className="border px-4 py-2 flex justify-between items-center ">
               <div className="text-slate-600">{selectedContributors.length} Contributors selected</div>
@@ -234,6 +242,8 @@ const Contributors = ({
               topic={topic}
               contributors={data}
               selectedContributors={selectedContributors}
+              loggedIn={loggedIn}
+              showOscr={false}
             ></ContributorTable>
           </ClientOnly>
         </div>
