@@ -16,7 +16,7 @@ import { BsArrowsCollapse, BsArrowsExpand } from "react-icons/bs";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { LineChart, ResponsiveContainer } from "recharts";
+import { Line, LineChart, ResponsiveContainer } from "recharts";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -29,7 +29,8 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/shared/Button/button";
 import InfoTooltip from "components/shared/InfoTooltip";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
-import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
+import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
+import { getDailyPullRequestsHistogramToDays } from "lib/utils/repo-page-utils";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 const AddToContributorInsightModal = dynamic(() => import("components/Contributors/AddToContributorInsightModal"), {
@@ -52,12 +53,20 @@ type ContributorsTableProps = {
 };
 
 // TODO: silo into new component file?
-function Sparkline({ login, range }: { login: string; range: string | number }) {
-  const { data: prData } = usePullRequestsHistogram({ contributor: login, range: Number(range ?? "30"), width: 1 });
+function Sparkline({ repository, login, range }: { repository: string; login: string; range: number }) {
+  const { data: stats, isLoading } = useFetchMetricStats({
+    variant: "prs",
+    repository,
+    range,
+    contributor: login,
+  });
 
+  const dailyData = getDailyPullRequestsHistogramToDays({ stats, range });
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <LineChart />
+    <ResponsiveContainer width="100%" height={220}>
+      <LineChart width={200} height={10} data={dailyData}>
+        <Line type="monotone" dataKey="contributor_associated_prs" stroke="#ea580c" strokeWidth={2} dot={false} />
+      </LineChart>
     </ResponsiveContainer>
   );
 }
@@ -144,11 +153,10 @@ export default function ContributorsTable({
         </div>
       ),
     }),
-    {
-      id: "last30days",
+    contributorsColumnHelper.display({
       header: "Last 30 Days",
-      cell: ({ row }) => <Sparkline login={row.original.login} range={range} />,
-    },
+      cell: ({ row }) => <Sparkline repository={repository} login={row.original.login} range={range} />,
+    }),
   ];
 
   const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
@@ -319,7 +327,7 @@ export default function ContributorsTable({
                 <>
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="w-fit max-w-xl">
+                      <TableCell key={cell.id} className="w-fit max-w-xl border border-black">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}
@@ -343,10 +351,10 @@ export default function ContributorsTable({
                             Location:
                             <span className="font-normal">{row.original.location}</span>
                           </p>
-                          <p className="flex justify-between font-semibold pt-2">
-                            Last 30 Days:
-                            {renderSparkline({ login: row.original.login })}
-                          </p>
+                          <div className="flex justify-between font-semibold pt-2">
+                            <p>Last 30 Days:</p>
+                            <Sparkline repository={repository} login={row.original.login} range={range} />
+                          </div>
                         </div>
                       </TableCell>
                     </TableRow>

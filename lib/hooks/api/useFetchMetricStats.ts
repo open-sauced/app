@@ -6,6 +6,7 @@ type UseFetchMetricStatsParams = {
   variant: "stars" | "forks" | "contributors" | "prs" | "issues"; // TODO: add other MetricCard types
   range: number;
   orderDirection?: "ASC" | "DESC";
+  contributor?: string;
 };
 
 export type StatsType = {
@@ -17,13 +18,21 @@ export type StatsType = {
   closed_issues?: number;
   active_prs?: number;
   accepted_prs?: number;
+  contributor_associated_prs?: number;
 };
 
-export function useFetchMetricStats({ repository, variant, range, orderDirection = "ASC" }: UseFetchMetricStatsParams) {
+export function useFetchMetricStats({
+  repository,
+  variant,
+  range,
+  orderDirection = "ASC",
+  contributor = "",
+}: UseFetchMetricStatsParams) {
   const query = new URLSearchParams();
   query.set("repo", repository);
   query.set("range", range.toString());
   query.set("orderDirection", orderDirection);
+  query.set("contributor", contributor);
 
   const endpoint = () => {
     if (typeof window === "undefined") {
