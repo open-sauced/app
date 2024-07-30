@@ -32,11 +32,11 @@ export default function AddToContributorInsightDrawer({
   const [selectedInsight, setSelectedInsight] = useState("new");
 
   const [host, setHost] = useState("");
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setHost(window.location.origin as string);
-    }
-  }, []);
+  const hasMounted = useHasMounted();
+
+  if (hasMounted) {
+    setHost(window.location.origin);
+  }
 
   const addToContributorInsight = async () => {
     posthog.capture(`Repo Pages: add to contributor insight`, {
