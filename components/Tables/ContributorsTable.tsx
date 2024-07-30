@@ -17,6 +17,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
+import Skeleton from "react-loading-skeleton";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -62,7 +63,9 @@ function Sparkline({ repository, login, range }: { repository: string; login: st
   });
 
   const dailyData = useMemo(() => getDailyPullRequestsHistogramToDays({ stats, range }), [stats, range]);
-  return (
+  return isLoading ? (
+    <Skeleton width="100%" />
+  ) : (
     <ResponsiveContainer width="100%" height={50}>
       <LineChart data={dailyData}>
         <Line type="monotone" dataKey="prs_count" stroke="#ea580c" strokeWidth={2} dot={false} />
@@ -330,7 +333,10 @@ export default function ContributorsTable({
                 <>
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="w-fit max-w-lg">
+                      <TableCell
+                        key={cell.id}
+                        className={`w-fit max-w-lg ${row.getIsExpanded() && "text-orange-600 font-semibold"}`}
+                      >
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}
