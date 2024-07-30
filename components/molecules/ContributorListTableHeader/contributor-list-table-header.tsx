@@ -8,9 +8,14 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 interface ContributorListTableHeadersProps {
   selected?: boolean;
   handleOnSelectAllContributor?: (checked: boolean) => void;
+  showOscr?: boolean;
 }
 
-const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }: ContributorListTableHeadersProps) => {
+const ContributorListTableHeaders = ({
+  selected,
+  handleOnSelectAllContributor,
+  showOscr = false,
+}: ContributorListTableHeadersProps) => {
   const router = useRouter();
   const { range } = router.query;
 
@@ -43,19 +48,22 @@ const ContributorListTableHeaders = ({ selected, handleOnSelectAllContributor }:
           <TableTitle>Contributor</TableTitle>
         </div>
 
-        <div className={clsx("flex-1 lg:max-w-[6.25rem]  ")}>
+        {showOscr ? (
+          <div className={clsx("flex-1 lg:flex justify-center lg:max-w-[5rem]")}>
+            <TableTitle>Rating</TableTitle>
+          </div>
+        ) : null}
+
+        <div className={clsx("flex-1 hidden lg:flex lg:max-w-[6.25rem]  ")}>
           <TableTitle>Repositories</TableTitle>
         </div>
         <div className={clsx("flex-1 lg:max-w-[8.1rem]  ")}>
           <TableTitle>Last Contributed</TableTitle>
         </div>
-        <div className={clsx(" flex flex-1 justify-center    max-w-[7.5rem]")}>
+        <div className={clsx("hidden lg:flex flex-1 justify-center lg:max-w-[7.5rem]")}>
           <TableTitle>Most Used Languages</TableTitle>
         </div>
 
-        <div className={clsx("flex-1 hidden  lg:flex justify-center lg:max-w-[5rem]")}>
-          <TableTitle>Time zone</TableTitle>
-        </div>
         <div className={clsx("flex-1 hidden lg:flex lg:max-w-fit")}>
           <TableTitle>Contributions</TableTitle>
         </div>

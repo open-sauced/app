@@ -23,6 +23,6 @@ jobs:
           body: |
             Thanks for the issue, our team will look into it as soon as possible! If you would like to work on this issue, please wait for us to decide if it's ready. The issue will be ready to work on once we remove the "needs triage" label.
 
-            To claim an issue that does not have the "needs triage" label, please leave a comment that says ".take". If you have any questions, please reach out to us on [Discord](https://discord.gg/U2peSNf23P) or follow up on the issue itself.
+            To claim an issue that does not have the "needs triage" label, please leave a comment that says ".take". If you have any questions, please comment on this issue.
 
             For full info on how to contribute, please check out our [contributors guide](https://docs.opensauced.pizza/contributing/introduction-to-contributing/).

@@ -20,8 +20,15 @@ import { setQueryParams } from "lib/utils/query-params";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { SubTabsList } from "components/TabList/tab-list";
+import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
+const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"), {
+  ssr: false,
+});
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -36,18 +43,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     pathValidator: () => true,
   });
 
-  const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
-    path: `workspaces/${workspaceId}/members`,
-    bearerToken,
-    pathValidator: () => true,
-  });
-
-  const userId = Number(session?.user.user_metadata.sub);
-
-  const isOwner = !!(workspaceMembers?.data || []).find(
-    (member) => member.role === "owner" && member.user_id === userId
-  );
-
   if (error) {
     deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
 
@@ -60,18 +55,35 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
-  return { props: { workspace: data, overLimit: !!data?.exceeds_upgrade_limits, isOwner } };
+  return {
+    props: {
+      workspace: data,
+      overLimit: !!data?.exceeds_upgrade_limits,
+    },
+  };
 };
 
 interface WorkspaceDashboardProps {
   workspace: Workspace;
-  isOwner: boolean;
   overLimit: boolean;
 }
 
 type OrderDirection = "ASC" | "DESC";
 
-const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashboardProps) => {
+const WorkspaceActivityPage = ({ workspace, overLimit }: WorkspaceDashboardProps) => {
+  const { sessionToken, signIn, userId } = useSupabaseAuth();
+  const {
+    data: workspaceMembers = [],
+    isLoading: isLoadingMembers,
+    isError: isMembersError,
+  } = useWorkspaceMembers({ workspaceId: workspace.id, limit: 1000 });
+  const workspaceMember =
+    !isLoadingMembers && !isMembersError
+      ? (workspaceMembers || []).find((member) => member.user_id === Number(userId))
+      : null;
+  const isOwner = workspaceMember?.role === "owner";
+  const isEditor = isOwner || workspaceMember?.role === "editor";
+
   const router = useRouter();
   const {
     limit = 10,
@@ -106,6 +118,7 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
 
   const showBanner = isOwner && overLimit;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
@@ -117,46 +130,65 @@ const WorkspaceActivityPage = ({ workspace, isOwner, overLimit }: WorkspaceDashb
           ) : null
         }
       >
-        <WorkspaceHeader workspace={workspace} />
-        <div className="grid sm:flex gap-4 pt-3 border-b">
-          <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
-        </div>
-        <div className="mt-6 grid gap-6">
-          <div className="grid md:flex justify-between gap-2 md:gap-4">
-            <SubTabsList
-              label="Activity pages"
-              textSize="small"
-              tabList={[
-                { name: "Pull Requests", path: "activity" },
-                { name: "Issues", path: "issues" },
-              ]}
-              selectedTab={"pull requests"}
-              pageId={`/workspaces/${workspace.id}`}
-            />
-            <div className="flex justify-end items-center gap-4">
-              <TrackedRepositoryFilter
-                options={filterOptions}
-                handleSelect={(selected: OptionKeys[]) => {
-                  setFilteredRepositories(selected);
-                  setQueryParams({ page: "1" });
-                }}
-              />
-              <DayRangePicker />
-              <LimitPicker />
-            </div>
+        <div className="px-4 py-8 lg:px-16 lg:py-12">
+          <WorkspaceHeader workspace={workspace} />
+          <div className="grid sm:flex gap-4 pt-3 border-b">
+            <WorkspacesTabList workspaceId={workspace.id} selectedTab={"activity"} />
           </div>
-          <ClientOnly>
-            <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />
-          </ClientOnly>
+          <div className="mt-6 grid gap-6">
+            <div className="grid md:flex gap-2 md:gap-4 w-full items-center mb-2">
+              <div className="flex items-center justify-between w-full md:w-fit">
+                <SubTabsList
+                  label="Activity pages"
+                  textSize="small"
+                  tabList={[
+                    { name: "Pull Requests", path: "activity" },
+                    { name: "Issues", path: "issues" },
+                  ]}
+                  selectedTab={"pull requests"}
+                  pageId={`/workspaces/${workspace.id}`}
+                />
+                <ClientOnly>{isMobile ? <DayRangePicker /> : null}</ClientOnly>
+              </div>
+              <div className="flex items-center justify-end gap-2 flex-wrap w-full">
+                <TrackedRepositoryFilter
+                  options={filterOptions}
+                  handleSelect={(selected: OptionKeys[]) => {
+                    setFilteredRepositories(selected);
+                    setQueryParams({ page: "1" });
+                  }}
+                />
+                <ClientOnly>{isMobile ? <DayRangePicker /> : null}</ClientOnly>
+                <LimitPicker />
+              </div>
+            </div>
+            <ClientOnly>
+              <WorkspacePullRequestTable isLoading={isLoading} data={pullRequests} meta={meta} />
+            </ClientOnly>
+          </div>
         </div>
-        <InsightUpgradeModal
-          workspaceId={workspace.id}
-          variant="contributors"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={10}
-        />
       </WorkspaceLayout>
+      <ClientOnly>
+        <StarSearchEmbed
+          userId={userId}
+          isEditor={isEditor}
+          bearerToken={sessionToken}
+          suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
+          isMobile={isMobile}
+          // TODO: implement once we have shared chats in workspaces
+          sharedChatId={null}
+          tagline="Ask anything about your workspace"
+          workspaceId={workspace.id}
+          signInHandler={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}
+        />
+      </ClientOnly>
+      <InsightUpgradeModal
+        workspaceId={workspace.id}
+        variant="contributors"
+        isOpen={isInsightUpgradeModalOpen}
+        onClose={() => setIsInsightUpgradeModalOpen(false)}
+        overLimit={10}
+      />
     </>
   );
 };

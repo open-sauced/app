@@ -9,9 +9,10 @@ interface CardLineChartProps {
   contributor: string;
   repoIds?: number[];
   range?: number;
+  repo?: string;
 }
 
-const CardLineChart: React.FC<CardLineChartProps> = ({ className, contributor, repoIds = [], range = 30 }) => {
+const CardLineChart: React.FC<CardLineChartProps> = ({ className, contributor, repoIds = [], range = 30, repo }) => {
   const lineChart = {
     xAxis: {
       type: "category",
@@ -61,6 +62,7 @@ const CardLineChart: React.FC<CardLineChartProps> = ({ className, contributor, r
     width: 1,
     contributor,
     direction: "ASC",
+    repo,
   });
 
   const chartData = getPullRequestsHistogramToDays(histogramData, Number(range));

@@ -36,6 +36,9 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useToast } from "lib/hooks/useToast";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { DayRangePicker } from "components/shared/DayRangePicker";
+import IssueCommentsTable from "components/Profiles/IssueCommentsTable/issue-comments-table";
+import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
+import { SubTabsList } from "components/TabList/tab-list";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
@@ -59,8 +62,8 @@ interface QueryParams {
 }
 
 const tabs: Record<TabKey, string> = {
-  highlights: "Highlights",
   contributions: "Contributions",
+  highlights: "Highlights",
   recommendations: "Recommendations",
 };
 
@@ -90,6 +93,7 @@ const ContributorProfileTab = ({
   const [showSocialLinks, setShowSocialLinks] = useState(false);
   const { toast } = useToast();
   const posthog = usePostHog();
+  const [selectedRepo, setSelectedRepo] = useState("");
 
   const { data: highlights, isError, isLoading, mutate, meta, setPage } = useFetchUserHighlights(login || "");
   const { data: emojis } = useFetchAllEmojis();
@@ -99,6 +103,8 @@ const ContributorProfileTab = ({
 
   const hasHighlights = highlights ? highlights.length > 0 : false;
   const [inputVisible, setInputVisible] = useState(false);
+
+  const { showPRs, showIssueComments, selected, setSelected } = useContributionsFilter();
 
   function onTabChange(value: string) {
     const tabValue = value as TabKey;
@@ -125,7 +131,7 @@ const ContributorProfileTab = ({
         profile: login,
       });
 
-      copyToClipboard(`${new URL(`/user/${login}`, location.origin)}`).then(() => {
+      copyToClipboard(`${new URL(`/u/${login}`, location.origin)}`).then(() => {
         toast({
           title: "Copied to clipboard",
           description: "Share this link with your friend to invite them to OpenSauced!",
@@ -215,7 +221,7 @@ const ContributorProfileTab = ({
                 className="max-md:w-full md:w-40 flex justify-center"
                 variant="primary"
               >
-                Invite to opensauced
+                Invite to OpenSauced
               </Button>
             )}
 
@@ -259,7 +265,7 @@ const ContributorProfileTab = ({
                 onClick={() =>
                   signIn({
                     provider: "github",
-                    options: { redirectTo: `${window.location.origin}/user/${login}` },
+                    options: { redirectTo: `${window.location.origin}/u/${login}` },
                   })
                 }
                 className="max-md:w-full md:w-40 flex justify-center"
@@ -402,19 +408,49 @@ const ContributorProfileTab = ({
               </div>
             </div>
             <div className="mt-2 h-36">
-              <CardLineChart contributor={githubName} range={Number(range)} className="!h-36" />
+              <CardLineChart contributor={githubName} range={Number(range)} className="!h-36" repo={selectedRepo} />
             </div>
             <div>
-              <CardRepoList limit={7} repoList={repoList} />
-            </div>
-            <div className="mt-6">
-              <PullRequestTable
-                limit={15}
-                contributor={githubName}
-                topic={"*"}
-                repositories={undefined}
-                range={range}
+              <CardRepoList
+                limit={7}
+                repoList={repoList}
+                onSelect={(repo) => setSelectedRepo(repo)}
+                showCursor={true}
               />
+            </div>
+            <div className="mt-6 flex flex-col">
+              <div className="pb-2">
+                <SubTabsList
+                  label="Contributions"
+                  textSize="small"
+                  tabList={contributionsOptions}
+                  selectedTab={selected.toLowerCase()}
+                  onSelect={(e) => setSelected(e.name)}
+                />
+              </div>
+
+              {showPRs && (
+                <div className="pt-2 min-h-[275px] md:min-h-[550px]">
+                  <PullRequestTable
+                    limit={15}
+                    contributor={githubName}
+                    topic={"*"}
+                    repositories={undefined}
+                    range={range}
+                    repoFilter={selectedRepo}
+                  />
+                </div>
+              )}
+              {showIssueComments && (
+                <div className="pt-2 min-h-[275px] md:min-h-[550px]">
+                  <IssueCommentsTable
+                    contributor={githubName}
+                    limit={15}
+                    range={Number(range ?? 30)}
+                    repoFilter={selectedRepo}
+                  />
+                </div>
+              )}
             </div>
             <div className="mt-8 text-sm text-light-slate-9">
               <p>The data for these contributions is from publicly available open source projects on GitHub.</p>

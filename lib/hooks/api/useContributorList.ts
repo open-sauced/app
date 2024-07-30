@@ -2,14 +2,24 @@ import useSWR, { Fetcher } from "swr";
 import { useState } from "react";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
-export function convertToContributors(rawContributors: DBListContributor[] = []): DbPRContributor[] {
+export function convertToContributors({
+  rawContributors = [],
+  username,
+  oscrEnabled,
+}: {
+  rawContributors: DBListContributor[];
+  username: string;
+  oscrEnabled: boolean;
+}): DbPRContributor[] {
   const contributors = rawContributors
     ? rawContributors.map((contributor) => {
+        const returnOscr = oscrEnabled || contributor.username === username;
         return {
           author_login: contributor.login,
           username: contributor.username,
           updated_at: contributor.created_at,
           user_id: contributor.id,
+          oscr: returnOscr ? contributor.oscr : undefined,
         };
       })
     : [];
@@ -18,12 +28,16 @@ export function convertToContributors(rawContributors: DBListContributor[] = [])
 }
 
 export const useContributorsList = ({
+  workspaceId,
   listId,
   initialData,
   initialPage = 1,
   defaultLimit = 10,
   defaultRange = "30",
+  showOscr = false,
+  username,
 }: {
+  workspaceId: string | undefined;
   listId: string | undefined;
   initialData?: {
     data: DbPRContributor[];
@@ -32,6 +46,8 @@ export const useContributorsList = ({
   initialPage?: number;
   defaultLimit?: number;
   defaultRange?: string;
+  showOscr?: boolean;
+  username: string;
 }) => {
   const [page, setPage] = useState(initialPage);
 
@@ -41,13 +57,14 @@ export const useContributorsList = ({
   query.append("range", defaultRange ?? "30");
 
   const { data, error, mutate } = useSWR<any>(
-    listId ? `lists/${listId}/contributors?${query}` : null,
+    listId ? (workspaceId ? `workspaces/${workspaceId}/userLists/${listId}/contributors?${query}` : null) : null,
     publicApiFetcher as Fetcher<PagedData<DBListContributor>, Error>,
     {
       fallbackData: initialData,
     }
   );
-  const contributors = convertToContributors(data?.data);
+
+  const contributors = convertToContributors({ rawContributors: data?.data, username, oscrEnabled: showOscr });
 
   return {
     setPage,

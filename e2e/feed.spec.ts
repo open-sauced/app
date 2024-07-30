@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
-test("Loads home page (logged out user)", async ({ page }) => {
-  await page.goto("/");
+test("Loads feed page (logged out user)", async ({ page }) => {
+  await page.goto("/feed");
 
   await expect(page.getByRole("link", { name: "OpenSauced", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Explore", exact: true })).toBeVisible();
@@ -12,5 +12,5 @@ test("Loads home page (logged out user)", async ({ page }) => {
   await expect(page.getByRole("complementary", { name: "Repositories", exact: true })).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Featured Highlights", exact: true })).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Subscribe to our newsletter", exact: true })).toBeVisible();
-  await expect(page.getByRole("complementary", { name: "Join Us for Lunch Week!", exact: true })).toBeVisible();
+  await expect(page.getByRole("complementary", { name: "Introducing StarSearch!", exact: true })).toBeVisible();
 });

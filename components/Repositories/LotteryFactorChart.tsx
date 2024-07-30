@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import Link from "next/link";
+import * as HoverCard from "@radix-ui/react-hover-card";
+import { FaArrowRight, FaRegHandPeace } from "react-icons/fa6";
 import Card from "components/atoms/Card/card";
 import Pill from "components/atoms/Pill/pill";
 import { DayRange } from "components/shared/DayRangePicker";
@@ -12,6 +14,7 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Avatar from "components/atoms/Avatar/avatar";
 
 import { getAvatarByUsername } from "lib/utils/github";
+import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 type LotteryFactorChartProps = {
@@ -19,6 +22,11 @@ type LotteryFactorChartProps = {
   isLoading: boolean;
   error: Error | undefined;
   range: DayRange;
+  showHoverCards?: boolean;
+  uniqueYoloCoders?: Set<string>;
+  yoloBannerOnClick?: () => void;
+  onProfileClick?: () => void;
+  onYoloIconClick?: () => void;
   className?: string;
 };
 
@@ -27,6 +35,11 @@ export default function LotteryFactorChart({
   isLoading,
   error,
   range,
+  showHoverCards,
+  uniqueYoloCoders = new Set<string>(),
+  yoloBannerOnClick,
+  onProfileClick,
+  onYoloIconClick,
   className,
 }: LotteryFactorChartProps) {
   const [hovered, setHovered] = useState<string | undefined>(undefined);
@@ -56,7 +69,7 @@ export default function LotteryFactorChart({
       result.push({
         name: "Other Contributors",
         count: 0,
-        value: 100 - topFourPercentage,
+        value: Number((100 - topFourPercentage).toPrecision(2)),
         factor: "Other Contributors",
       });
     }
@@ -100,8 +113,8 @@ export default function LotteryFactorChart({
         <header className="flex w-full justify-between items-center">
           <div className="flex gap-2 items-center">
             <HiOutlineTicket className="text-xl" />
-            <h3 className="text-sm font-semibold md:text-lg text-slate-800">Lottery Factor</h3>
-            <InfoTooltip information="Identifies project risk due to dependency on top contributors. Indicates project vulnerability if 2 or fewer do >50% of the work." />
+            <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Lottery Factor</h3>
+            <InfoTooltip information="Identifies reliance on top contributors. Indicates potential project vulnerability if 2 or fewer create >50% of the pull requests." />
           </div>
           {error ? null : isLoading || !lotteryFactor ? (
             <SkeletonWrapper width={42} height={24} radius={999} />
@@ -125,7 +138,29 @@ export default function LotteryFactorChart({
         </header>
       </section>
 
-      <section className="w-full px-4 flex flex-col gap-4 text-sm">
+      {yoloBannerOnClick && (
+        <button
+          onClick={yoloBannerOnClick}
+          className="flex items-center justify-between w-full text-slate-500 shadow-sm !border !border-slate-300 p-1 gap-2 text-sm rounded-full"
+        >
+          <div className="flex gap-2 items-center">
+            <div className="flex items-center font-medium gap-1 px-2 py-0.5 rounded-2xl bg-light-red-4 text-light-red-11">
+              <FaRegHandPeace />
+              YOLO Coders
+            </div>
+            <p className="block lg:hidden 2xl:block">
+              Pushing commits <span className="xs:hidden sm:inline-block">directly</span> to main
+            </p>
+          </div>
+
+          <div className="hidden xs:flex gap-2 items-center ml-auto mr-3">
+            <p className="hidden sm:inline-block xl:hidden min-[1650px]:inline-block">See more</p>
+            <FaArrowRight className="hidden xs:inline-block" />
+          </div>
+        </button>
+      )}
+
+      <section className="w-full px-4 flex flex-col gap-4 text-xs xl:text-sm">
         {isLoading ? (
           <Skeleton height={32} />
         ) : (
@@ -136,12 +171,12 @@ export default function LotteryFactorChart({
                 {summary.count > 1 ? <span className="font-semibold text-black">{`${summary.count} `}</span> : null}
                 contributor{summary.count > 1 && "s"} of this repository {summary.count > 1 ? "have" : "has"} made{" "}
                 <span className="font-semibold text-black">{summary.percentage}% </span>
-                of all commits in the past <span className="font-semibold text-black">{range}</span> days.
+                of all pull requests in the past <span className="font-semibold text-black">{range}</span> days.
               </>
             ) : (
               <>
                 {error ? (
-                  <>This repository doesn&apos;t have enough commit data to calculate the Lottery Factor.</>
+                  <>This repository doesn&apos;t have enough pull request data to calculate the Lottery Factor.</>
                 ) : (
                   <>
                     No one has contributed to the repository in the past{" "}
@@ -187,7 +222,7 @@ export default function LotteryFactorChart({
         </div>
       </section>
 
-      {error || !hasContributors ? <Image src={errorImage} alt="" /> : null}
+      {!isLoading && (error || !hasContributors) ? <Image src={errorImage} alt="" /> : null}
 
       {isLoading ? (
         <div className="flex flex-col w-full gap-4 px-4">
@@ -196,11 +231,11 @@ export default function LotteryFactorChart({
       ) : null}
 
       {!isLoading && hasContributors ? (
-        <table className="table-fixed divide-y text-xs lg:text-sm text-slate-500 w-full px-4 border-separate border-spacing-y-2">
+        <table className="table-fixed divide-y text-xs xl:text-sm text-slate-500 w-full px-4 border-separate border-spacing-y-2">
           <thead>
             <tr>
               <th className="font-normal text-start">Contributor</th>
-              <th className="font-normal text-end w-fit">Commits</th>
+              <th className="font-normal text-end w-fit">Pull Requests</th>
               <th className="font-normal text-end">% of Total</th>
             </tr>
           </thead>
@@ -212,11 +247,43 @@ export default function LotteryFactorChart({
                     Temporarily copying the DevProfile JSX minus the desktop view to fix this issue https://github.com/open-sauced/app/pull/3373#issuecomment-2112399608
                   */}
                   <div className="flex items-center gap-2 text-light-slate-11">
-                    <Link href={`/user/${name}`} className="rounded-full">
-                      <Avatar size={36} isCircle hasBorder={false} avatarURL={getAvatarByUsername(name)} />
-                    </Link>
-                    <div>
+                    {showHoverCards ? (
+                      <HoverCard.Root>
+                        <Link href={`/u/${name}`} className="rounded-full" onClick={onProfileClick}>
+                          <HoverCard.Trigger>
+                            <Avatar
+                              size={24}
+                              className="xl:w-9 xl:h-9"
+                              isCircle
+                              hasBorder={false}
+                              avatarURL={getAvatarByUsername(name)}
+                            />
+                          </HoverCard.Trigger>
+                        </Link>
+                        <HoverCard.Portal>
+                          <HoverCard.Content sideOffset={5}>
+                            <HoverCardWrapper username={name} />
+                          </HoverCard.Content>
+                        </HoverCard.Portal>
+                      </HoverCard.Root>
+                    ) : (
+                      <Link href={`/u/${name}`} className="rounded-full" onClick={onProfileClick}>
+                        <Avatar
+                          size={24}
+                          className="xl:w-9 xl:h-9"
+                          isCircle
+                          hasBorder={false}
+                          avatarURL={getAvatarByUsername(name)}
+                        />
+                      </Link>
+                    )}
+                    <div className="flex gap-1 items-center">
                       <h1 className="truncate text-light-slate-12">{name}</h1>
+                      {uniqueYoloCoders.has(name) && (
+                        <button onClick={onYoloIconClick}>
+                          <InfoTooltip icon={<FaRegHandPeace />} information="YOLO Coder" />
+                        </button>
+                      )}
                     </div>
                   </div>
                 </td>
@@ -229,14 +296,16 @@ export default function LotteryFactorChart({
             {isLoading ? <Skeleton /> : null}
             {lotteryFactor?.all_contribs.length && lotteryFactor?.all_contribs.length > 4 ? (
               <tr className={`${hovered === "Other Contributors" ? "font-semibold bg-slate-100" : "font-normal"}`}>
-                <td className="flex gap-2 items-center py-4 pl-2">
+                <td className="flex gap-2 items-center pt-1 pb-2 xl:py-4 pl-2">
                   <StackedOwners
                     owners={lotteryFactor.all_contribs.slice(4, 7).map((contributor) => contributor.contributor)}
                   />
                   <p>Other contributors</p>
                 </td>
                 <td></td>
-                <td className="text-end py-4 pr-2 ">{sortedContributors.at(sortedContributors.length - 1)?.value}%</td>
+                <td className="text-end pt-1 pb-2 pr-2 xl:py-4">
+                  {sortedContributors.at(sortedContributors.length - 1)?.value}%
+                </td>
               </tr>
             ) : null}
           </tbody>

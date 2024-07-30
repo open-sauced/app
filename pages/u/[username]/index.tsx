@@ -4,10 +4,7 @@ import { jsonLdScriptProps } from "react-schemaorg";
 import { Person } from "schema-dts";
 
 import { useRouter } from "next/router";
-import ProfileLayout from "layouts/profile";
 import SEO from "layouts/SEO/SEO";
-
-import { WithPageLayout } from "interfaces/with-page-layout";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
 import useRepoList from "lib/hooks/useRepoList";
@@ -16,6 +13,9 @@ import useContributorLanguages from "lib/hooks/api/useContributorLanguages";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
 import { useHasMounted } from "lib/hooks/useHasMounted";
 import ContributorProfilePage from "components/organisms/ContributorProfilePage/contributor-profile-page";
+import { isValidUrlSlug } from "lib/utils/url-validators";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
+import useSession from "lib/hooks/useSession";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -25,10 +25,11 @@ export type ContributorSSRProps = {
   ogImage: string;
 };
 
-const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogImage }) => {
+export default function Contributor({ username, user, ogImage }: ContributorSSRProps) {
   const router = useRouter();
   const range = (router.query.range as string) ?? "30";
   const hasMounted = useHasMounted();
+  const { session } = useSession(true);
 
   const { data: contributorPRData, meta: contributorPRMeta } = useContributorPullRequests({
     contributor: username,
@@ -82,7 +83,7 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           />
         )}
       </Head>
-      <div className="w-full">
+      <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <ContributorProfilePage
           prMerged={mergedPrs.length}
           error={isError}
@@ -97,47 +98,39 @@ const Contributor: WithPageLayout<ContributorSSRProps> = ({ username, user, ogIm
           prVelocity={prVelocity}
           range={range}
         />
-      </div>
+      </WorkspaceLayout>
     </>
   );
-};
-
-Contributor.PageLayout = ProfileLayout;
-export default Contributor;
+}
 
 export const getServerSideProps = async (context: UserSSRPropsContext) => {
-  return await handleUserSSR(context);
-};
+  const { username } = context.params ?? { username: "" };
 
-export type UserSSRPropsContext = GetServerSidePropsContext<{ username: string }>;
-
-export async function handleUserSSR({ params }: GetServerSidePropsContext<{ username: string }>) {
-  const { username } = params!;
-
-  async function fetchUserData() {
-    try {
-      const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
-        headers: {
-          accept: "application/json",
-        },
-      });
-
-      if (!req.ok) {
-        return null;
-      }
-
-      return (await req.json()) as DbUser;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      return null;
-    }
+  if (!isValidUrlSlug(username)) {
+    return { notFound: true };
   }
 
-  const userData = await fetchUserData();
+  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
+    headers: {
+      accept: "application/json",
+    },
+  });
+
+  if (!req.ok) {
+    return { notFound: true };
+  }
+
+  const userData = (await req.json()) as DbUser;
   const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/users/${username}`;
+
+  // Cache page for 60 seconds
+  context.res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
+  context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=0, stale-while-revalidate=60");
+  context.res.setHeader("Cache-Tag", `user-profiles,user-profile-${username}`);
 
   return {
     props: { username, user: userData, ogImage },
   };
-}
+};
+
+export type UserSSRPropsContext = GetServerSidePropsContext<{ username: string }>;

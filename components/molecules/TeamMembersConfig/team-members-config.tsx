@@ -38,8 +38,7 @@ const TeamMembersConfig = ({
 
   const handleChange = async (value: string) => {
     setEmail(value);
-
-    setValidInput(!!validateEmail(value));
+    setValidInput(validateEmail(value));
   };
 
   const handleAddMember = async () => {

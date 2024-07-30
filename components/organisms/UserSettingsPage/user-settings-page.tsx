@@ -151,12 +151,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
-
-    if (validateEmail(value)) {
-      setIsValidEmail(true);
-    } else {
-      setIsValidEmail(false);
-    }
+    setIsValidEmail(validateEmail(value));
   };
 
   const handleTwitterUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {

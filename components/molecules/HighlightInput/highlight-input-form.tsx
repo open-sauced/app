@@ -28,6 +28,7 @@ import {
   isValidPullRequestUrl,
   getAvatarByUsername,
   generateRepoParts,
+  isValidReleaseUrl,
 } from "lib/utils/github";
 
 import { fetchGithubPRInfo } from "lib/hooks/fetchGithubPRInfo";
@@ -456,7 +457,9 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       setIsHighlightURLValid(true);
       // generateApiPrUrl will return an object with repoName, orgName and issueId
       // it can work with both issue and pull request links
-      const highlightType = isValidIssueUrl(highlightLink)
+      const highlightType = isValidReleaseUrl(highlightLink)
+        ? "release"
+        : isValidIssueUrl(highlightLink)
         ? "issue"
         : isValidPullRequestUrl(highlightLink)
         ? "pull_request"

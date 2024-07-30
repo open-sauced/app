@@ -72,7 +72,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     }),
   ]);
 
-  if (error?.status === 404 || error?.status === 401) {
+  if (error?.status === 404 || error?.status === 401 || !list?.id) {
     return {
       notFound: true,
     };
@@ -294,6 +294,7 @@ const ListActivityPage = ({
         repoFilter={true}
         repoFilterOptions={filterOptions}
         repoFilterSelect={setFilteredRepositories}
+        overLimit={showBanner}
       >
         {isError ? (
           <Error errorMessage="Unable to load list activity" />
@@ -327,7 +328,7 @@ const ListActivityPage = ({
       </ListPageLayout>
       <InsightUpgradeModal
         workspaceId={workspaceId}
-        variant="contributors"
+        variant="all"
         isOpen={isInsightUpgradeModalOpen}
         onClose={() => setIsInsightUpgradeModalOpen(false)}
         overLimit={numberOfContributors}
