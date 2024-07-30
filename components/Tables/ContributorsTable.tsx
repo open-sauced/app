@@ -15,6 +15,8 @@ import { useMemo, useState } from "react";
 import { BsArrowsCollapse, BsArrowsExpand } from "react-icons/bs";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { LineChart, ResponsiveContainer } from "recharts";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -27,6 +29,7 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import Button from "components/shared/Button/button";
 import InfoTooltip from "components/shared/InfoTooltip";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
+import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 const AddToContributorInsightModal = dynamic(() => import("components/Contributors/AddToContributorInsightModal"), {
@@ -40,7 +43,6 @@ const AddToContributorInsightDrawer = dynamic(() => import("components/Contribut
 type OrderDirection = "ASC" | "DESC";
 
 type ContributorsTableProps = {
-  repository: string;
   contributors: DbRepoContributor[] | undefined;
   meta: Meta | null;
   isLoading: boolean;
@@ -49,8 +51,18 @@ type ContributorsTableProps = {
   setOscrSorting: (value: OrderDirection) => void;
 };
 
+// TODO: silo into new component file?
+function Sparkline({ login, range }: { login: string; range: string | number }) {
+  const { data: prData } = usePullRequestsHistogram({ contributor: login, range: Number(range ?? "30"), width: 1 });
+
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <LineChart />
+    </ResponsiveContainer>
+  );
+}
+
 export default function ContributorsTable({
-  repository,
   contributors,
   meta,
   oscrSorting,
@@ -59,6 +71,9 @@ export default function ContributorsTable({
   isError,
 }: ContributorsTableProps) {
   const isMobile = useMediaQuery("(max-width: 640px)");
+  const router = useRouter();
+  const repository = `${router.query.org}/${router.query.repo}`;
+  const range = Number(router.query.range ?? 30);
 
   const [isAddToContributorInsightModalOpen, setIsAddToContributorInsightModalOpen] = useState(false);
   const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
@@ -129,6 +144,11 @@ export default function ContributorsTable({
         </div>
       ),
     }),
+    {
+      id: "last30days",
+      header: "Last 30 Days",
+      cell: ({ row }) => <Sparkline login={row.original.login} range={range} />,
+    },
   ];
 
   const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
@@ -299,7 +319,9 @@ export default function ContributorsTable({
                 <>
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                      <TableCell key={cell.id} className="w-fit max-w-xl">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
                     ))}
                   </TableRow>
                   {row.getIsExpanded() && (
@@ -320,6 +342,10 @@ export default function ContributorsTable({
                           <p className="flex justify-between font-semibold pt-2">
                             Location:
                             <span className="font-normal">{row.original.location}</span>
+                          </p>
+                          <p className="flex justify-between font-semibold pt-2">
+                            Last 30 Days:
+                            {renderSparkline({ login: row.original.login })}
                           </p>
                         </div>
                       </TableCell>
