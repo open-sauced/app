@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.4](https://github.com/open-sauced/app/compare/v2.48.0-beta.3...v2.48.0-beta.4) (2024-07-30)
+
+
+### 🐛 Bug Fixes
+
+* Upgrades email validation regex to the more agnostic HTML5 regex ([#3801](https://github.com/open-sauced/app/issues/3801)) ([8643aef](https://github.com/open-sauced/app/commit/8643aef09c2abcb2a26088ebd33811b6e7fd2a75))
+
 ## [2.48.0-beta.3](https://github.com/open-sauced/app/compare/v2.48.0-beta.2...v2.48.0-beta.3) (2024-07-29)
 
 
