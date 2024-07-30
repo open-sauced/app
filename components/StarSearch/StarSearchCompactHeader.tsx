@@ -1,24 +1,17 @@
-import { ArrowLeftIcon, PlusIcon, XIcon } from "@primer/octicons-react";
+import { ArrowLeftIcon, HistoryIcon, PlusIcon, XIcon } from "@primer/octicons-react";
+import { HiOutlineShare } from "react-icons/hi";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 import { StarSearchLogo } from "./StarSearchLogo";
 
 type OnClick = (e: React.MouseEvent<HTMLButtonElement>) => void;
 
 interface StarSearchCompactHeaderProps {
   onBack: OnClick;
-  onShare: OnClick;
+  onShare?: OnClick;
   onNewChat: OnClick;
   onShowHistory: OnClick;
   onClose: OnClick;
-  view: "prompt" | "chat";
 }
-
-const CloseButton = ({ onClick }: { onClick: OnClick }) => {
-  return (
-    <button onClick={onClick} className="hover:text-orange-500">
-      <XIcon />
-    </button>
-  );
-};
 
 export const StarSearchCompactHeader = ({
   onBack,
@@ -26,40 +19,50 @@ export const StarSearchCompactHeader = ({
   onNewChat,
   onShowHistory,
   onClose,
-  view,
 }: StarSearchCompactHeaderProps) => {
-  const buttonHoverStyle = "hover:text-orange-500";
+  const menuButtonStyle = "hover:text-orange-500 grid place-content-center";
 
   return (
-    <>
-      {view === "chat" ? (
-        <div className="flex items-center justify-between gap-2 [&_button]:text-slate-600 h-9 p-1 bg-slate-50">
-          <div className="flex items-center gap-2">
-            <button onClick={onBack} className={buttonHoverStyle}>
-              <ArrowLeftIcon />
-            </button>
-            <StarSearchLogo size="small" />
-            <span className="font-semibold text-slate-800">StarSearch</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button onClick={onNewChat} className={buttonHoverStyle}>
-              <PlusIcon />
-            </button>
-            {/* TODO: implement share and history for StarSearch conversations for workspaces */}
-            {/* <button onClick={onShare} className={buttonHoverStyle}>
+    <div className="flex items-center justify-between gap-2 [&_button]:text-slate-600 h-9 p-1 bg-slate-50">
+      <div className="flex items-center gap-2">
+        <Tooltip direction="top" className="text-center w-36" content="Back">
+          <button onClick={onBack} className={menuButtonStyle}>
+            <ArrowLeftIcon />
+          </button>
+        </Tooltip>
+        <StarSearchLogo size="small" />
+        <span className="font-semibold text-slate-800">StarSearch</span>
+      </div>
+      <div className="flex items-center gap-2">
+        <Tooltip direction="top" className="text-center w-36" content="New Chat">
+          <button onClick={onNewChat} className={menuButtonStyle}>
+            <span className="sr-only">New Chat</span>
+            <PlusIcon />
+          </button>
+        </Tooltip>
+        {onShare ? (
+          <Tooltip direction="top" className="text-center w-36" content="Share current conversation">
+            <button onClick={onShare} className={menuButtonStyle}>
+              <span className="sr-only">Share current conversation</span>
               <HiOutlineShare />
             </button>
-            <button onClick={onShowHistory} className={buttonHoverStyle}>
-              <HistoryIcon />
-            </button> */}
-            {onClose ? <CloseButton onClick={onClose} /> : null}
-          </div>
-        </div>
-      ) : (
-        <div className="flex items-center justify-end gap-2 [&_button]:text-slate-600 h-8 p-1 bg-slate-50">
-          {onClose ? <CloseButton onClick={onClose} /> : null}
-        </div>
-      )}
-    </>
+          </Tooltip>
+        ) : null}
+        <Tooltip direction="top" className="text-center w-36" content="Chat history">
+          <button onClick={onShowHistory} className={menuButtonStyle}>
+            <span className="sr-only">Chat history</span>
+            <HistoryIcon />
+          </button>
+        </Tooltip>
+        {onClose ? (
+          <Tooltip direction="top" className="text-center w-36" content="Close StarSearch">
+            <button onClick={onClose} className="hover:text-orange-500">
+              <span className="sr-only">Close StarSearch</span>
+              <XIcon size={18} />
+            </button>
+          </Tooltip>
+        ) : null}
+      </div>
+    </div>
   );
 };

@@ -8,7 +8,6 @@ import { useToast } from "lib/hooks/useToast";
 import { StarSearchButton } from "./StarSearchButton";
 import { StarSearchChat } from "./StarSearchChat";
 interface StarSearchEmbedProps extends Omit<ComponentProps<typeof StarSearchChat>, "sharedPrompt"> {
-  workspaceId?: string;
   isEditor?: boolean;
   signInHandler: () => void;
 }
@@ -107,7 +106,6 @@ export const StarSearchEmbed = ({
         style={{
           top: "var(--top-nav-height)",
           height: "calc(100dvh - var(--top-nav-height))",
-          zIndex: 1,
         }}
       >
         <StarSearchChat
