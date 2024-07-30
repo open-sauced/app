@@ -19,6 +19,13 @@ export const Default: Story = {
     hideRating: false,
   },
 };
+
+export const NoRating: Story = {
+  args: {
+    rating: 0,
+  },
+};
+
 export const Blurred: Story = {
   args: {
     hideRating: true,
