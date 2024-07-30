@@ -24,7 +24,7 @@ interface ContributorListTableRow {
   selected?: boolean;
   handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
   range: string;
-  showOscr?: boolean;
+  loggedIn: boolean;
 }
 
 function getLastContributionDate(contributions: DbRepoPREvents[]) {
@@ -76,7 +76,7 @@ const ContributorListTableRow = ({
   selected,
   handleOnSelectContributor,
   range,
-  showOscr = false,
+  loggedIn,
 }: ContributorListTableRow) => {
   const [tableOpen, setTableOpen] = useState(false);
   const login = contributor.author_login || contributor.username;
@@ -119,7 +119,13 @@ const ContributorListTableRow = ({
             />
           )}
           <div className="w-[68%]">
-            <DevProfile username={login} hasBorder={!contributor.author_login} oscrRating={contributor.oscr} />
+            <DevProfile
+              username={login}
+              hasBorder={!contributor.author_login}
+              oscrRating={contributor.oscr}
+              showOscr={true}
+              loggedIn={loggedIn}
+            />
           </div>
           <div className="w-[34%] text-normal text-light-slate-11  h-full">
             <div className="flex flex-col gap-x-3">
@@ -195,15 +201,13 @@ const ContributorListTableRow = ({
 
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
-          <DevProfile username={login} hasBorder={!contributor.author_login} />
+          <DevProfile username={login} hasBorder={!contributor.author_login} showOscr={false} loggedIn={loggedIn} />
         </div>
 
         {/* Column: OSCR */}
-        {showOscr ? (
-          <div className={clsx("flex-1 lg:max-w-[5rem] text-light-slate-11 justify-center lg:flex ")}>
-            <div className="flex gap-x-3">{contributor.oscr ? <OscrPill rating={contributor.oscr} /> ?? "-" : "-"}</div>
-          </div>
-        ) : null}
+        <div className={clsx("flex-1 lg:max-w-[5rem] text-light-slate-11 justify-center lg:flex ")}>
+          <OscrPill rating={contributor.oscr} hideRating={!loggedIn} />
+        </div>
 
         {/* Column Repositories */}
         <div className={clsx("flex-1 hidden lg:flex lg:max-w-[6.25rem] justify-center")}>

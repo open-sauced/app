@@ -21,5 +21,5 @@ type Story = StoryObj<typeof ContributorCard>;
 // };
 
 export const WithoutRepositories: Story = {
-  render: () => <ContributorCard contributor={baseContributor} topic={""} />,
+  render: () => <ContributorCard contributor={baseContributor} topic={""} showOscr={true} />,
 };

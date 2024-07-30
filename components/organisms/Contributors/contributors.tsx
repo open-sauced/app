@@ -39,6 +39,8 @@ const Contributors = ({
   defaultLayout = "list",
   personalWorkspaceId,
 }: ContributorProps): JSX.Element => {
+  const { userId } = useSupabaseAuth();
+  const loggedIn = Boolean(userId);
   const router = useRouter();
   const limit = router.query.limit as string;
   const topic = router.query.pageId as string;
@@ -196,7 +198,13 @@ const Contributors = ({
           {!isLoading &&
             !isError &&
             data.map((contributor, index) => (
-              <ContributorCard key={index} contributor={contributor} topic={topic} repositories={repositories} />
+              <ContributorCard
+                key={index}
+                contributor={contributor}
+                topic={topic}
+                repositories={repositories}
+                showOscr={loggedIn}
+              />
             ))}
         </div>
       ) : (
@@ -234,6 +242,7 @@ const Contributors = ({
               topic={topic}
               contributors={data}
               selectedContributors={selectedContributors}
+              loggedIn={loggedIn}
             ></ContributorTable>
           </ClientOnly>
         </div>

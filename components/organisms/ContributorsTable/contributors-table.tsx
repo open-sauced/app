@@ -10,7 +10,7 @@ export interface ContributorTableProps {
   handleSelectContributors?: (state: boolean, contributor: DbPRContributor) => void;
   range?: string;
   noContributorsMessage?: string;
-  showOscr?: boolean;
+  loggedIn: boolean;
 }
 
 const ContributorTable = ({
@@ -21,7 +21,7 @@ const ContributorTable = ({
   handleSelectContributors,
   range = "30",
   noContributorsMessage = "Sorry! We couldn't find any contributors.",
-  showOscr = false,
+  loggedIn,
 }: ContributorTableProps) => {
   return (
     <div className="flex flex-col overflow-hidden border rounded-md">
@@ -40,7 +40,7 @@ const ContributorTable = ({
                 }
                 handleOnSelectContributor={handleSelectContributors}
                 range={range}
-                showOscr={showOscr}
+                loggedIn={loggedIn}
               />
             ))
           ) : (
