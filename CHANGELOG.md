@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.3](https://github.com/open-sauced/app/compare/v2.48.0-beta.2...v2.48.0-beta.3) (2024-07-29)
+
+
+### 🍕 Features
+
+* updated one of the suggested prompts for workspaces ([#3786](https://github.com/open-sauced/app/issues/3786)) ([6dc225e](https://github.com/open-sauced/app/commit/6dc225e611251dfafb78ed2bca95b51fcf468946))
+
 ## [2.48.0-beta.2](https://github.com/open-sauced/app/compare/v2.48.0-beta.1...v2.48.0-beta.2) (2024-07-26)
 
 
