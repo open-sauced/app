@@ -13,7 +13,7 @@ export const OscrPill = ({ rating, hideRating }: { rating: number | undefined; h
       {hideRating ? (
         <Pill color="purple" size="small" text="00" blurText={true} />
       ) : (
-        <Pill color="purple" size="small" text={`${percentageRating}`} className="" />
+        <Pill color="purple" size="small" text={`${percentageRating}`} />
       )}
     </Tooltip>
   );
