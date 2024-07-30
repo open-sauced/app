@@ -251,7 +251,7 @@ export default function ContributorsTable({
   return (
     <div className="flex flex-col gap-4">
       {Object.keys(selectedContributors).length > 0 && (
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           <p>{Object.keys(selectedContributors).length} selected</p>
           {isMobile ? (
             <AddToContributorInsightDrawer repository={repository} contributors={Object.keys(selectedContributors)} />
