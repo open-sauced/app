@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.8](https://github.com/open-sauced/app/compare/v2.48.0-beta.7...v2.48.0-beta.8) (2024-07-30)
+
+
+### 🐛 Bug Fixes
+
+* fixed the share button does not close when clicked outside it. ([#3617](https://github.com/open-sauced/app/issues/3617)) ([ddaa375](https://github.com/open-sauced/app/commit/ddaa375136761db99680109b8f2c00c7ae9bacd8))
+
 ## [2.48.0-beta.7](https://github.com/open-sauced/app/compare/v2.48.0-beta.6...v2.48.0-beta.7) (2024-07-30)
 
 
