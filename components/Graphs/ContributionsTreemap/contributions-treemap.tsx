@@ -69,6 +69,7 @@ export const ContributionsTreemap = ({
           <h2 className="font-medium text-lg text-slate-900 mb-2 flex items-center justify-between">
             All Contributions
           </h2>
+          <div className="text-sm text-slate-400 mb-4">Based on the number of PRs</div>
           <div className="flex gap-2 items-center justify-between">
             <div className="flex gap-2 mb-2">
               {orgName ? (

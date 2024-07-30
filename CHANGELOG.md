@@ -5,6 +5,71 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.8](https://github.com/open-sauced/app/compare/v2.48.0-beta.7...v2.48.0-beta.8) (2024-07-30)
+
+
+### 🐛 Bug Fixes
+
+* fixed the share button does not close when clicked outside it. ([#3617](https://github.com/open-sauced/app/issues/3617)) ([ddaa375](https://github.com/open-sauced/app/commit/ddaa375136761db99680109b8f2c00c7ae9bacd8))
+
+## [2.48.0-beta.7](https://github.com/open-sauced/app/compare/v2.48.0-beta.6...v2.48.0-beta.7) (2024-07-30)
+
+
+### 🍕 Features
+
+* Added explanation of what users are seeing on list activity graph ([#3328](https://github.com/open-sauced/app/issues/3328)) ([b41dfdc](https://github.com/open-sauced/app/commit/b41dfdc6dd98d7f8d85b5534896fe5a3f3e2ed83))
+
+## [2.48.0-beta.6](https://github.com/open-sauced/app/compare/v2.48.0-beta.5...v2.48.0-beta.6) (2024-07-30)
+
+
+### 🍕 Features
+
+* added OSCR to avatar hover card ([#3803](https://github.com/open-sauced/app/issues/3803)) ([034cb1a](https://github.com/open-sauced/app/commit/034cb1a468d66cf9f552306ba1703ab739120b99))
+
+## [2.48.0-beta.5](https://github.com/open-sauced/app/compare/v2.48.0-beta.4...v2.48.0-beta.5) (2024-07-30)
+
+
+### 🍕 Features
+
+* add new OG image for contributor highlights ([#3779](https://github.com/open-sauced/app/issues/3779)) ([a2ac727](https://github.com/open-sauced/app/commit/a2ac727b410c4bacd78a62bfd651afa72a70f224))
+* add new OG image for repository insights ([#3800](https://github.com/open-sauced/app/issues/3800)) ([d6c1d63](https://github.com/open-sauced/app/commit/d6c1d63cba0755e59e422663794ff97185beb515))
+
+## [2.48.0-beta.4](https://github.com/open-sauced/app/compare/v2.48.0-beta.3...v2.48.0-beta.4) (2024-07-30)
+
+
+### 🐛 Bug Fixes
+
+* Upgrades email validation regex to the more agnostic HTML5 regex ([#3801](https://github.com/open-sauced/app/issues/3801)) ([8643aef](https://github.com/open-sauced/app/commit/8643aef09c2abcb2a26088ebd33811b6e7fd2a75))
+
+## [2.48.0-beta.3](https://github.com/open-sauced/app/compare/v2.48.0-beta.2...v2.48.0-beta.3) (2024-07-29)
+
+
+### 🍕 Features
+
+* updated one of the suggested prompts for workspaces ([#3786](https://github.com/open-sauced/app/issues/3786)) ([6dc225e](https://github.com/open-sauced/app/commit/6dc225e611251dfafb78ed2bca95b51fcf468946))
+
+## [2.48.0-beta.2](https://github.com/open-sauced/app/compare/v2.48.0-beta.1...v2.48.0-beta.2) (2024-07-26)
+
+
+### 🍕 Features
+
+* implement OSCR on devcards ([#3791](https://github.com/open-sauced/app/issues/3791)) ([9f2d7d2](https://github.com/open-sauced/app/commit/9f2d7d2966139278840033a0311e688d975dd0f1))
+
+## [2.48.0-beta.1](https://github.com/open-sauced/app/compare/v2.47.1-beta.1...v2.48.0-beta.1) (2024-07-26)
+
+
+### 🍕 Features
+
+* MVP `OssfChart` component ([#3766](https://github.com/open-sauced/app/issues/3766)) ([d7827a3](https://github.com/open-sauced/app/commit/d7827a39cb990d103857df92291c1d22c8f22183))
+
+## [2.47.1-beta.1](https://github.com/open-sauced/app/compare/v2.47.0...v2.47.1-beta.1) (2024-07-26)
+
+
+### 🐛 Bug Fixes
+
+* now pinned table columns only get pinned when embedded StarSearch is closed ([#3783](https://github.com/open-sauced/app/issues/3783)) ([c1535ac](https://github.com/open-sauced/app/commit/c1535ac8222973b8614aa5d41d1925f925e90706))
+* round 'Other Contributors' to avoid overflow ([#3784](https://github.com/open-sauced/app/issues/3784)) ([62ac24d](https://github.com/open-sauced/app/commit/62ac24de665bfe80930faa7df4b4adc51a56e1ad))
+
 ## [2.47.0](https://github.com/open-sauced/app/compare/v2.46.0...v2.47.0) (2024-07-25)
 
 
