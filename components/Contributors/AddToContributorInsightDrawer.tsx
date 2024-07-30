@@ -64,7 +64,11 @@ export default function AddToContributorInsightDrawer({
       count: contributors.length,
     });
 
-    router.push(`/workspaces/${workspaceId}/contributor-insights/new?contributors=${JSON.stringify(contributors)}`);
+    router.push(
+      `/workspaces/${workspaceId}/contributor-insights/new?contributors=${encodeURIComponent(
+        JSON.stringify(contributors)
+      )}`
+    );
     return;
   };
 
