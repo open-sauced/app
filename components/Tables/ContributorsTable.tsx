@@ -9,6 +9,7 @@ import {
   getExpandedRowModel,
   TableState,
   ColumnDef,
+  Table as TableDef,
 } from "@tanstack/react-table";
 import { FaSortDown, FaSortUp } from "react-icons/fa6";
 import { useMemo, useState } from "react";
@@ -74,26 +75,82 @@ function Sparkline({ repository, login }: { repository: string; login: string })
   );
 }
 
-export default function ContributorsTable({
-  contributors,
-  meta,
-  oscrSorting,
-  setOscrSorting,
-  isLoading,
-  isError,
-}: ContributorsTableProps) {
-  const isMobile = useMediaQuery("(max-width: 640px)");
-  const router = useRouter();
-  const repository = `${router.query.org}/${router.query.repo}`;
-  const range = Number(router.query.range ?? 30);
+const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
+const defaultColumns = (repository: string) => [
+  contributorsColumnHelper.display({
+    id: "selector",
+    header: ({ table }: { table: TableDef<DbRepoContributor> }) => (
+      <Checkbox
+        key={"selector_all"}
+        checked={table.getIsAllRowsSelected()}
+        onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
+      />
+    ),
+    cell: ({ row }: { row: Row<DbRepoContributor> }) => (
+      <Checkbox
+        key={row.id}
+        checked={row.getIsSelected()}
+        onCheckedChange={(checked) => row.toggleSelected(Boolean(checked.valueOf()))}
+      />
+    ),
+  }),
+  contributorsColumnHelper.accessor("login", {
+    header: "Contributor",
+    cell: (info) => (
+      <div className="w-fit">
+        <HoverCard.Root>
+          <Link href={`/u/${info.row.original.login}`} className="rounded-full">
+            <HoverCard.Trigger className="flex gap-4 items-center">
+              <Avatar
+                size={24}
+                className="xl:w-9 xl:h-9"
+                isCircle
+                hasBorder={false}
+                avatarURL={getAvatarByUsername(info.row.original.login)}
+              />
+              <p>{info.row.original.login}</p>
+            </HoverCard.Trigger>
+          </Link>
+          <HoverCard.Portal>
+            <HoverCard.Content sideOffset={5}>
+              <HoverCardWrapper username={info.row.original.login} />
+            </HoverCard.Content>
+          </HoverCard.Portal>
+        </HoverCard.Root>
+      </div>
+    ),
+  }),
+  contributorsColumnHelper.accessor("oscr", {
+    header: "Rating",
+    enableSorting: true,
+    enableGlobalFilter: false,
+    cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
+  }),
+  contributorsColumnHelper.accessor("company", {
+    header: "Company",
+  }),
+  contributorsColumnHelper.accessor("location", {
+    header: "Location",
+  }),
+  contributorsColumnHelper.accessor("total_contributions", {
+    header: () => (
+      <div className="flex gap-2 w-fit items-center">
+        <h2>Contributions</h2>
+        <InfoTooltip information="A total of PR, issue, and commit contributions" />
+      </div>
+    ),
+  }),
+  contributorsColumnHelper.display({
+    header: "Last 30 Days",
+    cell: ({ row }) => <Sparkline repository={repository} login={row.original.login} />,
+  }),
+];
 
-  const [isAddToContributorInsightModalOpen, setIsAddToContributorInsightModalOpen] = useState(false);
-  const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
-  const [selectedContributors, setSelectedContributors] = useState<Record<string, boolean>>({});
-
-  const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
-  const defaultColumns = useMemo(
-    () => [
+const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
+  {
+    id: "mobileContributor",
+    header: "",
+    columns: [
       {
         id: "selector",
         header: ({ table }) => (
@@ -123,7 +180,7 @@ export default function ContributorsTable({
                     className="xl:w-9 xl:h-9"
                     isCircle
                     hasBorder={false}
-                    avatarURL={getAvatarByUsername(info.row.original.login)}
+                    avatarURL={info.row.original.avatar_url}
                   />
                   <p>{info.row.original.login}</p>
                 </HoverCard.Trigger>
@@ -140,103 +197,43 @@ export default function ContributorsTable({
       contributorsColumnHelper.accessor("oscr", {
         header: "Rating",
         enableSorting: true,
-        enableGlobalFilter: false,
         cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
       }),
-      contributorsColumnHelper.accessor("company", {
-        header: "Company",
-      }),
-      contributorsColumnHelper.accessor("location", {
-        header: "Location",
-      }),
-      contributorsColumnHelper.accessor("total_contributions", {
-        header: () => (
-          <div className="flex gap-2 w-fit items-center">
-            <h2>Contributions</h2>
-            <InfoTooltip information="A total of PR, issue, and commit contributions" />
-          </div>
-        ),
-      }),
-      contributorsColumnHelper.display({
-        header: "Last 30 Days",
-        cell: ({ row }) => <Sparkline repository={repository} login={row.original.login} />,
-      }),
+      {
+        id: "expand",
+        header: "",
+        cell: ({ row }: { row: Row<DbRepoContributor> }) => {
+          return (
+            row.getCanExpand() && (
+              <button onClick={row.getToggleExpandedHandler()}>
+                {row.getIsExpanded() ? <BsArrowsCollapse /> : <BsArrowsExpand />}
+              </button>
+            )
+          );
+        },
+      },
     ],
-    [contributors]
-  );
+  },
+];
 
-  const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
-    {
-      id: "mobileContributor",
-      header: "",
-      columns: [
-        {
-          id: "selector",
-          header: ({ table }) => (
-            <Checkbox
-              key={"selector_all"}
-              checked={table.getIsAllRowsSelected()}
-              onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
-            />
-          ),
-          cell: ({ row }: { row: Row<DbRepoContributor> }) => (
-            <Checkbox
-              key={row.id}
-              checked={row.getIsSelected()}
-              onCheckedChange={(checked) => row.toggleSelected(Boolean(checked.valueOf()))}
-            />
-          ),
-        },
-        contributorsColumnHelper.accessor("login", {
-          header: "Contributor",
-          cell: (info) => (
-            <div className="w-fit">
-              <HoverCard.Root>
-                <Link href={`/u/${info.row.original.login}`} className="rounded-full">
-                  <HoverCard.Trigger className="flex gap-4 items-center">
-                    <Avatar
-                      size={24}
-                      className="xl:w-9 xl:h-9"
-                      isCircle
-                      hasBorder={false}
-                      avatarURL={info.row.original.avatar_url}
-                    />
-                    <p>{info.row.original.login}</p>
-                  </HoverCard.Trigger>
-                </Link>
-                <HoverCard.Portal>
-                  <HoverCard.Content sideOffset={5}>
-                    <HoverCardWrapper username={info.row.original.login} />
-                  </HoverCard.Content>
-                </HoverCard.Portal>
-              </HoverCard.Root>
-            </div>
-          ),
-        }),
-        contributorsColumnHelper.accessor("oscr", {
-          header: "Rating",
-          enableSorting: true,
-          cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
-        }),
-        {
-          id: "expand",
-          header: "",
-          cell: ({ row }: { row: Row<DbRepoContributor> }) => {
-            return (
-              row.getCanExpand() && (
-                <button onClick={row.getToggleExpandedHandler()}>
-                  {row.getIsExpanded() ? <BsArrowsCollapse /> : <BsArrowsExpand />}
-                </button>
-              )
-            );
-          },
-        },
-      ],
-    },
-  ];
+export default function ContributorsTable({
+  contributors,
+  meta,
+  oscrSorting,
+  setOscrSorting,
+  isLoading,
+  isError,
+}: ContributorsTableProps) {
+  const isMobile = useMediaQuery("(max-width: 640px)");
+  const router = useRouter();
+  const repository = `${router.query.org}/${router.query.repo}`;
+
+  const [isAddToContributorInsightModalOpen, setIsAddToContributorInsightModalOpen] = useState(false);
+  const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
+  const [selectedContributors, setSelectedContributors] = useState<Record<string, boolean>>({});
 
   const table = useReactTable({
-    columns: useMemo(() => (isMobile ? mobileColumns : defaultColumns), [isMobile]),
+    columns: useMemo(() => (isMobile ? mobileColumns : defaultColumns(repository)), [isMobile]),
     data: contributors ?? [],
     manualSorting: true,
     manualPagination: true,
