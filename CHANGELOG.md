@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.5](https://github.com/open-sauced/app/compare/v2.48.0-beta.4...v2.48.0-beta.5) (2024-07-30)
+
+
+### 🍕 Features
+
+* add new OG image for contributor highlights ([#3779](https://github.com/open-sauced/app/issues/3779)) ([a2ac727](https://github.com/open-sauced/app/commit/a2ac727b410c4bacd78a62bfd651afa72a70f224))
+* add new OG image for repository insights ([#3800](https://github.com/open-sauced/app/issues/3800)) ([d6c1d63](https://github.com/open-sauced/app/commit/d6c1d63cba0755e59e422663794ff97185beb515))
+
 ## [2.48.0-beta.4](https://github.com/open-sauced/app/compare/v2.48.0-beta.3...v2.48.0-beta.4) (2024-07-30)
 
 
