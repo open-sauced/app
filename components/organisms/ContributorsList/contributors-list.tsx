@@ -58,13 +58,14 @@ const ContributorsList = ({ contributors, isLoading, meta, setPage, range, logge
       <ClientOnly>
         {layout !== "grid" ? (
           <>
-            <ContributorListTableHeaders />
+            <ContributorListTableHeaders showOscr={true} />
             <ContributorTable
               loading={isLoading}
               topic={"*"}
               contributors={contributors}
               range={range ?? 30}
               loggedIn={loggedIn}
+              showOscr={true}
             />
           </>
         ) : (

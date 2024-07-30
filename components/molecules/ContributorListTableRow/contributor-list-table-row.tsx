@@ -25,6 +25,7 @@ interface ContributorListTableRow {
   handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
   range: string;
   loggedIn: boolean;
+  showOscr: boolean;
 }
 
 function getLastContributionDate(contributions: DbRepoPREvents[]) {
@@ -77,6 +78,7 @@ const ContributorListTableRow = ({
   handleOnSelectContributor,
   range,
   loggedIn,
+  showOscr,
 }: ContributorListTableRow) => {
   const [tableOpen, setTableOpen] = useState(false);
   const login = contributor.author_login || contributor.username;
@@ -123,7 +125,7 @@ const ContributorListTableRow = ({
               username={login}
               hasBorder={!contributor.author_login}
               oscrRating={contributor.oscr}
-              showOscr={true}
+              showOscr={showOscr}
               loggedIn={loggedIn}
             />
           </div>
@@ -205,9 +207,11 @@ const ContributorListTableRow = ({
         </div>
 
         {/* Column: OSCR */}
-        <div className={clsx("flex-1 lg:max-w-[5rem] text-light-slate-11 justify-center lg:flex ")}>
-          <OscrPill rating={contributor.oscr} hideRating={!loggedIn} />
-        </div>
+        {showOscr ? (
+          <div className={clsx("flex-1 lg:max-w-[5rem] text-light-slate-11 justify-center lg:flex ")}>
+            <OscrPill rating={contributor.oscr} hideRating={!loggedIn} />
+          </div>
+        ) : null}
 
         {/* Column Repositories */}
         <div className={clsx("flex-1 hidden lg:flex lg:max-w-[6.25rem] justify-center")}>

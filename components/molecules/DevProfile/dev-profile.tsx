@@ -41,10 +41,7 @@ const DevProfile = ({
         <div className="flex flex-col items-start gap-1">
           <span className={`${truncate && "truncate"} text-light-slate-12 font-semibold`}>{username}</span>
           {showOscr && typeof oscrRating !== "undefined" ? (
-            <>
-              asfsdafds
-              <OscrPill rating={oscrRating} hideRating={!loggedIn} />
-            </>
+            <OscrPill rating={oscrRating} hideRating={!loggedIn} />
           ) : null}
         </div>
       </div>

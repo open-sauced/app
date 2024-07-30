@@ -209,7 +209,7 @@ const Contributors = ({
         </div>
       ) : (
         <div className="lg:min-w-[1150px]">
-          <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} />
+          <ContributorListTableHeaders handleOnSelectAllContributor={onSelectAllContributors} showOscr={false} />
           {selectedContributors.length > 0 && (
             <div className="border px-4 py-2 flex justify-between items-center ">
               <div className="text-slate-600">{selectedContributors.length} Contributors selected</div>
@@ -243,6 +243,7 @@ const Contributors = ({
               contributors={data}
               selectedContributors={selectedContributors}
               loggedIn={loggedIn}
+              showOscr={false}
             ></ContributorTable>
           </ClientOnly>
         </div>
