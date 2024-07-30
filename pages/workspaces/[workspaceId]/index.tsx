@@ -25,6 +25,12 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { WorkspaceOgImage, getWorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
 import { useHasMounted } from "lib/hooks/useHasMounted";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
+import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
+import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
+import useSession from "lib/hooks/useSession";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
@@ -48,17 +54,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     bearerToken,
     pathValidator: () => true,
   });
-  const { data: workspaceMembers } = await fetchApiData<{ data?: WorkspaceMember[] }>({
-    path: `workspaces/${workspaceId}/members`,
-    bearerToken,
-    pathValidator: () => true,
-  });
-
-  const userId = Number(session?.user.user_metadata.sub);
-
-  const isOwner = !!(workspaceMembers?.data || []).find(
-    (member) => member.role === "owner" && member.user_id === userId
-  );
 
   if (error) {
     deleteCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME });
@@ -77,20 +72,36 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
   );
 
-  return { props: { workspace: data, isOwner, overLimit: !!data?.exceeds_upgrade_limits, ogImage: `${ogImage.href}` } };
+  return {
+    props: {
+      workspace: data,
+      overLimit: !!data?.exceeds_upgrade_limits,
+      ogImage: `${ogImage.href}`,
+    },
+  };
 };
 
 interface WorkspaceDashboardProps {
   workspace: Workspace;
   ogImage: string;
-  isOwner: boolean;
   overLimit: boolean;
 }
 
-const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: WorkspaceDashboardProps) => {
+const WorkspaceDashboard = ({ workspace, ogImage, overLimit }: WorkspaceDashboardProps) => {
+  const { sessionToken, signIn, userId } = useSupabaseAuth();
+  const {
+    data: workspaceMembers = [],
+    isLoading,
+    isError,
+  } = useWorkspaceMembers({ workspaceId: workspace.id, limit: 1000 });
+  const workspaceMember =
+    !isLoading && !isError ? (workspaceMembers || []).find((member) => member.user_id === Number(userId)) : null;
+  const isOwner = workspaceMember?.role === "owner";
+  const isEditor = isOwner || workspaceMember?.role === "editor";
+
   const [showWelcome, setShowWelcome] = useLocalStorage("show-welcome", true);
   const hasMounted = useHasMounted();
-
+  const { session } = useSession(true);
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
   const { data: repositories, error: hasError } = useGetWorkspaceRepositories({ workspaceId: workspace.id, range });
@@ -116,6 +127,8 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
   const showBanner = isOwner && overLimit;
   const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   useEffect(() => {
     setRepoIds(
       filteredRepositories.length > 0
@@ -140,23 +153,25 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
         }
       >
         <div className="px-4 py-8 lg:px-16 lg:py-12">
-          <WorkspaceHeader workspace={workspace} />
-          <div className="grid sm:flex gap-4 pt-3 border-b">
-            <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
-            <div className="flex justify-end items-center gap-4">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  if (overLimit) {
-                    setIsInsightUpgradeModalOpen(true);
-                    return;
-                  }
+          <WorkspaceHeader workspace={workspace}>
+            <Button
+              variant="outline"
+              className="my-auto gap-2 items-center shrink-0"
+              onClick={() => {
+                if (overLimit) {
+                  setIsInsightUpgradeModalOpen(true);
+                  return;
+                }
 
-                  router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
-                }}
-              >
-                Add repositories
-              </Button>
+                router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
+              }}
+            >
+              Add repositories
+            </Button>
+          </WorkspaceHeader>
+          <div className="grid gap-4 pt-3 border-b sm:flex">
+            <WorkspacesTabList workspaceId={workspace.id} selectedTab={"repositories"} />
+            <div className="flex items-center justify-end gap-4 flex-wrap w-full mb-2">
               <DayRangePicker />
               <TrackedRepositoryFilter
                 options={filterOptions}
@@ -164,11 +179,11 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
               />
             </div>
           </div>
-          <div className="mt-6 grid gap-6">
+          <div className="grid gap-6 mt-6">
             <ClientOnly>
               {repoIds.length > 0 ? (
                 <>
-                  <div className="flex flex-col lg:flex-row gap-6">
+                  <div className="flex flex-col gap-6 lg:flex-row">
                     <RepositoryStatCard
                       type="pulls"
                       stats={stats?.data?.pull_requests}
@@ -188,7 +203,11 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
                       hasError={isStatsError}
                     />
                   </div>
-                  <Repositories repositories={repoIds} showSearch={false} />
+                  <Repositories
+                    repositories={repoIds}
+                    personalWorkspaceId={isOwner ? undefined : (session as DbUser)?.personal_workspace_id}
+                    showSearch={false}
+                  />
                 </>
               ) : (
                 <Card className="bg-transparent">
@@ -206,22 +225,35 @@ const WorkspaceDashboard = ({ workspace, ogImage, isOwner, overLimit }: Workspac
               )}
             </ClientOnly>
           </div>
-
-          <WorkspaceWelcomeModal
-            isOpen={showWelcome!}
-            onClose={() => {
-              setShowWelcome(false);
-            }}
-          />
-          <InsightUpgradeModal
-            workspaceId={workspace.id}
-            variant="contributors"
-            isOpen={isInsightUpgradeModalOpen}
-            onClose={() => setIsInsightUpgradeModalOpen(false)}
-            overLimit={10}
-          />
         </div>
       </WorkspaceLayout>
+      <ClientOnly>
+        <StarSearchEmbed
+          userId={userId}
+          isEditor={isEditor}
+          bearerToken={sessionToken}
+          suggestions={WORKSPACE_STARSEARCH_SUGGESTIONS}
+          isMobile={isMobile}
+          // TODO: implement once we have shared chats in workspaces
+          sharedChatId={null}
+          tagline="Ask anything about your workspace"
+          workspaceId={workspace.id}
+          signInHandler={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}
+        />
+        <WorkspaceWelcomeModal
+          isOpen={showWelcome!}
+          onClose={() => {
+            setShowWelcome(false);
+          }}
+        />
+        <InsightUpgradeModal
+          workspaceId={workspace.id}
+          variant="contributors"
+          isOpen={isInsightUpgradeModalOpen}
+          onClose={() => setIsInsightUpgradeModalOpen(false)}
+          overLimit={10}
+        />
+      </ClientOnly>
     </>
   );
 };

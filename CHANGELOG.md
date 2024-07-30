@@ -5,6 +5,562 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.4](https://github.com/open-sauced/app/compare/v2.48.0-beta.3...v2.48.0-beta.4) (2024-07-30)
+
+
+### 🐛 Bug Fixes
+
+* Upgrades email validation regex to the more agnostic HTML5 regex ([#3801](https://github.com/open-sauced/app/issues/3801)) ([8643aef](https://github.com/open-sauced/app/commit/8643aef09c2abcb2a26088ebd33811b6e7fd2a75))
+
+## [2.48.0-beta.3](https://github.com/open-sauced/app/compare/v2.48.0-beta.2...v2.48.0-beta.3) (2024-07-29)
+
+
+### 🍕 Features
+
+* updated one of the suggested prompts for workspaces ([#3786](https://github.com/open-sauced/app/issues/3786)) ([6dc225e](https://github.com/open-sauced/app/commit/6dc225e611251dfafb78ed2bca95b51fcf468946))
+
+## [2.48.0-beta.2](https://github.com/open-sauced/app/compare/v2.48.0-beta.1...v2.48.0-beta.2) (2024-07-26)
+
+
+### 🍕 Features
+
+* implement OSCR on devcards ([#3791](https://github.com/open-sauced/app/issues/3791)) ([9f2d7d2](https://github.com/open-sauced/app/commit/9f2d7d2966139278840033a0311e688d975dd0f1))
+
+## [2.48.0-beta.1](https://github.com/open-sauced/app/compare/v2.47.1-beta.1...v2.48.0-beta.1) (2024-07-26)
+
+
+### 🍕 Features
+
+* MVP `OssfChart` component ([#3766](https://github.com/open-sauced/app/issues/3766)) ([d7827a3](https://github.com/open-sauced/app/commit/d7827a39cb990d103857df92291c1d22c8f22183))
+
+## [2.47.1-beta.1](https://github.com/open-sauced/app/compare/v2.47.0...v2.47.1-beta.1) (2024-07-26)
+
+
+### 🐛 Bug Fixes
+
+* now pinned table columns only get pinned when embedded StarSearch is closed ([#3783](https://github.com/open-sauced/app/issues/3783)) ([c1535ac](https://github.com/open-sauced/app/commit/c1535ac8222973b8614aa5d41d1925f925e90706))
+* round 'Other Contributors' to avoid overflow ([#3784](https://github.com/open-sauced/app/issues/3784)) ([62ac24d](https://github.com/open-sauced/app/commit/62ac24de665bfe80930faa7df4b4adc51a56e1ad))
+
+## [2.47.0](https://github.com/open-sauced/app/compare/v2.46.0...v2.47.0) (2024-07-25)
+
+
+### 🍕 Features
+
+* StarSearch history for workspaces ([#3753](https://github.com/open-sauced/app/issues/3753)) ([9fd3fb8](https://github.com/open-sauced/app/commit/9fd3fb8eee90d4e653f0790609379b2383638797))
+
+
+### 🐛 Bug Fixes
+
+* changed OpenSauced text to proper casing ([#3759](https://github.com/open-sauced/app/issues/3759)) ([dd9e5e4](https://github.com/open-sauced/app/commit/dd9e5e4ac43a35022d0b55a4feccd025e50717c2))
+* now StarSearch for Workspaces resets when changing workspaces ([#3757](https://github.com/open-sauced/app/issues/3757)) ([7183b33](https://github.com/open-sauced/app/commit/7183b3374330b07312a50a076986b7e7932afaf7))
+* now StarSearch history resets if workspace changes ([#3780](https://github.com/open-sauced/app/issues/3780)) ([26fe731](https://github.com/open-sauced/app/commit/26fe73110231612dfee6c3aed66789cc675a69d2))
+* use personal workspace for creating repository insights from non-owner workspaces ([#3763](https://github.com/open-sauced/app/issues/3763)) ([0d1ec38](https://github.com/open-sauced/app/commit/0d1ec3825dd0b8cfccd17988551a181947b742f3))
+
+## [2.47.0-beta.2](https://github.com/open-sauced/app/compare/v2.47.0-beta.1...v2.47.0-beta.2) (2024-07-25)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch history resets if workspace changes ([#3780](https://github.com/open-sauced/app/issues/3780)) ([26fe731](https://github.com/open-sauced/app/commit/26fe73110231612dfee6c3aed66789cc675a69d2))
+
+## [2.47.0-beta.1](https://github.com/open-sauced/app/compare/v2.46.1-beta.3...v2.47.0-beta.1) (2024-07-25)
+
+
+### 🍕 Features
+
+* StarSearch history for workspaces ([#3753](https://github.com/open-sauced/app/issues/3753)) ([9fd3fb8](https://github.com/open-sauced/app/commit/9fd3fb8eee90d4e653f0790609379b2383638797))
+
+## [2.46.1-beta.3](https://github.com/open-sauced/app/compare/v2.46.1-beta.2...v2.46.1-beta.3) (2024-07-24)
+
+
+### 🐛 Bug Fixes
+
+* use personal workspace for creating repository insights from non-owner workspaces ([#3763](https://github.com/open-sauced/app/issues/3763)) ([0d1ec38](https://github.com/open-sauced/app/commit/0d1ec3825dd0b8cfccd17988551a181947b742f3))
+
+## [2.46.1-beta.2](https://github.com/open-sauced/app/compare/v2.46.1-beta.1...v2.46.1-beta.2) (2024-07-22)
+
+
+### 🐛 Bug Fixes
+
+* changed OpenSauced text to proper casing ([#3759](https://github.com/open-sauced/app/issues/3759)) ([dd9e5e4](https://github.com/open-sauced/app/commit/dd9e5e4ac43a35022d0b55a4feccd025e50717c2))
+
+## [2.46.1-beta.1](https://github.com/open-sauced/app/compare/v2.46.0...v2.46.1-beta.1) (2024-07-19)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch for Workspaces resets when changing workspaces ([#3757](https://github.com/open-sauced/app/issues/3757)) ([7183b33](https://github.com/open-sauced/app/commit/7183b3374330b07312a50a076986b7e7932afaf7))
+
+## [2.46.0](https://github.com/open-sauced/app/compare/v2.45.0...v2.46.0) (2024-07-18)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch for workspaces only works for editors ([#3733](https://github.com/open-sauced/app/issues/3733)) ([4aeb220](https://github.com/open-sauced/app/commit/4aeb220dec334e37629537b61d5959e5b1cb73f2))
+
+
+### 🍕 Features
+
+* added posthog analytics for StarSearch for Workspaces ([#3748](https://github.com/open-sauced/app/issues/3748)) ([72d7c23](https://github.com/open-sauced/app/commit/72d7c2335867b8cafb2ac79189ad312ef2f7569b))
+* removed StarSearch feature flagging ([#3730](https://github.com/open-sauced/app/issues/3730)) ([701a95a](https://github.com/open-sauced/app/commit/701a95a3294c81ef878b4ed6dee6db380bdf9c47))
+* Track Repo Pages (Header) ([#3728](https://github.com/open-sauced/app/issues/3728)) ([2dede76](https://github.com/open-sauced/app/commit/2dede76509a7a489c63829e644a8c9cb219be36a))
+* Tracking Repo Pages (Lottery Factor Chart) ([#3734](https://github.com/open-sauced/app/issues/3734)) ([be5c72e](https://github.com/open-sauced/app/commit/be5c72e203c9406128fe30b90d355584e5de1354))
+* Tracking Repo Pages (Miscellaneous) ([#3739](https://github.com/open-sauced/app/issues/3739)) ([5530beb](https://github.com/open-sauced/app/commit/5530beb1868d925c67a9390e8b924289d36d6e58))
+* Tracking Repo Pages (YOLO Chart) ([#3736](https://github.com/open-sauced/app/issues/3736)) ([5edfe8a](https://github.com/open-sauced/app/commit/5edfe8ac5cbefd04ca36e0fbbda85bdc330c5f1d))
+
+## [2.46.0-beta.6](https://github.com/open-sauced/app/compare/v2.46.0-beta.5...v2.46.0-beta.6) (2024-07-18)
+
+
+### 🍕 Features
+
+* added posthog analytics for StarSearch for Workspaces ([#3748](https://github.com/open-sauced/app/issues/3748)) ([72d7c23](https://github.com/open-sauced/app/commit/72d7c2335867b8cafb2ac79189ad312ef2f7569b))
+
+## [2.46.0-beta.5](https://github.com/open-sauced/app/compare/v2.46.0-beta.4...v2.46.0-beta.5) (2024-07-18)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch for workspaces only works for editors ([#3733](https://github.com/open-sauced/app/issues/3733)) ([4aeb220](https://github.com/open-sauced/app/commit/4aeb220dec334e37629537b61d5959e5b1cb73f2))
+
+## [2.46.0-beta.4](https://github.com/open-sauced/app/compare/v2.46.0-beta.3...v2.46.0-beta.4) (2024-07-18)
+
+
+### 🍕 Features
+
+* Tracking Repo Pages (YOLO Chart) ([#3736](https://github.com/open-sauced/app/issues/3736)) ([5edfe8a](https://github.com/open-sauced/app/commit/5edfe8ac5cbefd04ca36e0fbbda85bdc330c5f1d))
+
+## [2.46.0-beta.3](https://github.com/open-sauced/app/compare/v2.46.0-beta.2...v2.46.0-beta.3) (2024-07-18)
+
+
+### 🍕 Features
+
+* Tracking Repo Pages (Miscellaneous) ([#3739](https://github.com/open-sauced/app/issues/3739)) ([5530beb](https://github.com/open-sauced/app/commit/5530beb1868d925c67a9390e8b924289d36d6e58))
+
+## [2.46.0-beta.2](https://github.com/open-sauced/app/compare/v2.46.0-beta.1...v2.46.0-beta.2) (2024-07-17)
+
+
+### 🍕 Features
+
+* removed StarSearch feature flagging ([#3730](https://github.com/open-sauced/app/issues/3730)) ([701a95a](https://github.com/open-sauced/app/commit/701a95a3294c81ef878b4ed6dee6db380bdf9c47))
+* Tracking Repo Pages (Lottery Factor Chart) ([#3734](https://github.com/open-sauced/app/issues/3734)) ([be5c72e](https://github.com/open-sauced/app/commit/be5c72e203c9406128fe30b90d355584e5de1354))
+
+## [2.46.0-beta.1](https://github.com/open-sauced/app/compare/v2.45.0...v2.46.0-beta.1) (2024-07-17)
+
+
+### 🍕 Features
+
+* Track Repo Pages (Header) ([#3728](https://github.com/open-sauced/app/issues/3728)) ([2dede76](https://github.com/open-sauced/app/commit/2dede76509a7a489c63829e644a8c9cb219be36a))
+
+## [2.45.0](https://github.com/open-sauced/app/compare/v2.44.0...v2.45.0) (2024-07-16)
+
+
+### 🍕 Features
+
+* display "license, language, and last updated at" in repo pages ([#3710](https://github.com/open-sauced/app/issues/3710)) ([d286741](https://github.com/open-sauced/app/commit/d286741ee94e767cfa0e324e92fa4c211a74d4de))
+* now userprofile pages are cached for 60 seconds ([#3721](https://github.com/open-sauced/app/issues/3721)) ([dd8243b](https://github.com/open-sauced/app/commit/dd8243b7c5998f71490a719fb487b444a3b28507))
+* show total Outside Contributors in `RossChart` ([#3694](https://github.com/open-sauced/app/issues/3694)) ([1e00a24](https://github.com/open-sauced/app/commit/1e00a2430380a09f23fe304f24936bb229f73780))
+
+
+### 🐛 Bug Fixes
+
+* add padding to explore tabs ([#3718](https://github.com/open-sauced/app/issues/3718)) ([2b3fb90](https://github.com/open-sauced/app/commit/2b3fb9058503ff06124d686a3dd17601c7e6a9e7))
+* fixed several UI/UX issues for StarSearch ([#3692](https://github.com/open-sauced/app/issues/3692)) ([d06ea60](https://github.com/open-sauced/app/commit/d06ea607c5c6e43ca07b5583e293a58c2b0810cb))
+* maintain selected date across dashboard tabs ([#3660](https://github.com/open-sauced/app/issues/3660)) ([cf641f1](https://github.com/open-sauced/app/commit/cf641f1baae7912dcfd86477f685eafbede23c45))
+* maintain selected date range when switching between tabs ([3528397](https://github.com/open-sauced/app/commit/35283974768b527a0cabde196caf25efe340da1c))
+* now user menu opens in the top nav ([#3725](https://github.com/open-sauced/app/issues/3725)) ([5732d08](https://github.com/open-sauced/app/commit/5732d08ff2d6c40d70c49ee719f3c2595a691d96))
+
+## [2.45.0-beta.5](https://github.com/open-sauced/app/compare/v2.45.0-beta.4...v2.45.0-beta.5) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* now user menu opens in the top nav ([#3725](https://github.com/open-sauced/app/issues/3725)) ([5732d08](https://github.com/open-sauced/app/commit/5732d08ff2d6c40d70c49ee719f3c2595a691d96))
+
+## [2.45.0-beta.4](https://github.com/open-sauced/app/compare/v2.45.0-beta.3...v2.45.0-beta.4) (2024-07-16)
+
+
+### 🍕 Features
+
+* display "license, language, and last updated at" in repo pages ([#3710](https://github.com/open-sauced/app/issues/3710)) ([d286741](https://github.com/open-sauced/app/commit/d286741ee94e767cfa0e324e92fa4c211a74d4de))
+
+## [2.45.0-beta.3](https://github.com/open-sauced/app/compare/v2.45.0-beta.2...v2.45.0-beta.3) (2024-07-16)
+
+
+### 🍕 Features
+
+* now userprofile pages are cached for 60 seconds ([#3721](https://github.com/open-sauced/app/issues/3721)) ([dd8243b](https://github.com/open-sauced/app/commit/dd8243b7c5998f71490a719fb487b444a3b28507))
+
+## [2.45.0-beta.2](https://github.com/open-sauced/app/compare/v2.45.0-beta.1...v2.45.0-beta.2) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* fixed several UI/UX issues for StarSearch ([#3692](https://github.com/open-sauced/app/issues/3692)) ([d06ea60](https://github.com/open-sauced/app/commit/d06ea607c5c6e43ca07b5583e293a58c2b0810cb))
+
+## [2.45.0-beta.1](https://github.com/open-sauced/app/compare/v2.44.1-beta.2...v2.45.0-beta.1) (2024-07-16)
+
+
+### 🍕 Features
+
+* show total Outside Contributors in `RossChart` ([#3694](https://github.com/open-sauced/app/issues/3694)) ([1e00a24](https://github.com/open-sauced/app/commit/1e00a2430380a09f23fe304f24936bb229f73780))
+
+## [2.44.1-beta.2](https://github.com/open-sauced/app/compare/v2.44.1-beta.1...v2.44.1-beta.2) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* maintain selected date across dashboard tabs ([#3660](https://github.com/open-sauced/app/issues/3660)) ([cf641f1](https://github.com/open-sauced/app/commit/cf641f1baae7912dcfd86477f685eafbede23c45))
+* maintain selected date range when switching between tabs ([3528397](https://github.com/open-sauced/app/commit/35283974768b527a0cabde196caf25efe340da1c))
+
+## [2.44.1-beta.1](https://github.com/open-sauced/app/compare/v2.44.0...v2.44.1-beta.1) (2024-07-16)
+
+
+### 🐛 Bug Fixes
+
+* add padding to explore tabs ([#3718](https://github.com/open-sauced/app/issues/3718)) ([2b3fb90](https://github.com/open-sauced/app/commit/2b3fb9058503ff06124d686a3dd17601c7e6a9e7))
+
+## [2.44.0](https://github.com/open-sauced/app/compare/v2.43.0...v2.44.0) (2024-07-11)
+
+
+### 🍕 Features
+
+* add Contributor Distribution to repo page ([#3712](https://github.com/open-sauced/app/issues/3712)) ([a53c7cd](https://github.com/open-sauced/app/commit/a53c7cd57652c75ecc52a9650a8aed9dbc9ac9c7))
+* allow input and display of GitHub releases as highlights ([#3705](https://github.com/open-sauced/app/issues/3705)) ([8aa0177](https://github.com/open-sauced/app/commit/8aa01775eb4f93491459bbcd571293bf207e66e4))
+* filter `RossChart` by contributor type ([#3698](https://github.com/open-sauced/app/issues/3698)) ([d48e8ac](https://github.com/open-sauced/app/commit/d48e8ac55e34136540277c1f7bb9dac2881d984c))
+* implemented the Radar chart component ([#3704](https://github.com/open-sauced/app/issues/3704)) ([8579f41](https://github.com/open-sauced/app/commit/8579f416f3077108631d04d88833a47d43896e17))
+
+
+### 🐛 Bug Fixes
+
+* allow repos and contributors to be added to workspaces from explore page ([#3700](https://github.com/open-sauced/app/issues/3700)) ([3271dd4](https://github.com/open-sauced/app/commit/3271dd4f086df90b79a8ad5a704ea49a1f528602))
+* now a contributor insight can be deleted if one was deleted in the same page session ([#3246](https://github.com/open-sauced/app/issues/3246)) ([8dd1ee2](https://github.com/open-sauced/app/commit/8dd1ee25d4bfbee7d78191609e205e0cb62f7213))
+* now the contributions tab is the first tab on the user profile page ([#3709](https://github.com/open-sauced/app/issues/3709)) ([87d0ee9](https://github.com/open-sauced/app/commit/87d0ee9f72a002de2cffb0df1d335add01303330))
+
+## [2.44.0-beta.6](https://github.com/open-sauced/app/compare/v2.44.0-beta.5...v2.44.0-beta.6) (2024-07-11)
+
+
+### 🍕 Features
+
+* filter `RossChart` by contributor type ([#3698](https://github.com/open-sauced/app/issues/3698)) ([d48e8ac](https://github.com/open-sauced/app/commit/d48e8ac55e34136540277c1f7bb9dac2881d984c))
+
+
+### 🐛 Bug Fixes
+
+* allow repos and contributors to be added to workspaces from explore page ([#3700](https://github.com/open-sauced/app/issues/3700)) ([3271dd4](https://github.com/open-sauced/app/commit/3271dd4f086df90b79a8ad5a704ea49a1f528602))
+
+## [2.44.0-beta.5](https://github.com/open-sauced/app/compare/v2.44.0-beta.4...v2.44.0-beta.5) (2024-07-11)
+
+
+### 🍕 Features
+
+* add Contributor Distribution to repo page ([#3712](https://github.com/open-sauced/app/issues/3712)) ([a53c7cd](https://github.com/open-sauced/app/commit/a53c7cd57652c75ecc52a9650a8aed9dbc9ac9c7))
+
+## [2.44.0-beta.4](https://github.com/open-sauced/app/compare/v2.44.0-beta.3...v2.44.0-beta.4) (2024-07-11)
+
+
+### 🍕 Features
+
+* allow input and display of GitHub releases as highlights ([#3705](https://github.com/open-sauced/app/issues/3705)) ([8aa0177](https://github.com/open-sauced/app/commit/8aa01775eb4f93491459bbcd571293bf207e66e4))
+
+## [2.44.0-beta.3](https://github.com/open-sauced/app/compare/v2.44.0-beta.2...v2.44.0-beta.3) (2024-07-10)
+
+
+### 🐛 Bug Fixes
+
+* now a contributor insight can be deleted if one was deleted in the same page session ([#3246](https://github.com/open-sauced/app/issues/3246)) ([8dd1ee2](https://github.com/open-sauced/app/commit/8dd1ee25d4bfbee7d78191609e205e0cb62f7213))
+
+## [2.44.0-beta.2](https://github.com/open-sauced/app/compare/v2.44.0-beta.1...v2.44.0-beta.2) (2024-07-10)
+
+
+### 🐛 Bug Fixes
+
+* now the contributions tab is the first tab on the user profile page ([#3709](https://github.com/open-sauced/app/issues/3709)) ([87d0ee9](https://github.com/open-sauced/app/commit/87d0ee9f72a002de2cffb0df1d335add01303330))
+
+## [2.44.0-beta.1](https://github.com/open-sauced/app/compare/v2.43.0...v2.44.0-beta.1) (2024-07-10)
+
+
+### 🍕 Features
+
+* implemented the Radar chart component ([#3704](https://github.com/open-sauced/app/issues/3704)) ([8579f41](https://github.com/open-sauced/app/commit/8579f416f3077108631d04d88833a47d43896e17))
+
+## [2.43.0](https://github.com/open-sauced/app/compare/v2.42.0...v2.43.0) (2024-07-09)
+
+
+### 🍕 Features
+
+* `YoloChart` in repo pages ([#3658](https://github.com/open-sauced/app/issues/3658)) ([9462519](https://github.com/open-sauced/app/commit/94625196853928735a49095d01bc580187ad2aec))
+
+
+### 🐛 Bug Fixes
+
+* now app sidebar menu items have the same font weight ([#3690](https://github.com/open-sauced/app/issues/3690)) ([3647252](https://github.com/open-sauced/app/commit/36472521749d04843275edf33387e7a156556291))
+* now the repository insights pages header looks good on smaller screens ([#3687](https://github.com/open-sauced/app/issues/3687)) ([8a47e17](https://github.com/open-sauced/app/commit/8a47e17b690dedcaf02453a8ee683ede0b8d27b3))
+* use explore page with typescript topic as fallback instead of feed page ([#3691](https://github.com/open-sauced/app/issues/3691)) ([a50e34a](https://github.com/open-sauced/app/commit/a50e34aa56812e463c8f956062b06f8fb8f40885))
+
+## [2.43.0-beta.2](https://github.com/open-sauced/app/compare/v2.43.0-beta.1...v2.43.0-beta.2) (2024-07-09)
+
+
+### 🐛 Bug Fixes
+
+* use explore page with typescript topic as fallback instead of feed page ([#3691](https://github.com/open-sauced/app/issues/3691)) ([a50e34a](https://github.com/open-sauced/app/commit/a50e34aa56812e463c8f956062b06f8fb8f40885))
+
+## [2.43.0-beta.1](https://github.com/open-sauced/app/compare/v2.42.1-beta.2...v2.43.0-beta.1) (2024-07-08)
+
+
+### 🍕 Features
+
+* `YoloChart` in repo pages ([#3658](https://github.com/open-sauced/app/issues/3658)) ([9462519](https://github.com/open-sauced/app/commit/94625196853928735a49095d01bc580187ad2aec))
+
+## [2.42.1-beta.2](https://github.com/open-sauced/app/compare/v2.42.1-beta.1...v2.42.1-beta.2) (2024-07-08)
+
+
+### 🐛 Bug Fixes
+
+* now the repository insights pages header looks good on smaller screens ([#3687](https://github.com/open-sauced/app/issues/3687)) ([8a47e17](https://github.com/open-sauced/app/commit/8a47e17b690dedcaf02453a8ee683ede0b8d27b3))
+
+## [2.42.1-beta.1](https://github.com/open-sauced/app/compare/v2.42.0...v2.42.1-beta.1) (2024-07-05)
+
+
+### 🐛 Bug Fixes
+
+* now app sidebar menu items have the same font weight ([#3690](https://github.com/open-sauced/app/issues/3690)) ([3647252](https://github.com/open-sauced/app/commit/36472521749d04843275edf33387e7a156556291))
+
+## [2.42.0](https://github.com/open-sauced/app/compare/v2.41.0...v2.42.0) (2024-07-04)
+
+
+### 🍕 Features
+
+* add repo filtering to contributions tables on contributor profile ([#3580](https://github.com/open-sauced/app/issues/3580)) ([a2e49ef](https://github.com/open-sauced/app/commit/a2e49ef2f18cfd8347af1676631b10eb0542adad))
+
+
+### 🐛 Bug Fixes
+
+* lottery factor copy ([#3682](https://github.com/open-sauced/app/issues/3682)) ([baac008](https://github.com/open-sauced/app/commit/baac00867e9f4ce2a8d0126656df3250c092c40a))
+* now OSCR column is hidden if feature flag is not enabled for OSCR ([#3676](https://github.com/open-sauced/app/issues/3676)) ([061c590](https://github.com/open-sauced/app/commit/061c590e7be296f75b4812f552b0e33e3dcfad03))
+* now the contributor insights new/edit page fits in smaller screens ([#3679](https://github.com/open-sauced/app/issues/3679)) ([256af40](https://github.com/open-sauced/app/commit/256af405de326f9814330b72c938233f1e63da83))
+
+## [2.42.0-beta.2](https://github.com/open-sauced/app/compare/v2.42.0-beta.1...v2.42.0-beta.2) (2024-07-04)
+
+
+### 🐛 Bug Fixes
+
+* lottery factor copy ([#3682](https://github.com/open-sauced/app/issues/3682)) ([baac008](https://github.com/open-sauced/app/commit/baac00867e9f4ce2a8d0126656df3250c092c40a))
+
+## [2.42.0-beta.1](https://github.com/open-sauced/app/compare/v2.41.1-beta.2...v2.42.0-beta.1) (2024-07-03)
+
+
+### 🍕 Features
+
+* add repo filtering to contributions tables on contributor profile ([#3580](https://github.com/open-sauced/app/issues/3580)) ([a2e49ef](https://github.com/open-sauced/app/commit/a2e49ef2f18cfd8347af1676631b10eb0542adad))
+
+## [2.41.1-beta.2](https://github.com/open-sauced/app/compare/v2.41.1-beta.1...v2.41.1-beta.2) (2024-07-03)
+
+
+### 🐛 Bug Fixes
+
+* now the contributor insights new/edit page fits in smaller screens ([#3679](https://github.com/open-sauced/app/issues/3679)) ([256af40](https://github.com/open-sauced/app/commit/256af405de326f9814330b72c938233f1e63da83))
+
+## [2.41.1-beta.1](https://github.com/open-sauced/app/compare/v2.41.0...v2.41.1-beta.1) (2024-07-03)
+
+
+### 🐛 Bug Fixes
+
+* now OSCR column is hidden if feature flag is not enabled for OSCR ([#3676](https://github.com/open-sauced/app/issues/3676)) ([061c590](https://github.com/open-sauced/app/commit/061c590e7be296f75b4812f552b0e33e3dcfad03))
+
+## [2.41.0](https://github.com/open-sauced/app/compare/v2.40.0...v2.41.0) (2024-07-03)
+
+
+### 🐛 Bug Fixes
+
+* now OSCR that is 0 gets rendered as a dash ([#3662](https://github.com/open-sauced/app/issues/3662)) ([5e12564](https://github.com/open-sauced/app/commit/5e1256491964dc6e443b0f6db5bef59a9b9c57e9))
+* now workspace pages on smaller screens keep their layout in bounds ([#3664](https://github.com/open-sauced/app/issues/3664)) ([8b2a879](https://github.com/open-sauced/app/commit/8b2a8795f2d10a30cc187431cce2e199c4802d9b))
+* remove dots from `IssueChart` & `PRChart` ([#3659](https://github.com/open-sauced/app/issues/3659)) ([deb24a0](https://github.com/open-sauced/app/commit/deb24a0be3b040883e4f03c31db50e48a90dbde1))
+* reset input after deleting contributor insight list ([#3600](https://github.com/open-sauced/app/issues/3600)) ([2a2ac76](https://github.com/open-sauced/app/commit/2a2ac7653bfe61914a950edb0cbe7d419d1ee2df))
+* reset input after deleting contributor insight list([#3553](https://github.com/open-sauced/app/issues/3553)) ([e436e8d](https://github.com/open-sauced/app/commit/e436e8d1f5fccb4ca6e640b85a889dfd53132907))
+* workspace insight header paddings ([#3623](https://github.com/open-sauced/app/issues/3623)) ([10438b4](https://github.com/open-sauced/app/commit/10438b4935a2020bd2e1171c2e63c048e0be81cd))
+
+
+### 🍕 Features
+
+* add range filter when importing GitHub repos for an org ([#3665](https://github.com/open-sauced/app/issues/3665)) ([89abf59](https://github.com/open-sauced/app/commit/89abf59f6770507ce7c659016ca88240e907f2da))
+
+## [2.41.0-beta.1](https://github.com/open-sauced/app/compare/v2.40.1-beta.4...v2.41.0-beta.1) (2024-07-02)
+
+
+### 🍕 Features
+
+* add range filter when importing GitHub repos for an org ([#3665](https://github.com/open-sauced/app/issues/3665)) ([89abf59](https://github.com/open-sauced/app/commit/89abf59f6770507ce7c659016ca88240e907f2da))
+
+## [2.40.1-beta.4](https://github.com/open-sauced/app/compare/v2.40.1-beta.3...v2.40.1-beta.4) (2024-07-02)
+
+
+### 🐛 Bug Fixes
+
+* now workspace pages on smaller screens keep their layout in bounds ([#3664](https://github.com/open-sauced/app/issues/3664)) ([8b2a879](https://github.com/open-sauced/app/commit/8b2a8795f2d10a30cc187431cce2e199c4802d9b))
+
+## [2.40.1-beta.3](https://github.com/open-sauced/app/compare/v2.40.1-beta.2...v2.40.1-beta.3) (2024-07-02)
+
+
+### 🐛 Bug Fixes
+
+* now OSCR that is 0 gets rendered as a dash ([#3662](https://github.com/open-sauced/app/issues/3662)) ([5e12564](https://github.com/open-sauced/app/commit/5e1256491964dc6e443b0f6db5bef59a9b9c57e9))
+* remove dots from `IssueChart` & `PRChart` ([#3659](https://github.com/open-sauced/app/issues/3659)) ([deb24a0](https://github.com/open-sauced/app/commit/deb24a0be3b040883e4f03c31db50e48a90dbde1))
+
+## [2.40.1-beta.2](https://github.com/open-sauced/app/compare/v2.40.1-beta.1...v2.40.1-beta.2) (2024-07-01)
+
+
+### 🐛 Bug Fixes
+
+* workspace insight header paddings ([#3623](https://github.com/open-sauced/app/issues/3623)) ([10438b4](https://github.com/open-sauced/app/commit/10438b4935a2020bd2e1171c2e63c048e0be81cd))
+
+## [2.40.1-beta.1](https://github.com/open-sauced/app/compare/v2.40.0...v2.40.1-beta.1) (2024-06-29)
+
+
+### 🐛 Bug Fixes
+
+* reset input after deleting contributor insight list ([#3600](https://github.com/open-sauced/app/issues/3600)) ([2a2ac76](https://github.com/open-sauced/app/commit/2a2ac7653bfe61914a950edb0cbe7d419d1ee2df))
+* reset input after deleting contributor insight list([#3553](https://github.com/open-sauced/app/issues/3553)) ([e436e8d](https://github.com/open-sauced/app/commit/e436e8d1f5fccb4ca6e640b85a889dfd53132907))
+
+## [2.40.0](https://github.com/open-sauced/app/compare/v2.39.0...v2.40.0) (2024-06-27)
+
+
+### 🍕 Features
+
+* created the OSCR rating feature flag ([#3642](https://github.com/open-sauced/app/issues/3642)) ([2db70a2](https://github.com/open-sauced/app/commit/2db70a27db2cd5ca2f9838f273d8cf73c3defa05))
+* implemented Open Source Contributor Rating for contributor table ([#3643](https://github.com/open-sauced/app/issues/3643)) ([68e8494](https://github.com/open-sauced/app/commit/68e849458a971fe86b98f58f63035dc8007d199f))
+
+## [2.40.0-beta.2](https://github.com/open-sauced/app/compare/v2.40.0-beta.1...v2.40.0-beta.2) (2024-06-27)
+
+
+### 🍕 Features
+
+* implemented Open Source Contributor Rating for contributor table ([#3643](https://github.com/open-sauced/app/issues/3643)) ([68e8494](https://github.com/open-sauced/app/commit/68e849458a971fe86b98f58f63035dc8007d199f))
+
+## [2.40.0-beta.1](https://github.com/open-sauced/app/compare/v2.39.0...v2.40.0-beta.1) (2024-06-27)
+
+
+### 🍕 Features
+
+* created the OSCR rating feature flag ([#3642](https://github.com/open-sauced/app/issues/3642)) ([2db70a2](https://github.com/open-sauced/app/commit/2db70a27db2cd5ca2f9838f273d8cf73c3defa05))
+
+## [2.39.0](https://github.com/open-sauced/app/compare/v2.38.0...v2.39.0) (2024-06-26)
+
+
+### 🍕 Features
+
+* add `showHoverCards` optional prop to `LotteryFactorChart` ([#3611](https://github.com/open-sauced/app/issues/3611)) ([9c7f7c7](https://github.com/open-sauced/app/commit/9c7f7c72775fc104681dfe663a60115d6f91c0f8))
+* add fallback to GitHub API for repository search hook ([#3613](https://github.com/open-sauced/app/issues/3613)) ([8141092](https://github.com/open-sauced/app/commit/81410923e96054cef01362bb6a5dac114836734b))
+* added the repo name as a link above the lottery factor chart ([#3632](https://github.com/open-sauced/app/issues/3632)) ([329d5c4](https://github.com/open-sauced/app/commit/329d5c40199d73fe07dde1f25b31fe1f3a354b05))
+* now StarSearch conversation share link button has a loading state ([#3638](https://github.com/open-sauced/app/issues/3638)) ([282ee04](https://github.com/open-sauced/app/commit/282ee042997efbe811babe081f9bf27859e32a91))
+* redirect user to workspaces after onboarding ([#3621](https://github.com/open-sauced/app/issues/3621)) ([0e686dd](https://github.com/open-sauced/app/commit/0e686ddb5e9dbaf534d11957a7b79a0b23a6f3ef))
+* Remove deprecated v2/lists/:id/contributors endpoint ([#3635](https://github.com/open-sauced/app/issues/3635)) ([06f4235](https://github.com/open-sauced/app/commit/06f42350aad80385c5c7ce9b272cf942a3dde4fd))
+
+
+### 🐛 Bug Fixes
+
+* Issue and PR charts velocity text sizing ([#3603](https://github.com/open-sauced/app/issues/3603)) ([82726a6](https://github.com/open-sauced/app/commit/82726a6a3ac85e0923be07b029f5f7324b5a88b2))
+* now a new StarSearch chat can be started if one was in progress ([#3637](https://github.com/open-sauced/app/issues/3637)) ([c430f66](https://github.com/open-sauced/app/commit/c430f66b3776ff0ddaeb1b19de20ff495a4705b3))
+* now StarSearch compact header no longer cuts off StarSearch logo ([#3630](https://github.com/open-sauced/app/issues/3630)) ([b74a956](https://github.com/open-sauced/app/commit/b74a956284910b751bc7a80eacc9fd178444ab5a))
+* now widgets in StarSearch look good width wise when embedded ([#3628](https://github.com/open-sauced/app/issues/3628)) ([422096d](https://github.com/open-sauced/app/commit/422096d9a8214464ac7456a1dcc94458a04fd58c))
+* now workspace pages with StarSearch are scrollable ([#3619](https://github.com/open-sauced/app/issues/3619)) ([5e68639](https://github.com/open-sauced/app/commit/5e686393b1389481fbbcf0a9ca5ff3b5dd9a5b88))
+
+## [2.39.0-beta.9](https://github.com/open-sauced/app/compare/v2.39.0-beta.8...v2.39.0-beta.9) (2024-06-26)
+
+
+### 🐛 Bug Fixes
+
+* now a new StarSearch chat can be started if one was in progress ([#3637](https://github.com/open-sauced/app/issues/3637)) ([c430f66](https://github.com/open-sauced/app/commit/c430f66b3776ff0ddaeb1b19de20ff495a4705b3))
+
+## [2.39.0-beta.8](https://github.com/open-sauced/app/compare/v2.39.0-beta.7...v2.39.0-beta.8) (2024-06-26)
+
+
+### 🍕 Features
+
+* now StarSearch conversation share link button has a loading state ([#3638](https://github.com/open-sauced/app/issues/3638)) ([282ee04](https://github.com/open-sauced/app/commit/282ee042997efbe811babe081f9bf27859e32a91))
+
+## [2.39.0-beta.7](https://github.com/open-sauced/app/compare/v2.39.0-beta.6...v2.39.0-beta.7) (2024-06-26)
+
+
+### 🍕 Features
+
+* Remove deprecated v2/lists/:id/contributors endpoint ([#3635](https://github.com/open-sauced/app/issues/3635)) ([06f4235](https://github.com/open-sauced/app/commit/06f42350aad80385c5c7ce9b272cf942a3dde4fd))
+
+## [2.39.0-beta.6](https://github.com/open-sauced/app/compare/v2.39.0-beta.5...v2.39.0-beta.6) (2024-06-25)
+
+
+### 🍕 Features
+
+* added the repo name as a link above the lottery factor chart ([#3632](https://github.com/open-sauced/app/issues/3632)) ([329d5c4](https://github.com/open-sauced/app/commit/329d5c40199d73fe07dde1f25b31fe1f3a354b05))
+
+## [2.39.0-beta.5](https://github.com/open-sauced/app/compare/v2.39.0-beta.4...v2.39.0-beta.5) (2024-06-25)
+
+
+### 🐛 Bug Fixes
+
+* Issue and PR charts velocity text sizing ([#3603](https://github.com/open-sauced/app/issues/3603)) ([82726a6](https://github.com/open-sauced/app/commit/82726a6a3ac85e0923be07b029f5f7324b5a88b2))
+
+## [2.39.0-beta.4](https://github.com/open-sauced/app/compare/v2.39.0-beta.3...v2.39.0-beta.4) (2024-06-25)
+
+
+### 🐛 Bug Fixes
+
+* now StarSearch compact header no longer cuts off StarSearch logo ([#3630](https://github.com/open-sauced/app/issues/3630)) ([b74a956](https://github.com/open-sauced/app/commit/b74a956284910b751bc7a80eacc9fd178444ab5a))
+* now widgets in StarSearch look good width wise when embedded ([#3628](https://github.com/open-sauced/app/issues/3628)) ([422096d](https://github.com/open-sauced/app/commit/422096d9a8214464ac7456a1dcc94458a04fd58c))
+
+## [2.39.0-beta.3](https://github.com/open-sauced/app/compare/v2.39.0-beta.2...v2.39.0-beta.3) (2024-06-25)
+
+
+### 🍕 Features
+
+* add fallback to GitHub API for repository search hook ([#3613](https://github.com/open-sauced/app/issues/3613)) ([8141092](https://github.com/open-sauced/app/commit/81410923e96054cef01362bb6a5dac114836734b))
+* redirect user to workspaces after onboarding ([#3621](https://github.com/open-sauced/app/issues/3621)) ([0e686dd](https://github.com/open-sauced/app/commit/0e686ddb5e9dbaf534d11957a7b79a0b23a6f3ef))
+
+## [2.39.0-beta.2](https://github.com/open-sauced/app/compare/v2.39.0-beta.1...v2.39.0-beta.2) (2024-06-24)
+
+
+### 🐛 Bug Fixes
+
+* now workspace pages with StarSearch are scrollable ([#3619](https://github.com/open-sauced/app/issues/3619)) ([5e68639](https://github.com/open-sauced/app/commit/5e686393b1389481fbbcf0a9ca5ff3b5dd9a5b88))
+
+## [2.39.0-beta.1](https://github.com/open-sauced/app/compare/v2.38.0...v2.39.0-beta.1) (2024-06-21)
+
+
+### 🍕 Features
+
+* add `showHoverCards` optional prop to `LotteryFactorChart` ([#3611](https://github.com/open-sauced/app/issues/3611)) ([9c7f7c7](https://github.com/open-sauced/app/commit/9c7f7c72775fc104681dfe663a60115d6f91c0f8))
+
+## [2.38.0](https://github.com/open-sauced/app/compare/v2.37.0...v2.38.0) (2024-06-20)
+
+
+### 🐛 Bug Fixes
+
+* center highlights page ([#3604](https://github.com/open-sauced/app/issues/3604)) ([52667b6](https://github.com/open-sauced/app/commit/52667b63ef5d53091cfb54e011bde4deed351485))
+* remove discord link from issue.yml ([#3593](https://github.com/open-sauced/app/issues/3593)) ([5d1b7a4](https://github.com/open-sauced/app/commit/5d1b7a4b54614695e8ac0ad67f1b7e1b41e01af9))
+
+
+### 🍕 Features
+
+* added Swift to the explore page ([#3594](https://github.com/open-sauced/app/issues/3594)) ([ef05a87](https://github.com/open-sauced/app/commit/ef05a87a6a2daf042a4b52f82787d2c2b752996f))
+* added the starsearch-workspaces feature flag to the app ([#3590](https://github.com/open-sauced/app/issues/3590)) ([ae9d6b8](https://github.com/open-sauced/app/commit/ae9d6b8c986cd690faa94f4e1a3db4d66cd6b906))
+* created the StarSearch button CTA ([#3578](https://github.com/open-sauced/app/issues/3578)) ([90158f8](https://github.com/open-sauced/app/commit/90158f89eb3d4e4352e5c71f6d74714a8a076567))
+* implemented the StarSearchCompactHeader component ([#3591](https://github.com/open-sauced/app/issues/3591)) ([bbb5e6c](https://github.com/open-sauced/app/commit/bbb5e6ce607770dd371ac03c3462ae3697215e8b))
+* ROSS chart in repo pages ([#3586](https://github.com/open-sauced/app/issues/3586)) ([f6772bf](https://github.com/open-sauced/app/commit/f6772bf173d60baf04c54e8dffd32766e2d86e59))
+* StarSearch for Workspaces ([#3597](https://github.com/open-sauced/app/issues/3597)) ([44b08f0](https://github.com/open-sauced/app/commit/44b08f091b3d4f31a9f12fb463f1e6065a8ad763))
+
+## [2.38.0-beta.8](https://github.com/open-sauced/app/compare/v2.38.0-beta.7...v2.38.0-beta.8) (2024-06-20)
+
+
+### 🍕 Features
+
+* StarSearch for Workspaces ([#3597](https://github.com/open-sauced/app/issues/3597)) ([44b08f0](https://github.com/open-sauced/app/commit/44b08f091b3d4f31a9f12fb463f1e6065a8ad763))
+
+## [2.38.0-beta.7](https://github.com/open-sauced/app/compare/v2.38.0-beta.6...v2.38.0-beta.7) (2024-06-20)
+
+
+### 🐛 Bug Fixes
+
+* center highlights page ([#3604](https://github.com/open-sauced/app/issues/3604)) ([52667b6](https://github.com/open-sauced/app/commit/52667b63ef5d53091cfb54e011bde4deed351485))
+
 ## [2.38.0-beta.6](https://github.com/open-sauced/app/compare/v2.38.0-beta.5...v2.38.0-beta.6) (2024-06-20)
 
 

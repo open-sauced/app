@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import ContributorProfileHeader from "components/molecules/ContributorProfileHeader/contributor-profile-header";
@@ -108,7 +109,7 @@ const ContributorProfilePage = ({
   });
 
   const chartData = getPullRequestsHistogramToDays(histogramData, Number(range));
-
+  const [selectedRepo, setSelectedRepo] = useState("");
   const totalPrs = chartData.reduce((total, curr) => total + curr.y, 0);
   const iscConnected = !!user?.is_open_sauced_member;
   const { showPRs, showIssueComments, selected, setSelected } = useContributionsFilter();
@@ -236,10 +237,17 @@ const ContributorProfilePage = ({
                         contributor={githubName}
                         range={Number(range)}
                         className="!h-32"
+                        repo={selectedRepo}
                       />
                     </div>
                     <div>
-                      <CardRepoList limit={7} repoList={repoList} total={repoList.length} />
+                      <CardRepoList
+                        limit={7}
+                        repoList={repoList}
+                        total={repoList.length}
+                        onSelect={(repo) => setSelectedRepo(repo)}
+                        showCursor={true}
+                      />
                     </div>
 
                     <div className="mt-6">
@@ -254,19 +262,20 @@ const ContributorProfilePage = ({
                       </div>
 
                       {showPRs && (
-                        <div className="pt-2">
+                        <div className="pt-2 min-h-[550px]">
                           <PullRequestTable
                             limit={15}
                             contributor={githubName}
                             topic={"*"}
                             repositories={undefined}
                             range={range}
+                            repoFilter={selectedRepo}
                           />
                         </div>
                       )}
 
                       {showIssueComments && (
-                        <div className="pt-2">
+                        <div className="pt-2 min-h-[550px]">
                           <IssueCommentsTable contributor={githubName} limit={15} range={Number(range)} />
                         </div>
                       )}

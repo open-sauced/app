@@ -7,6 +7,7 @@ import { ThumbsdownIcon, ThumbsupIcon, XCircleIcon } from "@primer/octicons-reac
 import clsx from "clsx";
 import { captureException } from "@sentry/nextjs";
 import { useRouter } from "next/router";
+import { BiConversation } from "react-icons/bi";
 import { Drawer } from "components/shared/Drawer";
 import {
   StarSearchFeedbackAnalytic,
@@ -14,20 +15,26 @@ import {
   useStarSearchFeedback,
 } from "lib/hooks/useStarSearchFeedback";
 import { useToast } from "lib/hooks/useToast";
-import { ScrollArea } from "components/atoms/ScrollArea/scroll-area";
 import { StarSearchLoader } from "components/StarSearch/StarSearchLoader";
 import StarSearchLoginModal from "components/StarSearch/LoginModal";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { useGetStarSearchThreadHistory } from "lib/hooks/api/useGetStarSearchThreadHistory";
-import { getThreadStream } from "lib/utils/star-search-utils";
+import { deleteWorkspaceStarSearchThread, getThreadStream } from "lib/utils/star-search-utils";
 import { UuidSchema, parseSchema } from "lib/validation-schemas";
 import Button from "components/shared/Button/button";
+import {
+  StarSearchHistoryItem,
+  useGetStarSearchWorkspaceHistory,
+} from "lib/hooks/api/useGetStarSearchWorkspaceHistory";
 import { ChatAvatar } from "./ChatAvatar";
 import { WidgetDefinition } from "./StarSearchWidget";
 import { Chatbox, StarSearchChatMessage } from "./Chatbox";
 import { SuggestedPrompts } from "./SuggestedPrompts";
 import { ShareChatMenu } from "./ShareChatMenu";
+import { StarSearchCompactHeader } from "./StarSearchCompactHeader";
+import "@github/relative-time-element";
 
+const DEFAULT_STAR_SEARCH_API_BASE_URL = new URL(`${process.env.NEXT_PUBLIC_API_URL!}/star-search`);
 const cannedMessage = `I am a chat bot that highlights open source contributors. Try asking about a contributor you know in the open source ecosystem or a GitHub project you use!
 
 Need some ideas? Try hitting the **Need Inspiration?** button below!`;
@@ -62,41 +69,157 @@ async function updateComponentRegistry(name: string) {
   }
 }
 
+interface StarSearchHistoryProps {
+  history: StarSearchHistoryItem[];
+  onLoadThread: (conversationId: string) => void;
+  onNewChat: () => void;
+  onDeleteThread?: (conversationId: string) => void;
+  loadMore?: () => void;
+}
+
+const StarSearchHistory = ({ history, onNewChat, onLoadThread, onDeleteThread, loadMore }: StarSearchHistoryProps) => {
+  return (
+    <div className="flex flex-col gap-2 w-full px-2">
+      <h2 className="fixed text-slate-800 font-semibold w-full bg-light-slate-2 pt-2">StarSearch History</h2>
+      {history.length === 0 ? (
+        <div className="flex flex-col items-center gap-4 pt-10 ">
+          <p>No previous conversations with StarSearch. Start a new conversation</p>
+          <Button variant="primary" onClick={() => onNewChat()} className="flex gap-2 items-center">
+            <BiConversation size={18} />
+            <span>Start a new conversation</span>
+          </Button>
+        </div>
+      ) : (
+        <div className="pb-20">
+          <ul className="grid gap-2 pt-10 [&_li]:p-2" aria-label="StarSearch History">
+            {history.map((item) => (
+              <li
+                key={item.id}
+                className="flex justify-between items-center w-full gap-2 [&:focus-within_[data-delete]]:border-1 [&:focus-within_[data-delete]]:text-inherit focus-within:bg-light-slate-3 hover:bg-light-slate-3 rounded-md hover:text-orange-700 [&_[data-delete]]:hover:text-orange-700"
+              >
+                <div className="grid">
+                  <button
+                    onClick={(event) => {
+                      const { starSearchThreadId } = event.currentTarget.dataset;
+                      starSearchThreadId && onLoadThread(starSearchThreadId);
+                    }}
+                    className="p-2 text-left rounded-md"
+                    data-star-search-thread-id={item.id}
+                  >
+                    {item.title}
+                  </button>
+                  <div className="px-2 text-sm text-light-slate-10">
+                    <relative-time datetime={item.updated_at ?? item.created_at} />
+                  </div>
+                </div>
+                <div className="grid place-content-center">
+                  <button
+                    data-delete
+                    data-id={item.id}
+                    className="p-2 rounded-md text-light-slate-8"
+                    onClick={(event) => {
+                      const { starSearchThreadId } = event.currentTarget.dataset;
+                      starSearchThreadId && onDeleteThread?.(starSearchThreadId);
+                    }}
+                    data-star-search-thread-id={item.id}
+                  >
+                    <span className="sr-only">Delete conversation</span>
+                    <TrashIcon width={18} height={18} />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {loadMore ? (
+            <div className="grid place-content-center">
+              <Button variant="default" onClick={loadMore} className="flex gap-2 items-center justify-center w-fit">
+                Load more...
+              </Button>
+            </div>
+          ) : null}
+        </div>
+      )}
+    </div>
+  );
+};
+
 type StarSearchChatProps = {
-  userId: number | undefined;
-  sharedPrompt: string | null;
-  sharedChatId: string | null;
+  userId?: number | null;
+  sharedPrompt?: string | null;
+  sharedChatId?: string | null;
   bearerToken: string | undefined | null;
   isMobile: boolean;
+  showTopNavigation?: boolean;
   suggestions: { title: string; prompt: string }[];
+  tagline?: string;
+  embedded?: boolean;
+  onClose?: () => void;
+  baseApiStarSearchUrl?: URL;
+  sharingEnabled?: boolean;
+  workspaceId?: string;
 };
+
+type StarSearchState = "initial" | "chat" | "history";
 
 export function StarSearchChat({
   userId,
-  sharedChatId,
-  sharedPrompt,
+  sharedChatId = null,
+  sharedPrompt = null,
   bearerToken,
   isMobile,
   suggestions,
+  tagline = "Copilot, but for git history",
+  onClose,
+  embedded = false,
+  baseApiStarSearchUrl = DEFAULT_STAR_SEARCH_API_BASE_URL,
+  sharingEnabled = true,
+  showTopNavigation = false,
+  workspaceId,
 }: StarSearchChatProps) {
-  const [starSearchState, setStarSearchState] = useState<"initial" | "chat">("initial");
+  const [starSearchState, setStarSearchState] = useState<StarSearchState>("initial");
   const [chat, setChat] = useState<StarSearchChatMessage[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [isRunning, setIsRunning] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [ranOnce, setRanOnce] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const { feedback, prompt } = useStarSearchFeedback();
+  const { feedback, prompt } = useStarSearchFeedback(!!workspaceId);
   const { toast } = useToast();
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [checkAuth, setCheckAuth] = useState(false);
   const [chatId, setChatId] = useState<string | null>(sharedChatId);
+  const [shareLinkError, setShareLinkError] = useState(false);
+  const streamRef = useRef<ReadableStreamDefaultReader<string>>();
+
+  useEffect(() => {
+    if (!workspaceId) {
+      return;
+    }
+
+    onNewChat();
+  }, [workspaceId]);
+
+  const {
+    data: starSearchHistory,
+    isError: isHistoryError,
+    isLoading: isLoadingHistory,
+    mutate: mutateStarSearchHistory,
+    loadMore,
+  } = useGetStarSearchWorkspaceHistory({ workspaceId });
+
+  const onNewChat = () => {
+    streamRef.current?.cancel();
+    setIsRunning(false);
+    setChatId(null);
+    setStarSearchState("initial");
+    setChat([]);
+  };
+
   const {
     data: threadHistory,
     isError,
     isLoading,
     mutate: mutateThreadHistory,
-  } = useGetStarSearchThreadHistory(chatId);
+  } = useGetStarSearchThreadHistory(chatId, workspaceId);
   const router = useRouter();
 
   function clearChatHistory() {
@@ -104,9 +227,29 @@ export function StarSearchChat({
       router.push("/star-search");
     }
 
-    setStarSearchState("initial");
-    setChat([]);
-    setChatId(null);
+    onNewChat();
+  }
+
+  async function deleteStarSearchThread(threadId: string) {
+    if (!bearerToken) {
+      setLoginModalOpen(true);
+      return;
+    }
+
+    const { error } = await deleteWorkspaceStarSearchThread({
+      workspaceId,
+      threadId,
+      bearerToken,
+    });
+
+    if (error) {
+      toast({ description: "Failed to delete conversation", variant: "danger" });
+      return;
+    }
+
+    mutateStarSearchHistory();
+
+    toast({ description: "Conversation deleted", variant: "success" });
   }
 
   useEffect(() => {
@@ -125,12 +268,12 @@ export function StarSearchChat({
     if (inputRef.current) {
       addPromptInput(sharedPrompt);
     }
-  }, [sharedPrompt, inputRef.current]);
+  }, [sharedPrompt, inputRef.current, bearerToken, ranOnce]);
 
   useEffect(() => {
     // Prevents the thread history from running when a new thread has been created and is currently
     // being used. This check is also to prevent the thread history from running multiple times.
-    if (!threadHistory || isLoading || !sharedChatId || (ranOnce && sharedChatId)) {
+    if (isRunning || !threadHistory || isLoading || (!threadHistory && (!sharedChatId || (ranOnce && sharedChatId)))) {
       return;
     }
 
@@ -144,7 +287,8 @@ export function StarSearchChat({
 
     const stream = getThreadStream(threadHistory.thread_history);
     setStarSearchState("chat");
-    processStream(stream.getReader());
+    streamRef.current = stream.getReader();
+    processStream(streamRef.current);
   }, [threadHistory, isError, isLoading, sharedChatId]);
 
   function chatError(resetChatId = false) {
@@ -173,12 +317,21 @@ export function StarSearchChat({
       if (done) {
         setIsRunning(false); // enables input
         setCheckAuth(true);
+
+        // Since this is a new conversation, have the StarSearch history update.
+        mutateStarSearchHistory();
         setChat((chat) => {
           // This is a bit of a hack.
           //
           // We're not changing the chat state, but we're using this as a way to capture the user prompt and the
           // StarSearch response as an analytic.
           const [userPrompt, ...systemResponses] = chat;
+
+          if (!userPrompt) {
+            // the streamed response was cancelled by the user as they
+            // started a new conversation.
+            return chat;
+          }
 
           registerPrompt({
             // userPrompt.content will always be a string, but the .toString() is we don't need to check
@@ -401,10 +554,6 @@ export function StarSearchChat({
     });
   }
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chat]);
-
   const submitPrompt = async (prompt: string) => {
     if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
       setLoginModalOpen(true);
@@ -431,14 +580,11 @@ export function StarSearchChat({
       return temp;
     });
 
-    // get ReadableStream from API
-    const baseUrl = new URL(process.env.NEXT_PUBLIC_API_URL!);
-
     // Get new StarSearch conversation ID
     let id = chatId;
 
     if (!id) {
-      const starSearchThreadResponse = await fetch(`${baseUrl}/star-search`, {
+      const starSearchThreadResponse = await fetch(baseApiStarSearchUrl, {
         method: "POST",
         body: "{}",
         headers: {
@@ -464,7 +610,7 @@ export function StarSearchChat({
         return;
       }
 
-      const updateStarSearchThreadTitle = await fetch(`${baseUrl}/star-search/${id}`, {
+      const updateStarSearchThreadTitle = await fetch(`${baseApiStarSearchUrl}/${id}`, {
         method: "PATCH",
         body: JSON.stringify({ title: prompt }),
         headers: {
@@ -481,7 +627,7 @@ export function StarSearchChat({
       setChatId(id);
     }
 
-    const response = await fetch(`${baseUrl}/star-search/${id}/stream`, {
+    const response = await fetch(`${baseApiStarSearchUrl}/${id}/stream`, {
       method: "POST",
       body: JSON.stringify({
         query_text: prompt,
@@ -493,26 +639,48 @@ export function StarSearchChat({
       },
     });
 
+    // This updates the StarSearch history with the new conversation
+    // This gets called when the stream completes as well, but we want to update
+    // the StarSearch history here as well in case they cancel the conversation.
+    mutateStarSearchHistory();
+
     if (response.status !== 200) {
       chatError();
       return;
     }
 
     const decoder = new TextDecoderStream();
-    const reader = response.body?.pipeThrough(decoder).getReader();
-
-    processStream(reader);
+    streamRef.current = response.body?.pipeThrough(decoder).getReader();
+    processStream(streamRef.current);
   };
 
   const renderState = () => {
     switch (starSearchState) {
       case "initial":
         return (
-          <div className="h-[calc(100vh-240px)] md:h-fit grid place-content-center text-center items-center gap-4">
+          <div
+            style={{
+              height:
+                isMobile && !showTopNavigation
+                  ? "calc(100vh - 215px)"
+                  : isMobile && showTopNavigation
+                  ? "calc(100vh - 225px)"
+                  : undefined,
+            }}
+            className={clsx(
+              isMobile && showTopNavigation && "mt-2",
+              isMobile && !showTopNavigation && "mt-8",
+              "grid place-content-center text-center items-center gap-4 overflow-hidden"
+            )}
+          >
             {!(sharedChatId || sharedPrompt) ? (
               <>
-                <Header />
-                {isMobile ? null : <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />}
+                <Header tagline={tagline} />
+                {isMobile ? null : (
+                  <div className="pb-8">
+                    <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} embedded={embedded} />
+                  </div>
+                )}
               </>
             ) : null}
           </div>
@@ -526,50 +694,55 @@ export function StarSearchChat({
         );
 
         const loaderIndex = chatMessagesToProcess.findLastIndex((c) => c.author === "You");
-        let heightToRemove = 300;
-
-        if (!isRunning && !isMobile && ranOnce && showSuggestions) {
-          heightToRemove = 370;
-        }
 
         return (
           <>
-            <div className="flex flex-col w-full max-w-xl mx-auto mb-4 lg:max-w-5xl lg:px-8">
-              <ScrollArea
-                className="flex grow"
-                asChild={true}
-                style={{ maxHeight: `calc(100vh - ${heightToRemove}px)` }}
-              >
-                <section role="feed" aria-label="StarSearch conversation" aria-busy={isRunning} aria-setsize={-1}>
-                  {chatMessagesToProcess.map((message, i, messages) => {
-                    if (loaderIndex === i && isRunning && messages.length - 1 === i) {
-                      return (
-                        <Fragment key={i}>
-                          <Chatbox userId={userId} message={message} componentRegistry={componentRegistry} />
-                          <div className="flex items-center gap-2 my-4 w-max">
-                            <ChatAvatar author="StarSearch" userId={userId} />
-                            <StarSearchLoader />
-                          </div>
-                        </Fragment>
-                      );
-                    } else {
-                      return (
-                        <Chatbox key={i} userId={userId} message={message} componentRegistry={componentRegistry} />
-                      );
-                    }
-                  })}
-                </section>
-                <div ref={scrollRef} />
-              </ScrollArea>
-              <div className={clsx("text-slate-600 flex gap-4 items-center self-end", isRunning && "invisible")}>
-                <button
-                  type="button"
-                  className="flex items-center gap-2 hover:text-sauced-orange"
-                  onClick={clearChatHistory}
-                >
-                  Clear chat history
-                  <TrashIcon width={18} height={18} />
-                </button>
+            <div
+              role="feed"
+              aria-label="StarSearch conversation"
+              aria-busy={isRunning}
+              aria-setsize={-1}
+              className={clsx("w-full max-w-xl mx-auto lg:max-w-5xl pb-[210px] md:pb-[285px]")}
+            >
+              {chatMessagesToProcess.map((message, i, messages) => {
+                if (loaderIndex === i && isRunning && messages.length - 1 === i) {
+                  return (
+                    <Fragment key={i}>
+                      <Chatbox
+                        userId={userId}
+                        message={message}
+                        componentRegistry={componentRegistry}
+                        embedded={embedded}
+                      />
+                      <div className="flex items-center gap-2 my-4 w-max">
+                        <ChatAvatar author="StarSearch" userId={userId} />
+                        <StarSearchLoader />
+                      </div>
+                    </Fragment>
+                  );
+                } else {
+                  return (
+                    <Chatbox
+                      key={i}
+                      userId={userId}
+                      message={message}
+                      componentRegistry={componentRegistry}
+                      embedded={embedded}
+                    />
+                  );
+                }
+              })}
+              <div className={clsx("text-slate-600 flex gap-4 items-center justify-end", isRunning && "invisible")}>
+                {workspaceId ? null : (
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 hover:text-sauced-orange"
+                    onClick={clearChatHistory}
+                  >
+                    Clear chat history
+                    <TrashIcon width={18} height={18} />
+                  </button>
+                )}
                 <span className="flex gap-1">
                   <button
                     type="button"
@@ -591,189 +764,247 @@ export function StarSearchChat({
                     <span className="sr-only">Thumbs down</span>
                     <ThumbsdownIcon size={16} />
                   </button>
-                  <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
-                    <ShareChatMenu
-                      createLink={
-                        threadHistory?.is_publicly_viewable
-                          ? undefined
-                          : async () => {
-                              try {
-                                parseSchema(UuidSchema, chatId);
-                              } catch (error) {
-                                captureException(
-                                  new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, { cause: error })
-                                );
-                                toast({
-                                  description: "Failed to create a share link",
-                                  variant: "danger",
-                                });
-                                return;
-                              }
+                  {sharingEnabled ? (
+                    <div className="flex items-center gap-2 pl-4 hover:text-sauced-orange">
+                      <ShareChatMenu
+                        createLink={
+                          threadHistory?.is_publicly_viewable
+                            ? undefined
+                            : async () => {
+                                setShareLinkError(false);
 
-                              const response = await fetch(
-                                `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
-                                {
-                                  body: "",
-                                  method: "POST",
-                                  headers: {
-                                    Authorization: `Bearer ${bearerToken}`,
-                                  },
+                                try {
+                                  parseSchema(UuidSchema, chatId);
+                                } catch (error) {
+                                  captureException(
+                                    new Error(`Failed to parse UUID for StarSearch. UUID: ${chatId}`, {
+                                      cause: error,
+                                    })
+                                  );
+                                  toast({
+                                    description: "Failed to create a share link",
+                                    variant: "danger",
+                                  });
+                                  return;
                                 }
-                              );
 
-                              if (response.status == 201) {
-                                toast({
-                                  description: "Share link created",
-                                  variant: "success",
-                                });
-                                // Causes a re-fetch of the thread history so the hook reruns
-                                // and gets the public_link and is_publicly_viewable property updates
-                                mutateThreadHistory(undefined, true);
-                              } else {
-                                toast({
-                                  description: "Failed to create a share link",
-                                  variant: "danger",
-                                });
+                                const response = await fetch(
+                                  `${process.env.NEXT_PUBLIC_API_URL}/star-search/${chatId}/share`,
+                                  {
+                                    body: "",
+                                    method: "POST",
+                                    headers: {
+                                      Authorization: `Bearer ${bearerToken}`,
+                                    },
+                                  }
+                                );
+
+                                if (response.status == 201) {
+                                  toast({
+                                    description: "Share link created",
+                                    variant: "success",
+                                  });
+                                  // Causes a re-fetch of the thread history so the hook reruns
+                                  // and gets the public_link and is_publicly_viewable property updates
+                                  mutateThreadHistory(undefined, true);
+                                } else {
+                                  setShareLinkError(true);
+                                  toast({
+                                    description: "Failed to create a share link",
+                                    variant: "danger",
+                                  });
+                                }
                               }
-                            }
-                      }
-                      shareUrl={threadHistory?.public_link}
-                      copyLinkHandler={async (url: string) => {
-                        await writeToClipboard(url);
-                        toast({
-                          description: "Link copied to clipboard",
-                          variant: "success",
-                        });
-                      }}
-                    />
-                  </div>
+                        }
+                        shareUrl={threadHistory?.public_link}
+                        copyLinkHandler={async (url: string) => {
+                          await writeToClipboard(url);
+                          toast({
+                            description: "Link copied to clipboard",
+                            variant: "success",
+                          });
+                        }}
+                        error={shareLinkError}
+                      />
+                    </div>
+                  ) : null}
                 </span>
               </div>
             </div>
           </>
         );
+
+      case "history":
+        return (
+          <StarSearchHistory
+            history={starSearchHistory}
+            onLoadThread={(conversationId) => {
+              onNewChat();
+              setStarSearchState("chat");
+              setChatId(conversationId);
+            }}
+            onDeleteThread={deleteStarSearchThread}
+            onNewChat={onNewChat}
+            loadMore={loadMore}
+          />
+        );
+
+      default:
+        throw new Error(`Invalid StarSearch state: ${starSearchState}`);
     }
   };
 
   return (
     <>
-      <div className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow bg-slate-50">
-        {renderState()}
-        <div className="sticky w-full bottom-2 md:bottom-4">
-          {!isRunning &&
-            (isMobile ? (
-              <Drawer
-                title="Choose a suggestion"
-                description="You can customize the prompt after selection"
-                showCloseButton
-                trigger={
-                  <button
-                    onClick={() => setShowSuggestions(!showSuggestions)}
-                    className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                  >
-                    Need inspiration?
-                    <BsArrowUpShort className="text-2xl" />
-                  </button>
-                }
-              >
-                <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
-              </Drawer>
-            ) : (
-              <>
-                {!showSuggestions && ranOnce && (
-                  <button
-                    onClick={() => setShowSuggestions(!showSuggestions)}
-                    className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
-                  >
-                    Need inspiration?
-                    <BsArrowUpShort className="text-2xl" />
-                  </button>
-                )}
-              </>
-            ))}
-          {!isMobile && showSuggestions && (
-            <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
-              <button
-                onClick={() => {
-                  setShowSuggestions(false);
-                  inputRef.current?.focus();
-                }}
-                className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
-              >
-                <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
-              </button>
-              <SuggestedPrompts
-                isHorizontal
-                addPromptInput={(prompt) => {
-                  addPromptInput(prompt);
-                  setShowSuggestions(false);
-                }}
-                suggestions={suggestions}
-              />
-            </div>
-          )}
-          {sharedChatId ? (
-            <div className="flex items-center justify-center gap-2 p-2">
-              <p>This is a shared conversation and cannot be added to.</p>
-              <Button variant="primary" onClick={clearChatHistory}>
-                Start a Conversation
-              </Button>
-            </div>
-          ) : null}
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              const form = event.currentTarget;
-              const formData = new FormData(form);
-              submitPrompt(formData.get("prompt") as string);
-              form.reset();
-            }}
-            className="bg-white flex justify-between mx-0.5 lg:mx-auto lg:max-w-3xl px-1 py-[3px] rounded-xl bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange"
-          >
-            <input
-              required
-              type="text"
-              name="prompt"
-              ref={inputRef}
-              disabled={isRunning || !!sharedChatId}
-              placeholder="Ask a question"
-              className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
-              onFocus={() => {
-                if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
-                  setLoginModalOpen(true);
-                }
-              }}
-            />
-            <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
-              <span className="sr-only">Submit your question to StarSearch</span>
-              <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
-            </button>
-          </form>
-          <p className="py-2 text-sm text-center text-slate-400">
-            {isMobile ? (
-              <>StarSearch may generate incorrect responses</>
-            ) : (
-              <>StarSearch may generate incorrect responses, double check important information</>
-            )}
-          </p>
+      {showTopNavigation ? (
+        <StarSearchCompactHeader
+          onBack={onNewChat}
+          onClose={() => {
+            onClose?.();
+          }}
+          onShowHistory={() => {
+            setStarSearchState("history");
+          }}
+          onNewChat={onNewChat}
+        />
+      ) : null}
+      <div
+        className={clsx(
+          isMobile && showTopNavigation && "overflow-y-auto",
+          embedded && "overflow-y-auto overflow-x-hidden self-start w-full"
+        )}
+      >
+        {showTopNavigation ? null : (
+          <div className="fixed inset-x-0 top-20 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]" />
+        )}
+        <div
+          className="star-search relative -mt-1.5 flex flex-col px-2 justify-between items-center w-full h-full grow"
+          data-is-embedded={embedded}
+        >
+          {renderState()}
         </div>
-        <div className="absolute inset-x-0 top-0 h-[125px] w-full translate-y-[-100%] lg:translate-y-[-50%] rounded-full bg-gradient-to-r from-light-red-10 via-sauced-orange to-amber-400 opacity-20 opa blur-[40px]"></div>
+      </div>
+      <div className="fixed w-full bottom-0 h-fit">
+        <div className="h-8 bg-gradient-to-t from-light-slate-2 to-transparent" />
+        {starSearchState === "history" ? null : (
+          <div className="bg-light-slate-2">
+            {!isRunning &&
+              (isMobile ? (
+                <Drawer
+                  title="Choose a suggestion"
+                  description="You can customize the prompt after selection"
+                  showCloseButton
+                  trigger={
+                    <button
+                      onClick={() => setShowSuggestions(!showSuggestions)}
+                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                    >
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  }
+                >
+                  <SuggestedPrompts addPromptInput={addPromptInput} suggestions={suggestions} />
+                </Drawer>
+              ) : (
+                <>
+                  {!showSuggestions && ranOnce && (
+                    <button
+                      onClick={() => setShowSuggestions(!showSuggestions)}
+                      className="mx-auto w-fit flex gap-1 shadow-xs items-center text-slate-700 font-medium bg-slate-100 !border-2 !border-slate-300 px-4 py-1 rounded-full mb-2 md:mb-4"
+                    >
+                      Need inspiration?
+                      <BsArrowUpShort className="text-2xl" />
+                    </button>
+                  )}
+                </>
+              ))}
+            {!isMobile && showSuggestions && (
+              <div className="relative flex flex-col gap-2 mx-auto mb-4 w-fit">
+                <button
+                  onClick={() => {
+                    setShowSuggestions(false);
+                    inputRef.current?.focus();
+                  }}
+                  className="absolute flex self-end gap-2 w-fit -right-5 -top-3"
+                >
+                  <XCircleIcon className="w-5 h-5 text-slate-400" aria-label="Close suggestions" />
+                </button>
+                <SuggestedPrompts
+                  isHorizontal
+                  addPromptInput={(prompt) => {
+                    addPromptInput(prompt);
+                    setShowSuggestions(false);
+                  }}
+                  suggestions={suggestions}
+                />
+              </div>
+            )}
+            {sharedChatId ? (
+              <div className="flex items-center justify-center gap-2 p-2">
+                <p>This is a shared conversation and cannot be added to.</p>
+                <Button variant="primary" onClick={clearChatHistory}>
+                  Start a Conversation
+                </Button>
+              </div>
+            ) : null}
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                const form = event.currentTarget;
+                const formData = new FormData(form);
+                submitPrompt(formData.get("prompt") as string);
+                form.reset();
+              }}
+              className={clsx(
+                "bg-white flex justify-between mx-1 lg:max-w-3xl p-[3px] rounded-[11px] bg-gradient-to-r from-sauced-orange via-amber-400 to-sauced-orange",
+                embedded ? "mx-1" : "md:mx-4 lg:mx-auto"
+              )}
+            >
+              <input
+                required
+                type="text"
+                name="prompt"
+                ref={inputRef}
+                disabled={isRunning || !!sharedChatId}
+                placeholder="Ask a question"
+                className="p-4 bg-white border border-none rounded-l-lg focus:outline-none grow"
+                onFocus={() => {
+                  if ((checkAuth && sharedChatId && !bearerToken) || (!bearerToken && !sharedChatId)) {
+                    setLoginModalOpen(true);
+                  }
+                }}
+              />
+              <button type="submit" disabled={isRunning || !!sharedChatId} className="p-2 bg-white rounded-r-lg">
+                <span className="sr-only">Submit your question to StarSearch</span>
+                <MdOutlineSubdirectoryArrowRight className="w-10 h-10 p-2 rounded-lg bg-light-orange-3 text-light-orange-10" />
+              </button>
+            </form>
+            <p className="py-2 text-sm text-center text-slate-400">
+              {isMobile ? (
+                <>StarSearch may generate incorrect responses</>
+              ) : (
+                <>StarSearch may generate incorrect responses, double check important information</>
+              )}
+            </p>
+          </div>
+        )}
       </div>
       <StarSearchLoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
     </>
   );
 }
 
-function Header() {
+function Header({ tagline }: { tagline: string }) {
   return (
-    <header className="flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
+    <header className="mt-4 flex flex-col items-center gap-2 text-center lg:gap-4 lg:pt-8">
       <div className="flex items-center gap-2">
         <Image src="/assets/star-search-logo.svg" alt="" width={40} height={40} />
         <h1 className="text-3xl font-bold text-transparent lg:text-4xl bg-clip-text bg-gradient-to-r from-sauced-orange to-amber-400">
           StarSearch
         </h1>
       </div>
-      <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">Copilot, but for git history</h2>
+      <h2 className="pt-1 text-3xl font-semibold lg:text-4xl text-slate-600">{tagline}</h2>
     </header>
   );
 }

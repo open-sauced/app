@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Card from "components/atoms/Card/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
 
@@ -10,10 +11,12 @@ export function SuggestedPrompts({
   addPromptInput,
   isHorizontal,
   suggestions,
+  embedded = false,
 }: {
   addPromptInput: (prompt: string) => void;
   isHorizontal?: boolean;
   suggestions: SuggesionTypes[];
+  embedded?: boolean;
 }) {
   return isHorizontal ? (
     <Carousel className="w-fit max-w-[32rem] my-0 mx-auto px-auto md:ml-[1.63rem] lg:mx-auto" orientation="horizontal">
@@ -36,7 +39,10 @@ export function SuggestedPrompts({
   ) : (
     <ul
       aria-label="suggested prompts"
-      className="grid w-full max-w-3xl grid-cols-1 gap-2 lg:grid-cols-2 place-content-center lg:gap-4"
+      className={clsx(
+        `grid w-full max-w-3xl grid-cols-1 gap-2 place-content-center lg:gap-4 p-1`,
+        embedded ? "" : "lg:grid-cols-2"
+      )}
     >
       {suggestions.map((suggestion, i) => (
         <li key={i}>
@@ -46,7 +52,7 @@ export function SuggestedPrompts({
             aria-describedby={`prompt-description-${i}`}
             className="w-full h-full"
           >
-            <Card className="shadow-md border-none text-start !p-6 text-slate-600">
+            <Card className="shadow-md border-none text-start !p-6 text-slate-600 hover:shadow-lg hover:scale-[1.025] transition-all duration-75">
               <span id={`prompt-label-${i}`} className="text-sm font-semibold lg:text-base">
                 {suggestion.title}
               </span>

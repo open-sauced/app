@@ -21,9 +21,10 @@ import RepoNotIndexed from "./repository-not-indexed";
 interface RepositoriesProps {
   repositories?: number[];
   showSearch?: boolean;
+  personalWorkspaceId?: string;
 }
 
-export default function Repositories({ repositories, showSearch = true }: RepositoriesProps) {
+export default function Repositories({ repositories, showSearch = true, personalWorkspaceId }: RepositoriesProps) {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
   const workspaceId = router.query.workspaceId as string;
@@ -52,20 +53,23 @@ export default function Repositories({ repositories, showSearch = true }: Reposi
   };
 
   const handleOnAddtoInsights = () => {
-    if (user) {
+    if (!workspaceId) {
       router.push({
-        pathname: `/workspaces/${workspaceId}/repository-insights/new`,
+        pathname: `/workspaces/new`,
+        query: { repos: JSON.stringify(selectedRepos.map((repo) => repo.full_name)) },
+      });
+    } else if (user) {
+      router.push({
+        pathname: `/workspaces/${personalWorkspaceId ?? workspaceId}/repository-insights/new`,
         query: { repos: JSON.stringify(selectedRepos.map((repo) => repo.full_name)) },
       });
     } else {
       signIn({
         provider: "github",
         options: {
-          redirectTo: `${
-            window.location.origin
-          }/workspaces/${workspaceId}/repository-insights/new?repos=${JSON.stringify(
-            selectedRepos.map((repo) => repo.full_name)
-          )}&login=true&`,
+          redirectTo: `${window.location.origin}/workspaces/${
+            personalWorkspaceId ?? workspaceId
+          }/repository-insights/new?repos=${JSON.stringify(selectedRepos.map((repo) => repo.full_name))}&login=true&`,
         },
       });
     }
@@ -143,10 +147,16 @@ export default function Repositories({ repositories, showSearch = true }: Reposi
           </div>
 
           {selectedRepos.length > 0 && (
-            <div className="flex justify-between p-3 px-6 items-center border-b-2 text-light-slate-11">
+            <div
+              aria-hidden={selectedRepos.length === 0}
+              className={clsx(
+                selectedRepos.length > 0 ? "flex" : "hidden",
+                `justify-between p-3 px-6 items-center border-b-2 text-light-slate-11`
+              )}
+            >
               <div>{selectedRepos.length} Repositories selected</div>
               <Button onClick={handleOnAddtoInsights} variant="primary">
-                Add to Insight Page
+                {workspaceId ? "Add to Insight Page" : "Add to Workspace"}
               </Button>
             </div>
           )}

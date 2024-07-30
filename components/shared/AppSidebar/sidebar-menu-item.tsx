@@ -17,7 +17,7 @@ const SidebarMenuItem = ({ title, icon, type, url: href, isActive }: MenuItemPro
         className="hover:bg-slate-100 text-sm font-medium flex gap-1 items-center rounded-md transition-colors cursor-pointer tracking-tight py-1 px-2 group"
       >
         {icon}
-        <h3 className="py-1 text-slate-800">{title}</h3>
+        <span className="py-1 text-slate-800">{title}</span>
       </Link>
     </li>
   );

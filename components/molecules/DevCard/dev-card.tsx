@@ -20,6 +20,7 @@ export interface DevCardProps {
   username: string;
   name?: string;
   avatarURL: string;
+  oscr?: number;
   prs?: number;
   repos?: number;
   bio?: string;
@@ -138,12 +139,8 @@ export default function DevCard(props: DevCardProps) {
               <div className="text-sm mb-3 font-semibold">@{props.username}</div>
               <div className="w-full flex justify-center gap-6">
                 <div className="text-center">
-                  <div className="text-6xl font-black">{props.isLoading ? "-" : props.prs}</div>
-                  <div className="text-xs">PRs created</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-6xl font-black">{props.isLoading ? "-" : props.repos}</div>
-                  <div className="text-xs">{props.repos! === 1 ? "Repo" : "Repos"}</div>
+                  <div className="text-6xl font-black">{props.isLoading ? "-" : props.oscr}</div>
+                  <div className="text-xs">OSCR</div>
                 </div>
               </div>
             </div>
@@ -210,7 +207,7 @@ export default function DevCard(props: DevCardProps) {
               </div>
             </div>
             <div className="px-2">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center py-2">
                 <div className="text-xs text-slate-300">Activity</div>
                 {!props.isLoading ? (
                   <ActivityPill activity={activity} size="small" />
@@ -219,7 +216,7 @@ export default function DevCard(props: DevCardProps) {
                 )}
               </div>
               <Seperator />
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center py-2">
                 <div className="text-xs text-slate-300">PRs Velocity</div>
                 <div className="flex items-center ml-auto gap-1">
                   {!props.prVelocity || props.prMergePercentage == undefined ? (

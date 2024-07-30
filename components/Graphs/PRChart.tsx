@@ -73,10 +73,10 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
                 <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(closedRangedTotal)}</p>
               </div>
               <div>
-                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">Velocity</h3>
+                <h3 className="text-xs xl:text-sm !font-medium text-slate-500">Velocity</h3>
                 <p className="font-semibold text-xl xl:text-2xl">
                   {humanizeNumber(velocity)}
-                  <span className="text-xl text-slate-500 pl-0.5">d</span>
+                  <span className="text-lg xl:text-xl text-slate-500 pl-0.5">d</span>
                 </p>
               </div>
             </aside>
@@ -98,8 +98,8 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
             />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
-            <Line dataKey="active_prs" stroke="#16a34a" strokeWidth={2} />
-            <Line dataKey="accepted_prs" stroke="#9333ea" strokeWidth={2} />
+            <Line dataKey="active_prs" stroke="#16a34a" strokeWidth={2} dot={false} />
+            <Line dataKey="accepted_prs" stroke="#9333ea" strokeWidth={2} dot={false} />
           </LineChart>
         )}
       </ResponsiveContainer>

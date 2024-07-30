@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { LanguagePill } from "components/shared/LanguagePill/LanguagePill";
+import LanguagePill from "components/shared/LanguagePill/LanguagePill";
 
 type Story = StoryObj<typeof LanguagePill>;
 
@@ -7,7 +7,7 @@ const meta: Meta<typeof LanguagePill> = {
   title: "Components/Shared/LanguagePill",
   component: LanguagePill,
   args: {
-    topic: "javascript",
+    language: "javascript",
   },
 };
 

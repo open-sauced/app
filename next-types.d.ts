@@ -43,6 +43,7 @@ interface DbRepoInfo {
   readonly description: string;
   readonly language: string;
   readonly license: string;
+  readonly pushed_at: string;
   readonly url: string;
   readonly homepage: string;
   readonly topics: string[];
@@ -73,6 +74,8 @@ interface DbRepo {
   readonly language: string;
   readonly stars: number;
   readonly description: string;
+  readonly license?: string;
+  readonly updated_at?: string;
 }
 
 interface DbRecommendedInsightsRepo {
@@ -133,6 +136,7 @@ interface DBListContributor {
   readonly public_repos: number;
   readonly receive_collaboration: boolean;
   readonly username: string;
+  readonly oscr: number;
 }
 
 interface DbRepoPREvents {
@@ -196,6 +200,7 @@ interface DbIssueComment {
 
 interface DbPRContributor {
   readonly author_login: string;
+  readonly oscr?: number;
   readonly username: string;
   readonly updated_at: string;
   readonly user_id: number;
@@ -361,6 +366,7 @@ interface DbUser {
   readonly coupon_code: string;
   readonly receive_product_updates: boolean;
   readonly personal_workspace_id: string;
+  readonly oscr: number;
 }
 
 interface DbHighlight {
@@ -410,6 +416,7 @@ interface GhOrg {
   id: number;
   name: string;
   full_name: string;
+  pushed_at: string;
   private: boolean;
 }
 
@@ -635,8 +642,19 @@ interface RepositoryRoss {
   contributors: {
     bucket: string;
     new: number;
-    returning: number;
+    recurring: number;
     internal: number;
+  }[];
+}
+
+interface RepositoryYolo {
+  num_yolo_pushes: number;
+  num_yolo_pushed_commits: number;
+  data: {
+    actor_login: string;
+    event_time: string;
+    sha: string;
+    push_num_commits: number;
   }[];
 }
 

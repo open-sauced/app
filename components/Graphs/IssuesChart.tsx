@@ -73,10 +73,10 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
                 <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(closedRangedTotal)}</p>
               </div>
               <div>
-                <h3 className="text-xs lg:text-sm !font-medium text-slate-500">Velocity</h3>
+                <h3 className="text-xs xl:text-sm !font-medium text-slate-500">Velocity</h3>
                 <p className="font-semibold text-xl xl:text-2xl">
                   {humanizeNumber(velocity)}
-                  <span className="text-xl text-slate-500 pl-0.5">d</span>
+                  <span className="text-lg xl:text-xl text-slate-500 pl-0.5">d</span>
                 </p>
               </div>
             </aside>
@@ -98,8 +98,8 @@ export default function IssuesChart({ stats, velocity, syncId, range = 30, isLoa
             />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
-            <Line dataKey="opened_issues" stroke="#16a34a" strokeWidth={2} />
-            <Line dataKey="closed_issues" stroke="#9333ea" strokeWidth={2} />
+            <Line dataKey="opened_issues" stroke="#16a34a" strokeWidth={2} dot={false} />
+            <Line dataKey="closed_issues" stroke="#9333ea" strokeWidth={2} dot={false} />
           </LineChart>
         )}
       </ResponsiveContainer>
