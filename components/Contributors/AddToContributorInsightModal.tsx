@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
 import { usePostHog } from "posthog-js/react";
+import { safeParse } from "valibot";
 import Card from "components/atoms/Card/card";
 import SingleSelect from "components/atoms/Select/single-select";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
@@ -12,6 +13,7 @@ import { useToast } from "lib/hooks/useToast";
 import Text from "components/atoms/Typography/text";
 import { useFetchAllLists } from "lib/hooks/useList";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
+import { UuidSchema } from "lib/validation-schemas";
 
 type AddToContributorInsightModalProps = {
   repository: string;
@@ -36,13 +38,6 @@ export default function AddToContributorInsightModal({
 
   const [selectedInsight, setSelectedInsight] = useState("new");
 
-  const [host, setHost] = useState("");
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setHost(window.location.origin as string);
-    }
-  }, []);
-
   const addToContributorInsight = async () => {
     posthog.capture(`Repo Pages: add to contributor insight`, {
       repository,
@@ -58,7 +53,7 @@ export default function AddToContributorInsightModal({
         }),
       },
       bearerToken: sessionToken!,
-      pathValidator: () => true,
+      pathValidator: () => safeParse(UuidSchema, selectedInsight).success,
     });
 
     if (error) {
@@ -75,7 +70,11 @@ export default function AddToContributorInsightModal({
       count: contributors.length,
     });
 
-    router.push(`/workspaces/${workspaceId}/contributor-insights/new?contributors=${JSON.stringify(contributors)}`);
+    router.push(
+      `/workspaces/${workspaceId}/contributor-insights/new?contributors=${encodeURIComponent(
+        JSON.stringify(contributors)
+      )}`
+    );
     return;
   };
 

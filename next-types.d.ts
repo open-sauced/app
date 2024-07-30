@@ -516,7 +516,6 @@ interface PagedData<T> {
   meta: Meta;
 }
 
-// TODO: refactor various `Contributor` types
 interface DbRepoContributor {
   id: number;
   login: string;

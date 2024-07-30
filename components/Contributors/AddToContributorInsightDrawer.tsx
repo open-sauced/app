@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
 import { usePostHog } from "posthog-js/react";
+import { safeParse } from "valibot";
 import SingleSelect from "components/atoms/Select/single-select";
 import Button from "components/shared/Button/button";
 import { fetchApiData } from "helpers/fetchApiData";
@@ -11,6 +12,7 @@ import Text from "components/atoms/Typography/text";
 import { useFetchAllLists } from "lib/hooks/useList";
 import useWorkspaces from "lib/hooks/api/useWorkspaces";
 import { Drawer } from "components/shared/Drawer";
+import { UuidSchema } from "lib/validation-schemas";
 
 type AddToContributorInsightDrawerProps = {
   repository: string;
@@ -31,13 +33,6 @@ export default function AddToContributorInsightDrawer({
 
   const [selectedInsight, setSelectedInsight] = useState("new");
 
-  const [host, setHost] = useState("");
-  const hasMounted = useHasMounted();
-
-  if (hasMounted) {
-    setHost(window.location.origin);
-  }
-
   const addToContributorInsight = async () => {
     posthog.capture(`Repo Pages: add to contributor insight`, {
       repository,
@@ -53,7 +48,7 @@ export default function AddToContributorInsightDrawer({
         }),
       },
       bearerToken: sessionToken!,
-      pathValidator: () => true,
+      pathValidator: () => safeParse(UuidSchema, selectedInsight).success,
     });
 
     if (error) {
@@ -105,7 +100,6 @@ export default function AddToContributorInsightDrawer({
             onClick={() => {
               signIn({
                 provider: "github",
-                options: { redirectTo: `${host}/workspaces/new?repos=${JSON.stringify([repository])}` },
               });
             }}
           >
