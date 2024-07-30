@@ -62,7 +62,10 @@ export default function Feeds(props: HighlightSSRProps) {
   const topRef = useRef<HTMLDivElement>(null);
   const singleHighlight = props.highlight;
   const ogImage = props?.highlight
-    ? `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/highlights/${props.highlight.id}`
+    ? `${new URL(
+        `/og-images/highlight/${props.highlight.id}`,
+        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+      )}`
     : undefined;
 
   const { data: followersRepo } = useFetchFollowersHighlightRepos();
