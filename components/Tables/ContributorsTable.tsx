@@ -61,10 +61,10 @@ function Sparkline({ repository, login, range }: { repository: string; login: st
     contributor: login,
   });
 
-  const dailyData = getDailyPullRequestsHistogramToDays({ stats, range });
+  const dailyData = useMemo(() => getDailyPullRequestsHistogramToDays({ stats, range }), [stats, range]);
   return (
-    <ResponsiveContainer width="100%" height={220}>
-      <LineChart width={200} height={10} data={dailyData}>
+    <ResponsiveContainer width="100%" height={50}>
+      <LineChart data={dailyData}>
         <Line type="monotone" dataKey="contributor_associated_prs" stroke="#ea580c" strokeWidth={2} dot={false} />
       </LineChart>
     </ResponsiveContainer>
@@ -89,75 +89,78 @@ export default function ContributorsTable({
   const [selectedContributors, setSelectedContributors] = useState<Record<string, boolean>>({});
 
   const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
-  const defaultColumns: ColumnDef<DbRepoContributor, any>[] = [
-    {
-      id: "selector",
-      header: ({ table }) => (
-        <Checkbox
-          key={"selector_all"}
-          checked={table.getIsAllRowsSelected()}
-          onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
-        />
-      ),
-      cell: ({ row }: { row: Row<DbRepoContributor> }) => (
-        <Checkbox
-          key={row.id}
-          checked={row.getIsSelected()}
-          onCheckedChange={(checked) => row.toggleSelected(Boolean(checked.valueOf()))}
-        />
-      ),
-    },
-    contributorsColumnHelper.accessor("login", {
-      header: "Contributor",
-      cell: (info) => (
-        <div className="w-fit">
-          <HoverCard.Root>
-            <Link href={`/u/${info.row.original.login}`} className="rounded-full">
-              <HoverCard.Trigger className="flex gap-4 items-center">
-                <Avatar
-                  size={24}
-                  className="xl:w-9 xl:h-9"
-                  isCircle
-                  hasBorder={false}
-                  avatarURL={getAvatarByUsername(info.row.original.login)}
-                />
-                <p>{info.row.original.login}</p>
-              </HoverCard.Trigger>
-            </Link>
-            <HoverCard.Portal>
-              <HoverCard.Content sideOffset={5}>
-                <HoverCardWrapper username={info.row.original.login} />
-              </HoverCard.Content>
-            </HoverCard.Portal>
-          </HoverCard.Root>
-        </div>
-      ),
-    }),
-    contributorsColumnHelper.accessor("oscr", {
-      header: "Rating",
-      enableSorting: true,
-      enableGlobalFilter: false,
-      cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
-    }),
-    contributorsColumnHelper.accessor("company", {
-      header: "Company",
-    }),
-    contributorsColumnHelper.accessor("location", {
-      header: "Location",
-    }),
-    contributorsColumnHelper.accessor("total_contributions", {
-      header: () => (
-        <div className="flex gap-2 w-fit items-center">
-          <h2>Contributions</h2>
-          <InfoTooltip information="A total of PR, issue, and commit contributions" />
-        </div>
-      ),
-    }),
-    contributorsColumnHelper.display({
-      header: "Last 30 Days",
-      cell: ({ row }) => <Sparkline repository={repository} login={row.original.login} range={range} />,
-    }),
-  ];
+  const defaultColumns = useMemo(
+    () => [
+      {
+        id: "selector",
+        header: ({ table }) => (
+          <Checkbox
+            key={"selector_all"}
+            checked={table.getIsAllRowsSelected()}
+            onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
+          />
+        ),
+        cell: ({ row }: { row: Row<DbRepoContributor> }) => (
+          <Checkbox
+            key={row.id}
+            checked={row.getIsSelected()}
+            onCheckedChange={(checked) => row.toggleSelected(Boolean(checked.valueOf()))}
+          />
+        ),
+      },
+      contributorsColumnHelper.accessor("login", {
+        header: "Contributor",
+        cell: (info) => (
+          <div className="w-fit">
+            <HoverCard.Root>
+              <Link href={`/u/${info.row.original.login}`} className="rounded-full">
+                <HoverCard.Trigger className="flex gap-4 items-center">
+                  <Avatar
+                    size={24}
+                    className="xl:w-9 xl:h-9"
+                    isCircle
+                    hasBorder={false}
+                    avatarURL={getAvatarByUsername(info.row.original.login)}
+                  />
+                  <p>{info.row.original.login}</p>
+                </HoverCard.Trigger>
+              </Link>
+              <HoverCard.Portal>
+                <HoverCard.Content sideOffset={5}>
+                  <HoverCardWrapper username={info.row.original.login} />
+                </HoverCard.Content>
+              </HoverCard.Portal>
+            </HoverCard.Root>
+          </div>
+        ),
+      }),
+      contributorsColumnHelper.accessor("oscr", {
+        header: "Rating",
+        enableSorting: true,
+        enableGlobalFilter: false,
+        cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
+      }),
+      contributorsColumnHelper.accessor("company", {
+        header: "Company",
+      }),
+      contributorsColumnHelper.accessor("location", {
+        header: "Location",
+      }),
+      contributorsColumnHelper.accessor("total_contributions", {
+        header: () => (
+          <div className="flex gap-2 w-fit items-center">
+            <h2>Contributions</h2>
+            <InfoTooltip information="A total of PR, issue, and commit contributions" />
+          </div>
+        ),
+      }),
+      contributorsColumnHelper.display({
+        header: `Last ${range} Days`,
+        cell: ({ row }) => <Sparkline repository={repository} login={row.original.login} range={range} />,
+      }),
+    ],
+    [contributors]
+  );
 
   const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
     {
@@ -327,7 +330,7 @@ export default function ContributorsTable({
                 <>
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="w-fit max-w-xl border border-black">
+                      <TableCell key={cell.id} className="w-fit max-w-xl">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}
