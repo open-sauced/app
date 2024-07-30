@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.7](https://github.com/open-sauced/app/compare/v2.48.0-beta.6...v2.48.0-beta.7) (2024-07-30)
+
+
+### 🍕 Features
+
+* Added explanation of what users are seeing on list activity graph ([#3328](https://github.com/open-sauced/app/issues/3328)) ([b41dfdc](https://github.com/open-sauced/app/commit/b41dfdc6dd98d7f8d85b5534896fe5a3f3e2ed83))
+
 ## [2.48.0-beta.6](https://github.com/open-sauced/app/compare/v2.48.0-beta.5...v2.48.0-beta.6) (2024-07-30)
 
 
