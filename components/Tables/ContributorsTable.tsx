@@ -13,12 +13,12 @@ import {
 } from "@tanstack/react-table";
 import { FaSortDown, FaSortUp } from "react-icons/fa6";
 import { useMemo, useState } from "react";
-import { BsArrowsCollapse, BsArrowsExpand } from "react-icons/bs";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
 import Skeleton from "react-loading-skeleton";
+import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -33,6 +33,7 @@ import InfoTooltip from "components/shared/InfoTooltip";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 import { getDailyPullRequestsHistogramToDays } from "lib/utils/repo-page-utils";
+import Card from "components/atoms/Card/card";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 const AddToContributorInsightModal = dynamic(() => import("components/Contributors/AddToContributorInsightModal"), {
@@ -121,7 +122,12 @@ const defaultColumns = (repository: string) => [
     ),
   }),
   contributorsColumnHelper.accessor("oscr", {
-    header: "Rating",
+    header: () => (
+      <div className="flex gap-2 w-fit items-center hover:bg-slate-50 rounded-md px-2 py-1 cursor-pointer">
+        <p>OSCR Rating</p>
+        <InfoTooltip information="OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem." />
+      </div>
+    ),
     enableSorting: true,
     enableGlobalFilter: false,
     cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
@@ -134,9 +140,9 @@ const defaultColumns = (repository: string) => [
   }),
   contributorsColumnHelper.accessor("total_contributions", {
     header: () => (
-      <div className="flex gap-2 w-fit items-center">
-        <h2>Contributions</h2>
-        <InfoTooltip information="A total of PR, issue, and commit contributions" />
+      <div className="flex gap-2 w-fit items-center hover:bg-slate-50 rounded-md px-2 py-1 cursor-pointer">
+        <p>Contributions</p>
+        <InfoTooltip information="A total of PR, issue, and commit contributions for this repository." />
       </div>
     ),
   }),
@@ -195,7 +201,12 @@ const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
         ),
       }),
       contributorsColumnHelper.accessor("oscr", {
-        header: "Rating",
+        header: () => (
+          <div className="flex gap-2 w-fit items-center">
+            <p>OSCR</p>
+            <InfoTooltip information="OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem." />
+          </div>
+        ),
         enableSorting: true,
         cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
       }),
@@ -206,7 +217,11 @@ const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
           return (
             row.getCanExpand() && (
               <button onClick={row.getToggleExpandedHandler()}>
-                {row.getIsExpanded() ? <BsArrowsCollapse /> : <BsArrowsExpand />}
+                {row.getIsExpanded() ? (
+                  <RiArrowDownSLine className="text-xl m-1 text-slate-500 border border-slate-200 rounded-sm" />
+                ) : (
+                  <RiArrowUpSLine className="text-xl m-1 text-slate-500 border border-slate-200 rounded-sm" />
+                )}
               </button>
             )
           );
@@ -246,9 +261,9 @@ export default function ContributorsTable({
   });
 
   return (
-    <div className="flex flex-col gap-4">
+    <>
       {Object.keys(selectedContributors).length > 0 && (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between px-4">
           <p>{Object.keys(selectedContributors).length} selected</p>
           {isMobile ? (
             <AddToContributorInsightDrawer repository={repository} contributors={Object.keys(selectedContributors)} />
@@ -259,141 +274,149 @@ export default function ContributorsTable({
           )}
         </div>
       )}
+      <Card className="!p-0">
+        {isLoading && (
+          <div className="flex flex-col w-full gap-4 px-4">
+            <SkeletonWrapper count={4} height={32} />
+          </div>
+        )}
 
-      {isLoading && (
-        <div className="flex flex-col w-full gap-4 px-4">
-          <SkeletonWrapper count={4} height={32} />
-        </div>
-      )}
+        {!isLoading && (isError || !contributors) && (
+          <section className="flex flex-col gap-4 items-center">
+            <Image src={errorImage} alt="Contributors Table error image" />
+            <h2 className="font-medium">There are no contributors loaded.</h2>
+          </section>
+        )}
 
-      {!isLoading && (isError || !contributors) && (
-        <section className="flex flex-col gap-4 items-center">
-          <Image src={errorImage} alt="Contributors Table error image" />
-          <h2 className="font-semibold">There are no contributors loaded.</h2>
-        </section>
-      )}
+        {!isError && !isLoading && (
+          <>
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <TableHead key={header.id} className={`!font-medium !text-slate-500 first:border-0 `}>
+                        {header.column.columnDef.enableSorting ? (
+                          <div className="flex gap-2">
+                            <>{flexRender(header.column.columnDef.header, header.getContext())}</>
+                            <button
+                              onClick={() => {
+                                const { enableSorting } = header.column.columnDef;
+                                const isAscending = Boolean(
+                                  sorting.find((item) => item.id === header.id && !item.desc)
+                                );
 
-      {!isError && !isLoading && (
-        <>
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id} className="font-semibold">
-                      {header.column.columnDef.enableSorting ? (
-                        <button
-                          onClick={() => {
-                            const { enableSorting } = header.column.columnDef;
-                            const isAscending = Boolean(sorting.find((item) => item.id === header.id && !item.desc));
+                                if (enableSorting) {
+                                  setOscrSorting(isAscending ? "ASC" : "DESC");
 
-                            if (enableSorting) {
-                              setOscrSorting(isAscending ? "ASC" : "DESC");
+                                  setSorting((currentState) => {
+                                    // future-proof, set other column sorting to false
+                                    const state = currentState
+                                      .filter((item) => item.id !== header.id)
+                                      .map(({ id }) => ({ id, desc: false }));
 
-                              setSorting((currentState) => {
-                                // future-proof, set other column sorting to false
-                                const state = currentState
-                                  .filter((item) => item.id !== header.id)
-                                  .map(({ id }) => ({ id, desc: false }));
-
-                                return [
-                                  ...state,
-                                  {
-                                    id: header.id,
-                                    desc: isAscending,
-                                  },
-                                ];
-                              });
-                            }
-                          }}
-                          className="flex gap-2 w-fit items-center"
-                        >
-                          <h2 className="font-semibold">{header.column.columnDef.header?.toString()}</h2>
-                          {header.column.columnDef.enableSorting &&
-                            (Boolean(sorting.find((item) => item.id === header.id && !item.desc)) ? (
-                              <FaSortUp />
-                            ) : (
-                              <FaSortDown />
-                            ))}
-                        </button>
-                      ) : (
-                        <>{flexRender(header.column.columnDef.header, header.getContext())}</>
-                      )}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHeader>
-
-            <TableBody>
-              {table.getRowModel().rows.map((row) => (
-                <>
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell
-                        key={cell.id}
-                        className={`w-fit max-w-lg ${row.getIsExpanded() && "text-orange-600 font-semibold"}`}
-                      >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
+                                    return [
+                                      ...state,
+                                      {
+                                        id: header.id,
+                                        desc: isAscending,
+                                      },
+                                    ];
+                                  });
+                                }
+                              }}
+                            >
+                              {header.column.columnDef.enableSorting &&
+                                (Boolean(sorting.find((item) => item.id === header.id && !item.desc)) ? (
+                                  <FaSortUp className="text-lg p-0.5" />
+                                ) : (
+                                  <FaSortDown className="text-lg p-0.5" />
+                                ))}
+                            </button>
+                          </div>
+                        ) : (
+                          <>{flexRender(header.column.columnDef.header, header.getContext())}</>
+                        )}
+                      </TableHead>
                     ))}
                   </TableRow>
-                  {row.getIsExpanded() && (
-                    <TableRow key={`expanded_${row.id}`}>
-                      <TableCell colSpan={row.getVisibleCells().length}>
-                        <div className="flex flex-col gap-2 divide-y-2">
-                          <div className="flex justify-between font-semibold">
-                            <div className="flex gap-2 w-fit items-center">
-                              <h2>Contributions</h2>
-                              <InfoTooltip information="A total of PR, issue, and commit contributions" />
-                            </div>
-                            <span className="font-normal">{row.original.total_contributions}</span>
-                          </div>
-                          <p className="flex justify-between font-semibold pt-2">
-                            Company:
-                            <span className="font-normal">{row.original.company}</span>
-                          </p>
-                          <p className="flex justify-between font-semibold pt-2">
-                            Location:
-                            <span className="font-normal">{row.original.location}</span>
-                          </p>
-                          <div className="flex justify-between font-semibold pt-2">
-                            <p>Last 30 Days:</p>
-                            <Sparkline repository={repository} login={row.original.login} />
-                          </div>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </>
-              ))}
-            </TableBody>
-          </Table>
-          {meta && (
-            <div className="self-end">
-              <Pagination
-                showPages={!isMobile}
-                showTotalPages={true}
-                onPageChange={(page) => {
-                  setQueryParams({ page: `${page}` });
-                }}
-                hasNextPage={meta.hasNextPage}
-                hasPreviousPage={meta.hasPreviousPage}
-                totalPage={meta.pageCount}
-                page={meta.page}
-                goToPage={true}
-              />
-            </div>
-          )}
-        </>
-      )}
+                ))}
+              </TableHeader>
 
-      <AddToContributorInsightModal
-        repository={repository}
-        contributors={Object.keys(selectedContributors)}
-        isOpen={isAddToContributorInsightModalOpen}
-        onCloseModal={() => setIsAddToContributorInsightModalOpen(false)}
-      />
-    </div>
+              <TableBody>
+                {table.getRowModel().rows.map((row) => (
+                  <>
+                    <TableRow
+                      key={row.id}
+                      className={`${row.getIsExpanded() && "border-b-0"} hover:bg-slate-50 text-slate-700`}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell
+                          key={cell.id}
+                          className={`w-fit max-w-lg ${row.getIsExpanded() && "text-orange-600 font-medium"}`}
+                        >
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                    {row.getIsExpanded() && (
+                      <TableRow key={`expanded_${row.id}`}>
+                        <TableCell colSpan={row.getVisibleCells().length}>
+                          <div className="flex flex-col gap-2 font-normal text-slate-500">
+                            <Sparkline repository={repository} login={row.original.login} />
+                            <p className="text-center text-slate-400 p-1.5">PR Activity Last 30d</p>
+
+                            <div className="flex justify-between pt-2">
+                              <div className="flex gap-2 w-fit items-center">
+                                <p>Contributions</p>
+                                <InfoTooltip information="A total of PR, issue, and commit contributions for this repository." />
+                              </div>
+                              <span className="">{row.original.total_contributions}</span>
+                            </div>
+
+                            <p className="flex justify-between pt-2">
+                              Company
+                              <span className="">{row.original.company}</span>
+                            </p>
+
+                            <p className="flex justify-between pt-2">
+                              Location
+                              <span className="">{row.original.location}</span>
+                            </p>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </>
+                ))}
+              </TableBody>
+            </Table>
+          </>
+        )}
+
+        <AddToContributorInsightModal
+          repository={repository}
+          contributors={Object.keys(selectedContributors)}
+          isOpen={isAddToContributorInsightModalOpen}
+          onCloseModal={() => setIsAddToContributorInsightModalOpen(false)}
+        />
+      </Card>
+      {meta && (
+        <div className="self-end">
+          <Pagination
+            showPages={!isMobile}
+            showTotalPages={true}
+            onPageChange={(page) => {
+              setQueryParams({ page: `${page}` });
+            }}
+            hasNextPage={meta.hasNextPage}
+            hasPreviousPage={meta.hasPreviousPage}
+            totalPage={meta.pageCount}
+            page={meta.page}
+            goToPage={true}
+          />
+        </div>
+      )}
+    </>
   );
 }
