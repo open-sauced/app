@@ -54,15 +54,15 @@ type ContributorsTableProps = {
 };
 
 // TODO: silo into new component file?
-function Sparkline({ repository, login, range }: { repository: string; login: string; range: number }) {
+function Sparkline({ repository, login }: { repository: string; login: string }) {
   const { data: stats, isLoading } = useFetchMetricStats({
     variant: "prs",
     repository,
-    range,
+    range: 30,
     contributor: login,
   });
 
-  const dailyData = useMemo(() => getDailyPullRequestsHistogramToDays({ stats, range }), [stats, range]);
+  const dailyData = useMemo(() => getDailyPullRequestsHistogramToDays({ stats, range: 30 }), [stats]);
   return isLoading ? (
     <Skeleton width="100%" />
   ) : (
@@ -158,8 +158,8 @@ export default function ContributorsTable({
         ),
       }),
       contributorsColumnHelper.display({
-        header: `Last ${range} Days`,
-        cell: ({ row }) => <Sparkline repository={repository} login={row.original.login} range={range} />,
+        header: "Last 30 Days",
+        cell: ({ row }) => <Sparkline repository={repository} login={row.original.login} />,
       }),
     ],
     [contributors]
@@ -362,7 +362,7 @@ export default function ContributorsTable({
                           </p>
                           <div className="flex justify-between font-semibold pt-2">
                             <p>Last 30 Days:</p>
-                            <Sparkline repository={repository} login={row.original.login} range={range} />
+                            <Sparkline repository={repository} login={row.original.login} />
                           </div>
                         </div>
                       </TableCell>
