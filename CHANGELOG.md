@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.48.0-beta.6](https://github.com/open-sauced/app/compare/v2.48.0-beta.5...v2.48.0-beta.6) (2024-07-30)
+
+
+### 🍕 Features
+
+* added OSCR to avatar hover card ([#3803](https://github.com/open-sauced/app/issues/3803)) ([034cb1a](https://github.com/open-sauced/app/commit/034cb1a468d66cf9f552306ba1703ab739120b99))
+
 ## [2.48.0-beta.5](https://github.com/open-sauced/app/compare/v2.48.0-beta.4...v2.48.0-beta.5) (2024-07-30)
 
 
