@@ -13,8 +13,18 @@ interface DevProfileProps {
   size?: "xsmall" | "small" | "medium" | "large";
   truncate?: boolean;
   oscrRating?: number;
+  showOscr: boolean;
+  loggedIn: boolean;
 }
-const DevProfile = ({ username, hasBorder, size = "small", truncate, oscrRating }: DevProfileProps) => {
+const DevProfile = ({
+  username,
+  hasBorder,
+  size = "small",
+  truncate,
+  oscrRating,
+  showOscr,
+  loggedIn,
+}: DevProfileProps) => {
   return (
     <section className="flex items-center gap-2 text-light-slate-11">
       {/* Mobile */}
@@ -30,7 +40,9 @@ const DevProfile = ({ username, hasBorder, size = "small", truncate, oscrRating 
         </Link>
         <div className="flex flex-col items-start gap-1">
           <span className={`${truncate && "truncate"} text-light-slate-12 font-semibold`}>{username}</span>
-          {typeof oscrRating !== "undefined" ? <OscrPill rating={oscrRating} /> : null}
+          {showOscr && typeof oscrRating !== "undefined" ? (
+            <OscrPill rating={oscrRating} hideRating={!loggedIn} />
+          ) : null}
         </div>
       </div>
       {/* Desktop */}
@@ -40,7 +52,6 @@ const DevProfile = ({ username, hasBorder, size = "small", truncate, oscrRating 
         </div>
         <div className="grid gap-1 items-center">
           <h1 className={`${truncate && "truncate"} text-light-slate-12`}>{username}</h1>
-          {typeof oscrRating !== "undefined" ? <OscrPill rating={oscrRating} /> : null}
         </div>
       </div>
     </section>

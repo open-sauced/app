@@ -15,6 +15,7 @@ import Button from "components/shared/Button/button";
 import Card from "components/atoms/Card/card";
 import { EmptyState } from "components/Workspaces/TrackedContributorsTable";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -49,6 +50,8 @@ interface WorkspaceContributorsPageProps {
 }
 
 export default function WorkspaceContributorsPage({ workspace }: WorkspaceContributorsPageProps) {
+  const { userId } = useSupabaseAuth();
+  const loggedIn = Boolean(userId);
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range as string) : 30;
   const [page, setPage] = useState(1);
@@ -97,6 +100,7 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
                 range={`${range}`}
                 meta={data.meta}
                 setPage={setPage}
+                loggedIn={loggedIn}
               />
             ) : (
               <Card className="bg-transparent">

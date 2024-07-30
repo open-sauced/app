@@ -3,7 +3,7 @@ import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 type UserResponse = DbUser;
 
-const useFetchUser = (username: string, config?: SWRConfiguration, repositories?: number[]) => {
+const useFetchUser = (username: string | null, config?: SWRConfiguration, repositories?: number[]) => {
   const query = new URLSearchParams();
 
   if (repositories) {

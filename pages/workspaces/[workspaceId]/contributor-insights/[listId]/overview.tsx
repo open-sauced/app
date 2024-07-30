@@ -16,7 +16,7 @@ import ContributorsList from "components/organisms/ContributorsList/contributors
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -79,7 +79,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   ).filter(Boolean);
 
   const isOwner = !!(workspaceData?.data || []).find((member) => member.role === "owner" && member.user_id === userId);
-  const featureFlags = await getAllFeatureFlags(userId);
 
   return {
     props: {
@@ -89,7 +88,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       isError: error || contributorListError,
       workspaceId,
       owners,
-      featureFlags,
       username,
     },
   };
@@ -102,10 +100,10 @@ const ListsOverview = ({
   isError,
   workspaceId,
   owners,
-  featureFlags,
   username,
 }: ListsOverviewProps): JSX.Element => {
-  const showOscr = featureFlags && featureFlags["oscr-rating"];
+  const { userId } = useSupabaseAuth();
+  const loggedIn = Boolean(userId);
   const router = useRouter();
   const { listId, range, limit } = router.query;
 
@@ -118,7 +116,7 @@ const ListsOverview = ({
     listId: list?.id,
     defaultRange: range ? (range as string) : "30",
     defaultLimit: limit ? (limit as unknown as number) : 10,
-    showOscr,
+    showOscr: loggedIn,
     username,
   });
 
@@ -232,7 +230,7 @@ const ListsOverview = ({
                       isLoading={isLoading}
                       setPage={setPage}
                       range={String(range ?? "30")}
-                      showOscr={showOscr}
+                      loggedIn={loggedIn}
                     />
                   </ErrorBoundary>
                 )}

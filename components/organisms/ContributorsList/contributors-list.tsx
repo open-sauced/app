@@ -14,33 +14,35 @@ interface ContributorsListProps {
   meta: Meta;
   setPage: (page: number) => void;
   range: string;
-  showOscr?: boolean;
+  loggedIn: boolean;
 }
 
 interface ContributorCardListProps {
   contributors: DbPRContributor[];
   topic: string;
   range: string;
+  loggedIn: boolean;
 }
 
-const ContributorCardList = ({ contributors = [], topic, range }: ContributorCardListProps) => {
+const ContributorCardList = ({ contributors = [], topic, range, loggedIn }: ContributorCardListProps) => {
   return (
     <div className="grid w-full gap-3 grid-cols-automobile md:grid-cols-autodesktop">
       {contributors.map((contributor) => {
-        return <ContributorCard key={contributor.author_login} contributor={contributor} topic={topic} range={range} />;
+        return (
+          <ContributorCard
+            key={contributor.author_login}
+            contributor={contributor}
+            topic={topic}
+            range={range}
+            showOscr={loggedIn}
+          />
+        );
       })}
     </div>
   );
 };
 
-const ContributorsList = ({
-  contributors,
-  isLoading,
-  meta,
-  setPage,
-  range,
-  showOscr = false,
-}: ContributorsListProps) => {
+const ContributorsList = ({ contributors, isLoading, meta, setPage, range, loggedIn }: ContributorsListProps) => {
   const [layout, setLayout] = useState<ToggleValue>("list");
 
   return (
@@ -56,17 +58,18 @@ const ContributorsList = ({
       <ClientOnly>
         {layout !== "grid" ? (
           <>
-            <ContributorListTableHeaders showOscr={showOscr} />
+            <ContributorListTableHeaders showOscr={true} />
             <ContributorTable
               loading={isLoading}
               topic={"*"}
               contributors={contributors}
               range={range ?? 30}
-              showOscr={showOscr}
+              loggedIn={loggedIn}
+              showOscr={true}
             />
           </>
         ) : (
-          <ContributorCardList contributors={contributors} topic={"*"} range={range ?? 30} />
+          <ContributorCardList contributors={contributors} topic={"*"} range={range ?? 30} loggedIn={loggedIn} />
         )}
       </ClientOnly>
 
