@@ -65,7 +65,7 @@ function Sparkline({ repository, login, range }: { repository: string; login: st
   return (
     <ResponsiveContainer width="100%" height={50}>
       <LineChart data={dailyData}>
-        <Line type="monotone" dataKey="contributor_associated_prs" stroke="#ea580c" strokeWidth={2} dot={false} />
+        <Line type="monotone" dataKey="prs_count" stroke="#ea580c" strokeWidth={2} dot={false} />
       </LineChart>
     </ResponsiveContainer>
   );
@@ -330,7 +330,7 @@ export default function ContributorsTable({
                 <>
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="w-fit max-w-xl">
+                      <TableCell key={cell.id} className="w-fit max-w-lg">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}

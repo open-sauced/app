@@ -18,7 +18,7 @@ export type StatsType = {
   closed_issues?: number;
   active_prs?: number;
   accepted_prs?: number;
-  contributor_associated_prs?: number;
+  prs_count?: number;
 };
 
 export function useFetchMetricStats({

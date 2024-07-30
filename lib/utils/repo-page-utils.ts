@@ -450,7 +450,7 @@ export function getDailyPullRequestsHistogramToDays({
 
     if (days[count]) {
       days[count].active_prs! += current.active_prs!;
-      days[count].contributor_associated_prs! += current.contributor_associated_prs!;
+      days[count].prs_count! += current.prs_count!;
       days[count].accepted_prs! += current.accepted_prs!;
     } else {
       const newDay = new Date();
@@ -462,7 +462,7 @@ export function getDailyPullRequestsHistogramToDays({
             bucket: missingDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
             active_prs: 0,
             accepted_prs: 0,
-            contributor_associated_prs: 0,
+            prs_count: 0,
           };
         }
       }
@@ -472,7 +472,7 @@ export function getDailyPullRequestsHistogramToDays({
         bucket: newDay.toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
         active_prs: current.active_prs!,
         accepted_prs: current.accepted_prs!,
-        contributor_associated_prs: current.contributor_associated_prs!,
+        prs_count: current.prs_count!,
       };
     }
 
@@ -493,7 +493,7 @@ export function getDailyPullRequestsHistogramToDays({
         }),
         active_prs: 0,
         accepted_prs: 0,
-        contributor_associated_prs: 0,
+        prs_count: 0,
       };
     }
     result.push(temp);
