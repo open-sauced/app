@@ -8,6 +8,8 @@ import Text from "components/atoms/Typography/text";
 import ForkIcon from "img/icons/fork-icon.svg";
 import FirstPRIcon from "img/icons/first-pr-icon.svg";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { OscrPill } from "components/Contributors/OscrPill";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface CardProfileProps {
   githubAvatar?: string | StaticImageData;
@@ -15,6 +17,8 @@ interface CardProfileProps {
   totalPRs: number;
   dateOfFirstPR: string;
   isRoundedAvatar?: boolean;
+  oscr?: number;
+  loggedIn: boolean;
 }
 
 const CardProfile = ({
@@ -23,6 +27,8 @@ const CardProfile = ({
   totalPRs,
   dateOfFirstPR,
   isRoundedAvatar,
+  oscr,
+  loggedIn,
 }: CardProfileProps): JSX.Element => {
   return (
     <Link href={`/u/${githubName}`} as={`/u/${githubName}`}>
@@ -49,6 +55,11 @@ const CardProfile = ({
                 <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} /> {dateOfFirstPR}
               </Tooltip>
             </div>
+            {oscr != null || !loggedIn ? (
+              <OscrPill rating={oscr} hideRating={!loggedIn} />
+            ) : (
+              <SkeletonWrapper count={1} width={24} height={16} radius={8} />
+            )}
           </div>
         </div>
       </div>
