@@ -9,6 +9,7 @@ import ForkIcon from "img/icons/fork-icon.svg";
 import FirstPRIcon from "img/icons/first-pr-icon.svg";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { OscrPill } from "components/Contributors/OscrPill";
+import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface CardProfileProps {
   githubAvatar?: string | StaticImageData;
@@ -54,7 +55,11 @@ const CardProfile = ({
                 <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} /> {dateOfFirstPR}
               </Tooltip>
             </div>
-            <OscrPill rating={oscr} hideRating={!loggedIn} />
+            {oscr != null || !loggedIn ? (
+              <OscrPill rating={oscr} hideRating={!loggedIn} />
+            ) : (
+              <SkeletonWrapper count={1} width={24} height={16} radius={8} />
+            )}
           </div>
         </div>
       </div>
