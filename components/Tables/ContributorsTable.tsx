@@ -281,7 +281,7 @@ export default function ContributorsTable({
       )}
       <Card className="!p-0">
         {isLoading && (
-          <div className="flex flex-col w-full gap-4 px-4">
+          <div className="flex flex-col w-full gap-4 px-4 my-8">
             <SkeletonWrapper count={4} height={32} />
           </div>
         )}
