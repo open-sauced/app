@@ -14,4 +14,13 @@ const meta: MetaData = {
 export default meta;
 type Story = StoryObj<typeof OscrPill>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    hideRating: false,
+  },
+};
+export const Blurred: Story = {
+  args: {
+    hideRating: true,
+  },
+};

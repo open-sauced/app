@@ -26,9 +26,10 @@ interface ContributorCardProps {
   topic: string;
   repositories?: number[];
   range?: string;
+  showOscr: boolean;
 }
 
-const ContributorCard = ({ className, contributor, topic, repositories, range }: ContributorCardProps) => {
+const ContributorCard = ({ className, contributor, topic, repositories, range, showOscr }: ContributorCardProps) => {
   const [showPRs, setShowPRs] = useState(false);
   const githubAvatar = getAvatarByUsername(contributor.author_login);
   const { repoList, meta } = useContributorPullRequestsChart(contributor.author_login, topic, repositories, range);
@@ -53,7 +54,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range }:
               <div>
                 <div className="flex gap-2">
                   <Text className="!text-base !text-black">{contributor.author_login}</Text>
-                  {contributor.oscr ? <OscrPill rating={contributor.oscr} /> : null}
+                  {contributor.oscr ? <OscrPill rating={contributor.oscr} hideRating={!showOscr} /> : null}
                 </div>
                 <div className="flex gap-2 text-xs mt-1">
                   <div className="flex items-center gap-1 text-xs text-light-slate-11">
