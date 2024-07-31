@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.49.0-beta.2](https://github.com/open-sauced/app/compare/v2.49.0-beta.1...v2.49.0-beta.2) (2024-07-31)
+
+
+### 🍕 Features
+
+* show OSSF Score in Repo Pages ([#3793](https://github.com/open-sauced/app/issues/3793)) ([a18ced7](https://github.com/open-sauced/app/commit/a18ced759007b12363747e23def12e5674923575))
+
 ## [2.49.0-beta.1](https://github.com/open-sauced/app/compare/v2.48.1-beta.1...v2.49.0-beta.1) (2024-07-31)
 
 

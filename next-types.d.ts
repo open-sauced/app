@@ -47,6 +47,11 @@ interface DbRepoInfo {
   readonly url: string;
   readonly homepage: string;
   readonly topics: string[];
+  readonly ossf_scorecard_total_score: number;
+  readonly ossf_scorecard_dependency_update_score: number;
+  readonly ossf_scorecard_fuzzing_score: number;
+  readonly ossf_scorecard_maintained_score: number;
+  readonly ossf_scorecard_updated_at: string;
 }
 
 interface DbRepo {
