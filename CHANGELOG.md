@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.49.0-beta.3](https://github.com/open-sauced/app/compare/v2.49.0-beta.2...v2.49.0-beta.3) (2024-07-31)
+
+
+### 🍕 Features
+
+* refactor `ContributorsTable` with TanStack Table ([#3626](https://github.com/open-sauced/app/issues/3626)) ([6ae8738](https://github.com/open-sauced/app/commit/6ae873885ece571b947ecb514f00310409c689b6))
+
 ## [2.49.0-beta.2](https://github.com/open-sauced/app/compare/v2.49.0-beta.1...v2.49.0-beta.2) (2024-07-31)
 
 
