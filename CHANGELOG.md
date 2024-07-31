@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.49.0-beta.1](https://github.com/open-sauced/app/compare/v2.48.1-beta.1...v2.49.0-beta.1) (2024-07-31)
+
+
+### 🍕 Features
+
+* now OSCR component has a CTA to log in if logged out ([#3814](https://github.com/open-sauced/app/issues/3814)) ([c4d7a50](https://github.com/open-sauced/app/commit/c4d7a506a23fab083a69f7a261a4a9f5ad0ede88))
+
+## [2.48.1-beta.1](https://github.com/open-sauced/app/compare/v2.48.0...v2.48.1-beta.1) (2024-07-31)
+
+
+### 🐛 Bug Fixes
+
+* Now you can't type more than 255 characters in the bio field of user settings ([#2615](https://github.com/open-sauced/app/issues/2615)) ([2d58445](https://github.com/open-sauced/app/commit/2d58445e5667b6eeb764761eb9d7cdda5bfffa74))
+
 ## [2.48.0](https://github.com/open-sauced/app/compare/v2.47.0...v2.48.0) (2024-07-30)
 
 

@@ -1,3 +1,4 @@
+import { OAuthResponse } from "@supabase/supabase-js";
 import { OscrPill } from "components/Contributors/OscrPill";
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -7,6 +8,7 @@ const meta: MetaData = {
   title: "Components/Contributors/OscrRating",
   component: OscrPill,
   args: {
+    signIn: (options) => Promise.resolve({} as OAuthResponse),
     rating: 0.5,
   },
 };
