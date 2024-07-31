@@ -42,6 +42,7 @@ import ContributorConfidenceChart from "components/Repositories/ContributorConfi
 import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
+import OssfChart from "components/Repositories/OssfChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -307,7 +308,28 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
           <ClientOnly>
             <div className="flex flex-col gap-8">
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
-                <div className="order-last lg:order-none lg:col-span-8 flex flex-col gap-4">
+                <div className="lg:col-span-8 flex flex-col gap-4">
+                  <div className="flex gap-4 h-full flex-col lg:flex-row">
+                    <ContributorConfidenceChart
+                      contributorConfidence={repoStats?.contributor_confidence}
+                      isError={isError}
+                      isLoading={isLoading}
+                      onLearnMoreClick={() =>
+                        posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                          repository: repoData.full_name,
+                        })
+                      }
+                    />
+                    <OssfChart
+                      totalScore={repoData.ossf_scorecard_total_score}
+                      dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
+                      maintainedScore={repoData.ossf_scorecard_maintained_score}
+                      fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
+                      isLoading={false}
+                      isError={!repoData.ossf_scorecard_total_score}
+                    />
+                  </div>
+
                   <RossChart
                     stats={rossStats}
                     range={range}
@@ -322,40 +344,9 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     }
                     className="h-fit"
                   />
-
-                  <div className="flex gap-4 h-full flex-col lg:flex-row">
-                    <IssuesChart
-                      stats={issueStats}
-                      range={range}
-                      velocity={repoStats?.issues_velocity_count ?? 0}
-                      syncId={syncId}
-                      isLoading={isIssueDataLoading}
-                      className="h-full"
-                    />
-
-                    <PRChart
-                      stats={prStats}
-                      range={range}
-                      velocity={repoStats?.pr_velocity_count ?? 0}
-                      syncId={syncId}
-                      isLoading={isPrDataLoading}
-                      className="h-full"
-                    />
-                  </div>
                 </div>
 
-                <div className="order-1 lg:order-none lg:col-span-4 flex flex-col gap-4">
-                  <ContributorConfidenceChart
-                    contributorConfidence={repoStats?.contributor_confidence}
-                    isError={isError}
-                    isLoading={isLoading}
-                    onLearnMoreClick={() =>
-                      posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
-                        repository: repoData.full_name,
-                      })
-                    }
-                  />
-
+                <div className="lg:col-span-4 flex flex-col gap-4">
                   {lotteryState === "lottery" && (
                     <LotteryFactorChart
                       lotteryFactor={lotteryFactor}
@@ -411,35 +402,61 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 </div>
               </section>
 
-              <section className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                <StarsChart
-                  stats={starsData}
-                  total={repoData.stars}
-                  range={range}
-                  syncId={syncId}
-                  isLoading={isStarsDataLoading}
-                  onCategoryClick={(category) =>
-                    posthog.capture("Repo Pages: clicked Stars Chart category", {
-                      repository: repoData.full_name,
-                      category,
-                    })
-                  }
-                  className="lg:col-span-6 h-fit"
-                />
-                <ForksChart
-                  stats={forkStats}
-                  total={repoData.forks}
-                  range={range}
-                  syncId={syncId}
-                  isLoading={isForksDataLoading}
-                  onCategoryClick={(category) =>
-                    posthog.capture("Repo Pages: clicked Forks Chart category", {
-                      repository: repoData.full_name,
-                      category,
-                    })
-                  }
-                  className="lg:col-span-6 h-fit"
-                />
+              <section className="flex flex-col gap-4">
+                <h2 className="text-lg font-semibold">Activity</h2>
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+                  <IssuesChart
+                    stats={issueStats}
+                    range={range}
+                    velocity={repoStats?.issues_velocity_count ?? 0}
+                    syncId={syncId}
+                    isLoading={isIssueDataLoading}
+                    className="lg:col-span-6 h-fit"
+                  />
+
+                  <PRChart
+                    stats={prStats}
+                    range={range}
+                    velocity={repoStats?.pr_velocity_count ?? 0}
+                    syncId={syncId}
+                    isLoading={isPrDataLoading}
+                    className="lg:col-span-6 h-fit"
+                  />
+                </div>
+              </section>
+
+              <section className="flex flex-col gap-4">
+                <h2 className="text-lg font-semibold">Engagement</h2>
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+                  <StarsChart
+                    stats={starsData}
+                    total={repoData.stars}
+                    range={range}
+                    syncId={syncId}
+                    isLoading={isStarsDataLoading}
+                    onCategoryClick={(category) =>
+                      posthog.capture("Repo Pages: clicked Stars Chart category", {
+                        repository: repoData.full_name,
+                        category,
+                      })
+                    }
+                    className="lg:col-span-6 h-fit"
+                  />
+                  <ForksChart
+                    stats={forkStats}
+                    total={repoData.forks}
+                    range={range}
+                    syncId={syncId}
+                    isLoading={isForksDataLoading}
+                    onCategoryClick={(category) =>
+                      posthog.capture("Repo Pages: clicked Forks Chart category", {
+                        repository: repoData.full_name,
+                        category,
+                      })
+                    }
+                    className="lg:col-span-6 h-fit"
+                  />
+                </div>
               </section>
             </div>
           </ClientOnly>
