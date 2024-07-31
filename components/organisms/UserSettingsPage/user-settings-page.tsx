@@ -284,16 +284,10 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                 </div>
               </label>
 
-              {bio?.length > 255 ? (
-                <p aria-live="assertive" className="text-light-red-10 text-xs">
-                  255/255 <br />
-                  Bio Max Length
-                </p>
-              ) : (
-                <p aria-live="polite" className="text-xs">
-                  {bio?.length}/255
-                </p>
-              )}
+              <p aria-live="polite" className="text-xs flex gap-1">
+                <span>{bio?.length}/255</span>
+                {bio?.length === 255 ? <span>(max characters reached)</span> : null}
+              </p>
             </div>
             <TextInput
               className="bg-light-slate-4"
