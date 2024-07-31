@@ -8,7 +8,6 @@ import {
   Row,
   getExpandedRowModel,
   TableState,
-  ColumnDef,
   Table as TableDef,
 } from "@tanstack/react-table";
 import { FaSortDown, FaSortUp } from "react-icons/fa6";
@@ -34,6 +33,7 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 import { getDailyPullRequestsHistogramToDays } from "lib/utils/repo-page-utils";
 import Card from "components/atoms/Card/card";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 const AddToContributorInsightModal = dynamic(() => import("components/Contributors/AddToContributorInsightModal"), {
@@ -77,7 +77,7 @@ function Sparkline({ repository, login }: { repository: string; login: string })
 }
 
 const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
-const defaultColumns = (repository: string) => [
+const defaultColumns = ({ repository, isLoggedIn }: { repository: string; isLoggedIn: boolean }) => [
   contributorsColumnHelper.display({
     id: "selector",
     header: ({ table }: { table: TableDef<DbRepoContributor> }) => (
@@ -130,7 +130,7 @@ const defaultColumns = (repository: string) => [
     ),
     enableSorting: true,
     enableGlobalFilter: false,
-    cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
+    cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} hideRating={!isLoggedIn} />,
   }),
   contributorsColumnHelper.accessor("company", {
     header: "Company",
@@ -152,14 +152,14 @@ const defaultColumns = (repository: string) => [
   }),
 ];
 
-const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
+const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
   {
     id: "mobileContributor",
     header: "",
     columns: [
       {
         id: "selector",
-        header: ({ table }) => (
+        header: ({ table }: { table: TableDef<DbRepoContributor> }) => (
           <Checkbox
             key={"selector_all"}
             checked={table.getIsAllRowsSelected()}
@@ -208,7 +208,7 @@ const mobileColumns: ColumnDef<DbRepoContributor, any>[] = [
           </div>
         ),
         enableSorting: true,
-        cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} />,
+        cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} hideRating={!isLoggedIn} />,
       }),
       {
         id: "expand",
@@ -241,6 +241,8 @@ export default function ContributorsTable({
 }: ContributorsTableProps) {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const router = useRouter();
+  const { userId } = useSupabaseAuth();
+  const isLoggedIn = Boolean(userId);
   const repository = `${router.query.org}/${router.query.repo}`;
 
   const [isAddToContributorInsightModalOpen, setIsAddToContributorInsightModalOpen] = useState(false);
@@ -248,7 +250,10 @@ export default function ContributorsTable({
   const [selectedContributors, setSelectedContributors] = useState<Record<string, boolean>>({});
 
   const table = useReactTable({
-    columns: useMemo(() => (isMobile ? mobileColumns : defaultColumns(repository)), [isMobile]),
+    columns: useMemo(
+      () => (isMobile ? mobileColumns({ isLoggedIn }) : defaultColumns({ repository, isLoggedIn })),
+      [isMobile]
+    ),
     data: contributors ?? [],
     manualSorting: true,
     manualPagination: true,
