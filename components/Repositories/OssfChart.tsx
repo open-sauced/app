@@ -82,7 +82,7 @@ export default function OssfChart({
           <h3 className="text-sm font-semibold xl:text-lg text-slate-800">OpenSSF Score</h3>
         </div>
         <a
-          href="" // TODO: Link to OpenSauced docs about OpenSSF
+          href="https://opensauced.pizza/docs/features/repo-pages/#insights-into-the-ossf-scorecard"
           onClick={onLearnMoreClick}
           className="text-xs font-semibold text-sauced-orange xl:text-sm hover:underline"
         >
