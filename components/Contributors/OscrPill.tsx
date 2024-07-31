@@ -28,7 +28,9 @@ export const OscrPill = ({
       {hideRating ? (
         <button onClick={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}>
           <span className="sr-only">Login to view Open Source Contributor Rating (OSCR)</span>
-          <Pill color="purple" size="small" text="00" blurText={true} />
+          <span aria-hidden={true}>
+            <Pill color="purple" size="small" text="00" blurText={true} />
+          </span>
         </button>
       ) : (
         <Pill color="purple" size="small" text={`${percentageRating}`} />
