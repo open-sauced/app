@@ -15,7 +15,7 @@ export default function InfoTooltip({ information, icon }: { information: string
       <TooltipPortal>
         <TooltipContent
           side="bottom"
-          className="max-w-xs text-sm shadow-lg text-slate-100 px-4 py-3 rounded-xl bg-[#171E29]"
+          className="w-fit max-w-xs text-sm shadow-lg text-slate-100 px-4 py-3 rounded-xl bg-[#171E29]"
         >
           <TooltipArrow className="fill-[#171E29]" />
           {information}

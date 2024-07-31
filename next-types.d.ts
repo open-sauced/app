@@ -521,6 +521,23 @@ interface PagedData<T> {
   meta: Meta;
 }
 
+interface DbRepoContributor {
+  id: number;
+  login: string;
+  company: string;
+  location: string;
+  avatar_url: string;
+
+  oscr: number;
+  commits: number;
+  prs_created: number;
+  issues_created: number;
+  issue_comments: number;
+  commit_comments: number;
+  pr_review_comments: number;
+  total_contributions: number;
+}
+
 interface DbListContributorStat {
   login: string;
   commits: number;
