@@ -300,7 +300,12 @@ export default function ContributorsTable({
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => (
-                      <TableHead key={header.id} className={`!font-medium !text-slate-500 first:border-0 `}>
+                      <TableHead
+                        key={header.id}
+                        className={`!font-medium !text-slate-500 ${
+                          header.id === "1_mobileContributor_selector" && "hidden"
+                        }`}
+                      >
                         {header.column.columnDef.enableSorting ? (
                           <div className="flex gap-2">
                             <>{flexRender(header.column.columnDef.header, header.getContext())}</>
