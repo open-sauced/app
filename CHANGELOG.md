@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.49.0-beta.6](https://github.com/open-sauced/app/compare/v2.49.0-beta.5...v2.49.0-beta.6) (2024-08-01)
+
+
+### 🐛 Bug Fixes
+
+* updated OSCR login CTA for OSCR pill component ([#3823](https://github.com/open-sauced/app/issues/3823)) ([90d3ccd](https://github.com/open-sauced/app/commit/90d3ccd5e938e59ca81f08aa26934f93692c25ca))
+
 ## [2.49.0-beta.5](https://github.com/open-sauced/app/compare/v2.49.0-beta.4...v2.49.0-beta.5) (2024-08-01)
 
 
