@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.49.0-beta.4](https://github.com/open-sauced/app/compare/v2.49.0-beta.3...v2.49.0-beta.4) (2024-08-01)
+
+
+### 🍕 Features
+
+* added OSCR to user profile page ([#3821](https://github.com/open-sauced/app/issues/3821)) ([928c8db](https://github.com/open-sauced/app/commit/928c8dbf98ffc71eebe89d253565acc490b456ce))
+
 ## [2.49.0-beta.3](https://github.com/open-sauced/app/compare/v2.49.0-beta.2...v2.49.0-beta.3) (2024-07-31)
 
 
