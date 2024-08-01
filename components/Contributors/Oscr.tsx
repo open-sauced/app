@@ -13,10 +13,10 @@ interface OscrProps {
 }
 
 export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
-  let percentageRating = rating ? Math.floor(rating * 100) : 0;
+  let ratingToRender = rating ? Math.floor(rating * 100) : 0;
 
-  if (percentageRating < 1) {
-    percentageRating = 0;
+  if (ratingToRender < 1) {
+    ratingToRender = 0;
   }
 
   const tooltipText = hideRating
@@ -33,14 +33,14 @@ export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrP
           </span>
         </button>
       ) : (
-        <Pill color="purple" size="small" text={`${percentageRating}`} />
+        <Pill color="purple" size="small" text={`${ratingToRender}`} />
       )}
     </Tooltip>
   );
 };
 
 export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
-  let percentageRating = rating ? Math.floor(rating * 100) : 0;
+  let ratingToRender = rating ? Math.floor(rating * 100) : 0;
 
   return (
     <>
@@ -55,7 +55,7 @@ export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: Osc
           <LockIcon size={16} />
         </Button>
       ) : (
-        <span>{percentageRating}</span>
+        <span>{ratingToRender}</span>
       )}
     </>
   );
