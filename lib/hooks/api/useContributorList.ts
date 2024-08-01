@@ -7,10 +7,10 @@ export function convertToContributors({
   username,
   oscrEnabled,
 }: {
-  rawContributors: DBListContributor[];
+  rawContributors: DbContributorInsightUser[];
   username: string;
   oscrEnabled: boolean;
-}): DBListContributor[] {
+}): DbContributorInsightUser[] {
   const contributors = rawContributors
     ? rawContributors.map((contributor) => {
         const returnOscr = oscrEnabled || contributor.username === username;
@@ -56,7 +56,7 @@ export const useContributorsList = ({
 
   const { data, error, mutate } = useSWR<any>(
     listId ? (workspaceId ? `workspaces/${workspaceId}/userLists/${listId}/contributors?${query}` : null) : null,
-    publicApiFetcher as Fetcher<PagedData<DBListContributor>, Error>,
+    publicApiFetcher as Fetcher<PagedData<DbContributorInsightUser>, Error>,
     {
       fallbackData: initialData,
     }

@@ -112,7 +112,7 @@ interface DbRecommendedInsightsRepo {
   readonly default_branch: string;
 }
 
-interface DBListContributor {
+interface DbContributorInsightUser {
   readonly avatar_url: string;
   readonly id: number;
   readonly login: string;

@@ -55,7 +55,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const range = rawRange ? Number(rawRange) : 30;
   const limit = rawLimit ? Number(rawLimit) : 20;
   const [{ data, error: contributorListError }, { data: list, error }, { data: workspaceMembers }] = await Promise.all([
-    fetchApiData<PagedData<DBListContributor>>({
+    fetchApiData<PagedData<DbContributorInsightUser>>({
       path: `workspaces/${workspaceId}/userLists/${listId}/contributors?limit=1`,
       bearerToken,
       pathValidator: validateListPath,
