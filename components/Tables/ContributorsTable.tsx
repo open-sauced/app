@@ -246,7 +246,7 @@ export default function ContributorsTable<T extends Contributor>({
   const router = useRouter();
   const { userId } = useSupabaseAuth();
   const isLoggedIn = Boolean(userId);
-  const repository = `${router.query.org}/${router.query.repo}`;
+  const repository = router.query.org && router.query.repo ? `${router.query.org}/${router.query.repo}` : undefined;
 
   const [isAddToContributorInsightModalOpen, setIsAddToContributorInsightModalOpen] = useState(false);
   const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
