@@ -46,8 +46,11 @@ const AddToContributorInsightDrawer = dynamic(() => import("components/Contribut
 
 type OrderDirection = "ASC" | "DESC";
 
-type ContributorsTableProps = {
-  contributors: DbRepoContributor[] | undefined;
+type Contributor = (DbRepoContributor | DbContributorInsightUser) &
+  Partial<Pick<DbRepoContributor, "total_contributions">>;
+
+type ContributorsTableProps<T> = {
+  contributors: T[] | undefined;
   meta: Meta | null;
   isLoading: boolean;
   isError: boolean;
@@ -76,18 +79,18 @@ function Sparkline({ repository, login }: { repository: string; login: string })
   );
 }
 
-const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
+const contributorsColumnHelper = createColumnHelper<Contributor>();
 const defaultColumns = ({ repository, isLoggedIn }: { repository: string; isLoggedIn: boolean }) => [
   contributorsColumnHelper.display({
     id: "selector",
-    header: ({ table }: { table: TableDef<DbRepoContributor> }) => (
+    header: ({ table }: { table: TableDef<Contributor> }) => (
       <Checkbox
         key={"selector_all"}
         checked={table.getIsAllRowsSelected()}
         onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
       />
     ),
-    cell: ({ row }: { row: Row<DbRepoContributor> }) => (
+    cell: ({ row }: { row: Row<Contributor> }) => (
       <Checkbox
         key={row.id}
         checked={row.getIsSelected()}
@@ -159,14 +162,14 @@ const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
     columns: [
       {
         id: "selector",
-        header: ({ table }: { table: TableDef<DbRepoContributor> }) => (
+        header: ({ table }: { table: TableDef<Contributor> }) => (
           <Checkbox
             key={"selector_all"}
             checked={table.getIsAllRowsSelected()}
             onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
           />
         ),
-        cell: ({ row }: { row: Row<DbRepoContributor> }) => (
+        cell: ({ row }: { row: Row<Contributor> }) => (
           <Checkbox
             key={row.id}
             checked={row.getIsSelected()}
@@ -213,7 +216,7 @@ const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
       {
         id: "expand",
         header: "",
-        cell: ({ row }: { row: Row<DbRepoContributor> }) => {
+        cell: ({ row }: { row: Row<Contributor> }) => {
           return (
             row.getCanExpand() && (
               <button onClick={row.getToggleExpandedHandler()}>
@@ -231,14 +234,14 @@ const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
   },
 ];
 
-export default function ContributorsTable({
+export default function ContributorsTable<T extends Contributor>({
   contributors,
   meta,
   oscrSorting,
   setOscrSorting,
   isLoading,
   isError,
-}: ContributorsTableProps) {
+}: ContributorsTableProps<T>) {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const router = useRouter();
   const { userId } = useSupabaseAuth();
