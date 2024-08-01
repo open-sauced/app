@@ -45,25 +45,19 @@ export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: Osc
   return (
     <>
       {hideRating ? (
-        <div className="relative flex items-center justify-center w-fit">
-          <span
-            className="absolute blur-sm text-5xl text-gray-300 z-0 leading-tight"
-            style={{
-              "--tw-blur": "blur(1.75px)",
-            }}
-          >
-            000
-          </span>
-          <Button
-            variant="primary"
-            className="flex items-center gap-2 !p-1.5 !text-xs z-10"
-            onClick={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}
-          >
-            <span>Login in to view</span>
-            <span className="sr-only">&nbsp;Open Source Contributor Rating (OSCR)</span>
-            <LockIcon size={16} />
-          </Button>
-        </div>
+        <Tooltip direction="top" content="Login in to view Open Source Contributor Rating (OSCR)" className="z-1">
+          <div className="relative flex items-center justify-center w-fit">
+            <span className="absolute blur-sm text-xl text-black z-0 leading-tight">000</span>
+            <Button
+              variant="primary"
+              className="flex items-center gap-2 !p-1 !text-xs z-10"
+              onClick={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}
+            >
+              <span className="sr-only">Login in to view Open Source Contributor Rating (OSCR)</span>
+              <LockIcon size={16} />
+            </Button>
+          </div>
+        </Tooltip>
       ) : (
         <span>{ratingToRender}</span>
       )}
