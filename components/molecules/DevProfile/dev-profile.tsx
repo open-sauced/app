@@ -5,7 +5,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 
 import { getAvatarByUsername } from "lib/utils/github";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
-import { OscrPill } from "components/Contributors/OscrPill";
+import { OscrPill } from "components/Contributors/Oscr";
 
 interface DevProfileProps {
   username: string;

@@ -1,12 +1,12 @@
 import { OAuthResponse } from "@supabase/supabase-js";
-import { OscrPill } from "components/Contributors/Oscr";
+import { OscrButton } from "components/Contributors/Oscr";
 import type { Meta, StoryObj } from "@storybook/react";
 
-type MetaData = Meta<typeof OscrPill>;
+type MetaData = Meta<typeof OscrButton>;
 
 const meta: MetaData = {
-  title: "Components/Contributors/OscrPill",
-  component: OscrPill,
+  title: "Components/Contributors/OscrButton",
+  component: OscrButton,
   args: {
     signIn: (options) => Promise.resolve({} as OAuthResponse),
     rating: 0.5,
@@ -14,7 +14,7 @@ const meta: MetaData = {
 };
 
 export default meta;
-type Story = StoryObj<typeof OscrPill>;
+type Story = StoryObj<typeof OscrButton>;
 
 export const Default: Story = {
   args: {

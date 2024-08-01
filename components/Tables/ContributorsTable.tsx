@@ -22,7 +22,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
-import { OscrPill } from "components/Contributors/OscrPill";
+import { OscrPill } from "components/Contributors/Oscr";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { setQueryParams } from "lib/utils/query-params";
 import Pagination from "components/molecules/Pagination/pagination";
