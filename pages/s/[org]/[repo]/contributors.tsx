@@ -28,6 +28,8 @@ import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/L
 import ContributorsTable from "components/Tables/ContributorsTable";
 import useRepositoryContributors from "lib/hooks/api/useRepositoryContributors";
 import Activity from "components/organisms/Activity/activity";
+import ContributorsGrid from "components/Tables/ContributorsGrid";
+import LayoutToggle, { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -81,6 +83,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
   const isMobile = useMediaQuery("(max-width: 576px)");
   const [oscrSorting, setOscrSorting] = useState<OrderDirection>("DESC");
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
+  const [contributorsView, setContributorsView] = useState<ToggleValue>("grid");
   const tabList = [
     { name: "Overview", path: "" },
     { name: "Contributors", path: "contributors" },
@@ -210,14 +213,24 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
           <ClientOnly>
             <div className="flex flex-col gap-8 px-2 py-4 lg:p-8">
               <Activity repositories={[repoData.id]} />
-              <ContributorsTable
-                contributors={contributors}
-                meta={meta}
-                isLoading={isContributorsLoading}
-                isError={isContributorsError}
-                oscrSorting={oscrSorting}
-                setOscrSorting={setOscrSorting}
-              />
+              <div className="flex w-full justify-between">
+                <h2 className="text-lg font-semibold">Contributors</h2>
+                <LayoutToggle
+                  value={contributorsView}
+                  onChange={() => setContributorsView((prev) => (prev === "list" ? "grid" : "list"))}
+                />
+              </div>
+              {contributorsView === "grid" && <ContributorsGrid repositoryIds={[repoData.id]} />}
+              {contributorsView === "list" && (
+                <ContributorsTable
+                  contributors={contributors}
+                  meta={meta}
+                  isLoading={isContributorsLoading}
+                  isError={isContributorsError}
+                  oscrSorting={oscrSorting}
+                  setOscrSorting={setOscrSorting}
+                />
+              )}
             </div>
           </ClientOnly>
         </div>
