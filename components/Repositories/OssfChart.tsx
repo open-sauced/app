@@ -3,6 +3,7 @@ import { FaShieldAlt } from "react-icons/fa";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Card from "components/atoms/Card/card";
+import Button from "components/shared/Button/button";
 
 type OssfChartProps = {
   totalScore: number | null;
@@ -52,17 +53,18 @@ export default function OssfChart({
   const pieColor = getValueBasedOnScore({ low: "#f59e0b", med: "#2563eb", high: "#22c55e", error: "#e2e8f0" });
 
   const projectStatus = getValueBasedOnScore({
-    low: "might not be safe to use",
-    med: "is safe to use",
-    high: "is safe to use",
-    error: "hasn't been calculated yet.",
+    low: "This project might not be safe to use",
+    med: "This project is safe to use",
+    high: "This project is safe to use",
+    error: "Coming soon!",
   });
 
   const projectDescription = getValueBasedOnScore({
     low: "It might not pass all checks in the OpenSSF software security checklist. ",
     med: "It passes almost all checks in the OpenSSF software security checklist. ",
     high: "It passes almost all checks in the OpenSSF software security checklist with a high score. ",
-    error: "No checks have been tested from the OpenSSF software security checklist. ",
+    error:
+      "We are still calculating the OpenSSF Score for this repository that measures the security level of the project.",
   });
 
   const renderCustomLabel = ({ cx, cy }: { cx: number; cy: number }) => {
@@ -93,9 +95,16 @@ export default function OssfChart({
       {!isError && (isLoading || !totalScore) ? ( // check if other scores are null
         <SkeletonWrapper width={300} height={100} />
       ) : (
-        <section className="flex justify-between w-full gap-2 lg:flex-col xl:flex-row h-fit max-h-24 lg:max-h-full xl:max-h-24">
-          <div className="w-full !max-w-[14rem] lg:max-w-full lg:mx-auto h-full lg:max-h-24 xl:h-full">
-            <ResponsiveContainer width="100%" height={150}>
+        <section className="flex justify-between items-center w-full gap-2 lg:flex-col xl:flex-row h-fit max-h-24 lg:max-h-full xl:max-h-24">
+          <div className="relative w-full !max-w-[14rem] lg:max-w-full lg:mx-auto h-full lg:max-h-24 xl:h-full">
+            {isError && (
+              <div className="absolute inset-0 z-50 flex items-center justify-center">
+                <Button variant="primary" className="!text-xs">
+                  I want this now!
+                </Button>
+              </div>
+            )}
+            <ResponsiveContainer width="100%" height={150} className={`${isError && "blur-[2.5px]"}`}>
               <PieChart>
                 <Pie
                   data={data}
@@ -115,18 +124,22 @@ export default function OssfChart({
             </ResponsiveContainer>
           </div>
           <section className="flex flex-col gap-1 lg:text-center xl:text-start">
-            <h3 className="font-medium text-sm text-slate-700">This project {projectStatus}</h3>
+            <h3 className="font-medium text-sm text-slate-700">{projectStatus}</h3>
             <p className="text-xs text-slate-600">
               {projectDescription}
-              You can run the full test{" "}
-              <a
-                href="https://github.com/ossf/scorecard?tab=readme-ov-file#view-a-projects-score"
-                target="_blank"
-                className="text-orange-500"
-              >
-                here
-              </a>
-              .
+              {!isError && (
+                <span>
+                  You can run the full test{" "}
+                  <a
+                    href="https://github.com/ossf/scorecard?tab=readme-ov-file#view-a-projects-score"
+                    target="_blank"
+                    className="text-orange-500"
+                  >
+                    here
+                  </a>
+                  .
+                </span>
+              )}
             </p>
           </section>
         </section>
