@@ -1,4 +1,5 @@
 import { LockIcon } from "@primer/octicons-react";
+import { usePostHog } from "posthog-js/react";
 import Pill from "components/atoms/Pill/pill";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import Button from "components/shared/Button/button";
@@ -13,6 +14,7 @@ interface OscrProps {
 }
 
 export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
+  const posthog = usePostHog();
   let ratingToRender = rating ? Math.floor(rating * 100) : 0;
 
   if (ratingToRender < 1) {
@@ -26,7 +28,12 @@ export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrP
   return (
     <Tooltip direction="top" content={tooltipText}>
       {hideRating ? (
-        <button onClick={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}>
+        <button
+          onClick={() => {
+            posthog.capture("OSCR Login Button Clicked");
+            signIn({ provider: "github", options: { redirectTo: window.location.href } });
+          }}
+        >
           <span className="sr-only">Login to view Open Source Contributor Rating (OSCR)</span>
           <span aria-hidden={true}>
             <Pill color="purple" size="small" text="00" blurText={true} />
@@ -40,6 +47,7 @@ export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrP
 };
 
 export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
+  const posthog = usePostHog();
   let ratingToRender = rating ? Math.floor(rating * 100) : 0;
 
   return (
@@ -51,7 +59,10 @@ export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: Osc
             <Button
               variant="primary"
               className="flex items-center gap-2 !p-1 !text-xs z-10"
-              onClick={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}
+              onClick={() => {
+                posthog.capture("OSCR Login Button Clicked");
+                signIn({ provider: "github", options: { redirectTo: window.location.href } });
+              }}
             >
               <span className="sr-only">Login in to view Open Source Contributor Rating (OSCR)</span>
               <LockIcon size={16} />
