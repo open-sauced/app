@@ -5,6 +5,23 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.49.0](https://github.com/open-sauced/app/compare/v2.48.0...v2.49.0) (2024-08-01)
+
+
+### 🍕 Features
+
+* added OSCR to user profile page ([#3821](https://github.com/open-sauced/app/issues/3821)) ([928c8db](https://github.com/open-sauced/app/commit/928c8dbf98ffc71eebe89d253565acc490b456ce))
+* now OSCR component has a CTA to log in if logged out ([#3814](https://github.com/open-sauced/app/issues/3814)) ([c4d7a50](https://github.com/open-sauced/app/commit/c4d7a506a23fab083a69f7a261a4a9f5ad0ede88))
+* refactor `ContributorsTable` with TanStack Table ([#3626](https://github.com/open-sauced/app/issues/3626)) ([6ae8738](https://github.com/open-sauced/app/commit/6ae873885ece571b947ecb514f00310409c689b6))
+* show OSSF Score in Repo Pages ([#3793](https://github.com/open-sauced/app/issues/3793)) ([a18ced7](https://github.com/open-sauced/app/commit/a18ced759007b12363747e23def12e5674923575))
+
+
+### 🐛 Bug Fixes
+
+* contributors grid view in repo pages ([#3820](https://github.com/open-sauced/app/issues/3820)) ([75c5965](https://github.com/open-sauced/app/commit/75c59657d9e3d006d8697d526d0f7b9e3d5ceb48))
+* Now you can't type more than 255 characters in the bio field of user settings ([#2615](https://github.com/open-sauced/app/issues/2615)) ([2d58445](https://github.com/open-sauced/app/commit/2d58445e5667b6eeb764761eb9d7cdda5bfffa74))
+* updated OSCR login CTA for OSCR pill component ([#3823](https://github.com/open-sauced/app/issues/3823)) ([90d3ccd](https://github.com/open-sauced/app/commit/90d3ccd5e938e59ca81f08aa26934f93692c25ca))
+
 ## [2.49.0-beta.6](https://github.com/open-sauced/app/compare/v2.49.0-beta.5...v2.49.0-beta.6) (2024-08-01)
 
 
