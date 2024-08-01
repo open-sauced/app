@@ -10,16 +10,14 @@ export function convertToContributors({
   rawContributors: DBListContributor[];
   username: string;
   oscrEnabled: boolean;
-}): DbPRContributor[] {
+}): DBListContributor[] {
   const contributors = rawContributors
     ? rawContributors.map((contributor) => {
         const returnOscr = oscrEnabled || contributor.username === username;
         return {
-          author_login: contributor.login,
-          username: contributor.username,
-          updated_at: contributor.created_at,
-          user_id: contributor.id,
+          ...contributor,
           oscr: returnOscr ? contributor.oscr : undefined,
+          login: contributor.login ?? contributor.username,
         };
       })
     : [];

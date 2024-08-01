@@ -12,11 +12,11 @@ import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { useContributorsList } from "lib/hooks/api/useContributorList";
-import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import ContributorsTable from "components/Tables/ContributorsTable";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -105,6 +105,18 @@ const ListsOverview = ({
   const loggedIn = Boolean(userId);
   const router = useRouter();
   const { listId, range, limit } = router.query;
+  const oscrSort = router.query.oscrSort as OrderDirection;
+
+  type OrderDirection = "ASC" | "DESC";
+
+  const setOscrSortDirection = (direction: OrderDirection) => {
+    router.push({
+      query: {
+        ...router.query,
+        oscrSort: direction,
+      },
+    });
+  };
 
   const {
     isLoading,
@@ -223,13 +235,13 @@ const ListsOverview = ({
                   <ErrorBoundary
                     fallback={<div className="grid place-content-center">Error loading the list of contributors</div>}
                   >
-                    <ContributorsList
+                    <ContributorsTable
                       contributors={contributors}
                       meta={meta}
                       isLoading={isLoading}
-                      setPage={setPage}
-                      range={String(range ?? "30")}
-                      loggedIn={loggedIn}
+                      isError={isError}
+                      oscrSorting={oscrSort}
+                      setOscrSorting={setOscrSortDirection}
                     />
                   </ErrorBoundary>
                 )}
