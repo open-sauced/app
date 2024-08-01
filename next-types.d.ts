@@ -47,6 +47,11 @@ interface DbRepoInfo {
   readonly url: string;
   readonly homepage: string;
   readonly topics: string[];
+  readonly ossf_scorecard_total_score: number;
+  readonly ossf_scorecard_dependency_update_score: number;
+  readonly ossf_scorecard_fuzzing_score: number;
+  readonly ossf_scorecard_maintained_score: number;
+  readonly ossf_scorecard_updated_at: string;
 }
 
 interface DbRepo {
@@ -514,6 +519,23 @@ interface DBList {
 interface PagedData<T> {
   data?: T[];
   meta: Meta;
+}
+
+interface DbRepoContributor {
+  id: number;
+  login: string;
+  company: string;
+  location: string;
+  avatar_url: string;
+
+  oscr: number;
+  commits: number;
+  prs_created: number;
+  issues_created: number;
+  issue_comments: number;
+  commit_comments: number;
+  pr_review_comments: number;
+  total_contributions: number;
 }
 
 interface DbListContributorStat {

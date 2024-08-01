@@ -9,6 +9,13 @@ test("Loads user profile page", async ({ page }) => {
   expect(await page.title()).toBe("bdougie | OpenSauced");
 
   await expect(page.getByRole("heading", { name: "bdougie", exact: true })).toBeVisible();
+
+  // Check for login button for viewing OSCR
+  await page
+    .getByRole("button", { name: "Log in to view  Open Source Contributor Rating (OSCR)", exact: true })
+    .click();
+
+  await expect(page.url()).toContain("https://github.com/login");
 });
 
 test("Redirects to user profile page", async ({ page }) => {

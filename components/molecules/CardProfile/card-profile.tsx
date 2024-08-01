@@ -8,7 +8,7 @@ import Text from "components/atoms/Typography/text";
 import ForkIcon from "img/icons/fork-icon.svg";
 import FirstPRIcon from "img/icons/first-pr-icon.svg";
 import Tooltip from "components/atoms/Tooltip/tooltip";
-import { OscrPill } from "components/Contributors/OscrPill";
+import { OscrPill } from "components/Contributors/Oscr";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 
 interface CardProfileProps {

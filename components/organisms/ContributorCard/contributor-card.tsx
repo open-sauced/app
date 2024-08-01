@@ -18,7 +18,7 @@ import Tooltip from "components/atoms/Tooltip/tooltip";
 import Icon from "components/atoms/Icon/icon";
 import ForkIcon from "img/icons/fork-icon.svg";
 import FirstPRIcon from "img/icons/first-pr-icon.svg";
-import { OscrPill } from "components/Contributors/OscrPill";
+import { OscrPill } from "components/Contributors/Oscr";
 
 interface ContributorCardProps {
   className?: string;
