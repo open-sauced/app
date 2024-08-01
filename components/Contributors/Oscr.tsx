@@ -1,18 +1,18 @@
+import { LockIcon } from "@primer/octicons-react";
 import Pill from "components/atoms/Pill/pill";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import Button from "components/shared/Button/button";
 import { supabase } from "lib/utils/supabase";
 
 const DEFAULT_SIGN_IN = supabase.auth.signInWithOAuth.bind(supabase.auth);
 
-export const OscrPill = ({
-  rating,
-  hideRating,
-  signIn = DEFAULT_SIGN_IN,
-}: {
+interface OscrProps {
   rating: number | undefined;
   hideRating: boolean;
   signIn?: typeof DEFAULT_SIGN_IN;
-}) => {
+}
+
+export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
   let percentageRating = rating ? Math.floor(rating * 100) : 0;
 
   if (percentageRating < 1) {
@@ -36,5 +36,27 @@ export const OscrPill = ({
         <Pill color="purple" size="small" text={`${percentageRating}`} />
       )}
     </Tooltip>
+  );
+};
+
+export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
+  let percentageRating = rating ? Math.floor(rating * 100) : 0;
+
+  return (
+    <>
+      {hideRating ? (
+        <Button
+          variant="primary"
+          className="flex items-center gap-2 !p-1"
+          onClick={() => signIn({ provider: "github", options: { redirectTo: window.location.href } })}
+        >
+          <span>Login in to view</span>
+          <span className="sr-only">&nbsp;Open Source Contributor Rating (OSCR)</span>
+          <LockIcon size={16} />
+        </Button>
+      ) : (
+        <span>{percentageRating}</span>
+      )}
+    </>
   );
 };

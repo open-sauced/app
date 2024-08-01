@@ -1,5 +1,5 @@
 import { OAuthResponse } from "@supabase/supabase-js";
-import { OscrPill } from "components/Contributors/OscrPill";
+import { OscrPill } from "components/Contributors/Oscr";
 import type { Meta, StoryObj } from "@storybook/react";
 
 type MetaData = Meta<typeof OscrPill>;

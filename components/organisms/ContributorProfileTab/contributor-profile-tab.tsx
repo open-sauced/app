@@ -12,8 +12,6 @@ import { TbMailFilled } from "react-icons/tb";
 import Avatar from "components/atoms/Avatar/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/atoms/Tabs/tabs";
 import HighlightInputForm from "components/molecules/HighlightInput/highlight-input-form";
-import Text from "components/atoms/Typography/text";
-import { getRelativeDays } from "lib/utils/date-utils";
 import Pill from "components/atoms/Pill/pill";
 import CardLineChart from "components/molecules/CardLineChart/card-line-chart";
 import CardRepoList, { RepoList } from "components/molecules/CardRepoList/card-repo-list";
@@ -39,6 +37,7 @@ import { DayRangePicker } from "components/shared/DayRangePicker";
 import IssueCommentsTable from "components/Profiles/IssueCommentsTable/issue-comments-table";
 import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
 import { SubTabsList } from "components/TabList/tab-list";
+import { OscrButton } from "components/Contributors/Oscr";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
@@ -369,26 +368,30 @@ const ContributorProfileTab = ({
             <div className="flex justify-end">
               <DayRangePicker />
             </div>
-            <div className="flex flex-col justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
+            <div className="grid grid-cols-2 2xl:grid-cols-4 justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
+              <div>
+                <span className="text-xs text-light-slate-11">OSCR Rating</span>
+                <div className="flex mt-1 text-lg md:text-xl lg:text-2xl !text-black leading-none">
+                  <OscrButton rating={contributor?.oscr} hideRating={!Boolean(user)} />
+                </div>
+              </div>
               <div>
                 <span className="text-xs text-light-slate-11">PRs opened</span>
                 {totalPrs ? (
-                  <div className="flex mt-1 lg:justify-center md:pr-8">
-                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">{totalPrs} PRs</Text>
+                  <div className="flex mt-1 !text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                    {totalPrs} PRs
                   </div>
                 ) : (
                   <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
                 )}
               </div>
-              <div>
-                <span className="text-xs text-light-slate-11">Avg PR velocity</span>
-                {prVelocity ? (
-                  <div className="flex items-center gap-2 lg:justify-center">
-                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
-                      {getRelativeDays(prVelocity)}
-                    </Text>
 
-                    <Pill color="purple" text={`${prsMergedPercentage}%`} />
+              <div>
+                <span className="text-xs text-light-slate-11">PRs opened</span>
+                {prVelocity ? (
+                  <div className="flex mt-1 gap-2 !text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                    <span>{prVelocity} PRs</span>
+                    <Pill color="purple" text={`${prsMergedPercentage}%`} className="-mt-1 md:mt-0" />
                   </div>
                 ) : (
                   <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
@@ -397,10 +400,8 @@ const ContributorProfileTab = ({
               <div>
                 <span className="text-xs text-light-slate-11">Contributed Repos</span>
                 {recentContributionCount ? (
-                  <div className="flex mt-1 lg:justify-center">
-                    <Text className="!text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
-                      {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
-                    </Text>
+                  <div className="flex mt-1 !text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
+                    {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
                   </div>
                 ) : (
                   <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
