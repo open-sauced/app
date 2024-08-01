@@ -382,7 +382,7 @@ const ContributorProfileTab = ({
                     {totalPrs} PRs
                   </div>
                 ) : (
-                  <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+                  <div className="mt-1">{DATA_FALLBACK_VALUE}</div>
                 )}
               </div>
 
@@ -394,7 +394,7 @@ const ContributorProfileTab = ({
                     <Pill color="purple" text={`${prsMergedPercentage}%`} className="-mt-1 md:mt-0" />
                   </div>
                 ) : (
-                  <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+                  <div className="mt-1">{DATA_FALLBACK_VALUE}</div>
                 )}
               </div>
               <div>
@@ -404,7 +404,7 @@ const ContributorProfileTab = ({
                     {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
                   </div>
                 ) : (
-                  <div className="flex items-end justify-center mt-1">{DATA_FALLBACK_VALUE}</div>
+                  <div className="mt-1">{DATA_FALLBACK_VALUE}</div>
                 )}
               </div>
             </div>
