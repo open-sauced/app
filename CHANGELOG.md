@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.49.0-beta.5](https://github.com/open-sauced/app/compare/v2.49.0-beta.4...v2.49.0-beta.5) (2024-08-01)
+
+
+### 🐛 Bug Fixes
+
+* contributors grid view in repo pages ([#3820](https://github.com/open-sauced/app/issues/3820)) ([75c5965](https://github.com/open-sauced/app/commit/75c59657d9e3d006d8697d526d0f7b9e3d5ceb48))
+
 ## [2.49.0-beta.4](https://github.com/open-sauced/app/compare/v2.49.0-beta.3...v2.49.0-beta.4) (2024-08-01)
 
 
