@@ -8,7 +8,7 @@ test("workspace contributor insight page loads", async ({ page }) => {
   // There is more than one row of users, but we only want the first one to test the login CTA
   // for viewing OSCRs.
   await page
-    .getByRole("button", { name: "Login to view Open Source Contributor Rating (OSCR)", exact: true })
+    .getByRole("button", { name: "Log in to view Open Source Contributor Rating (OSCR)", exact: true })
     .first()
     .click();
 
