@@ -71,7 +71,7 @@ async function fetchInitialCardData(username: string): Promise<DevCardProps> {
     name: user.name || username,
     bio: user.bio,
     age: ageInDays,
-    oscr: Math.floor(user.oscr * 100),
+    oscr: Math.ceil(user.oscr),
     isLoading: true,
   };
 }
