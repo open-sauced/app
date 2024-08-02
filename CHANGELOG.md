@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.5](https://github.com/open-sauced/app/compare/v2.50.0-beta.4...v2.50.0-beta.5) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* now using setQueryParams no longer causes page to jump ([#3837](https://github.com/open-sauced/app/issues/3837)) ([6541971](https://github.com/open-sauced/app/commit/6541971dcd6d0930f62e2a41365e7039eaebab35))
+
 ## [2.50.0-beta.4](https://github.com/open-sauced/app/compare/v2.50.0-beta.3...v2.50.0-beta.4) (2024-08-02)
 
 
