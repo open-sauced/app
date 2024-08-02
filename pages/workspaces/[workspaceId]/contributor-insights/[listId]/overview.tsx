@@ -27,7 +27,6 @@ interface ListsOverviewProps {
   isError: boolean;
   workspaceId: string;
   owners: string[];
-  featureFlags: Record<string, boolean>;
   username: string;
 }
 

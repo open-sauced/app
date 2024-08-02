@@ -12,7 +12,7 @@ test("Loads user profile page", async ({ page }) => {
 
   // Check for login button for viewing OSCR
   await page
-    .getByRole("button", { name: "Login in to view  Open Source Contributor Rating (OSCR)", exact: true })
+    .getByRole("button", { name: "Log in to view  Open Source Contributor Rating (OSCR)", exact: true })
     .click();
 
   await expect(page.url()).toContain("https://github.com/login");
