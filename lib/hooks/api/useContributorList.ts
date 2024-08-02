@@ -33,6 +33,8 @@ export const useContributorsList = ({
   defaultLimit = 10,
   defaultRange = "30",
   showOscr = false,
+  orderBy,
+  orderDirection,
   username,
 }: {
   workspaceId: string | undefined;
@@ -46,6 +48,8 @@ export const useContributorsList = ({
   defaultRange?: string;
   showOscr?: boolean;
   username: string;
+  orderBy?: string;
+  orderDirection?: string;
 }) => {
   const [page, setPage] = useState(initialPage);
 
@@ -53,6 +57,14 @@ export const useContributorsList = ({
   query.append("page", page.toString());
   query.append("limit", `${defaultLimit}`);
   query.append("range", defaultRange ?? "30");
+
+  if (orderBy) {
+    query.append("orderBy", orderBy);
+  }
+
+  if (orderDirection) {
+    query.append("orderDirection", orderDirection);
+  }
 
   const { data, error, mutate } = useSWR<any>(
     listId ? (workspaceId ? `workspaces/${workspaceId}/userLists/${listId}/contributors?${query}` : null) : null,

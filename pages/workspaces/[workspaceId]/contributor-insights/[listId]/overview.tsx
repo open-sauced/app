@@ -17,6 +17,7 @@ import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import ContributorsTable from "components/Tables/ContributorsTable";
+import { setQueryParams } from "lib/utils/query-params";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -105,17 +106,13 @@ const ListsOverview = ({
   const loggedIn = Boolean(userId);
   const router = useRouter();
   const { listId, range, limit } = router.query;
-  const oscrSort = router.query.oscrSort as OrderDirection;
+  const orderDirection = router.query.orderDirection as OrderDirection;
+  const orderBy = router.query.orderBy as string;
 
   type OrderDirection = "ASC" | "DESC";
 
   const setOscrSortDirection = (direction: OrderDirection) => {
-    router.push({
-      query: {
-        ...router.query,
-        oscrSort: direction,
-      },
-    });
+    setQueryParams({ orderDirection: direction, orderBy: "oscr" });
   };
 
   const {
@@ -129,6 +126,8 @@ const ListsOverview = ({
     defaultLimit: limit ? (limit as unknown as number) : 10,
     showOscr: loggedIn,
     username,
+    orderBy,
+    orderDirection,
   });
 
   const {
@@ -240,7 +239,7 @@ const ListsOverview = ({
                       meta={meta}
                       isLoading={isLoading}
                       isError={isError}
-                      oscrSorting={oscrSort}
+                      oscrSorting={orderDirection}
                       setOscrSorting={setOscrSortDirection}
                     />
                   </ErrorBoundary>
