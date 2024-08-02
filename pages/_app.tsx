@@ -23,7 +23,6 @@ import { Toaster } from "components/molecules/Toaster/toaster";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSession from "lib/hooks/useSession";
 
-import { FeatureFlag } from "lib/utils/server/feature-flags";
 import { APP_CACHE_KEY } from "lib/utils/caching";
 import type { AppProps } from "next/app";
 
@@ -58,7 +57,7 @@ type ComponentWithPageLayout = AppProps & {
     SEO?: SEOobject;
     updateSEO?: (SEO: SEOobject) => void;
   };
-  pageProps: AppProps["pageProps"] & { featureFlags: Record<FeatureFlag, boolean> };
+  pageProps: AppProps["pageProps"];
 };
 
 function MyApp({ Component, pageProps }: ComponentWithPageLayout) {

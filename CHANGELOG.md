@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.5](https://github.com/open-sauced/app/compare/v2.50.0-beta.4...v2.50.0-beta.5) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* now using setQueryParams no longer causes page to jump ([#3837](https://github.com/open-sauced/app/issues/3837)) ([6541971](https://github.com/open-sauced/app/commit/6541971dcd6d0930f62e2a41365e7039eaebab35))
+
+## [2.50.0-beta.4](https://github.com/open-sauced/app/compare/v2.50.0-beta.3...v2.50.0-beta.4) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* now tooltip appears over lock button ([#3832](https://github.com/open-sauced/app/issues/3832)) ([b3274cb](https://github.com/open-sauced/app/commit/b3274cb6296f104daa8fed49e97d85d27a9aa55b))
+
+## [2.50.0-beta.3](https://github.com/open-sauced/app/compare/v2.50.0-beta.2...v2.50.0-beta.3) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* put back original heading for PR velocity ([#3830](https://github.com/open-sauced/app/issues/3830)) ([e8acd50](https://github.com/open-sauced/app/commit/e8acd50aab41c86601e068027278ae9ba8965823))
+
+## [2.50.0-beta.2](https://github.com/open-sauced/app/compare/v2.50.0-beta.1...v2.50.0-beta.2) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* removed unused code ([#3827](https://github.com/open-sauced/app/issues/3827)) ([3d28f2c](https://github.com/open-sauced/app/commit/3d28f2cefe93ed20788f170b69a0cdfa01acbb23))
+
 ## [2.50.0-beta.1](https://github.com/open-sauced/app/compare/v2.49.0...v2.50.0-beta.1) (2024-08-02)
 
 
