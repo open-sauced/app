@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.6](https://github.com/open-sauced/app/compare/v2.50.0-beta.5...v2.50.0-beta.6) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* OSCR math ceiling for contributor card ([#3839](https://github.com/open-sauced/app/issues/3839)) ([fc9b3e9](https://github.com/open-sauced/app/commit/fc9b3e93ad05f90d81f5e95cf8fa86ed54574d2c))
+
 ## [2.50.0-beta.5](https://github.com/open-sauced/app/compare/v2.50.0-beta.4...v2.50.0-beta.5) (2024-08-02)
 
 
