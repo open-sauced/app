@@ -59,7 +59,7 @@ type ContributorsTableProps<T> = {
 };
 
 // TODO: silo into new component file?
-function Sparkline({ repository, login }: { repository: string; login: string }) {
+function Sparkline({ repository, login }: { repository?: string; login: string }) {
   const { data: stats, isLoading } = useFetchMetricStats({
     variant: "prs",
     repository,
@@ -80,7 +80,7 @@ function Sparkline({ repository, login }: { repository: string; login: string })
 }
 
 const contributorsColumnHelper = createColumnHelper<Contributor>();
-const defaultColumns = ({ repository, isLoggedIn }: { repository: string; isLoggedIn: boolean }) => [
+const defaultColumns = ({ repository, isLoggedIn }: { repository?: string; isLoggedIn: boolean }) => [
   contributorsColumnHelper.display({
     id: "selector",
     header: ({ table }: { table: TableDef<Contributor> }) => (
@@ -273,13 +273,20 @@ export default function ContributorsTable<T extends Contributor>({
       {Object.keys(selectedContributors).length > 0 && (
         <div className="flex items-center justify-between px-4">
           <p>{Object.keys(selectedContributors).length} selected</p>
-          {isMobile ? (
-            <AddToContributorInsightDrawer repository={repository} contributors={Object.keys(selectedContributors)} />
-          ) : (
-            <Button variant="primary" onClick={() => setIsAddToContributorInsightModalOpen(true)}>
-              Add to Insight
-            </Button>
-          )}
+          {repository ? (
+            <>
+              {isMobile ? (
+                <AddToContributorInsightDrawer
+                  repository={repository}
+                  contributors={Object.keys(selectedContributors)}
+                />
+              ) : (
+                <Button variant="primary" onClick={() => setIsAddToContributorInsightModalOpen(true)}>
+                  Add to Insight
+                </Button>
+              )}
+            </>
+          ) : null}
         </div>
       )}
       <Card className="!p-0">
@@ -407,12 +414,14 @@ export default function ContributorsTable<T extends Contributor>({
           </>
         )}
 
-        <AddToContributorInsightModal
-          repository={repository}
-          contributors={Object.keys(selectedContributors)}
-          isOpen={isAddToContributorInsightModalOpen}
-          onCloseModal={() => setIsAddToContributorInsightModalOpen(false)}
-        />
+        {repository ? (
+          <AddToContributorInsightModal
+            repository={repository}
+            contributors={Object.keys(selectedContributors)}
+            isOpen={isAddToContributorInsightModalOpen}
+            onCloseModal={() => setIsAddToContributorInsightModalOpen(false)}
+          />
+        ) : null}
       </Card>
       {meta && (
         <div className="self-end">
