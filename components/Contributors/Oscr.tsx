@@ -17,7 +17,7 @@ export const OSCR_LOGIN_TEXT = "Log in to view Open Source Contributor Rating (O
 
 export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
   const posthog = usePostHog();
-  let ratingToRender = rating ? Math.floor(rating * 100) : 0;
+  let ratingToRender = rating ? Math.ceil(rating) : 0;
 
   if (ratingToRender < 1) {
     ratingToRender = 0;
@@ -51,7 +51,7 @@ export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrP
 
 export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
   const posthog = usePostHog();
-  let ratingToRender = rating ? Math.floor(rating * 100) : 0;
+  let ratingToRender = rating ? Math.ceil(rating) : 0;
 
   const tooltipText = hideRating
     ? "Log in to view Open Source Contributor Rating (OSCR)"
