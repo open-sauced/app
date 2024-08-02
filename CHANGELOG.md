@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.3](https://github.com/open-sauced/app/compare/v2.50.0-beta.2...v2.50.0-beta.3) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* put back original heading for PR velocity ([#3830](https://github.com/open-sauced/app/issues/3830)) ([e8acd50](https://github.com/open-sauced/app/commit/e8acd50aab41c86601e068027278ae9ba8965823))
+
 ## [2.50.0-beta.2](https://github.com/open-sauced/app/compare/v2.50.0-beta.1...v2.50.0-beta.2) (2024-08-02)
 
 
