@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.1](https://github.com/open-sauced/app/compare/v2.49.0...v2.50.0-beta.1) (2024-08-02)
+
+
+### 🍕 Features
+
+* OSCR works with API range 0-300 and uses ceiling math ([#3829](https://github.com/open-sauced/app/issues/3829)) ([23ae445](https://github.com/open-sauced/app/commit/23ae445a9247e954981db43bf2db0dcf8050acb4))
+
 ## [2.49.0](https://github.com/open-sauced/app/compare/v2.48.0...v2.49.0) (2024-08-01)
 
 
