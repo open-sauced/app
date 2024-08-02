@@ -29,10 +29,10 @@ export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrP
     <Tooltip direction="top" content={tooltipText}>
       {hideRating ? (
         <div className="relative flex items-center justify-center w-fit">
-          <span className="absolute blur-sm text-xl text-purple-00 z-0 leading-tight">000</span>
+          <span className="absolute blur-sm text-xl text-purple-00 leading-tight">000</span>
           <Button
             variant="primary"
-            className="flex items-center gap-2 !p-1 !text-xs z-10"
+            className="flex items-center gap-2 !p-1 !text-xs z-0"
             onClick={() => {
               posthog.capture("OSCR Login Button Clicked");
               signIn({ provider: "github", options: { redirectTo: window.location.href } });
