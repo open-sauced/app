@@ -186,7 +186,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           </div>
 
           {/* Row: SPAM */}
-          <div className="flex items-center justify-between py-3 border-b">
+          {/* <div className="flex items-center justify-between py-3 border-b">
             <div>Spam</div>
             <div className="flex text-base gap-x-3">
               {spamPrsCount && spamPrsCount > 0 ? (
@@ -204,7 +204,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
                 "-"
               )}
             </div>
-          </div>
+          </div> */}
 
           {/* Row: Contributors */}
 
@@ -261,7 +261,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         </div>
 
         {/* Column: SPAM */}
-        <div className={`${classNames.cols.spam}`}>
+        {/* <div className={`${classNames.cols.spam}`}>
           {spamPrsCount && spamPrsCount > 0 ? (
             <>
               <div>
@@ -276,7 +276,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           ) : (
             "-"
           )}
-        </div>
+        </div> */}
 
         {/* Column: Contributors */}
         <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
