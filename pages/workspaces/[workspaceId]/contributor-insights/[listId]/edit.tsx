@@ -15,7 +15,6 @@ import TextInput from "components/atoms/TextInput/text-input";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedContributorsTable } from "components/Workspaces/TrackedContributorsTable";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 
 const TrackedContributorsModal = dynamic(import("components/Workspaces/TrackedContributorsModal"));
 const DeleteListPageModal = dynamic(import("components/organisms/ListPage/DeleteListPageModal"));
@@ -55,8 +54,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const userId = Number(session?.user.user_metadata.sub);
   const username = session?.user.user_metadata.user_name;
 
-  const featureFlags = await getAllFeatureFlags(userId);
-
   const isOwner = !!(workspaceMembers?.data || []).find(
     (member) => member.role === "owner" && member.user_id === userId
   );
@@ -67,7 +64,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       bearerToken,
       list,
       isOwner,
-      featureFlags,
       username,
     },
   };
@@ -78,7 +74,6 @@ type ContributorInsightEditPageProps = {
   bearerToken: string;
   list: DbUserList;
   isOwner: boolean;
-  featureFlags: Record<string, boolean>;
   username: string;
 };
 
@@ -87,7 +82,6 @@ export default function ContributorInsightEditPage({
   bearerToken,
   list,
   isOwner,
-  featureFlags,
   username,
 }: ContributorInsightEditPageProps) {
   const {

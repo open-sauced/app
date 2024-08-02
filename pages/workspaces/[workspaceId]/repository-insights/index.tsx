@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
 import clsx from "clsx";
 
-import { GetServerSidePropsContext } from "next";
-import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
@@ -10,28 +8,10 @@ import WorkspaceRepositoryInsightRow from "components/Workspaces/WorkspaceReposi
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useSession from "lib/hooks/useSession";
-import { getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useWorkspacesRepositoryInsights } from "lib/hooks/api/useWorkspaceRepositoryInsights";
 import Title from "components/atoms/Typography/title";
 import Button from "components/shared/Button/button";
-
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const supabase = createPagesServerClient(context);
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const userId = Number(session?.user.user_metadata.sub);
-  const featureFlags = await getAllFeatureFlags(userId);
-
-  return {
-    props: {
-      featureFlags,
-    },
-  };
-};
 
 const RepositoryInsights = () => {
   const router = useRouter();
