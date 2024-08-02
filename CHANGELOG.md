@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.4](https://github.com/open-sauced/app/compare/v2.50.0-beta.3...v2.50.0-beta.4) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* now tooltip appears over lock button ([#3832](https://github.com/open-sauced/app/issues/3832)) ([b3274cb](https://github.com/open-sauced/app/commit/b3274cb6296f104daa8fed49e97d85d27a9aa55b))
+
 ## [2.50.0-beta.3](https://github.com/open-sauced/app/compare/v2.50.0-beta.2...v2.50.0-beta.3) (2024-08-02)
 
 
