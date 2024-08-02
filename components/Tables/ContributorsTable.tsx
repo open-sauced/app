@@ -255,7 +255,7 @@ export default function ContributorsTable<T extends Contributor>({
   const table = useReactTable({
     columns: useMemo(
       () => (isMobile ? mobileColumns({ isLoggedIn }) : defaultColumns({ repository, isLoggedIn })),
-      [isMobile]
+      [isMobile, isLoggedIn]
     ),
     data: contributors ?? [],
     manualSorting: true,
