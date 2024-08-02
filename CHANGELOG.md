@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.7](https://github.com/open-sauced/app/compare/v2.50.0-beta.6...v2.50.0-beta.7) (2024-08-02)
+
+
+### 🍕 Features
+
+* 'Coming Soon' state for OSSF Scorecard ([#3840](https://github.com/open-sauced/app/issues/3840)) ([a36205a](https://github.com/open-sauced/app/commit/a36205afaba8c10c06e8a4bc0173cd9832dd8d41))
+
 ## [2.50.0-beta.6](https://github.com/open-sauced/app/compare/v2.50.0-beta.5...v2.50.0-beta.6) (2024-08-02)
 
 
