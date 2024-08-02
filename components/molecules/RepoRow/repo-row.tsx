@@ -90,6 +90,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
     merged_prs_count: mergedPrsCount,
     spam_prs_count: spamPrsCount,
     pr_velocity_count: prVelocityCount,
+    ossf_scorecard_total_score: ossfScorecardTotalScore,
   } = repo;
   const ownerAvatar = getAvatarByUsername(fullName.split("/")[0]);
 
@@ -185,26 +186,13 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             </div>
           </div>
 
-          {/* Row: SPAM */}
-          {/* <div className="flex items-center justify-between py-3 border-b">
-            <div>Spam</div>
+          {/* Row: OSSF Scorecard */}
+          <div className="flex items-center justify-between py-3 border-b">
+            <div>OSSF Score</div>
             <div className="flex text-base gap-x-3">
-              {spamPrsCount && spamPrsCount > 0 ? (
-                <>
-                  <div>
-                    {spamPrsCount || 0} PR{spamPrsCount === 1 ? "" : "s"}
-                  </div>
-                  <Pill
-                    text={`${spamPrsPercentage || 0}%`}
-                    size="small"
-                    color={spamPrsPercentage > 10 ? "red" : "yellow"}
-                  />
-                </>
-              ) : (
-                "-"
-              )}
+              {ossfScorecardTotalScore ? `${ossfScorecardTotalScore}/10` : "-"}
             </div>
-          </div> */}
+          </div>
 
           {/* Row: Contributors */}
 
@@ -260,23 +248,10 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
         </div>
 
-        {/* Column: SPAM */}
-        {/* <div className={`${classNames.cols.spam}`}>
-          {spamPrsCount && spamPrsCount > 0 ? (
-            <>
-              <div>
-                {spamPrsCount || 0} PR{spamPrsCount === 1 ? "" : "s"}
-              </div>
-              <Pill
-                text={`${spamPrsPercentage || 0}%`}
-                size="small"
-                color={spamPrsPercentage > 10 ? "red" : "yellow"}
-              />
-            </>
-          ) : (
-            "-"
-          )}
-        </div> */}
+        {/* Column: OSSF Scorecard */}
+        <div className={`${classNames.cols.spam}`}>
+          {ossfScorecardTotalScore ? `${ossfScorecardTotalScore}/10` : "-"}
+        </div>
 
         {/* Column: Contributors */}
         <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
