@@ -321,6 +321,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       }
                     />
                     <OssfChart
+                      repository={repoData.full_name}
                       totalScore={repoData.ossf_scorecard_total_score}
                       dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
                       maintainedScore={repoData.ossf_scorecard_maintained_score}
