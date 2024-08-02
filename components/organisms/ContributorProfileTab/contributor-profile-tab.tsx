@@ -387,7 +387,7 @@ const ContributorProfileTab = ({
               </div>
 
               <div>
-                <span className="text-xs text-light-slate-11">PRs opened</span>
+                <span className="text-xs text-light-slate-11">Avg PR velocity</span>
                 {prVelocity ? (
                   <div className="flex mt-1 gap-2 !text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                     <span>{prVelocity} PRs</span>
