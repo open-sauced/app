@@ -127,7 +127,7 @@ const defaultColumns = ({ repository, isLoggedIn }: { repository: string; isLogg
   contributorsColumnHelper.accessor("oscr", {
     header: () => (
       <div className="flex gap-2 w-fit items-center hover:bg-slate-50 rounded-md px-2 py-1 cursor-pointer">
-        <p>OSCR Rating</p>
+        <p>OSCR</p>
         <InfoTooltip information="OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem." />
       </div>
     ),
