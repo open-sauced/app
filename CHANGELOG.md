@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.10](https://github.com/open-sauced/app/compare/v2.50.0-beta.9...v2.50.0-beta.10) (2024-08-05)
+
+
+### 🐛 Bug Fixes
+
+* **/app/pages/_document.tsx:** add lang attribute to html tag ([#3851](https://github.com/open-sauced/app/issues/3851)) ([d98bc0a](https://github.com/open-sauced/app/commit/d98bc0a702578f7167b87d65fd58467a25cfdffb))
+
 ## [2.50.0-beta.9](https://github.com/open-sauced/app/compare/v2.50.0-beta.8...v2.50.0-beta.9) (2024-08-05)
 
 
