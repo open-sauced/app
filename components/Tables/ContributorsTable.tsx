@@ -46,8 +46,7 @@ const AddToContributorInsightDrawer = dynamic(() => import("components/Contribut
 
 type OrderDirection = "ASC" | "DESC";
 
-type Contributor = (DbRepoContributor | DbContributorInsightUser) &
-  Partial<Pick<DbRepoContributor, "total_contributions">>;
+type Contributor = DbRepoContributor | DbContributorInsightUser;
 
 type ContributorsTableProps<T> = {
   contributors: T[] | undefined;

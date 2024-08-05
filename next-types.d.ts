@@ -123,6 +123,7 @@ interface DbContributorInsightUser {
   readonly oscr?: number;
   readonly user_id: string;
   readonly username: string;
+  readonly total_contributions: number;
 }
 
 interface DbRepoPREvents {
