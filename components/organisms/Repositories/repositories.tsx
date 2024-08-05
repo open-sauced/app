@@ -136,7 +136,7 @@ export default function Repositories({ repositories, showSearch = true, personal
               <TableTitle>PR Velocity</TableTitle>
             </div>
             <div className={clsx(classNames.cols.spam)}>
-              <TableTitle>SPAM</TableTitle>
+              <TableTitle>OSSF Score</TableTitle>
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
               <TableTitle>Contributors</TableTitle>

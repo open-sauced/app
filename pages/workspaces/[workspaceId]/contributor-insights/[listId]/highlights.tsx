@@ -63,7 +63,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     { data: highlights, error: highlightError },
     { data: workspaceMembers },
   ] = await Promise.all([
-    fetchApiData<PagedData<DBListContributor>>({
+    fetchApiData<PagedData<DbContributorInsightUser>>({
       path: `workspaces/${workspaceId}/userLists/${listId}/contributors?limit=${limit}`,
       bearerToken,
       pathValidator: validateListPath,

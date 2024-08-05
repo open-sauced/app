@@ -370,7 +370,7 @@ const ContributorProfileTab = ({
             </div>
             <div className="grid grid-cols-2 2xl:grid-cols-4 justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
               <div>
-                <span className="text-xs text-light-slate-11">OSCR Rating</span>
+                <span className="text-xs text-light-slate-11">OSCR</span>
                 <div className="flex mt-1 text-lg md:text-xl lg:text-2xl !text-black leading-none">
                   <OscrButton rating={contributor?.oscr} hideRating={!Boolean(user)} />
                 </div>
