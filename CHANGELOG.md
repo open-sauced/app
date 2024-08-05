@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.11](https://github.com/open-sauced/app/compare/v2.50.0-beta.10...v2.50.0-beta.11) (2024-08-05)
+
+
+### 🍕 Features
+
+* converted contributor insight contributor table to new table component ([#3843](https://github.com/open-sauced/app/issues/3843)) ([c91211c](https://github.com/open-sauced/app/commit/c91211c16bff21f43444b55d04265868b76942fc))
+
 ## [2.50.0-beta.10](https://github.com/open-sauced/app/compare/v2.50.0-beta.9...v2.50.0-beta.10) (2024-08-05)
 
 
