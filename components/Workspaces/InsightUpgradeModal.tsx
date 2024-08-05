@@ -64,6 +64,9 @@ export default function InsightUpgradeModal({ workspaceId, variant, isOpen, onCl
             <ChecklistItem color="green">
               Up to <span className="font-bold">100</span> repositories per insight page
             </ChecklistItem>
+            <ChecklistItem color="green">
+              Unlock <span className="font-bold">all</span> contributor OSCRs
+            </ChecklistItem>
           </ul>
 
           <Button
@@ -102,6 +105,9 @@ export default function InsightUpgradeModal({ workspaceId, variant, isOpen, onCl
             </ChecklistItem>
             <ChecklistItem color="orange">
               Up to <span className="font-bold">20</span> repositories per insight page
+            </ChecklistItem>
+            <ChecklistItem color="orange">
+              Up to <span className="font-bold">10</span> contributor OSCRs
             </ChecklistItem>
           </ul>
 
@@ -149,6 +155,9 @@ export default function InsightUpgradeModal({ workspaceId, variant, isOpen, onCl
                   <ChecklistItem color="orange">
                     Up to <span className="font-bold">20</span> repositories per insight page
                   </ChecklistItem>
+                  <ChecklistItem color="orange">
+                    Up to <span className="font-bold">10</span> contributor OSCRs
+                  </ChecklistItem>
                 </ul>
 
                 <Button
@@ -184,6 +193,9 @@ export default function InsightUpgradeModal({ workspaceId, variant, isOpen, onCl
                   </ChecklistItem>
                   <ChecklistItem color="green">
                     Up to <span className="font-bold">100</span> repositories per insight page
+                  </ChecklistItem>
+                  <ChecklistItem color="green">
+                    Unlock <span className="font-bold">all</span> contributor OSCRs
                   </ChecklistItem>
                 </ul>
 
