@@ -85,9 +85,9 @@ const ListPageLayout = ({
         </div>
       </div>
 
-      <main className="flex flex-col items-center flex-1 w-full py-8  bg-light-slate-2">
+      <div className="flex flex-col items-center flex-1 w-full py-8  bg-light-slate-2">
         <div className="container">{children}</div>
-      </main>
+      </div>
     </>
   );
 };

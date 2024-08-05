@@ -91,7 +91,7 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
             <DayRangePicker onDayRangeChanged={(value) => setPage(Number(value))} />
           </div>
         </div>
-        <main className="py-8">
+        <div className="py-8">
           <ClientOnly>
             {data && contributors.length > 0 ? (
               <ContributorsList
@@ -110,7 +110,7 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
               </Card>
             )}
           </ClientOnly>
-        </main>
+        </div>
       </div>
     </WorkspaceLayout>
   );
