@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.9](https://github.com/open-sauced/app/compare/v2.50.0-beta.8...v2.50.0-beta.9) (2024-08-05)
+
+
+### 🍕 Features
+
+* added a skip link ([#3850](https://github.com/open-sauced/app/issues/3850)) ([83b335a](https://github.com/open-sauced/app/commit/83b335a53e4a8219ab11253a3448e3034ee4da72))
+
 ## [2.50.0-beta.8](https://github.com/open-sauced/app/compare/v2.50.0-beta.7...v2.50.0-beta.8) (2024-08-05)
 
 
