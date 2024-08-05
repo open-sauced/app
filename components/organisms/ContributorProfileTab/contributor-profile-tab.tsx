@@ -38,6 +38,7 @@ import IssueCommentsTable from "components/Profiles/IssueCommentsTable/issue-com
 import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
 import { SubTabsList } from "components/TabList/tab-list";
 import { OscrButton } from "components/Contributors/Oscr";
+import InfoTooltip from "components/shared/InfoTooltip";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
@@ -370,7 +371,10 @@ const ContributorProfileTab = ({
             </div>
             <div className="grid grid-cols-2 2xl:grid-cols-4 justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
               <div>
-                <span className="text-xs text-light-slate-11">OSCR Rating</span>
+                <span className="flex gap-2 text-xs text-light-slate-11">
+                  OSCR Rating
+                  <InfoTooltip information="OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem." />
+                </span>
                 <div className="flex mt-1 text-lg md:text-xl lg:text-2xl !text-black leading-none">
                   <OscrButton rating={contributor?.oscr} hideRating={!Boolean(user)} />
                 </div>
