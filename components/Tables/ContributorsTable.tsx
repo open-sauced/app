@@ -46,8 +46,10 @@ const AddToContributorInsightDrawer = dynamic(() => import("components/Contribut
 
 type OrderDirection = "ASC" | "DESC";
 
-type ContributorsTableProps = {
-  contributors: DbRepoContributor[] | undefined;
+type Contributor = DbRepoContributor | DbContributorInsightUser;
+
+type ContributorsTableProps<T> = {
+  contributors: T[] | undefined;
   meta: Meta | null;
   isLoading: boolean;
   isError: boolean;
@@ -56,7 +58,7 @@ type ContributorsTableProps = {
 };
 
 // TODO: silo into new component file?
-function Sparkline({ repository, login }: { repository: string; login: string }) {
+function Sparkline({ repository, login }: { repository?: string; login: string }) {
   const { data: stats, isLoading } = useFetchMetricStats({
     variant: "prs",
     repository,
@@ -76,18 +78,18 @@ function Sparkline({ repository, login }: { repository: string; login: string })
   );
 }
 
-const contributorsColumnHelper = createColumnHelper<DbRepoContributor>();
-const defaultColumns = ({ repository, isLoggedIn }: { repository: string; isLoggedIn: boolean }) => [
+const contributorsColumnHelper = createColumnHelper<Contributor>();
+const defaultColumns = ({ repository, isLoggedIn }: { repository?: string; isLoggedIn: boolean }) => [
   contributorsColumnHelper.display({
     id: "selector",
-    header: ({ table }: { table: TableDef<DbRepoContributor> }) => (
+    header: ({ table }: { table: TableDef<Contributor> }) => (
       <Checkbox
         key={"selector_all"}
         checked={table.getIsAllRowsSelected()}
         onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
       />
     ),
-    cell: ({ row }: { row: Row<DbRepoContributor> }) => (
+    cell: ({ row }: { row: Row<Contributor> }) => (
       <Checkbox
         key={row.id}
         checked={row.getIsSelected()}
@@ -124,7 +126,7 @@ const defaultColumns = ({ repository, isLoggedIn }: { repository: string; isLogg
   contributorsColumnHelper.accessor("oscr", {
     header: () => (
       <div className="flex gap-2 w-fit items-center hover:bg-slate-50 rounded-md px-2 py-1 cursor-pointer">
-        <p>OSCR Rating</p>
+        <p>OSCR</p>
         <InfoTooltip information="OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem." />
       </div>
     ),
@@ -159,14 +161,14 @@ const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
     columns: [
       {
         id: "selector",
-        header: ({ table }: { table: TableDef<DbRepoContributor> }) => (
+        header: ({ table }: { table: TableDef<Contributor> }) => (
           <Checkbox
             key={"selector_all"}
             checked={table.getIsAllRowsSelected()}
             onCheckedChange={(checked) => table.toggleAllRowsSelected(Boolean(checked.valueOf()))}
           />
         ),
-        cell: ({ row }: { row: Row<DbRepoContributor> }) => (
+        cell: ({ row }: { row: Row<Contributor> }) => (
           <Checkbox
             key={row.id}
             checked={row.getIsSelected()}
@@ -213,7 +215,7 @@ const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
       {
         id: "expand",
         header: "",
-        cell: ({ row }: { row: Row<DbRepoContributor> }) => {
+        cell: ({ row }: { row: Row<Contributor> }) => {
           return (
             row.getCanExpand() && (
               <button onClick={row.getToggleExpandedHandler()}>
@@ -231,19 +233,19 @@ const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
   },
 ];
 
-export default function ContributorsTable({
+export default function ContributorsTable<T extends Contributor>({
   contributors,
   meta,
   oscrSorting,
   setOscrSorting,
   isLoading,
   isError,
-}: ContributorsTableProps) {
+}: ContributorsTableProps<T>) {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const router = useRouter();
   const { userId } = useSupabaseAuth();
   const isLoggedIn = Boolean(userId);
-  const repository = `${router.query.org}/${router.query.repo}`;
+  const repository = router.query.org && router.query.repo ? `${router.query.org}/${router.query.repo}` : undefined;
 
   const [isAddToContributorInsightModalOpen, setIsAddToContributorInsightModalOpen] = useState(false);
   const [sorting, setSorting] = useState<TableState["sorting"]>([{ id: "oscr", desc: oscrSorting === "DESC" }]);
@@ -252,7 +254,7 @@ export default function ContributorsTable({
   const table = useReactTable({
     columns: useMemo(
       () => (isMobile ? mobileColumns({ isLoggedIn }) : defaultColumns({ repository, isLoggedIn })),
-      [isMobile]
+      [isMobile, isLoggedIn]
     ),
     data: contributors ?? [],
     manualSorting: true,
@@ -270,13 +272,20 @@ export default function ContributorsTable({
       {Object.keys(selectedContributors).length > 0 && (
         <div className="flex items-center justify-between px-4">
           <p>{Object.keys(selectedContributors).length} selected</p>
-          {isMobile ? (
-            <AddToContributorInsightDrawer repository={repository} contributors={Object.keys(selectedContributors)} />
-          ) : (
-            <Button variant="primary" onClick={() => setIsAddToContributorInsightModalOpen(true)}>
-              Add to Insight
-            </Button>
-          )}
+          {repository ? (
+            <>
+              {isMobile ? (
+                <AddToContributorInsightDrawer
+                  repository={repository}
+                  contributors={Object.keys(selectedContributors)}
+                />
+              ) : (
+                <Button variant="primary" onClick={() => setIsAddToContributorInsightModalOpen(true)}>
+                  Add to Insight
+                </Button>
+              )}
+            </>
+          ) : null}
         </div>
       )}
       <Card className="!p-0">
@@ -404,12 +413,14 @@ export default function ContributorsTable({
           </>
         )}
 
-        <AddToContributorInsightModal
-          repository={repository}
-          contributors={Object.keys(selectedContributors)}
-          isOpen={isAddToContributorInsightModalOpen}
-          onCloseModal={() => setIsAddToContributorInsightModalOpen(false)}
-        />
+        {repository ? (
+          <AddToContributorInsightModal
+            repository={repository}
+            contributors={Object.keys(selectedContributors)}
+            isOpen={isAddToContributorInsightModalOpen}
+            onCloseModal={() => setIsAddToContributorInsightModalOpen(false)}
+          />
+        ) : null}
       </Card>
       {meta && (
         <div className="self-end">
