@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.8](https://github.com/open-sauced/app/compare/v2.50.0-beta.7...v2.50.0-beta.8) (2024-08-05)
+
+
+### 🐛 Bug Fixes
+
+* removed some unused code ([#3849](https://github.com/open-sauced/app/issues/3849)) ([70be5b9](https://github.com/open-sauced/app/commit/70be5b9bba379ac2243a6716ba400d0949207417))
+
 ## [2.50.0-beta.7](https://github.com/open-sauced/app/compare/v2.50.0-beta.6...v2.50.0-beta.7) (2024-08-02)
 
 
