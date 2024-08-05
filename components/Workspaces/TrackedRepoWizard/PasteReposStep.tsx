@@ -8,6 +8,20 @@ interface PasteReposStepProps {
 export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
   const [pastedInput, setPastedInput] = useLocalStorage("bulk-add-repos", "");
 
+  const loadSbomRepos = async (repos: string[]) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/repos/sbom?repos=${repos.join(",")}`);
+
+    if (response.ok) {
+      const sbomData: Record<string, string[]> = await response.json();
+      let collectedRepos: string[] = [];
+      Object.keys(sbomData).forEach((key) => {
+        collectedRepos = collectedRepos.concat(sbomData[key]);
+      });
+
+      onBulkAddRepos(collectedRepos);
+    }
+  };
+
   const parseInput = () => {
     const repos = pastedInput!
       .split(/[,\n ]/g) // split by either comma, new line, or space
@@ -40,6 +54,14 @@ export const PasteReposStep = ({ onBulkAddRepos }: PasteReposStepProps) => {
         className="w-fit self-end"
       >
         Import
+      </Button>
+      <Button
+        onClick={() => loadSbomRepos(parseInput())}
+        variant="primary"
+        disabled={pastedInput!.trim().length === 0}
+        className="w-fit self-end"
+      >
+        Import SBOM
       </Button>
     </div>
   );

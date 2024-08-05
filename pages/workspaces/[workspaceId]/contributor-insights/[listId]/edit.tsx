@@ -88,7 +88,7 @@ export default function ContributorInsightEditPage({
     data: { data: contributors },
   } = useContributorsList({ workspaceId, listId: list?.id, showOscr: true, username });
   const initialTrackedContributors = new Map([
-    ...contributors.map((contributor) => [contributor.author_login, true] as const),
+    ...contributors.map((contributor) => [contributor.login ?? contributor.username, true] as const),
   ]);
 
   const router = useRouter();
