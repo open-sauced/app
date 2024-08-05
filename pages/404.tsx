@@ -47,7 +47,7 @@ export default function Custom404() {
         <div className="grid items-center justify-center place-content-start py-7 px-4 z-50 md:grid-flow-col  md:justify-between">
           <HeaderLogo />
         </div>
-        <main className="grid md:grid-cols-2 place-content-center py-6">
+        <main id="main" className="grid md:grid-cols-2 place-content-center py-6">
           <div className="text-center px-6 relative z-10">
             <h1 className="text-8xl font-bold mb-2">404</h1>
             <div className="text-3xl mb-2">uh oh page not found</div>
