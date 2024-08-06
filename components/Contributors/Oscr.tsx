@@ -11,17 +11,14 @@ interface OscrProps {
   rating: number | undefined;
   hideRating: boolean;
   signIn?: typeof DEFAULT_SIGN_IN;
+  calculated: boolean;
 }
 
 export const OSCR_LOGIN_TEXT = "Log in to view Open Source Contributor Rating (OSCR)";
 
-export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
+export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calculated }: OscrProps) => {
   const posthog = usePostHog();
-  let ratingToRender = rating ? Math.ceil(rating) : 0;
-
-  if (ratingToRender < 1) {
-    ratingToRender = 0;
-  }
+  let ratingToRender = calculated ? (rating ? Math.ceil(rating) : 0) : "-";
 
   const tooltipText = hideRating ? OSCR_LOGIN_TEXT : "Open Source Contributor Rating (OSCR)";
 
@@ -49,9 +46,9 @@ export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrP
   );
 };
 
-export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN }: OscrProps) => {
+export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calculated }: OscrProps) => {
   const posthog = usePostHog();
-  let ratingToRender = rating ? Math.ceil(rating) : 0;
+  let ratingToRender = calculated ? (rating ? Math.ceil(rating) : 0) : "-";
 
   const tooltipText = hideRating
     ? "Log in to view Open Source Contributor Rating (OSCR)"
