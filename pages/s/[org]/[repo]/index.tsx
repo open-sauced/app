@@ -296,8 +296,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 size="xsmall"
                 className="!px-2 whitespace-nowrap"
               />
-
-              <span className="fixed rounded-r-full right-8 lg:hidden w-12 h-8 bg-gradient-to-l from-light-slate-3 to-transparent" />
             </div>
           </section>
 
@@ -321,6 +319,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       }
                     />
                     <OssfChart
+                      repository={repoData.full_name}
                       totalScore={repoData.ossf_scorecard_total_score}
                       dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
                       maintainedScore={repoData.ossf_scorecard_maintained_score}

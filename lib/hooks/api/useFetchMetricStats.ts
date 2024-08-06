@@ -2,7 +2,7 @@ import useSWR, { Fetcher } from "swr";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 type UseFetchMetricStatsParams = {
-  repository: string;
+  repository?: string;
   variant: "stars" | "forks" | "contributors" | "prs" | "issues"; // TODO: add other MetricCard types
   range: number;
   orderDirection?: "ASC" | "DESC";
@@ -29,7 +29,7 @@ export function useFetchMetricStats({
   contributor = "",
 }: UseFetchMetricStatsParams) {
   const query = new URLSearchParams();
-  query.set("repo", repository);
+  repository && query.set("repo", repository);
   query.set("range", range.toString());
   query.set("orderDirection", orderDirection);
   query.set("contributor", contributor);

@@ -5,6 +5,97 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.13](https://github.com/open-sauced/app/compare/v2.50.0-beta.12...v2.50.0-beta.13) (2024-08-06)
+
+
+### 🐛 Bug Fixes
+
+* remove gradient from metadata tags ([#3856](https://github.com/open-sauced/app/issues/3856)) ([b446fc7](https://github.com/open-sauced/app/commit/b446fc721c19e8d208fa9a642655a4099b2ca676))
+
+## [2.50.0-beta.12](https://github.com/open-sauced/app/compare/v2.50.0-beta.11...v2.50.0-beta.12) (2024-08-05)
+
+
+### 🍕 Features
+
+* add option to import a SBOM of repositories to a workspace ([#3838](https://github.com/open-sauced/app/issues/3838)) ([ce6b783](https://github.com/open-sauced/app/commit/ce6b78303219d0b1b49db1058409f895cbeb8531))
+
+## [2.50.0-beta.11](https://github.com/open-sauced/app/compare/v2.50.0-beta.10...v2.50.0-beta.11) (2024-08-05)
+
+
+### 🍕 Features
+
+* converted contributor insight contributor table to new table component ([#3843](https://github.com/open-sauced/app/issues/3843)) ([c91211c](https://github.com/open-sauced/app/commit/c91211c16bff21f43444b55d04265868b76942fc))
+
+## [2.50.0-beta.10](https://github.com/open-sauced/app/compare/v2.50.0-beta.9...v2.50.0-beta.10) (2024-08-05)
+
+
+### 🐛 Bug Fixes
+
+* **/app/pages/_document.tsx:** add lang attribute to html tag ([#3851](https://github.com/open-sauced/app/issues/3851)) ([d98bc0a](https://github.com/open-sauced/app/commit/d98bc0a702578f7167b87d65fd58467a25cfdffb))
+
+## [2.50.0-beta.9](https://github.com/open-sauced/app/compare/v2.50.0-beta.8...v2.50.0-beta.9) (2024-08-05)
+
+
+### 🍕 Features
+
+* added a skip link ([#3850](https://github.com/open-sauced/app/issues/3850)) ([83b335a](https://github.com/open-sauced/app/commit/83b335a53e4a8219ab11253a3448e3034ee4da72))
+
+## [2.50.0-beta.8](https://github.com/open-sauced/app/compare/v2.50.0-beta.7...v2.50.0-beta.8) (2024-08-05)
+
+
+### 🐛 Bug Fixes
+
+* removed some unused code ([#3849](https://github.com/open-sauced/app/issues/3849)) ([70be5b9](https://github.com/open-sauced/app/commit/70be5b9bba379ac2243a6716ba400d0949207417))
+
+## [2.50.0-beta.7](https://github.com/open-sauced/app/compare/v2.50.0-beta.6...v2.50.0-beta.7) (2024-08-02)
+
+
+### 🍕 Features
+
+* 'Coming Soon' state for OSSF Scorecard ([#3840](https://github.com/open-sauced/app/issues/3840)) ([a36205a](https://github.com/open-sauced/app/commit/a36205afaba8c10c06e8a4bc0173cd9832dd8d41))
+
+## [2.50.0-beta.6](https://github.com/open-sauced/app/compare/v2.50.0-beta.5...v2.50.0-beta.6) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* OSCR math ceiling for contributor card ([#3839](https://github.com/open-sauced/app/issues/3839)) ([fc9b3e9](https://github.com/open-sauced/app/commit/fc9b3e93ad05f90d81f5e95cf8fa86ed54574d2c))
+
+## [2.50.0-beta.5](https://github.com/open-sauced/app/compare/v2.50.0-beta.4...v2.50.0-beta.5) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* now using setQueryParams no longer causes page to jump ([#3837](https://github.com/open-sauced/app/issues/3837)) ([6541971](https://github.com/open-sauced/app/commit/6541971dcd6d0930f62e2a41365e7039eaebab35))
+
+## [2.50.0-beta.4](https://github.com/open-sauced/app/compare/v2.50.0-beta.3...v2.50.0-beta.4) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* now tooltip appears over lock button ([#3832](https://github.com/open-sauced/app/issues/3832)) ([b3274cb](https://github.com/open-sauced/app/commit/b3274cb6296f104daa8fed49e97d85d27a9aa55b))
+
+## [2.50.0-beta.3](https://github.com/open-sauced/app/compare/v2.50.0-beta.2...v2.50.0-beta.3) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* put back original heading for PR velocity ([#3830](https://github.com/open-sauced/app/issues/3830)) ([e8acd50](https://github.com/open-sauced/app/commit/e8acd50aab41c86601e068027278ae9ba8965823))
+
+## [2.50.0-beta.2](https://github.com/open-sauced/app/compare/v2.50.0-beta.1...v2.50.0-beta.2) (2024-08-02)
+
+
+### 🐛 Bug Fixes
+
+* removed unused code ([#3827](https://github.com/open-sauced/app/issues/3827)) ([3d28f2c](https://github.com/open-sauced/app/commit/3d28f2cefe93ed20788f170b69a0cdfa01acbb23))
+
+## [2.50.0-beta.1](https://github.com/open-sauced/app/compare/v2.49.0...v2.50.0-beta.1) (2024-08-02)
+
+
+### 🍕 Features
+
+* OSCR works with API range 0-300 and uses ceiling math ([#3829](https://github.com/open-sauced/app/issues/3829)) ([23ae445](https://github.com/open-sauced/app/commit/23ae445a9247e954981db43bf2db0dcf8050acb4))
+
 ## [2.49.0](https://github.com/open-sauced/app/compare/v2.48.0...v2.49.0) (2024-08-01)
 
 

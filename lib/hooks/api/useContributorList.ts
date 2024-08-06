@@ -7,19 +7,17 @@ export function convertToContributors({
   username,
   oscrEnabled,
 }: {
-  rawContributors: DBListContributor[];
+  rawContributors: DbContributorInsightUser[];
   username: string;
   oscrEnabled: boolean;
-}): DbPRContributor[] {
+}): DbContributorInsightUser[] {
   const contributors = rawContributors
     ? rawContributors.map((contributor) => {
         const returnOscr = oscrEnabled || contributor.username === username;
         return {
-          author_login: contributor.login,
-          username: contributor.username,
-          updated_at: contributor.created_at,
-          user_id: contributor.id,
+          ...contributor,
           oscr: returnOscr ? contributor.oscr : undefined,
+          login: contributor.login ?? contributor.username,
         };
       })
     : [];
@@ -35,6 +33,8 @@ export const useContributorsList = ({
   defaultLimit = 10,
   defaultRange = "30",
   showOscr = false,
+  orderBy,
+  orderDirection,
   username,
 }: {
   workspaceId: string | undefined;
@@ -48,6 +48,8 @@ export const useContributorsList = ({
   defaultRange?: string;
   showOscr?: boolean;
   username: string;
+  orderBy?: string;
+  orderDirection?: string;
 }) => {
   const [page, setPage] = useState(initialPage);
 
@@ -56,9 +58,17 @@ export const useContributorsList = ({
   query.append("limit", `${defaultLimit}`);
   query.append("range", defaultRange ?? "30");
 
+  if (orderBy) {
+    query.append("orderBy", orderBy);
+  }
+
+  if (orderDirection) {
+    query.append("orderDirection", orderDirection);
+  }
+
   const { data, error, mutate } = useSWR<any>(
     listId ? (workspaceId ? `workspaces/${workspaceId}/userLists/${listId}/contributors?${query}` : null) : null,
-    publicApiFetcher as Fetcher<PagedData<DBListContributor>, Error>,
+    publicApiFetcher as Fetcher<PagedData<DbContributorInsightUser>, Error>,
     {
       fallbackData: initialData,
     }

@@ -12,11 +12,12 @@ import HighlightCard from "components/molecules/HighlightCard/highlight-card";
 import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { useContributorsList } from "lib/hooks/api/useContributorList";
-import ContributorsList from "components/organisms/ContributorsList/contributors-list";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import ContributorsTable from "components/Tables/ContributorsTable";
+import { setQueryParams } from "lib/utils/query-params";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -27,7 +28,6 @@ interface ListsOverviewProps {
   isError: boolean;
   workspaceId: string;
   owners: string[];
-  featureFlags: Record<string, boolean>;
   username: string;
 }
 
@@ -43,7 +43,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const limit = 10; // Can pull this from the querystring in the future
   const [{ data, error: contributorListError }, { data: list, error }, { data: workspaceData, error: workspaceError }] =
     await Promise.all([
-      fetchApiData<PagedData<DBListContributor>>({
+      fetchApiData<PagedData<DbContributorInsightUser>>({
         path: `workspaces/${workspaceId}/userLists/${listId}/contributors?limit=${limit}`,
         bearerToken,
         pathValidator: validateListPath,
@@ -106,6 +106,14 @@ const ListsOverview = ({
   const loggedIn = Boolean(userId);
   const router = useRouter();
   const { listId, range, limit } = router.query;
+  const orderDirection = router.query.orderDirection as OrderDirection;
+  const orderBy = router.query.orderBy as string;
+
+  type OrderDirection = "ASC" | "DESC";
+
+  const setOscrSortDirection = (direction: OrderDirection) => {
+    setQueryParams({ orderDirection: direction, orderBy: "oscr" });
+  };
 
   const {
     isLoading,
@@ -118,6 +126,8 @@ const ListsOverview = ({
     defaultLimit: limit ? (limit as unknown as number) : 10,
     showOscr: loggedIn,
     username,
+    orderBy,
+    orderDirection,
   });
 
   const {
@@ -224,13 +234,13 @@ const ListsOverview = ({
                   <ErrorBoundary
                     fallback={<div className="grid place-content-center">Error loading the list of contributors</div>}
                   >
-                    <ContributorsList
+                    <ContributorsTable
                       contributors={contributors}
                       meta={meta}
                       isLoading={isLoading}
-                      setPage={setPage}
-                      range={String(range ?? "30")}
-                      loggedIn={loggedIn}
+                      isError={isError}
+                      oscrSorting={orderDirection}
+                      setOscrSorting={setOscrSortDirection}
                     />
                   </ErrorBoundary>
                 )}
