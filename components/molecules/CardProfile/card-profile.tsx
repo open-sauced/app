@@ -19,6 +19,7 @@ interface CardProfileProps {
   isRoundedAvatar?: boolean;
   oscr?: number;
   loggedIn: boolean;
+  oscrCalculated: boolean;
 }
 
 const CardProfile = ({
@@ -28,6 +29,7 @@ const CardProfile = ({
   dateOfFirstPR,
   isRoundedAvatar,
   oscr,
+  oscrCalculated,
   loggedIn,
 }: CardProfileProps): JSX.Element => {
   return (
@@ -56,7 +58,7 @@ const CardProfile = ({
               </Tooltip>
             </div>
             {oscr != null || !loggedIn ? (
-              <OscrPill rating={oscr} hideRating={!loggedIn} />
+              <OscrPill rating={oscr} hideRating={!loggedIn} calculated={oscrCalculated} />
             ) : (
               <SkeletonWrapper count={1} width={24} height={16} radius={8} />
             )}
