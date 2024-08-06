@@ -369,7 +369,7 @@ const ContributorProfileTab = ({
             <div className="flex justify-end">
               <DayRangePicker />
             </div>
-            <div className="grid grid-cols-2 2xl:grid-cols-4 justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16">
+            <div className="grid grid-cols-2 2xl:grid-cols-4 justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16 items-center">
               <div>
                 <span className="flex gap-2 text-sm">
                   <p className="text-xs text-light-slate-11">OSCR Rating</p>
