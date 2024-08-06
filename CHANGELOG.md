@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.51.0](https://github.com/open-sauced/app/compare/v2.50.0...v2.51.0) (2024-08-06)
+
+
+### 🍕 Features
+
+* now the OSCR has a not calculated state ([#3868](https://github.com/open-sauced/app/issues/3868)) ([997c3f4](https://github.com/open-sauced/app/commit/997c3f40669d551d7c0d327dd16b07cf618f910e))
+
+## [2.51.0-beta.1](https://github.com/open-sauced/app/compare/v2.50.0...v2.51.0-beta.1) (2024-08-06)
+
+
+### 🍕 Features
+
+* now the OSCR has a not calculated state ([#3868](https://github.com/open-sauced/app/issues/3868)) ([997c3f4](https://github.com/open-sauced/app/commit/997c3f40669d551d7c0d327dd16b07cf618f910e))
+
 ## [2.50.0](https://github.com/open-sauced/app/compare/v2.49.0...v2.50.0) (2024-08-06)
 
 
