@@ -9,6 +9,7 @@ type DbWorkspaceContributor = {
     login: string;
     username: string;
     updated_at: string;
+    devstats_updated_at: string;
   };
 };
 
