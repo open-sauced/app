@@ -6,6 +6,7 @@ import { useContributorPullRequestsChart } from "lib/hooks/useContributorPullReq
 import { getAvatarByUsername } from "lib/utils/github";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { calcDistanceFromToday } from "lib/utils/date-utils";
+import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 import PullRequestTable from "../PullRequestTable/pull-request-table";
 import CardRepoList from "../CardRepoList/card-repo-list";
 import CardProfile from "../CardProfile/card-profile";
@@ -37,6 +38,7 @@ const HoverCardWrapper = ({ username, repositories }: HoverCardWrapperProps) => 
           isRoundedAvatar={true}
           oscr={oscr}
           loggedIn={loggedIn}
+          oscrCalculated={contributor?.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
         />
         {is_maintainer && <Badge>maintainer</Badge>}
       </div>

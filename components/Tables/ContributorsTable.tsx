@@ -34,6 +34,7 @@ import { useFetchMetricStats } from "lib/hooks/api/useFetchMetricStats";
 import { getDailyPullRequestsHistogramToDays } from "lib/utils/repo-page-utils";
 import Card from "components/atoms/Card/card";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 const AddToContributorInsightModal = dynamic(() => import("components/Contributors/AddToContributorInsightModal"), {
@@ -132,7 +133,13 @@ const defaultColumns = ({ repository, isLoggedIn }: { repository?: string; isLog
     ),
     enableSorting: true,
     enableGlobalFilter: false,
-    cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} hideRating={!isLoggedIn} />,
+    cell: (info) => (
+      <OscrPill
+        rating={info.row.original.oscr}
+        hideRating={!isLoggedIn}
+        calculated={info.row.original.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
+      />
+    ),
   }),
   contributorsColumnHelper.accessor("company", {
     header: "Company",
@@ -210,7 +217,13 @@ const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
           </div>
         ),
         enableSorting: true,
-        cell: (info) => <OscrPill rating={info.row.original.oscr ?? 0} hideRating={!isLoggedIn} />,
+        cell: (info) => (
+          <OscrPill
+            rating={info.row.original.oscr ?? 0}
+            hideRating={!isLoggedIn}
+            calculated={info.row.original.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
+          />
+        ),
       }),
       {
         id: "expand",

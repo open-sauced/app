@@ -38,6 +38,7 @@ import IssueCommentsTable from "components/Profiles/IssueCommentsTable/issue-com
 import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
 import { SubTabsList } from "components/TabList/tab-list";
 import { OscrButton } from "components/Contributors/Oscr";
+import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
 interface ContributorProfileTabProps {
@@ -372,7 +373,11 @@ const ContributorProfileTab = ({
               <div>
                 <span className="text-xs text-light-slate-11">OSCR</span>
                 <div className="flex mt-1 text-lg md:text-xl lg:text-2xl !text-black leading-none">
-                  <OscrButton rating={contributor?.oscr} hideRating={!Boolean(user)} />
+                  <OscrButton
+                    rating={contributor?.oscr}
+                    hideRating={!Boolean(user)}
+                    calculated={contributor?.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
+                  />
                 </div>
               </div>
               <div>
