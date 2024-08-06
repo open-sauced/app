@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.13](https://github.com/open-sauced/app/compare/v2.50.0-beta.12...v2.50.0-beta.13) (2024-08-06)
+
+
+### 🐛 Bug Fixes
+
+* remove gradient from metadata tags ([#3856](https://github.com/open-sauced/app/issues/3856)) ([b446fc7](https://github.com/open-sauced/app/commit/b446fc721c19e8d208fa9a642655a4099b2ca676))
+
 ## [2.50.0-beta.12](https://github.com/open-sauced/app/compare/v2.50.0-beta.11...v2.50.0-beta.12) (2024-08-05)
 
 
