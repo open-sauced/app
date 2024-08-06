@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.51.1-beta.1](https://github.com/open-sauced/app/compare/v2.51.0...v2.51.1-beta.1) (2024-08-06)
+
+
+### 🐛 Bug Fixes
+
+* repository insight limited features ([#3876](https://github.com/open-sauced/app/issues/3876)) ([5ef6bd6](https://github.com/open-sauced/app/commit/5ef6bd6ed37d330e684b7f884f1f434b4df2580b))
+
 ## [2.51.0](https://github.com/open-sauced/app/compare/v2.50.0...v2.51.0) (2024-08-06)
 
 
