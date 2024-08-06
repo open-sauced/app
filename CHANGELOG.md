@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0-beta.12](https://github.com/open-sauced/app/compare/v2.50.0-beta.11...v2.50.0-beta.12) (2024-08-05)
+
+
+### 🍕 Features
+
+* add option to import a SBOM of repositories to a workspace ([#3838](https://github.com/open-sauced/app/issues/3838)) ([ce6b783](https://github.com/open-sauced/app/commit/ce6b78303219d0b1b49db1058409f895cbeb8531))
+
+## [2.50.0-beta.11](https://github.com/open-sauced/app/compare/v2.50.0-beta.10...v2.50.0-beta.11) (2024-08-05)
+
+
+### 🍕 Features
+
+* converted contributor insight contributor table to new table component ([#3843](https://github.com/open-sauced/app/issues/3843)) ([c91211c](https://github.com/open-sauced/app/commit/c91211c16bff21f43444b55d04265868b76942fc))
+
 ## [2.50.0-beta.10](https://github.com/open-sauced/app/compare/v2.50.0-beta.9...v2.50.0-beta.10) (2024-08-05)
 
 
