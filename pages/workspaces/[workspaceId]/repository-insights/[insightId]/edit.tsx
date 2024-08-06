@@ -14,6 +14,7 @@ import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
+import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 
 const TrackedReposModal = dynamic(import("components/Workspaces/TrackedReposModal"));
 const DeleteInsightPageModal = dynamic(import("components/organisms/InsightPage/DeleteInsightPageModal"));
@@ -142,6 +143,11 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
   return (
     <WorkspaceLayout
       workspaceId={workspaceId}
+      banner={
+        showBanner ? (
+          <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
+        ) : null
+      }
       footer={
         <Button
           variant="primary"
