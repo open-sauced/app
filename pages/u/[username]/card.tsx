@@ -18,7 +18,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import { isValidUrlSlug } from "lib/utils/url-validators";
-import TwitterIcon from "../../../img/icons/social-twitter.svg";
+import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
 const ADDITIONAL_PROFILES_TO_LOAD = [
@@ -26,6 +26,7 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
   "nickytonline",
   "brandonroberts",
   "bekahhw",
+  "zeucapua",
   "ogdev-01",
   "jpmcb",
   "gr2m",
@@ -123,7 +124,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
   });
 
   const [fullCardsData, setFullCardsData] = useState<DevCardProps[]>(cards);
-  const firstCard = fullCardsData.find((card) => card.username === username);
+  const firstCard = fullCardsData?.find((card) => card.username === username);
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
@@ -260,7 +261,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
       name: "Twitter",
       src: TwitterIcon.src,
       url: twitterCardShareUrl(username),
-      color: "#3eabfa",
+      color: "#000",
     },
     {
       name: "LinkedIn",
@@ -274,6 +275,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
    rounded-full
    w-10
    h-10
+   p-2.5
    grid
    place-content-center
    border
