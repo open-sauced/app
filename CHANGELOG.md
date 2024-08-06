@@ -5,6 +5,29 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.50.0](https://github.com/open-sauced/app/compare/v2.49.0...v2.50.0) (2024-08-06)
+
+
+### 🍕 Features
+
+* 'Coming Soon' state for OSSF Scorecard ([#3840](https://github.com/open-sauced/app/issues/3840)) ([a36205a](https://github.com/open-sauced/app/commit/a36205afaba8c10c06e8a4bc0173cd9832dd8d41))
+* add option to import a SBOM of repositories to a workspace ([#3838](https://github.com/open-sauced/app/issues/3838)) ([ce6b783](https://github.com/open-sauced/app/commit/ce6b78303219d0b1b49db1058409f895cbeb8531))
+* added a skip link ([#3850](https://github.com/open-sauced/app/issues/3850)) ([83b335a](https://github.com/open-sauced/app/commit/83b335a53e4a8219ab11253a3448e3034ee4da72))
+* converted contributor insight contributor table to new table component ([#3843](https://github.com/open-sauced/app/issues/3843)) ([c91211c](https://github.com/open-sauced/app/commit/c91211c16bff21f43444b55d04265868b76942fc))
+* OSCR works with API range 0-300 and uses ceiling math ([#3829](https://github.com/open-sauced/app/issues/3829)) ([23ae445](https://github.com/open-sauced/app/commit/23ae445a9247e954981db43bf2db0dcf8050acb4))
+
+
+### 🐛 Bug Fixes
+
+* **/app/pages/_document.tsx:** add lang attribute to html tag ([#3851](https://github.com/open-sauced/app/issues/3851)) ([d98bc0a](https://github.com/open-sauced/app/commit/d98bc0a702578f7167b87d65fd58467a25cfdffb))
+* now tooltip appears over lock button ([#3832](https://github.com/open-sauced/app/issues/3832)) ([b3274cb](https://github.com/open-sauced/app/commit/b3274cb6296f104daa8fed49e97d85d27a9aa55b))
+* now using setQueryParams no longer causes page to jump ([#3837](https://github.com/open-sauced/app/issues/3837)) ([6541971](https://github.com/open-sauced/app/commit/6541971dcd6d0930f62e2a41365e7039eaebab35))
+* OSCR math ceiling for contributor card ([#3839](https://github.com/open-sauced/app/issues/3839)) ([fc9b3e9](https://github.com/open-sauced/app/commit/fc9b3e93ad05f90d81f5e95cf8fa86ed54574d2c))
+* put back original heading for PR velocity ([#3830](https://github.com/open-sauced/app/issues/3830)) ([e8acd50](https://github.com/open-sauced/app/commit/e8acd50aab41c86601e068027278ae9ba8965823))
+* remove gradient from metadata tags ([#3856](https://github.com/open-sauced/app/issues/3856)) ([b446fc7](https://github.com/open-sauced/app/commit/b446fc721c19e8d208fa9a642655a4099b2ca676))
+* removed some unused code ([#3849](https://github.com/open-sauced/app/issues/3849)) ([70be5b9](https://github.com/open-sauced/app/commit/70be5b9bba379ac2243a6716ba400d0949207417))
+* removed unused code ([#3827](https://github.com/open-sauced/app/issues/3827)) ([3d28f2c](https://github.com/open-sauced/app/commit/3d28f2cefe93ed20788f170b69a0cdfa01acbb23))
+
 ## [2.50.0-beta.13](https://github.com/open-sauced/app/compare/v2.50.0-beta.12...v2.50.0-beta.13) (2024-08-06)
 
 
