@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import cntl from "cntl";
+import { usePostHog } from "posthog-js/react";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -256,6 +257,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
 export default Card;
 
 function SocialButtons({ username, summary }: { username: string; summary: string }) {
+  const posthog = usePostHog();
   const icons = [
     {
       name: "Twitter",
@@ -294,6 +296,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
             className={linkStyle}
             style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
+            onClick={() => posthog.capture("DevCard share link clicked", { platform: icon.name, username })}
           >
             <Image src={icon.src} alt={icon.name} width={24} height={24} />
           </a>
