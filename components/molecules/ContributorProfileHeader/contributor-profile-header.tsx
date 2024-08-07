@@ -178,6 +178,7 @@ const ContributorProfileHeader = ({
           <Link
             href={cardPageUrl(username!)}
             className="absolute bottom-0 z-10 grid rounded-full shadow-xs w-11 h-11 right-1 place-content-center border-conic-gradient"
+            onClick={() => posthog.capture("DevCard clicked", { username })}
           >
             <div className="grid w-[2.5em] h-[2.5em] overflow-hidden rounded-full place-content-center bg-black/80">
               <Image priority alt="user profile cover image" className="w-5 h-5 " src={PizzaGradient} />
