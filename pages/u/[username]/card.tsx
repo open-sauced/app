@@ -12,7 +12,6 @@ import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
 import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
 import getPercent from "lib/utils/get-percent";
 import { getRepoList } from "lib/hooks/useRepoList";
-import { DevCardProps } from "components/molecules/DevCard/dev-card";
 import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
@@ -36,7 +35,7 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
 
 interface CardProps {
   username: string;
-  cards: DevCardProps[];
+  cards: DbUser[];
 }
 
 interface Params extends ParsedUrlQuery {
@@ -57,24 +56,6 @@ async function fetchUserData(username: string) {
   return (await req.json()) as DbUser;
 }
 
-async function fetchInitialCardData(username: string): Promise<DevCardProps> {
-  const user = await fetchUserData(username);
-  const githubAvatar = getAvatarByUsername(username, 300);
-
-  const ageInDays = user.first_opened_pr_at
-    ? Math.floor((Date.now() - Date.parse(user.first_opened_pr_at)) / 86400000)
-    : 0;
-
-  return {
-    username,
-    avatarURL: githubAvatar,
-    name: user.name || username,
-    bio: user.bio,
-    age: ageInDays,
-    oscr: Math.ceil(user.oscr),
-    isLoading: true,
-  };
-}
 
 async function fetchRemainingCardData(
   username: string
@@ -103,7 +84,7 @@ export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (
   }
 
   const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
-  const cards = await Promise.all(uniqueUsernames.map(fetchInitialCardData));
+  const cards = await Promise.all(uniqueUsernames.map(fetchUserData));
 
   return {
     props: {
@@ -122,8 +103,8 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
   });
 
-  const [fullCardsData, setFullCardsData] = useState<DevCardProps[]>(cards);
-  const firstCard = fullCardsData.find((card) => card.username === username);
+  const [fullCardsData, setFullCardsData] = useState<DbUser[]>(cards);
+  const firstCard = fullCardsData.find((card) => card.login === username);
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
@@ -136,10 +117,10 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
    */
   useEffect(() => {
     cards.forEach(async (card) => {
-      const cardData = await fetchRemainingCardData(card.username);
+      const cardData = await fetchRemainingCardData(card.login);
       setFullCardsData((prev) =>
         prev.map((c) => {
-          if (c.username === card.username) {
+          if (c.login === card.login) {
             return {
               ...c,
               ...cardData,

@@ -1,44 +1,22 @@
-"use client";
-
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowTrendingUpIcon, MinusSmallIcon, ArrowSmallUpIcon, ArrowSmallDownIcon } from "@heroicons/react/24/solid";
-import { GiftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Tilt from "react-parallax-tilt";
 import { FiGlobe } from "react-icons/fi";
 import Button from "components/shared/Button/button";
 import Pill, { PillProps } from "components/atoms/Pill/pill";
-import Icon from "components/atoms/Icon/icon";
 import openSaucedImg from "img/openSauced-icon.png";
-import PRIcon from "img/icons/pr-icon.svg";
 import { getRelativeDays } from "lib/utils/date-utils";
-import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import DevCardGradient from "../../../public/devcard-gradient.png";
+import { getAvatarByUsername } from "lib/utils/github";
 
-export interface DevCardProps {
-  username: string;
-  name?: string;
-  avatarURL: string;
-  oscr?: number;
-  prs?: number;
-  repos?: number;
-  bio?: string;
-  prVelocity?: number;
-  prMergePercentage?: number;
-  isLoading?: boolean;
-  isFlipped?: boolean;
-  isInteractive?: boolean;
-  hideProfileButton?: boolean;
-  age?: number;
-  onFlip?: () => void;
-}
-
-export default function DevCard(props: DevCardProps) {
+export default function DevCard(props: { user: DbUser, isFlipped: boolean, isInteractive: boolean, onFlip?: () => void }) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
   const isInteractive = props.isInteractive ?? true;
 
-  const activity = getActivity(props.prs ?? 0);
+  // TODO: fetch activity (TBD)
+  const activity = getActivity(0);
 
   useEffect(() => {
     setIsFlipped(props.isFlipped ?? false);
@@ -50,7 +28,7 @@ export default function DevCard(props: DevCardProps) {
     }
   }, [props.isInteractive, props.isFlipped]);
 
-  const profileHref = `/u/${props.username}`;
+  const profileHref = `/u/${props.user.login}`;
 
   function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     if (!isInteractive) {
@@ -119,18 +97,18 @@ export default function DevCard(props: DevCardProps) {
             {/** Avatar + @Username **/}
             <div className="flex flex-col items-center gap-1">
               <Image
-                src={props.avatarURL}
-                alt={`${props.username} front avatar`}
+                src={getAvatarByUsername(props.user.login)}
+                alt={`${props.user.login} front avatar`}
                 width={100}
                 height={100}
                 className="rounded-full border-[1.5px] border-gray-300 border-opacity-40"
               />
-              <p>@{props.username}</p>
+              <p>@{props.user.login}</p>
             </div>
 
             {/** OSCR Score **/}
             <div className="flex flex-col items-center gap-1">
-              <p className="text-7xl font-bold">{props.oscr}</p>
+              <p className="text-7xl font-bold">{!props.user.oscr ? "-" : Math.ceil(props.user.oscr)}</p>
               <p className="text-transparent bg-clip-text bg-gradient-to-r from-sauced-orange via-gradient-orange-one to-amber-500 font-medium">
                 OSCR Score
               </p>
@@ -145,86 +123,52 @@ export default function DevCard(props: DevCardProps) {
         </div>
 
         <div
-          className="DevCard-back flex flex-col overflow-hidden rounded-xl border-white cursor-pointer w-full h-full absolute left-0 top-0"
+          className="DevCard-back flex flex-col overflow-hidden rounded-xl border-white cursor-pointer w-full h-full absolute left-0 top-0 p-2"
           onClick={handleCardClick}
           style={{
             ...faceStyle,
             transform: "rotateY(180deg)",
           }}
         >
-          <div className="p-2 pt-4 w-full h-full flex flex-col">
-            <div
-              className="text-white rounded-full w-full bg-[#F98026] mb-2 flex items-center"
-              style={{
-                boxShadow: "0px 10px 15px -3px rgba(249, 128, 38, 0.1), 0px 4px 6px -2px rgba(249, 128, 38, 0.05)",
-              }}
-            >
+          <div className="z-10 flex flex-col gap-4 px-1 py-4 items-center w-full h-full text-white text-xs">
+            {/** Avatar + username + OSCR **/}
+            <div className="relative flex gap-4 items-center justify-between bg-sauced-orange px-2 py-1 rounded-full w-full font-semibold">
               <Image
-                src={props.avatarURL}
-                alt="avatar"
-                width={36}
-                height={36}
-                className="border-white border-[2px] block rounded-full mr-2"
+                src={getAvatarByUsername(props.user.login)}
+                alt={`${props.user.login} front avatar`}
+                width={50}
+                height={50}
+                className="absolute rounded-full border-[1.5px] border-gray-300 border-opacity-40 -left-1"
               />
-              <div className="py-0.5">
-                <div className="text-xs font-semibold">{props.name ?? props.username}</div>
-                <div className="flex items-center gap-2">
-                  {props.prs !== undefined && (
-                    <div className="flex items-center">
-                      <Icon IconImage={PRIcon} className="w-3 h-3 mr-1" />
-                      <div className="flex text-xs">{props.prs} PR</div>
-                    </div>
-                  )}
-                  {props.age !== undefined && (
-                    <div className="flex items-center">
-                      <GiftIcon className="w-3 h-3 mr-1" />
-                      <div className="flex text-xs">{getRelativeDays(props.age)}</div>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <p className="pl-10">{props.user.login}</p>
+              <p className="-pl-4 justfy-self-end text-sm">
+                {props.user.oscr}
+                <span className="text-[0.5rem] text-gray-100 font-normal">/300</span>
+              </p>
             </div>
-            <div className="px-2">
-              <div className="flex justify-between items-center py-2">
-                <div className="text-xs text-slate-300">Activity</div>
-                {!props.isLoading ? (
-                  <ActivityPill activity={activity} size="small" />
-                ) : (
-                  <div className="text-xs text-slate-300 font-extralight">{DATA_FALLBACK_VALUE}</div>
-                )}
+
+            {/** Bio **/}
+            <p className="py-2">{props.user.bio}</p>
+
+            {/** Last 30 Days **/}
+            <div className="flex flex-col w-full h-fit text-md">
+              <p className="text-gray-300">Last 30 days</p>
+              <Separator />
+              <div className="flex justify-between items-center">
+                <p>Activity</p>
+                <ActivityPill activity={activity} size="xsmall" />
               </div>
-              <Seperator />
-              <div className="flex justify-between items-center py-2">
-                <div className="text-xs text-slate-300">PRs Velocity</div>
-                <div className="flex items-center ml-auto gap-1">
-                  {!props.prVelocity || props.prMergePercentage == undefined ? (
-                    <div className="text-xs text-slate-300 font-extralight">{DATA_FALLBACK_VALUE}</div>
-                  ) : (
-                    <>
-                      <div className="text-xs text-slate-300 font-extralight">{getRelativeDays(props.prVelocity)}</div>
-                      <VelocityPill velocity={props.prMergePercentage} size="small" />
-                    </>
-                  )}
-                </div>
+              <Separator />
+              <div className="flex justify-between">
+                <p>Opened PRs</p>
               </div>
-              <Seperator />
-              <div className="text-xs text-slate-300 text-ellipsis">{props.bio}</div>
-            </div>
-            {/* bottom */}
-            <div className="px-2 mt-auto justify-self-end">
-              {!props.hideProfileButton && (
-                <Link href={profileHref} passHref>
-                  <Button variant="primary" className="w-full text-center justify-center mt-4 !py-1">
-                    View Profile
-                  </Button>
-                </Link>
-              )}
-              <div className="flex justify-center mt-2">
-                <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
-                <p className={"font-semibold text-white ml-1"} style={{ fontSize: "8px" }}>
-                  OpenSauced
-                </p>
+              <Separator />
+              <div className="flex justify-between">
+                <p>PR Velocity</p>
+                <p>{getRelativeDays(3)}</p> {/** TODO: fetch PR velocity **/}
               </div>
+              <Separator />
+
             </div>
           </div>
         </div>
@@ -243,12 +187,6 @@ function getActivity(prs: number): Activity {
   }
 }
 
-function VelocityPill({ velocity, ...props }: { velocity: number } & Omit<PillProps, "text" | "icon">) {
-  const icon =
-    velocity > 0 ? <ArrowSmallUpIcon color="purple" className="h-4 w-4" /> : <ArrowSmallDownIcon className="h-4 w-4" />;
-  return <Pill color="purple" icon={icon} text={`${velocity}%`} {...props} />;
-}
-
 function ActivityPill({ activity, ...props }: { activity: Activity } & Omit<PillProps, "text" | "icon">) {
   const color = activity === "high" ? "green" : "yellow";
   const activityText = activity === "high" ? "High" : "Mid";
@@ -262,7 +200,7 @@ function ActivityPill({ activity, ...props }: { activity: Activity } & Omit<Pill
   return <Pill color={color} icon={icon} text={activityText} {...props} />;
 }
 
-function Seperator() {
+function Separator() {
   return (
     <div
       className="my-2 h-[1px]"
