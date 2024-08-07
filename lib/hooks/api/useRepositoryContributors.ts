@@ -20,7 +20,7 @@ export default function useRepositoryContributors({
   range = 30,
   page = 1,
   limit = 1000,
-  orderDirection = "ASC",
+  orderDirection = "DESC",
 }: UseRepositoryContributorsProps) {
   const query = new URLSearchParams();
 
@@ -36,7 +36,7 @@ export default function useRepositoryContributors({
     query.set("limit", `${limit}`);
   }
 
-  if (orderDirection) {
+  if (orderDirection.trim()) {
     query.set("orderDirection", orderDirection);
   }
 
