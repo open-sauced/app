@@ -30,6 +30,7 @@ import useRepositoryContributors from "lib/hooks/api/useRepositoryContributors";
 import Activity from "components/organisms/Activity/activity";
 import ContributorsGrid from "components/Tables/ContributorsGrid";
 import LayoutToggle, { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
+import { OrderDirection } from "lib/utils/sorting";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -68,7 +69,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 type Range = 30 | 7 | 90 | 180 | 360;
-type OrderDirection = "ASC" | "DESC";
 
 interface RepoPageProps {
   repoData: DbRepoInfo;

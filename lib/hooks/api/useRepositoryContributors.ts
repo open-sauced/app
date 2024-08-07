@@ -1,12 +1,12 @@
 import useSWR, { Fetcher } from "swr";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
+import { OrderDirection } from "lib/utils/sorting";
 
 interface PaginatedResponse {
   readonly data: DbRepoContributor[];
   readonly meta: Meta;
 }
 
-type OrderDirection = "ASC" | "DESC";
 type UseRepositoryContributorsProps = {
   repository: string;
   range: number;

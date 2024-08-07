@@ -4,12 +4,15 @@ import ContributorCard from "components/organisms/ContributorCard/contributor-ca
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
+import { OrderDirection } from "lib/utils/sorting";
 
 type ContributorsGridProps = {
   contributors: DbRepoContributor[];
   isLoading: boolean;
   isError: boolean;
   meta: Meta;
+  oscrSorting: OrderDirection;
+  setOscrSorting: (value: OrderDirection) => void;
   repositoryIds: number[];
 };
 
