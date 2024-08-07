@@ -28,7 +28,6 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
   "brandonroberts",
   "bekahhw",
   "zeucapua",
-  "ogdev-01",
   "jpmcb",
   "gr2m",
   "joshuakgoldberg",
