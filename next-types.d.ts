@@ -523,6 +523,7 @@ interface DbRepoContributor {
   pr_review_comments: number;
   total_contributions: number;
   devstats_updated_at: string;
+  updated_at: string;
 }
 
 interface DbListContributorStat {
