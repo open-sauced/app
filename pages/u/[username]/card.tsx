@@ -124,7 +124,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
   });
 
   const [fullCardsData, setFullCardsData] = useState<DevCardProps[]>(cards);
-  const firstCard = fullCardsData?.find((card) => card.username === username);
+  const firstCard = fullCardsData.find((card) => card.username === username);
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
