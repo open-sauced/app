@@ -193,6 +193,7 @@ interface DbPRContributor {
   readonly updated_at: string;
   readonly user_id: number;
   readonly devstats_updated_at: string;
+  readonly updated_at: string;
 }
 
 interface DbFollowUser {

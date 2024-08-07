@@ -23,7 +23,7 @@ import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 
 interface ContributorCardProps {
   className?: string;
-  contributor: DbPRContributor;
+  contributor: DbPRContributor | DbRepoContributor;
   topic: string;
   repositories?: number[];
   range?: string;
@@ -31,12 +31,13 @@ interface ContributorCardProps {
 }
 
 const ContributorCard = ({ className, contributor, topic, repositories, range, showOscr }: ContributorCardProps) => {
+  const username = "author_login" in contributor ? contributor.author_login : contributor.login;
   const [showPRs, setShowPRs] = useState(false);
-  const githubAvatar = getAvatarByUsername(contributor.author_login);
-  const { repoList, meta } = useContributorPullRequestsChart(contributor.author_login, topic, repositories, range);
-  const languageList = useContributorLanguages(contributor.author_login);
+  const githubAvatar = getAvatarByUsername(username);
+  const { repoList, meta } = useContributorPullRequestsChart(username, topic, repositories, range);
+  const languageList = useContributorLanguages(username);
   const { data: user } = useFetchUser(
-    contributor.author_login,
+    username,
     {
       revalidateOnFocus: false,
     },
@@ -49,12 +50,12 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
     <Card className={className && className}>
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between w-full gap-2">
-          <Link href={`/u/${contributor.author_login}`} as={`/u/${contributor.author_login}`}>
+          <Link href={`/u/${username}`} as={`/u/${username}`}>
             <div className="flex items-center gap-2">
               <Avatar size={40} avatarURL={githubAvatar ? githubAvatar : undefined} />
               <div>
                 <div className="flex gap-2">
-                  <Text className="!text-base !text-black">{contributor.author_login}</Text>
+                  <Text className="!text-base !text-black">{username}</Text>
                   {contributor.oscr ? (
                     <OscrPill
                       rating={contributor.oscr}
@@ -91,7 +92,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
         </div>
         <div className="h-32">
           <CardLineChart
-            contributor={contributor.author_login}
+            contributor={username}
             repoIds={repositories}
             range={Number(range ?? 30)}
             className="max-h-36"
@@ -100,12 +101,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
         <CardRepoList repoList={repoList} total={repoList.length} />
 
         {showPRs ? (
-          <PullRequestTable
-            contributor={contributor.author_login}
-            topic={topic}
-            repositories={repositories}
-            range={range}
-          />
+          <PullRequestTable contributor={username} topic={topic} repositories={repositories} range={range} />
         ) : null}
 
         <div className="flex justify-center w-full">

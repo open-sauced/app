@@ -220,7 +220,17 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                   onChange={() => setContributorsView((prev) => (prev === "list" ? "grid" : "list"))}
                 />
               </div>
-              {contributorsView === "grid" && <ContributorsGrid repositoryIds={[repoData.id]} />}
+              {contributorsView === "grid" && (
+                <ContributorsGrid
+                  contributors={contributors}
+                  meta={meta}
+                  isLoading={isContributorsLoading}
+                  isError={isContributorsError}
+                  oscrSorting={oscrSorting}
+                  setOscrSorting={setOscrSorting}
+                  repositoryIds={[repoData.id]}
+                />
+              )}
               {contributorsView === "list" && (
                 <ContributorsTable
                   contributors={contributors}
