@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.2](https://github.com/open-sauced/app/compare/v2.52.0-beta.1...v2.52.0-beta.2) (2024-08-07)
+
+
+### 🍕 Features
+
+* tracking DevCard analytics ([#3874](https://github.com/open-sauced/app/issues/3874)) ([583e42a](https://github.com/open-sauced/app/commit/583e42ab6957448de750309e59de853e1d2a7d99))
+
 ## [2.52.0-beta.1](https://github.com/open-sauced/app/compare/v2.51.1-beta.1...v2.52.0-beta.1) (2024-08-07)
 
 
