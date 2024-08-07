@@ -15,6 +15,7 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import { getTopContributorLanguages } from "lib/utils/contributor-utils";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
 import { OscrPill } from "components/Contributors/Oscr";
+import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
@@ -127,6 +128,7 @@ const ContributorListTableRow = ({
               oscrRating={contributor.oscr}
               showOscr={showOscr}
               loggedIn={loggedIn}
+              devstatsUpdatedAt={contributor.devstats_updated_at}
             />
           </div>
           <div className="w-[34%] text-normal text-light-slate-11  h-full">
@@ -203,13 +205,23 @@ const ContributorListTableRow = ({
 
         {/* Column: Contributors */}
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
-          <DevProfile username={login} hasBorder={!contributor.author_login} showOscr={false} loggedIn={loggedIn} />
+          <DevProfile
+            username={login}
+            hasBorder={!contributor.author_login}
+            showOscr={false}
+            loggedIn={loggedIn}
+            devstatsUpdatedAt={contributor.devstats_updated_at}
+          />
         </div>
 
         {/* Column: OSCR */}
         {showOscr ? (
           <div className={clsx("flex-1 lg:max-w-[5rem] text-light-slate-11 justify-center lg:flex ")}>
-            <OscrPill rating={contributor.oscr} hideRating={!loggedIn} />
+            <OscrPill
+              rating={contributor.oscr}
+              hideRating={!loggedIn}
+              calculated={contributor.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
+            />
           </div>
         ) : null}
 

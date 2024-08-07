@@ -68,6 +68,7 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
           username: info.contributor.username,
           updated_at: info.contributor.updated_at,
           user_id: info.contributor_id,
+          devstats_updated_at: info.contributor.devstats_updated_at,
         };
       })
     : [];

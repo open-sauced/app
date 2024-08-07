@@ -20,5 +20,6 @@ ContributorListTableRowStory.args = {
     username: "foxyblocks",
     updated_at: "2021-08-24T00:00:00.000Z",
     user_id: 1,
+    devstats_updated_at: "2021-08-24T00:00:00.000Z",
   },
 };

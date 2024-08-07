@@ -50,8 +50,8 @@ const NivoScatterPlot = ({
   metadata,
   handleSetPrFilter,
 }: ScatterPlotProps) => {
-  const [showMembers, setShowMembers] = useState<boolean>(false);
-  const [isLogarithmic, setIsLogarithmic] = useState<boolean>(false);
+  const [showMembers, setShowMembers] = useState(false);
+  const [isLogarithmic, setIsLogarithmic] = useState(true);
 
   let functionTimeout: any;
 
