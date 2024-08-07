@@ -23,8 +23,8 @@ const FilterCardTemplate: ComponentStory<typeof FilterCard> = (args) => <FilterC
 
 // FilterCard Default
 export const Default = FilterCardTemplate.bind({});
-Default.args = { filterName: "hacktoberfest", isRemovable: false };
+Default.args = { filterName: "Most Active", isRemovable: false };
 
 // FilterCard Removable
 export const Removable = FilterCardTemplate.bind({});
-Removable.args = { filterName: "hacktoberfest", isRemovable: true };
+Removable.args = { filterName: "Most Active", isRemovable: true };
