@@ -56,13 +56,11 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
               <div>
                 <div className="flex gap-2">
                   <Text className="!text-base !text-black">{username}</Text>
-                  {contributor.oscr ? (
-                    <OscrPill
-                      rating={contributor.oscr}
-                      hideRating={!showOscr}
-                      calculated={contributor.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
-                    />
-                  ) : null}
+                  <OscrPill
+                    rating={contributor.oscr}
+                    hideRating={!showOscr}
+                    calculated={contributor.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
+                  />
                 </div>
                 <div className="flex gap-2 text-xs mt-1">
                   <div className="flex items-center gap-1 text-xs text-light-slate-11">
