@@ -16,6 +16,7 @@ Default.args = {
   children: [<>Option 1</>, <>Option 2</>, <>Option 3</>],
   defaultSelection: "0",
   className: "w-max",
+  label: "Toggle Group",
 };
 AllowNone.args = {
   children: [<>Option 1</>, <>Option 2</>, <>Option 3</>],
