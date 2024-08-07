@@ -5,16 +5,16 @@ import { useEffect, useState } from "react";
 import { ArrowTrendingUpIcon, MinusSmallIcon, ArrowSmallUpIcon, ArrowSmallDownIcon } from "@heroicons/react/24/solid";
 import { GiftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import clsx from "clsx";
 import Tilt from "react-parallax-tilt";
+import { FiGlobe } from "react-icons/fi";
 import Button from "components/shared/Button/button";
 import Pill, { PillProps } from "components/atoms/Pill/pill";
 import Icon from "components/atoms/Icon/icon";
-import CardSauceBGSVG from "img/card-sauce-bg.svg";
 import openSaucedImg from "img/openSauced-icon.png";
 import PRIcon from "img/icons/pr-icon.svg";
 import { getRelativeDays } from "lib/utils/date-utils";
 import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
+import DevCardGradient from "../../../public/devcard-gradient.png";
 
 export interface DevCardProps {
   username: string;
@@ -66,22 +66,6 @@ export default function DevCard(props: DevCardProps) {
     }
   }
 
-  const faceClasses = clsx(
-    "flex",
-    "flex-col",
-    "items-stretch",
-    "justify-items-stretch",
-    "overflow-hidden",
-    "rounded-3xl",
-    "border-white",
-    "cursor-pointer",
-    "w-full",
-    "h-full",
-    "absolute",
-    "left-0",
-    "top-0"
-  );
-
   const faceStyle: React.CSSProperties = {
     backfaceVisibility: "hidden",
     background: "#11181c linear-gradient(152.13deg, rgba(217, 217, 217, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%)",
@@ -101,73 +85,67 @@ export default function DevCard(props: DevCardProps) {
         tiltEnable={isInteractive}
         glareEnable={isInteractive}
         trackOnWindow={isInteractive}
-        glareBorderRadius="1.5rem"
+        glareBorderRadius="0.75rem"
         flipHorizontally={isFlipped}
-        className={clsx("DevCard-card", "relative", "rounded-3xl", "w-full", "h-full", "border", "border-gray-400")}
+        className="DevCard-card relative rounded-xl w-full h-full border border-gray-400"
         style={{
           boxShadow: "0px 0px 20px -12px rgba(0, 0, 0, 0.25)",
           transformStyle: "preserve-3d",
         }}
       >
+        {/** Front View **/}
         <div
-          className={clsx("DevCard-front", faceClasses)}
+          className="relative DevCard-front flex flex-col overflow-hidden rounded-xl border-white cursor-pointer w-full h-full"
           onClick={handleCardClick}
           style={{
             ...faceStyle,
           }}
         >
-          <div className="grid grid-rows-2 grid-cols-1 flex-shrink-0 w-full h-full">
-            <div
-              className="DevCard-top"
-              style={{
-                backgroundImage: `url(${CardSauceBGSVG.src})`,
-              }}
-            >
-              <div className=" absolute left-[10px] top-[10px] flex items-center gap-1 cursor-pointer">
-                <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
-                <p className={"font-semibold text-white"} style={{ fontSize: "8px" }}>
-                  OpenSauced
-                </p>
-              </div>
+          <Image
+            src={DevCardGradient}
+            alt="devcard-gradient"
+            className="absolute top-0 inset-x-0"
+            width={245}
+            height={348}
+          />
+          <Image
+            src="/devcard-border.svg"
+            alt="devcard-border"
+            className="absolute top-0 inset-x-0 p-2"
+            width={245}
+            height={348}
+          />
+          <div className="z-10 flex flex-col gap-2 items-center justify-center w-full h-full text-white">
+            {/** Avatar + @Username **/}
+            <div className="flex flex-col items-center gap-1">
+              <Image
+                src={props.avatarURL}
+                alt={`${props.username} front avatar`}
+                width={100}
+                height={100}
+                className="rounded-full border-[1.5px] border-gray-300 border-opacity-40"
+              />
+              <p>@{props.username}</p>
             </div>
-            <div className="DevCard-bottom relative text-white flex flex-col items-center pt-10">
-              {!props.isLoading && (
-                <div className="absolute right-[8px] top-[8px]">
-                  <ActivityPill activity={activity} />
-                </div>
-              )}
-              <div className="text-sm mb-3 font-semibold">@{props.username}</div>
-              <div className="w-full flex justify-center gap-6">
-                <div className="text-center">
-                  <div className="text-6xl font-black">{props.isLoading ? "-" : props.oscr}</div>
-                  <div className="text-xs">OSCR</div>
-                </div>
-              </div>
+
+            {/** OSCR Score **/}
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-7xl font-bold">{props.oscr}</p>
+              <p className="text-transparent bg-clip-text bg-gradient-to-r from-sauced-orange via-gradient-orange-one to-amber-500 font-medium">
+                OSCR Score
+              </p>
             </div>
-          </div>
-          <div
-            className={clsx(
-              "DevCard-avatar",
-              "absolute",
-              "top-1/2",
-              "left-1/2",
-              "bg-white",
-              "border-white",
-              "border-2",
-              "block",
-              "rounded-full",
-              "w-28",
-              "h-28",
-              "text-transparent",
-              "overflow-hidden"
-            )}
-            style={{ transform: "translate(-50%, -75%)" }}
-          >
-            <Image src={props.avatarURL} alt="avatar" width={116} height={116} />
+
+            {/** 'Ranking' Badge **/}
+            <div className="flex items-center gap-2 px-2 py-1 border border-amber-500 rounded-full">
+              <FiGlobe className="text-lg text-orange-500" />
+              <p className="text-xs font-medium">In the top 3%</p>
+            </div>
           </div>
         </div>
+
         <div
-          className={clsx("DevCard-back", faceClasses)}
+          className="DevCard-back flex flex-col overflow-hidden rounded-xl border-white cursor-pointer w-full h-full absolute left-0 top-0"
           onClick={handleCardClick}
           style={{
             ...faceStyle,

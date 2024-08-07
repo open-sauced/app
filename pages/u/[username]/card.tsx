@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
-import cntl from "cntl";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -270,17 +269,6 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
     },
   ];
 
-  const linkStyle = cntl`
-   rounded-full
-   w-10
-   h-10
-   grid
-   place-content-center
-   border
-   hover:opacity-80
-   transition-all
-  `;
-
   return (
     <div>
       <div className="text-white text-xs mb-2">Share your DevCard</div>
@@ -289,7 +277,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
           <a
             key={icon.src}
             href={icon.url}
-            className={linkStyle}
+            className="rounded-full w-10 h-10 grid place-content-center border hover:opacity-80 transition-all"
             style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
           >
