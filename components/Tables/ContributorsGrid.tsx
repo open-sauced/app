@@ -1,19 +1,30 @@
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Pagination from "components/molecules/Pagination/pagination";
 import ContributorCard from "components/organisms/ContributorCard/contributor-card";
-import useContributors from "lib/hooks/api/useContributors";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
+import { OrderDirection } from "lib/utils/sorting";
 
 type ContributorsGridProps = {
+  contributors: DbRepoContributor[];
+  isLoading: boolean;
+  isError: boolean;
+  meta: Meta;
+  oscrSorting: OrderDirection;
+  setOscrSorting: (value: OrderDirection) => void;
   repositoryIds: number[];
 };
 
-export default function ContributorsGrid({ repositoryIds }: ContributorsGridProps) {
+export default function ContributorsGrid({
+  contributors,
+  isLoading,
+  isError,
+  meta,
+  repositoryIds,
+}: ContributorsGridProps) {
   const { user } = useSupabaseAuth();
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const { data, meta, isError, isLoading } = useContributors(10, repositoryIds);
 
   return (
     <>
@@ -22,7 +33,7 @@ export default function ContributorsGrid({ repositoryIds }: ContributorsGridProp
         {isError ? <>An error occurred!..</> : ""}
         {!isLoading &&
           !isError &&
-          data.map((contributor, index) => (
+          contributors.map((contributor, index) => (
             <ContributorCard
               key={index}
               contributor={contributor}
