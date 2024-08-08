@@ -27,10 +27,21 @@ interface ContributorCardProps {
   topic: string;
   repositories?: number[];
   range?: string;
+  // whether to show the OSCR rating or the login button
   showOscr: boolean;
+  // exclude OSCR rating from the card
+  excludeOscr?: boolean;
 }
 
-const ContributorCard = ({ className, contributor, topic, repositories, range, showOscr }: ContributorCardProps) => {
+const ContributorCard = ({
+  className,
+  contributor,
+  topic,
+  repositories,
+  range,
+  showOscr,
+  excludeOscr = false,
+}: ContributorCardProps) => {
   const username = "author_login" in contributor ? contributor.author_login : contributor.login;
   const [showPRs, setShowPRs] = useState(false);
   const githubAvatar = getAvatarByUsername(username);
@@ -59,11 +70,13 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
                 <Link href={`/u/${username}`} as={`/u/${username}`}>
                   <Text className="!text-base !text-black">{username}</Text>
                 </Link>
-                <OscrPill
-                  rating={contributor.oscr}
-                  hideRating={!showOscr}
-                  calculated={contributor.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
-                />
+                {excludeOscr ? null : (
+                  <OscrPill
+                    rating={contributor.oscr}
+                    hideRating={!showOscr}
+                    calculated={contributor.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
+                  />
+                )}
               </div>
               <div className="flex gap-2 text-xs mt-1">
                 <div className="flex items-center gap-1 text-xs text-light-slate-11">
