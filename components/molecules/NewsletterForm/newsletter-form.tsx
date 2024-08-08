@@ -7,6 +7,16 @@ import TextInput from "components/atoms/TextInput/text-input";
 import SaucedLogo from "img/fallbackImageColor.svg";
 import { validateEmail } from "lib/utils/validate-email";
 
+/*
+ * cursed: this form needs a refactor as it won't actually subscribe the user to
+ * the newsletter while still returning success. This is related to breaking changes
+ * with how Next works with Netlify forms: https://docs.netlify.com/frameworks/next-js/overview/#breaking-changes
+ *
+ * For now, use NewsletterLink which is a simple link off to the ghost.io blog directly.
+ *
+ * related to: https://github.com/open-sauced/app/issues/3796
+ */
+
 const NewsletterForm = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -127,4 +137,30 @@ const NewsletterForm = () => {
   );
 };
 
-export default NewsletterForm;
+const NewsletterLink = () => {
+  return (
+    <aside
+      aria-labelledby="subscribe-to-newsletter"
+      className="newsletter-wrap flex flex-col w-full gap-3 p-6 pt-5 border rounded-lg bg-light-slate-1"
+    >
+      <div className="w-64 space-y-1">
+        <h2 className="text-lg" id="subscribe-to-newsletter">
+          Subscribe to our newsletter
+        </h2>
+        <p className="text-sm font-normal text-light-slate-11">
+          Stay up to date with the latest OpenSauced news and trends!
+        </p>
+      </div>
+      <a
+        href="https://news.opensauced.pizza/#/portal/signup"
+        target="_blank"
+        className="flex flex-none justify-center py-1 border-light-orange-7 text-light-orange-10 px-2"
+        type="button"
+      >
+        Subscribe
+      </a>
+    </aside>
+  );
+};
+
+export default NewsletterLink;

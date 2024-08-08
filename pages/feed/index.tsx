@@ -28,7 +28,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import FollowingHighlightWrapper from "components/organisms/FollowersHighlightWrapper/following-highlight-wrapper";
 import HomeHighlightsWrapper from "components/organisms/HomeHighlightsWrapper/home-highlights-wrapper";
-import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form";
+import NewsletterLink from "components/molecules/NewsletterForm/newsletter-form";
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
@@ -165,7 +165,7 @@ export default function Feeds(props: HighlightSSRProps) {
           twitterCard="summary_large_image"
         />
         <div className="hidden">
-          <NewsletterForm />
+          <NewsletterLink />
         </div>
       </>
     );
@@ -204,13 +204,13 @@ export default function Feeds(props: HighlightSSRProps) {
                 />
               )}
               <AnnouncementCard
-                title="Introducing StarSearch!"
+                title="Introducing the OSCR!"
                 description={
-                  "Start using StarSearch, our AI-powered feature that allows you to ask questions and get answers with in-depth insights into contributor history and activities, bringing a new depth of knowledge about open source projects."
+                  "Discover your open source impact with the OSCR - Open Source Contributor Rating. Visit your profile to view your personalized DevCard, showcasing your influence and impact on the open source ecosystem. Check out your OSCR DevCard and share it today!"
                 }
-                bannerSrc={"/assets/images/anouncement-cards/star-search-announcement-card.png"}
-                url={"/star-search"}
-                cta={"Try It Now!"}
+                bannerSrc={"/assets/images/anouncement-cards/OSCR-devcard.png"}
+                url={`/u/${loggedInUser?.name ? loggedInUser.name + "/card" : "bdougie/card"}`}
+                cta={"See It Now!"}
               />
             </div>
           </div>
@@ -361,7 +361,7 @@ export default function Feeds(props: HighlightSSRProps) {
             {featuredHighlights && featuredHighlights.length > 0 && (
               <FeaturedHighlightsPanel highlights={featuredHighlights} />
             )}
-            <NewsletterForm />
+            <NewsletterLink />
           </div>
         </div>
       </WorkspaceLayout>

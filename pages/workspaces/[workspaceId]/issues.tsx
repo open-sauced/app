@@ -25,6 +25,7 @@ import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
+import { OrderDirection } from "lib/utils/sorting";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -62,8 +63,6 @@ interface WorkspaceDashboardProps {
   workspace: Workspace;
   overLimit: boolean;
 }
-
-type OrderDirection = "ASC" | "DESC";
 
 const WorkspaceIssuesPage = ({ workspace, overLimit }: WorkspaceDashboardProps) => {
   const { sessionToken, signIn, userId } = useSupabaseAuth();

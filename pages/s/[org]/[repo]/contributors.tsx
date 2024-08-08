@@ -30,6 +30,8 @@ import useRepositoryContributors from "lib/hooks/api/useRepositoryContributors";
 import Activity from "components/organisms/Activity/activity";
 import ContributorsGrid from "components/Tables/ContributorsGrid";
 import LayoutToggle, { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
+import { OrderDirection } from "lib/utils/sorting";
+import { setQueryParams } from "lib/utils/query-params";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -68,7 +70,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 type Range = 30 | 7 | 90 | 180 | 360;
-type OrderDirection = "ASC" | "DESC";
 
 interface RepoPageProps {
   repoData: DbRepoInfo;
@@ -81,7 +82,6 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
   const posthog = usePostHog();
   const { session } = useSession(true);
   const isMobile = useMediaQuery("(max-width: 576px)");
-  const [oscrSorting, setOscrSorting] = useState<OrderDirection>("DESC");
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
   const [contributorsView, setContributorsView] = useState<ToggleValue>("grid");
   const tabList = [
@@ -91,6 +91,10 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
 
   const router = useRouter();
   const { limit = 10, range: rawRange = 30, page = 1 } = router.query as { limit: string; range: string; page: string };
+  const orderDirection = router.query.orderDirection as OrderDirection;
+  const setOscrSortDirection = (direction: OrderDirection) => {
+    setQueryParams({ orderDirection: direction, orderBy: "oscr" });
+  };
 
   const {
     meta,
@@ -102,7 +106,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
     range: Number(rawRange ?? 30),
     page: Number(page),
     limit: Number(limit),
-    orderDirection: oscrSorting,
+    orderDirection,
   });
 
   const copyUrlToClipboard = async () => {
@@ -220,15 +224,25 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                   onChange={() => setContributorsView((prev) => (prev === "list" ? "grid" : "list"))}
                 />
               </div>
-              {contributorsView === "grid" && <ContributorsGrid repositoryIds={[repoData.id]} />}
+              {contributorsView === "grid" && (
+                <ContributorsGrid
+                  contributors={contributors}
+                  meta={meta}
+                  isLoading={isContributorsLoading}
+                  isError={isContributorsError}
+                  oscrSorting={orderDirection}
+                  setOscrSorting={setOscrSortDirection}
+                  repositoryIds={[repoData.id]}
+                />
+              )}
               {contributorsView === "list" && (
                 <ContributorsTable
                   contributors={contributors}
                   meta={meta}
                   isLoading={isContributorsLoading}
                   isError={isContributorsError}
-                  oscrSorting={oscrSorting}
-                  setOscrSorting={setOscrSorting}
+                  oscrSorting={orderDirection}
+                  setOscrSorting={setOscrSortDirection}
                 />
               )}
             </div>

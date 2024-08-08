@@ -16,26 +16,32 @@ const LayoutToggle = ({ value, onChange }: LayoutToggleProps) => {
 
   return (
     <div className="flex h-8 border rounded-lg shadow-xs w-28 p-[1px] text-light-slate-9">
-      <div
+      <button
+        role="radio"
+        aria-checked={value === "list"}
+        name="layout"
         onClick={() => handleToggle("list")}
-        role="toggle"
         className={clsx(
-          "flex items-center cursor-pointer justify-center flex-1 transition rounded-lg",
-          value === "list" && "bg-light-slate-4 "
+          "flex items-center cursor-pointer justify-center flex-1 transition rounded-lg border border-transparent",
+          value === "list" && "bg-light-slate-4"
         )}
       >
+        <span className="sr-only">Contributor list view</span>
         <BsListUl className="text-2xl" />
-      </div>
-      <div
+      </button>
+      <button
+        role="radio"
+        aria-checked={value === "grid"}
+        name="layout"
         onClick={() => handleToggle("grid")}
-        role="toggle"
         className={clsx(
-          "flex items-center justify-center flex-1 rounded-lg transition cursor-pointer",
-          value === "grid" && "bg-light-slate-4 "
+          "flex items-center justify-center flex-1 rounded-lg transition cursor-pointer border border-transparent",
+          value === "grid" && "bg-light-slate-4"
         )}
       >
+        <span className="sr-only">Contributor grid view</span>
         <BiGridAlt className="text-2xl" />
-      </div>
+      </button>
     </div>
   );
 };

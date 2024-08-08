@@ -12,5 +12,5 @@ test("Loads feed page (logged out user)", async ({ page }) => {
   await expect(page.getByRole("complementary", { name: "Repositories", exact: true })).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Featured Highlights", exact: true })).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Subscribe to our newsletter", exact: true })).toBeVisible();
-  await expect(page.getByRole("complementary", { name: "Introducing StarSearch!", exact: true })).toBeVisible();
+  await expect(page.getByRole("complementary", { name: "Introducing the OSCR!", exact: true })).toBeVisible();
 });
