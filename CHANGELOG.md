@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.7](https://github.com/open-sauced/app/compare/v2.52.0-beta.6...v2.52.0-beta.7) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* now the contributor card user profile link no longer affects the OSCR login flow ([#3898](https://github.com/open-sauced/app/issues/3898)) ([7405660](https://github.com/open-sauced/app/commit/7405660ade55e4efaf090836389473ca9e93c201))
+
 ## [2.52.0-beta.6](https://github.com/open-sauced/app/compare/v2.52.0-beta.5...v2.52.0-beta.6) (2024-08-08)
 
 
