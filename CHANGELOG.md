@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.5](https://github.com/open-sauced/app/compare/v2.52.0-beta.4...v2.52.0-beta.5) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* now layout toggles are radio buttons ([#3888](https://github.com/open-sauced/app/issues/3888)) ([efba1f8](https://github.com/open-sauced/app/commit/efba1f806f8bf093ceb996f6b8ba51d817df3cb9))
+
 ## [2.52.0-beta.4](https://github.com/open-sauced/app/compare/v2.52.0-beta.3...v2.52.0-beta.4) (2024-08-08)
 
 
