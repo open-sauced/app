@@ -204,13 +204,13 @@ export default function Feeds(props: HighlightSSRProps) {
                 />
               )}
               <AnnouncementCard
-                title="Introducing StarSearch!"
+                title="Introducing OSCR!"
                 description={
-                  "Start using StarSearch, our AI-powered feature that allows you to ask questions and get answers with in-depth insights into contributor history and activities, bringing a new depth of knowledge about open source projects."
+                  "Discover your open source impact with the OSCR - Open Source Contributor Rating. Visit your profile to view your personalized DevCard, showcasing your influence and impact on the open source ecosystem. Check out your OSCR DevCard and share it today!"
                 }
-                bannerSrc={"/assets/images/anouncement-cards/star-search-announcement-card.png"}
-                url={"/star-search"}
-                cta={"Try It Now!"}
+                bannerSrc={"/assets/images/anouncement-cards/OSCR-devcard.png"}
+                url={`/u/${loggedInUser?.name ? loggedInUser.name + "/card" : "bdougie/card"}`}
+                cta={"See It Now!"}
               />
             </div>
           </div>
