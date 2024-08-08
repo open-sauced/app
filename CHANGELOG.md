@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.4](https://github.com/open-sauced/app/compare/v2.52.0-beta.3...v2.52.0-beta.4) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* now the contributor scatter chart toggle group has a label ([#3882](https://github.com/open-sauced/app/issues/3882)) ([adf5c6c](https://github.com/open-sauced/app/commit/adf5c6cec33132ac5d7128b452546983519df249))
+
 ## [2.52.0-beta.3](https://github.com/open-sauced/app/compare/v2.52.0-beta.2...v2.52.0-beta.3) (2024-08-08)
 
 
