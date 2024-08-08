@@ -6,6 +6,7 @@ const baseContributor = Object.freeze({
   username: "bdougie",
   updated_at: new Date("2020-01-01").toISOString(),
   user_id: 5713670,
+  devstats_updated_at: "2021-08-24T00:00:00.000Z",
 });
 
 const meta: Meta<typeof ContributorCard> = {

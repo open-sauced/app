@@ -32,6 +32,10 @@ test("Loads explore contributors page", async ({ page }) => {
   await expect(page.getByRole("button", { name: "7d" })).toBeVisible();
   await expect(page.getByRole("button", { name: "30d" })).toBeVisible();
   await expect(page.getByRole("button", { name: "3m" })).toBeVisible();
+
+  await expect(page.getByRole("radio", { name: "Contributor list view" })).toBeVisible();
+  await expect(page.getByRole("radio", { name: "Contributor list view" })).toBeChecked();
+  await expect(page.getByRole("radio", { name: "Contributor grid view" })).toBeVisible();
 });
 
 test("Loads explore activity page", async ({ page }) => {

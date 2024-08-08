@@ -124,6 +124,7 @@ interface DbContributorInsightUser {
   readonly user_id: string;
   readonly username: string;
   readonly total_contributions: number;
+  readonly devstats_updated_at: string;
 }
 
 interface DbRepoPREvents {
@@ -191,6 +192,8 @@ interface DbPRContributor {
   readonly username: string;
   readonly updated_at: string;
   readonly user_id: number;
+  readonly devstats_updated_at: string;
+  readonly updated_at: string;
 }
 
 interface DbFollowUser {
@@ -354,6 +357,7 @@ interface DbUser {
   readonly receive_product_updates: boolean;
   readonly personal_workspace_id: string;
   readonly oscr: number;
+  readonly devstats_updated_at: string;
 }
 
 interface DbHighlight {
@@ -518,6 +522,8 @@ interface DbRepoContributor {
   commit_comments: number;
   pr_review_comments: number;
   total_contributions: number;
+  devstats_updated_at: string;
+  updated_at: string;
 }
 
 interface DbListContributorStat {

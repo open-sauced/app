@@ -111,14 +111,7 @@ const InsightHeader = ({
               <Button
                 className="text-xs w-max"
                 variant="primary"
-                onClick={() => {
-                  if (overLimit) {
-                    setIsInsightUpgradeModalOpen(true);
-                    return;
-                  }
-
-                  router.push(`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`);
-                }}
+                href={`/workspaces/${workspaceId}/repository-insights/${insightId}/edit`}
               >
                 <FaEdit className="mr-2" /> Edit
               </Button>
@@ -150,15 +143,6 @@ const InsightHeader = ({
             defaultRange={Number(range)}
           />
         </div>
-        {workspaceId && (
-          <InsightUpgradeModal
-            workspaceId={workspaceId}
-            variant="all"
-            isOpen={isInsightUpgradeModalOpen}
-            onClose={() => setIsInsightUpgradeModalOpen(false)}
-            overLimit={0}
-          />
-        )}
       </div>
     </>
   );

@@ -11,6 +11,7 @@ interface ToggleGroupProps {
   /** Callback function that is called when the user selects an option, and the position of the selected element is passed into as string, starting with '0'. */
   handleChange?: (value: string) => void;
   className?: string;
+  label: string;
 }
 
 /** A ToggleGroup component that allows the user to select one option from a list of options.
@@ -29,6 +30,7 @@ const ToggleGroup = ({
   defaultSelection = "0",
   handleChange,
   className,
+  label,
 }: ToggleGroupProps) => {
   const [value, setValue] = useState(defaultSelection + "");
 
@@ -47,6 +49,7 @@ const ToggleGroup = ({
       value={value}
       onValueChange={handleValueChange}
       className={`bg-light-slate-6 rounded-lg p-0.25 ${className && className}`}
+      aria-label={label}
     >
       {Array.isArray(children) ? (
         children.map((child, index) => (

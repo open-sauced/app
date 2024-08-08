@@ -10,6 +10,7 @@ const meta: MetaData = {
   args: {
     signIn: (options) => Promise.resolve({} as OAuthResponse),
     rating: 0.5,
+    calculated: true,
   },
 };
 
@@ -21,8 +22,15 @@ export const Default: Story = {
     hideRating: false,
   },
 };
+
 export const Blurred: Story = {
   args: {
     hideRating: true,
+  },
+};
+
+export const NotCalculated: Story = {
+  args: {
+    calculated: false,
   },
 };

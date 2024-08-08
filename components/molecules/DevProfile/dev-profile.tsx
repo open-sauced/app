@@ -6,6 +6,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
 import { OscrPill } from "components/Contributors/Oscr";
+import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 
 interface DevProfileProps {
   username: string;
@@ -15,6 +16,7 @@ interface DevProfileProps {
   oscrRating?: number;
   showOscr: boolean;
   loggedIn: boolean;
+  devstatsUpdatedAt: string;
 }
 const DevProfile = ({
   username,
@@ -24,6 +26,7 @@ const DevProfile = ({
   oscrRating,
   showOscr,
   loggedIn,
+  devstatsUpdatedAt,
 }: DevProfileProps) => {
   return (
     <section className="flex items-center gap-2 text-light-slate-11">
@@ -41,7 +44,11 @@ const DevProfile = ({
         <div className="flex flex-col items-start gap-1">
           <span className={`${truncate && "truncate"} text-light-slate-12 font-semibold`}>{username}</span>
           {showOscr && typeof oscrRating !== "undefined" ? (
-            <OscrPill rating={oscrRating} hideRating={!loggedIn} />
+            <OscrPill
+              rating={oscrRating}
+              hideRating={!loggedIn}
+              calculated={devstatsUpdatedAt !== INITIAL_DEV_STATS_TIMESTAMP}
+            />
           ) : null}
         </div>
       </div>
