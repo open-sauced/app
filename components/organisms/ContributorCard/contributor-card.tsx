@@ -50,42 +50,44 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
     <Card className={className && className}>
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between w-full gap-2">
-          <Link href={`/u/${username}`} as={`/u/${username}`}>
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+            <Link href={`/u/${username}`} as={`/u/${username}`}>
               <Avatar size={40} avatarURL={githubAvatar ? githubAvatar : undefined} />
-              <div>
-                <div className="flex gap-2">
+            </Link>
+            <div>
+              <div className="flex gap-2">
+                <Link href={`/u/${username}`} as={`/u/${username}`}>
                   <Text className="!text-base !text-black">{username}</Text>
-                  <OscrPill
-                    rating={contributor.oscr}
-                    hideRating={!showOscr}
-                    calculated={contributor.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
-                  />
+                </Link>
+                <OscrPill
+                  rating={contributor.oscr}
+                  hideRating={!showOscr}
+                  calculated={contributor.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
+                />
+              </div>
+              <div className="flex gap-2 text-xs mt-1">
+                <div className="flex items-center gap-1 text-xs text-light-slate-11">
+                  {meta.itemCount !== undefined && (
+                    <>
+                      <Tooltip content="PRs merged">
+                        <Icon size={12} alt="PRs merged" IconImage={ForkIcon} />
+                      </Tooltip>
+                      {meta.itemCount} PR
+                      {meta.itemCount === 1 ? "" : "s"}
+                    </>
+                  )}
                 </div>
-                <div className="flex gap-2 text-xs mt-1">
-                  <div className="flex items-center gap-1 text-xs text-light-slate-11">
-                    {meta.itemCount !== undefined && (
-                      <>
-                        <Tooltip content="PRs merged">
-                          <Icon size={12} alt="PRs merged" IconImage={ForkIcon} />
-                        </Tooltip>
-                        {meta.itemCount} PR
-                        {meta.itemCount === 1 ? "" : "s"}
-                      </>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-1 text-light-slate-11">
-                    <Tooltip content="First commit date">
-                      <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} />{" "}
-                      <time aria-label="Last time contributor data was updated at" dateTime={contributor.updated_at}>
-                        {new Date(contributor.updated_at).toLocaleDateString()}
-                      </time>
-                    </Tooltip>
-                  </div>
+                <div className="flex items-center gap-1 text-light-slate-11">
+                  <Tooltip content="First commit date">
+                    <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} />{" "}
+                    <time aria-label="Last time contributor data was updated at" dateTime={contributor.updated_at}>
+                      {new Date(contributor.updated_at).toLocaleDateString()}
+                    </time>
+                  </Tooltip>
                 </div>
               </div>
             </div>
-          </Link>
+          </div>
           <div className="flex flex-col items-end gap-2">
             <CardHorizontalBarChart withDescription={false} languageList={languageList} />
             {!!isMaintainer && <Badge text="maintainer" />}
