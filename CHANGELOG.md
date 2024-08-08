@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.10](https://github.com/open-sauced/app/compare/v2.52.0-beta.9...v2.52.0-beta.10) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* Removes NewsletterForm usage in favor of sole link to newsletter ([#3897](https://github.com/open-sauced/app/issues/3897)) ([61951ff](https://github.com/open-sauced/app/commit/61951ffe7c01ff7a9079b98422cacd235d0c504f))
+
 ## [2.52.0-beta.9](https://github.com/open-sauced/app/compare/v2.52.0-beta.8...v2.52.0-beta.9) (2024-08-08)
 
 
