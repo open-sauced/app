@@ -143,7 +143,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
         receive_collaboration: insightsUser?.receive_collaboration,
         receive_product_updates: insightsUser?.receive_product_updates,
       });
-      setSelectedInterest(insightsUser?.interests?.split(","));
+      setSelectedInterest(insightsUser?.interests?.split(",") || []);
       setDisplayLocalTime(insightsUser?.display_local_time);
       setTimezone(insightsUser?.timezone || "");
     }
