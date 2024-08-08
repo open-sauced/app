@@ -1,5 +1,4 @@
-import { ParsedUrlQuery } from "querystring";
-import { GetServerSideProps, NextPage } from "next";
+import { GetServerSidePropsContext } from "next";
 import { useEffect, useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
@@ -7,11 +6,6 @@ import { usePostHog } from "posthog-js/react";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
-import { getAvatarByUsername } from "lib/utils/github";
-import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
-import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
-import getPercent from "lib/utils/get-percent";
-import { getRepoList } from "lib/hooks/useRepoList";
 import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
@@ -33,49 +27,18 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
   "CBID2",
 ];
 
-interface CardProps {
-  username: string;
-  cards: DbUser[];
-}
-
-interface Params extends ParsedUrlQuery {
-  username: string;
-}
+export type UserDevStats = DbUser & DbListContributorStat;
 
 async function fetchUserData(username: string) {
-  if (!isValidUrlSlug(username)) {
-    throw new Error("Invalid input");
-  }
-
-  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
     headers: {
-      accept: "application/json",
-    },
+      "Content-Type": "application/json"
+    }
   });
+  return await response.json() as UserDevStats;
+};
 
-  return (await req.json()) as DbUser;
-}
-
-
-async function fetchRemainingCardData(
-  username: string
-): Promise<Pick<DevCardProps, "prs" | "prVelocity" | "prMergePercentage" | "repos">> {
-  const { data, meta } = await fetchContributorPRs(username, undefined, "*", [], 100);
-  const prs = data.length;
-  const prVelocity = getContributorPullRequestVelocity(data);
-  const prTotal = meta.itemCount;
-  const mergedPrs = data.filter((prData) => prData.pr_is_merged);
-  const prMergePercentage = getPercent(prTotal, mergedPrs.length || 0);
-  const repos = getRepoList(Array.from(new Set(data.map((prData) => prData.repo_name))).join(",")).length;
-  return {
-    prs,
-    prVelocity,
-    prMergePercentage,
-    repos,
-  };
-}
-
-export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (context) => {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const username = context?.params?.username as string | undefined;
   if (!username) {
     return {
@@ -89,12 +52,12 @@ export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (
   return {
     props: {
       username,
-      cards,
+      cards
     },
   };
 };
 
-const Card: NextPage<CardProps> = ({ username, cards }) => {
+export default function CardPage({ username, cards }: { username: string, cards: UserDevStats[] }) {
   const { user: loggedInUser } = useSupabaseAuth();
   const [selectedUserName, setSelectedUserName] = useState<string>(username);
   const iframeTransition = useTransition(selectedUserName, {
@@ -103,36 +66,12 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
   });
 
-  const [fullCardsData, setFullCardsData] = useState<DbUser[]>(cards);
-  const firstCard = fullCardsData.find((card) => card.login === username);
+  const firstCard = cards.find((card) => card.login === username);
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
 
   const ogImage = cardImageUrl(username, { size: "490" });
-
-  /**
-   * for each of the cards we need to load additional data async because it's slow to block page load
-   * to fetch all of them
-   */
-  useEffect(() => {
-    cards.forEach(async (card) => {
-      const cardData = await fetchRemainingCardData(card.login);
-      setFullCardsData((prev) =>
-        prev.map((c) => {
-          if (c.login === card.login) {
-            return {
-              ...c,
-              ...cardData,
-              isLoading: false,
-            };
-          }
-
-          return c;
-        })
-      );
-    });
-  }, [cards]);
 
   return (
     <FullHeightContainer>
@@ -162,7 +101,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
         >
           <div className="flex items-center justify-center md:justify-end">
             <div className="flex flex-col gap-10">
-              <DevCardCarousel cards={fullCardsData} onSelect={(name) => setSelectedUserName(name)} />
+              <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
               <div className="hidden md:flex align-self-stretch justify-center">
                 {isViewingOwnProfile ? (
                   <SocialButtons username={username} summary={socialSummary} />
@@ -232,8 +171,6 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
     </FullHeightContainer>
   );
 };
-
-export default Card;
 
 function SocialButtons({ username, summary }: { username: string; summary: string }) {
   const posthog = usePostHog();

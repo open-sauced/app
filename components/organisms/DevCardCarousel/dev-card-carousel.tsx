@@ -4,9 +4,10 @@ import { useGesture } from "@use-gesture/react";
 import { useCallback, useEffect, useState } from "react";
 import { useKey } from "react-use";
 import DevCard from "components/molecules/DevCard/dev-card";
+import { UserDevStats } from "pages/u/[username]/card";
 
 export interface DevCardCarouselProps {
-  cards: DbUser[];
+  cards: UserDevStats[];
   onSelect?: (username: string) => void;
 }
 
