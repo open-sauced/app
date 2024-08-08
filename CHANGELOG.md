@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.3](https://github.com/open-sauced/app/compare/v2.52.0-beta.2...v2.52.0-beta.3) (2024-08-08)
+
+
+### 🍕 Features
+
+* now OSCR appears on repository page contributor grid view ([#3884](https://github.com/open-sauced/app/issues/3884)) ([d7163d8](https://github.com/open-sauced/app/commit/d7163d89056bc536056ba3c1cd0f07b1471e0a00))
+
 ## [2.52.0-beta.2](https://github.com/open-sauced/app/compare/v2.52.0-beta.1...v2.52.0-beta.2) (2024-08-07)
 
 
