@@ -204,7 +204,7 @@ export default function Feeds(props: HighlightSSRProps) {
                 />
               )}
               <AnnouncementCard
-                title="Introducing OSCR!"
+                title="Introducing the OSCR!"
                 description={
                   "Discover your open source impact with the OSCR - Open Source Contributor Rating. Visit your profile to view your personalized DevCard, showcasing your influence and impact on the open source ecosystem. Check out your OSCR DevCard and share it today!"
                 }
