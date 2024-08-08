@@ -204,6 +204,7 @@ const Contributors = ({
                 topic={topic}
                 repositories={repositories}
                 showOscr={loggedIn}
+                excludeOscr={true}
               />
             ))}
         </div>
