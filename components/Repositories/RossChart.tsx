@@ -33,7 +33,10 @@ export default function RossChart({ stats, isLoading, error, range, onFilterClic
   }, [stats, filterOutside, filterRecurring, filterInternal]);
 
   const rangedAverage = useMemo(
-    () => (filteredTotal / (stats ? stats.contributors.length : 1)).toPrecision(2),
+    () =>
+      filteredTotal > 0 && stats && stats.contributors.length > 0
+        ? (filteredTotal / stats.contributors.length).toPrecision(2)
+        : 0,
     [filteredTotal, stats]
   );
 
