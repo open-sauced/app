@@ -8,6 +8,8 @@ import { getRelativeDays } from "lib/utils/date-utils";
 import { getAvatarByUsername } from "lib/utils/github";
 import { UserDevStats } from "pages/u/[username]/card";
 import DevCardGradient from "../../../public/devcard-gradient.png";
+import Pill from "components/atoms/Pill/pill";
+import { HiArrowNarrowRight, HiTrendingDown, HiTrendingUp } from "react-icons/hi";
 
 export default function DevCard(props: { user: UserDevStats | undefined, isFlipped?: boolean, isInteractive: boolean, onFlip?: () => void }) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
@@ -147,6 +149,7 @@ export default function DevCard(props: { user: UserDevStats | undefined, isFlipp
               <Separator />
               <div className="flex justify-between items-center">
                 <p>Activity</p>
+                <ActivityPill recent_pull_requests_count={props.user?.recent_pull_requests_count || 0} />
               </div>
               <Separator />
               <div className="flex justify-between">
@@ -186,5 +189,36 @@ function Separator() {
       className="my-2 h-[1px]"
       style={{ background: "linear-gradient(90deg, hsla(206, 12%, 89%, 0.6), hsla(206, 12%, 89%, 0.01)" }}
     ></div>
+  );
+}
+
+function ActivityPill({ recent_pull_requests_count }: { recent_pull_requests_count: number }) {
+
+  const getValueBasedOnCount = ({ low, med, high }: { low: any; med: any; high: any }) => {
+    return recent_pull_requests_count < 7 ? low
+      : recent_pull_requests_count< 28 ? med
+      : high;
+  };
+
+  const status = getValueBasedOnCount({
+    low: "Low",
+    med: "Mid",
+    high: "High",
+  });
+
+  const icon = getValueBasedOnCount({
+    low: <HiTrendingDown />,
+    med: <HiArrowNarrowRight />,
+    high: <HiTrendingUp />,
+  });
+
+  const color = getValueBasedOnCount({
+    low: "red",
+    med: "yellow",
+    high: "green"
+  });
+
+  return (
+    <Pill text={status} icon={icon} color={color} size="xsmall" />
   );
 }
