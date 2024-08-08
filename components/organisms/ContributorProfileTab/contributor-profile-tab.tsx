@@ -371,16 +371,18 @@ const ContributorProfileTab = ({
             </div>
             <div className="grid grid-cols-2 2xl:grid-cols-4 justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16 items-center">
               <div>
-                <span className="flex gap-2 text-sm">
-                  <p className="text-xs text-light-slate-11">OSCR Rating</p>
-                  <InfoTooltip information="OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem." />
+                <span className="relative text-xs text-light-slate-11 flex gap-0.5 items-center">
+                  <span>OSCR Rating</span>
+                  <span className="text-sm grid place-content-center">
+                    <InfoTooltip information="OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem." />
+                  </span>
                 </span>
                 <div className="flex mt-1 text-lg md:text-xl lg:text-2xl !text-black leading-none">
-                  <OscrButton rating={contributor?.oscr} hideRating={!Boolean(user)} />
+                  <OscrButton rating={contributor?.oscr} hideRating={!Boolean(user)} calculated />
                 </div>
               </div>
               <div>
-                <span className="text-xs text-light-slate-11">PRs opened</span>
+                <span className="text-xs text-light-slate-11 flex items-center">PRs opened</span>
                 {totalPrs ? (
                   <div className="flex mt-1 !text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                     {totalPrs} PRs
