@@ -1,12 +1,12 @@
 import useSWR, { Fetcher } from "swr";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
+import { OrderDirection } from "lib/utils/sorting";
 
 interface PaginatedResponse {
   readonly data: DbRepoContributor[];
   readonly meta: Meta;
 }
 
-type OrderDirection = "ASC" | "DESC";
 type UseRepositoryContributorsProps = {
   repository: string;
   range: number;
@@ -20,7 +20,7 @@ export default function useRepositoryContributors({
   range = 30,
   page = 1,
   limit = 1000,
-  orderDirection = "ASC",
+  orderDirection = "DESC",
 }: UseRepositoryContributorsProps) {
   const query = new URLSearchParams();
 
@@ -36,7 +36,7 @@ export default function useRepositoryContributors({
     query.set("limit", `${limit}`);
   }
 
-  if (orderDirection) {
+  if (orderDirection.trim()) {
     query.set("orderDirection", orderDirection);
   }
 

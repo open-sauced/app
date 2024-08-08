@@ -25,6 +25,7 @@ import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
+import { OrderDirection } from "lib/utils/sorting";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"), {
   ssr: false,
@@ -67,8 +68,6 @@ interface WorkspaceDashboardProps {
   workspace: Workspace;
   overLimit: boolean;
 }
-
-type OrderDirection = "ASC" | "DESC";
 
 const WorkspaceActivityPage = ({ workspace, overLimit }: WorkspaceDashboardProps) => {
   const { sessionToken, signIn, userId } = useSupabaseAuth();

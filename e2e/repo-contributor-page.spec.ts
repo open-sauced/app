@@ -17,4 +17,20 @@ test("Loads a repository contributor page", async ({ page }) => {
   const showBotsSwitch = page.getByRole("switch", { name: "Show Bots", exact: true });
   await expect(showBotsSwitch).toBeVisible();
   await expect(showBotsSwitch).toHaveAttribute("aria-checked", "false");
+
+  const prToggleGroup = page.getByRole("group", { name: "Pull Request State", exact: true });
+  await expect(prToggleGroup).toBeVisible();
+
+  // All PRs should be selected by default.
+  const allPrsRadio = prToggleGroup.getByRole("radio", { name: /All PRs\d+/, exact: true });
+  await expect(allPrsRadio).toBeVisible();
+  await expect(allPrsRadio).toHaveAttribute("aria-checked", "true");
+
+  const openPrsRadio = prToggleGroup.getByRole("radio", { name: /Open\d+/, exact: true });
+  await expect(openPrsRadio).toBeVisible();
+  await expect(openPrsRadio).toHaveAttribute("aria-checked", "false");
+
+  const closePRsRadio = prToggleGroup.getByRole("radio", { name: /Closed\d+/, exact: true });
+  await expect(closePRsRadio).toBeVisible();
+  await expect(closePRsRadio).toHaveAttribute("aria-checked", "false");
 });
