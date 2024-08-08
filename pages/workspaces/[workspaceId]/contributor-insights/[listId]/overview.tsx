@@ -18,6 +18,7 @@ import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import ContributorsTable from "components/Tables/ContributorsTable";
 import { setQueryParams } from "lib/utils/query-params";
+import { OrderDirection } from "lib/utils/sorting";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -108,8 +109,6 @@ const ListsOverview = ({
   const { listId, range, limit } = router.query;
   const orderDirection = router.query.orderDirection as OrderDirection;
   const orderBy = router.query.orderBy as string;
-
-  type OrderDirection = "ASC" | "DESC";
 
   const setOscrSortDirection = (direction: OrderDirection) => {
     setQueryParams({ orderDirection: direction, orderBy: "oscr" });
