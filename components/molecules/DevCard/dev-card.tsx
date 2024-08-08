@@ -1,11 +1,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { ArrowTrendingUpIcon, MinusSmallIcon, ArrowSmallUpIcon, ArrowSmallDownIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
 import Tilt from "react-parallax-tilt";
 import { FiGlobe } from "react-icons/fi";
 import Button from "components/shared/Button/button";
-import Pill, { PillProps } from "components/atoms/Pill/pill";
 import openSaucedImg from "img/openSauced-icon.png";
 import { getRelativeDays } from "lib/utils/date-utils";
 import DevCardGradient from "../../../public/devcard-gradient.png";
