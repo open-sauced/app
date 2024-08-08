@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.9](https://github.com/open-sauced/app/compare/v2.52.0-beta.8...v2.52.0-beta.9) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* excluded OSCR from old contributor card list component ([#3901](https://github.com/open-sauced/app/issues/3901)) ([446f27c](https://github.com/open-sauced/app/commit/446f27c7180bca08f5def27b673fc898c4c5c7d6))
+
 ## [2.52.0-beta.8](https://github.com/open-sauced/app/compare/v2.52.0-beta.7...v2.52.0-beta.8) (2024-08-08)
 
 
