@@ -5,6 +5,48 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.11](https://github.com/open-sauced/app/compare/v2.52.0-beta.10...v2.52.0-beta.11) (2024-08-08)
+
+
+### 🍕 Features
+
+* add OSCR tooltip to user page ([#3857](https://github.com/open-sauced/app/issues/3857)) ([fd5fa41](https://github.com/open-sauced/app/commit/fd5fa41225838ef72e3cfd149e07572056839ec5))
+
+## [2.52.0-beta.10](https://github.com/open-sauced/app/compare/v2.52.0-beta.9...v2.52.0-beta.10) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* Removes NewsletterForm usage in favor of sole link to newsletter ([#3897](https://github.com/open-sauced/app/issues/3897)) ([61951ff](https://github.com/open-sauced/app/commit/61951ffe7c01ff7a9079b98422cacd235d0c504f))
+
+## [2.52.0-beta.9](https://github.com/open-sauced/app/compare/v2.52.0-beta.8...v2.52.0-beta.9) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* excluded OSCR from old contributor card list component ([#3901](https://github.com/open-sauced/app/issues/3901)) ([446f27c](https://github.com/open-sauced/app/commit/446f27c7180bca08f5def27b673fc898c4c5c7d6))
+
+## [2.52.0-beta.8](https://github.com/open-sauced/app/compare/v2.52.0-beta.7...v2.52.0-beta.8) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* calculate avergage per week for ross contributors greater than 0 ([#3893](https://github.com/open-sauced/app/issues/3893)) ([a8859c5](https://github.com/open-sauced/app/commit/a8859c5bcd2f020f4aac6a57c4924b3a4da9a7d9))
+
+## [2.52.0-beta.7](https://github.com/open-sauced/app/compare/v2.52.0-beta.6...v2.52.0-beta.7) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* now the contributor card user profile link no longer affects the OSCR login flow ([#3898](https://github.com/open-sauced/app/issues/3898)) ([7405660](https://github.com/open-sauced/app/commit/7405660ade55e4efaf090836389473ca9e93c201))
+
+## [2.52.0-beta.6](https://github.com/open-sauced/app/compare/v2.52.0-beta.5...v2.52.0-beta.6) (2024-08-08)
+
+
+### 🍕 Features
+
+* add OSCR's location to PostHog capture ([#3895](https://github.com/open-sauced/app/issues/3895)) ([bbf8ee5](https://github.com/open-sauced/app/commit/bbf8ee5b139d3cc8e62c11184051b12f27cf4bcf))
+
 ## [2.52.0-beta.5](https://github.com/open-sauced/app/compare/v2.52.0-beta.4...v2.52.0-beta.5) (2024-08-08)
 
 

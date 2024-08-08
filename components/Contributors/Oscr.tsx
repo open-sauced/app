@@ -1,5 +1,6 @@
 import { LockIcon } from "@primer/octicons-react";
 import { usePostHog } from "posthog-js/react";
+import { useRouter } from "next/router";
 import Pill from "components/atoms/Pill/pill";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import Button from "components/shared/Button/button";
@@ -17,6 +18,7 @@ interface OscrProps {
 export const OSCR_LOGIN_TEXT = "Log in to view Open Source Contributor Rating (OSCR)";
 
 export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calculated }: OscrProps) => {
+  const router = useRouter();
   const posthog = usePostHog();
   let ratingToRender = calculated ? (rating ? Math.ceil(rating) : 0) : "-";
 
@@ -31,7 +33,9 @@ export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calcula
             variant="primary"
             className="flex items-center gap-2 !p-1 !text-xs z-0"
             onClick={() => {
-              posthog.capture("OSCR Login Button Clicked");
+              posthog.capture("OSCR Login Button Clicked", {
+                pathname: router.pathname,
+              });
               signIn({ provider: "github", options: { redirectTo: window.location.href } });
             }}
           >
