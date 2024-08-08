@@ -370,7 +370,7 @@ const ContributorProfileTab = ({
             <div className="flex justify-end">
               <DayRangePicker />
             </div>
-            <div className="grid grid-cols-2 2xl:grid-cols-4 justify-between gap-2 lg:flex-row md:gap-12 lg:gap-16 items-center">
+            <div className="grid grid-cols-2 2xl:grid-cols-4 justify-between my-2 gap-2 lg:flex-row md:gap-12 lg:gap-16 items-center">
               <div>
                 <span className="relative text-xs text-light-slate-11 flex gap-0.5 items-center">
                   <span>OSCR Rating</span>
@@ -398,7 +398,7 @@ const ContributorProfileTab = ({
               </div>
 
               <div>
-                <span className="text-xs text-light-slate-11">Avg PR velocity</span>
+                <span className="text-xs text-light-slate-11 flex items-center">Avg PR velocity</span>
                 {prVelocity ? (
                   <div className="flex mt-1 gap-2 !text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                     <span>{prVelocity} PRs</span>
@@ -409,7 +409,7 @@ const ContributorProfileTab = ({
                 )}
               </div>
               <div>
-                <span className="text-xs text-light-slate-11">Contributed Repos</span>
+                <span className="text-xs text-light-slate-11 flex items-center">Contributed Repos</span>
                 {recentContributionCount ? (
                   <div className="flex mt-1 !text-lg md:!text-xl lg:!text-2xl !text-black !leading-none">
                     {`${recentContributionCount} Repo${recentContributionCount > 1 ? "s" : ""}`}
