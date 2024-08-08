@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.8](https://github.com/open-sauced/app/compare/v2.52.0-beta.7...v2.52.0-beta.8) (2024-08-08)
+
+
+### 🐛 Bug Fixes
+
+* calculate avergage per week for ross contributors greater than 0 ([#3893](https://github.com/open-sauced/app/issues/3893)) ([a8859c5](https://github.com/open-sauced/app/commit/a8859c5bcd2f020f4aac6a57c4924b3a4da9a7d9))
+
 ## [2.52.0-beta.7](https://github.com/open-sauced/app/compare/v2.52.0-beta.6...v2.52.0-beta.7) (2024-08-08)
 
 
