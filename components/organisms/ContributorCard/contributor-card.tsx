@@ -76,7 +76,10 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
                   </div>
                   <div className="flex items-center gap-1 text-light-slate-11">
                     <Tooltip content="First commit date">
-                      <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} /> {contributor.updated_at}
+                      <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} />{" "}
+                      <time aria-label="Last time contributor data was updated at" dateTime={contributor.updated_at}>
+                        {new Date(contributor.updated_at).toLocaleDateString()}
+                      </time>
                     </Tooltip>
                   </div>
                 </div>
