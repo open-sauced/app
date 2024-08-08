@@ -5,9 +5,9 @@ import { FiGlobe } from "react-icons/fi";
 import Button from "components/shared/Button/button";
 import openSaucedImg from "img/openSauced-icon.png";
 import { getRelativeDays } from "lib/utils/date-utils";
-import DevCardGradient from "../../../public/devcard-gradient.png";
 import { getAvatarByUsername } from "lib/utils/github";
 import { UserDevStats } from "pages/u/[username]/card";
+import DevCardGradient from "../../../public/devcard-gradient.png";
 
 export default function DevCard(props: { user: UserDevStats | undefined, isFlipped?: boolean, isInteractive: boolean, onFlip?: () => void }) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
