@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.6](https://github.com/open-sauced/app/compare/v2.52.0-beta.5...v2.52.0-beta.6) (2024-08-08)
+
+
+### 🍕 Features
+
+* add OSCR's location to PostHog capture ([#3895](https://github.com/open-sauced/app/issues/3895)) ([bbf8ee5](https://github.com/open-sauced/app/commit/bbf8ee5b139d3cc8e62c11184051b12f27cf4bcf))
+
 ## [2.52.0-beta.5](https://github.com/open-sauced/app/compare/v2.52.0-beta.4...v2.52.0-beta.5) (2024-08-08)
 
 
