@@ -122,7 +122,7 @@ const NivoScatterPlot = ({
           {title}
         </Title>
         {metadata ? (
-          <ToggleGroup handleChange={handleTogglePrFilter} className="hidden lg:flex">
+          <ToggleGroup handleChange={handleTogglePrFilter} className="hidden lg:flex" label="Pull Request State">
             <>
               All PRs
               <span className="ml-2 py-0.5 px-1.5 h-fit bg-slate-200 text-slate-500 border rounded-full text-xs font-semibold">
