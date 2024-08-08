@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.11](https://github.com/open-sauced/app/compare/v2.52.0-beta.10...v2.52.0-beta.11) (2024-08-08)
+
+
+### 🍕 Features
+
+* add OSCR tooltip to user page ([#3857](https://github.com/open-sauced/app/issues/3857)) ([fd5fa41](https://github.com/open-sauced/app/commit/fd5fa41225838ef72e3cfd149e07572056839ec5))
+
 ## [2.52.0-beta.10](https://github.com/open-sauced/app/compare/v2.52.0-beta.9...v2.52.0-beta.10) (2024-08-08)
 
 
