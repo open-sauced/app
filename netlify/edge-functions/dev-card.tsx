@@ -5,6 +5,22 @@ import { getLocalAsset, getActivityRatio } from "../og-image-utils.ts";
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
+function getTopPercent(oscr: number) {
+  switch (true) {
+    case oscr >= 250:
+      return 1;
+    case oscr >= 235:
+      return 2;
+    case oscr >= 225:
+      return 3;
+    case oscr >= 215:
+      return 4;
+    case oscr >= 200:
+      return 5;
+    default:
+      return "";
+  }
+}
 function differenceInDays(dateLeft, dateRight) {
   // Convert both dates to milliseconds
   const dateLeftMs = dateLeft.getTime();
@@ -56,6 +72,40 @@ const getPullRequestsHistogramToDays = (pull_requests: any[], range = 30) => {
   }
 
   return days;
+};
+
+const CrownIcon = () => {
+  return (
+    <svg
+      stroke="#fb8405"
+      fill="#fb8405"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      height="20px"
+      width="20px"
+      style={{ marginTop: "-1.5px" }}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M12 6l4 6l5 -4l-2 10h-14l-2 -10l5 4z"></path>
+    </svg>
+  );
+};
+
+const GlobeIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="15"
+      height="15"
+      fill="currentColor"
+      stroke="#fb8405"
+      style={{ marginTop: "-1.45px" }}
+    >
+      <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM5.78 8.75a9.64 9.64 0 0 0 1.363 4.177c.255.426.542.832.857 1.215.245-.296.551-.705.857-1.215A9.64 9.64 0 0 0 10.22 8.75Zm4.44-1.5a9.64 9.64 0 0 0-1.363-4.177c-.307-.51-.612-.919-.857-1.215a9.927 9.927 0 0 0-.857 1.215A9.64 9.64 0 0 0 5.78 7.25Zm-5.944 1.5H1.543a6.507 6.507 0 0 0 4.666 5.5c-.123-.181-.24-.365-.352-.552-.715-1.192-1.437-2.874-1.581-4.948Zm-2.733-1.5h2.733c.144-2.074.866-3.756 1.58-4.948.12-.197.237-.381.353-.552a6.507 6.507 0 0 0-4.666 5.5Zm10.181 1.5c-.144 2.074-.866 3.756-1.58 4.948-.12.197-.237.381-.353.552a6.507 6.507 0 0 0 4.666-5.5Zm2.733-1.5a6.507 6.507 0 0 0-4.666-5.5c.123.181.24.365.353.552.714 1.192 1.436 2.874 1.58 4.948Z"></path>
+    </svg>
+  );
 };
 
 const ArrowTrendingUpIcon = ({ color }: { color: string }) => {
@@ -151,6 +201,8 @@ export default async function handler(req: Request) {
   const activityBgColor = activityText === "high" ? "#dff3df" : activityText === "mid" ? "#fde68a" : "#f1f3f5";
   const activityTextColor = activityText === "high" ? "#297c3b" : activityText === "mid" ? "#b45309" : "#687076";
 
+  const topPercent = oscr === "-" ? "" : getTopPercent(oscr);
+
   return new ImageResponse(
     (
       <div
@@ -218,6 +270,30 @@ export default async function handler(req: Request) {
         >
           {oscr}
         </span>
+        {topPercent === "" ? null : (
+          <span
+            style={{
+              position: "absolute",
+              color: "#fff",
+              top: "446px",
+              left: "327px",
+              width: "148px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              border: "1px solid #fb8405",
+              borderRadius: "9999px",
+              paddingTop: "6px",
+              paddingBottom: "6px",
+              paddingLeft: "8px",
+              paddingRight: "8px",
+              gap: topPercent < 4 ? "5px" : "6px",
+            }}
+          >
+            {topPercent < 4 ? <CrownIcon /> : <GlobeIcon />}
+            <span>In the top {topPercent}%</span>
+          </span>
+        )}
         <span
           style={{
             position: "absolute",
