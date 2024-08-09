@@ -74,7 +74,7 @@ export default async function handler(req: Request) {
   ]);
 
   const userData = await userResponse.json();
-  const { oscr: rawOscr, devstats_updated_at } = userData;
+  const { oscr: rawOscr, devstats_updated_at, bio } = userData;
   const oscr = devstats_updated_at !== "1970-01-01 00:00:00+00Z" ? Math.ceil(rawOscr) : "-";
   const openedPrs = 3;
   const prVelocity = "13d";
@@ -173,16 +173,6 @@ export default async function handler(req: Request) {
             justifyContent: "flex-end",
           }}
         >
-          {/* <img
-            style={{
-              width: 90.5,
-              height: 21,
-            }}
-            src={`${new URL(
-              `/assets/og-images/workspaces/${getActivityRatio(Math.round(activityRatio))}-activity.png`,
-              req.url
-            )}`}
-          /> */}
           <div
             style={{
               display: "flex",
