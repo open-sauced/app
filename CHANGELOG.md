@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.53.0-beta.2](https://github.com/open-sauced/app/compare/v2.53.0-beta.1...v2.53.0-beta.2) (2024-08-09)
+
+
+### 🍕 Features
+
+* implemented the dev card OG image ([#3903](https://github.com/open-sauced/app/issues/3903)) ([5047e1f](https://github.com/open-sauced/app/commit/5047e1f9ae3f90e2ecd71556ae415dfff148ac51))
+
 ## [2.53.0-beta.1](https://github.com/open-sauced/app/compare/v2.52.0...v2.53.0-beta.1) (2024-08-09)
 
 
