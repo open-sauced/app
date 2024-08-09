@@ -65,7 +65,7 @@ export default async function handler(req: Request) {
             left: "629px",
           }}
         />
-        <span style={{ position: "absolute", top: "87px", left: "686px" }}>{username}</span>
+        <span style={{ position: "absolute", top: "87px", left: "686px", color: "#fff" }}>{username}</span>
         <span
           style={{
             position: "absolute",
