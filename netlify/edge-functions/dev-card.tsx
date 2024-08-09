@@ -3,6 +3,7 @@ import { ImageResponse } from "og_edge";
 import type { Config } from "https://edge.netlify.com";
 import { getLocalAsset, getActivityRatio } from "../og-image-utils.ts";
 
+const MAX_ABOUT_LENGTH = 77;
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
 function getTopPercent(oscr: number) {
@@ -196,7 +197,7 @@ export default async function handler(req: Request) {
   const about: string = bio ?? "";
   const oscr = devstats_updated_at !== "1970-01-01 00:00:00+00Z" ? Math.ceil(rawOscr) : "-";
   const prVelocity = getContributorPullRequestVelocity(contributorPRData); // e.g. 13d
-  const activityRatio = 5;
+  const activityRatio = 999;
   const activityText = getActivityRatio(Math.round(activityRatio));
   const activityBgColor = activityText === "high" ? "#dff3df" : activityText === "mid" ? "#fde68a" : "#f1f3f5";
   const activityTextColor = activityText === "high" ? "#297c3b" : activityText === "mid" ? "#b45309" : "#687076";
@@ -250,11 +251,11 @@ export default async function handler(req: Request) {
             left: "641px",
             maxWidth: "285px",
             wordWrap: "break-word",
+            wordBreak: "break-all",
             textAlign: "justify",
-            color: "#fff",
           }}
         >
-          {about.length > 85 ? about.slice(0, 85) + "..." : bio}
+          {about.length > MAX_ABOUT_LENGTH ? about.slice(0, MAX_ABOUT_LENGTH).trim() + "..." : bio}
         </span>
         <span
           style={{
