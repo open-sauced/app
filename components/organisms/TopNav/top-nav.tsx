@@ -44,7 +44,7 @@ const TopNav = () => {
 const Nav = ({ className }: { className?: string }) => {
   const { user } = useSupabaseAuth();
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
+  const userInterest = gitHubUser?.interests?.split(",")[0] || "javascript";
   const router = useRouter();
 
   const explorePageUrlPattern = /^(\/explore\/topic).*\/(dashboard|reports|contributors|activity).*/g;
