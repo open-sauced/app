@@ -129,7 +129,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
 
-  const ogImage = cardImageUrl(username, { size: "490" });
+  const ogImage = cardImageUrl(username);
 
   /**
    * for each of the cards we need to load additional data async because it's slow to block page load
