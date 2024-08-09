@@ -43,7 +43,7 @@ const AddToWorkspaceDrawer = dynamic(() => import("components/Repositories/AddTo
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { org, repo } = context.params ?? { org: "", repo: "" };
   const range = (context.query.range ? Number(context.query.range) : 30) as Range;
-
+  const display = (context.query.display ?? "grid") as ToggleValue;
   const { data: repoData, error } = await fetchApiData<DbRepo>({
     path: `repos/${org}/${repo}/info`,
   });
@@ -66,7 +66,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   context.res.setHeader("Netlify-Vary", "query=range");
   context.res.setHeader("Cache-Tag", `repo-pages,repo-page-${repoData.id}`);
 
-  return { props: { repoData, ogImageUrl } };
+  return { props: { repoData, ogImageUrl, display } };
 }
 
 type Range = 30 | 7 | 90 | 180 | 360;
@@ -74,16 +74,17 @@ type Range = 30 | 7 | 90 | 180 | 360;
 interface RepoPageProps {
   repoData: DbRepoInfo;
   ogImageUrl: string;
+  display: ToggleValue;
 }
 
-export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPageProps) {
+export default function RepoPageContributorsTab({ repoData, ogImageUrl, display }: RepoPageProps) {
   const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const { toast } = useToast();
   const posthog = usePostHog();
   const { session } = useSession(true);
   const isMobile = useMediaQuery("(max-width: 576px)");
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
-  const [contributorsView, setContributorsView] = useState<ToggleValue>("grid");
+  const [contributorsView, setContributorsView] = useState<ToggleValue>(display);
   const tabList = [
     { name: "Overview", path: "" },
     { name: "Contributors", path: "contributors" },
@@ -221,7 +222,10 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl }: RepoPa
                 <h2 className="text-lg font-semibold">Contributors</h2>
                 <LayoutToggle
                   value={contributorsView}
-                  onChange={() => setContributorsView((prev) => (prev === "list" ? "grid" : "list"))}
+                  onChange={() => {
+                    setContributorsView((prev) => (prev === "list" ? "grid" : "list"));
+                    setQueryParams({ display: contributorsView === "list" ? "grid" : "list" });
+                  }}
                 />
               </div>
               {contributorsView === "grid" && (
