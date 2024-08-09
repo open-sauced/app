@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.53.0-beta.1](https://github.com/open-sauced/app/compare/v2.52.0...v2.53.0-beta.1) (2024-08-09)
+
+
+### 🍕 Features
+
+* add display query param for toggling repo contributors list view ([#3907](https://github.com/open-sauced/app/issues/3907)) ([d97c8f5](https://github.com/open-sauced/app/commit/d97c8f5d82218882b74a5d3bfbc3167901afad14))
+
 ## [2.52.0](https://github.com/open-sauced/app/compare/v2.51.0...v2.52.0) (2024-08-09)
 
 
