@@ -67,7 +67,7 @@ export default function ContributorConfidenceChart({
         </a>
       </header>
 
-      {!isError && (isLoading || !contributorConfidence) ? (
+      {!isError && (isLoading || contributorConfidence === undefined) ? (
         <SkeletonWrapper width={300} height={100} />
       ) : (
         <section className="flex justify-between w-full gap-2 lg:flex-col xl:flex-row h-fit max-h-24 lg:max-h-full xl:max-h-24">

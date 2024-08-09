@@ -23,20 +23,32 @@ import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 
 interface ContributorCardProps {
   className?: string;
-  contributor: DbPRContributor;
+  contributor: DbPRContributor | DbRepoContributor;
   topic: string;
   repositories?: number[];
   range?: string;
+  // whether to show the OSCR rating or the login button
   showOscr: boolean;
+  // exclude OSCR rating from the card
+  excludeOscr?: boolean;
 }
 
-const ContributorCard = ({ className, contributor, topic, repositories, range, showOscr }: ContributorCardProps) => {
+const ContributorCard = ({
+  className,
+  contributor,
+  topic,
+  repositories,
+  range,
+  showOscr,
+  excludeOscr = false,
+}: ContributorCardProps) => {
+  const username = "author_login" in contributor ? contributor.author_login : contributor.login;
   const [showPRs, setShowPRs] = useState(false);
-  const githubAvatar = getAvatarByUsername(contributor.author_login);
-  const { repoList, meta } = useContributorPullRequestsChart(contributor.author_login, topic, repositories, range);
-  const languageList = useContributorLanguages(contributor.author_login);
+  const githubAvatar = getAvatarByUsername(username);
+  const { repoList, meta } = useContributorPullRequestsChart(username, topic, repositories, range);
+  const languageList = useContributorLanguages(username);
   const { data: user } = useFetchUser(
-    contributor.author_login,
+    username,
     {
       revalidateOnFocus: false,
     },
@@ -49,41 +61,46 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
     <Card className={className && className}>
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between w-full gap-2">
-          <Link href={`/u/${contributor.author_login}`} as={`/u/${contributor.author_login}`}>
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+            <Link href={`/u/${username}`} as={`/u/${username}`}>
               <Avatar size={40} avatarURL={githubAvatar ? githubAvatar : undefined} />
-              <div>
-                <div className="flex gap-2">
-                  <Text className="!text-base !text-black">{contributor.author_login}</Text>
-                  {contributor.oscr ? (
-                    <OscrPill
-                      rating={contributor.oscr}
-                      hideRating={!showOscr}
-                      calculated={contributor.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
-                    />
-                  ) : null}
+            </Link>
+            <div>
+              <div className="flex gap-2">
+                <Link href={`/u/${username}`} as={`/u/${username}`}>
+                  <Text className="!text-base !text-black">{username}</Text>
+                </Link>
+                {excludeOscr ? null : (
+                  <OscrPill
+                    rating={contributor.oscr}
+                    hideRating={!showOscr}
+                    calculated={contributor.devstats_updated_at !== INITIAL_DEV_STATS_TIMESTAMP}
+                  />
+                )}
+              </div>
+              <div className="flex gap-2 text-xs mt-1">
+                <div className="flex items-center gap-1 text-xs text-light-slate-11">
+                  {meta.itemCount !== undefined && (
+                    <>
+                      <Tooltip content="PRs merged">
+                        <Icon size={12} alt="PRs merged" IconImage={ForkIcon} />
+                      </Tooltip>
+                      {meta.itemCount} PR
+                      {meta.itemCount === 1 ? "" : "s"}
+                    </>
+                  )}
                 </div>
-                <div className="flex gap-2 text-xs mt-1">
-                  <div className="flex items-center gap-1 text-xs text-light-slate-11">
-                    {meta.itemCount !== undefined && (
-                      <>
-                        <Tooltip content="PRs merged">
-                          <Icon size={12} alt="PRs merged" IconImage={ForkIcon} />
-                        </Tooltip>
-                        {meta.itemCount} PR
-                        {meta.itemCount === 1 ? "" : "s"}
-                      </>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-1 text-light-slate-11">
-                    <Tooltip content="First commit date">
-                      <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} /> {contributor.updated_at}
-                    </Tooltip>
-                  </div>
+                <div className="flex items-center gap-1 text-light-slate-11">
+                  <Tooltip content="First commit date">
+                    <Icon size={12} alt="First commit date" IconImage={FirstPRIcon} />{" "}
+                    <time aria-label="Last time contributor data was updated at" dateTime={contributor.updated_at}>
+                      {new Date(contributor.updated_at).toLocaleDateString()}
+                    </time>
+                  </Tooltip>
                 </div>
               </div>
             </div>
-          </Link>
+          </div>
           <div className="flex flex-col items-end gap-2">
             <CardHorizontalBarChart withDescription={false} languageList={languageList} />
             {!!isMaintainer && <Badge text="maintainer" />}
@@ -91,7 +108,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
         </div>
         <div className="h-32">
           <CardLineChart
-            contributor={contributor.author_login}
+            contributor={username}
             repoIds={repositories}
             range={Number(range ?? 30)}
             className="max-h-36"
@@ -100,12 +117,7 @@ const ContributorCard = ({ className, contributor, topic, repositories, range, s
         <CardRepoList repoList={repoList} total={repoList.length} />
 
         {showPRs ? (
-          <PullRequestTable
-            contributor={contributor.author_login}
-            topic={topic}
-            repositories={repositories}
-            range={range}
-          />
+          <PullRequestTable contributor={username} topic={topic} repositories={repositories} range={range} />
         ) : null}
 
         <div className="flex justify-center w-full">

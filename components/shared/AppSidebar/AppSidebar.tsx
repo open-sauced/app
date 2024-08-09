@@ -87,7 +87,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
   });
 
   const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterest = gitHubUser?.interests.split(",")[0] || "javascript";
+  const userInterest = gitHubUser?.interests?.split(",")[0] || "javascript";
 
   return (
     // TODO: get rid of the z-index. There is grid content like the avatars and paged data text that bleed through the sidebar atm.

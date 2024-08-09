@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import cntl from "cntl";
+import { usePostHog } from "posthog-js/react";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -18,7 +19,7 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import { isValidUrlSlug } from "lib/utils/url-validators";
-import TwitterIcon from "../../../img/icons/social-twitter.svg";
+import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
 const ADDITIONAL_PROFILES_TO_LOAD = [
@@ -26,7 +27,7 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
   "nickytonline",
   "brandonroberts",
   "bekahhw",
-  "ogdev-01",
+  "zeucapua",
   "jpmcb",
   "gr2m",
   "joshuakgoldberg",
@@ -255,12 +256,13 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
 export default Card;
 
 function SocialButtons({ username, summary }: { username: string; summary: string }) {
+  const posthog = usePostHog();
   const icons = [
     {
       name: "Twitter",
       src: TwitterIcon.src,
       url: twitterCardShareUrl(username),
-      color: "#3eabfa",
+      color: "#000",
     },
     {
       name: "LinkedIn",
@@ -274,6 +276,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
    rounded-full
    w-10
    h-10
+   p-2.5
    grid
    place-content-center
    border
@@ -292,6 +295,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
             className={linkStyle}
             style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
+            onClick={() => posthog.capture("DevCard share link clicked", { platform: icon.name, username })}
           >
             <Image src={icon.src} alt={icon.name} width={24} height={24} />
           </a>

@@ -193,6 +193,7 @@ interface DbPRContributor {
   readonly updated_at: string;
   readonly user_id: number;
   readonly devstats_updated_at: string;
+  readonly updated_at: string;
 }
 
 interface DbFollowUser {
@@ -337,7 +338,7 @@ interface DbUser {
   readonly location: string;
   readonly display_local_time: boolean;
   readonly name: string;
-  readonly interests: string;
+  readonly interests?: string;
   readonly receive_collaboration: boolean;
   readonly display_email: boolean;
   readonly timezone: string;
@@ -522,6 +523,7 @@ interface DbRepoContributor {
   pr_review_comments: number;
   total_contributions: number;
   devstats_updated_at: string;
+  updated_at: string;
 }
 
 interface DbListContributorStat {
