@@ -16,7 +16,7 @@ import { getRepoList } from "lib/hooks/useRepoList";
 import { DevCardProps } from "components/molecules/DevCard/dev-card";
 import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { cardImageUrl, linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/urls";
+import { linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import { isValidUrlSlug } from "lib/utils/url-validators";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";

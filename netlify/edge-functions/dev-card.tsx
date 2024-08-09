@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageResponse } from "og_edge";
 import type { Config } from "https://edge.netlify.com";
-import { getLocalAsset, getActivityRatio } from "../og-image-utils.ts";
+import { getLocalAsset } from "../og-image-utils.ts";
 
 const MAX_ABOUT_LENGTH = 77;
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
