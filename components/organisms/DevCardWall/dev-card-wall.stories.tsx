@@ -1,11 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { STUB_DEV_CARDS as cards } from "../DevCardCarousel/stubData";
 import DevCardWall from "./dev-card-wall";
-
-const cards = Array.from({ length: 10 }, (_, i) => ({
-  username: `test${i}`,
-  name: "test",
-  avatarURL: "https://avatars.githubusercontent.com/u/54212428?v=4",
-}));
 
 export default {
   title: "Design System/Organisms/DevCard Wall",

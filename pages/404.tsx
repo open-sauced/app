@@ -1,27 +1,30 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { differenceInDays } from "date-fns";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import { useFetchTopContributors } from "lib/hooks/useFetchTopContributors";
 import DevCardWall from "components/organisms/DevCardWall/dev-card-wall";
-import { DevCardProps } from "components/molecules/DevCard/dev-card";
-import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
-import { getRepoList } from "lib/hooks/useRepoList";
-import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
-import getPercent from "lib/utils/get-percent";
-import { getAvatarByUsername } from "lib/utils/github";
 import BubbleBG from "../img/bubble-bg.svg";
+import { UserDevStats } from "./u/[username]/card";
+
+async function fetchUserData(username: string) {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+  return await response.json() as UserDevStats;
+};
 
 export default function Custom404() {
   const { data } = useFetchTopContributors({ limit: 20 });
-  const [cards, setCards] = useState<DevCardProps[]>([]);
+  const [cards, setCards] = useState<UserDevStats[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [initialCardIndex, setInitialCardIndex] = useState<number | undefined>();
 
   useEffect(() => {
     async function loadCards() {
-      const cardData = await Promise.all(data.map((user) => getAllCardData(user.login)));
+      const cardData = await Promise.all(data.map((user) => fetchUserData(user.login)));
       // randomize cards
       cardData.sort(() => Math.random() - 0.5);
       setCards(cardData);
@@ -76,58 +79,3 @@ export default function Custom404() {
   );
 }
 
-async function getAllCardData(username: string): Promise<DevCardProps> {
-  const [basicData, contributorData] = await Promise.all([
-    fetchBasicCardData(username),
-    fetchContributorCardData(username),
-  ]);
-
-  return {
-    ...basicData,
-    ...contributorData,
-    isLoading: false,
-  };
-}
-
-async function fetchUserData(username: string) {
-  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
-    headers: {
-      accept: "application/json",
-    },
-  });
-
-  return (await req.json()) as DbUser;
-}
-
-async function fetchBasicCardData(username: string): Promise<DevCardProps> {
-  const user = await fetchUserData(username);
-  const githubAvatar = getAvatarByUsername(username, 300);
-
-  const ageInDays = user.first_opened_pr_at ? differenceInDays(new Date(), new Date(user.first_opened_pr_at)) : 0;
-
-  return {
-    username,
-    avatarURL: githubAvatar,
-    name: user.name || username,
-    bio: user.bio,
-    age: ageInDays,
-  };
-}
-
-async function fetchContributorCardData(
-  username: string
-): Promise<Pick<DevCardProps, "prs" | "prVelocity" | "prMergePercentage" | "repos">> {
-  const { data, meta } = await fetchContributorPRs(username, undefined, "*", [], 100);
-  const prs = data.length;
-  const prVelocity = getContributorPullRequestVelocity(data);
-  const prTotal = meta.itemCount;
-  const mergedPrs = data.filter((prData) => prData.pr_is_merged);
-  const prMergePercentage = getPercent(prTotal, mergedPrs.length || 0);
-  const repos = getRepoList(Array.from(new Set(data.map((prData) => prData.repo_name))).join(",")).length;
-  return {
-    prs,
-    prVelocity,
-    prMergePercentage,
-    repos,
-  };
-}
