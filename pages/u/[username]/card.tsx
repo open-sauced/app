@@ -10,6 +10,7 @@ import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
+import { isValidUrlSlug } from "lib/utils/url-validators";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -29,13 +30,18 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
 export type UserDevStats = DbUser & DbListContributorStat;
 
 async function fetchUserData(username: string) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  return await response.json() as UserDevStats;
-};
+  try {
+    const validUsername = isValidUrlSlug(username);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${validUsername}/devstats`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return (await response.json()) as UserDevStats;
+  } catch (e) {
+    throw Error(`Invalid username`);
+  }
+}
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const username = context?.params?.username as string | undefined;
@@ -51,12 +57,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       username,
-      cards
+      cards,
     },
   };
-};
+}
 
-export default function CardPage({ username, cards }: { username: string, cards: UserDevStats[] }) {
+export default function CardPage({ username, cards }: { username: string; cards: UserDevStats[] }) {
   const { user: loggedInUser } = useSupabaseAuth();
   const [selectedUserName, setSelectedUserName] = useState<string>(username);
   const iframeTransition = useTransition(selectedUserName, {
@@ -169,7 +175,7 @@ export default function CardPage({ username, cards }: { username: string, cards:
       </main>
     </FullHeightContainer>
   );
-};
+}
 
 function SocialButtons({ username, summary }: { username: string; summary: string }) {
   const posthog = usePostHog();
