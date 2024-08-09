@@ -1,25 +1,9 @@
 import React from "react";
 import { ImageResponse } from "og_edge";
 import type { Config } from "https://edge.netlify.com";
-import { getLocalAsset, getOrgUsernameAvatar, humanizeNumber } from "../og-image-utils.ts";
+import { getLocalAsset, getOrgUsernameAvatar, humanizeNumber, getActivityRatio } from "../og-image-utils.ts";
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
-
-const getActivityRatio = (total?: number) => {
-  if (total === undefined) {
-    return "-";
-  }
-
-  if (total > 7) {
-    return "high";
-  }
-
-  if (total >= 4 && total <= 7) {
-    return "mid";
-  }
-
-  return "low";
-};
 
 export default async function handler(req: Request) {
   const { searchParams, pathname } = new URL(req.url);

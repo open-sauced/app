@@ -15,3 +15,19 @@ export function getLocalAsset(url: URL): Promise<ArrayBuffer> {
 export function getOrgUsernameAvatar(username: string, size = 25.2) {
   return `https://www.github.com/${username}.png?size=${size}`;
 }
+
+export const getActivityRatio = (total?: number) => {
+  if (total === undefined) {
+    return "-";
+  }
+
+  if (total > 7) {
+    return "high";
+  }
+
+  if (total >= 4 && total <= 7) {
+    return "mid";
+  }
+
+  return "low";
+};
