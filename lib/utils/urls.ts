@@ -29,9 +29,6 @@ export const isValidUrl = (url: string) => {
  */
 export const cardPageUrl = (username: string) => siteUrl(`user/${username}/card`);
 
-export const cardImageUrl = (username: string, opts: { size?: string } = {}) =>
-  siteUrl(`og-images/dev-card`, { username, ...opts });
-
 export const twitterCardShareUrl = (username: string) => {
   const url = new URL("https://twitter.com/intent/tweet");
   url.searchParams.append("text", "Check out my open-source contributions card!");

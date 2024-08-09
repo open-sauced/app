@@ -197,8 +197,7 @@ export default async function handler(req: Request) {
   const about: string = bio ?? "";
   const oscr = devstats_updated_at !== "1970-01-01 00:00:00+00Z" ? Math.ceil(rawOscr) : "-";
   const prVelocity = getContributorPullRequestVelocity(contributorPRData); // e.g. 13d
-  const activityRatio = 999;
-  const activityText = getActivityRatio(Math.round(activityRatio));
+  const activityText = openedPrs > 4 ? "high" : "mid";
   const activityBgColor = activityText === "high" ? "#dff3df" : activityText === "mid" ? "#fde68a" : "#f1f3f5";
   const activityTextColor = activityText === "high" ? "#297c3b" : activityText === "mid" ? "#b45309" : "#687076";
 
@@ -322,7 +321,7 @@ export default async function handler(req: Request) {
         <div
           style={{
             position: "absolute",
-            top: "254px",
+            top: "251px",
             left: "778px",
             width: "148px",
             display: "flex",

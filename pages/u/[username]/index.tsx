@@ -16,6 +16,7 @@ import ContributorProfilePage from "components/organisms/ContributorProfilePage/
 import { isValidUrlSlug } from "lib/utils/url-validators";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import useSession from "lib/hooks/useSession";
+import { siteUrl } from "lib/utils/urls";
 
 // A quick fix to the hydration issue. Should be replaced with a real solution.
 // Slows down the page's initial client rendering as the component won't be loaded on the server.
@@ -121,7 +122,7 @@ export const getServerSideProps = async (context: UserSSRPropsContext) => {
   }
 
   const userData = (await req.json()) as DbUser;
-  const ogImage = `${process.env.NEXT_PUBLIC_OPENGRAPH_URL}/users/${username}`;
+  const ogImage = siteUrl(`og-images/dev-card`, { username });
 
   // Cache page for 60 seconds
   context.res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");

@@ -16,7 +16,7 @@ import { getRepoList } from "lib/hooks/useRepoList";
 import { DevCardProps } from "components/molecules/DevCard/dev-card";
 import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { cardImageUrl, linkedinCardShareUrl, twitterCardShareUrl } from "lib/utils/urls";
+import { cardImageUrl, linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import { isValidUrlSlug } from "lib/utils/url-validators";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";
@@ -129,8 +129,6 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
 
-  const ogImage = cardImageUrl(username);
-
   /**
    * for each of the cards we need to load additional data async because it's slow to block page load
    * to fetch all of them
@@ -159,7 +157,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
       <SEO
         title={`${username} | OpenSauced`}
         description={socialSummary}
-        image={ogImage}
+        image={siteUrl(`og-images/dev-card`, { username })}
         twitterCard="summary_large_image"
       />
       <main
