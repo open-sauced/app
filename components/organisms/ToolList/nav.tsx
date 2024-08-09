@@ -1,9 +1,7 @@
 import React from "react";
-
 import { useRouter } from "next/router";
-import { setQueryParams } from "lib/utils/query-params";
-
 import ComponentDateFilter from "components/molecules/ComponentDateFilter/component-date-filter";
+import { setQueryParams } from "lib/utils/query-params";
 import NavItem from "./nav-item";
 
 type ToolListArray = {
@@ -70,7 +68,7 @@ const Nav: React.FC<NavProps> = ({
             data-state={selectedTool === tool.name.toLowerCase() ? "active" : "inactive"}
             tabIndex={-1}
             key={index}
-            className={`tool-list-item border-b-2 transition-all ease-in-out ${
+            className={`tool-list-item border-b-2 ml-2 transition-all ease-in-out ${
               (selectedTool as string).toLowerCase() === tool.name.toLowerCase()
                 ? "border-orange-500"
                 : "border-transparent hover:border-light-slate-8"
