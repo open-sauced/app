@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0-beta.12](https://github.com/open-sauced/app/compare/v2.52.0-beta.11...v2.52.0-beta.12) (2024-08-09)
+
+
+### 🐛 Bug Fixes
+
+* show loading indicator for contributor confidence if undefined ([#3894](https://github.com/open-sauced/app/issues/3894)) ([3032a6a](https://github.com/open-sauced/app/commit/3032a6a6cd0ec9acfe04fc98ee900ef7b989979b))
+* update profile interests type to be optional and add guards ([#3890](https://github.com/open-sauced/app/issues/3890)) ([2e62773](https://github.com/open-sauced/app/commit/2e627731f6481381b8d80d1e129275e503fbc5f4))
+
 ## [2.52.0-beta.11](https://github.com/open-sauced/app/compare/v2.52.0-beta.10...v2.52.0-beta.11) (2024-08-08)
 
 
