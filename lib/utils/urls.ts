@@ -30,7 +30,7 @@ export const isValidUrl = (url: string) => {
 export const cardPageUrl = (username: string) => siteUrl(`user/${username}/card`);
 
 export const cardImageUrl = (username: string, opts: { size?: string } = {}) =>
-  siteUrl(`api/card`, { username, ...opts });
+  siteUrl(`og-images/dev-card`, { username, ...opts });
 
 export const twitterCardShareUrl = (username: string) => {
   const url = new URL("https://twitter.com/intent/tweet");
