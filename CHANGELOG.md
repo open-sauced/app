@@ -5,6 +5,30 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.52.0](https://github.com/open-sauced/app/compare/v2.51.0...v2.52.0) (2024-08-09)
+
+
+### 🍕 Features
+
+* add OSCR tooltip to user page ([#3857](https://github.com/open-sauced/app/issues/3857)) ([fd5fa41](https://github.com/open-sauced/app/commit/fd5fa41225838ef72e3cfd149e07572056839ec5))
+* add OSCR's location to PostHog capture ([#3895](https://github.com/open-sauced/app/issues/3895)) ([bbf8ee5](https://github.com/open-sauced/app/commit/bbf8ee5b139d3cc8e62c11184051b12f27cf4bcf))
+* now OSCR appears on repository page contributor grid view ([#3884](https://github.com/open-sauced/app/issues/3884)) ([d7163d8](https://github.com/open-sauced/app/commit/d7163d89056bc536056ba3c1cd0f07b1471e0a00))
+* repository page contributor graph defaults to enhance by default now ([#3880](https://github.com/open-sauced/app/issues/3880)) ([90948a5](https://github.com/open-sauced/app/commit/90948a5fce57e13b9e5de01cfd720289271de2ec))
+* tracking DevCard analytics ([#3874](https://github.com/open-sauced/app/issues/3874)) ([583e42a](https://github.com/open-sauced/app/commit/583e42ab6957448de750309e59de853e1d2a7d99))
+
+
+### 🐛 Bug Fixes
+
+* calculate avergage per week for ross contributors greater than 0 ([#3893](https://github.com/open-sauced/app/issues/3893)) ([a8859c5](https://github.com/open-sauced/app/commit/a8859c5bcd2f020f4aac6a57c4924b3a4da9a7d9))
+* excluded OSCR from old contributor card list component ([#3901](https://github.com/open-sauced/app/issues/3901)) ([446f27c](https://github.com/open-sauced/app/commit/446f27c7180bca08f5def27b673fc898c4c5c7d6))
+* now layout toggles are radio buttons ([#3888](https://github.com/open-sauced/app/issues/3888)) ([efba1f8](https://github.com/open-sauced/app/commit/efba1f806f8bf093ceb996f6b8ba51d817df3cb9))
+* now the contributor card user profile link no longer affects the OSCR login flow ([#3898](https://github.com/open-sauced/app/issues/3898)) ([7405660](https://github.com/open-sauced/app/commit/7405660ade55e4efaf090836389473ca9e93c201))
+* now the contributor scatter chart toggle group has a label ([#3882](https://github.com/open-sauced/app/issues/3882)) ([adf5c6c](https://github.com/open-sauced/app/commit/adf5c6cec33132ac5d7128b452546983519df249))
+* Removes NewsletterForm usage in favor of sole link to newsletter ([#3897](https://github.com/open-sauced/app/issues/3897)) ([61951ff](https://github.com/open-sauced/app/commit/61951ffe7c01ff7a9079b98422cacd235d0c504f))
+* repository insight limited features ([#3876](https://github.com/open-sauced/app/issues/3876)) ([5ef6bd6](https://github.com/open-sauced/app/commit/5ef6bd6ed37d330e684b7f884f1f434b4df2580b))
+* show loading indicator for contributor confidence if undefined ([#3894](https://github.com/open-sauced/app/issues/3894)) ([3032a6a](https://github.com/open-sauced/app/commit/3032a6a6cd0ec9acfe04fc98ee900ef7b989979b))
+* update profile interests type to be optional and add guards ([#3890](https://github.com/open-sauced/app/issues/3890)) ([2e62773](https://github.com/open-sauced/app/commit/2e627731f6481381b8d80d1e129275e503fbc5f4))
+
 ## [2.52.0-beta.12](https://github.com/open-sauced/app/compare/v2.52.0-beta.11...v2.52.0-beta.12) (2024-08-09)
 
 
