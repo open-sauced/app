@@ -84,7 +84,6 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl, display 
   const { session } = useSession(true);
   const isMobile = useMediaQuery("(max-width: 576px)");
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
-  const [contributorsView, setContributorsView] = useState<ToggleValue>(display);
   const tabList = [
     { name: "Overview", path: "" },
     { name: "Contributors", path: "contributors" },
@@ -221,14 +220,13 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl, display 
               <div className="flex w-full justify-between">
                 <h2 className="text-lg font-semibold">Contributors</h2>
                 <LayoutToggle
-                  value={contributorsView}
+                  value={display}
                   onChange={() => {
-                    setContributorsView((prev) => (prev === "list" ? "grid" : "list"));
-                    setQueryParams({ display: contributorsView === "list" ? "grid" : "list" });
+                    setQueryParams({ display: display === "list" ? "grid" : "list" });
                   }}
                 />
               </div>
-              {contributorsView === "grid" && (
+              {display === "grid" && (
                 <ContributorsGrid
                   contributors={contributors}
                   meta={meta}
@@ -239,7 +237,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl, display 
                   repositoryIds={[repoData.id]}
                 />
               )}
-              {contributorsView === "list" && (
+              {display === "list" && (
                 <ContributorsTable
                   contributors={contributors}
                   meta={meta}
