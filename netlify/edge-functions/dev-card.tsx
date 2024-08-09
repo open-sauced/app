@@ -75,6 +75,7 @@ export default async function handler(req: Request) {
 
   const userData = await userResponse.json();
   const { oscr: rawOscr, devstats_updated_at, bio } = userData;
+  const about: string = bio ?? "";
   const oscr = devstats_updated_at !== "1970-01-01 00:00:00+00Z" ? Math.ceil(rawOscr) : "-";
   const openedPrs = 3;
   const prVelocity = "13d";
@@ -111,7 +112,6 @@ export default async function handler(req: Request) {
             left: "324px",
           }}
         />
-
         <img
           src={`https://www.github.com/${username}.png?size=49`}
           style={{
@@ -124,6 +124,19 @@ export default async function handler(req: Request) {
           }}
         />
         <span style={{ position: "absolute", top: "87px", left: "686px", color: "#fff" }}>{username}</span>
+        <span
+          style={{
+            position: "absolute",
+            top: "137px",
+            left: "641px",
+            maxWidth: "285px",
+            wordWrap: "break-word",
+            textAlign: "justify",
+            color: "#fff",
+          }}
+        >
+          {about.length > 85 ? about.slice(0, 85) + "..." : bio}
+        </span>
         <span
           style={{
             position: "absolute",
