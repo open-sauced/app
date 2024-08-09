@@ -2,16 +2,26 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Tilt from "react-parallax-tilt";
 import { FiGlobe } from "react-icons/fi";
+import { PiCrownSimpleFill } from "react-icons/pi";
+import { HiArrowNarrowRight, HiTrendingDown, HiTrendingUp } from "react-icons/hi";
 import Button from "components/shared/Button/button";
 import openSaucedImg from "img/openSauced-icon.png";
 import { getRelativeDays } from "lib/utils/date-utils";
 import { getAvatarByUsername } from "lib/utils/github";
 import { UserDevStats } from "pages/u/[username]/card";
-import DevCardGradient from "../../../public/devcard-gradient.png";
 import Pill from "components/atoms/Pill/pill";
-import { HiArrowNarrowRight, HiTrendingDown, HiTrendingUp } from "react-icons/hi";
+import DevCardGradient from "../../../public/devcard-gradient.png";
 
-export default function DevCard(props: { user: UserDevStats | undefined, isFlipped?: boolean, isInteractive: boolean, onFlip?: () => void }) {
+export type DevCardProps = {
+ user: UserDevStats | undefined;
+ isFlipped?: boolean;
+ isInteractive?: boolean;
+ hideProfileButton?: boolean;
+ isLoading?: boolean;
+ onFlip?: () => void;
+}
+
+export default function DevCard(props: DevCardProps) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
   const isInteractive = props.isInteractive ?? true;
 
@@ -42,6 +52,14 @@ export default function DevCard(props: { user: UserDevStats | undefined, isFlipp
     background: "#11181c linear-gradient(152.13deg, rgba(217, 217, 217, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%)",
     gridArea: "1/1",
     border: "2px",
+  };
+
+  const getValueBasedOnCount = ({ low, med, high }: { low: any; med: any; high: any }) => {
+    const recent_pull_requests_count = props.user?.recent_pull_requests_count || 0;
+
+    return recent_pull_requests_count < 7 ? low
+      : recent_pull_requests_count< 28 ? med
+      : high;
   };
 
   return (
@@ -108,10 +126,9 @@ export default function DevCard(props: { user: UserDevStats | undefined, isFlipp
             </div>
 
             {/** 'Ranking' Badge **/}
-            <div className="flex items-center gap-2 px-2 py-1 border border-amber-500 rounded-full">
-              <FiGlobe className="text-lg text-orange-500" />
-              <p className="text-xs font-medium">In the top 3%</p>
-            </div>
+            { props.user?.oscr && props.user?.oscr > 200 &&
+              <RankingBadge oscr={props.user.oscr} />
+            }
           </div>
         </div>
 
@@ -149,7 +166,7 @@ export default function DevCard(props: { user: UserDevStats | undefined, isFlipp
               <Separator />
               <div className="flex justify-between items-center">
                 <p>Activity</p>
-                <ActivityPill recent_pull_requests_count={props.user?.recent_pull_requests_count || 0} />
+                <ActivityBadge getValueBasedOnCount={getValueBasedOnCount} />
               </div>
               <Separator />
               <div className="flex justify-between">
@@ -165,10 +182,12 @@ export default function DevCard(props: { user: UserDevStats | undefined, isFlipp
             </div>
 
             {/** Footer **/}
-            <div className="flex flex-col gap-[0.25] w-full">
-              <Button variant="primary" href={`/u/${props.user?.login}`} className="w-full justify-center">
-                View Profile
-              </Button>
+            <div className="flex flex-col gap-[0.25] w-full self-end">
+              {!props.hideProfileButton &&
+                <Button variant="primary" href={`/u/${props.user?.login}`} className="w-full justify-center">
+                  View Profile
+                </Button>
+              }
               <div className="flex justify-center my-2">
                 <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
                 <p className={"font-semibold text-white ml-1"} style={{ fontSize: "8px" }}>
@@ -192,13 +211,9 @@ function Separator() {
   );
 }
 
-function ActivityPill({ recent_pull_requests_count }: { recent_pull_requests_count: number }) {
-
-  const getValueBasedOnCount = ({ low, med, high }: { low: any; med: any; high: any }) => {
-    return recent_pull_requests_count < 7 ? low
-      : recent_pull_requests_count< 28 ? med
-      : high;
-  };
+function ActivityBadge({ getValueBasedOnCount }: {
+  getValueBasedOnCount: ({ low, med, high }: { low: any, med: any, high: any }) => any
+}) {
 
   const status = getValueBasedOnCount({
     low: "Low",
@@ -220,5 +235,34 @@ function ActivityPill({ recent_pull_requests_count }: { recent_pull_requests_cou
 
   return (
     <Pill text={status} icon={icon} color={color} size="xsmall" />
+  );
+}
+
+function RankingBadge({ oscr }: { oscr: number }) {
+  const getValueBasedOnOscr = ({ five, four, three, two, one }:
+    { five: any, four: any, three: any, two: any, one: any }
+  ) => {
+    return oscr > 250 ? one
+      : oscr > 235 ? two
+      : oscr > 225 ? three
+      : oscr > 215 ? four
+      : oscr > 200 ? five
+      : null;
+  };
+
+  const percentage = getValueBasedOnOscr({ five: 5, four: 4, three: 3, two: 2, one: 1 });
+  const icon = getValueBasedOnOscr({
+    five: <FiGlobe className="text-lg text-orange-500" />,
+    four: <FiGlobe className="text-lg text-orange-500" />,
+    three: <PiCrownSimpleFill className="text-lg text-orange-500" />,
+    two: <PiCrownSimpleFill className="text-lg text-orange-500" />,
+    one: <PiCrownSimpleFill className="text-lg text-orange-500" />,
+  });
+
+  return (
+    <div className="flex items-center gap-2 px-2 py-1 border border-amber-500 rounded-full">
+      {icon}
+      <p className="text-xs font-medium">In the top {percentage}%</p>
+    </div>
   );
 }
