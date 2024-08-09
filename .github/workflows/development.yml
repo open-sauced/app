@@ -1,6 +1,7 @@
 name: "Development"
 
 on:
+  merge_group:
   pull_request:
     types:
       - opened
