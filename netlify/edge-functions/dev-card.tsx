@@ -5,6 +5,59 @@ import { getLocalAsset, getActivityRatio } from "../og-image-utils.ts";
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
+function differenceInDays(dateLeft, dateRight) {
+  // Convert both dates to milliseconds
+  const dateLeftMs = dateLeft.getTime();
+  const dateRightMs = dateRight.getTime();
+
+  // Calculate the difference in milliseconds
+  const differenceMs = Math.abs(dateLeftMs - dateRightMs);
+
+  // Convert the difference to days
+  const days = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
+
+  return days;
+}
+
+const getContributorPullRequestVelocity = (repositoryPullRequests: any[]) => {
+  const mergedPRs = repositoryPullRequests.filter((prState) => prState.pr_is_merged);
+
+  const totalDays = mergedPRs.reduce((total, event) => {
+    const daysBetween = differenceInDays(new Date(event.pr_closed_at), new Date(event.pr_created_at));
+    return (total += daysBetween);
+  }, 0);
+
+  const averageVelocity = mergedPRs.length > 0 ? totalDays / mergedPRs.length : undefined;
+
+  if (averageVelocity && averageVelocity < 1) {
+    return 1;
+  }
+
+  return averageVelocity ? Math.floor(averageVelocity) : averageVelocity;
+};
+
+const getPullRequestsHistogramToDays = (pull_requests: any[], range = 30) => {
+  const graphDays = pull_requests.reduce((days: { [name: string]: number }, curr: any) => {
+    const day = differenceInDays(new Date(), new Date(curr.bucket));
+
+    if (days[day]) {
+      days[day] += curr.prs_count;
+    } else {
+      days[day] = curr.prs_count;
+    }
+
+    return days;
+  }, {});
+
+  const days: any[] = [];
+
+  for (let d = range; d >= 0; d--) {
+    days.push({ x: d, y: graphDays[d] || 0 });
+  }
+
+  return days;
+};
+
 const ArrowTrendingUpIcon = ({ color }: { color: string }) => {
   return (
     <svg
@@ -64,21 +117,35 @@ export default async function handler(req: Request) {
   const { searchParams } = new URL(req.url);
   const username = searchParams.get("username");
 
-  const [interSemiBoldFontData, userResponse] = await Promise.all([
+  const [interSemiBoldFontData, userResponse, prHistorgramRequest, contributorPrDataRequest] = await Promise.all([
     getLocalAsset(new URL("/assets/card/Inter-SemiBold.ttf", req.url)),
     fetch(`${baseApiUrl}/users/${username}`, {
       headers: {
         accept: "application/json",
       },
     }),
+    fetch(`${baseApiUrl}/histogram/pull-requests?contributor=${username}&orderDirection=ASC&range=30&width=1`, {
+      headers: {
+        accept: "application/json",
+      },
+    }),
+    fetch(`${baseApiUrl}/users/${username}/prs?limit=50&range=30`, {
+      headers: {
+        accept: "application/json",
+      },
+    }),
   ]);
+
+  const prHistogramData = await prHistorgramRequest.json();
+  const { data: contributorPRData } = await contributorPrDataRequest.json();
+  const chartData: any[] = getPullRequestsHistogramToDays(prHistogramData, 30);
+  const openedPrs = chartData.reduce((total, curr) => total + curr.y, 0);
 
   const userData = await userResponse.json();
   const { oscr: rawOscr, devstats_updated_at, bio } = userData;
   const about: string = bio ?? "";
   const oscr = devstats_updated_at !== "1970-01-01 00:00:00+00Z" ? Math.ceil(rawOscr) : "-";
-  const openedPrs = 3;
-  const prVelocity = "13d";
+  const prVelocity = getContributorPullRequestVelocity(contributorPRData); // e.g. 13d
   const activityRatio = 5;
   const activityText = getActivityRatio(Math.round(activityRatio));
   const activityBgColor = activityText === "high" ? "#dff3df" : activityText === "mid" ? "#fde68a" : "#f1f3f5";
@@ -173,7 +240,7 @@ export default async function handler(req: Request) {
             justifyContent: "flex-end",
           }}
         >
-          {prVelocity}
+          {prVelocity}d
         </span>
         <div
           style={{
