@@ -19,16 +19,17 @@ export default async function handler(req: Request) {
   ]);
 
   const userData = await userResponse.json();
-  console.dir(userData);
   const { oscr: rawOscr, devstats_updated_at } = userData;
   const oscr = devstats_updated_at !== "1970-01-01 00:00:00+00Z" ? Math.ceil(rawOscr) : "-";
-  console.dir(userData);
+  const openedPrs = 999;
+  const prVelocity = "10d";
+
   return new ImageResponse(
     (
       <div
         style={{
           fontFamily: '"Inter"',
-          color: "#fff",
+          color: "#d7d8d9",
           display: "flex",
           flexDirection: "column",
           fontSize: "1rem",
@@ -68,6 +69,7 @@ export default async function handler(req: Request) {
           style={{
             position: "absolute",
             fontSize: "84px",
+            color: "#fff",
             top: "310px",
             left: "327px",
             width: "148px",
@@ -76,6 +78,30 @@ export default async function handler(req: Request) {
           }}
         >
           {oscr}
+        </span>
+        <span
+          style={{
+            position: "absolute",
+            top: "295px",
+            left: "778px",
+            width: "148px",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          {openedPrs}
+        </span>
+        <span
+          style={{
+            position: "absolute",
+            top: "335px",
+            left: "778px",
+            width: "148px",
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          {prVelocity}
         </span>
       </div>
     ),
