@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageResponse } from "og_edge";
 import type { Config } from "https://edge.netlify.com";
-import { getLocalAsset, getOrgUsernameAvatar, humanizeNumber } from "../og-image-utils.ts";
+import { getLocalAsset, getActivityRatio } from "../og-image-utils.ts";
 
 const baseApiUrl = Deno.env.get("NEXT_PUBLIC_API_URL");
 
@@ -23,6 +23,7 @@ export default async function handler(req: Request) {
   const oscr = devstats_updated_at !== "1970-01-01 00:00:00+00Z" ? Math.ceil(rawOscr) : "-";
   const openedPrs = 999;
   const prVelocity = "10d";
+  const activityRatio = 999;
 
   return new ImageResponse(
     (
@@ -103,6 +104,28 @@ export default async function handler(req: Request) {
         >
           {prVelocity}
         </span>
+        <div
+          style={{
+            position: "absolute",
+            top: "254px",
+            left: "778px",
+            width: "148px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <img
+            style={{
+              width: 90.5,
+              height: 21,
+            }}
+            src={`${new URL(
+              `/assets/og-images/workspaces/${getActivityRatio(Math.round(activityRatio))}-activity.png`,
+              req.url
+            )}`}
+          />
+        </div>
       </div>
     ),
     {
