@@ -4,6 +4,7 @@ on:
     branches: [main, beta]
   pull_request:
     branches: [main, beta]
+  merge_group:
 env:
   NEXT_PUBLIC_BASE_URL: http://localhost:3000
 jobs:
