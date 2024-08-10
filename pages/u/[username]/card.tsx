@@ -75,30 +75,6 @@ export default function CardPage({ username, cards }: { username: string; cards:
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
-  const ogImage = cardImageUrl(username, { size: "490" });
-
-  /**
-   * for each of the cards we need to load additional data async because it's slow to block page load
-   * to fetch all of them
-   */
-  useEffect(() => {
-    cards.forEach(async (card) => {
-      const cardData = await fetchRemainingCardData(card.username);
-      setFullCardsData((prev) =>
-        prev.map((c) => {
-          if (c.username === card.username) {
-            return {
-              ...c,
-              ...cardData,
-              isLoading: false,
-            };
-          }
-
-          return c;
-        })
-      );
-    });
-  }, [cards]);
 
   return (
     <FullHeightContainer>
