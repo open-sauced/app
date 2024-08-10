@@ -13,13 +13,12 @@ import Pill from "components/atoms/Pill/pill";
 import DevCardGradient from "../../../public/devcard-gradient.png";
 
 export type DevCardProps = {
- user: UserDevStats | undefined;
- isFlipped?: boolean;
- isInteractive?: boolean;
- hideProfileButton?: boolean;
- isLoading?: boolean;
- onFlip?: () => void;
-}
+  user: UserDevStats | undefined;
+  isFlipped?: boolean;
+  isInteractive?: boolean;
+  hideProfileButton?: boolean;
+  onFlip?: () => void;
+};
 
 export default function DevCard(props: DevCardProps) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
@@ -57,9 +56,7 @@ export default function DevCard(props: DevCardProps) {
   const getValueBasedOnCount = ({ low, med, high }: { low: any; med: any; high: any }) => {
     const recent_pull_requests_count = props.user?.recent_pull_requests_count || 0;
 
-    return recent_pull_requests_count < 7 ? low
-      : recent_pull_requests_count< 28 ? med
-      : high;
+    return recent_pull_requests_count < 7 ? low : recent_pull_requests_count < 28 ? med : high;
   };
 
   return (
@@ -126,9 +123,7 @@ export default function DevCard(props: DevCardProps) {
             </div>
 
             {/** 'Ranking' Badge **/}
-            { props.user?.oscr && props.user?.oscr > 200 &&
-              <RankingBadge oscr={props.user.oscr} />
-            }
+            {props.user?.oscr && props.user?.oscr > 200 && <RankingBadge oscr={props.user.oscr} />}
           </div>
         </div>
 
@@ -182,12 +177,12 @@ export default function DevCard(props: DevCardProps) {
             </div>
 
             {/** Footer **/}
-            <div className="flex flex-col gap-[0.25] w-full self-end">
-              {!props.hideProfileButton &&
+            <div className="flex flex-col gap-[0.25] w-full">
+              {!props.hideProfileButton && (
                 <Button variant="primary" href={`/u/${props.user?.login}`} className="w-full justify-center">
                   View Profile
                 </Button>
-              }
+              )}
               <div className="flex justify-center my-2">
                 <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
                 <p className={"font-semibold text-white ml-1"} style={{ fontSize: "8px" }}>
@@ -211,10 +206,11 @@ function Separator() {
   );
 }
 
-function ActivityBadge({ getValueBasedOnCount }: {
-  getValueBasedOnCount: ({ low, med, high }: { low: any, med: any, high: any }) => any
+function ActivityBadge({
+  getValueBasedOnCount,
+}: {
+  getValueBasedOnCount: ({ low, med, high }: { low: any; med: any; high: any }) => any;
 }) {
-
   const status = getValueBasedOnCount({
     low: "Low",
     med: "Mid",
@@ -230,24 +226,27 @@ function ActivityBadge({ getValueBasedOnCount }: {
   const color = getValueBasedOnCount({
     low: "red",
     med: "yellow",
-    high: "green"
+    high: "green",
   });
 
-  return (
-    <Pill text={status} icon={icon} color={color} size="xsmall" />
-  );
+  return <Pill text={status} icon={icon} color={color} size="xsmall" />;
 }
 
 function RankingBadge({ oscr }: { oscr: number }) {
-  const getValueBasedOnOscr = ({ five, four, three, two, one }:
-    { five: any, four: any, three: any, two: any, one: any }
-  ) => {
-    return oscr > 250 ? one
-      : oscr > 235 ? two
-      : oscr > 225 ? three
-      : oscr > 215 ? four
-      : oscr > 200 ? five
-      : null;
+  const getValueBasedOnOscr = ({
+    five,
+    four,
+    three,
+    two,
+    one,
+  }: {
+    five: any;
+    four: any;
+    three: any;
+    two: any;
+    one: any;
+  }) => {
+    return oscr > 250 ? one : oscr > 235 ? two : oscr > 225 ? three : oscr > 215 ? four : oscr > 200 ? five : null;
   };
 
   const percentage = getValueBasedOnOscr({ five: 5, four: 4, three: 3, two: 2, one: 1 });
