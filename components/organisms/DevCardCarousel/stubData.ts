@@ -69,6 +69,9 @@ export const STUB_DEV_CARDS = [
     total_contributions: 48,
   },
   {
+    email: "",
+    notification_count: 0,
+    insights_count: 0,
     personal_workspace_id: "3432aaf7-55db-4c2b-9fde-f61604471e21",
     id: 833231,
     open_issues: 150,
@@ -138,6 +141,9 @@ export const STUB_DEV_CARDS = [
     total_contributions: 324,
   },
   {
+    email: "",
+    notification_count: 0,
+    insights_count: 0,
     personal_workspace_id: "85be2079-5293-4482-9cd2-d420de812691",
     id: 42211,
     open_issues: 83,
