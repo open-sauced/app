@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import { usePostHog } from "posthog-js/react";
+import { captureException } from "@sentry/nextjs";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -31,15 +32,18 @@ export type UserDevStats = DbUser & DbListContributorStat;
 
 async function fetchUserData(username: string) {
   try {
-    const validUsername = isValidUrlSlug(username);
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${validUsername}/devstats`, {
+    if (!isValidUrlSlug(username)) {
+      throw Error("Invalid username");
+    }
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
     return (await response.json()) as UserDevStats;
   } catch (e) {
-    throw Error(`Invalid username`);
+    captureException(e);
   }
 }
 
