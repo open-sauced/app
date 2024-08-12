@@ -530,12 +530,15 @@ interface DbListContributorStat {
   login: string;
   commits: number;
   prs_created: number;
+  prs_reviewed: number;
   issues_created: number;
   commit_comments: number;
   issue_comments: number;
   pr_review_comments: number;
   comments: number;
   total_contributions: number;
+  recent_pull_requests_count?: number;
+  recent_pull_request_velocity_count?: number;
 }
 
 interface DbProjectContributions {
