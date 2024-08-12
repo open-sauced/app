@@ -4,6 +4,7 @@ import Tilt from "react-parallax-tilt";
 import { FiGlobe } from "react-icons/fi";
 import { PiCrownSimpleFill } from "react-icons/pi";
 import { HiArrowNarrowRight, HiTrendingDown, HiTrendingUp } from "react-icons/hi";
+import clsx from "clsx";
 import Button from "components/shared/Button/button";
 import openSaucedImg from "img/openSauced-icon.png";
 import { getRelativeDays } from "lib/utils/date-utils";
@@ -102,7 +103,12 @@ export default function DevCard(props: DevCardProps) {
             height={348}
           />
 
-          <div className="z-10 flex flex-col gap-2 items-center justify-center w-full h-full text-white">
+          <div
+            className={clsx(
+              "z-10 flex flex-col gap-2 items-center justify-center w-full h-full text-white",
+              isFlipped && "invisible"
+            )}
+          >
             {/** Avatar + @Username **/}
             <div className="flex flex-col items-center gap-1">
               <Image
