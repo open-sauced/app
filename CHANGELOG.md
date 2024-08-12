@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.55.0-beta.1](https://github.com/open-sauced/app/compare/v2.54.1-beta.1...v2.55.0-beta.1) (2024-08-12)
+
+
+### 🍕 Features
+
+* added a link to OSCR tooltips pointing to the OSCR docs ([#3921](https://github.com/open-sauced/app/issues/3921)) ([71e8b4a](https://github.com/open-sauced/app/commit/71e8b4ac419168d17e069fb17b5be790c66d87a3))
+
 ## [2.54.1-beta.1](https://github.com/open-sauced/app/compare/v2.54.0...v2.54.1-beta.1) (2024-08-12)
 
 
