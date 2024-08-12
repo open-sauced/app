@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.54.0-beta.1](https://github.com/open-sauced/app/compare/v2.53.1-beta.2...v2.54.0-beta.1) (2024-08-12)
+
+
+### 🍕 Features
+
+* update DevCard design ([#3879](https://github.com/open-sauced/app/issues/3879)) ([979576d](https://github.com/open-sauced/app/commit/979576d482ec1f0d6fe5cc6b63468ac27e1628a8))
+
 ## [2.53.1-beta.2](https://github.com/open-sauced/app/compare/v2.53.1-beta.1...v2.53.1-beta.2) (2024-08-12)
 
 
