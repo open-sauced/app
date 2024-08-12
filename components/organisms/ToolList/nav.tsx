@@ -70,7 +70,7 @@ const Nav: React.FC<NavProps> = ({
             data-state={selectedTool === tool.name.toLowerCase() ? "active" : "inactive"}
             tabIndex={-1}
             key={index}
-            className={`tool-list-item border-b-2 transition-all ease-in-out ${
+            className={`tool-list-item border-b-2 ml-2 transition-all ease-in-out ${
               (selectedTool as string).toLowerCase() === tool.name.toLowerCase()
                 ? "border-orange-500"
                 : "border-transparent hover:border-light-slate-8"

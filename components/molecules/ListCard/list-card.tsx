@@ -29,7 +29,7 @@ const ListCard = ({ list, handleOnDeleteClick, workspaceId, user }: ListCardProp
       <div className="flex flex-col items-start w-full gap-4 px-4 py-6 bg-white rounded-lg md:items-center md:justify-between md:flex-row lg:px-8 lg:gap-2">
         <div className="flex flex-col flex-1 gap-4 lg:gap-6">
           <div className="flex items-center gap-4 lg:items-center ">
-            <div className="w-4 h-4 rounded-full bg-light-orange-10"></div>
+            <div className="w-4 h-4 rounded-full bg-light-orange-10 shrink-0"></div>
             <div className="flex justify-between text-xl text-light-slate-12">
               <Link
                 href={
