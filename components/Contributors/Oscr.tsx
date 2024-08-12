@@ -1,6 +1,7 @@
 import { LockIcon } from "@primer/octicons-react";
 import { usePostHog } from "posthog-js/react";
 import { useRouter } from "next/router";
+import { HiOutlineInformationCircle } from "react-icons/hi";
 import Pill from "components/atoms/Pill/pill";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import Button from "components/shared/Button/button";
@@ -81,5 +82,28 @@ export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calcu
         <span>{ratingToRender}</span>
       )}
     </>
+  );
+};
+
+export const OscrInfoTooltip = () => {
+  return (
+    <Tooltip
+      content={
+        <div className="grid gap-2">
+          <p>OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem.</p>
+
+          <a
+            href="https://opensauced.pizza/docs/features/contributor-insights/#open-source-contributor-rating-oscr"
+            className="underline"
+          >
+            Learn more...
+            <span className="sr-only"> about OSCR rating</span>
+          </a>
+        </div>
+      }
+      className="max-w-xs"
+    >
+      <HiOutlineInformationCircle className="text-slate-500" />
+    </Tooltip>
   );
 };

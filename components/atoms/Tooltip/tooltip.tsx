@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 interface TooltipProps {
   children: React.ReactNode;
-  content: string;
+  content: React.ReactNode;
   direction?: "top" | "right" | "left" | "bottom";
   delay?: number;
   className?: string;
