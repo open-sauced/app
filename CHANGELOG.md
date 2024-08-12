@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.53.1-beta.1](https://github.com/open-sauced/app/compare/v2.53.0...v2.53.1-beta.1) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* add margin left to prevent overflow of nav item ([#3904](https://github.com/open-sauced/app/issues/3904)) ([c8b8ace](https://github.com/open-sauced/app/commit/c8b8acec3595bf4a243f15ade411f4fe4d4e7693))
+
 ## [2.53.0](https://github.com/open-sauced/app/compare/v2.52.0...v2.53.0) (2024-08-12)
 
 
