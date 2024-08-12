@@ -129,7 +129,7 @@ export default function DevCard(props: DevCardProps) {
 
         {/** Back View **/}
         <div
-          className="DevCard-back flex flex-col overflow-hidden rounded-xl border-white cursor-pointer w-full h-full absolute left-0 top-0 p-4"
+          className="DevCard-back flex flex-col overflow-hidden rounded-xl border-white cursor-pointer w-full h-full absolute left-0 top-0 px-4 pt-4"
           style={{
             ...faceStyle,
             transform: "rotateY(180deg)",
@@ -153,7 +153,7 @@ export default function DevCard(props: DevCardProps) {
             </div>
 
             {/** Bio **/}
-            <p className="py-2">{props.user?.bio}</p>
+            <p className="mt-2 h-full max-h-18 overflow-auto">{props.user?.bio}</p>
 
             {/** Last 30 Days **/}
             <div className="flex flex-col w-full h-fit text-md">
