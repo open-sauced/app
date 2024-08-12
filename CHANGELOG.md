@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.53.0](https://github.com/open-sauced/app/compare/v2.52.0...v2.53.0) (2024-08-12)
+
+
+### 🍕 Features
+
+* add display query param for toggling repo contributors list view ([#3907](https://github.com/open-sauced/app/issues/3907)) ([d97c8f5](https://github.com/open-sauced/app/commit/d97c8f5d82218882b74a5d3bfbc3167901afad14))
+* implemented the dev card OG image ([#3903](https://github.com/open-sauced/app/issues/3903)) ([5047e1f](https://github.com/open-sauced/app/commit/5047e1f9ae3f90e2ecd71556ae415dfff148ac51))
+
 ## [2.53.0-beta.2](https://github.com/open-sauced/app/compare/v2.53.0-beta.1...v2.53.0-beta.2) (2024-08-09)
 
 
