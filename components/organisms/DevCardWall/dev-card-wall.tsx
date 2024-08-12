@@ -3,7 +3,8 @@ import { useCallback, useEffect, useState } from "react";
 import { animated, useSpring, useSprings } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { useOutsideClickRef } from "rooks";
-import DevCard, { DevCardProps } from "components/molecules/DevCard/dev-card";
+import DevCard from "components/molecules/DevCard/dev-card";
+import { UserDevStats } from "pages/u/[username]/card";
 import Button from "components/shared/Button/button";
 import ChevronLeft from "../../../img/icons/chevron-left.svg";
 
@@ -28,7 +29,7 @@ const coordinatesForIndex = (height: number) => (index: number) => {
 };
 
 interface DevCardWallProps {
-  cards: DevCardProps[];
+  cards: UserDevStats[];
   isLoading?: boolean;
   initialCardIndex?: number;
 }
@@ -235,9 +236,9 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
           zIndex,
         }}
       >
-        <DevCard key="card" isInteractive={i === activeCardIndex} hideProfileButton {...cardProps} />
+        <DevCard key="card" user={cardProps} isInteractive={i === activeCardIndex} hideProfileButton />
         <animated.div key="button" className={"grid place-content-center"} style={{ ...buttonSpring }}>
-          <Button variant="primary" href={`/u/${cardProps.username}`}>
+          <Button variant="primary" href={`/u/${cardProps.login}`}>
             View Profile
           </Button>
         </animated.div>
