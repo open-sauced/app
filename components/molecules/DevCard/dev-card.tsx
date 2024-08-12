@@ -101,6 +101,14 @@ export default function DevCard(props: DevCardProps) {
             width={245}
             height={348}
           />
+
+          <div className="absolute top-0.5 right-6 flex items-center my-2">
+            <Image className="rounded fill-white" alt="OpenSauced Logo" width={15} height={15} src={openSaucedImg} />
+            <p className={"font-semibold text-white ml-1"} style={{ fontSize: "8px" }}>
+              OpenSauced
+            </p>
+          </div>
+
           <div className="z-10 flex flex-col gap-2 items-center justify-center w-full h-full text-white">
             {/** Avatar + @Username **/}
             <div className="flex flex-col items-center gap-1">
