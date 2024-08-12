@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.54.0-beta.2](https://github.com/open-sauced/app/compare/v2.54.0-beta.1...v2.54.0-beta.2) (2024-08-12)
+
+
+### 🤖 Build System
+
+* remove OpenGraph service environment variable ([#3915](https://github.com/open-sauced/app/issues/3915)) ([7c57ef0](https://github.com/open-sauced/app/commit/7c57ef0edb908dc158c5758bb034a1c6032f11c3))
+
 ## [2.54.0-beta.1](https://github.com/open-sauced/app/compare/v2.53.1-beta.2...v2.54.0-beta.1) (2024-08-12)
 
 
