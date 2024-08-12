@@ -1,12 +1,12 @@
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import NewsletterLink from "components/molecules/NewsletterForm/newsletter-form";
+import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form";
 
 const storyConfig = {
   title: "Design System/Molecules/NewsletterForm",
-} as ComponentMeta<typeof NewsletterLink>;
+} as ComponentMeta<typeof NewsletterForm>;
 
 export default storyConfig;
 
-const NewsletterFormTemplate: ComponentStory<typeof NewsletterLink> = (args) => <NewsletterLink />;
+const NewsletterFormTemplate: ComponentStory<typeof NewsletterForm> = (args) => <NewsletterForm />;
 
 export const Default = NewsletterFormTemplate.bind({});

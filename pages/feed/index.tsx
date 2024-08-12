@@ -28,7 +28,7 @@ import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
 import FollowingHighlightWrapper from "components/organisms/FollowersHighlightWrapper/following-highlight-wrapper";
 import HomeHighlightsWrapper from "components/organisms/HomeHighlightsWrapper/home-highlights-wrapper";
-import NewsletterLink from "components/molecules/NewsletterForm/newsletter-form";
+import NewsletterForm from "components/molecules/NewsletterForm/newsletter-form";
 import UserCard, { MetaObj } from "components/atoms/UserCard/user-card";
 import FeaturedHighlightsPanel from "components/molecules/FeaturedHighlightsPanel/featured-highlights-panel";
 import AnnouncementCard from "components/molecules/AnnouncementCard/announcement-card";
@@ -165,7 +165,7 @@ export default function Feeds(props: HighlightSSRProps) {
           twitterCard="summary_large_image"
         />
         <div className="hidden">
-          <NewsletterLink />
+          <NewsletterForm />
         </div>
       </>
     );
@@ -361,7 +361,7 @@ export default function Feeds(props: HighlightSSRProps) {
             {featuredHighlights && featuredHighlights.length > 0 && (
               <FeaturedHighlightsPanel highlights={featuredHighlights} />
             )}
-            <NewsletterLink />
+            <NewsletterForm />
           </div>
         </div>
       </WorkspaceLayout>
