@@ -62,7 +62,7 @@ export default function DevCard(props: DevCardProps) {
 
   return (
     <div
-      className="DevCard"
+      className="DevCard select-none"
       style={{
         width: "245px",
         height: "348px",
