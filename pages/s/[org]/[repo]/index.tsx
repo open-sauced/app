@@ -4,7 +4,7 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 import { FaBalanceScale } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa6";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { usePostHog } from "posthog-js/react";
@@ -43,6 +43,7 @@ import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 import OssfChart from "components/Repositories/OssfChart";
+import { setQueryParams } from "lib/utils/query-params";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -96,9 +97,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const isMobile = useMediaQuery("(max-width: 576px)");
   const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const [lotteryState, setLotteryState] = useState<"lottery" | "yolo">("lottery");
-  const [yoloHideBots, setYoloHideBots] = useState(
-    router.query.hideBots ? (router.query.hideBots === "true" ? true : false) : false
-  );
+  const yoloHideBots = router.query.hideBots === "true";
   const [isAddToWorkspaceModalOpen, setIsAddToWorkspaceModalOpen] = useState(false);
   const range = (router.query.range ? Number(router.query.range) : 30) as Range;
   const tabList = [
@@ -106,9 +105,9 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     { name: "Contributors", path: "contributors" },
   ];
 
-  useEffect(() => {
-    router.push({ query: { ...router.query, hideBots: yoloHideBots } });
-  }, [yoloHideBots]);
+  function setYoloHideBots(value: boolean) {
+    setQueryParams({ hideBots: `${value}` });
+  }
 
   const {
     data: starsData,
