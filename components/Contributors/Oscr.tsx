@@ -101,7 +101,7 @@ export const OscrInfoTooltip = () => {
           </a>
         </div>
       }
-      className="max-w-xs"
+      className="w-fit max-w-xs !text-sm shadow-lg text-slate-100 !px-4 !py-3 !rounded-xl"
     >
       <HiOutlineInformationCircle className="text-slate-500" />
     </Tooltip>
