@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.53.1-beta.2](https://github.com/open-sauced/app/compare/v2.53.1-beta.1...v2.53.1-beta.2) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* contributor insight card orange dot no longer squished ([#3912](https://github.com/open-sauced/app/issues/3912)) ([01cb265](https://github.com/open-sauced/app/commit/01cb265d531e7b9392d89b397436afab12442c78))
+
 ## [2.53.1-beta.1](https://github.com/open-sauced/app/compare/v2.53.0...v2.53.1-beta.1) (2024-08-12)
 
 
