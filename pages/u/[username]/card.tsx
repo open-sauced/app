@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import { usePostHog } from "posthog-js/react";
-import { captureException } from "@sentry/nextjs";
+import { safeParse } from "valibot";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -11,7 +11,8 @@ import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
-import { isValidUrlSlug } from "lib/utils/url-validators";
+import { fetchApiData } from "helpers/fetchApiData";
+import { GitHubUserNameSchema } from "lib/validation-schemas";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -30,23 +31,6 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
 
 export type UserDevStats = DbUser & DbListContributorStat;
 
-async function fetchUserData(username: string) {
-  try {
-    if (!isValidUrlSlug(username)) {
-      throw Error("Invalid username");
-    }
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return (await response.json()) as UserDevStats;
-  } catch (e) {
-    captureException(e);
-  }
-}
-
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const username = context?.params?.username as string | undefined;
   if (!username) {
@@ -55,37 +39,44 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     };
   }
 
-  const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
-  const cards = await Promise.all(uniqueUsernames.map(fetchUserData));
+  const { data: userData, error } = await fetchApiData({
+    path: `users/${username}`,
+    pathValidator: () => safeParse(GitHubUserNameSchema, username).success,
+  });
+
+  if (error || !userData) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
-      username,
-      cards,
+      user: userData,
     },
   };
 }
 
-export default function CardPage({ username, cards }: { username: string; cards: UserDevStats[] }) {
+export default function CardPage({ user }: { user: DbUser }) {
   const { user: loggedInUser } = useSupabaseAuth();
-  const [selectedUserName, setSelectedUserName] = useState<string>(username);
+  const uniqueUsernames = [...new Set([user.login, ...ADDITIONAL_PROFILES_TO_LOAD])];
+  const [selectedUserName, setSelectedUserName] = useState<string>(user.login);
   const iframeTransition = useTransition(selectedUserName, {
     from: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
     enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
   });
 
-  const firstCard = cards!.find((card) => card.login === username);
-  const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
+  const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === user.login;
 
-  const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
+  const socialSummary = `${user.bio || `${user.login} has connected their GitHub but has not added a bio.`}`;
 
   return (
     <FullHeightContainer>
       <SEO
-        title={`${username} | OpenSauced`}
+        title={`${user.login} | OpenSauced`}
         description={socialSummary}
-        image={siteUrl(`og-images/dev-card`, { username })}
+        image={siteUrl(`og-images/dev-card`, { username: user.login })}
         twitterCard="summary_large_image"
       />
       <main
@@ -108,10 +99,10 @@ export default function CardPage({ username, cards }: { username: string; cards:
         >
           <div className="flex items-center justify-center md:justify-end">
             <div className="flex flex-col gap-10">
-              <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
+              <DevCardCarousel usernames={uniqueUsernames} onSelect={(name) => setSelectedUserName(name)} />
               <div className="hidden md:flex align-self-stretch justify-center">
                 {isViewingOwnProfile ? (
-                  <SocialButtons username={username} summary={socialSummary} />
+                  <SocialButtons username={user.login} summary={socialSummary} />
                 ) : (
                   <Button variant="primary" className="justify-center" href="/start">
                     Create your own dev card!
@@ -162,7 +153,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
         </div>
         <div className="grid justify-center place-content-start py-7 md:hidden">
           {isViewingOwnProfile ? (
-            <SocialButtons username={username} summary={socialSummary} />
+            <SocialButtons username={user.login} summary={socialSummary} />
           ) : (
             <div className="flex flex-col gap-2">
               <Button variant="primary" className="justify-center" href={`/u/${selectedUserName}`}>
