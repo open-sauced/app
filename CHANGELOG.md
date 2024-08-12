@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.55.0-beta.2](https://github.com/open-sauced/app/compare/v2.55.0-beta.1...v2.55.0-beta.2) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* re-enable newsletter form on Netlify ([#3919](https://github.com/open-sauced/app/issues/3919)) ([42e2668](https://github.com/open-sauced/app/commit/42e266808a1d3e859ca0d7070fa586d4bb344afd))
+* toggling hide bots for yolo coders no longer causes page jumps ([#3911](https://github.com/open-sauced/app/issues/3911)) ([4337ec3](https://github.com/open-sauced/app/commit/4337ec3cf4f04638ecd1a127803b4d0f258d77ac))
+
 ## [2.55.0-beta.1](https://github.com/open-sauced/app/compare/v2.54.1-beta.1...v2.55.0-beta.1) (2024-08-12)
 
 
