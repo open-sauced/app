@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.55.1](https://github.com/open-sauced/app/compare/v2.55.0...v2.55.1) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* capture pathname for `OscrButton` when clicked ([#3924](https://github.com/open-sauced/app/issues/3924)) ([3925911](https://github.com/open-sauced/app/commit/392591142cca1afe945f3f40aa9f6c2e49b76e46))
+
 ## [2.55.1-beta.1](https://github.com/open-sauced/app/compare/v2.55.0...v2.55.1-beta.1) (2024-08-12)
 
 
