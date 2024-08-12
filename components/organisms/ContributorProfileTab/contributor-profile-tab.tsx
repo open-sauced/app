@@ -37,8 +37,7 @@ import { DayRangePicker } from "components/shared/DayRangePicker";
 import IssueCommentsTable from "components/Profiles/IssueCommentsTable/issue-comments-table";
 import { contributionsOptions, useContributionsFilter } from "components/Profiles/contributors-sub-tab-list";
 import { SubTabsList } from "components/TabList/tab-list";
-import { OscrButton } from "components/Contributors/Oscr";
-import InfoTooltip from "components/shared/InfoTooltip";
+import { OscrButton, OscrInfoTooltip } from "components/Contributors/Oscr";
 import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 import UserRepositoryRecommendations from "../UserRepositoryRecommendations/user-repository-recommendations";
 
@@ -375,7 +374,7 @@ const ContributorProfileTab = ({
                 <span className="relative text-xs text-light-slate-11 flex gap-0.5 items-center">
                   <span>OSCR Rating</span>
                   <span className="text-sm grid place-content-center">
-                    <InfoTooltip information="OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem." />
+                    <OscrInfoTooltip />
                   </span>
                 </span>
                 <div className="flex mt-1 text-lg md:text-xl lg:text-2xl !text-black leading-none">

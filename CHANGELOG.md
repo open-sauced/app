@@ -5,6 +5,28 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.55.0-beta.2](https://github.com/open-sauced/app/compare/v2.55.0-beta.1...v2.55.0-beta.2) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* re-enable newsletter form on Netlify ([#3919](https://github.com/open-sauced/app/issues/3919)) ([42e2668](https://github.com/open-sauced/app/commit/42e266808a1d3e859ca0d7070fa586d4bb344afd))
+* toggling hide bots for yolo coders no longer causes page jumps ([#3911](https://github.com/open-sauced/app/issues/3911)) ([4337ec3](https://github.com/open-sauced/app/commit/4337ec3cf4f04638ecd1a127803b4d0f258d77ac))
+
+## [2.55.0-beta.1](https://github.com/open-sauced/app/compare/v2.54.1-beta.1...v2.55.0-beta.1) (2024-08-12)
+
+
+### 🍕 Features
+
+* added a link to OSCR tooltips pointing to the OSCR docs ([#3921](https://github.com/open-sauced/app/issues/3921)) ([71e8b4a](https://github.com/open-sauced/app/commit/71e8b4ac419168d17e069fb17b5be790c66d87a3))
+
+## [2.54.1-beta.1](https://github.com/open-sauced/app/compare/v2.54.0...v2.54.1-beta.1) (2024-08-12)
+
+
+### 🤖 Build System
+
+* remove OpenGraph service environment variable ([#3915](https://github.com/open-sauced/app/issues/3915)) ([7c57ef0](https://github.com/open-sauced/app/commit/7c57ef0edb908dc158c5758bb034a1c6032f11c3))
+
 ## [2.54.0](https://github.com/open-sauced/app/compare/v2.53.0...v2.54.0) (2024-08-12)
 
 
