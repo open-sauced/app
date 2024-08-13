@@ -4,6 +4,7 @@ import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import { usePostHog } from "posthog-js/react";
 import { captureException } from "@sentry/nextjs";
+import { safeParse } from "valibot";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -12,6 +13,8 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import { isValidUrlSlug } from "lib/utils/url-validators";
+import { fetchApiData } from "helpers/fetchApiData";
+import { GitHubUserNameSchema } from "lib/validation-schemas";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -53,6 +56,20 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       notFound: true,
     };
+  }
+
+  const { data: userData, error } = await fetchApiData({
+    path: `users/${username}`,
+    pathValidator: () => safeParse(GitHubUserNameSchema, username).success,
+  });
+
+  if (error || !userData) {
+    if (error?.status === 404 || error?.status === 401) {
+      return { notFound: true };
+    }
+    const exception = new Error(`Error in fetching user data`);
+    captureException(exception);
+    throw exception;
   }
 
   const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
