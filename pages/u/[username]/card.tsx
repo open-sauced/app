@@ -4,6 +4,7 @@ import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import { usePostHog } from "posthog-js/react";
 import { captureException } from "@sentry/nextjs";
+import { FiCopy } from "react-icons/fi";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -12,6 +13,8 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import { isValidUrlSlug } from "lib/utils/url-validators";
+import { copyImageToClipboard } from "lib/utils/copy-to-clipboard";
+import { useToast } from "lib/hooks/useToast";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -47,6 +50,10 @@ async function fetchUserData(username: string) {
   }
 }
 
+async function copyImage(username: string) {
+  return copyImageToClipboard(siteUrl(`og-images/dev-card`, { username }));
+}
+
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const username = context?.params?.username as string | undefined;
   if (!username) {
@@ -67,6 +74,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 export default function CardPage({ username, cards }: { username: string; cards: UserDevStats[] }) {
+  const { toast } = useToast();
   const { user: loggedInUser } = useSupabaseAuth();
   const [selectedUserName, setSelectedUserName] = useState<string>(username);
   const iframeTransition = useTransition(selectedUserName, {
@@ -111,7 +119,20 @@ export default function CardPage({ username, cards }: { username: string; cards:
               <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
               <div className="hidden md:flex align-self-stretch justify-center">
                 {isViewingOwnProfile ? (
-                  <SocialButtons username={username} summary={socialSummary} />
+                  <>
+                    <SocialButtons username={username} summary={socialSummary}>
+                      <FiCopy
+                        className="w-10 h-10 stroke-orange-500 cursor-pointer hover:opacity-80 transition-all"
+                        onClick={async () => {
+                          const copied = await copyImage(selectedUserName);
+
+                          if (copied) {
+                            toast({ description: "Copied to clipboard", variant: "success" });
+                          }
+                        }}
+                      />
+                    </SocialButtons>
+                  </>
                 ) : (
                   <Button variant="primary" className="justify-center" href="/start">
                     Create your own dev card!
@@ -162,7 +183,20 @@ export default function CardPage({ username, cards }: { username: string; cards:
         </div>
         <div className="grid justify-center place-content-start py-7 md:hidden">
           {isViewingOwnProfile ? (
-            <SocialButtons username={username} summary={socialSummary} />
+            <>
+              <SocialButtons username={username} summary={socialSummary}>
+                <FiCopy
+                  className="w-10 h-10 stroke-orange-500 hover:opacity-80 transition-all"
+                  onClick={async () => {
+                    const copied = await copyImage(selectedUserName);
+
+                    if (copied) {
+                      toast({ description: "Copied to clipboard", variant: "success" });
+                    }
+                  }}
+                />
+              </SocialButtons>
+            </>
           ) : (
             <div className="flex flex-col gap-2">
               <Button variant="primary" className="justify-center" href={`/u/${selectedUserName}`}>
@@ -179,7 +213,15 @@ export default function CardPage({ username, cards }: { username: string; cards:
   );
 }
 
-function SocialButtons({ username, summary }: { username: string; summary: string }) {
+function SocialButtons({
+  children,
+  username,
+  summary,
+}: {
+  children: React.ReactNode;
+  username: string;
+  summary: string;
+}) {
   const posthog = usePostHog();
   const icons = [
     {
@@ -212,6 +254,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
             <Image src={icon.src} alt={icon.name} width={24} height={24} />
           </a>
         ))}
+        {children}
       </div>
     </div>
   );

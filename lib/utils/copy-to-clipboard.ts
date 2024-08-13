@@ -9,3 +9,23 @@ export const copyToClipboard = async (content: string) => {
     console.log("This browser does not support the clipboard.", error);
   }
 };
+
+export async function copyImageToClipboard(imageUrl: string) {
+  try {
+    const data = await fetch(imageUrl);
+
+    if (data.ok) {
+      const blob = await data.blob();
+      await navigator.clipboard.write([
+        new ClipboardItem({
+          [blob.type]: blob,
+        }),
+      ]);
+      return true;
+    }
+
+    return false;
+  } catch (err) {
+    return false;
+  }
+}
