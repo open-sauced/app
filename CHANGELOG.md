@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.55.2](https://github.com/open-sauced/app/compare/v2.55.1...v2.55.2) (2024-08-13)
+
+
+### 🐛 Bug Fixes
+
+* now the back of the dev card no longer peers through when flipped on Safari and Firefox ([#3931](https://github.com/open-sauced/app/issues/3931)) ([eb9f458](https://github.com/open-sauced/app/commit/eb9f458c67adbd10d47572144451087e35bf340d))
+
 ## [2.55.2-beta.1](https://github.com/open-sauced/app/compare/v2.55.1...v2.55.2-beta.1) (2024-08-12)
 
 
