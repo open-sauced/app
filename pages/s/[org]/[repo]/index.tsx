@@ -94,6 +94,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const { toast } = useToast();
   const posthog = usePostHog();
   const { session } = useSession(true);
+  const [sbomUrl, setSbomUrl] = useState<string | undefined>();
   const isMobile = useMediaQuery("(max-width: 576px)");
   const avatarUrl = getAvatarByUsername(repoData.full_name.split("/")[0], 96);
   const [lotteryState, setLotteryState] = useState<"lottery" | "yolo">("lottery");
@@ -215,27 +216,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     }
   };
 
-  const workspaceFromSbomButton = (
-    <Button
-      variant="primary"
-      onClick={() => {
-        posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
-          repository: repoData.full_name,
-        });
-
-        const params = new URLSearchParams();
-        params.set("sbom", "true");
-        params.set("repo", repoData.full_name);
-
-        router.push(`/workspaces/new?${params}`);
-      }}
-      className="shrink-0 items-center gap-3 w-full"
-    >
-      <MdWorkspaces />
-      Workspace from SBOM
-    </Button>
-  );
-
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
@@ -261,7 +241,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 {isMobile ? (
                   <>
                     <AddToWorkspaceDrawer repository={repoData.full_name} />
-                    {workspaceFromSbomButton}
                   </>
                 ) : (
                   <>
@@ -276,7 +255,32 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       <MdWorkspaces />
                       Add to Workspace
                     </Button>
-                    {workspaceFromSbomButton}
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
+                          repository: repoData.full_name,
+                        });
+
+                        const params = new URLSearchParams();
+                        params.set("sbom", "true");
+                        params.set("repo", repoData.full_name);
+
+                        const url = `/workspaces/new?${params}`;
+
+                        if (!session) {
+                          setSbomUrl(new URL(url, window.location.origin).toString());
+                          setIsAddToWorkspaceModalOpen(true);
+                          return;
+                        }
+
+                        router.push(url);
+                      }}
+                      className="shrink-0 items-center gap-3 w-full"
+                    >
+                      <MdWorkspaces />
+                      Workspace from SBOM
+                    </Button>
                   </>
                 )}
                 <div className="flex gap-2 items-center">
@@ -489,6 +493,8 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
       </WorkspaceLayout>
 
       <AddToWorkspaceModal
+        sbomUrl={sbomUrl}
+        content="Create a new workspace from the SBOM for this repository"
         repository={repoData.full_name}
         isOpen={isAddToWorkspaceModalOpen}
         onCloseModal={() => setIsAddToWorkspaceModalOpen(false)}

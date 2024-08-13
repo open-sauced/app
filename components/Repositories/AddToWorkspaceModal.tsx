@@ -16,9 +16,10 @@ type AddToWorkspaceModalProps = {
   repository: string;
   isOpen: boolean;
   onCloseModal: () => void;
+  sbomUrl: string;
 };
 
-export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }: AddToWorkspaceModalProps) {
+export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal, sbomUrl }: AddToWorkspaceModalProps) {
   const { toast } = useToast();
   const router = useRouter();
   const posthog = usePostHog();
@@ -77,7 +78,9 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }
                   insights and lists are now part of your personal workspace.
                 </Text>
                 <p className="font-medium text-light-orange-10">
-                  Create a new workspace with this repository and explore open source like never before!
+                  {sbomUrl
+                    ? "Create a new workspace with this repository's SBOM and explore open source like never before!"
+                    : "Create a new workspace with this repository and explore open source like never before!"}
                 </p>
                 <Button
                   variant="primary"
@@ -85,7 +88,9 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }
                   onClick={() => {
                     signIn({
                       provider: "github",
-                      options: { redirectTo: `${host}/workspaces/new?repos=${JSON.stringify([repository])}` },
+                      options: {
+                        redirectTo: sbomUrl ? sbomUrl : `${host}/workspaces/new?repos=${JSON.stringify([repository])}`,
+                      },
                     });
                   }}
                 >
@@ -95,28 +100,32 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal }
               </div>
             ) : (
               <>
-                <p>Create a new workspace or add to an existing one.</p>
-                {workspacesLoading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <SingleSelect
-                    options={[
-                      { label: "Create new workspace...", value: "new" },
-                      ...workspaces.map(({ id, name }) => ({
-                        label: name,
-                        value: id,
-                      })),
-                    ]}
-                    value={workspaceId ?? "new"}
-                    placeholder="Select a workspace"
-                    onValueChange={(value) => {
-                      setWorkspaceId(value);
-                    }}
-                  />
+                {sbomUrl ? null : (
+                  <>
+                    <p>Create a new workspace or add to an existing one.</p>
+                    {workspacesLoading ? (
+                      <p>Loading...</p>
+                    ) : (
+                      <SingleSelect
+                        options={[
+                          { label: "Create new workspace...", value: "new" },
+                          ...workspaces.map(({ id, name }) => ({
+                            label: name,
+                            value: id,
+                          })),
+                        ]}
+                        value={workspaceId ?? "new"}
+                        placeholder="Select a workspace"
+                        onValueChange={(value) => {
+                          setWorkspaceId(value);
+                        }}
+                      />
+                    )}
+                    <Button onClick={addRepositoryToWorkspace} variant="primary" className="w-fit self-end">
+                      Confirm
+                    </Button>
+                  </>
                 )}
-                <Button onClick={addRepositoryToWorkspace} variant="primary" className="w-fit self-end">
-                  Confirm
-                </Button>
               </>
             )}
           </div>
