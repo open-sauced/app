@@ -241,6 +241,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 {isMobile ? (
                   <>
                     <AddToWorkspaceDrawer repository={repoData.full_name} />
+                    <AddToWorkspaceDrawer type="sbom" repository={repoData.full_name} />
                   </>
                 ) : (
                   <>
