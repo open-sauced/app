@@ -16,7 +16,7 @@ type AddToWorkspaceModalProps = {
   repository: string;
   isOpen: boolean;
   onCloseModal: () => void;
-  sbomUrl: string;
+  sbomUrl?: string;
 };
 
 export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal, sbomUrl }: AddToWorkspaceModalProps) {

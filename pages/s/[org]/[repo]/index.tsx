@@ -494,7 +494,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
       <AddToWorkspaceModal
         sbomUrl={sbomUrl}
-        content="Create a new workspace from the SBOM for this repository"
         repository={repoData.full_name}
         isOpen={isAddToWorkspaceModalOpen}
         onCloseModal={() => setIsAddToWorkspaceModalOpen(false)}
