@@ -215,6 +215,27 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
     }
   };
 
+  const workspaceFromSbomButton = (
+    <Button
+      variant="primary"
+      onClick={() => {
+        posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
+          repository: repoData.full_name,
+        });
+
+        const params = new URLSearchParams();
+        params.set("sbom", "true");
+        params.set("repo", repoData.full_name);
+
+        router.push(`/workspaces/new?${params}`);
+      }}
+      className="shrink-0 items-center gap-3 w-full"
+    >
+      <MdWorkspaces />
+      Workspace from SBOM
+    </Button>
+  );
+
   return (
     <>
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
@@ -238,7 +259,10 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               </header>
               <div className="self-end flex flex-col gap-2 items-end">
                 {isMobile ? (
-                  <AddToWorkspaceDrawer repository={repoData.full_name} />
+                  <>
+                    <AddToWorkspaceDrawer repository={repoData.full_name} />
+                    {workspaceFromSbomButton}
+                  </>
                 ) : (
                   <>
                     <Button
@@ -252,24 +276,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       <MdWorkspaces />
                       Add to Workspace
                     </Button>
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
-                          repository: repoData.full_name,
-                        });
-
-                        const params = new URLSearchParams();
-                        params.set("sbom", "true");
-                        params.set("repo", repoData.full_name);
-
-                        router.push(`/workspaces/new?${params}`);
-                      }}
-                      className="shrink-0 items-center gap-3 w-full"
-                    >
-                      <MdWorkspaces />
-                      Workspace from SBOM
-                    </Button>
+                    {workspaceFromSbomButton}
                   </>
                 )}
                 <div className="flex gap-2 items-center">

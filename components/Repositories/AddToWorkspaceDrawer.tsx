@@ -57,7 +57,7 @@ export default function AddToWorkspaceDrawer({ repository }: { repository: strin
       description="Create a new workspace or add to an existing one."
       showCloseButton
       trigger={
-        <Button variant="primary" className="shrink-0 items-center gap-3 w-fit">
+        <Button variant="primary" className="shrink-0 items-center gap-3 w-full">
           <MdWorkspaces />
           Add to Workspace
         </Button>
