@@ -259,8 +259,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                           repository: repoData.full_name,
                         });
 
-                        // use urlsearchapi to update the url
-                        // sbom=true&repo=${encodeURIComponent(repoData.full_name)}
                         const params = new URLSearchParams();
                         params.set("sbom", "true");
                         params.set("repo", repoData.full_name);
