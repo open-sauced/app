@@ -15,6 +15,7 @@ import FullHeightContainer from "components/atoms/FullHeightContainer/full-heigh
 import { isValidUrlSlug } from "lib/utils/url-validators";
 import { copyImageToClipboard } from "lib/utils/copy-to-clipboard";
 import { useToast } from "lib/hooks/useToast";
+import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -119,20 +120,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
               <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
               <div className="hidden md:flex align-self-stretch justify-center">
                 {isViewingOwnProfile ? (
-                  <>
-                    <SocialButtons username={username} summary={socialSummary}>
-                      <FiCopy
-                        className="w-10 h-10 stroke-orange-500 cursor-pointer hover:opacity-80 transition-all"
-                        onClick={async () => {
-                          const copied = await copyImage(selectedUserName);
-
-                          if (copied) {
-                            toast({ description: "Copied to clipboard", variant: "success" });
-                          }
-                        }}
-                      />
-                    </SocialButtons>
-                  </>
+                  <SocialButtons username={username} summary={socialSummary} toast={toast} />
                 ) : (
                   <Button variant="primary" className="justify-center" href="/start">
                     Create your own dev card!
@@ -183,20 +171,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
         </div>
         <div className="grid justify-center place-content-start py-7 md:hidden">
           {isViewingOwnProfile ? (
-            <>
-              <SocialButtons username={username} summary={socialSummary}>
-                <FiCopy
-                  className="w-10 h-10 stroke-orange-500 hover:opacity-80 transition-all"
-                  onClick={async () => {
-                    const copied = await copyImage(selectedUserName);
-
-                    if (copied) {
-                      toast({ description: "Copied to clipboard", variant: "success" });
-                    }
-                  }}
-                />
-              </SocialButtons>
-            </>
+            <SocialButtons username={username} summary={socialSummary} toast={toast} />
           ) : (
             <div className="flex flex-col gap-2">
               <Button variant="primary" className="justify-center" href={`/u/${selectedUserName}`}>
@@ -213,14 +188,41 @@ export default function CardPage({ username, cards }: { username: string; cards:
   );
 }
 
+function CopyButton({ username, toast }: { username: string; toast: ReturnType<typeof useToast>["toast"] }) {
+  const [copying, setCopying] = useState(false);
+
+  return (
+    <div
+      className="rounded-full w-10 h-10 bg-sauced-orange stroke-white cursor-pointer hover:opacity-80 transition-all
+flex items-center justify-center"
+      onClick={async () => {
+        setCopying(true);
+        const copied = await copyImage(username);
+
+        if (copied) {
+          setTimeout(() => {
+            toast({ description: "Copied to clipboard", variant: "success" });
+            setCopying(false);
+          }, 500);
+        } else {
+          toast({ description: "Error copying to clipboard", variant: "warning" });
+          setCopying(false);
+        }
+      }}
+    >
+      {copying ? <Spinner className="w-6 h-8" /> : <FiCopy className="w-6 h-8 stroke-white" />}
+    </div>
+  );
+}
+
 function SocialButtons({
-  children,
   username,
   summary,
+  toast,
 }: {
-  children: React.ReactNode;
   username: string;
   summary: string;
+  toast: ReturnType<typeof useToast>["toast"];
 }) {
   const posthog = usePostHog();
   const icons = [
@@ -254,7 +256,8 @@ function SocialButtons({
             <Image src={icon.src} alt={icon.name} width={24} height={24} />
           </a>
         ))}
-        {children}
+
+        <CopyButton username={username} toast={toast} />
       </div>
     </div>
   );
