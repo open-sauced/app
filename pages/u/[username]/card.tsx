@@ -71,7 +71,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 export default function CardPage({ username, cards }: { username: string; cards: UserDevStats[] }) {
-  const { toast } = useToast();
   const { user: loggedInUser } = useSupabaseAuth();
   const [selectedUserName, setSelectedUserName] = useState<string>(username);
   const iframeTransition = useTransition(selectedUserName, {
@@ -116,7 +115,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
               <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
               <div className="hidden md:flex align-self-stretch justify-center">
                 {isViewingOwnProfile ? (
-                  <SocialButtons username={username} summary={socialSummary} toast={toast} />
+                  <SocialButtons username={username} summary={socialSummary} />
                 ) : (
                   <Button variant="primary" className="justify-center" href="/start">
                     Create your own dev card!
@@ -167,7 +166,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
         </div>
         <div className="grid justify-center place-content-start py-7 md:hidden">
           {isViewingOwnProfile ? (
-            <SocialButtons username={username} summary={socialSummary} toast={toast} />
+            <SocialButtons username={username} summary={socialSummary} />
           ) : (
             <div className="flex flex-col gap-2">
               <Button variant="primary" className="justify-center" href={`/u/${selectedUserName}`}>
@@ -184,8 +183,10 @@ export default function CardPage({ username, cards }: { username: string; cards:
   );
 }
 
-function CopyButton({ username, toast }: { username: string; toast: ReturnType<typeof useToast>["toast"] }) {
+function CopyButton({ username }: { username: string }) {
   const [copying, setCopying] = useState(false);
+  const { toast } = useToast();
+  const posthog = usePostHog();
 
   return (
     <div
@@ -193,6 +194,7 @@ function CopyButton({ username, toast }: { username: string; toast: ReturnType<t
 flex items-center justify-center"
       onClick={async () => {
         setCopying(true);
+        posthog.capture("DevCard image copied", { username });
         copyImageToClipboard(siteUrl(`og-images/dev-card`, { username })).then((copied) => {
           if (copied) {
             setTimeout(() => {
@@ -211,15 +213,7 @@ flex items-center justify-center"
   );
 }
 
-function SocialButtons({
-  username,
-  summary,
-  toast,
-}: {
-  username: string;
-  summary: string;
-  toast: ReturnType<typeof useToast>["toast"];
-}) {
+function SocialButtons({ username, summary }: { username: string; summary: string }) {
   const posthog = usePostHog();
   const icons = [
     {
@@ -253,7 +247,7 @@ function SocialButtons({
           </a>
         ))}
 
-        <CopyButton username={username} toast={toast} />
+        <CopyButton username={username} />
       </div>
     </div>
   );
