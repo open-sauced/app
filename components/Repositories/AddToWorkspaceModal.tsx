@@ -26,6 +26,7 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal, 
   const { signIn, user, sessionToken } = useSupabaseAuth();
   const [workspaceId, setWorkspaceId] = useState("new");
   const { data: workspaces, isLoading: workspacesLoading, mutate } = useWorkspaces({ load: !!user, limit: 100 });
+  const title = sbomUrl ? "Add repository SBOM to Workspace" : "Add repository to Workspace";
 
   const [host, setHost] = useState("");
   useEffect(() => {
@@ -62,7 +63,12 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal, 
 
   return (
     <Dialog open={isOpen}>
-      <DialogContent autoStyle={false} onEscapeKeyDown={onCloseModal} onInteractOutside={onCloseModal}>
+      <DialogContent
+        aria-label={title}
+        autoStyle={false}
+        onEscapeKeyDown={onCloseModal}
+        onInteractOutside={onCloseModal}
+      >
         <Card heading={<h1 className="text-xl font-semibold">Add to workspace</h1>}>
           <div className="flex flex-col gap-4 w-[32rem] h-full px-8 py-4">
             {!user ? (

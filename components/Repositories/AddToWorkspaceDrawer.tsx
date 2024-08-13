@@ -67,12 +67,12 @@ export default function AddToWorkspaceDrawer({ repository, type = "repo" }: AddT
   }
 
   const url = `/workspaces/new?${params}`;
-
   const redirectTo = new URL(url, window.location.origin).toString();
+  const title = type === "repo" ? "Add repository to Workspace" : "Add repository SBOM to Workspace";
 
   return (
     <Drawer
-      title="Add repository to Workspace"
+      title={title}
       description="Create a new workspace or add to an existing one."
       showCloseButton
       trigger={
