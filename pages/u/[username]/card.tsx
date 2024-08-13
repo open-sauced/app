@@ -64,9 +64,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   });
 
   if (error || !userData) {
-    return {
-      notFound: true,
-    };
+    if (error?.status === 404 || error?.status === 401) {
+      return { notFound: true };
+    }
+    const exception = new Error(`Error in fetching user data`);
+    captureException(exception);
+    throw exception;
   }
 
   const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
