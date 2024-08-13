@@ -187,7 +187,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
           <a
             key={icon.src}
             href={icon.url}
-            className="rounded-full w-10 h-10 grid place-content-center border hover:opacity-80 transition-all"
+            className="rounded-full w-10 h-10 grid p-2.5 place-content-center border hover:opacity-80 transition-all"
             style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
             onClick={() => posthog.capture("DevCard share link clicked", { platform: icon.name, username })}
