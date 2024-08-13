@@ -44,6 +44,7 @@ import YoloChart from "components/Repositories/YoloChart";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 import OssfChart from "components/Repositories/OssfChart";
 import { setQueryParams } from "lib/utils/query-params";
+import Tooltip from "components/atoms/Tooltip/tooltip";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -244,7 +245,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     <AddToWorkspaceDrawer type="sbom" repository={repoData.full_name} />
                   </>
                 ) : (
-                  <>
+                  <div className="grid gap-2 md:gap-1 w-fit">
                     <Button
                       variant="primary"
                       onClick={() => {
@@ -256,33 +257,45 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       <MdWorkspaces />
                       Add to Workspace
                     </Button>
-                    <Button
-                      variant="dark"
-                      onClick={() => {
-                        posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
-                          repository: repoData.full_name,
-                        });
+                    <Tooltip
+                      content={
+                        <div className="grid gap-2">
+                          <p>Create a workspace from the software bill of materials (SBOM) for this repository</p>
 
-                        const params = new URLSearchParams();
-                        params.set("sbom", "true");
-                        params.set("repo", repoData.full_name);
-
-                        const url = `/workspaces/new?${params}`;
-
-                        if (!session) {
-                          setSbomUrl(new URL(url, window.location.origin).toString());
-                          setIsAddToWorkspaceModalOpen(true);
-                          return;
-                        }
-
-                        router.push(url);
-                      }}
-                      className="shrink-0 items-center gap-3 w-full"
+                          <a href="https://www.cisa.gov/sbom" className="underline" target="_blank">
+                            Learn more...<span className="sr-only"> about SBOM</span>
+                          </a>
+                        </div>
+                      }
                     >
-                      <MdWorkspaces />
-                      Workspace from SBOM
-                    </Button>
-                  </>
+                      <Button
+                        variant="dark"
+                        onClick={() => {
+                          posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
+                            repository: repoData.full_name,
+                          });
+
+                          const params = new URLSearchParams();
+                          params.set("sbom", "true");
+                          params.set("repo", repoData.full_name);
+
+                          const url = `/workspaces/new?${params}`;
+
+                          if (!session) {
+                            setSbomUrl(new URL(url, window.location.origin).toString());
+                            setIsAddToWorkspaceModalOpen(true);
+                            return;
+                          }
+
+                          router.push(url);
+                        }}
+                        className="shrink-0 items-center gap-3 w-full"
+                      >
+                        <MdWorkspaces />
+                        Workspace from SBOM
+                      </Button>
+                    </Tooltip>
+                  </div>
                 )}
                 <div className="flex gap-2 items-center">
                   <Button
