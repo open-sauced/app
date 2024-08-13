@@ -4,6 +4,7 @@ import { ComponentProps, useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { usePostHog } from "posthog-js/react";
+import { captureException } from "@sentry/nextjs";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -13,6 +14,7 @@ import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import { createWorkspace } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import AuthContentWrapper from "components/molecules/AuthContentWrapper/auth-content-wrapper";
+import { fetchApiData } from "helpers/fetchApiData";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
 
@@ -30,6 +32,35 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 };
 
 const NewWorkspace = () => {
+  const loadSbomRepos = async (repos: string[]) => {
+    const params = new URLSearchParams({ repos: repos.join(",") });
+    const { data: sbomData, error } = await fetchApiData<Record<string, string[]>>({ path: `repos/sbom?${params}` });
+
+    if (error) {
+      captureException(error);
+      toast({ description: `Error loading SBOM data. Please try again`, variant: "danger" });
+      setTrackedReposLoading(false);
+      return;
+    }
+
+    if (sbomData) {
+      setTrackedRepos(() => {
+        const updates = new Map();
+
+        Object.keys(sbomData).forEach((key) => {
+          const repos = sbomData[key];
+
+          repos.forEach((repo) => {
+            updates.set(repo, true);
+          });
+        });
+
+        return updates;
+      });
+      setTrackedReposLoading(false);
+    }
+  };
+
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -38,6 +69,7 @@ const NewWorkspace = () => {
   const descriptionQuery = router.query.description as string;
   const reposQuery = router.query.repos as string;
   const welcome = router.query.welcome as string;
+  const sbom = (router.query.sbom as string) === "true";
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -45,8 +77,16 @@ const NewWorkspace = () => {
 
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(new Map());
+  const [trackedReposLoading, setTrackedReposLoading] = useState(false);
 
   useEffect(() => {
+    if (sbom) {
+      setTrackedReposLoading(true);
+      setName(`SBOM for ${router.query.repo}`);
+      loadSbomRepos([router.query.repo as string]);
+      return;
+    }
+
     if (nameQuery) {
       setName(nameQuery);
     }
@@ -63,7 +103,7 @@ const NewWorkspace = () => {
     if (descriptionQuery) {
       setDescription(descriptionQuery);
     }
-  }, [router.query]);
+  }, [sbom, nameQuery, reposQuery, descriptionQuery]);
 
   useEffect(() => {
     if (welcome) {
@@ -156,6 +196,8 @@ const NewWorkspace = () => {
         </form>
 
         <TrackedReposTable
+          isLoading={trackedReposLoading}
+          loadingMessage="Loading SBOM..."
           repositories={trackedRepos}
           onAddRepos={() => {
             posthog.capture("clicked: Add Repositories (Create workspace)");

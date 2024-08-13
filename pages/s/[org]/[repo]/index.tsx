@@ -240,17 +240,39 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 {isMobile ? (
                   <AddToWorkspaceDrawer repository={repoData.full_name} />
                 ) : (
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
-                      setIsAddToWorkspaceModalOpen(true);
-                    }}
-                    className="shrink-0 items-center gap-3 w-fit"
-                  >
-                    <MdWorkspaces />
-                    Add to Workspace
-                  </Button>
+                  <>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
+                        setIsAddToWorkspaceModalOpen(true);
+                      }}
+                      className="shrink-0 items-center gap-3 w-full"
+                    >
+                      <MdWorkspaces />
+                      Add to Workspace
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
+                          repository: repoData.full_name,
+                        });
+
+                        // use urlsearchapi to update the url
+                        // sbom=true&repo=${encodeURIComponent(repoData.full_name)}
+                        const params = new URLSearchParams();
+                        params.set("sbom", "true");
+                        params.set("repo", repoData.full_name);
+
+                        router.push(`/workspaces/new?${params}`);
+                      }}
+                      className="shrink-0 items-center gap-3 w-full"
+                    >
+                      <MdWorkspaces />
+                      Workspace from SBOM
+                    </Button>
+                  </>
                 )}
                 <div className="flex gap-2 items-center">
                   <Button
