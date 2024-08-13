@@ -32,13 +32,21 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 };
 
 const NewWorkspace = () => {
-  const loadSbomRepos = async (repos: string[]) => {
-    const params = new URLSearchParams({ repos: repos.join(",") });
+  const loadSbomRepo = async (repo: string) => {
+    const params = new URLSearchParams({ repos: repo });
     const { data: sbomData, error } = await fetchApiData<Record<string, string[]>>({ path: `repos/sbom?${params}` });
 
     if (error) {
-      captureException(error);
-      toast({ description: `Error loading SBOM data. Please try again`, variant: "danger" });
+      if (error.status === 412) {
+        toast({
+          description: `Generating a workspace from the SBOM for ${repo} is currently not supported`,
+          variant: "danger",
+        });
+      } else {
+        captureException(error);
+        toast({ description: `Error loading SBOM data. Please try again`, variant: "danger" });
+      }
+
       setTrackedReposLoading(false);
       return;
     }
@@ -83,7 +91,7 @@ const NewWorkspace = () => {
     if (sbom) {
       setTrackedReposLoading(true);
       setName(`SBOM for ${router.query.repo}`);
-      loadSbomRepos([router.query.repo as string]);
+      loadSbomRepo(router.query.repo as string);
       return;
     }
 
