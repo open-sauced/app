@@ -51,10 +51,6 @@ async function fetchUserData(username: string) {
   }
 }
 
-async function copyImage(username: string) {
-  return copyImageToClipboard(siteUrl(`og-images/dev-card`, { username }));
-}
-
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const username = context?.params?.username as string | undefined;
   if (!username) {
@@ -197,17 +193,17 @@ function CopyButton({ username, toast }: { username: string; toast: ReturnType<t
 flex items-center justify-center"
       onClick={async () => {
         setCopying(true);
-        const copied = await copyImage(username);
-
-        if (copied) {
-          setTimeout(() => {
-            toast({ description: "Copied to clipboard", variant: "success" });
+        copyImageToClipboard(siteUrl(`og-images/dev-card`, { username })).then((copied) => {
+          if (copied) {
+            setTimeout(() => {
+              toast({ description: "Copied to clipboard", variant: "success" });
+              setCopying(false);
+            }, 500);
+          } else {
+            toast({ description: "Error copying to clipboard", variant: "warning" });
             setCopying(false);
-          }, 500);
-        } else {
-          toast({ description: "Error copying to clipboard", variant: "warning" });
-          setCopying(false);
-        }
+          }
+        });
       }}
     >
       {copying ? <Spinner className="w-6 h-8" /> : <FiCopy className="w-6 h-8 stroke-white" />}
