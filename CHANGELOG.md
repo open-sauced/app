@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.56.0-beta.1](https://github.com/open-sauced/app/compare/v2.55.3-beta.1...v2.56.0-beta.1) (2024-08-13)
+
+
+### 🍕 Features
+
+* now workspace can be generated from repo page via SBOM ([#3938](https://github.com/open-sauced/app/issues/3938)) ([e2bd019](https://github.com/open-sauced/app/commit/e2bd019134e86a700d7f18b20b755541e57a32cf))
+
 ## [2.55.3-beta.1](https://github.com/open-sauced/app/compare/v2.55.2...v2.55.3-beta.1) (2024-08-13)
 
 
