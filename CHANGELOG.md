@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.55.3-beta.1](https://github.com/open-sauced/app/compare/v2.55.2...v2.55.3-beta.1) (2024-08-13)
+
+
+### 🐛 Bug Fixes
+
+* validate user exists for `/user/<username>/card` page ([#3933](https://github.com/open-sauced/app/issues/3933)) ([9976453](https://github.com/open-sauced/app/commit/99764535b0690788f86ae951b33a520b5a1bbeb1))
+
 ## [2.55.2](https://github.com/open-sauced/app/compare/v2.55.1...v2.55.2) (2024-08-13)
 
 
