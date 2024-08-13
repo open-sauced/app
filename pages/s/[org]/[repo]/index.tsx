@@ -256,7 +256,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       Add to Workspace
                     </Button>
                     <Button
-                      variant="primary"
+                      variant="dark"
                       onClick={() => {
                         posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
                           repository: repoData.full_name,
