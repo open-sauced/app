@@ -75,7 +75,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
   });
 
-  const firstCard = cards.find((card) => card.login === username);
+  const firstCard = cards && cards.find((card) => card.login === username);
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
@@ -188,11 +188,16 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
             key={icon.src}
             href={icon.url}
             className="rounded-full w-10 h-10 grid p-2.5 place-content-center border hover:opacity-80 transition-all"
-            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
+            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.3)" }}
             target="_blank"
             onClick={() => posthog.capture("DevCard share link clicked", { platform: icon.name, username })}
           >
-            <Image src={icon.src} alt={icon.name} width={24} height={24} />
+            <Image
+              src={icon.src}
+              alt={icon.name}
+              width={icon.name === "Twitter" ? 14 : 24}
+              height={icon.name === "Twitter" ? 14 : 24}
+            />
           </a>
         ))}
       </div>
