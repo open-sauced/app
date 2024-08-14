@@ -132,7 +132,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
               <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
               <div className="hidden md:flex align-self-stretch justify-center">
                 {isViewingOwnProfile ? (
-                  <SocialButtons username={username} summary={socialSummary} />
+                  <SocialButtons username={selectedUserName} summary={socialSummary} />
                 ) : (
                   <Button variant="primary" className="justify-center" href="/start">
                     Create your own dev card!
@@ -183,7 +183,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
         </div>
         <div className="grid justify-center place-content-start py-7 md:hidden">
           {isViewingOwnProfile ? (
-            <SocialButtons username={username} summary={socialSummary} />
+            <SocialButtons username={selectedUserName} summary={socialSummary} />
           ) : (
             <div className="flex flex-col gap-2">
               <Button variant="primary" className="justify-center" href={`/u/${selectedUserName}`}>
@@ -249,7 +249,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
 
   return (
     <div>
-      <div className="text-white text-xs mb-2">Share your DevCard</div>
+      <div className="flex justify-center text-white text-xs mb-2">Share your DevCard</div>
       <div className="flex gap-2 justify-center">
         {icons.map((icon) => (
           <a

@@ -12,19 +12,17 @@ export const copyToClipboard = async (content: string) => {
 
 export async function copyImageToClipboard(imageUrl: string) {
   try {
-    const data = await fetch(imageUrl);
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        "image/png": new Promise(async (resolve) => {
+          const data = await fetch(imageUrl);
+          const blob = await data.blob();
 
-    if (data.ok) {
-      const blob = await data.blob();
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          [blob.type]: blob,
+          resolve(new Blob([blob], { type: "image/png" }));
         }),
-      ]);
-      return true;
-    }
-
-    return false;
+      }),
+    ]);
+    return true;
   } catch (err) {
     return false;
   }
