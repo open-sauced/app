@@ -28,12 +28,10 @@ import useSession from "lib/hooks/useSession";
 import { captureAnalytics } from "lib/utils/analytics";
 
 import useStore from "lib/store";
-import { getInterestOptions } from "lib/utils/getInterestOptions";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import { timezones } from "lib/utils/timezones";
 import { useFetchUser } from "lib/hooks/useFetchUser";
-import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
 
 type StepKeys = "1" | "2" | "3";
 
@@ -70,7 +68,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
     } else if (onboarded === false && user && providerToken) {
       setQueryParams({ step: "2" } satisfies QueryParams);
     }
-  }, [user, onboarded, providerToken]);
+  }, [user, onboarded, providerToken, router]);
 
   const handleGitHubAuth = async () => {
     // Redirect user to GitHub to authenticate
@@ -127,13 +125,10 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
 };
 
 interface LoginStep2Props {
-  handleUpdateInterests: (interests: string[]) => void;
+  user: User | null;
 }
 
-const LoginStep2: React.FC<LoginStep2Props> = ({ handleUpdateInterests: handleUpdateInterestsParent }) => {
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
-  const interestArray = getInterestOptions();
-  const { user } = useSupabaseAuth();
+const LoginStep2: React.FC<LoginStep2Props> = ({ user }) => {
   const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
 
   useEffect(() => {
@@ -149,78 +144,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ handleUpdateInterests: handleUp
     });
   }, [userInfo, isLoading]);
 
-  const handleSelectInterest = (interest: string) => {
-    if (selectedInterests.length > 0 && selectedInterests.includes(interest)) {
-      setSelectedInterests((prev) => prev.filter((item) => item !== interest));
-    } else {
-      setSelectedInterests((prev) => [...prev, interest]);
-    }
-  };
-
-  const handleUpdateInterest = async () => {
-    handleUpdateInterestsParent(selectedInterests);
-    setQueryParams({ step: "3" } satisfies QueryParams);
-  };
-
-  return (
-    <>
-      <div className="flex flex-col h-full login-step lg:gap-28">
-        <div>
-          <div className="flex items-center gap-2 mb-4">
-            <Icon className="lg:hidden" IconImage={ChooseInterestsActiveIcon} size={48} />
-            <Title className="!text-sm !text-light-orange-9">Step Two</Title>
-          </div>
-          <div className="gap-2 mb-4">
-            <Title className="!text-2xl">Choose your interests</Title>
-          </div>
-          <div className="mb-4 text-left ">
-            <Text className="!text-sm">
-              Take a moment to select your interests to help us provide personalized project recommendations. By doing
-              so, you&apos;ll find projects that match your skills and aspirations.
-            </Text>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            {interestArray.map((topic, index) => (
-              <LanguageSwitch
-                checked={selectedInterests.includes(topic)}
-                onClick={() => handleSelectInterest(topic)}
-                topic={topic}
-                key={index}
-              />
-            ))}
-          </div>
-        </div>
-        <Button onClick={handleUpdateInterest} variant="primary" className="justify-center w-full h-10 mt-3">
-          Confirm Selections
-        </Button>
-      </div>
-    </>
-  );
-};
-
-interface LoginStep3Props {
-  interests: string[];
-  user: User | null;
-}
-
-const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
-  const { data: userInfo, isLoading } = useFetchUser(user?.user_metadata.user_name);
-
-  useEffect(() => {
-    if (isLoading) {
-      return;
-    }
-
-    captureAnalytics({
-      title: "User Onboarding",
-      property: "onboardingStep3",
-      value: "visited",
-      userInfo,
-    });
-  }, [userInfo, isLoading]);
-
   const store = useStore();
-  const router = useRouter();
   const { sessionToken } = useSupabaseAuth();
   const [timezone, setTimezone] = useState("");
   const [loading, setLoading] = useState(false);
@@ -242,12 +166,12 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionToken}`,
         },
-        body: JSON.stringify({ interests, timezone }),
+        body: JSON.stringify({ interests: [], timezone }),
       });
 
       if (data.ok) {
         store.onboardUser();
-        router.push("/workspaces");
+        setQueryParams({ step: "3" } satisfies QueryParams);
       } else {
         setLoading(false);
         // eslint-disable-next-line no-console
@@ -315,6 +239,43 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ interests, user }) => {
   );
 };
 
+interface LoginStep3Props {
+  user: User | null;
+}
+
+const LoginStep3: React.FC<LoginStep3Props> = ({ user }) => {
+  const username: string = user?.user_metadata.user_name;
+  const router = useRouter();
+
+  return (
+    <>
+      <div className="flex flex-col h-full lg:gap-36">
+        <div>
+          <div className="flex items-center gap-2 mb-4">
+            <Icon className="lg:hidden" IconImage={ChooseInterestsActiveIcon} size={48} />
+            <Title className="!text-sm !text-light-orange-9">Congrats!</Title>
+          </div>
+          <div className="gap-2 mb-4">
+            <Title className="!text-2xl">Share Your DevCard!</Title>
+          </div>
+          <div className="mb-4 text-left ">
+            <Text className="!text-sm">
+              Congratulations on your new account. Share your creator card to let other people know you&apos;re here.
+            </Text>
+          </div>
+        </div>
+        <Button
+          variant="primary"
+          onClick={() => router.push(`/u/${username}/card`)}
+          className="justify-center w-full h-10 mt-3 md:mt-0"
+        >
+          Go to Your DevCard
+        </Button>
+      </div>
+    </>
+  );
+};
+
 const Login: WithPageLayout = () => {
   type LoginSteps = number;
 
@@ -327,8 +288,6 @@ const Login: WithPageLayout = () => {
   const highlighted = "!text-light-slate-12";
 
   const [currentLoginStep, setCurrentLoginStep] = useState<LoginSteps>(Number(step) || 1);
-
-  const [interests, setInterests] = useState<string[]>([]);
 
   useEffect(() => {
     if (step) {
@@ -364,24 +323,27 @@ const Login: WithPageLayout = () => {
             <Icon
               IconImage={
                 currentLoginStep === 2
-                  ? ChooseInterestsActiveIcon
+                  ? ChooseTimezoneActiveIcon
                   : currentLoginStep < 2
-                  ? ChooseInterestsIcon
+                  ? ChooseTimezoneIcon
                   : CompletedIcon
               }
               size={48}
             />
-            <Text disabled={currentLoginStep !== 2} className={`!text-[16px] ${currentLoginStep === 2 && highlighted}`}>
-              Choose your interests
+            <Text
+              disabled={currentLoginStep !== 2}
+              className={`!text-[16px]  ${currentLoginStep === 2 && highlighted}`}
+            >
+              What time is it?
             </Text>
           </div>
           <div className="items-center hidden gap-2 mb-8 lg:flex">
             <Icon
               IconImage={
                 currentLoginStep === 3
-                  ? ChooseTimezoneActiveIcon
+                  ? ChooseInterestsActiveIcon
                   : currentLoginStep < 3
-                  ? ChooseTimezoneIcon
+                  ? ChooseInterestsIcon
                   : CompletedIcon
               }
               size={48}
@@ -390,14 +352,14 @@ const Login: WithPageLayout = () => {
               disabled={currentLoginStep !== 3}
               className={`!text-[16px]  ${currentLoginStep === 3 && highlighted}`}
             >
-              What time is it?
+              Share Your DevCard!
             </Text>
           </div>
         </section>
         <section className="w-full lg:max-w-[50%] p-9 rounded-lg lg:rounded-r-lg bg-white">
           {currentLoginStep === 1 && <LoginStep1 user={user} />}
-          {currentLoginStep === 2 && <LoginStep2 handleUpdateInterests={(interests) => setInterests(interests)} />}
-          {currentLoginStep >= 3 && <LoginStep3 interests={interests} user={user} />}
+          {currentLoginStep === 2 && <LoginStep2 user={user} />}
+          {currentLoginStep >= 3 && <LoginStep3 user={user} />}
         </section>
       </>
     </Card>
