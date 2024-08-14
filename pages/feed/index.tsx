@@ -209,7 +209,7 @@ export default function Feeds(props: HighlightSSRProps) {
                   "Discover your open source impact with the OSCR - Open Source Contributor Rating. Visit your profile to view your personalized DevCard, showcasing your influence and impact on the open source ecosystem. Check out your OSCR DevCard and share it today!"
                 }
                 bannerSrc={"/assets/images/anouncement-cards/OSCR-devcard.png"}
-                url={`/u/${loggedInUser?.name ? loggedInUser.name + "/card" : "bdougie/card"}`}
+                url={`/u/${loggedInUser?.login ? loggedInUser.login + "/card" : "bdougie/card"}`}
                 cta={"See It Now!"}
               />
             </div>
