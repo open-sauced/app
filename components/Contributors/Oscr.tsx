@@ -1,6 +1,7 @@
 import { LockIcon } from "@primer/octicons-react";
 import { usePostHog } from "posthog-js/react";
 import { useRouter } from "next/router";
+import { HiOutlineInformationCircle } from "react-icons/hi";
 import Pill from "components/atoms/Pill/pill";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import Button from "components/shared/Button/button";
@@ -51,6 +52,7 @@ export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calcula
 };
 
 export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calculated }: OscrProps) => {
+  const router = useRouter();
   const posthog = usePostHog();
   let ratingToRender = calculated ? (rating ? Math.ceil(rating) : 0) : "-";
 
@@ -68,7 +70,9 @@ export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calcu
               variant="primary"
               className="flex items-center gap-2 !p-1 !text-xs z-10"
               onClick={() => {
-                posthog.capture("OSCR Login Button Clicked");
+                posthog.capture("OSCR Login Button Clicked", {
+                  pathname: router.pathname,
+                });
                 signIn({ provider: "github", options: { redirectTo: window.location.href } });
               }}
             >
@@ -81,5 +85,28 @@ export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calcu
         <span>{ratingToRender}</span>
       )}
     </>
+  );
+};
+
+export const OscrInfoTooltip = () => {
+  return (
+    <Tooltip
+      content={
+        <div className="grid gap-2">
+          <p>OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem.</p>
+
+          <a
+            href="https://opensauced.pizza/docs/features/contributor-insights/#open-source-contributor-rating-oscr"
+            className="underline"
+          >
+            Learn more...
+            <span className="sr-only"> about OSCR rating</span>
+          </a>
+        </div>
+      }
+      className="w-fit max-w-xs !text-sm shadow-lg text-slate-100 !px-4 !py-3 !rounded-xl"
+    >
+      <HiOutlineInformationCircle className="text-slate-500" />
+    </Tooltip>
   );
 };

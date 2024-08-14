@@ -1,44 +1,29 @@
-"use client";
-
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { ArrowTrendingUpIcon, MinusSmallIcon, ArrowSmallUpIcon, ArrowSmallDownIcon } from "@heroicons/react/24/solid";
-import { GiftIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
-import clsx from "clsx";
 import Tilt from "react-parallax-tilt";
+import { FiGlobe } from "react-icons/fi";
+import { PiCrownSimpleFill } from "react-icons/pi";
+import { HiArrowNarrowRight, HiTrendingDown, HiTrendingUp } from "react-icons/hi";
+import clsx from "clsx";
 import Button from "components/shared/Button/button";
-import Pill, { PillProps } from "components/atoms/Pill/pill";
-import Icon from "components/atoms/Icon/icon";
-import CardSauceBGSVG from "img/card-sauce-bg.svg";
 import openSaucedImg from "img/openSauced-icon.png";
-import PRIcon from "img/icons/pr-icon.svg";
 import { getRelativeDays } from "lib/utils/date-utils";
-import { DATA_FALLBACK_VALUE } from "lib/utils/fallback-values";
+import { getAvatarByUsername } from "lib/utils/github";
+import { UserDevStats } from "pages/u/[username]/card";
+import Pill from "components/atoms/Pill/pill";
+import DevCardGradient from "../../../public/devcard-gradient.png";
 
-export interface DevCardProps {
-  username: string;
-  name?: string;
-  avatarURL: string;
-  oscr?: number;
-  prs?: number;
-  repos?: number;
-  bio?: string;
-  prVelocity?: number;
-  prMergePercentage?: number;
-  isLoading?: boolean;
+export type DevCardProps = {
+  user: UserDevStats | undefined;
   isFlipped?: boolean;
   isInteractive?: boolean;
   hideProfileButton?: boolean;
-  age?: number;
   onFlip?: () => void;
-}
+};
 
 export default function DevCard(props: DevCardProps) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
   const isInteractive = props.isInteractive ?? true;
-
-  const activity = getActivity(props.prs ?? 0);
 
   useEffect(() => {
     setIsFlipped(props.isFlipped ?? false);
@@ -50,37 +35,17 @@ export default function DevCard(props: DevCardProps) {
     }
   }, [props.isInteractive, props.isFlipped]);
 
-  const profileHref = `/u/${props.username}`;
-
   function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     if (!isInteractive) {
       return;
     }
+
     // flip the card if the click is not on the button
     if (!(event.target instanceof HTMLAnchorElement || event.target instanceof HTMLButtonElement)) {
-      if (props.isFlipped === undefined) {
-        setIsFlipped(!isFlipped);
-      } else {
-        props.onFlip?.();
-      }
+      setIsFlipped(!isFlipped);
+      props.onFlip?.();
     }
   }
-
-  const faceClasses = clsx(
-    "flex",
-    "flex-col",
-    "items-stretch",
-    "justify-items-stretch",
-    "overflow-hidden",
-    "rounded-3xl",
-    "border-white",
-    "cursor-pointer",
-    "w-full",
-    "h-full",
-    "absolute",
-    "left-0",
-    "top-0"
-  );
 
   const faceStyle: React.CSSProperties = {
     backfaceVisibility: "hidden",
@@ -89,159 +54,143 @@ export default function DevCard(props: DevCardProps) {
     border: "2px",
   };
 
+  const getValueBasedOnCount = ({ low, med, high }: { low: any; med: any; high: any }) => {
+    const recent_pull_requests_count = props.user?.recent_pull_requests_count || 0;
+
+    return recent_pull_requests_count < 7 ? low : recent_pull_requests_count < 28 ? med : high;
+  };
+
   return (
     <div
-      className="DevCard"
+      className="DevCard select-none"
       style={{
         width: "245px",
         height: "348px",
       }}
+      onClick={handleCardClick}
     >
       <Tilt
         tiltEnable={isInteractive}
         glareEnable={isInteractive}
         trackOnWindow={isInteractive}
-        glareBorderRadius="1.5rem"
+        glareBorderRadius="0.75rem"
         flipHorizontally={isFlipped}
-        className={clsx("DevCard-card", "relative", "rounded-3xl", "w-full", "h-full", "border", "border-gray-400")}
+        className="DevCard-card relative rounded-xl w-full h-full border border-gray-400"
         style={{
           boxShadow: "0px 0px 20px -12px rgba(0, 0, 0, 0.25)",
           transformStyle: "preserve-3d",
         }}
       >
+        {/** Front View **/}
         <div
-          className={clsx("DevCard-front", faceClasses)}
-          onClick={handleCardClick}
+          className="relative DevCard-front flex flex-col overflow-hidden rounded-xl border-white cursor-pointer w-full h-full"
           style={{
             ...faceStyle,
           }}
         >
-          <div className="grid grid-rows-2 grid-cols-1 flex-shrink-0 w-full h-full">
-            <div
-              className="DevCard-top"
-              style={{
-                backgroundImage: `url(${CardSauceBGSVG.src})`,
-              }}
-            >
-              <div className=" absolute left-[10px] top-[10px] flex items-center gap-1 cursor-pointer">
-                <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
-                <p className={"font-semibold text-white"} style={{ fontSize: "8px" }}>
-                  OpenSauced
-                </p>
-              </div>
-            </div>
-            <div className="DevCard-bottom relative text-white flex flex-col items-center pt-10">
-              {!props.isLoading && (
-                <div className="absolute right-[8px] top-[8px]">
-                  <ActivityPill activity={activity} />
-                </div>
-              )}
-              <div className="text-sm mb-3 font-semibold">@{props.username}</div>
-              <div className="w-full flex justify-center gap-6">
-                <div className="text-center">
-                  <div className="text-6xl font-black">{props.isLoading ? "-" : props.oscr}</div>
-                  <div className="text-xs">OSCR</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Image
+            src={DevCardGradient}
+            alt="devcard-gradient"
+            className="absolute top-0 inset-x-0"
+            width={245}
+            height={348}
+          />
+          <Image
+            src="/devcard-border.svg"
+            alt="devcard-border"
+            className="absolute top-0 inset-x-0 p-2"
+            width={245}
+            height={348}
+          />
+
           <div
             className={clsx(
-              "DevCard-avatar",
-              "absolute",
-              "top-1/2",
-              "left-1/2",
-              "bg-white",
-              "border-white",
-              "border-2",
-              "block",
-              "rounded-full",
-              "w-28",
-              "h-28",
-              "text-transparent",
-              "overflow-hidden"
+              "z-10 flex flex-col gap-2 items-center justify-center w-full h-full text-white",
+              isFlipped && "invisible"
             )}
-            style={{ transform: "translate(-50%, -75%)" }}
           >
-            <Image src={props.avatarURL} alt="avatar" width={116} height={116} />
+            {/** Avatar + @Username **/}
+            <div className="flex flex-col items-center gap-1">
+              <Image
+                src={getAvatarByUsername(props.user?.login || "asf")}
+                alt={`${props.user?.login} front avatar`}
+                width={100}
+                height={100}
+                className="rounded-full border-[1.5px] border-gray-300 border-opacity-40"
+              />
+              <p>@{props.user?.login}</p>
+            </div>
+
+            {/** OSCR Score **/}
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-7xl font-bold">{!props.user?.oscr ? "-" : Math.ceil(props.user?.oscr)}</p>
+              <p className="text-transparent bg-clip-text bg-gradient-to-r from-sauced-orange via-gradient-orange-one to-amber-500 font-medium">
+                OSCR Score
+              </p>
+            </div>
+
+            {/** 'Ranking' Badge **/}
+            {props.user?.oscr && props.user?.oscr > 200 && <RankingBadge oscr={props.user.oscr} />}
           </div>
         </div>
+
+        {/** Back View **/}
         <div
-          className={clsx("DevCard-back", faceClasses)}
-          onClick={handleCardClick}
+          className="DevCard-back flex flex-col overflow-hidden rounded-xl border-white cursor-pointer w-full h-full absolute left-0 top-0 px-4 pt-4"
           style={{
             ...faceStyle,
             transform: "rotateY(180deg)",
           }}
         >
-          <div className="p-2 pt-4 w-full h-full flex flex-col">
-            <div
-              className="text-white rounded-full w-full bg-[#F98026] mb-2 flex items-center"
-              style={{
-                boxShadow: "0px 10px 15px -3px rgba(249, 128, 38, 0.1), 0px 4px 6px -2px rgba(249, 128, 38, 0.05)",
-              }}
-            >
+          <div className="z-10 flex flex-col gap-3 items-center w-full h-full text-white text-xs">
+            {/** Avatar + username + OSCR **/}
+            <div className="relative flex gap-4 items-center justify-between bg-sauced-orange px-2 py-1 rounded-full w-full font-semibold">
               <Image
-                src={props.avatarURL}
-                alt="avatar"
-                width={36}
-                height={36}
-                className="border-white border-[2px] block rounded-full mr-2"
+                src={getAvatarByUsername(props.user?.login || "zeucapua")}
+                alt={`${props.user?.login} front avatar`}
+                width={50}
+                height={50}
+                className="absolute rounded-full border-[1.5px] border-gray-300 border-opacity-40 -left-1"
               />
-              <div className="py-0.5">
-                <div className="text-xs font-semibold">{props.name ?? props.username}</div>
-                <div className="flex items-center gap-2">
-                  {props.prs !== undefined && (
-                    <div className="flex items-center">
-                      <Icon IconImage={PRIcon} className="w-3 h-3 mr-1" />
-                      <div className="flex text-xs">{props.prs} PR</div>
-                    </div>
-                  )}
-                  {props.age !== undefined && (
-                    <div className="flex items-center">
-                      <GiftIcon className="w-3 h-3 mr-1" />
-                      <div className="flex text-xs">{getRelativeDays(props.age)}</div>
-                    </div>
-                  )}
-                </div>
-              </div>
+              <p className="pl-10">{props.user?.login}</p>
+              <p className="-pl-4 justfy-self-end text-sm flex gap-0.5">
+                {Math.ceil(props.user?.oscr || 0)}
+                <span className="text-[0.5rem] text-gray-100 font-normal">/300</span>
+              </p>
             </div>
-            <div className="px-2">
-              <div className="flex justify-between items-center py-2">
-                <div className="text-xs text-slate-300">Activity</div>
-                {!props.isLoading ? (
-                  <ActivityPill activity={activity} size="small" />
-                ) : (
-                  <div className="text-xs text-slate-300 font-extralight">{DATA_FALLBACK_VALUE}</div>
-                )}
+
+            {/** Bio **/}
+            <p className="mt-2 h-full max-h-18 overflow-auto">{props.user?.bio}</p>
+
+            {/** Last 30 Days **/}
+            <div className="flex flex-col w-full h-fit text-md">
+              <p className="text-gray-300">Last 30 days</p>
+              <Separator />
+              <div className="flex justify-between items-center">
+                <p>Activity</p>
+                <ActivityBadge getValueBasedOnCount={getValueBasedOnCount} />
               </div>
-              <Seperator />
-              <div className="flex justify-between items-center py-2">
-                <div className="text-xs text-slate-300">PRs Velocity</div>
-                <div className="flex items-center ml-auto gap-1">
-                  {!props.prVelocity || props.prMergePercentage == undefined ? (
-                    <div className="text-xs text-slate-300 font-extralight">{DATA_FALLBACK_VALUE}</div>
-                  ) : (
-                    <>
-                      <div className="text-xs text-slate-300 font-extralight">{getRelativeDays(props.prVelocity)}</div>
-                      <VelocityPill velocity={props.prMergePercentage} size="small" />
-                    </>
-                  )}
-                </div>
+              <Separator />
+              <div className="flex justify-between">
+                <p>Opened PRs</p>
+                <p>{props.user?.recent_pull_requests_count}</p>
               </div>
-              <Seperator />
-              <div className="text-xs text-slate-300 text-ellipsis">{props.bio}</div>
+              <Separator />
+              <div className="flex justify-between">
+                <p>PR Velocity</p>
+                <p>{getRelativeDays(props.user?.recent_pull_request_velocity_count || 0)}</p>
+              </div>
+              <Separator />
             </div>
-            {/* bottom */}
-            <div className="px-2 mt-auto justify-self-end">
+
+            {/** Footer **/}
+            <div className="flex flex-col gap-[0.25] w-full">
               {!props.hideProfileButton && (
-                <Link href={profileHref} passHref>
-                  <Button variant="primary" className="w-full text-center justify-center mt-4 !py-1">
-                    View Profile
-                  </Button>
-                </Link>
+                <Button variant="primary" href={`/u/${props.user?.login}`} className="w-full justify-center">
+                  View Profile
+                </Button>
               )}
-              <div className="flex justify-center mt-2">
+              <div className="flex justify-center my-2">
                 <Image className="rounded" alt="OpenSauced Logo" width={13} height={13} src={openSaucedImg} />
                 <p className={"font-semibold text-white ml-1"} style={{ fontSize: "8px" }}>
                   OpenSauced
@@ -255,40 +204,71 @@ export default function DevCard(props: DevCardProps) {
   );
 }
 
-type Activity = "high" | "mid";
-
-function getActivity(prs: number): Activity {
-  if (prs > 4) {
-    return "high";
-  } else {
-    return "mid";
-  }
-}
-
-function VelocityPill({ velocity, ...props }: { velocity: number } & Omit<PillProps, "text" | "icon">) {
-  const icon =
-    velocity > 0 ? <ArrowSmallUpIcon color="purple" className="h-4 w-4" /> : <ArrowSmallDownIcon className="h-4 w-4" />;
-  return <Pill color="purple" icon={icon} text={`${velocity}%`} {...props} />;
-}
-
-function ActivityPill({ activity, ...props }: { activity: Activity } & Omit<PillProps, "text" | "icon">) {
-  const color = activity === "high" ? "green" : "yellow";
-  const activityText = activity === "high" ? "High" : "Mid";
-  const icon =
-    activity === "high" ? (
-      <ArrowTrendingUpIcon color="green" className="h-4 w-4" />
-    ) : (
-      <MinusSmallIcon className="h-4 w-4 text-amber-500" />
-    );
-
-  return <Pill color={color} icon={icon} text={activityText} {...props} />;
-}
-
-function Seperator() {
+function Separator() {
   return (
     <div
       className="my-2 h-[1px]"
       style={{ background: "linear-gradient(90deg, hsla(206, 12%, 89%, 0.6), hsla(206, 12%, 89%, 0.01)" }}
     ></div>
+  );
+}
+
+function ActivityBadge({
+  getValueBasedOnCount,
+}: {
+  getValueBasedOnCount: ({ low, med, high }: { low: any; med: any; high: any }) => any;
+}) {
+  const status = getValueBasedOnCount({
+    low: "Low",
+    med: "Mid",
+    high: "High",
+  });
+
+  const icon = getValueBasedOnCount({
+    low: <HiTrendingDown />,
+    med: <HiArrowNarrowRight />,
+    high: <HiTrendingUp />,
+  });
+
+  const color = getValueBasedOnCount({
+    low: "red",
+    med: "yellow",
+    high: "green",
+  });
+
+  return <Pill text={status} icon={icon} color={color} size="xsmall" />;
+}
+
+function RankingBadge({ oscr }: { oscr: number }) {
+  const getValueBasedOnOscr = ({
+    five,
+    four,
+    three,
+    two,
+    one,
+  }: {
+    five: any;
+    four: any;
+    three: any;
+    two: any;
+    one: any;
+  }) => {
+    return oscr > 250 ? one : oscr > 235 ? two : oscr > 225 ? three : oscr > 215 ? four : oscr > 200 ? five : null;
+  };
+
+  const percentage = getValueBasedOnOscr({ five: 5, four: 4, three: 3, two: 2, one: 1 });
+  const icon = getValueBasedOnOscr({
+    five: <FiGlobe className="text-lg text-orange-500" />,
+    four: <FiGlobe className="text-lg text-orange-500" />,
+    three: <PiCrownSimpleFill className="text-lg text-orange-500" />,
+    two: <PiCrownSimpleFill className="text-lg text-orange-500" />,
+    one: <PiCrownSimpleFill className="text-lg text-orange-500" />,
+  });
+
+  return (
+    <div className="flex items-center gap-2 px-2 py-1 border border-amber-500 rounded-full">
+      {icon}
+      <p className="text-xs font-medium">In the top {percentage}%</p>
+    </div>
   );
 }

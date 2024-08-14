@@ -38,7 +38,7 @@ const NewsletterForm = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("/", {
+      const res = await fetch("/__newsletter.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(formData).toString(),
@@ -87,14 +87,7 @@ const NewsletterForm = () => {
               Stay up to date with the latest OpenSauced news and trends!
             </p>
           </div>
-          <form
-            name="newsletter"
-            data-netlify="true"
-            method="post"
-            autoComplete="off"
-            className="w-full"
-            onSubmit={handleSubmit}
-          >
+          <form name="newsletter" method="post" autoComplete="off" className="w-full" onSubmit={handleSubmit}>
             <div hidden aria-hidden="true">
               <label>
                 Try your luck
@@ -137,30 +130,4 @@ const NewsletterForm = () => {
   );
 };
 
-const NewsletterLink = () => {
-  return (
-    <aside
-      aria-labelledby="subscribe-to-newsletter"
-      className="newsletter-wrap flex flex-col w-full gap-3 p-6 pt-5 border rounded-lg bg-light-slate-1"
-    >
-      <div className="w-64 space-y-1">
-        <h2 className="text-lg" id="subscribe-to-newsletter">
-          Subscribe to our newsletter
-        </h2>
-        <p className="text-sm font-normal text-light-slate-11">
-          Stay up to date with the latest OpenSauced news and trends!
-        </p>
-      </div>
-      <a
-        href="https://news.opensauced.pizza/#/portal/signup"
-        target="_blank"
-        className="flex flex-none justify-center py-1 border-light-orange-7 text-light-orange-10 px-2"
-        type="button"
-      >
-        Subscribe
-      </a>
-    </aside>
-  );
-};
-
-export default NewsletterLink;
+export default NewsletterForm;

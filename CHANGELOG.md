@@ -5,6 +5,122 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.56.0-beta.1](https://github.com/open-sauced/app/compare/v2.55.3-beta.1...v2.56.0-beta.1) (2024-08-13)
+
+
+### 🍕 Features
+
+* now workspace can be generated from repo page via SBOM ([#3938](https://github.com/open-sauced/app/issues/3938)) ([e2bd019](https://github.com/open-sauced/app/commit/e2bd019134e86a700d7f18b20b755541e57a32cf))
+
+## [2.55.3-beta.1](https://github.com/open-sauced/app/compare/v2.55.2...v2.55.3-beta.1) (2024-08-13)
+
+
+### 🐛 Bug Fixes
+
+* validate user exists for `/user/<username>/card` page ([#3933](https://github.com/open-sauced/app/issues/3933)) ([9976453](https://github.com/open-sauced/app/commit/99764535b0690788f86ae951b33a520b5a1bbeb1))
+
+## [2.55.2](https://github.com/open-sauced/app/compare/v2.55.1...v2.55.2) (2024-08-13)
+
+
+### 🐛 Bug Fixes
+
+* now the back of the dev card no longer peers through when flipped on Safari and Firefox ([#3931](https://github.com/open-sauced/app/issues/3931)) ([eb9f458](https://github.com/open-sauced/app/commit/eb9f458c67adbd10d47572144451087e35bf340d))
+
+## [2.55.2-beta.1](https://github.com/open-sauced/app/compare/v2.55.1...v2.55.2-beta.1) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* now the back of the dev card no longer peers through when flipped on Safari and Firefox ([#3931](https://github.com/open-sauced/app/issues/3931)) ([eb9f458](https://github.com/open-sauced/app/commit/eb9f458c67adbd10d47572144451087e35bf340d))
+
+## [2.55.1](https://github.com/open-sauced/app/compare/v2.55.0...v2.55.1) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* capture pathname for `OscrButton` when clicked ([#3924](https://github.com/open-sauced/app/issues/3924)) ([3925911](https://github.com/open-sauced/app/commit/392591142cca1afe945f3f40aa9f6c2e49b76e46))
+
+## [2.55.1-beta.1](https://github.com/open-sauced/app/compare/v2.55.0...v2.55.1-beta.1) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* capture pathname for `OscrButton` when clicked ([#3924](https://github.com/open-sauced/app/issues/3924)) ([3925911](https://github.com/open-sauced/app/commit/392591142cca1afe945f3f40aa9f6c2e49b76e46))
+
+## [2.55.0](https://github.com/open-sauced/app/compare/v2.54.0...v2.55.0) (2024-08-12)
+
+
+### 🤖 Build System
+
+* remove OpenGraph service environment variable ([#3915](https://github.com/open-sauced/app/issues/3915)) ([7c57ef0](https://github.com/open-sauced/app/commit/7c57ef0edb908dc158c5758bb034a1c6032f11c3))
+
+
+### 🍕 Features
+
+* added a link to OSCR tooltips pointing to the OSCR docs ([#3921](https://github.com/open-sauced/app/issues/3921)) ([71e8b4a](https://github.com/open-sauced/app/commit/71e8b4ac419168d17e069fb17b5be790c66d87a3))
+
+
+### 🐛 Bug Fixes
+
+* re-enable newsletter form on Netlify ([#3919](https://github.com/open-sauced/app/issues/3919)) ([42e2668](https://github.com/open-sauced/app/commit/42e266808a1d3e859ca0d7070fa586d4bb344afd))
+* toggling hide bots for yolo coders no longer causes page jumps ([#3911](https://github.com/open-sauced/app/issues/3911)) ([4337ec3](https://github.com/open-sauced/app/commit/4337ec3cf4f04638ecd1a127803b4d0f258d77ac))
+
+## [2.55.0-beta.2](https://github.com/open-sauced/app/compare/v2.55.0-beta.1...v2.55.0-beta.2) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* re-enable newsletter form on Netlify ([#3919](https://github.com/open-sauced/app/issues/3919)) ([42e2668](https://github.com/open-sauced/app/commit/42e266808a1d3e859ca0d7070fa586d4bb344afd))
+* toggling hide bots for yolo coders no longer causes page jumps ([#3911](https://github.com/open-sauced/app/issues/3911)) ([4337ec3](https://github.com/open-sauced/app/commit/4337ec3cf4f04638ecd1a127803b4d0f258d77ac))
+
+## [2.55.0-beta.1](https://github.com/open-sauced/app/compare/v2.54.1-beta.1...v2.55.0-beta.1) (2024-08-12)
+
+
+### 🍕 Features
+
+* added a link to OSCR tooltips pointing to the OSCR docs ([#3921](https://github.com/open-sauced/app/issues/3921)) ([71e8b4a](https://github.com/open-sauced/app/commit/71e8b4ac419168d17e069fb17b5be790c66d87a3))
+
+## [2.54.1-beta.1](https://github.com/open-sauced/app/compare/v2.54.0...v2.54.1-beta.1) (2024-08-12)
+
+
+### 🤖 Build System
+
+* remove OpenGraph service environment variable ([#3915](https://github.com/open-sauced/app/issues/3915)) ([7c57ef0](https://github.com/open-sauced/app/commit/7c57ef0edb908dc158c5758bb034a1c6032f11c3))
+
+## [2.54.0](https://github.com/open-sauced/app/compare/v2.53.0...v2.54.0) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* add margin left to prevent overflow of nav item ([#3904](https://github.com/open-sauced/app/issues/3904)) ([c8b8ace](https://github.com/open-sauced/app/commit/c8b8acec3595bf4a243f15ade411f4fe4d4e7693))
+* contributor insight card orange dot no longer squished ([#3912](https://github.com/open-sauced/app/issues/3912)) ([01cb265](https://github.com/open-sauced/app/commit/01cb265d531e7b9392d89b397436afab12442c78))
+
+
+### 🍕 Features
+
+* update DevCard design ([#3879](https://github.com/open-sauced/app/issues/3879)) ([979576d](https://github.com/open-sauced/app/commit/979576d482ec1f0d6fe5cc6b63468ac27e1628a8))
+
+## [2.54.0-beta.1](https://github.com/open-sauced/app/compare/v2.53.1-beta.2...v2.54.0-beta.1) (2024-08-12)
+
+
+### 🍕 Features
+
+* update DevCard design ([#3879](https://github.com/open-sauced/app/issues/3879)) ([979576d](https://github.com/open-sauced/app/commit/979576d482ec1f0d6fe5cc6b63468ac27e1628a8))
+
+## [2.53.1-beta.2](https://github.com/open-sauced/app/compare/v2.53.1-beta.1...v2.53.1-beta.2) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* contributor insight card orange dot no longer squished ([#3912](https://github.com/open-sauced/app/issues/3912)) ([01cb265](https://github.com/open-sauced/app/commit/01cb265d531e7b9392d89b397436afab12442c78))
+
+## [2.53.1-beta.1](https://github.com/open-sauced/app/compare/v2.53.0...v2.53.1-beta.1) (2024-08-12)
+
+
+### 🐛 Bug Fixes
+
+* add margin left to prevent overflow of nav item ([#3904](https://github.com/open-sauced/app/issues/3904)) ([c8b8ace](https://github.com/open-sauced/app/commit/c8b8acec3595bf4a243f15ade411f4fe4d4e7693))
+
 ## [2.53.0](https://github.com/open-sauced/app/compare/v2.52.0...v2.53.0) (2024-08-12)
 
 

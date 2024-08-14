@@ -1,24 +1,20 @@
-import { ParsedUrlQuery } from "querystring";
-import { GetServerSideProps, NextPage } from "next";
-import { useEffect, useState } from "react";
+import { GetServerSidePropsContext } from "next";
+import { useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
-import cntl from "cntl";
 import { usePostHog } from "posthog-js/react";
+import { captureException } from "@sentry/nextjs";
+import { safeParse } from "valibot";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
-import { getAvatarByUsername } from "lib/utils/github";
-import { fetchContributorPRs } from "lib/hooks/api/useContributorPullRequests";
-import getContributorPullRequestVelocity from "lib/utils/get-contributor-pr-velocity";
-import getPercent from "lib/utils/get-percent";
-import { getRepoList } from "lib/hooks/useRepoList";
-import { DevCardProps } from "components/molecules/DevCard/dev-card";
 import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import { isValidUrlSlug } from "lib/utils/url-validators";
+import { fetchApiData } from "helpers/fetchApiData";
+import { GitHubUserNameSchema } from "lib/validation-schemas";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -35,67 +31,26 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
   "CBID2",
 ];
 
-interface CardProps {
-  username: string;
-  cards: DevCardProps[];
-}
-
-interface Params extends ParsedUrlQuery {
-  username: string;
-}
+export type UserDevStats = DbUser & DbListContributorStat;
 
 async function fetchUserData(username: string) {
-  if (!isValidUrlSlug(username)) {
-    throw new Error("Invalid input");
+  try {
+    if (!isValidUrlSlug(username)) {
+      throw Error("Invalid username");
+    }
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return (await response.json()) as UserDevStats;
+  } catch (e) {
+    captureException(e);
   }
-
-  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, {
-    headers: {
-      accept: "application/json",
-    },
-  });
-
-  return (await req.json()) as DbUser;
 }
 
-async function fetchInitialCardData(username: string): Promise<DevCardProps> {
-  const user = await fetchUserData(username);
-  const githubAvatar = getAvatarByUsername(username, 300);
-
-  const ageInDays = user.first_opened_pr_at
-    ? Math.floor((Date.now() - Date.parse(user.first_opened_pr_at)) / 86400000)
-    : 0;
-
-  return {
-    username,
-    avatarURL: githubAvatar,
-    name: user.name || username,
-    bio: user.bio,
-    age: ageInDays,
-    oscr: Math.ceil(user.oscr),
-    isLoading: true,
-  };
-}
-
-async function fetchRemainingCardData(
-  username: string
-): Promise<Pick<DevCardProps, "prs" | "prVelocity" | "prMergePercentage" | "repos">> {
-  const { data, meta } = await fetchContributorPRs(username, undefined, "*", [], 100);
-  const prs = data.length;
-  const prVelocity = getContributorPullRequestVelocity(data);
-  const prTotal = meta.itemCount;
-  const mergedPrs = data.filter((prData) => prData.pr_is_merged);
-  const prMergePercentage = getPercent(prTotal, mergedPrs.length || 0);
-  const repos = getRepoList(Array.from(new Set(data.map((prData) => prData.repo_name))).join(",")).length;
-  return {
-    prs,
-    prVelocity,
-    prMergePercentage,
-    repos,
-  };
-}
-
-export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (context) => {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const username = context?.params?.username as string | undefined;
   if (!username) {
     return {
@@ -103,8 +58,22 @@ export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (
     };
   }
 
+  const { data: userData, error } = await fetchApiData({
+    path: `users/${username}`,
+    pathValidator: () => safeParse(GitHubUserNameSchema, username).success,
+  });
+
+  if (error || !userData) {
+    if (error?.status === 404 || error?.status === 401) {
+      return { notFound: true };
+    }
+    const exception = new Error(`Error in fetching user data`);
+    captureException(exception);
+    throw exception;
+  }
+
   const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
-  const cards = await Promise.all(uniqueUsernames.map(fetchInitialCardData));
+  const cards = await Promise.all(uniqueUsernames.map(fetchUserData));
 
   return {
     props: {
@@ -112,9 +81,9 @@ export const getServerSideProps: GetServerSideProps<CardProps, Params> = async (
       cards,
     },
   };
-};
+}
 
-const Card: NextPage<CardProps> = ({ username, cards }) => {
+export default function CardPage({ username, cards }: { username: string; cards: UserDevStats[] }) {
   const { user: loggedInUser } = useSupabaseAuth();
   const [selectedUserName, setSelectedUserName] = useState<string>(username);
   const iframeTransition = useTransition(selectedUserName, {
@@ -123,34 +92,10 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
   });
 
-  const [fullCardsData, setFullCardsData] = useState<DevCardProps[]>(cards);
-  const firstCard = fullCardsData.find((card) => card.username === username);
+  const firstCard = cards!.find((card) => card.login === username);
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
-
-  /**
-   * for each of the cards we need to load additional data async because it's slow to block page load
-   * to fetch all of them
-   */
-  useEffect(() => {
-    cards.forEach(async (card) => {
-      const cardData = await fetchRemainingCardData(card.username);
-      setFullCardsData((prev) =>
-        prev.map((c) => {
-          if (c.username === card.username) {
-            return {
-              ...c,
-              ...cardData,
-              isLoading: false,
-            };
-          }
-
-          return c;
-        })
-      );
-    });
-  }, [cards]);
 
   return (
     <FullHeightContainer>
@@ -180,7 +125,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
         >
           <div className="flex items-center justify-center md:justify-end">
             <div className="flex flex-col gap-10">
-              <DevCardCarousel cards={fullCardsData} onSelect={(name) => setSelectedUserName(name)} />
+              <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
               <div className="hidden md:flex align-self-stretch justify-center">
                 {isViewingOwnProfile ? (
                   <SocialButtons username={username} summary={socialSummary} />
@@ -249,9 +194,7 @@ const Card: NextPage<CardProps> = ({ username, cards }) => {
       </main>
     </FullHeightContainer>
   );
-};
-
-export default Card;
+}
 
 function SocialButtons({ username, summary }: { username: string; summary: string }) {
   const posthog = usePostHog();
@@ -270,18 +213,6 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
     },
   ];
 
-  const linkStyle = cntl`
-   rounded-full
-   w-10
-   h-10
-   p-2.5
-   grid
-   place-content-center
-   border
-   hover:opacity-80
-   transition-all
-  `;
-
   return (
     <div>
       <div className="text-white text-xs mb-2">Share your DevCard</div>
@@ -290,7 +221,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
           <a
             key={icon.src}
             href={icon.url}
-            className={linkStyle}
+            className="rounded-full w-10 h-10 grid place-content-center border hover:opacity-80 transition-all"
             style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
             target="_blank"
             onClick={() => posthog.capture("DevCard share link clicked", { platform: icon.name, username })}
