@@ -9,13 +9,65 @@ test("Loads a repository page", async ({ page }) => {
   await expect(rangePopup).toBeVisible();
   await expect(rangePopup).toHaveAttribute("aria-haspopup", "menu");
   await expect(rangePopup).toHaveAttribute("data-state", "closed");
-});
 
-test("repository page has an OG image", async ({ page }) => {
-  await page.goto("/s/open-sauced/app");
+  page.getByRole("button", { name: "Add to Workspace", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Workspace from SBOM", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Share", exact: true })).toBeVisible();
+
+  // check for OG image
   const expectedUrl = `${config.use?.baseURL}/og-images/repository/open-sauced/app/30?description=%F0%9F%8D%95+Insights+into+your+entire+open+source+ecosystem.`;
 
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", expectedUrl);
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute("content", expectedUrl);
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
+});
+
+test.describe("large screen", () => {
+  test("Adds a repository to a workspace", async ({ page }) => {
+    await page.goto("/s/open-sauced/app");
+
+    await page.getByRole("button", { name: "Add to Workspace", exact: true }).click();
+    const dialog = await page.getByRole("dialog", { name: "Add repository to Workspace", exact: true });
+    await expect(dialog).toBeVisible();
+
+    await dialog.getByRole("button", { name: "Connect with GitHub", exact: true }).click();
+    await expect(page.url()).toContain("https://github.com/login");
+  });
+
+  test("Adds a repository SBOM to a workspace", async ({ page }) => {
+    await page.goto("/s/open-sauced/app");
+
+    await page.getByRole("button", { name: "Workspace from SBOM", exact: true }).click();
+    const dialog = await page.getByRole("dialog", { name: "Add repository SBOM to Workspace", exact: true });
+    await expect(dialog).toBeVisible();
+
+    await dialog.getByRole("button", { name: "Connect with GitHub", exact: true }).click();
+    await expect(page.url()).toContain("https://github.com/login");
+  });
+});
+
+test.describe("small screen", () => {
+  test.use({ viewport: { width: 375, height: 629 } });
+
+  test("Adds a repository to a workspace", async ({ page }) => {
+    await page.goto("/s/open-sauced/app");
+
+    await page.getByRole("button", { name: "Add to Workspace", exact: true }).click();
+    const dialog = await page.getByRole("dialog", { name: "Add repository to Workspace", exact: true });
+    await expect(dialog).toBeVisible();
+
+    await dialog.getByRole("button", { name: "Connect with GitHub", exact: true }).click();
+    await expect(page.url()).toContain("https://github.com/login");
+  });
+
+  test("Adds a repository SBOM to a workspace", async ({ page }) => {
+    await page.goto("/s/open-sauced/app");
+
+    await page.getByRole("button", { name: "Workspace from SBOM", exact: true }).click();
+    const dialog = await page.getByRole("dialog", { name: "Add repository SBOM to Workspace", exact: true });
+    await expect(dialog).toBeVisible();
+
+    await dialog.getByRole("button", { name: "Connect with GitHub", exact: true }).click();
+    await expect(page.url()).toContain("https://github.com/login");
+  });
 });

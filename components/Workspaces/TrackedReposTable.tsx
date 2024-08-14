@@ -2,6 +2,7 @@ import { BiBarChartAlt2 } from "react-icons/bi";
 import { FaPlus } from "react-icons/fa6";
 import { FaTrashAlt } from "react-icons/fa";
 import { ComponentProps } from "react";
+import { MdWorkspaces } from "react-icons/md";
 import Button from "components/shared/Button/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/shared/Table";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
@@ -13,6 +14,7 @@ interface TrackedReposTableProps {
   onAddRepos: () => void;
   onRemoveTrackedRepo: ComponentProps<"button">["onClick"];
   isLoading?: boolean;
+  loadingMessage?: string;
   disabled?: boolean;
 }
 
@@ -53,10 +55,11 @@ export const TrackedReposTable = ({
   onAddRepos,
   onRemoveTrackedRepo,
   isLoading = false,
+  loadingMessage,
   disabled = false,
 }: TrackedReposTableProps) => {
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4" aria-busy={isLoading} aria-live="polite">
       <div className="flex justify-between flex-wrap gap-2">
         <div>
           <h2 className="flex gap-1 font-medium mb-2 text-md">Repositories Tracked</h2>
@@ -80,7 +83,7 @@ export const TrackedReposTable = ({
         </Table>
         <ClientOnly>
           {repositories.size > 0 || isLoading ? (
-            <div className="overflow-y-scroll h-60">
+            <div className="relative overflow-y-scroll h-60">
               <Table>
                 <TableHeader className="sr-only">
                   <TableRow className=" bg-light-slate-3">
@@ -116,6 +119,14 @@ export const TrackedReposTable = ({
                   )}
                 </TableBody>
               </Table>
+              {isLoading && loadingMessage ? (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="flex gap-2 items-center z-1 text-lg border border-light-slate-7 rounded-lg bg-light-slate-3 p-4">
+                    <MdWorkspaces />
+                    {loadingMessage}
+                  </div>
+                </div>
+              ) : null}
             </div>
           ) : (
             <EmptyState onAddRepos={onAddRepos} disabled={disabled} />

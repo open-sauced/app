@@ -12,7 +12,12 @@ import { fetchApiData } from "helpers/fetchApiData";
 import SingleSelect from "components/atoms/Select/single-select";
 import Text from "components/atoms/Typography/text";
 
-export default function AddToWorkspaceDrawer({ repository }: { repository: string }) {
+interface AddToWorkspaceDrawerProps {
+  repository: string;
+  type?: "repo" | "sbom";
+}
+
+export default function AddToWorkspaceDrawer({ repository, type = "repo" }: AddToWorkspaceDrawerProps) {
   const router = useRouter();
   const posthog = usePostHog();
   const { toast } = useToast();
@@ -51,15 +56,38 @@ export default function AddToWorkspaceDrawer({ repository }: { repository: strin
       toast({ description: `Added repository successfully`, variant: "success" });
     }
   };
+
+  const params = new URLSearchParams();
+
+  if (type === "sbom") {
+    params.set("sbom", "true");
+    params.set("repo", repository);
+  } else {
+    params.set("repos", JSON.stringify([repository]));
+  }
+
+  const url = `/workspaces/new?${params}`;
+  const redirectTo = new URL(url, window.location.origin).toString();
+  const title = type === "repo" ? "Add repository to Workspace" : "Add repository SBOM to Workspace";
+
   return (
     <Drawer
-      title="Add repository to Workspace"
+      title={title}
       description="Create a new workspace or add to an existing one."
       showCloseButton
       trigger={
-        <Button variant="primary" className="shrink-0 items-center gap-3 w-fit">
+        <Button
+          variant={type === "repo" ? "primary" : "dark"}
+          className="shrink-0 items-center gap-3 w-full"
+          onClick={(event) => {
+            if (user && type === "sbom") {
+              event.preventDefault();
+              router.push(url);
+            }
+          }}
+        >
           <MdWorkspaces />
-          Add to Workspace
+          {type === "repo" ? "Add to Workspace" : "Workspace from SBOM"}
         </Button>
       }
     >
@@ -76,7 +104,9 @@ export default function AddToWorkspaceDrawer({ repository }: { repository: strin
             lists are now part of your personal workspace.
           </Text>
           <p className="font-medium text-light-orange-10">
-            Create a new workspace with this repository and explore open source like never before!
+            {type === "sbom"
+              ? "Create a new workspace with this repository's SBOM and explore open source like never before!"
+              : "Create a new workspace with this repository and explore open source like never before!"}
           </p>
           <Button
             variant="primary"
@@ -84,7 +114,7 @@ export default function AddToWorkspaceDrawer({ repository }: { repository: strin
             onClick={() => {
               signIn({
                 provider: "github",
-                options: { redirectTo: `${host}/workspaces/new?repos=${JSON.stringify([repository])}` },
+                options: { redirectTo },
               });
             }}
           >
