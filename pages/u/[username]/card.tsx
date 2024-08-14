@@ -75,7 +75,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
   });
 
-  const firstCard = cards && cards.find((card) => card.login === username);
+  const firstCard = cards?.find((card) => card.login === username);
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
