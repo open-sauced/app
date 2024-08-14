@@ -85,49 +85,47 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
   }, [cardOrder, api]);
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="grid place-content-center">
-        {springProps.map(({ x, y, scale, zIndex, coverOpacity }, index) => {
-          const cardProps = props.cards[index];
-          const cardOrderIndex = cardOrder.indexOf(index);
-          const className = cntl`
-            DevCardCarousel-card
-            rounded-3xl
-            left-0
-            top-0
-            w-full
-            h-full
-            relative
-            cursor-pointer
-          `;
-          return (
+    <div className="grid place-content-center mb-8">
+      {springProps.map(({ x, y, scale, zIndex, coverOpacity }, index) => {
+        const cardProps = props.cards[index];
+        const cardOrderIndex = cardOrder.indexOf(index);
+        const className = cntl`
+          DevCardCarousel-card
+          rounded-3xl
+          left-0
+          top-0
+          w-full
+          h-full
+          relative
+          cursor-pointer
+        `;
+        return (
+          <animated.div
+            {...bind(index)}
+            key={cardProps.login}
+            className={className}
+            role="button"
+            title={cardProps.login}
+            style={{
+              gridArea: "1 / 1",
+              zIndex: zIndex,
+              transform: to([x, y, scale], transform),
+              transformOrigin: "left center",
+            }}
+          >
+            <DevCard key="card" isInteractive={index === cardOrder[0]} user={cardProps} isFlipped={false} />
             <animated.div
-              {...bind(index)}
-              key={cardProps.login}
-              className={className}
-              role="button"
-              title={cardProps.login}
-              style={{
-                gridArea: "1 / 1",
-                zIndex: zIndex,
-                transform: to([x, y, scale], transform),
-                transformOrigin: "left center",
+              key="cover"
+              className="DevCardCarousel-darken absolute left-0 right-0 top-0 bottom-0 bg-black rounded-3xl z-10"
+              title={`Select @${cardProps.login}`}
+              style={{ opacity: coverOpacity, pointerEvents: index === cardOrder[0] ? "none" : "auto" }}
+              onClick={() => {
+                handleClick(cardOrderIndex);
               }}
-            >
-              <DevCard key="card" isInteractive={index === cardOrder[0]} user={cardProps} isFlipped={false} />
-              <animated.div
-                key="cover"
-                className="DevCardCarousel-darken absolute left-0 right-0 top-0 bottom-0 bg-black rounded-3xl z-10"
-                title={`Select @${cardProps.login}`}
-                style={{ opacity: coverOpacity, pointerEvents: index === cardOrder[0] ? "none" : "auto" }}
-                onClick={() => {
-                  handleClick(cardOrderIndex);
-                }}
-              ></animated.div>
-            </animated.div>
-          );
-        })}
-      </div>
+            ></animated.div>
+          </animated.div>
+        );
+      })}
     </div>
   );
 }
