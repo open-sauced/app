@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.56.0-beta.3](https://github.com/open-sauced/app/compare/v2.56.0-beta.2...v2.56.0-beta.3) (2024-08-14)
+
+
+### 🐛 Bug Fixes
+
+* remove duplicate `DayRange` select ([#3939](https://github.com/open-sauced/app/issues/3939)) ([126d44f](https://github.com/open-sauced/app/commit/126d44f3957035856dc687590f4232e88193e681))
+
+## [2.56.0-beta.2](https://github.com/open-sauced/app/compare/v2.56.0-beta.1...v2.56.0-beta.2) (2024-08-14)
+
+
+### 🐛 Bug Fixes
+
+* fixed contributor insight contributor grid not loading paged data ([#3945](https://github.com/open-sauced/app/issues/3945)) ([1f645ed](https://github.com/open-sauced/app/commit/1f645ed44433d04acce1619d7a907ceda1384605))
+
+## [2.56.0-beta.1](https://github.com/open-sauced/app/compare/v2.55.3-beta.1...v2.56.0-beta.1) (2024-08-13)
+
+
+### 🍕 Features
+
+* now workspace can be generated from repo page via SBOM ([#3938](https://github.com/open-sauced/app/issues/3938)) ([e2bd019](https://github.com/open-sauced/app/commit/e2bd019134e86a700d7f18b20b755541e57a32cf))
+
+## [2.55.3-beta.1](https://github.com/open-sauced/app/compare/v2.55.2...v2.55.3-beta.1) (2024-08-13)
+
+
+### 🐛 Bug Fixes
+
+* validate user exists for `/user/<username>/card` page ([#3933](https://github.com/open-sauced/app/issues/3933)) ([9976453](https://github.com/open-sauced/app/commit/99764535b0690788f86ae951b33a520b5a1bbeb1))
+
 ## [2.55.2](https://github.com/open-sauced/app/compare/v2.55.1...v2.55.2) (2024-08-13)
 
 
