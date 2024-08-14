@@ -75,7 +75,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
   });
 
-  const firstCard = cards!.find((card) => card.login === username);
+  const firstCard = cards?.find((card) => card.login === username);
   const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
 
   const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
@@ -89,7 +89,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
         twitterCard="summary_large_image"
       />
       <main
-        className="grid max-h-screen md:overflow-hidden md:pb-20"
+        className="grid max-h-screen md:overflow-hidden"
         style={{
           background: `url(${BubbleBG.src}) no-repeat center center, linear-gradient(147deg, #212121 13.41%, #2E2E2E 86.8%)`,
           backgroundSize: "cover",
@@ -106,20 +106,19 @@ export default function CardPage({ username, cards }: { username: string; cards:
             columnGap: "4%",
           }}
         >
-          <div className="flex items-center justify-center md:justify-end">
-            <div className="flex flex-col gap-10">
-              <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
-              <div className="hidden md:flex align-self-stretch justify-center">
-                {isViewingOwnProfile ? (
-                  <SocialButtons username={username} summary={socialSummary} />
-                ) : (
-                  <Button variant="primary" className="justify-center" href="/start">
-                    Create your own dev card!
-                  </Button>
-                )}
-              </div>
+          <div className="flex flex-col gap-10 self-start h-fit my-auto">
+            <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
+            <div className="mt-8 flex align-self-stretch justify-center">
+              {isViewingOwnProfile ? (
+                <SocialButtons username={username} summary={socialSummary} />
+              ) : (
+                <Button variant="primary" className="justify-center" href="/start">
+                  Create your own dev card!
+                </Button>
+              )}
             </div>
           </div>
+
           <div className="hidden md:grid">
             {iframeTransition((style, username) => {
               return (
@@ -134,9 +133,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
                   <div className="grid hover:scale-[1.01] cursor-pointer transition-all group">
                     <div className="rounded-l-3xl h-full max-h-full grid bg-slate-50 overflow-hidden">
                       <iframe
-                        className="h-full max-h-full group-hover:blur-sm transition-all z-10 relative"
-                        width={1555}
-                        height={938}
+                        className="h-screen max-h-full group-hover:blur-sm transition-all z-10 relative"
                         src={`/u/${username}`}
                         style={{
                           pointerEvents: "none",
@@ -159,20 +156,6 @@ export default function CardPage({ username, cards }: { username: string; cards:
               );
             })}
           </div>
-        </div>
-        <div className="grid justify-center place-content-start py-7 md:hidden">
-          {isViewingOwnProfile ? (
-            <SocialButtons username={username} summary={socialSummary} />
-          ) : (
-            <div className="flex flex-col gap-2">
-              <Button variant="primary" className="justify-center" href={`/u/${selectedUserName}`}>
-                See Full Profile
-              </Button>
-              <Button variant="dark" className="justify-center" href="/start">
-                Create your own dev card!
-              </Button>
-            </div>
-          )}
         </div>
       </main>
     </FullHeightContainer>
@@ -204,12 +187,17 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
           <a
             key={icon.src}
             href={icon.url}
-            className="rounded-full w-10 h-10 grid place-content-center border hover:opacity-80 transition-all"
-            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
+            className="rounded-full w-10 h-10 grid p-2.5 place-content-center border hover:opacity-80 transition-all"
+            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.3)" }}
             target="_blank"
             onClick={() => posthog.capture("DevCard share link clicked", { platform: icon.name, username })}
           >
-            <Image src={icon.src} alt={icon.name} width={24} height={24} />
+            <Image
+              src={icon.src}
+              alt={icon.name}
+              width={icon.name === "Twitter" ? 14 : 24}
+              height={icon.name === "Twitter" ? 14 : 24}
+            />
           </a>
         ))}
       </div>

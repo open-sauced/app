@@ -1,5 +1,4 @@
 import useSWR, { Fetcher } from "swr";
-import { useState } from "react";
 import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 
 export function convertToContributors({
@@ -29,7 +28,7 @@ export const useContributorsList = ({
   workspaceId,
   listId,
   initialData,
-  initialPage = 1,
+  page,
   defaultLimit = 10,
   defaultRange = "30",
   showOscr = false,
@@ -43,7 +42,7 @@ export const useContributorsList = ({
     data: DbPRContributor[];
     meta: Meta;
   };
-  initialPage?: number;
+  page: number;
   defaultLimit?: number;
   defaultRange?: string;
   showOscr?: boolean;
@@ -51,8 +50,6 @@ export const useContributorsList = ({
   orderBy?: string;
   orderDirection?: string;
 }) => {
-  const [page, setPage] = useState(initialPage);
-
   const query = new URLSearchParams();
   query.append("page", page.toString());
   query.append("limit", `${defaultLimit}`);
@@ -77,7 +74,6 @@ export const useContributorsList = ({
   const contributors = convertToContributors({ rawContributors: data?.data, username, oscrEnabled: showOscr });
 
   return {
-    setPage,
     data: data ? { data: contributors, meta: data.meta } : { data: [], meta: {} },
     isLoading: !error && !data,
     isError: !!error,
