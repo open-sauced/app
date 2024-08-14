@@ -109,6 +109,7 @@ const ListsOverview = ({
   const { listId, range, limit } = router.query;
   const orderDirection = router.query.orderDirection as OrderDirection;
   const orderBy = router.query.orderBy as string;
+  const page = Number((router.query.page as string) ?? 1);
 
   const setOscrSortDirection = (direction: OrderDirection) => {
     setQueryParams({ orderDirection: direction, orderBy: "oscr" });
@@ -116,7 +117,6 @@ const ListsOverview = ({
 
   const {
     isLoading,
-    setPage,
     data: { data: contributors, meta },
   } = useContributorsList({
     workspaceId,
@@ -127,6 +127,7 @@ const ListsOverview = ({
     username,
     orderBy,
     orderDirection,
+    page,
   });
 
   const {
