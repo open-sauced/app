@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.56.0-beta.4](https://github.com/open-sauced/app/compare/v2.56.0-beta.3...v2.56.0-beta.4) (2024-08-14)
+
+
+### 🐛 Bug Fixes
+
+* now the Dev Card share buttons appear on all screen sizes ([#3941](https://github.com/open-sauced/app/issues/3941)) ([5fce569](https://github.com/open-sauced/app/commit/5fce5699245ea395e30b540ce6b265879c84f698))
+
 ## [2.56.0-beta.3](https://github.com/open-sauced/app/compare/v2.56.0-beta.2...v2.56.0-beta.3) (2024-08-14)
 
 
