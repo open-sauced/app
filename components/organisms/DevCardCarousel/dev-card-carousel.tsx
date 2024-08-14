@@ -85,7 +85,7 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
   }, [cardOrder, api]);
 
   return (
-    <div className="grid place-content-center mb-8 -mt-8">
+    <div className="grid place-content-center mb-8">
       {springProps.map(({ x, y, scale, zIndex, coverOpacity }, index) => {
         const cardProps = props.cards[index];
         const cardOrderIndex = cardOrder.indexOf(index);
