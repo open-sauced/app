@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.56.0-beta.3](https://github.com/open-sauced/app/compare/v2.56.0-beta.2...v2.56.0-beta.3) (2024-08-14)
+
+
+### 🐛 Bug Fixes
+
+* remove duplicate `DayRange` select ([#3939](https://github.com/open-sauced/app/issues/3939)) ([126d44f](https://github.com/open-sauced/app/commit/126d44f3957035856dc687590f4232e88193e681))
+
 ## [2.56.0-beta.2](https://github.com/open-sauced/app/compare/v2.56.0-beta.1...v2.56.0-beta.2) (2024-08-14)
 
 
