@@ -84,16 +84,18 @@ export default function ContributorInsightEditPage({
   isOwner,
   username,
 }: ContributorInsightEditPageProps) {
+  const router = useRouter();
+  const page = Number((router.query.page as string) ?? 1);
+  const [name, setName] = useState(list.name);
+  const [loading, setLoading] = useState(false);
+
   const {
     data: { data: contributors },
-  } = useContributorsList({ workspaceId, listId: list?.id, showOscr: true, username });
+  } = useContributorsList({ workspaceId, listId: list?.id, showOscr: true, username, page });
   const initialTrackedContributors = new Map([
     ...contributors.map((contributor) => [contributor.login ?? contributor.username, true] as const),
   ]);
 
-  const router = useRouter();
-  const [name, setName] = useState(list.name);
-  const [loading, setLoading] = useState(false);
   const [trackedContributors, setTrackedContributors] = useState<Map<string, boolean>>(initialTrackedContributors);
   const [isTrackedContributorsModalOpen, setIsTrackedContributorsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
