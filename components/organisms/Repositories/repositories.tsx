@@ -1,6 +1,6 @@
-import { ComponentProps, useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import clsx from "clsx";
+import { useRouter } from "next/router";
+import { ComponentProps, useEffect, useState } from "react";
 
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Pagination from "components/molecules/Pagination/pagination";
@@ -12,8 +12,8 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
 
 import Checkbox from "components/atoms/Checkbox/checkbox";
-import Button from "components/shared/Button/button";
 import LimitSelect from "components/atoms/Select/limit-select";
+import Button from "components/shared/Button/button";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
@@ -91,7 +91,7 @@ export default function Repositories({ repositories, showSearch = true, personal
       return router.push(`/${topic}/${toolName}`);
     }
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
-      return router.push(`/${topic}/${toolName}/filter/${search}`);
+      return router.push(`/explore/topic/${topic}/${toolName}/filter/${search}`);
     }
   };
 
