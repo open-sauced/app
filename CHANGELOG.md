@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.57.0-beta.3](https://github.com/open-sauced/app/compare/v2.57.0-beta.2...v2.57.0-beta.3) (2024-08-15)
+
+
+### 🐛 Bug Fixes
+
+* add docs link for SBOM to repository page ([#3958](https://github.com/open-sauced/app/issues/3958)) ([58360d9](https://github.com/open-sauced/app/commit/58360d9e85f0c9118e1734b8d7275fd066462639))
+
 ## [2.57.0-beta.2](https://github.com/open-sauced/app/compare/v2.57.0-beta.1...v2.57.0-beta.2) (2024-08-15)
 
 
