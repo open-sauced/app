@@ -11,11 +11,13 @@ import openSaucedImg from "img/openSauced-icon.png";
 import { getRelativeDays } from "lib/utils/date-utils";
 import { getAvatarByUsername } from "lib/utils/github";
 import Pill from "components/atoms/Pill/pill";
-import { useFetchUserDevStats } from "lib/hooks/api/useFetchUserDevStats";
+import { UserDevStats } from "pages/u/[username]/card";
 import DevCardGradient from "../../../public/devcard-gradient.png";
 
 export type DevCardProps = {
-  username: string;
+  devstats: UserDevStats | undefined;
+  isLoading: boolean;
+  error: Error | undefined;
   isFlipped?: boolean;
   isInteractive?: boolean;
   hideProfileButton?: boolean;
@@ -25,14 +27,6 @@ export type DevCardProps = {
 export default function DevCard(props: DevCardProps) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
   const isInteractive = props.isInteractive ?? true;
-
-  const {
-    data: devstats,
-    isLoading,
-    error,
-  } = useFetchUserDevStats({
-    username: props.username,
-  });
 
   useEffect(() => {
     setIsFlipped(props.isFlipped ?? false);
@@ -64,7 +58,7 @@ export default function DevCard(props: DevCardProps) {
   };
 
   const getValueBasedOnCount = ({ low, med, high }: { low: any; med: any; high: any }) => {
-    const recent_pull_requests_count = devstats?.recent_pull_requests_count || 0;
+    const recent_pull_requests_count = props.devstats?.recent_pull_requests_count || 0;
 
     return recent_pull_requests_count < 7 ? low : recent_pull_requests_count < 28 ? med : high;
   };
@@ -73,7 +67,7 @@ export default function DevCard(props: DevCardProps) {
     from: {
       opacity: 0.1,
     },
-    to: isLoading
+    to: props.isLoading
       ? [
           {
             opacity: 0.2,
@@ -83,25 +77,22 @@ export default function DevCard(props: DevCardProps) {
           },
         ]
       : { opacity: 0 },
-    loop: isLoading,
+    loop: props.isLoading,
     config: {
       duration: 1000,
     },
   });
 
-  return isLoading ? (
+  return props.isLoading ? (
     <animated.div
-      className={"grid absolute rounded-3xl bg-white"}
+      className={"grid rounded-3xl bg-white"}
       style={{
         width: "245px",
         height: "348px",
         ...pulseAnimation,
       }}
     >
-      <div
-        style={{ ...faceStyle }}
-        className="relative DevCard-front flex flex-col overflow-hidden rounded-xl border-white cursor-pointer w-full h-full"
-      />
+      <div style={{ ...faceStyle }} className="DevCard-card relative rounded-xl w-full h-full border border-gray-400" />
     </animated.div>
   ) : (
     <div
@@ -155,25 +146,25 @@ export default function DevCard(props: DevCardProps) {
             {/** Avatar + @Username **/}
             <div className="flex flex-col items-center gap-1">
               <Image
-                src={getAvatarByUsername(devstats?.login || "asf")}
-                alt={`${devstats?.login} front avatar`}
+                src={getAvatarByUsername(props.devstats?.login || "asf")}
+                alt={`${props.devstats?.login} front avatar`}
                 width={100}
                 height={100}
                 className="rounded-full border-[1.5px] border-gray-300 border-opacity-40"
               />
-              <p>@{devstats?.login}</p>
+              <p>@{props.devstats?.login}</p>
             </div>
 
             {/** OSCR Score **/}
             <div className="flex flex-col items-center gap-1">
-              <p className="text-7xl font-bold">{!devstats?.oscr ? "-" : Math.ceil(devstats?.oscr)}</p>
+              <p className="text-7xl font-bold">{!props.devstats?.oscr ? "-" : Math.ceil(props.devstats?.oscr)}</p>
               <p className="text-transparent bg-clip-text bg-gradient-to-r from-sauced-orange via-gradient-orange-one to-amber-500 font-medium">
                 OSCR Score
               </p>
             </div>
 
             {/** 'Ranking' Badge **/}
-            {devstats?.oscr && devstats.oscr > 200 && <RankingBadge oscr={devstats.oscr} />}
+            {props.devstats?.oscr && props.devstats.oscr > 200 && <RankingBadge oscr={props.devstats.oscr} />}
           </div>
         </div>
 
@@ -189,21 +180,21 @@ export default function DevCard(props: DevCardProps) {
             {/** Avatar + username + OSCR **/}
             <div className="relative flex gap-4 items-center justify-between bg-sauced-orange px-2 py-1 rounded-full w-full font-semibold">
               <Image
-                src={getAvatarByUsername(devstats?.login || "zeucapua")}
-                alt={`${devstats?.login} front avatar`}
+                src={getAvatarByUsername(props.devstats?.login || "zeucapua")}
+                alt={`${props.devstats?.login} front avatar`}
                 width={50}
                 height={50}
                 className="absolute rounded-full border-[1.5px] border-gray-300 border-opacity-40 -left-1"
               />
-              <p className="pl-10">{devstats?.login}</p>
+              <p className="pl-10">{props.devstats?.login}</p>
               <p className="-pl-4 justfy-self-end text-sm flex gap-0.5">
-                {Math.ceil(devstats?.oscr || 0)}
+                {Math.ceil(props.devstats?.oscr || 0)}
                 <span className="text-[0.5rem] text-gray-100 font-normal">/300</span>
               </p>
             </div>
 
             {/** Bio **/}
-            <p className="mt-2 h-full max-h-18 overflow-auto">{devstats?.bio}</p>
+            <p className="mt-2 h-full max-h-18 overflow-auto">{props.devstats?.bio}</p>
 
             {/** Last 30 Days **/}
             <div className="flex flex-col w-full h-fit text-md">
@@ -216,12 +207,12 @@ export default function DevCard(props: DevCardProps) {
               <Separator />
               <div className="flex justify-between">
                 <p>Opened PRs</p>
-                <p>{devstats?.recent_pull_requests_count}</p>
+                <p>{props.devstats?.recent_pull_requests_count}</p>
               </div>
               <Separator />
               <div className="flex justify-between">
                 <p>PR Velocity</p>
-                <p>{getRelativeDays(devstats?.recent_pull_request_velocity_count || 0)}</p>
+                <p>{getRelativeDays(props.devstats?.recent_pull_request_velocity_count || 0)}</p>
               </div>
               <Separator />
             </div>
@@ -229,7 +220,7 @@ export default function DevCard(props: DevCardProps) {
             {/** Footer **/}
             <div className="flex flex-col gap-[0.25] w-full">
               {!props.hideProfileButton && (
-                <Button variant="primary" href={`/u/${devstats?.login}`} className="w-full justify-center">
+                <Button variant="primary" href={`/u/${props.devstats?.login}`} className="w-full justify-center">
                   View Profile
                 </Button>
               )}

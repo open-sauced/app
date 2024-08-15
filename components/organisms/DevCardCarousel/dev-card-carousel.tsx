@@ -4,6 +4,7 @@ import { useGesture } from "@use-gesture/react";
 import { useCallback, useEffect, useState } from "react";
 import { useKey } from "react-use";
 import DevCard from "components/molecules/DevCard/dev-card";
+import { useFetchUserDevStats } from "lib/hooks/api/useFetchUserDevStats";
 
 export interface DevCardCarouselProps {
   usernames: string[];
@@ -22,6 +23,27 @@ const startTo = (index: number, delay = false) => ({
 const startFrom = (_i: number) => ({ x: 0, scale: 1, y: 0, zIndex: 0, coverOpacity: 0 });
 
 const transform = (x: number, y: number, s: number) => `translate(${x}px, ${y}px) scale(${s})`;
+
+function RenderedDevCard({ username, isInteractive }: { username: string; isInteractive: boolean }) {
+  const {
+    data: devstats,
+    isLoading,
+    error,
+  } = useFetchUserDevStats({
+    username: username,
+  });
+
+  return (
+    <DevCard
+      key={`card_${devstats?.login}`}
+      devstats={devstats}
+      isLoading={isLoading}
+      error={error}
+      isInteractive={isInteractive}
+      isFlipped={false}
+    />
+  );
+}
 
 export default function DevCardCarousel(props: DevCardCarouselProps) {
   const [cardOrder, setCardOrder] = useState(props.usernames.map((_, index) => index));
@@ -112,7 +134,7 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
               transformOrigin: "left center",
             }}
           >
-            <DevCard key="card" isInteractive={index === cardOrder[0]} username={username} isFlipped={false} />
+            <RenderedDevCard username={username} isInteractive={index === cardOrder[0]} />
             <animated.div
               key="cover"
               className="DevCardCarousel-darken absolute left-0 right-0 top-0 bottom-0 bg-black rounded-3xl z-10"
