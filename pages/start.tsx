@@ -21,6 +21,7 @@ import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
 import Icon from "components/atoms/Icon/icon";
 import Button from "components/shared/Button/button";
+import DevCard from "components/molecules/DevCard/dev-card";
 
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
@@ -64,7 +65,7 @@ const LoginStep1: React.FC<LoginStep1Props> = ({ user }) => {
 
   useEffect(() => {
     if (onboarded) {
-      router.push("/workspaces");
+      // router.push("/workspaces");
     } else if (onboarded === false && user && providerToken) {
       setQueryParams({ step: "2" } satisfies QueryParams);
     }
@@ -244,8 +245,30 @@ interface LoginStep3Props {
 }
 
 const LoginStep3: React.FC<LoginStep3Props> = ({ user }) => {
+  type UserDevStats = DbUser & DbListContributorStat;
   const username: string = user?.user_metadata.user_name;
   const router = useRouter();
+  const [userDevStats, setUserDevStats] = useState<UserDevStats | undefined>(undefined);
+
+  async function fetchUserData(username: string) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      return (await response.json()) as UserDevStats;
+    }
+
+    return undefined;
+  }
+
+  useEffect(() => {
+    fetchUserData(username).then((devstats) => {
+      setUserDevStats(devstats);
+    });
+  }, []);
 
   return (
     <>
@@ -263,14 +286,26 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ user }) => {
               Congratulations on your new account. Share your creator card to let other people know you&apos;re here.
             </Text>
           </div>
+          <div className="flex justify-center mb-4 md:mb-0">
+            {userDevStats && <DevCard key="card" isInteractive={false} user={userDevStats} isFlipped={false} />}
+          </div>
+
+          <Button
+            variant="primary"
+            onClick={() => router.push(`/u/${username}/card`)}
+            className="justify-center w-full mt-4"
+          >
+            Go to Your DevCard
+          </Button>
+
+          <Button
+            variant="primary"
+            onClick={() => router.push(`/u/${username}`)}
+            className="justify-center w-full mt-4"
+          >
+            Go to Your Profile
+          </Button>
         </div>
-        <Button
-          variant="primary"
-          onClick={() => router.push(`/u/${username}/card`)}
-          className="justify-center w-full h-10 mt-3 md:mt-0"
-        >
-          Go to Your DevCard
-        </Button>
       </div>
     </>
   );
