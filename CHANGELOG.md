@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.57.0-beta.1](https://github.com/open-sauced/app/compare/v2.56.1-beta.1...v2.57.0-beta.1) (2024-08-15)
+
+
+### 🍕 Features
+
+* update onboarding steps to include sharing the DevCard ([#3951](https://github.com/open-sauced/app/issues/3951)) ([1391aad](https://github.com/open-sauced/app/commit/1391aadc0629bbd2599456a7c5823a11161ab225))
+
 ## [2.56.1-beta.1](https://github.com/open-sauced/app/compare/v2.56.0...v2.56.1-beta.1) (2024-08-15)
 
 
