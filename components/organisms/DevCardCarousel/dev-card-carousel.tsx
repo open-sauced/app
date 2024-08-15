@@ -24,7 +24,7 @@ const startFrom = (_i: number) => ({ x: 0, scale: 1, y: 0, zIndex: 0, coverOpaci
 const transform = (x: number, y: number, s: number) => `translate(${x}px, ${y}px) scale(${s})`;
 
 export default function DevCardCarousel(props: DevCardCarouselProps) {
-  const [cardOrder, setCardOrder] = useState(props.usernames.map((username, index) => index));
+  const [cardOrder, setCardOrder] = useState(props.usernames.map((_, index) => index));
   const [springProps, api] = useSprings(props.usernames.length, (i: number) => ({
     ...startTo(i, true),
     from: startFrom(i),
@@ -86,7 +86,7 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
   return (
     <div className="grid place-content-center mb-8">
       {springProps.map(({ x, y, scale, zIndex, coverOpacity }, index) => {
-        const cardProps = props.cards[index];
+        const username = props.usernames[index];
         const cardOrderIndex = cardOrder.indexOf(index);
         const className = cntl`
           DevCardCarousel-card
@@ -101,10 +101,10 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
         return (
           <animated.div
             {...bind(index)}
-            key={cardProps.login}
+            key={username}
             className={className}
             role="button"
-            title={cardProps.login}
+            title={username}
             style={{
               gridArea: "1 / 1",
               zIndex: zIndex,
@@ -112,11 +112,11 @@ export default function DevCardCarousel(props: DevCardCarouselProps) {
               transformOrigin: "left center",
             }}
           >
-            <DevCard key="card" isInteractive={index === cardOrder[0]} user={cardProps} isFlipped={false} />
+            <DevCard key="card" isInteractive={index === cardOrder[0]} username={username} isFlipped={false} />
             <animated.div
               key="cover"
               className="DevCardCarousel-darken absolute left-0 right-0 top-0 bottom-0 bg-black rounded-3xl z-10"
-              title={`Select @${cardProps.login}`}
+              title={`Select @${username}`}
               style={{ opacity: coverOpacity, pointerEvents: index === cardOrder[0] ? "none" : "auto" }}
               onClick={() => {
                 handleClick(cardOrderIndex);
