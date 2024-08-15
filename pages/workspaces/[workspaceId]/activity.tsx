@@ -157,7 +157,7 @@ const WorkspaceActivityPage = ({ workspace, overLimit }: WorkspaceDashboardProps
                     setQueryParams({ page: "1" });
                   }}
                 />
-                <ClientOnly>{isMobile ? <DayRangePicker /> : null}</ClientOnly>
+                <ClientOnly>{isMobile ? null : <DayRangePicker />}</ClientOnly>
                 <LimitPicker />
               </div>
             </div>

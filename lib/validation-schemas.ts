@@ -1,4 +1,4 @@
-import { parse, pipe, regex, string, uuid } from "valibot";
+import { parse, pipe, string, regex, uuid } from "valibot";
 
 export const parseSchema = parse;
 

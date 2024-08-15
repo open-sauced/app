@@ -52,6 +52,7 @@ export const OscrPill = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calcula
 };
 
 export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calculated }: OscrProps) => {
+  const router = useRouter();
   const posthog = usePostHog();
   let ratingToRender = calculated ? (rating ? Math.ceil(rating) : 0) : "-";
 
@@ -69,7 +70,9 @@ export const OscrButton = ({ rating, hideRating, signIn = DEFAULT_SIGN_IN, calcu
               variant="primary"
               className="flex items-center gap-2 !p-1 !text-xs z-10"
               onClick={() => {
-                posthog.capture("OSCR Login Button Clicked");
+                posthog.capture("OSCR Login Button Clicked", {
+                  pathname: router.pathname,
+                });
                 signIn({ provider: "github", options: { redirectTo: window.location.href } });
               }}
             >

@@ -147,6 +147,8 @@ export default function CreateContributorInsightPage({
               variant="primary"
               className="flex gap-2.5 items-center cursor-pointer w-min mt-2 sm:mt-0 self-end"
               disabled={loading}
+              loading={loading}
+              loadingText={"Creating insight"}
             >
               Create Insight
             </Button>
