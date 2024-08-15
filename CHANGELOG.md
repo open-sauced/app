@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.57.0](https://github.com/open-sauced/app/compare/v2.56.0...v2.57.0) (2024-08-15)
+
+
+### 🍕 Features
+
+* update onboarding steps to include sharing the DevCard ([#3951](https://github.com/open-sauced/app/issues/3951)) ([1391aad](https://github.com/open-sauced/app/commit/1391aadc0629bbd2599456a7c5823a11161ab225))
+
+
+### 🐛 Bug Fixes
+
+* add docs link for SBOM to repository page ([#3958](https://github.com/open-sauced/app/issues/3958)) ([58360d9](https://github.com/open-sauced/app/commit/58360d9e85f0c9118e1734b8d7275fd066462639))
+* add loading feedback when creating contributor insight ([#3947](https://github.com/open-sauced/app/issues/3947)) ([7f94272](https://github.com/open-sauced/app/commit/7f94272ccd1a7b073137bc221647f6154d2b24a8))
+* now see it now link on feed when logged in goes to the user's dev card ([#3954](https://github.com/open-sauced/app/issues/3954)) ([cd3d5b2](https://github.com/open-sauced/app/commit/cd3d5b2554dfb9deec196b1551114358f84767fb))
+
 ## [2.57.0-beta.3](https://github.com/open-sauced/app/compare/v2.57.0-beta.2...v2.57.0-beta.3) (2024-08-15)
 
 
