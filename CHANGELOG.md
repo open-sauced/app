@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.57.0-beta.2](https://github.com/open-sauced/app/compare/v2.57.0-beta.1...v2.57.0-beta.2) (2024-08-15)
+
+
+### 🐛 Bug Fixes
+
+* add loading feedback when creating contributor insight ([#3947](https://github.com/open-sauced/app/issues/3947)) ([7f94272](https://github.com/open-sauced/app/commit/7f94272ccd1a7b073137bc221647f6154d2b24a8))
+
 ## [2.57.0-beta.1](https://github.com/open-sauced/app/compare/v2.56.1-beta.1...v2.57.0-beta.1) (2024-08-15)
 
 

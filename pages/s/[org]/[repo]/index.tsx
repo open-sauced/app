@@ -262,7 +262,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         <div className="grid gap-2">
                           <p>Create a workspace from the software bill of materials (SBOM) for this repository</p>
 
-                          <a href="https://www.cisa.gov/sbom" className="underline" target="_blank">
+                          <a
+                            href="https://opensauced.pizza/docs/features/repo-pages/#create-a-workspace-from-sbom"
+                            className="underline"
+                            target="_blank"
+                          >
                             Learn more...<span className="sr-only"> about SBOM</span>
                           </a>
                         </div>
