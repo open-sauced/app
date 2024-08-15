@@ -150,6 +150,8 @@ export default function ContributorInsightEditPage({
           className="flex gap-2.5 items-center cursor-pointer w-min sm:mt-0 self-end"
           disabled={loading}
           onClick={updateInsight}
+          loading={loading}
+          loadingText={"Updating insight"}
         >
           Update Insight
         </Button>
