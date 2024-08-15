@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.56.1-beta.1](https://github.com/open-sauced/app/compare/v2.56.0...v2.56.1-beta.1) (2024-08-15)
+
+
+### 🐛 Bug Fixes
+
+* now see it now link on feed when logged in goes to the user's dev card ([#3954](https://github.com/open-sauced/app/issues/3954)) ([cd3d5b2](https://github.com/open-sauced/app/commit/cd3d5b2554dfb9deec196b1551114358f84767fb))
+
 ## [2.56.0](https://github.com/open-sauced/app/compare/v2.55.2...v2.56.0) (2024-08-14)
 
 
