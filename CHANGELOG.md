@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.58.0-beta.1](https://github.com/open-sauced/app/compare/v2.57.0...v2.58.0-beta.1) (2024-08-15)
+
+
+### 🍕 Features
+
+* implemented utility function to copy an HTML element as an image to the clipboard ([#3963](https://github.com/open-sauced/app/issues/3963)) ([35a3ffe](https://github.com/open-sauced/app/commit/35a3ffe08c59a2e41cf84264206c04882496ff62))
+
 ## [2.57.0](https://github.com/open-sauced/app/compare/v2.56.0...v2.57.0) (2024-08-15)
 
 
