@@ -1,4 +1,4 @@
-import html2canvas from "html2canvas";
+import html2canvas, { Options } from "html2canvas";
 import { shortenUrl } from "./shorten-url";
 
 export const copyToClipboard = async (content: string) => {
@@ -33,10 +33,11 @@ export async function copyImageToClipboard(imageUrl: string) {
  * Copies the content of an HTML element as an image to the clipboard.
  *
  * @param node The HTML element to copy as an image.
+ * @param options The options to tweak the image generation.
  *
  * @returns A promise that resolves when the image has been copied to the clipboard.
  */
-export async function copyNodeAsImage(node: HTMLElement | null) {
+export async function copyNodeAsImage(node: HTMLElement | null, options?: Partial<Options>) {
   if (!node) {
     throw new Error("Failed to copy image to clipboard");
   }
@@ -44,7 +45,7 @@ export async function copyNodeAsImage(node: HTMLElement | null) {
   await navigator.clipboard.write([
     new ClipboardItem({
       "image/png": new Promise(async (resolve, reject) => {
-        html2canvas(node).then((canvas) => {
+        html2canvas(node, options).then((canvas) => {
           canvas.toBlob((blob) => {
             if (!blob) {
               reject("Failed to copy image to clipboard");
