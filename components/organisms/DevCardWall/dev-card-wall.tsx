@@ -6,7 +6,6 @@ import { useOutsideClickRef } from "rooks";
 import DevCard from "components/molecules/DevCard/dev-card";
 import Button from "components/shared/Button/button";
 import ChevronLeft from "../../../img/icons/chevron-left.svg";
-import { useFetchUserDevStats } from "lib/hooks/api/useFetchUserDevStats";
 
 const LOADING_TILES_COUNT = 20;
 
@@ -32,28 +31,6 @@ interface DevCardWallProps {
   usernames: string[];
   isLoading?: boolean;
   initialCardIndex?: number;
-}
-
-function RenderedDevCard({ username, isInteractive }: { username: string; isInteractive: boolean }) {
-  const {
-    data: devstats,
-    isLoading,
-    error,
-  } = useFetchUserDevStats({
-    username: username,
-  });
-
-  return (
-    <DevCard
-      key={`card_${devstats?.login}`}
-      devstats={devstats}
-      isLoading={isLoading}
-      error={error}
-      isInteractive={isInteractive}
-      isFlipped={false}
-      hideProfileButton
-    />
-  );
 }
 
 export default function DevCardWall({ isLoading = false, usernames, initialCardIndex }: DevCardWallProps) {
@@ -258,7 +235,7 @@ export default function DevCardWall({ isLoading = false, usernames, initialCardI
           zIndex,
         }}
       >
-        <RenderedDevCard username={username} isInteractive={i === activeCardIndex} />
+        <DevCard key="card" username={username} isInteractive={i === activeCardIndex} hideProfileButton />
         <animated.div key="button" className={"grid place-content-center"} style={{ ...buttonSpring }}>
           <Button variant="primary" href={`/u/${username}`}>
             View Profile

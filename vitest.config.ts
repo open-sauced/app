@@ -21,8 +21,6 @@ export default defineConfig({
       NEXT_PUBLIC_SUPABASE_URL: "https://fcqqkxwlntnrtjfbcioz.supabase.co",
       NEXT_PUBLIC_SUPABASE_ANON_KEY:
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjcXFreHdsbnRucnRqZmJjaW96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTg0MTkyNzQsImV4cCI6MjAxMzk5NTI3NH0.ymWWYdnJC2gsnrJx4lZX2cfSOp-1xVuWFGt1Wr6zwtg",
-      //NEXT_PUBLIC_API_URL: "https://beta.api.opensauced.pizza/v2",
     },
-    //setupFiles: ["./components/organisms/DevCardCarousel/testSetup.ts"]
   },
 });
