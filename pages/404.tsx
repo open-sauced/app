@@ -5,36 +5,17 @@ import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import { useFetchTopContributors } from "lib/hooks/useFetchTopContributors";
 import DevCardWall from "components/organisms/DevCardWall/dev-card-wall";
 import BubbleBG from "../img/bubble-bg.svg";
-import { UserDevStats } from "./u/[username]/card";
-
-async function fetchUserData(username: string) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-  return await response.json() as UserDevStats;
-};
 
 export default function Custom404() {
-  const { data } = useFetchTopContributors({ limit: 20 });
-  const [cards, setCards] = useState<UserDevStats[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { data, isLoading } = useFetchTopContributors({ limit: 20 });
   const [initialCardIndex, setInitialCardIndex] = useState<number | undefined>();
+  const [usernames, setUsernames] = useState<string[]>([]);
 
   useEffect(() => {
-    async function loadCards() {
-      const cardData = await Promise.all(data.map((user) => fetchUserData(user.login)));
-      // randomize cards
-      cardData.sort(() => Math.random() - 0.5);
-      setCards(cardData);
-      setIsLoading(false);
-      setTimeout(() => {
-        setInitialCardIndex(0);
-      }, 500);
+    setUsernames(data.map((user) => user.login));
+    if (!isLoading) {
+      setInitialCardIndex(0);
     }
-
-    loadCards();
   }, [data]);
 
   return (
@@ -70,7 +51,7 @@ export default function Custom404() {
                 width: "50%",
               }}
             >
-              <DevCardWall cards={cards} isLoading={isLoading} initialCardIndex={initialCardIndex} />
+              <DevCardWall usernames={usernames} isLoading={isLoading} initialCardIndex={initialCardIndex} />
             </div>
           </div>
         </main>
@@ -78,4 +59,3 @@ export default function Custom404() {
     </FullHeightContainer>
   );
 }
-
