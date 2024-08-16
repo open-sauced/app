@@ -32,3 +32,15 @@ deno_import_map = "./netlify/edge-functions/deno.json"
   to = "https://beta.app.opensauced.pizza/:splat"
   status = 301
   force = true
+
+[[redirects]]
+  from = "https://oscr.me"
+  to = "https://app.opensauced.pizza/u/zeucapua/card"
+  status = 301
+  force = true  
+
+[[redirects]]
+  from = "https://oscr.me/:username"
+  to = "https://app.opensauced.pizza/u/:username/card"
+  status = 301
+  force = true
