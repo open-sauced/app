@@ -4,6 +4,8 @@ import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import { usePostHog } from "posthog-js/react";
 import { safeParse } from "valibot";
+import { captureException } from "@sentry/nextjs";
+import { FiCopy } from "react-icons/fi";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -13,6 +15,10 @@ import { linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/ur
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import { fetchApiData } from "helpers/fetchApiData";
 import { GitHubUserNameSchema } from "lib/validation-schemas";
+import { isValidUrlSlug } from "lib/utils/url-validators";
+import { copyImageToClipboard } from "lib/utils/copy-to-clipboard";
+import { useToast } from "lib/hooks/useToast";
+import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -49,6 +55,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       notFound: true,
     };
   }
+
+  // Cache page for one hour
+  context.res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
+  context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=0, stale-while-revalidate=3600");
+  context.res.setHeader("Cache-Tag", `user-profiles,user-profile-${username}`);
 
   return {
     props: {
@@ -155,6 +166,36 @@ export default function CardPage({ user }: { user: DbUser }) {
   );
 }
 
+function CopyButton({ username }: { username: string }) {
+  const [copying, setCopying] = useState(false);
+  const { toast } = useToast();
+  const posthog = usePostHog();
+
+  return (
+    <div
+      className="rounded-full w-10 h-10 bg-sauced-orange stroke-white cursor-pointer hover:opacity-80 transition-all
+flex items-center justify-center"
+      onClick={async () => {
+        setCopying(true);
+        posthog.capture("DevCard image copied", { username });
+        copyImageToClipboard(siteUrl(`og-images/dev-card`, { username })).then((copied) => {
+          if (copied) {
+            setTimeout(() => {
+              toast({ description: "Copied to clipboard", variant: "success" });
+              setCopying(false);
+            }, 500);
+          } else {
+            toast({ description: "Error copying to clipboard", variant: "warning" });
+            setCopying(false);
+          }
+        });
+      }}
+    >
+      {copying ? <Spinner className="w-6 h-8" /> : <FiCopy className="w-6 h-8 stroke-white" />}
+    </div>
+  );
+}
+
 function SocialButtons({ username, summary }: { username: string; summary: string }) {
   const posthog = usePostHog();
   const icons = [
@@ -174,7 +215,7 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
 
   return (
     <div>
-      <div className="text-white text-xs mb-2">Share your DevCard</div>
+      <div className="flex justify-center text-white text-xs mb-2">Share your DevCard</div>
       <div className="flex gap-2 justify-center">
         {icons.map((icon) => (
           <a
@@ -193,6 +234,8 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
             />
           </a>
         ))}
+
+        <CopyButton username={username} />
       </div>
     </div>
   );

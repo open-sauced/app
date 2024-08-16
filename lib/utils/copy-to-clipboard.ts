@@ -11,6 +11,24 @@ export const copyToClipboard = async (content: string) => {
   }
 };
 
+export async function copyImageToClipboard(imageUrl: string) {
+  try {
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        "image/png": new Promise(async (resolve) => {
+          const data = await fetch(imageUrl);
+          const blob = await data.blob();
+
+          resolve(new Blob([blob], { type: "image/png" }));
+        }),
+      }),
+    ]);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 /**
  * Copies the content of an HTML element as an image to the clipboard.
  *
