@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.58.0-beta.3](https://github.com/open-sauced/app/compare/v2.58.0-beta.2...v2.58.0-beta.3) (2024-08-16)
+
+
+### 🍕 Features
+
+* now the dev card page is cached for one hour ([#3968](https://github.com/open-sauced/app/issues/3968)) ([d070065](https://github.com/open-sauced/app/commit/d0700650b2eb6bbd38ea328a73b52a13b63ae612))
+
 ## [2.58.0-beta.2](https://github.com/open-sauced/app/compare/v2.58.0-beta.1...v2.58.0-beta.2) (2024-08-16)
 
 
