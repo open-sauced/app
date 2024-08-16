@@ -1,3 +1,5 @@
+export const STUB_USERNAMES = ["zeucapua", "nickytonline", "brandonroberts"];
+
 export const STUB_DEV_CARDS = [
   {
     email: "",
