@@ -5,6 +5,21 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.58.0](https://github.com/open-sauced/app/compare/v2.57.0...v2.58.0) (2024-08-16)
+
+
+### 🐛 Bug Fixes
+
+* better DevCard data fetching flow ([#3936](https://github.com/open-sauced/app/issues/3936)) ([a5371ee](https://github.com/open-sauced/app/commit/a5371eee7243726f9e5e8bc55475a4e5da0171a6))
+
+
+### 🍕 Features
+
+* add button to copy DevCard image to clipboard ([#3943](https://github.com/open-sauced/app/issues/3943)) ([d15ea8c](https://github.com/open-sauced/app/commit/d15ea8c1dfa8dd946f44f365e7a93bcae14dd2d3))
+* add redirect for oscr.me to DevCard ([#3973](https://github.com/open-sauced/app/issues/3973)) ([88853aa](https://github.com/open-sauced/app/commit/88853aa5ec8f10603da784fc9cc26ae5fa44b0a0))
+* implemented utility function to copy an HTML element as an image to the clipboard ([#3963](https://github.com/open-sauced/app/issues/3963)) ([35a3ffe](https://github.com/open-sauced/app/commit/35a3ffe08c59a2e41cf84264206c04882496ff62))
+* now the dev card page is cached for one hour ([#3968](https://github.com/open-sauced/app/issues/3968)) ([d070065](https://github.com/open-sauced/app/commit/d0700650b2eb6bbd38ea328a73b52a13b63ae612))
+
 ## [2.58.0-beta.5](https://github.com/open-sauced/app/compare/v2.58.0-beta.4...v2.58.0-beta.5) (2024-08-16)
 
 
