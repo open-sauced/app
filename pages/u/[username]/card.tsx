@@ -4,7 +4,6 @@ import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import { usePostHog } from "posthog-js/react";
 import { safeParse } from "valibot";
-import { captureException } from "@sentry/nextjs";
 import { FiCopy } from "react-icons/fi";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
@@ -15,7 +14,6 @@ import { linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/ur
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import { fetchApiData } from "helpers/fetchApiData";
 import { GitHubUserNameSchema } from "lib/validation-schemas";
-import { isValidUrlSlug } from "lib/utils/url-validators";
 import { copyImageToClipboard } from "lib/utils/copy-to-clipboard";
 import { useToast } from "lib/hooks/useToast";
 import { Spinner } from "components/atoms/SpinLoader/spin-loader";
