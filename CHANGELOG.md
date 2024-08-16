@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.58.0-beta.2](https://github.com/open-sauced/app/compare/v2.58.0-beta.1...v2.58.0-beta.2) (2024-08-16)
+
+
+### 🍕 Features
+
+* add button to copy DevCard image to clipboard ([#3943](https://github.com/open-sauced/app/issues/3943)) ([d15ea8c](https://github.com/open-sauced/app/commit/d15ea8c1dfa8dd946f44f365e7a93bcae14dd2d3))
+
 ## [2.58.0-beta.1](https://github.com/open-sauced/app/compare/v2.57.0...v2.58.0-beta.1) (2024-08-15)
 
 
