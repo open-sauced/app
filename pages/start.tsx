@@ -150,15 +150,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ user }) => {
   const [timezone, setTimezone] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const timezone = timezones.find((timezone) => timezone.utc.includes(userTimezone));
-    if (timezone) {
-      setTimezone(timezone.value);
-    }
-  }, []);
-
-  const handleUpdateTimezone = async () => {
+  const handleOnboarding = async (updateTimezone: boolean) => {
     setLoading(true);
     try {
       const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/onboarding`, {
@@ -167,7 +159,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ user }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionToken}`,
         },
-        body: JSON.stringify({ interests: [], timezone }),
+        body: JSON.stringify({ interests: [], timezone: updateTimezone ? timezone : "" }),
       });
 
       if (data.ok) {
@@ -203,8 +195,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ user }) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label>Time zone*</label>
-            <Select onValueChange={(value) => setTimezone(value)} value={timezone} required>
+            <Select onValueChange={(value) => setTimezone(value)} value={timezone}>
               <SelectTrigger
                 selectIcon={
                   <div className="relative pr-4">
@@ -217,6 +208,7 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ user }) => {
               </SelectTrigger>
 
               <SelectContent position="item-aligned" className="bg-white">
+                <SelectItem value={""}>Select timezone</SelectItem>
                 {timezones.map((timezone, index) => (
                   <SelectItem key={index} value={timezone.value}>
                     {timezone.text}
@@ -225,16 +217,26 @@ const LoginStep2: React.FC<LoginStep2Props> = ({ user }) => {
               </SelectContent>
             </Select>
           </div>
+          <Button
+            variant="primary"
+            onClick={() => handleOnboarding(true)}
+            className="justify-center w-full mt-4"
+            disabled={loading}
+            loading={loading}
+          >
+            Continue
+          </Button>
+
+          <Button
+            variant="primary"
+            onClick={() => handleOnboarding(false)}
+            className="justify-center w-full mt-4"
+            disabled={loading}
+            loading={loading}
+          >
+            Skip
+          </Button>
         </div>
-        <Button
-          variant="primary"
-          onClick={handleUpdateTimezone}
-          className="justify-center w-full h-10 mt-3 md:mt-0"
-          disabled={loading || !timezone}
-          loading={loading}
-        >
-          Continue
-        </Button>
       </div>
     </>
   );
