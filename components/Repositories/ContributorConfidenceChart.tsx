@@ -62,6 +62,7 @@ export default function ContributorConfidenceChart({
           href="https://opensauced.pizza/docs/features/repo-pages/#insights-into-contributor-confidence"
           onClick={onLearnMoreClick}
           className="text-xs font-semibold text-sauced-orange xl:text-sm hover:underline"
+          data-html2canvas-ignore
         >
           Learn More
         </a>
