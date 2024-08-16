@@ -45,6 +45,7 @@ import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/L
 import OssfChart from "components/Repositories/OssfChart";
 import { setQueryParams } from "lib/utils/query-params";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { CopyContainer } from "components/shared/CopyContainer";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -356,25 +357,37 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
                 <div className="lg:col-span-8 flex flex-col gap-4">
                   <div className="flex gap-4 h-full flex-col lg:flex-row">
-                    <ContributorConfidenceChart
-                      contributorConfidence={repoStats?.contributor_confidence}
-                      isError={isError}
-                      isLoading={isLoading}
-                      onLearnMoreClick={() =>
-                        posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
-                          repository: repoData.full_name,
-                        })
-                      }
-                    />
-                    <OssfChart
-                      repository={repoData.full_name}
-                      totalScore={repoData.ossf_scorecard_total_score}
-                      dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
-                      maintainedScore={repoData.ossf_scorecard_maintained_score}
-                      fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
-                      isLoading={false}
-                      isError={!repoData.ossf_scorecard_total_score}
-                    />
+                    <CopyContainer
+                      options={{
+                        windowWidth: 1700,
+                      }}
+                    >
+                      <ContributorConfidenceChart
+                        contributorConfidence={repoStats?.contributor_confidence}
+                        isError={isError}
+                        isLoading={isLoading}
+                        onLearnMoreClick={() =>
+                          posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                            repository: repoData.full_name,
+                          })
+                        }
+                      />
+                    </CopyContainer>
+                    <CopyContainer
+                      options={{
+                        windowWidth: 1700,
+                      }}
+                    >
+                      <OssfChart
+                        repository={repoData.full_name}
+                        totalScore={repoData.ossf_scorecard_total_score}
+                        dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
+                        maintainedScore={repoData.ossf_scorecard_maintained_score}
+                        fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
+                        isLoading={false}
+                        isError={!repoData.ossf_scorecard_total_score}
+                      />
+                    </CopyContainer>
                   </div>
 
                   <RossChart
