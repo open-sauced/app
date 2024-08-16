@@ -62,6 +62,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
   const cards = await Promise.all(uniqueUsernames.map(fetchUserData));
 
+  // Cache page for one hour
+  context.res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
+  context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=0, stale-while-revalidate=3600");
+  context.res.setHeader("Cache-Tag", `user-profiles,user-profile-${username}`);
+
   return {
     props: {
       username,
