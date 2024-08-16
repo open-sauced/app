@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.58.0-beta.4](https://github.com/open-sauced/app/compare/v2.58.0-beta.3...v2.58.0-beta.4) (2024-08-16)
+
+
+### 🐛 Bug Fixes
+
+* better DevCard data fetching flow ([#3936](https://github.com/open-sauced/app/issues/3936)) ([a5371ee](https://github.com/open-sauced/app/commit/a5371eee7243726f9e5e8bc55475a4e5da0171a6))
+
 ## [2.58.0-beta.3](https://github.com/open-sauced/app/compare/v2.58.0-beta.2...v2.58.0-beta.3) (2024-08-16)
 
 
