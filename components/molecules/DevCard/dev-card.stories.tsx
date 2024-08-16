@@ -1,20 +1,41 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import DevCard from "components/molecules/DevCard/dev-card";
+import { Meta, StoryObj } from "@storybook/react";
+import { STUB_DEV_CARDS } from "components/organisms/DevCardCarousel/stubData";
+import DevCard from "./dev-card";
 
-const storyConfig = {
+type Story = StoryObj<typeof DevCard>;
+
+const meta: Meta<typeof DevCard> = {
   title: "Design System/Molecules/DevCard",
   component: DevCard,
-  parameters: {
-    layout: "centered",
+  args: {
+    devstats: STUB_DEV_CARDS[0],
+    isLoading: false,
+    error: undefined,
   },
-} as ComponentMeta<typeof DevCard>;
+};
 
-export default storyConfig;
+export default meta;
 
-const DevCardTemplate: ComponentStory<typeof DevCard> = (args) => <DevCard {...args} />;
-export const DevCardStory = DevCardTemplate.bind({});
+export const Default: Story = {
+  args: {
+    devstats: STUB_DEV_CARDS[0],
+    isLoading: false,
+    error: undefined,
+  },
+};
 
-DevCardStory.args = {
-  username: "zeucapua",
-  isInteractive: true,
+export const LoadingState: Story = {
+  args: {
+    devstats: undefined,
+    isLoading: true,
+    error: undefined,
+  },
+};
+
+export const ErrorState: Story = {
+  args: {
+    devstats: undefined,
+    isLoading: false,
+    error: new Error(),
+  },
 };
