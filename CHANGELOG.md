@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.59.0-beta.1](https://github.com/open-sauced/app/compare/v2.58.0...v2.59.0-beta.1) (2024-08-16)
+
+
+### 🍕 Features
+
+* implement the CopyContainer component for copying it's contents as an image ([#3975](https://github.com/open-sauced/app/issues/3975)) ([cee5fa8](https://github.com/open-sauced/app/commit/cee5fa8d1c65b5f296a362de72b5f0b1111373d1))
+
 ## [2.58.0](https://github.com/open-sauced/app/compare/v2.57.0...v2.58.0) (2024-08-16)
 
 
