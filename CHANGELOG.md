@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.59.0-beta.2](https://github.com/open-sauced/app/compare/v2.59.0-beta.1...v2.59.0-beta.2) (2024-08-16)
+
+
+### 🐛 Bug Fixes
+
+* reverted a file that accidentally went in cee5fa8d ([#3979](https://github.com/open-sauced/app/issues/3979)) ([d776a13](https://github.com/open-sauced/app/commit/d776a13e2d159d24ffd7d7424abb5d434f7306e4))
+
 ## [2.59.0-beta.1](https://github.com/open-sauced/app/compare/v2.58.0...v2.59.0-beta.1) (2024-08-16)
 
 
