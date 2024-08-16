@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.58.0-beta.5](https://github.com/open-sauced/app/compare/v2.58.0-beta.4...v2.58.0-beta.5) (2024-08-16)
+
+
+### 🍕 Features
+
+* add redirect for oscr.me to DevCard ([#3973](https://github.com/open-sauced/app/issues/3973)) ([88853aa](https://github.com/open-sauced/app/commit/88853aa5ec8f10603da784fc9cc26ae5fa44b0a0))
+
 ## [2.58.0-beta.4](https://github.com/open-sauced/app/compare/v2.58.0-beta.3...v2.58.0-beta.4) (2024-08-16)
 
 
