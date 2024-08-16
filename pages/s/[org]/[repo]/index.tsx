@@ -45,6 +45,7 @@ import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/L
 import OssfChart from "components/Repositories/OssfChart";
 import { setQueryParams } from "lib/utils/query-params";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { CopyContainer } from "components/shared/CopyContainer";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -356,16 +357,34 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
                 <div className="lg:col-span-8 flex flex-col gap-4">
                   <div className="flex gap-4 h-full flex-col lg:flex-row">
-                    <ContributorConfidenceChart
-                      contributorConfidence={repoStats?.contributor_confidence}
-                      isError={isError}
-                      isLoading={isLoading}
-                      onLearnMoreClick={() =>
-                        posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
-                          repository: repoData.full_name,
-                        })
-                      }
-                    />
+                    <CopyContainer
+                      options={{
+                        windowWidth: 1700,
+                        onclone(document, element) {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("invisible");
+                          });
+
+                          element.querySelectorAll(".graph-to-image").forEach((el) => {
+                            (el as HTMLElement).style.backgroundColor = "white";
+                          });
+
+                          (element.querySelector(".contributor-confidence-logo") as HTMLElement).style.marginTop =
+                            "0.9rem";
+                        },
+                      }}
+                    >
+                      <ContributorConfidenceChart
+                        contributorConfidence={repoStats?.contributor_confidence}
+                        isError={isError}
+                        isLoading={isLoading}
+                        onLearnMoreClick={() =>
+                          posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                            repository: repoData.full_name,
+                          })
+                        }
+                      />
+                    </CopyContainer>
                     <OssfChart
                       repository={repoData.full_name}
                       totalScore={repoData.ossf_scorecard_total_score}

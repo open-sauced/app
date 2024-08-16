@@ -3,6 +3,7 @@ import { FaUserPlus } from "react-icons/fa";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Card from "components/atoms/Card/card";
+import { CopyImageBranding } from "components/shared/CopyImageBranding";
 
 type ContributorConfidenceChartProps = {
   contributorConfidence: number | undefined;
@@ -52,10 +53,10 @@ export default function ContributorConfidenceChart({
   };
 
   return (
-    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-fit items-center py-8`}>
+    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-fit items-center py-8 graph-to-image`}>
       <header className="flex items-center justify-between w-full px-4">
         <div className="flex items-center gap-2">
-          <FaUserPlus className="text-xl" />
+          <FaUserPlus className="text-xl contributor-confidence-logo" />
           <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Contributor Confidence</h3>
         </div>
         <a
@@ -100,6 +101,7 @@ export default function ContributorConfidenceChart({
           </section>
         </section>
       )}
+      <CopyImageBranding />
     </Card>
   );
 }
