@@ -4,8 +4,8 @@ import { animated, useSpring, useSprings } from "@react-spring/web";
 import { useGesture } from "@use-gesture/react";
 import { useOutsideClickRef } from "rooks";
 import DevCard from "components/molecules/DevCard/dev-card";
-import { UserDevStats } from "pages/u/[username]/card";
 import Button from "components/shared/Button/button";
+import { useFetchUserDevStats } from "lib/hooks/api/useFetchUserDevStats";
 import ChevronLeft from "../../../img/icons/chevron-left.svg";
 
 const LOADING_TILES_COUNT = 20;
@@ -29,12 +29,34 @@ const coordinatesForIndex = (height: number) => (index: number) => {
 };
 
 interface DevCardWallProps {
-  cards: UserDevStats[];
+  usernames: string[];
   isLoading?: boolean;
   initialCardIndex?: number;
 }
 
-export default function DevCardWall({ isLoading = false, cards, initialCardIndex }: DevCardWallProps) {
+function RenderedDevCard({ username, isInteractive }: { username: string; isInteractive: boolean }) {
+  const {
+    data: devstats,
+    isLoading,
+    error,
+  } = useFetchUserDevStats({
+    username: username,
+  });
+
+  return (
+    <DevCard
+      key={`card_${devstats?.login}`}
+      devstats={devstats}
+      isLoading={isLoading}
+      error={error}
+      isInteractive={isInteractive}
+      isFlipped={false}
+      hideProfileButton
+    />
+  );
+}
+
+export default function DevCardWall({ isLoading = false, usernames, initialCardIndex }: DevCardWallProps) {
   const [containerRef, { height }] = useMeasure<HTMLDivElement>();
   const [activeCardIndex, setActiveCardIndex] = useState<number | null>(null);
   const [outsideClickRef] = useOutsideClickRef(() => {
@@ -96,7 +118,7 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
   });
 
   const [cardSprings, cardApi] = useSprings(
-    cards.length,
+    usernames.length,
     (index) => ({
       from: {
         x: 0,
@@ -114,16 +136,16 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
         ...coordinatesForIndex(height)(index),
       },
     }),
-    [cards, height]
+    [usernames, height]
   );
 
   const [cardButtonSprings, cardButtonApi] = useSprings(
-    cards.length,
+    usernames.length,
     (index) => ({
       opacity: 0,
       translateY: 50,
     }),
-    [cards, activeCardIndex]
+    [usernames, activeCardIndex]
   );
 
   useEffect(() => {
@@ -168,9 +190,9 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
       if (index === null) {
         return 0;
       }
-      return (index + 1) % cards.length;
+      return (index + 1) % usernames.length;
     });
-  }, [cards]);
+  }, [usernames]);
 
   useKey("ArrowLeft", nextCard, {}, [nextCard]);
   useKey("ArrowDown", nextCard, {}, [nextCard]);
@@ -215,7 +237,7 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
   });
 
   const cardElements = cardSprings.map(({ x, y, translateY, scale, zIndex }, i) => {
-    const cardProps = cards[i];
+    const username = usernames[i];
     const buttonSpring = cardButtonSprings[i];
     return (
       <animated.div
@@ -236,9 +258,9 @@ export default function DevCardWall({ isLoading = false, cards, initialCardIndex
           zIndex,
         }}
       >
-        <DevCard key="card" user={cardProps} isInteractive={i === activeCardIndex} hideProfileButton />
+        <RenderedDevCard username={username} isInteractive={i === activeCardIndex} />
         <animated.div key="button" className={"grid place-content-center"} style={{ ...buttonSpring }}>
-          <Button variant="primary" href={`/u/${cardProps.login}`}>
+          <Button variant="primary" href={`/u/${username}`}>
             View Profile
           </Button>
         </animated.div>

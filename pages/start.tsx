@@ -33,6 +33,7 @@ import useStore from "lib/store";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "components/atoms/Select/select";
 import { timezones } from "lib/utils/timezones";
 import { useFetchUser } from "lib/hooks/useFetchUser";
+import { useFetchUserDevStats } from "lib/hooks/api/useFetchUserDevStats";
 
 type StepKeys = "1" | "2" | "3";
 
@@ -247,30 +248,9 @@ interface LoginStep3Props {
 }
 
 const LoginStep3: React.FC<LoginStep3Props> = ({ user }) => {
-  type UserDevStats = DbUser & DbListContributorStat;
   const username: string = user?.user_metadata.user_name;
   const router = useRouter();
-  const [userDevStats, setUserDevStats] = useState<UserDevStats | undefined>(undefined);
-
-  async function fetchUserData(username: string) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      return (await response.json()) as UserDevStats;
-    }
-
-    return undefined;
-  }
-
-  useEffect(() => {
-    fetchUserData(username).then((devstats) => {
-      setUserDevStats(devstats);
-    });
-  }, []);
+  const { data: devstats, isLoading, error } = useFetchUserDevStats({ username });
 
   return (
     <>
@@ -289,7 +269,16 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ user }) => {
             </Text>
           </div>
           <div className="flex justify-center mb-4 md:mb-0">
-            {userDevStats && <DevCard key="card" isInteractive={false} user={userDevStats} isFlipped={false} />}
+            {devstats && (
+              <DevCard
+                key="card"
+                devstats={devstats}
+                isLoading={isLoading}
+                error={error}
+                isInteractive={false}
+                isFlipped={false}
+              />
+            )}
           </div>
 
           <Button
