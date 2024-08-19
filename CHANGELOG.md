@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.59.0-beta.3](https://github.com/open-sauced/app/compare/v2.59.0-beta.2...v2.59.0-beta.3) (2024-08-19)
+
+
+### 🐛 Bug Fixes
+
+* make timezone optional for onboarding and user settings ([#3972](https://github.com/open-sauced/app/issues/3972)) ([f1795a3](https://github.com/open-sauced/app/commit/f1795a3320f88f8a840b82b22529170b760a6589))
+
 ## [2.59.0-beta.2](https://github.com/open-sauced/app/compare/v2.59.0-beta.1...v2.59.0-beta.2) (2024-08-16)
 
 
