@@ -10,10 +10,10 @@ interface PaginatedResponse {
   readonly meta: Meta;
 }
 
-const usePullRequests = (intialLimit = 1000, repoIds: number[] = [], range = 30) => {
+const usePullRequests = (initialLimit = 1000, repoIds: number[] = [], range = 30) => {
   const router = useRouter();
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(intialLimit);
+  const [limit, setLimit] = useState(initialLimit);
   const { pageId, selectedFilter } = router.query;
   const topic = pageId as string;
   const filterQuery = getFilterQuery(selectedFilter);

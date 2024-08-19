@@ -32,6 +32,7 @@ import ContributorsGrid from "components/Tables/ContributorsGrid";
 import LayoutToggle, { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import { OrderDirection } from "lib/utils/sorting";
 import { setQueryParams } from "lib/utils/query-params";
+import ContributorDistributionChart from "components/Contributors/ContributorDistributionChart";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -217,6 +218,7 @@ export default function RepoPageContributorsTab({ repoData, ogImageUrl, display 
           <ClientOnly>
             <div className="flex flex-col gap-8 px-2 py-4 lg:p-8">
               <Activity repositories={[repoData.id]} />
+              <ContributorDistributionChart isLoading={false} range={Number(rawRange)} />
               <div className="flex w-full justify-between">
                 <h2 className="text-lg font-semibold">Contributors</h2>
                 <LayoutToggle
