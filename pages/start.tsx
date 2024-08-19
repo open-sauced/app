@@ -34,6 +34,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "c
 import { timezones } from "lib/utils/timezones";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import { useFetchUserDevStats } from "lib/hooks/api/useFetchUserDevStats";
+import { copyImageToClipboard } from "lib/utils/copy-to-clipboard";
+import { toast } from "lib/hooks/useToast";
+import { siteUrl } from "lib/utils/urls";
 
 type StepKeys = "1" | "2" | "3";
 
@@ -283,10 +286,20 @@ const LoginStep3: React.FC<LoginStep3Props> = ({ user }) => {
 
           <Button
             variant="primary"
-            onClick={() => router.push(`/u/${username}/card`)}
+            onClick={() =>
+              copyImageToClipboard(siteUrl(`og-images/dev-card`, { username })).then((copied) => {
+                if (copied) {
+                  setTimeout(() => {
+                    toast({ description: "Copied to clipboard", variant: "success" });
+                  }, 500);
+                } else {
+                  toast({ description: "Error copying to clipboard", variant: "warning" });
+                }
+              })
+            }
             className="justify-center w-full mt-4"
           >
-            Go to Your DevCard
+            Share Your DevCard
           </Button>
 
           <Button
