@@ -16,10 +16,9 @@ export const ContributorListTableRowStory = ContributorListTableRowTemplate.bind
 
 ContributorListTableRowStory.args = {
   contributor: {
-    author_login: "foxyblocks",
-    username: "foxyblocks",
+    login: "foxyblocks",
     updated_at: "2021-08-24T00:00:00.000Z",
-    user_id: 1,
+    id: 1,
     devstats_updated_at: "2021-08-24T00:00:00.000Z",
-  },
+  } as DbUserContributor,
 };

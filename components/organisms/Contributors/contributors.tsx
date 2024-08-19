@@ -50,7 +50,7 @@ const Contributors = ({
   const { toast } = useToast();
   const { user, signIn } = useSupabaseAuth();
   const [layout, setLayout] = useState<ToggleValue>(defaultLayout);
-  const [selectedContributors, setSelectedContributors] = useState<DbPRContributor[]>([]);
+  const [selectedContributors, setSelectedContributors] = useState<DbUserContributor[]>([]);
   const [selectedListIds, setSelectedListIds] = useState<string[]>([]);
   const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -60,11 +60,11 @@ const Contributors = ({
     setLayout(isMobile ? "grid" : defaultLayout);
   }, [isMobile]);
 
-  const onSelectContributor = (state: boolean, contributor: DbPRContributor) => {
+  const onSelectContributor = (state: boolean, contributor: DbUserContributor) => {
     if (state) {
       setSelectedContributors((prev) => [...prev, contributor]);
     } else {
-      setSelectedContributors(selectedContributors.filter((selected) => selected.user_id !== contributor.user_id));
+      setSelectedContributors(selectedContributors.filter((selected) => selected.id !== contributor.id));
     }
   };
 
@@ -90,7 +90,7 @@ const Contributors = ({
         selectedListIds.map((listIds) =>
           addListContributor(
             listIds,
-            selectedContributors.map((contributor) => ({ id: contributor.user_id })),
+            selectedContributors.map((contributor) => ({ id: contributor.id })),
             workspaceId || personalWorkspaceId
           )
         )
@@ -155,9 +155,7 @@ const Contributors = ({
                 pathname: `/workspaces/${urlWorkspaceId}/contributor-insights/new`,
                 query: {
                   title: title ? `${title} Contributors` : "",
-                  contributors: JSON.stringify(
-                    selectedContributors.map((contributor) => contributor.author_login || contributor.username)
-                  ),
+                  contributors: JSON.stringify(selectedContributors.map((contributor) => contributor.login)),
                 },
               });
             }}

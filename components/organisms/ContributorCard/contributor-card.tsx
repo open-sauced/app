@@ -23,7 +23,7 @@ import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 
 interface ContributorCardProps {
   className?: string;
-  contributor: DbPRContributor | DbRepoContributor;
+  contributor: DbUserContributor | DbRepoContributor;
   topic: string;
   repositories?: number[];
   range?: string;
@@ -42,7 +42,7 @@ const ContributorCard = ({
   showOscr,
   excludeOscr = false,
 }: ContributorCardProps) => {
-  const username = "author_login" in contributor ? contributor.author_login : contributor.login;
+  const username = contributor.login;
   const [showPRs, setShowPRs] = useState(false);
   const githubAvatar = getAvatarByUsername(username);
   const { repoList, meta } = useContributorPullRequestsChart(username, topic, repositories, range);
