@@ -71,6 +71,7 @@ const CustomAvatar = ({
           width={size as number}
           height={size as number}
           src={avatarURL}
+          style={{ zIndex: "-1" }}
         />
       ) : (
         <div
