@@ -404,9 +404,9 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         windowWidth: 1700,
                         allowTaint: true,
                         backgroundColor: "hsla(19, 100%, 50%, 1)",
-                        width: 1700,
+                        width: 1380,
                         height: 1000,
-                        x: -575,
+                        x: -425,
                         y: -125,
                         onclone: (document, element) => {
                           element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
