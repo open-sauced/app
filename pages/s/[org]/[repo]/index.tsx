@@ -45,6 +45,7 @@ import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/L
 import OssfChart from "components/Repositories/OssfChart";
 import { setQueryParams } from "lib/utils/query-params";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { CopyContainer } from "components/shared/CopyContainer";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -395,29 +396,38 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
                 <div className="lg:col-span-4 flex flex-col gap-4">
                   {lotteryState === "lottery" && (
-                    <LotteryFactorChart
-                      lotteryFactor={lotteryFactor}
-                      error={lotteryFactorError}
-                      range={range}
-                      isLoading={isLotteryFactorLoading}
-                      showHoverCards
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloBannerOnClick={
-                        uniqueYoloCoders.size > 0
-                          ? () => {
-                              setLotteryState("yolo");
-                              posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
-                            }
-                          : undefined
-                      }
-                      onYoloIconClick={() => {
-                        setLotteryState("yolo");
-                        posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                    <CopyContainer
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
                       }}
-                      onProfileClick={() => {
-                        posthog.capture(`Repo Pages: Lottery Factor user clicked`, { repository: repoData.full_name });
-                      }}
-                    />
+                    >
+                      <LotteryFactorChart
+                        lotteryFactor={lotteryFactor}
+                        error={lotteryFactorError}
+                        range={range}
+                        isLoading={isLotteryFactorLoading}
+                        showHoverCards
+                        uniqueYoloCoders={uniqueYoloCoders}
+                        yoloBannerOnClick={
+                          uniqueYoloCoders.size > 0
+                            ? () => {
+                                setLotteryState("yolo");
+                                posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
+                              }
+                            : undefined
+                        }
+                        onYoloIconClick={() => {
+                          setLotteryState("yolo");
+                          posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                        }}
+                        onProfileClick={() => {
+                          posthog.capture(`Repo Pages: Lottery Factor user clicked`, {
+                            repository: repoData.full_name,
+                          });
+                        }}
+                      />
+                    </CopyContainer>
                   )}
                   {lotteryState === "yolo" && (
                     <YoloChart
