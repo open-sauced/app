@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.59.0-beta.4](https://github.com/open-sauced/app/compare/v2.59.0-beta.3...v2.59.0-beta.4) (2024-08-19)
+
+
+### 🔁 Continuous Integration
+
+* improve stability of E2E tests ([#3983](https://github.com/open-sauced/app/issues/3983)) ([7668b06](https://github.com/open-sauced/app/commit/7668b06c89f7d776cefeca7f0cc5361479294f3b))
+
 ## [2.59.0-beta.3](https://github.com/open-sauced/app/compare/v2.59.0-beta.2...v2.59.0-beta.3) (2024-08-19)
 
 

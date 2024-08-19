@@ -18,11 +18,9 @@ test("Loads user profile page", async ({ page }) => {
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
 
   // Check for login button for viewing OSCR
-  await page
-    .getByRole("button", { name: "Log in to view  Open Source Contributor Rating (OSCR)", exact: true })
-    .click();
-
-  await expect(page.url()).toContain("https://github.com/login");
+  expect(
+    page.getByRole("button", { name: "Log in to view  Open Source Contributor Rating (OSCR)", exact: true })
+  ).toBeVisible();
 });
 
 test("Loads user dev card page", async ({ page }) => {

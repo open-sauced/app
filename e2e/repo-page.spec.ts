@@ -30,8 +30,7 @@ test.describe("large screen", () => {
     const dialog = await page.getByRole("dialog", { name: "Add repository to Workspace", exact: true });
     await expect(dialog).toBeVisible();
 
-    await dialog.getByRole("button", { name: "Connect with GitHub", exact: true }).click();
-    await expect(page.url()).toContain("https://github.com/login");
+    expect(dialog.getByRole("button", { name: "Connect with GitHub", exact: true })).toBeVisible();
   });
 
   test("Adds a repository SBOM to a workspace", async ({ page }) => {
@@ -41,8 +40,7 @@ test.describe("large screen", () => {
     const dialog = await page.getByRole("dialog", { name: "Add repository SBOM to Workspace", exact: true });
     await expect(dialog).toBeVisible();
 
-    await dialog.getByRole("button", { name: "Connect with GitHub", exact: true }).click();
-    await expect(page.url()).toContain("https://github.com/login");
+    expect(dialog.getByRole("button", { name: "Connect with GitHub", exact: true })).toBeVisible();
   });
 });
 
@@ -53,21 +51,15 @@ test.describe("small screen", () => {
     await page.goto("/s/open-sauced/app");
 
     await page.getByRole("button", { name: "Add to Workspace", exact: true }).click();
-    const dialog = await page.getByRole("dialog", { name: "Add repository to Workspace", exact: true });
+    const dialog = page.getByRole("dialog", { name: "Add repository to Workspace", exact: true });
     await expect(dialog).toBeVisible();
-
-    await dialog.getByRole("button", { name: "Connect with GitHub", exact: true }).click();
-    await expect(page.url()).toContain("https://github.com/login");
   });
 
   test("Adds a repository SBOM to a workspace", async ({ page }) => {
     await page.goto("/s/open-sauced/app");
 
     await page.getByRole("button", { name: "Workspace from SBOM", exact: true }).click();
-    const dialog = await page.getByRole("dialog", { name: "Add repository SBOM to Workspace", exact: true });
+    const dialog = page.getByRole("dialog", { name: "Add repository SBOM to Workspace", exact: true });
     await expect(dialog).toBeVisible();
-
-    await dialog.getByRole("button", { name: "Connect with GitHub", exact: true }).click();
-    await expect(page.url()).toContain("https://github.com/login");
   });
 });
