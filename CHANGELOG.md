@@ -5,6 +5,148 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.59.0-beta.4](https://github.com/open-sauced/app/compare/v2.59.0-beta.3...v2.59.0-beta.4) (2024-08-19)
+
+
+### 🔁 Continuous Integration
+
+* improve stability of E2E tests ([#3983](https://github.com/open-sauced/app/issues/3983)) ([7668b06](https://github.com/open-sauced/app/commit/7668b06c89f7d776cefeca7f0cc5361479294f3b))
+
+## [2.59.0-beta.3](https://github.com/open-sauced/app/compare/v2.59.0-beta.2...v2.59.0-beta.3) (2024-08-19)
+
+
+### 🐛 Bug Fixes
+
+* make timezone optional for onboarding and user settings ([#3972](https://github.com/open-sauced/app/issues/3972)) ([f1795a3](https://github.com/open-sauced/app/commit/f1795a3320f88f8a840b82b22529170b760a6589))
+
+## [2.59.0-beta.2](https://github.com/open-sauced/app/compare/v2.59.0-beta.1...v2.59.0-beta.2) (2024-08-16)
+
+
+### 🐛 Bug Fixes
+
+* reverted a file that accidentally went in cee5fa8d ([#3979](https://github.com/open-sauced/app/issues/3979)) ([d776a13](https://github.com/open-sauced/app/commit/d776a13e2d159d24ffd7d7424abb5d434f7306e4))
+
+## [2.59.0-beta.1](https://github.com/open-sauced/app/compare/v2.58.0...v2.59.0-beta.1) (2024-08-16)
+
+
+### 🍕 Features
+
+* implement the CopyContainer component for copying it's contents as an image ([#3975](https://github.com/open-sauced/app/issues/3975)) ([cee5fa8](https://github.com/open-sauced/app/commit/cee5fa8d1c65b5f296a362de72b5f0b1111373d1))
+
+## [2.58.0](https://github.com/open-sauced/app/compare/v2.57.0...v2.58.0) (2024-08-16)
+
+
+### 🐛 Bug Fixes
+
+* better DevCard data fetching flow ([#3936](https://github.com/open-sauced/app/issues/3936)) ([a5371ee](https://github.com/open-sauced/app/commit/a5371eee7243726f9e5e8bc55475a4e5da0171a6))
+
+
+### 🍕 Features
+
+* add button to copy DevCard image to clipboard ([#3943](https://github.com/open-sauced/app/issues/3943)) ([d15ea8c](https://github.com/open-sauced/app/commit/d15ea8c1dfa8dd946f44f365e7a93bcae14dd2d3))
+* add redirect for oscr.me to DevCard ([#3973](https://github.com/open-sauced/app/issues/3973)) ([88853aa](https://github.com/open-sauced/app/commit/88853aa5ec8f10603da784fc9cc26ae5fa44b0a0))
+* implemented utility function to copy an HTML element as an image to the clipboard ([#3963](https://github.com/open-sauced/app/issues/3963)) ([35a3ffe](https://github.com/open-sauced/app/commit/35a3ffe08c59a2e41cf84264206c04882496ff62))
+* now the dev card page is cached for one hour ([#3968](https://github.com/open-sauced/app/issues/3968)) ([d070065](https://github.com/open-sauced/app/commit/d0700650b2eb6bbd38ea328a73b52a13b63ae612))
+
+## [2.58.0-beta.5](https://github.com/open-sauced/app/compare/v2.58.0-beta.4...v2.58.0-beta.5) (2024-08-16)
+
+
+### 🍕 Features
+
+* add redirect for oscr.me to DevCard ([#3973](https://github.com/open-sauced/app/issues/3973)) ([88853aa](https://github.com/open-sauced/app/commit/88853aa5ec8f10603da784fc9cc26ae5fa44b0a0))
+
+## [2.58.0-beta.4](https://github.com/open-sauced/app/compare/v2.58.0-beta.3...v2.58.0-beta.4) (2024-08-16)
+
+
+### 🐛 Bug Fixes
+
+* better DevCard data fetching flow ([#3936](https://github.com/open-sauced/app/issues/3936)) ([a5371ee](https://github.com/open-sauced/app/commit/a5371eee7243726f9e5e8bc55475a4e5da0171a6))
+
+## [2.58.0-beta.3](https://github.com/open-sauced/app/compare/v2.58.0-beta.2...v2.58.0-beta.3) (2024-08-16)
+
+
+### 🍕 Features
+
+* now the dev card page is cached for one hour ([#3968](https://github.com/open-sauced/app/issues/3968)) ([d070065](https://github.com/open-sauced/app/commit/d0700650b2eb6bbd38ea328a73b52a13b63ae612))
+
+## [2.58.0-beta.2](https://github.com/open-sauced/app/compare/v2.58.0-beta.1...v2.58.0-beta.2) (2024-08-16)
+
+
+### 🍕 Features
+
+* add button to copy DevCard image to clipboard ([#3943](https://github.com/open-sauced/app/issues/3943)) ([d15ea8c](https://github.com/open-sauced/app/commit/d15ea8c1dfa8dd946f44f365e7a93bcae14dd2d3))
+
+## [2.58.0-beta.1](https://github.com/open-sauced/app/compare/v2.57.0...v2.58.0-beta.1) (2024-08-15)
+
+
+### 🍕 Features
+
+* implemented utility function to copy an HTML element as an image to the clipboard ([#3963](https://github.com/open-sauced/app/issues/3963)) ([35a3ffe](https://github.com/open-sauced/app/commit/35a3ffe08c59a2e41cf84264206c04882496ff62))
+
+## [2.57.0](https://github.com/open-sauced/app/compare/v2.56.0...v2.57.0) (2024-08-15)
+
+
+### 🍕 Features
+
+* update onboarding steps to include sharing the DevCard ([#3951](https://github.com/open-sauced/app/issues/3951)) ([1391aad](https://github.com/open-sauced/app/commit/1391aadc0629bbd2599456a7c5823a11161ab225))
+
+
+### 🐛 Bug Fixes
+
+* add docs link for SBOM to repository page ([#3958](https://github.com/open-sauced/app/issues/3958)) ([58360d9](https://github.com/open-sauced/app/commit/58360d9e85f0c9118e1734b8d7275fd066462639))
+* add loading feedback when creating contributor insight ([#3947](https://github.com/open-sauced/app/issues/3947)) ([7f94272](https://github.com/open-sauced/app/commit/7f94272ccd1a7b073137bc221647f6154d2b24a8))
+* now see it now link on feed when logged in goes to the user's dev card ([#3954](https://github.com/open-sauced/app/issues/3954)) ([cd3d5b2](https://github.com/open-sauced/app/commit/cd3d5b2554dfb9deec196b1551114358f84767fb))
+
+## [2.57.0-beta.3](https://github.com/open-sauced/app/compare/v2.57.0-beta.2...v2.57.0-beta.3) (2024-08-15)
+
+
+### 🐛 Bug Fixes
+
+* add docs link for SBOM to repository page ([#3958](https://github.com/open-sauced/app/issues/3958)) ([58360d9](https://github.com/open-sauced/app/commit/58360d9e85f0c9118e1734b8d7275fd066462639))
+
+## [2.57.0-beta.2](https://github.com/open-sauced/app/compare/v2.57.0-beta.1...v2.57.0-beta.2) (2024-08-15)
+
+
+### 🐛 Bug Fixes
+
+* add loading feedback when creating contributor insight ([#3947](https://github.com/open-sauced/app/issues/3947)) ([7f94272](https://github.com/open-sauced/app/commit/7f94272ccd1a7b073137bc221647f6154d2b24a8))
+
+## [2.57.0-beta.1](https://github.com/open-sauced/app/compare/v2.56.1-beta.1...v2.57.0-beta.1) (2024-08-15)
+
+
+### 🍕 Features
+
+* update onboarding steps to include sharing the DevCard ([#3951](https://github.com/open-sauced/app/issues/3951)) ([1391aad](https://github.com/open-sauced/app/commit/1391aadc0629bbd2599456a7c5823a11161ab225))
+
+## [2.56.1-beta.1](https://github.com/open-sauced/app/compare/v2.56.0...v2.56.1-beta.1) (2024-08-15)
+
+
+### 🐛 Bug Fixes
+
+* now see it now link on feed when logged in goes to the user's dev card ([#3954](https://github.com/open-sauced/app/issues/3954)) ([cd3d5b2](https://github.com/open-sauced/app/commit/cd3d5b2554dfb9deec196b1551114358f84767fb))
+
+## [2.56.0](https://github.com/open-sauced/app/compare/v2.55.2...v2.56.0) (2024-08-14)
+
+
+### 🍕 Features
+
+* now workspace can be generated from repo page via SBOM ([#3938](https://github.com/open-sauced/app/issues/3938)) ([e2bd019](https://github.com/open-sauced/app/commit/e2bd019134e86a700d7f18b20b755541e57a32cf))
+
+
+### 🐛 Bug Fixes
+
+* fixed contributor insight contributor grid not loading paged data ([#3945](https://github.com/open-sauced/app/issues/3945)) ([1f645ed](https://github.com/open-sauced/app/commit/1f645ed44433d04acce1619d7a907ceda1384605))
+* now the Dev Card share buttons appear on all screen sizes ([#3941](https://github.com/open-sauced/app/issues/3941)) ([5fce569](https://github.com/open-sauced/app/commit/5fce5699245ea395e30b540ce6b265879c84f698))
+* remove duplicate `DayRange` select ([#3939](https://github.com/open-sauced/app/issues/3939)) ([126d44f](https://github.com/open-sauced/app/commit/126d44f3957035856dc687590f4232e88193e681))
+* validate user exists for `/user/<username>/card` page ([#3933](https://github.com/open-sauced/app/issues/3933)) ([9976453](https://github.com/open-sauced/app/commit/99764535b0690788f86ae951b33a520b5a1bbeb1))
+
+## [2.56.0-beta.4](https://github.com/open-sauced/app/compare/v2.56.0-beta.3...v2.56.0-beta.4) (2024-08-14)
+
+
+### 🐛 Bug Fixes
+
+* now the Dev Card share buttons appear on all screen sizes ([#3941](https://github.com/open-sauced/app/issues/3941)) ([5fce569](https://github.com/open-sauced/app/commit/5fce5699245ea395e30b540ce6b265879c84f698))
+
 ## [2.56.0-beta.3](https://github.com/open-sauced/app/compare/v2.56.0-beta.2...v2.56.0-beta.3) (2024-08-14)
 
 

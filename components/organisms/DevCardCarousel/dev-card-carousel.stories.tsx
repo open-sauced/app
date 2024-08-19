@@ -1,23 +1,20 @@
-import { ComponentMeta, ComponentStory } from "@storybook/react";
-import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
-import { STUB_DEV_CARDS } from "components/organisms/DevCardCarousel/stubData";
+import { Meta, StoryObj } from "@storybook/react";
+import DevCardCarousel from "./dev-card-carousel";
 
-const storyConfig = {
+type Story = StoryObj<typeof DevCardCarousel>;
+
+const meta: Meta<typeof DevCardCarousel> = {
   title: "Design System/Organisms/DevCardCarousel",
   component: DevCardCarousel,
-  parameters: {
-    layout: "centered",
-    backgrounds: {
-      default: "dark",
-    },
+  args: {
+    usernames: ["zeucapua", "nickytonline", "brandonroberts"],
   },
-} as ComponentMeta<typeof DevCardCarousel>;
+};
 
-export default storyConfig;
+export default meta;
 
-const DevCardTemplate: ComponentStory<typeof DevCardCarousel> = (args) => <DevCardCarousel {...args} />;
-export const DevCardCarouselStory = DevCardTemplate.bind({});
-
-DevCardCarouselStory.args = {
-  cards: [...STUB_DEV_CARDS],
+export const Default: Story = {
+  args: {
+    usernames: ["zeucapua", "nickytonline", "brandonroberts"],
+  },
 };

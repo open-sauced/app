@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useTransition, animated } from "@react-spring/web";
 import Image from "next/image";
 import { usePostHog } from "posthog-js/react";
-import { captureException } from "@sentry/nextjs";
 import { safeParse } from "valibot";
+import { FiCopy } from "react-icons/fi";
 import Button from "components/shared/Button/button";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 import DevCardCarousel from "components/organisms/DevCardCarousel/dev-card-carousel";
@@ -12,9 +12,11 @@ import SEO from "layouts/SEO/SEO";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { linkedinCardShareUrl, siteUrl, twitterCardShareUrl } from "lib/utils/urls";
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
-import { isValidUrlSlug } from "lib/utils/url-validators";
 import { fetchApiData } from "helpers/fetchApiData";
 import { GitHubUserNameSchema } from "lib/validation-schemas";
+import { copyImageToClipboard } from "lib/utils/copy-to-clipboard";
+import { useToast } from "lib/hooks/useToast";
+import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 import TwitterIcon from "../../../public/twitter-x-logo.svg";
 import LinkinIcon from "../../../img/icons/social-linkedin.svg";
 import BubbleBG from "../../../img/bubble-bg.svg";
@@ -33,23 +35,6 @@ const ADDITIONAL_PROFILES_TO_LOAD = [
 
 export type UserDevStats = DbUser & DbListContributorStat;
 
-async function fetchUserData(username: string) {
-  try {
-    if (!isValidUrlSlug(username)) {
-      throw Error("Invalid username");
-    }
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${username}/devstats`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return (await response.json()) as UserDevStats;
-  } catch (e) {
-    captureException(e);
-  }
-}
-
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const username = context?.params?.username as string | undefined;
   if (!username) {
@@ -64,49 +49,47 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   });
 
   if (error || !userData) {
-    if (error?.status === 404 || error?.status === 401) {
-      return { notFound: true };
-    }
-    const exception = new Error(`Error in fetching user data`);
-    captureException(exception);
-    throw exception;
+    return {
+      notFound: true,
+    };
   }
 
-  const uniqueUsernames = [...new Set([username, ...ADDITIONAL_PROFILES_TO_LOAD])];
-  const cards = await Promise.all(uniqueUsernames.map(fetchUserData));
+  // Cache page for one hour
+  context.res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
+  context.res.setHeader("Netlify-CDN-Cache-Control", "public, max-age=0, stale-while-revalidate=3600");
+  context.res.setHeader("Cache-Tag", `user-profiles,user-profile-${username}`);
 
   return {
     props: {
-      username,
-      cards,
+      user: userData,
     },
   };
 }
 
-export default function CardPage({ username, cards }: { username: string; cards: UserDevStats[] }) {
+export default function CardPage({ user }: { user: DbUser }) {
   const { user: loggedInUser } = useSupabaseAuth();
-  const [selectedUserName, setSelectedUserName] = useState<string>(username);
+  const uniqueUsernames = [...new Set([user.login, ...ADDITIONAL_PROFILES_TO_LOAD])];
+  const [selectedUserName, setSelectedUserName] = useState<string>(user.login);
   const iframeTransition = useTransition(selectedUserName, {
     from: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
     enter: { opacity: 1, transform: "translate3d(0, 0, 0)" },
     leave: { opacity: 0, transform: "translate3d(100%, 0, 0)" },
   });
 
-  const firstCard = cards!.find((card) => card.login === username);
-  const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === username;
+  const isViewingOwnProfile = loggedInUser?.user_metadata?.user_name === user.login;
 
-  const socialSummary = `${firstCard?.bio || `${username} has connected their GitHub but has not added a bio.`}`;
+  const socialSummary = `${user.bio || `${user.login} has connected their GitHub but has not added a bio.`}`;
 
   return (
     <FullHeightContainer>
       <SEO
-        title={`${username} | OpenSauced`}
+        title={`${user.login} | OpenSauced`}
         description={socialSummary}
-        image={siteUrl(`og-images/dev-card`, { username })}
+        image={siteUrl(`og-images/dev-card`, { username: user.login })}
         twitterCard="summary_large_image"
       />
       <main
-        className="grid max-h-screen md:overflow-hidden md:pb-20"
+        className="grid max-h-screen md:overflow-hidden"
         style={{
           background: `url(${BubbleBG.src}) no-repeat center center, linear-gradient(147deg, #212121 13.41%, #2E2E2E 86.8%)`,
           backgroundSize: "cover",
@@ -125,10 +108,10 @@ export default function CardPage({ username, cards }: { username: string; cards:
         >
           <div className="flex items-center justify-center md:justify-end">
             <div className="flex flex-col gap-10">
-              <DevCardCarousel cards={cards} onSelect={(name) => setSelectedUserName(name)} />
+              <DevCardCarousel usernames={uniqueUsernames} onSelect={(name) => setSelectedUserName(name)} />
               <div className="hidden md:flex align-self-stretch justify-center">
                 {isViewingOwnProfile ? (
-                  <SocialButtons username={username} summary={socialSummary} />
+                  <SocialButtons username={user.login} summary={socialSummary} />
                 ) : (
                   <Button variant="primary" className="justify-center" href="/start">
                     Create your own dev card!
@@ -137,6 +120,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
               </div>
             </div>
           </div>
+
           <div className="hidden md:grid">
             {iframeTransition((style, username) => {
               return (
@@ -151,9 +135,7 @@ export default function CardPage({ username, cards }: { username: string; cards:
                   <div className="grid hover:scale-[1.01] cursor-pointer transition-all group">
                     <div className="rounded-l-3xl h-full max-h-full grid bg-slate-50 overflow-hidden">
                       <iframe
-                        className="h-full max-h-full group-hover:blur-sm transition-all z-10 relative"
-                        width={1555}
-                        height={938}
+                        className="h-screen max-h-full group-hover:blur-sm transition-all z-10 relative"
                         src={`/u/${username}`}
                         style={{
                           pointerEvents: "none",
@@ -177,22 +159,38 @@ export default function CardPage({ username, cards }: { username: string; cards:
             })}
           </div>
         </div>
-        <div className="grid justify-center place-content-start py-7 md:hidden">
-          {isViewingOwnProfile ? (
-            <SocialButtons username={username} summary={socialSummary} />
-          ) : (
-            <div className="flex flex-col gap-2">
-              <Button variant="primary" className="justify-center" href={`/u/${selectedUserName}`}>
-                See Full Profile
-              </Button>
-              <Button variant="dark" className="justify-center" href="/start">
-                Create your own dev card!
-              </Button>
-            </div>
-          )}
-        </div>
       </main>
     </FullHeightContainer>
+  );
+}
+
+function CopyButton({ username }: { username: string }) {
+  const [copying, setCopying] = useState(false);
+  const { toast } = useToast();
+  const posthog = usePostHog();
+
+  return (
+    <div
+      className="rounded-full w-10 h-10 bg-sauced-orange stroke-white cursor-pointer hover:opacity-80 transition-all
+flex items-center justify-center"
+      onClick={async () => {
+        setCopying(true);
+        posthog.capture("DevCard image copied", { username });
+        copyImageToClipboard(siteUrl(`og-images/dev-card`, { username })).then((copied) => {
+          if (copied) {
+            setTimeout(() => {
+              toast({ description: "Copied to clipboard", variant: "success" });
+              setCopying(false);
+            }, 500);
+          } else {
+            toast({ description: "Error copying to clipboard", variant: "warning" });
+            setCopying(false);
+          }
+        });
+      }}
+    >
+      {copying ? <Spinner className="w-6 h-8" /> : <FiCopy className="w-6 h-8 stroke-white" />}
+    </div>
   );
 }
 
@@ -215,20 +213,27 @@ function SocialButtons({ username, summary }: { username: string; summary: strin
 
   return (
     <div>
-      <div className="text-white text-xs mb-2">Share your DevCard</div>
+      <div className="flex justify-center text-white text-xs mb-2">Share your DevCard</div>
       <div className="flex gap-2 justify-center">
         {icons.map((icon) => (
           <a
             key={icon.src}
             href={icon.url}
-            className="rounded-full w-10 h-10 grid place-content-center border hover:opacity-80 transition-all"
-            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.2)" }}
+            className="rounded-full w-10 h-10 grid p-2.5 place-content-center border hover:opacity-80 transition-all"
+            style={{ backgroundColor: icon.color, borderColor: "rgba(255,255,255,0.3)" }}
             target="_blank"
             onClick={() => posthog.capture("DevCard share link clicked", { platform: icon.name, username })}
           >
-            <Image src={icon.src} alt={icon.name} width={24} height={24} />
+            <Image
+              src={icon.src}
+              alt={icon.name}
+              width={icon.name === "Twitter" ? 14 : 24}
+              height={icon.name === "Twitter" ? 14 : 24}
+            />
           </a>
         ))}
+
+        <CopyButton username={username} />
       </div>
     </div>
   );
