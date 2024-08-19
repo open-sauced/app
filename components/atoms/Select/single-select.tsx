@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RiArrowDownSLine } from "react-icons/ri";
-import * as Tooltip from "@radix-ui/react-tooltip";
+
 import clsx from "clsx";
 
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 import { Command, CommandGroup, CommandInput, CommandItem } from "../Cmd/command";
-
+import Tooltip from "../Tooltip/tooltip";
 interface SingleSelectProps {
   value?: string;
   onValueChange: (value: string) => void;
@@ -45,20 +45,6 @@ const SingleSelect = ({
       });
     }
   }, [isOpen, isSearchable]);
-  const truncateLabel = (label: string, wordLimit: number, maxChars: number) => {
-    const words = label.split(" ");
-    let truncated = label;
-    if (words.length > wordLimit) {
-      truncated = words.slice(0, wordLimit).join(" ") + "...";
-    }
-    if (truncated.length > maxChars) {
-      truncated = truncated.slice(0, maxChars - 3) + "...";
-    }
-    return truncated;
-  };
-  const label = current?.label || placeholder || "";
-  const truncatedLabel = truncateLabel(label, 4, 23);
-  const isTruncated = label.length > truncatedLabel.length;
 
   return (
     <DropdownMenu
@@ -77,26 +63,11 @@ const SingleSelect = ({
           insetLabel && `before:content-[attr(data-inset-label)] before:mr-1 before:font-normal before:text-slate-500`
         )}
       >
-        {isTruncated ? (
-          <Tooltip.Provider>
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <p className="grow text-start truncate">{truncatedLabel}</p>
-              </Tooltip.Trigger>
-              <Tooltip.Content
-                className="text-black p-3 rounded-lg shadow-lg border border-gray-300"
-                side="bottom"
-                align="center"
-                style={{ backgroundColor: "#fafafa" }}
-              >
-                {label}
-                <Tooltip.Arrow className="fill-gray-300" />
-              </Tooltip.Content>
-            </Tooltip.Root>
-          </Tooltip.Provider>
-        ) : (
-          <p className="grow text-start">{label}</p>
-        )}
+        <Tooltip content={current?.label ?? placeholder}>
+          <div className="flex items-center w-[200px]">
+            <p className="flex-grow text-start truncate">{current?.label ?? placeholder}</p>
+          </div>
+        </Tooltip>
 
         <div className="flex items-center">
           <RiArrowDownSLine size={20} className="w-5 text-slate-400" />
