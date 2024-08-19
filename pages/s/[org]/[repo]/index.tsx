@@ -46,6 +46,7 @@ import OssfChart from "components/Repositories/OssfChart";
 import { setQueryParams } from "lib/utils/query-params";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { CopyContainer } from "components/shared/CopyContainer";
+import CopyImageBranding from "components/shared/CopyImageBranding";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -400,8 +401,14 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       options={{
                         windowWidth: 1700,
                         allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
                       }}
                     >
+                      <CopyImageBranding repository={repoData.full_name} />
                       <LotteryFactorChart
                         lotteryFactor={lotteryFactor}
                         error={lotteryFactorError}
