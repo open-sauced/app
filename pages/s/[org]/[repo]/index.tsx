@@ -403,6 +403,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       options={{
                         windowWidth: 1700,
                         allowTaint: true,
+                        backgroundColor: "hsla(19, 100%, 50%, 1)",
+                        width: 1700,
+                        height: 1000,
+                        x: -575,
+                        y: -125,
                         onclone: (document, element) => {
                           element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
                             el.classList.remove("hidden");
