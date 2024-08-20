@@ -17,6 +17,7 @@ import { shortenUrl } from "lib/utils/shorten-url";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAvatarByUsername } from "lib/utils/github";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { setQueryParams } from "lib/utils/query-params";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
@@ -31,8 +32,6 @@ import TabList from "components/TabList/tab-list";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
-import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 
 import PRChart from "components/Graphs/PRChart";
 import StarsChart from "components/Graphs/StarsChart";
@@ -43,8 +42,11 @@ import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 import OssfChart from "components/Repositories/OssfChart";
-import { setQueryParams } from "lib/utils/query-params";
+import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { CopyContainer } from "components/shared/CopyContainer";
+import CopyImageBranding from "components/shared/CopyImageBranding";
+import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -397,29 +399,45 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
                 <div className="lg:col-span-4 flex flex-col gap-4">
                   {lotteryState === "lottery" && (
-                    <LotteryFactorChart
-                      lotteryFactor={lotteryFactor}
-                      error={lotteryFactorError}
-                      range={range}
-                      isLoading={isLotteryFactorLoading}
-                      showHoverCards
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloBannerOnClick={
-                        uniqueYoloCoders.size > 0
-                          ? () => {
-                              setLotteryState("yolo");
-                              posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
-                            }
-                          : undefined
-                      }
-                      onYoloIconClick={() => {
-                        setLotteryState("yolo");
-                        posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                    <CopyContainer
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                          element.querySelector("LotteryFactorChart")?.classList.add("z-20");
+                        },
                       }}
-                      onProfileClick={() => {
-                        posthog.capture(`Repo Pages: Lottery Factor user clicked`, { repository: repoData.full_name });
-                      }}
-                    />
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <LotteryFactorChart
+                        lotteryFactor={lotteryFactor}
+                        error={lotteryFactorError}
+                        range={range}
+                        isLoading={isLotteryFactorLoading}
+                        showHoverCards
+                        uniqueYoloCoders={uniqueYoloCoders}
+                        yoloBannerOnClick={
+                          uniqueYoloCoders.size > 0
+                            ? () => {
+                                setLotteryState("yolo");
+                                posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
+                              }
+                            : undefined
+                        }
+                        onYoloIconClick={() => {
+                          setLotteryState("yolo");
+                          posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                        }}
+                        onProfileClick={() => {
+                          posthog.capture(`Repo Pages: Lottery Factor user clicked`, {
+                            repository: repoData.full_name,
+                          });
+                        }}
+                      />
+                    </CopyContainer>
                   )}
                   {lotteryState === "yolo" && (
                     <YoloChart
