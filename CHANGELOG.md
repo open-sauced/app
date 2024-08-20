@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.59.0-beta.6](https://github.com/open-sauced/app/compare/v2.59.0-beta.5...v2.59.0-beta.6) (2024-08-20)
+
+
+### 🐛 Bug Fixes
+
+* adjust workspace upgrade pricing modal ([#3995](https://github.com/open-sauced/app/issues/3995)) ([798041a](https://github.com/open-sauced/app/commit/798041a5b8d153957bf966e9df48f306dd693525))
+* update PostHog SDK to latest version (1.152.7) ([#3996](https://github.com/open-sauced/app/issues/3996)) ([a5b7f3d](https://github.com/open-sauced/app/commit/a5b7f3d2a140adf55a2272583c501a490ce9ca93))
+
+
+### 🍕 Features
+
+* copy `LotteryFactorChart` as image ([#3987](https://github.com/open-sauced/app/issues/3987)) ([fa3255e](https://github.com/open-sauced/app/commit/fa3255e7246fe64bec2311eaa35bdc5763d1b9d5))
+
 ## [2.59.0-beta.5](https://github.com/open-sauced/app/compare/v2.59.0-beta.4...v2.59.0-beta.5) (2024-08-20)
 
 
