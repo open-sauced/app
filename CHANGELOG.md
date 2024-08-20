@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.59.0-beta.5](https://github.com/open-sauced/app/compare/v2.59.0-beta.4...v2.59.0-beta.5) (2024-08-20)
+
+
+### 🐛 Bug Fixes
+
+* Searching for a user/repository name throws error and crashes page ([#3980](https://github.com/open-sauced/app/issues/3980)) ([73f1c2c](https://github.com/open-sauced/app/commit/73f1c2c43a0a1cf7017c2747ca358c04a4f7b87e))
+
 ## [2.59.0-beta.4](https://github.com/open-sauced/app/compare/v2.59.0-beta.3...v2.59.0-beta.4) (2024-08-19)
 
 
