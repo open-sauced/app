@@ -361,6 +361,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 <div className="lg:col-span-8 flex flex-col gap-4">
                   <div className="flex gap-4 h-full flex-col lg:flex-row">
                     <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Contributor Confidence chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
                       options={{
                         windowWidth: 1700,
                         allowTaint: true,
