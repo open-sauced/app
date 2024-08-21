@@ -370,15 +370,45 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         })
                       }
                     />
-                    <OssfChart
-                      repository={repoData.full_name}
-                      totalScore={repoData.ossf_scorecard_total_score}
-                      dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
-                      maintainedScore={repoData.ossf_scorecard_maintained_score}
-                      fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
-                      isLoading={false}
-                      isError={!repoData.ossf_scorecard_total_score}
-                    />
+                    {!repoData.ossf_scorecard_total_score ? (
+                      <OssfChart
+                        repository={repoData.full_name}
+                        totalScore={repoData.ossf_scorecard_total_score}
+                        dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
+                        maintainedScore={repoData.ossf_scorecard_maintained_score}
+                        fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
+                        isLoading={false}
+                        isError={!repoData.ossf_scorecard_total_score}
+                      />
+                    ) : (
+                      <CopyContainer
+                        onCopyClick={() => {
+                          posthog.capture("Repo Pages: copied OSSF Scorecard", {
+                            repository: repoData.full_name,
+                          });
+                        }}
+                        options={{
+                          windowWidth: 1700,
+                          allowTaint: true,
+                          onclone: (document, element) => {
+                            element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                              el.classList.remove("hidden");
+                            });
+                          },
+                        }}
+                      >
+                        <CopyImageBranding repository={repoData.full_name} />
+                        <OssfChart
+                          repository={repoData.full_name}
+                          totalScore={repoData.ossf_scorecard_total_score}
+                          dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
+                          maintainedScore={repoData.ossf_scorecard_maintained_score}
+                          fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
+                          isLoading={false}
+                          isError={!repoData.ossf_scorecard_total_score}
+                        />
+                      </CopyContainer>
+                    )}
                   </div>
 
                   <RossChart
