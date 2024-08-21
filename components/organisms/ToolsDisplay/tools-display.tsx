@@ -7,8 +7,10 @@ import useContributors from "lib/hooks/api/useContributors";
 import ContributorsTable from "components/Tables/ContributorsTable";
 import { OrderDirection } from "lib/utils/sorting";
 import { setQueryParams } from "lib/utils/query-params";
-import Activity from "../Activity/activity";
+import ContributorsGrid from "components/Tables/ContributorsGrid";
+import LayoutToggle, { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import Dashboard from "../Dashboard/dashboard";
+import Activity from "../Activity/activity";
 
 interface ToolProps {
   tool?: string;
@@ -25,6 +27,7 @@ const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
     setQueryParams({ orderDirection: direction, orderBy: "oscr" });
   };
 
+  const display = (router.query.display ?? "list") as ToggleValue;
   const {
     data: contributors,
     meta: contributorsMeta,
@@ -45,14 +48,37 @@ const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
       return <Dashboard repositories={repositories} />;
     case "Contributors": {
       return (
-        <ContributorsTable
-          contributors={contributors}
-          isLoading={isContributorsLoading}
-          isError={isContributorsError}
-          meta={contributorsMeta}
-          oscrSorting={orderDirection}
-          setOscrSorting={setOscrSortDirection}
-        />
+        <div className="flex flex-col gap-4">
+          <span className="self-end">
+            <LayoutToggle
+              value={display}
+              onChange={() => {
+                setQueryParams({ display: display === "list" ? "grid" : "list" });
+              }}
+            />
+          </span>
+          {display === "list" && (
+            <ContributorsTable
+              contributors={contributors}
+              isLoading={isContributorsLoading}
+              isError={isContributorsError}
+              meta={contributorsMeta}
+              oscrSorting={orderDirection}
+              setOscrSorting={setOscrSortDirection}
+            />
+          )}
+          {display === "grid" && (
+            <ContributorsGrid
+              contributors={contributors}
+              isLoading={isContributorsLoading}
+              isError={isContributorsError}
+              meta={contributorsMeta}
+              oscrSorting={orderDirection}
+              setOscrSorting={setOscrSortDirection}
+              repositoryIds={repositories ?? []}
+            />
+          )}
+        </div>
       );
     }
 
