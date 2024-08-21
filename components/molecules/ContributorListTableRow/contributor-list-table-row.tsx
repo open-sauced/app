@@ -20,10 +20,10 @@ import { getActivity } from "../RepoRow/repo-row";
 import DevProfile from "../DevProfile/dev-profile";
 
 interface ContributorListTableRow {
-  contributor: DbPRContributor;
+  contributor: DbUserContributor;
   topic: string;
   selected?: boolean;
-  handleOnSelectContributor?: (state: boolean, contributor: DbPRContributor) => void;
+  handleOnSelectContributor?: (state: boolean, contributor: DbUserContributor) => void;
   range: string;
   loggedIn: boolean;
   showOscr: boolean;
@@ -82,8 +82,8 @@ const ContributorListTableRow = ({
   showOscr,
 }: ContributorListTableRow) => {
   const [tableOpen, setTableOpen] = useState(false);
-  const login = contributor.author_login || contributor.username;
-  const { data: user } = useFetchUser(contributor.author_login);
+  const login = contributor.login;
+  const { data: user } = useFetchUser(contributor.login);
   const { data } = useContributorPullRequests({
     contributor: login,
     topic,
@@ -124,7 +124,7 @@ const ContributorListTableRow = ({
           <div className="w-[68%]">
             <DevProfile
               username={login}
-              hasBorder={!contributor.author_login}
+              hasBorder={!contributor.login}
               oscrRating={contributor.oscr}
               showOscr={showOscr}
               loggedIn={loggedIn}
@@ -207,7 +207,7 @@ const ContributorListTableRow = ({
         <div className={clsx("flex-1 lg:min-w-[12.5rem] overflow-hidden")}>
           <DevProfile
             username={login}
-            hasBorder={!contributor.author_login}
+            hasBorder={!contributor.login}
             showOscr={false}
             loggedIn={loggedIn}
             devstatsUpdatedAt={contributor.devstats_updated_at}
@@ -227,13 +227,13 @@ const ContributorListTableRow = ({
 
         {/* Column Repositories */}
         <div className={clsx("flex-1 hidden lg:flex lg:max-w-[6.25rem] justify-center")}>
-          {contributor.author_login ? repoList.length : "-"}
+          {contributor.login ? repoList.length : "-"}
         </div>
 
         {/* Column: Last Contribution */}
         <div className={clsx("flex-1 lg:max-w-[130px]  flex text-light-slate-11 justify-center ")}>
           <div className="flex flex-col">
-            <p>{contributor.author_login ? getLastContributionDate(mergedPrs) : "-"}</p>{" "}
+            <p>{contributor.login ? getLastContributionDate(mergedPrs) : "-"}</p>{" "}
             <p
               className="hidden whitespace-nowrap overflow-hidden overflow-ellipsis text-sm font-normal md:inline-flex text-light-slate-9 lg:max-w-[8.12rem]"
               title={user?.company || getLastContributedRepo(data)}
@@ -255,11 +255,11 @@ const ContributorListTableRow = ({
 
         {/* Column: Contributions */}
         <div className={clsx("flex-1 hidden justify-center  lg:flex lg:max-w-[7.5rem]")}>
-          <p>{contributor.author_login ? mergedPrs.length : "-"}</p>
+          <p>{contributor.login ? mergedPrs.length : "-"}</p>
         </div>
         {/* Column Last 30 Days */}
         <div className={clsx("flex-1 lg:min-w-[9.37rem] hidden lg:flex justify-center")}>
-          {contributor.author_login && last30days ? <Sparkline data={last30days} width="100%" height={54} /> : "-"}
+          {contributor.login && last30days ? <Sparkline data={last30days} width="100%" height={54} /> : "-"}
         </div>
       </div>
     </>

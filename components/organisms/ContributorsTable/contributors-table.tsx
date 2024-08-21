@@ -3,11 +3,11 @@ import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import ContributorListTableRow from "components/molecules/ContributorListTableRow/contributor-list-table-row";
 
 export interface ContributorTableProps {
-  contributors: DbPRContributor[];
+  contributors: DbUserContributor[];
   topic: string;
   loading?: boolean;
-  selectedContributors?: DbPRContributor[];
-  handleSelectContributors?: (state: boolean, contributor: DbPRContributor) => void;
+  selectedContributors?: DbUserContributor[];
+  handleSelectContributors?: (state: boolean, contributor: DbUserContributor) => void;
   range?: string;
   noContributorsMessage?: string;
   loggedIn: boolean;
@@ -36,10 +36,8 @@ const ContributorTable = ({
               <ContributorListTableRow
                 topic={topic}
                 contributor={contributor}
-                key={contributor.user_id}
-                selected={
-                  !!selectedContributors?.find((selected) => selected.author_login === contributor.author_login)
-                }
+                key={contributor.id}
+                selected={!!selectedContributors?.find((selected) => selected.login === contributor.login)}
                 handleOnSelectContributor={handleSelectContributors}
                 range={range}
                 loggedIn={loggedIn}

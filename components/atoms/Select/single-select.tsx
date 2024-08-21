@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 import { Command, CommandGroup, CommandInput, CommandItem } from "../Cmd/command";
-
+import Tooltip from "../Tooltip/tooltip";
 interface SingleSelectProps {
   value?: string;
   onValueChange: (value: string) => void;
@@ -63,7 +63,12 @@ const SingleSelect = ({
           insetLabel && `before:content-[attr(data-inset-label)] before:mr-1 before:font-normal before:text-slate-500`
         )}
       >
-        <p className="grow text-start">{current?.label ?? placeholder}</p>
+        <Tooltip content={current?.label ?? placeholder}>
+          <div className="flex items-center w-48">
+            <p className="flex-grow text-start truncate">{current?.label ?? placeholder}</p>
+          </div>
+        </Tooltip>
+
         <div className="flex items-center">
           <RiArrowDownSLine size={20} className="w-5 text-slate-400" />
         </div>

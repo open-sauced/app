@@ -17,6 +17,7 @@ import { shortenUrl } from "lib/utils/shorten-url";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAvatarByUsername } from "lib/utils/github";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { setQueryParams } from "lib/utils/query-params";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
@@ -31,8 +32,6 @@ import TabList from "components/TabList/tab-list";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
-import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 
 import PRChart from "components/Graphs/PRChart";
 import StarsChart from "components/Graphs/StarsChart";
@@ -43,8 +42,11 @@ import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 import OssfChart from "components/Repositories/OssfChart";
-import { setQueryParams } from "lib/utils/query-params";
+import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { CopyContainer } from "components/shared/CopyContainer";
+import CopyImageBranding from "components/shared/CopyImageBranding";
+import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -222,130 +224,132 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
       <RepositoryOgImage repository={repoData} ogImageUrl={ogImageUrl} />
       <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <div className="px-4 py-8 lg:px-16 lg:py-12">
-          <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
-            <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
-              <header className="flex items-center gap-4">
-                <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
-                <div className="flex flex-col gap-2">
-                  <a
-                    href={`https://github.com/${repoData.full_name}`}
-                    target="_blank"
-                    className="group hover:underline underline-offset-2 text-xl md:text-3xl font-bold flex gap-2 items-center"
-                  >
-                    <h1>{repoData.full_name}</h1>
-                    <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
-                  </a>
-                  <p>{repoData.description}</p>
-                </div>
-              </header>
-              <div className="self-end flex flex-col gap-2 items-end">
-                {isMobile ? (
-                  <>
-                    <AddToWorkspaceDrawer repository={repoData.full_name} />
-                    <AddToWorkspaceDrawer type="sbom" repository={repoData.full_name} />
-                  </>
-                ) : (
-                  <div className="grid gap-2 md:gap-1 w-fit">
-                    <Button
-                      variant="primary"
-                      onClick={() => {
-                        posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
-                        setIsAddToWorkspaceModalOpen(true);
-                      }}
-                      className="shrink-0 items-center gap-3 w-full"
+          <ClientOnly>
+            <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
+              <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
+                <header className="flex items-center gap-4">
+                  <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
+                  <div className="flex flex-col gap-2">
+                    <a
+                      href={`https://github.com/${repoData.full_name}`}
+                      target="_blank"
+                      className="group hover:underline underline-offset-2 text-xl md:text-3xl font-bold flex gap-2 items-center"
                     >
-                      <MdWorkspaces />
-                      Add to Workspace
-                    </Button>
-                    <Tooltip
-                      content={
-                        <div className="grid gap-2">
-                          <p>Create a workspace from the software bill of materials (SBOM) for this repository</p>
-
-                          <a
-                            href="https://opensauced.pizza/docs/features/repo-pages/#create-a-workspace-from-sbom"
-                            className="underline"
-                            target="_blank"
-                          >
-                            Learn more...<span className="sr-only"> about SBOM</span>
-                          </a>
-                        </div>
-                      }
-                    >
+                      <h1>{repoData.full_name}</h1>
+                      <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
+                    </a>
+                    <p>{repoData.description}</p>
+                  </div>
+                </header>
+                <div className="self-end flex flex-col gap-2 items-end">
+                  {isMobile ? (
+                    <>
+                      <AddToWorkspaceDrawer repository={repoData.full_name} />
+                      <AddToWorkspaceDrawer type="sbom" repository={repoData.full_name} />
+                    </>
+                  ) : (
+                    <div className="grid gap-2 md:gap-1 w-fit">
                       <Button
-                        variant="dark"
+                        variant="primary"
                         onClick={() => {
-                          posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
-                            repository: repoData.full_name,
-                          });
-
-                          const params = new URLSearchParams();
-                          params.set("sbom", "true");
-                          params.set("repo", repoData.full_name);
-
-                          const url = `/workspaces/new?${params}`;
-
-                          if (!session) {
-                            setSbomUrl(new URL(url, window.location.origin).toString());
-                            setIsAddToWorkspaceModalOpen(true);
-                            return;
-                          }
-
-                          router.push(url);
+                          posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
+                          setIsAddToWorkspaceModalOpen(true);
                         }}
                         className="shrink-0 items-center gap-3 w-full"
                       >
                         <MdWorkspaces />
-                        Workspace from SBOM
+                        Add to Workspace
                       </Button>
-                    </Tooltip>
+                      <Tooltip
+                        content={
+                          <div className="grid gap-2">
+                            <p>Create a workspace from the software bill of materials (SBOM) for this repository</p>
+
+                            <a
+                              href="https://opensauced.pizza/docs/features/repo-pages/#create-a-workspace-from-sbom"
+                              className="underline"
+                              target="_blank"
+                            >
+                              Learn more...<span className="sr-only"> about SBOM</span>
+                            </a>
+                          </div>
+                        }
+                      >
+                        <Button
+                          variant="dark"
+                          onClick={() => {
+                            posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
+                              repository: repoData.full_name,
+                            });
+
+                            const params = new URLSearchParams();
+                            params.set("sbom", "true");
+                            params.set("repo", repoData.full_name);
+
+                            const url = `/workspaces/new?${params}`;
+
+                            if (!session) {
+                              setSbomUrl(new URL(url, window.location.origin).toString());
+                              setIsAddToWorkspaceModalOpen(true);
+                              return;
+                            }
+
+                            router.push(url);
+                          }}
+                          className="shrink-0 items-center gap-3 w-full"
+                        >
+                          <MdWorkspaces />
+                          Workspace from SBOM
+                        </Button>
+                      </Tooltip>
+                    </div>
+                  )}
+                  <div className="flex gap-2 items-center">
+                    <Button
+                      variant="outline"
+                      onClick={copyUrlToClipboard}
+                      className="my-auto gap-2 items-center shrink-0 place-self-end"
+                    >
+                      <FiCopy />
+                      Share
+                    </Button>
+                    <DayRangePicker
+                      onDayRangeChanged={(value: string) =>
+                        posthog.capture("Repo Pages: changed range", {
+                          repository: repoData.full_name,
+                          range: Number(value),
+                        })
+                      }
+                    />
                   </div>
-                )}
-                <div className="flex gap-2 items-center">
-                  <Button
-                    variant="outline"
-                    onClick={copyUrlToClipboard}
-                    className="my-auto gap-2 items-center shrink-0 place-self-end"
-                  >
-                    <FiCopy />
-                    Share
-                  </Button>
-                  <DayRangePicker
-                    onDayRangeChanged={(value: string) =>
-                      posthog.capture("Repo Pages: changed range", {
-                        repository: repoData.full_name,
-                        range: Number(value),
-                      })
-                    }
-                  />
                 </div>
               </div>
-            </div>
-            <div className="relative flex w-fit max-w-[21rem] lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
-              {repoData.language && (
-                <Link
-                  href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}
-                  onClick={() =>
-                    posthog.capture("Repo Pages: clicked language pill", {
-                      repository: repoData.full_name,
-                      language: repoData.language,
-                    })
-                  }
-                >
-                  <LanguagePill language={repoData.language.toLowerCase()} />
-                </Link>
-              )}
-              {repoData.license && (
-                <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
-              )}
-              <Pill
-                text={`Last Updated: ${new Date(repoData.pushed_at).toLocaleDateString()}`}
-                icon={<FaRegClock />}
-                size="xsmall"
-                className="!px-2 whitespace-nowrap"
-              />
-            </div>
-          </section>
+              <div className="relative flex w-fit max-w-[21rem] lg:w-full lg:max-w-full gap-2 overflow-x-scroll lg:overflow-auto">
+                {repoData.language && (
+                  <Link
+                    href={`/explore/topic/${getLanguageTopic(repoData.language)}/dashboard`}
+                    onClick={() =>
+                      posthog.capture("Repo Pages: clicked language pill", {
+                        repository: repoData.full_name,
+                        language: repoData.language,
+                      })
+                    }
+                  >
+                    <LanguagePill language={repoData.language.toLowerCase()} />
+                  </Link>
+                )}
+                {repoData.license && (
+                  <Pill text={repoData.license} icon={<FaBalanceScale />} size="xsmall" className="whitespace-nowrap" />
+                )}
+                <Pill
+                  text={`Last Updated: ${new Date(repoData.pushed_at).toLocaleDateString()}`}
+                  icon={<FaRegClock />}
+                  size="xsmall"
+                  className="!px-2 whitespace-nowrap"
+                />
+              </div>
+            </section>
+          </ClientOnly>
 
           <div className="border-b mb-4">
             <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
@@ -395,29 +399,45 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
                 <div className="lg:col-span-4 flex flex-col gap-4">
                   {lotteryState === "lottery" && (
-                    <LotteryFactorChart
-                      lotteryFactor={lotteryFactor}
-                      error={lotteryFactorError}
-                      range={range}
-                      isLoading={isLotteryFactorLoading}
-                      showHoverCards
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloBannerOnClick={
-                        uniqueYoloCoders.size > 0
-                          ? () => {
-                              setLotteryState("yolo");
-                              posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
-                            }
-                          : undefined
-                      }
-                      onYoloIconClick={() => {
-                        setLotteryState("yolo");
-                        posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                    <CopyContainer
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                          element.querySelector("LotteryFactorChart")?.classList.add("z-20");
+                        },
                       }}
-                      onProfileClick={() => {
-                        posthog.capture(`Repo Pages: Lottery Factor user clicked`, { repository: repoData.full_name });
-                      }}
-                    />
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <LotteryFactorChart
+                        lotteryFactor={lotteryFactor}
+                        error={lotteryFactorError}
+                        range={range}
+                        isLoading={isLotteryFactorLoading}
+                        showHoverCards
+                        uniqueYoloCoders={uniqueYoloCoders}
+                        yoloBannerOnClick={
+                          uniqueYoloCoders.size > 0
+                            ? () => {
+                                setLotteryState("yolo");
+                                posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
+                              }
+                            : undefined
+                        }
+                        onYoloIconClick={() => {
+                          setLotteryState("yolo");
+                          posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                        }}
+                        onProfileClick={() => {
+                          posthog.capture(`Repo Pages: Lottery Factor user clicked`, {
+                            repository: repoData.full_name,
+                          });
+                        }}
+                      />
+                    </CopyContainer>
                   )}
                   {lotteryState === "yolo" && (
                     <YoloChart

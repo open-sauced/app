@@ -5,6 +5,61 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.59.0-beta.7](https://github.com/open-sauced/app/compare/v2.59.0-beta.6...v2.59.0-beta.7) (2024-08-21)
+
+
+### 🐛 Bug Fixes
+
+* add tooltip for long titles ([#3969](https://github.com/open-sauced/app/issues/3969)) ([e3404df](https://github.com/open-sauced/app/commit/e3404dfb0301c0d1b0e6377b93af87d430615f34))
+
+## [2.59.0-beta.6](https://github.com/open-sauced/app/compare/v2.59.0-beta.5...v2.59.0-beta.6) (2024-08-20)
+
+
+### 🐛 Bug Fixes
+
+* adjust workspace upgrade pricing modal ([#3995](https://github.com/open-sauced/app/issues/3995)) ([798041a](https://github.com/open-sauced/app/commit/798041a5b8d153957bf966e9df48f306dd693525))
+* update PostHog SDK to latest version (1.152.7) ([#3996](https://github.com/open-sauced/app/issues/3996)) ([a5b7f3d](https://github.com/open-sauced/app/commit/a5b7f3d2a140adf55a2272583c501a490ce9ca93))
+
+
+### 🍕 Features
+
+* copy `LotteryFactorChart` as image ([#3987](https://github.com/open-sauced/app/issues/3987)) ([fa3255e](https://github.com/open-sauced/app/commit/fa3255e7246fe64bec2311eaa35bdc5763d1b9d5))
+
+## [2.59.0-beta.5](https://github.com/open-sauced/app/compare/v2.59.0-beta.4...v2.59.0-beta.5) (2024-08-20)
+
+
+### 🐛 Bug Fixes
+
+* Searching for a user/repository name throws error and crashes page ([#3980](https://github.com/open-sauced/app/issues/3980)) ([73f1c2c](https://github.com/open-sauced/app/commit/73f1c2c43a0a1cf7017c2747ca358c04a4f7b87e))
+
+## [2.59.0-beta.4](https://github.com/open-sauced/app/compare/v2.59.0-beta.3...v2.59.0-beta.4) (2024-08-19)
+
+
+### 🔁 Continuous Integration
+
+* improve stability of E2E tests ([#3983](https://github.com/open-sauced/app/issues/3983)) ([7668b06](https://github.com/open-sauced/app/commit/7668b06c89f7d776cefeca7f0cc5361479294f3b))
+
+## [2.59.0-beta.3](https://github.com/open-sauced/app/compare/v2.59.0-beta.2...v2.59.0-beta.3) (2024-08-19)
+
+
+### 🐛 Bug Fixes
+
+* make timezone optional for onboarding and user settings ([#3972](https://github.com/open-sauced/app/issues/3972)) ([f1795a3](https://github.com/open-sauced/app/commit/f1795a3320f88f8a840b82b22529170b760a6589))
+
+## [2.59.0-beta.2](https://github.com/open-sauced/app/compare/v2.59.0-beta.1...v2.59.0-beta.2) (2024-08-16)
+
+
+### 🐛 Bug Fixes
+
+* reverted a file that accidentally went in cee5fa8d ([#3979](https://github.com/open-sauced/app/issues/3979)) ([d776a13](https://github.com/open-sauced/app/commit/d776a13e2d159d24ffd7d7424abb5d434f7306e4))
+
+## [2.59.0-beta.1](https://github.com/open-sauced/app/compare/v2.58.0...v2.59.0-beta.1) (2024-08-16)
+
+
+### 🍕 Features
+
+* implement the CopyContainer component for copying it's contents as an image ([#3975](https://github.com/open-sauced/app/issues/3975)) ([cee5fa8](https://github.com/open-sauced/app/commit/cee5fa8d1c65b5f296a362de72b5f0b1111373d1))
+
 ## [2.58.0](https://github.com/open-sauced/app/compare/v2.57.0...v2.58.0) (2024-08-16)
 
 
