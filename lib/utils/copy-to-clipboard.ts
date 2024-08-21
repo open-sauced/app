@@ -1,4 +1,4 @@
-import html2canvas, { Options } from "html2canvas";
+import html2canvas, { Options } from "html2canvas-pro";
 import { shortenUrl } from "./shorten-url";
 
 export const copyToClipboard = async (content: string) => {

@@ -47,7 +47,7 @@ export default function InsightUpgradeModal({ workspaceId, variant, isOpen, onCl
 
             <div className="flex flex-col gap-0.5 items-end">
               <p className="text-2xl font-semibold">
-                <span className="text-lg">$</span>100<span className="text-lg text-slate-500">/mth</span>
+                <span className="text-lg">$</span>9<span className="text-lg text-slate-500">/mth</span>
               </p>
               <p className="text-xs font-semibold text-slate-500">charged per Workspace</p>
             </div>
@@ -168,7 +168,7 @@ export default function InsightUpgradeModal({ workspaceId, variant, isOpen, onCl
 
                   <div className="flex flex-col gap-0.5 items-end">
                     <p className="text-4xl font-semibold">
-                      <span className="text-xl">$</span>100<span className="text-2xl text-slate-500">/mth</span>
+                      <span className="text-xl">$</span>9<span className="text-2xl text-slate-500">/mth</span>
                     </p>
                     <p className="text-xs font-semibold text-slate-500">charged per Workspace</p>
                   </div>

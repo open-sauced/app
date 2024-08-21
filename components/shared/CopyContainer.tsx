@@ -1,6 +1,6 @@
 import { CopyIcon } from "@primer/octicons-react";
 import { useRef, useState } from "react";
-import { Options } from "html2canvas";
+import { Options } from "html2canvas-pro";
 import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 import { useToast } from "lib/hooks/useToast";
 import { copyNodeAsImage } from "lib/utils/copy-to-clipboard";
