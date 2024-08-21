@@ -41,7 +41,7 @@ const Dashboard = ({ repositories, personalWorkspaceId }: DashboardProps): JSX.E
             "abbreviation"
           )}
           value={humanizeNumber(contributorMeta.itemCount, "comma")}
-          contributors={contributorData.map((contributor) => ({ host_login: contributor.author_login }))}
+          contributors={contributorData.map((contributor) => ({ host_login: contributor.login }))}
           isLoading={isLoading}
         />
         <HighlightCard

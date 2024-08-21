@@ -320,6 +320,7 @@ interface DbUserInsightRepo {
 }
 
 interface DbUser {
+  readonly avatar_url: string;
   readonly email: string;
   readonly id: number;
   readonly open_issues: number;
@@ -505,6 +506,16 @@ interface DBList {
 interface PagedData<T> {
   data?: T[];
   meta: Meta;
+}
+
+interface DbUserContributor extends DbUser {
+  commits: number;
+  prs_created: number;
+  issues_created: number;
+  issue_comments: number;
+  commit_comments: number;
+  pr_review_comments: number;
+  total_contributions: number;
 }
 
 interface DbRepoContributor {

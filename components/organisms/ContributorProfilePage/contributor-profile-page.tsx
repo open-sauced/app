@@ -38,7 +38,7 @@ interface PrObjectType {
 }
 
 interface ContributorProfilePageProps {
-  contributor?: DbPRContributor;
+  contributor?: DbUserContributor;
   topic?: string;
   repositories?: number[];
   listOfPRs?: PrObjectType[];
