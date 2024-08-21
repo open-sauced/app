@@ -363,20 +363,16 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     <CopyContainer
                       options={{
                         windowWidth: 1700,
+                        allowTaint: true,
                         onclone(document, element) {
                           element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
-                            el.classList.remove("invisible");
+                            el.classList.remove("hidden");
                           });
-
-                          element.querySelectorAll(".graph-to-image").forEach((el) => {
-                            (el as HTMLElement).style.backgroundColor = "white";
-                          });
-
-                          (element.querySelector(".contributor-confidence-logo") as HTMLElement).style.marginTop =
-                            "0.9rem";
+                          element.querySelector("ContributorConfidenceChart")?.classList.add("z-20");
                         },
                       }}
                     >
+                      <CopyImageBranding repository={repoData.full_name} />
                       <ContributorConfidenceChart
                         contributorConfidence={repoStats?.contributor_confidence}
                         isError={isError}

@@ -3,7 +3,6 @@ import { FaUserPlus } from "react-icons/fa";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import SkeletonWrapper from "components/atoms/SkeletonLoader/skeleton-wrapper";
 import Card from "components/atoms/Card/card";
-import { CopyImageBranding } from "components/shared/CopyImageBranding";
 
 type ContributorConfidenceChartProps = {
   contributorConfidence: number | undefined;
@@ -101,7 +100,6 @@ export default function ContributorConfidenceChart({
           </section>
         </section>
       )}
-      <CopyImageBranding />
     </Card>
   );
 }
