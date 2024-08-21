@@ -55,6 +55,7 @@ type ContributorsTableProps<T> = {
   isError: boolean;
   oscrSorting: OrderDirection;
   setOscrSorting: (value: OrderDirection) => void;
+  disableOscrSorting?: boolean;
 };
 
 // TODO: silo into new component file?
@@ -79,7 +80,15 @@ function Sparkline({ repository, login }: { repository?: string; login: string }
 }
 
 const contributorsColumnHelper = createColumnHelper<Contributor>();
-const defaultColumns = ({ repository, isLoggedIn }: { repository?: string; isLoggedIn: boolean }) => [
+const defaultColumns = ({
+  repository,
+  isLoggedIn,
+  disableOscrSorting,
+}: {
+  repository?: string;
+  isLoggedIn: boolean;
+  disableOscrSorting?: boolean;
+}) => [
   contributorsColumnHelper.display({
     id: "selector",
     header: ({ table }: { table: TableDef<Contributor> }) => (
@@ -130,7 +139,7 @@ const defaultColumns = ({ repository, isLoggedIn }: { repository?: string; isLog
         <InfoTooltip information="OSCR evaluates the engagement and impact of contributors across the entire open source ecosystem." />
       </div>
     ),
-    enableSorting: true,
+    enableSorting: !disableOscrSorting,
     enableGlobalFilter: false,
     cell: (info) => (
       <OscrPill
@@ -160,7 +169,7 @@ const defaultColumns = ({ repository, isLoggedIn }: { repository?: string; isLog
   }),
 ];
 
-const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
+const mobileColumns = ({ isLoggedIn, disableOscrSorting }: { isLoggedIn: boolean; disableOscrSorting?: boolean }) => [
   {
     id: "mobileContributor",
     header: "",
@@ -215,7 +224,7 @@ const mobileColumns = ({ isLoggedIn }: { isLoggedIn: boolean }) => [
             <OscrInfoTooltip />
           </div>
         ),
-        enableSorting: true,
+        enableSorting: !disableOscrSorting,
         cell: (info) => (
           <OscrPill
             rating={info.row.original.oscr ?? 0}
@@ -252,6 +261,7 @@ export default function ContributorsTable<T extends Contributor>({
   setOscrSorting,
   isLoading,
   isError,
+  disableOscrSorting,
 }: ContributorsTableProps<T>) {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const router = useRouter();
@@ -265,7 +275,10 @@ export default function ContributorsTable<T extends Contributor>({
 
   const table = useReactTable({
     columns: useMemo(
-      () => (isMobile ? mobileColumns({ isLoggedIn }) : defaultColumns({ repository, isLoggedIn })),
+      () =>
+        isMobile
+          ? mobileColumns({ isLoggedIn, disableOscrSorting })
+          : defaultColumns({ repository, isLoggedIn, disableOscrSorting }),
       [isMobile, isLoggedIn]
     ),
     data: contributors ?? [],

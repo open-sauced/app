@@ -65,6 +65,7 @@ const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
               meta={contributorsMeta}
               oscrSorting={orderDirection}
               setOscrSorting={setOscrSortDirection}
+              disableOscrSorting
             />
           )}
           {display === "grid" && (
