@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.59.0-beta.7](https://github.com/open-sauced/app/compare/v2.59.0-beta.6...v2.59.0-beta.7) (2024-08-21)
+
+
+### 🐛 Bug Fixes
+
+* add tooltip for long titles ([#3969](https://github.com/open-sauced/app/issues/3969)) ([e3404df](https://github.com/open-sauced/app/commit/e3404dfb0301c0d1b0e6377b93af87d430615f34))
+
 ## [2.59.0-beta.6](https://github.com/open-sauced/app/compare/v2.59.0-beta.5...v2.59.0-beta.6) (2024-08-20)
 
 
