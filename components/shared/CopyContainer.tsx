@@ -30,7 +30,6 @@ export const CopyContainer = ({
         className="absolute top-2 right-2 p-2 bg-white rounded-md shadow-md opacity-0 group-hover:opacity-100 focus-within:opacity-100 scale-95 group-hover:scale-100 transition-all duration-200 ease-in-out transform"
         onClick={async () => {
           onCopyClick?.();
-
           const node = copyRef.current;
 
           try {
