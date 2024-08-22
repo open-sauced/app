@@ -88,7 +88,7 @@ export default function Repositories({ repositories, showSearch = true, personal
 
   const handleOnSearch = (search?: string) => {
     if (selectedFilter && !search) {
-      return router.push(`/${topic}/${toolName}`);
+       return router.push(`/explore/topic/${topic}/${toolName}`);
     }
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
       return router.push(`/explore/topic/${topic}/${toolName}/filter/${search}`);
