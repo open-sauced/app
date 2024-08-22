@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import { ComponentProps, useEffect, useState } from "react";
 
+import { usePostHog } from "posthog-js/react";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -27,6 +28,7 @@ interface RepositoriesProps {
 export default function Repositories({ repositories, showSearch = true, personalWorkspaceId }: RepositoriesProps) {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
+  const posthog = usePostHog();
   const workspaceId = router.query.workspaceId as string;
   const { pageId, toolName, selectedFilter, userOrg, range = 30, limit = 10 } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
@@ -53,6 +55,11 @@ export default function Repositories({ repositories, showSearch = true, personal
   };
 
   const handleOnAddtoInsights = () => {
+    posthog.capture(`Explore Page: added repos to ${!workspaceId ? "a new" : "existing"} workspace`, {
+      workspaceId,
+      repos: selectedRepos.map((repo) => repo.full_name),
+    });
+
     if (!workspaceId) {
       router.push({
         pathname: `/workspaces/new`,
@@ -146,20 +153,12 @@ export default function Repositories({ repositories, showSearch = true, personal
             </div>
           </div>
 
-          {selectedRepos.length > 0 && (
-            <div
-              aria-hidden={selectedRepos.length === 0}
-              className={clsx(
-                selectedRepos.length > 0 ? "flex" : "hidden",
-                `justify-between p-3 px-6 items-center border-b-2 text-light-slate-11`
-              )}
-            >
-              <div>{selectedRepos.length} Repositories selected</div>
-              <Button onClick={handleOnAddtoInsights} variant="primary">
-                {workspaceId ? "Add to Insight Page" : "Add to Workspace"}
-              </Button>
-            </div>
-          )}
+          <div className={clsx(`flex justify-between p-3 px-6 items-center border-b-2 text-light-slate-11`)}>
+            {selectedRepos.length > 0 ? <div>{selectedRepos.length} Repositories selected</div> : <div></div>}
+            <Button disabled={selectedRepos.length === 0} onClick={handleOnAddtoInsights} variant="primary">
+              {workspaceId ? "Add to Insight Page" : "Add to Workspace"}
+            </Button>
+          </div>
 
           <RepositoriesTable
             topic={topic}

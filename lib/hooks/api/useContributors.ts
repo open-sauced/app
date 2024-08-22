@@ -6,7 +6,7 @@ import { publicApiFetcher } from "lib/utils/public-api-fetcher";
 import getFilterQuery from "lib/utils/get-filter-query";
 
 interface PaginatedResponse {
-  readonly data: DbPRContributor[];
+  readonly data: DbUserContributor[];
   readonly meta: Meta;
 }
 

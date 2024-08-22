@@ -64,12 +64,11 @@ export default function WorkspaceContributorsPage({ workspace }: WorkspaceContri
   const contributors = data?.data
     ? Array.from(data.data, (info) => {
         return {
-          author_login: info.contributor.login,
-          username: info.contributor.username,
+          login: info.contributor.login,
           updated_at: info.contributor.updated_at,
-          user_id: info.contributor_id,
+          id: info.contributor_id,
           devstats_updated_at: info.contributor.devstats_updated_at,
-        };
+        } as DbUserContributor;
       })
     : [];
 
