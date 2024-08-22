@@ -160,7 +160,9 @@ export default function DevCard(props: DevCardProps) {
                 height={100}
                 className="rounded-full border-[1.5px] border-gray-300 border-opacity-40"
               />
-              <p>@{props.devstats?.login}</p>
+              <p className="break-words mx-auto whitespace-normal text-center max-w-[200px]">
+                @{props.devstats?.login}
+              </p>
             </div>
 
             {/** OSCR Score **/}
@@ -194,10 +196,10 @@ export default function DevCard(props: DevCardProps) {
                 height={50}
                 className="absolute rounded-full border-[1.5px] border-gray-300 border-opacity-40 -left-1"
               />
-              <p className="pl-10">{props.devstats?.login}</p>
+              <p className="pl-10 truncate items-center">{props.devstats?.login}</p>
               <p className="-pl-4 justfy-self-end text-sm flex gap-0.5">
                 {Math.ceil(props.devstats?.oscr || 0)}
-                <span className="text-[0.5rem] text-gray-100 font-normal">/300</span>
+                <span className="text-[0.7rem] text-gray-100 font-normal">/300</span>
               </p>
             </div>
 
