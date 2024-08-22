@@ -449,6 +449,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 <div className="lg:col-span-4 flex flex-col gap-4">
                   {lotteryState === "lottery" && (
                     <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Lottery Factor chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
                       options={{
                         windowWidth: 1700,
                         allowTaint: true,
@@ -489,31 +494,49 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     </CopyContainer>
                   )}
                   {lotteryState === "yolo" && (
-                    <YoloChart
-                      yoloStats={yoloStats}
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloHideBots={yoloHideBots}
-                      setYoloHideBots={setYoloHideBots}
-                      repository={repoData.full_name}
-                      isLoading={isYoloStatsLoading}
-                      range={range}
-                      backButtonOnClick={() => setLotteryState("lottery")}
-                      onShaClick={() =>
-                        posthog.capture("Repo Pages: clicked SHA link", { repository: repoData.full_name })
-                      }
-                      onProfileClick={() =>
-                        posthog.capture("Repo Pages: clicked YOLO coder (YOLO Chart)", {
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Lottery Factor chart", {
                           repository: repoData.full_name,
-                        })
-                      }
-                      onHideBotsToggle={(checked) =>
-                        posthog.capture("Repo Pages: toggled YOLO hide bots", {
-                          repository: repoData.full_name,
-                          checked,
-                        })
-                      }
-                      showHoverCards
-                    />
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <YoloChart
+                        yoloStats={yoloStats}
+                        uniqueYoloCoders={uniqueYoloCoders}
+                        yoloHideBots={yoloHideBots}
+                        setYoloHideBots={setYoloHideBots}
+                        repository={repoData.full_name}
+                        isLoading={isYoloStatsLoading}
+                        range={range}
+                        backButtonOnClick={() => setLotteryState("lottery")}
+                        onShaClick={() =>
+                          posthog.capture("Repo Pages: clicked SHA link", { repository: repoData.full_name })
+                        }
+                        onProfileClick={() =>
+                          posthog.capture("Repo Pages: clicked YOLO coder (YOLO Chart)", {
+                            repository: repoData.full_name,
+                          })
+                        }
+                        onHideBotsToggle={(checked) =>
+                          posthog.capture("Repo Pages: toggled YOLO hide bots", {
+                            repository: repoData.full_name,
+                            checked,
+                          })
+                        }
+                        showHoverCards
+                      />
+                    </CopyContainer>
                   )}
                 </div>
               </section>
