@@ -360,25 +360,74 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
                 <div className="lg:col-span-8 flex flex-col gap-4">
                   <div className="flex gap-4 h-full flex-col lg:flex-row">
-                    <ContributorConfidenceChart
-                      contributorConfidence={repoStats?.contributor_confidence}
-                      isError={isError}
-                      isLoading={isLoading}
-                      onLearnMoreClick={() =>
-                        posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Contributor Confidence chart", {
                           repository: repoData.full_name,
-                        })
-                      }
-                    />
-                    <OssfChart
-                      repository={repoData.full_name}
-                      totalScore={repoData.ossf_scorecard_total_score}
-                      dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
-                      maintainedScore={repoData.ossf_scorecard_maintained_score}
-                      fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
-                      isLoading={false}
-                      isError={!repoData.ossf_scorecard_total_score}
-                    />
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone(document, element) {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                          element.querySelector("ContributorConfidenceChart")?.classList.add("z-20");
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <ContributorConfidenceChart
+                        contributorConfidence={repoStats?.contributor_confidence}
+                        isError={isError}
+                        isLoading={isLoading}
+                        onLearnMoreClick={() =>
+                          posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                            repository: repoData.full_name,
+                          })
+                        }
+                      />
+                    </CopyContainer>
+                    {!repoData.ossf_scorecard_total_score ? (
+                      <OssfChart
+                        repository={repoData.full_name}
+                        totalScore={repoData.ossf_scorecard_total_score}
+                        dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
+                        maintainedScore={repoData.ossf_scorecard_maintained_score}
+                        fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
+                        isLoading={false}
+                        isError={!repoData.ossf_scorecard_total_score}
+                      />
+                    ) : (
+                      <CopyContainer
+                        onCopyClick={() => {
+                          posthog.capture("Repo Pages: copied OSSF Scorecard", {
+                            repository: repoData.full_name,
+                          });
+                        }}
+                        options={{
+                          windowWidth: 1700,
+                          allowTaint: true,
+                          onclone: (document, element) => {
+                            element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                              el.classList.remove("hidden");
+                            });
+                          },
+                        }}
+                      >
+                        <CopyImageBranding repository={repoData.full_name} />
+                        <OssfChart
+                          repository={repoData.full_name}
+                          totalScore={repoData.ossf_scorecard_total_score}
+                          dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
+                          maintainedScore={repoData.ossf_scorecard_maintained_score}
+                          fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
+                          isLoading={false}
+                          isError={!repoData.ossf_scorecard_total_score}
+                        />
+                      </CopyContainer>
+                    )}
                   </div>
 
                   <RossChart
@@ -400,6 +449,11 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                 <div className="lg:col-span-4 flex flex-col gap-4">
                   {lotteryState === "lottery" && (
                     <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Lottery Factor chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
                       options={{
                         windowWidth: 1700,
                         allowTaint: true,
@@ -440,31 +494,49 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     </CopyContainer>
                   )}
                   {lotteryState === "yolo" && (
-                    <YoloChart
-                      yoloStats={yoloStats}
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloHideBots={yoloHideBots}
-                      setYoloHideBots={setYoloHideBots}
-                      repository={repoData.full_name}
-                      isLoading={isYoloStatsLoading}
-                      range={range}
-                      backButtonOnClick={() => setLotteryState("lottery")}
-                      onShaClick={() =>
-                        posthog.capture("Repo Pages: clicked SHA link", { repository: repoData.full_name })
-                      }
-                      onProfileClick={() =>
-                        posthog.capture("Repo Pages: clicked YOLO coder (YOLO Chart)", {
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Lottery Factor chart", {
                           repository: repoData.full_name,
-                        })
-                      }
-                      onHideBotsToggle={(checked) =>
-                        posthog.capture("Repo Pages: toggled YOLO hide bots", {
-                          repository: repoData.full_name,
-                          checked,
-                        })
-                      }
-                      showHoverCards
-                    />
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <YoloChart
+                        yoloStats={yoloStats}
+                        uniqueYoloCoders={uniqueYoloCoders}
+                        yoloHideBots={yoloHideBots}
+                        setYoloHideBots={setYoloHideBots}
+                        repository={repoData.full_name}
+                        isLoading={isYoloStatsLoading}
+                        range={range}
+                        backButtonOnClick={() => setLotteryState("lottery")}
+                        onShaClick={() =>
+                          posthog.capture("Repo Pages: clicked SHA link", { repository: repoData.full_name })
+                        }
+                        onProfileClick={() =>
+                          posthog.capture("Repo Pages: clicked YOLO coder (YOLO Chart)", {
+                            repository: repoData.full_name,
+                          })
+                        }
+                        onHideBotsToggle={(checked) =>
+                          posthog.capture("Repo Pages: toggled YOLO hide bots", {
+                            repository: repoData.full_name,
+                            checked,
+                          })
+                        }
+                        showHoverCards
+                      />
+                    </CopyContainer>
                   )}
                 </div>
               </section>

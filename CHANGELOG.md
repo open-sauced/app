@@ -5,6 +5,39 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.60.0-beta.4](https://github.com/open-sauced/app/compare/v2.60.0-beta.3...v2.60.0-beta.4) (2024-08-22)
+
+
+### 🍕 Features
+
+* copy repo page YOLO Chart as image ([#4014](https://github.com/open-sauced/app/issues/4014)) ([376dbe2](https://github.com/open-sauced/app/commit/376dbe28a31f281fc90759c5c4eabd6960027844))
+
+## [2.60.0-beta.3](https://github.com/open-sauced/app/compare/v2.60.0-beta.2...v2.60.0-beta.3) (2024-08-22)
+
+
+### 🍕 Features
+
+* now you can copy the contributor confidence chart as an image ([#3966](https://github.com/open-sauced/app/issues/3966)) ([3291c6d](https://github.com/open-sauced/app/commit/3291c6d1f878f2693ccabb979a33011f6de7d77b))
+
+
+### 🐛 Bug Fixes
+
+* resolve incorrect redirect to 404 page on search fields ([#3959](https://github.com/open-sauced/app/issues/3959)) ([298161d](https://github.com/open-sauced/app/commit/298161dc7dd9973e1db05b80508c5b9bdcac7624))
+
+## [2.60.0-beta.2](https://github.com/open-sauced/app/compare/v2.60.0-beta.1...v2.60.0-beta.2) (2024-08-22)
+
+
+### 🐛 Bug Fixes
+
+* always show Add to Workspace button on repositories table ([#4003](https://github.com/open-sauced/app/issues/4003)) ([5954f32](https://github.com/open-sauced/app/commit/5954f321b1d1051b9ea022d7c9e762896609370b))
+
+## [2.60.0-beta.1](https://github.com/open-sauced/app/compare/v2.59.0...v2.60.0-beta.1) (2024-08-21)
+
+
+### 🍕 Features
+
+* copy OSSF Scorecard as image ([#4000](https://github.com/open-sauced/app/issues/4000)) ([690fb38](https://github.com/open-sauced/app/commit/690fb38381275b95b39efe266cad2e1bdcff44b9))
+
 ## [2.59.0](https://github.com/open-sauced/app/compare/v2.58.0...v2.59.0) (2024-08-21)
 
 
