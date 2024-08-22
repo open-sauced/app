@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.60.0-beta.2](https://github.com/open-sauced/app/compare/v2.60.0-beta.1...v2.60.0-beta.2) (2024-08-22)
+
+
+### 🐛 Bug Fixes
+
+* always show Add to Workspace button on repositories table ([#4003](https://github.com/open-sauced/app/issues/4003)) ([5954f32](https://github.com/open-sauced/app/commit/5954f321b1d1051b9ea022d7c9e762896609370b))
+
 ## [2.60.0-beta.1](https://github.com/open-sauced/app/compare/v2.59.0...v2.60.0-beta.1) (2024-08-21)
 
 
