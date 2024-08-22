@@ -26,6 +26,7 @@ export type DevCardProps = {
 
 export default function DevCard(props: DevCardProps) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
+  const [isLoading, setIsLoading] = useState(true); //used to solve hydartion error
   const isInteractive = props.isInteractive ?? true;
 
   useEffect(() => {
@@ -37,6 +38,13 @@ export default function DevCard(props: DevCardProps) {
       setIsFlipped(props.isFlipped ?? false);
     }
   }, [props.isInteractive, props.isFlipped]);
+
+  // used to solve hydartion error
+  useEffect(() => {
+    if (!props.isLoading) {
+      setIsLoading(props.isLoading ?? false);
+    }
+  }, [props.isLoading]);
 
   function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     if (!isInteractive) {
@@ -83,7 +91,7 @@ export default function DevCard(props: DevCardProps) {
     },
   });
 
-  return props.isLoading ? (
+  return isLoading ? (
     <animated.div
       className={"grid rounded-3xl bg-white"}
       style={{
