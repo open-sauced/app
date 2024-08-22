@@ -110,6 +110,7 @@ export default function OssfChart({
             href="https://opensauced.pizza/docs/features/repo-pages/#insights-into-the-ossf-scorecard"
             onClick={onLearnMoreClick}
             className="text-xs font-semibold text-sauced-orange xl:text-sm hover:underline"
+            data-html2canvas-ignore
           >
             Learn More
           </a>
@@ -151,7 +152,7 @@ export default function OssfChart({
               <p className="text-xs text-slate-600">
                 {projectDescription}
                 {!isError && (
-                  <span>
+                  <span data-html2canvas-ignore>
                     You can run the full test{" "}
                     <a
                       href="https://github.com/ossf/scorecard?tab=readme-ov-file#view-a-projects-score"

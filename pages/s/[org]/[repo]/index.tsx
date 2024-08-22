@@ -360,16 +360,35 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
                 <div className="lg:col-span-8 flex flex-col gap-4">
                   <div className="flex gap-4 h-full flex-col lg:flex-row">
-                    <ContributorConfidenceChart
-                      contributorConfidence={repoStats?.contributor_confidence}
-                      isError={isError}
-                      isLoading={isLoading}
-                      onLearnMoreClick={() =>
-                        posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Contributor Confidence chart", {
                           repository: repoData.full_name,
-                        })
-                      }
-                    />
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone(document, element) {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                          element.querySelector("ContributorConfidenceChart")?.classList.add("z-20");
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <ContributorConfidenceChart
+                        contributorConfidence={repoStats?.contributor_confidence}
+                        isError={isError}
+                        isLoading={isLoading}
+                        onLearnMoreClick={() =>
+                          posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                            repository: repoData.full_name,
+                          })
+                        }
+                      />
+                    </CopyContainer>
                     {!repoData.ossf_scorecard_total_score ? (
                       <OssfChart
                         repository={repoData.full_name}
