@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.60.0-beta.4](https://github.com/open-sauced/app/compare/v2.60.0-beta.3...v2.60.0-beta.4) (2024-08-22)
+
+
+### 🍕 Features
+
+* copy repo page YOLO Chart as image ([#4014](https://github.com/open-sauced/app/issues/4014)) ([376dbe2](https://github.com/open-sauced/app/commit/376dbe28a31f281fc90759c5c4eabd6960027844))
+
 ## [2.60.0-beta.3](https://github.com/open-sauced/app/compare/v2.60.0-beta.2...v2.60.0-beta.3) (2024-08-22)
 
 
