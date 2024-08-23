@@ -430,20 +430,42 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     )}
                   </div>
 
-                  <RossChart
-                    stats={rossStats}
-                    range={range}
-                    isLoading={isRossDataLoading}
-                    error={rossError}
-                    onFilterClick={(category, value) =>
-                      posthog.capture(`Repo Data: toggled ROSS filter`, {
+                  <CopyContainer
+                    onCopyClick={() => {
+                      posthog.capture("Repo Pages: copied Contributors (ROSS) chart", {
                         repository: repoData.full_name,
-                        category,
-                        value,
-                      })
-                    }
-                    className="h-fit"
-                  />
+                      });
+                    }}
+                    options={{
+                      windowWidth: 1700,
+                      allowTaint: true,
+                      onclone(document, element) {
+                        element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                          el.classList.remove("hidden");
+                        });
+                        element.querySelectorAll("[data-copy-image-legend-square]").forEach((el) => {
+                          el.classList.replace("w-4", "w-5");
+                          el.classList.replace("h-4", "h-5");
+                        });
+                      },
+                    }}
+                  >
+                    <CopyImageBranding repository={repoData.full_name} />
+                    <RossChart
+                      stats={rossStats}
+                      range={range}
+                      isLoading={isRossDataLoading}
+                      error={rossError}
+                      onFilterClick={(category, value) =>
+                        posthog.capture(`Repo Data: toggled ROSS filter`, {
+                          repository: repoData.full_name,
+                          category,
+                          value,
+                        })
+                      }
+                      className="h-fit"
+                    />
+                  </CopyContainer>
                 </div>
 
                 <div className="lg:col-span-4 flex flex-col gap-4">
