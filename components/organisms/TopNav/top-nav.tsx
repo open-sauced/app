@@ -69,7 +69,7 @@ const Nav = ({ className }: { className?: string }) => {
             className={`tracking-tight font-medium text-slate-700 text-sm hover:text-orange-500 transition-all ${getActiveStyle(
               explorePageUrlPattern.test(router.asPath)
             )}`}
-            href={`/explore/topic/${userInterest}/dashboard/filter/recent`}
+            href={`/explore/topic/${userInterest}`}
           >
             Explore
           </Link>

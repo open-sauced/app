@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import Text from "components/atoms/Typography/text";
 import Title from "components/atoms/Typography/title";
 import ContextThumbnail from "components/atoms/ContextThumbnail/context-thumbnail";
-import SuperativeSelector from "components/molecules/SuperlativeSelector/superlative-selector";
 
 import useFilterOptions from "lib/hooks/useFilterOptions";
 import { captureAnalytics } from "lib/utils/analytics";
@@ -57,13 +56,6 @@ const HeaderFilter = () => {
             options={topicOptions as unknown as []}
             icon="topic"
             handleFilterClick={topicRouting}
-          />
-          <SuperativeSelector
-            filterOptions={filterOptions}
-            filterValues={filterValues}
-            handleFilterClick={filterBtnRouting}
-            handleCancelClick={cancelFilterRouting}
-            selected={Array.isArray(selectedFilter) ? selectedFilter.join("/") : selectedFilter}
           />
         </div>
       </div>
