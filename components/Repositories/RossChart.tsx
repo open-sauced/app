@@ -45,8 +45,10 @@ export default function RossChart({ stats, isLoading, error, range, onFilterClic
   }, [stats]);
 
   const weeklyData = useMemo(() => {
+    // @ts-ignore
     const contributors = stats?.contributors.toReversed() ?? [];
 
+    // @ts-ignore
     return contributors.map((week) => {
       return {
         new: filterOutside ? week.new : 0,
@@ -58,8 +60,10 @@ export default function RossChart({ stats, isLoading, error, range, onFilterClic
   }, [stats, filterOutside, filterRecurring, filterInternal]);
 
   const bucketTicks = useMemo(() => {
+    // @ts-ignore
     const contributors = stats?.contributors.toReversed() ?? [];
 
+    // @ts-ignore
     return contributors.map((week) => {
       return new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" });
     });
