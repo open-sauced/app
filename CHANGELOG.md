@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.60.1-beta.1](https://github.com/open-sauced/app/compare/v2.60.0...v2.60.1-beta.1) (2024-08-23)
+
+
+### 🐛 Bug Fixes
+
+* `RossChart` order changing on filter ([#4018](https://github.com/open-sauced/app/issues/4018)) ([64a04f5](https://github.com/open-sauced/app/commit/64a04f5d3a8fbfe4647f8c43c07eca13e7ea0ef9))
+
 ## [2.60.0](https://github.com/open-sauced/app/compare/v2.59.0...v2.60.0) (2024-08-22)
 
 
