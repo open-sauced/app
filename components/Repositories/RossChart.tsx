@@ -45,28 +45,26 @@ export default function RossChart({ stats, isLoading, error, range, onFilterClic
   }, [stats]);
 
   const weeklyData = useMemo(() => {
-    // @ts-ignore
-    const contributors = stats?.contributors.toReversed() ?? [];
-
-    // @ts-ignore
-    return contributors.map((week) => {
-      return {
-        new: filterOutside ? week.new : 0,
-        recurring: filterRecurring ? week.recurring : 0,
-        internal: filterInternal ? week.internal : 0,
-        bucket: new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
-      };
-    });
+    return stats?.contributors
+      .slice()
+      .reverse()
+      .map((week) => {
+        return {
+          new: filterOutside ? week.new : 0,
+          recurring: filterRecurring ? week.recurring : 0,
+          internal: filterInternal ? week.internal : 0,
+          bucket: new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+        };
+      });
   }, [stats, filterOutside, filterRecurring, filterInternal]);
 
   const bucketTicks = useMemo(() => {
-    // @ts-ignore
-    const contributors = stats?.contributors.toReversed() ?? [];
-
-    // @ts-ignore
-    return contributors.map((week) => {
-      return new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" });
-    });
+    return stats?.contributors
+      .slice()
+      .reverse()
+      .map((week) => {
+        return new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" });
+      });
   }, [stats]);
 
   const CONTRIBUTOR_COLORS: Record<string, string> = {
