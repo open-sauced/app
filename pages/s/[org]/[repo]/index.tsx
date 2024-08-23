@@ -544,14 +544,32 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               <section className="flex flex-col gap-4">
                 <h2 className="text-lg font-semibold">Activity</h2>
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                  <IssuesChart
-                    stats={issueStats}
-                    range={range}
-                    velocity={repoStats?.issues_velocity_count ?? 0}
-                    syncId={syncId}
-                    isLoading={isIssueDataLoading}
-                    className="lg:col-span-6 h-fit"
-                  />
+                  <CopyContainer
+                    onCopyClick={() => {
+                      posthog.capture("Repo Pages: copied Issues chart", {
+                        repository: repoData.full_name,
+                      });
+                    }}
+                    options={{
+                      windowWidth: 1700,
+                      allowTaint: true,
+                      onclone(document, element) {
+                        element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                          el.classList.remove("hidden");
+                        });
+                      },
+                    }}
+                  >
+                    <CopyImageBranding repository={repoData.full_name} />
+                    <IssuesChart
+                      stats={issueStats}
+                      range={range}
+                      velocity={repoStats?.issues_velocity_count ?? 0}
+                      syncId={syncId}
+                      isLoading={isIssueDataLoading}
+                      className="lg:col-span-6 h-fit"
+                    />
+                  </CopyContainer>
 
                   <PRChart
                     stats={prStats}
