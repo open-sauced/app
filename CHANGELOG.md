@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.1](https://github.com/open-sauced/app/compare/v2.60.1-beta.2...v2.61.0-beta.1) (2024-08-23)
+
+
+### 🍕 Features
+
+* copy repo page Contributors chart as image ([#4025](https://github.com/open-sauced/app/issues/4025)) ([581497e](https://github.com/open-sauced/app/commit/581497e85de3e0f32e201d507181b20371e1c812))
+
 ## [2.60.1-beta.2](https://github.com/open-sauced/app/compare/v2.60.1-beta.1...v2.60.1-beta.2) (2024-08-23)
 
 
