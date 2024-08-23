@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.60.1-beta.2](https://github.com/open-sauced/app/compare/v2.60.1-beta.1...v2.60.1-beta.2) (2024-08-23)
+
+
+### 🐛 Bug Fixes
+
+* fixed typo for recommendations ([#4017](https://github.com/open-sauced/app/issues/4017)) ([2e4cbdb](https://github.com/open-sauced/app/commit/2e4cbdb4dbe1e16d22b6ce6656b95adc392c069e))
+
 ## [2.60.1-beta.1](https://github.com/open-sauced/app/compare/v2.60.0...v2.60.1-beta.1) (2024-08-23)
 
 
