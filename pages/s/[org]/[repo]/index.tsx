@@ -575,14 +575,33 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     className="lg:col-span-6 h-fit"
                   />
 
-                  <PRChart
-                    stats={prStats}
-                    range={range}
-                    velocity={repoStats?.pr_velocity_count ?? 0}
-                    syncId={syncId}
-                    isLoading={isPrDataLoading}
-                    className="lg:col-span-6 h-fit"
-                  />
+                  <div className="lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied PR chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <PRChart
+                        stats={prStats}
+                        range={range}
+                        velocity={repoStats?.pr_velocity_count ?? 0}
+                        syncId={syncId}
+                        isLoading={isPrDataLoading}
+                      />
+                    </CopyContainer>
+                  </div>
                 </div>
               </section>
 
