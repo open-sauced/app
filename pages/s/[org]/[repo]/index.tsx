@@ -607,7 +607,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   <div className="lg:col-span-6 h-fit">
                     <CopyContainer
                       onCopyClick={() => {
-                        posthog.capture("Repo Pages: copied Stars chart", {
+                        posthog.capture("Repo Pages: copied Forks chart", {
                           repository: repoData.full_name,
                         });
                       }}
