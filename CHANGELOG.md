@@ -5,6 +5,15 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.3](https://github.com/open-sauced/app/compare/v2.61.0-beta.2...v2.61.0-beta.3) (2024-08-26)
+
+
+### 🍕 Features
+
+* copy repo page `StarsChart` as image  ([#4035](https://github.com/open-sauced/app/issues/4035)) ([933bb2c](https://github.com/open-sauced/app/commit/933bb2c086e3ba68cf4b49aa64a5c475b6b7389d))
+* copy repo page Issues chart as image ([#4026](https://github.com/open-sauced/app/issues/4026)) ([f9fad65](https://github.com/open-sauced/app/commit/f9fad657f77679344e5e93081e71b304a76342b3))
+* copy repo page PR chart as image ([#4027](https://github.com/open-sauced/app/issues/4027)) ([3541a37](https://github.com/open-sauced/app/commit/3541a373f532bb25379db8c9697d8729dc19c5a7))
+
 ## [2.61.0-beta.2](https://github.com/open-sauced/app/compare/v2.61.0-beta.1...v2.61.0-beta.2) (2024-08-26)
 
 
