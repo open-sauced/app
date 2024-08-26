@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.2](https://github.com/open-sauced/app/compare/v2.61.0-beta.1...v2.61.0-beta.2) (2024-08-26)
+
+
+### 🍕 Features
+
+* refresh explore page to only loading repositories ([#4019](https://github.com/open-sauced/app/issues/4019)) ([88f5937](https://github.com/open-sauced/app/commit/88f5937b32b65c42f1bafe42d81ac9b6ec8dc6a9))
+
 ## [2.61.0-beta.1](https://github.com/open-sauced/app/compare/v2.60.1-beta.2...v2.61.0-beta.1) (2024-08-23)
 
 
