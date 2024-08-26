@@ -3,8 +3,8 @@ import { captureAnalytics } from "lib/utils/analytics";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import Contributors from "../Contributors/contributors";
-import Dashboard from "../Dashboard/dashboard";
 import Activity from "../Activity/activity";
+import Repositories from "../Repositories/repositories";
 
 interface ToolProps {
   tool?: string;
@@ -25,7 +25,7 @@ const Tool = ({ tool, repositories }: ToolProps): JSX.Element => {
 
   switch (tool) {
     case "Dashboard":
-      return <Dashboard repositories={repositories} />;
+      return <Repositories repositories={repositories} personalWorkspaceId={userInfo?.personal_workspace_id} />;
     case "Contributors":
       return <Contributors repositories={repositories} personalWorkspaceId={userInfo?.personal_workspace_id} />;
 

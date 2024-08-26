@@ -6,11 +6,11 @@ import dynamic from "next/dynamic";
 import SEO from "layouts/SEO/SEO";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import HubPageLayout from "layouts/hub-page";
-import Dashboard from "components/organisms/Dashboard/dashboard";
 import { fetchApiData } from "helpers/fetchApiData";
 import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
 import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import useSession from "lib/hooks/useSession";
+import Repositories from "components/organisms/Repositories/repositories";
 
 const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
@@ -66,7 +66,7 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId, owners }: InsightPage
       >
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <HubPageLayout page="dashboard" owners={owners} overLimit={showBanner}>
-            <Dashboard
+            <Repositories
               repositories={repositories}
               personalWorkspaceId={isOwner ? undefined : (session as DbUser)?.personal_workspace_id}
             />
