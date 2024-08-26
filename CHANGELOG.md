@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.4](https://github.com/open-sauced/app/compare/v2.61.0-beta.3...v2.61.0-beta.4) (2024-08-26)
+
+
+### 🍕 Features
+
+* copy repo page `ForksChart` as image ([#4036](https://github.com/open-sauced/app/issues/4036)) ([d30beff](https://github.com/open-sauced/app/commit/d30beff29c3db2ac91645c48d6321a4dbbcc27f0))
+
 ## [2.61.0-beta.3](https://github.com/open-sauced/app/compare/v2.61.0-beta.2...v2.61.0-beta.3) (2024-08-26)
 
 
