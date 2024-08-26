@@ -589,20 +589,40 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               <section className="flex flex-col gap-4">
                 <h2 className="text-lg font-semibold">Engagement</h2>
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                  <StarsChart
-                    stats={starsData}
-                    total={repoData.stars}
-                    range={range}
-                    syncId={syncId}
-                    isLoading={isStarsDataLoading}
-                    onCategoryClick={(category) =>
-                      posthog.capture("Repo Pages: clicked Stars Chart category", {
-                        repository: repoData.full_name,
-                        category,
-                      })
-                    }
-                    className="lg:col-span-6 h-fit"
-                  />
+                  <div className="lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Stars chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <StarsChart
+                        stats={starsData}
+                        total={repoData.stars}
+                        range={range}
+                        syncId={syncId}
+                        isLoading={isStarsDataLoading}
+                        onCategoryClick={(category) =>
+                          posthog.capture("Repo Pages: clicked Stars Chart category", {
+                            repository: repoData.full_name,
+                            category,
+                          })
+                        }
+                      />
+                    </CopyContainer>
+                  </div>
+
                   <ForksChart
                     stats={forkStats}
                     total={repoData.forks}
