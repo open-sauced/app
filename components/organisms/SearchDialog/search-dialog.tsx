@@ -140,14 +140,13 @@ const SearchDialog = () => {
   return (
     <Dialog open={openSearch} onOpenChange={setOpenSearch}>
       <DialogContent
-        className="fixed top-0 p-5 flex justify-center"
+        className="fixed top-2 lg:top-4 flex justify-center !pb-0 lg:!p-0 bg-transparent !w-full"
         onPointerDownOutside={() => {
-          alert("clicked outside");
           setOpenSearch(false);
         }}
       >
         <div
-          className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-50 overflow-hidden"
+          className="mx-1 md:mx-2 flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-50 overflow-hidden"
           onMouseMove={() => cursor !== -1 && setCursor(-1)}
         >
           <div className="flex w-full h-full items-center border-b p-2 pl-3">
