@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.7](https://github.com/open-sauced/app/compare/v2.61.0-beta.6...v2.61.0-beta.7) (2024-08-27)
+
+
+### 🐛 Bug Fixes
+
+* now search dialog is always on top of other elements ([#4047](https://github.com/open-sauced/app/issues/4047)) ([3b4101a](https://github.com/open-sauced/app/commit/3b4101a30927ac1fbd8ee83180e66cf7a566ca78))
+
 ## [2.61.0-beta.6](https://github.com/open-sauced/app/compare/v2.61.0-beta.5...v2.61.0-beta.6) (2024-08-27)
 
 
