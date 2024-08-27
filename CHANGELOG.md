@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.5](https://github.com/open-sauced/app/compare/v2.61.0-beta.4...v2.61.0-beta.5) (2024-08-27)
+
+
+### 🐛 Bug Fixes
+
+* remove deprecated "add coupon" section from user settings page ([#4039](https://github.com/open-sauced/app/issues/4039)) ([0b61b77](https://github.com/open-sauced/app/commit/0b61b776929601bf74d97e359c9c3c9c43d171ed))
+
 ## [2.61.0-beta.4](https://github.com/open-sauced/app/compare/v2.61.0-beta.3...v2.61.0-beta.4) (2024-08-26)
 
 
