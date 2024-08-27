@@ -198,7 +198,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           {/* Row: Contributor Confidence*/}
           <div className="flex items-center justify-between py-3 border-b">
             <div>Contributor Confidence</div>
-            <div className="flex text-base gap-x-3">{repo.contributor_confidence}%</div>
+            <div className="flex text-base gap-x-3">{Math.floor((contributorConfidence ?? 0) * 100)}%</div>
           </div>
 
           {/* Row: Contributors */}
