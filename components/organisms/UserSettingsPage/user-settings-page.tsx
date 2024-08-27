@@ -24,7 +24,6 @@ import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/molecules/Dialog/dialog";
 import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import CouponForm from "./coupon-form";
 import DeveloperPackForm from "./developer-pack-form";
 
 interface UserSettingsPageProps {
@@ -453,8 +452,6 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                         setCoupon("verified");
                       }}
                     />
-
-                    {!coupon && <CouponForm refreshUser={mutate} />}
                   </div>
                 ) : null}
               </div>
