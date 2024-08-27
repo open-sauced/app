@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.6](https://github.com/open-sauced/app/compare/v2.61.0-beta.5...v2.61.0-beta.6) (2024-08-27)
+
+
+### 🍕 Features
+
+* add contributor confidence to repository table ([#4038](https://github.com/open-sauced/app/issues/4038)) ([6f510cb](https://github.com/open-sauced/app/commit/6f510cb4944feaa1d791caf1ee495d1ba4ec0b19))
+* now html2canvas-pro is dynamically imported only when needed and then cached ([#4044](https://github.com/open-sauced/app/issues/4044)) ([23e4d76](https://github.com/open-sauced/app/commit/23e4d761fd0579b4dec098fec09d3e492384e24e))
+
+
+### 🐛 Bug Fixes
+
+* now if loading user profile fails an error is thrown instead of 404ing ([#4043](https://github.com/open-sauced/app/issues/4043)) ([3527795](https://github.com/open-sauced/app/commit/35277950e2deaacefeff971d2a85d062b2d9b5e5))
+* update validation for GitHub username ([#4046](https://github.com/open-sauced/app/issues/4046)) ([8a77fac](https://github.com/open-sauced/app/commit/8a77face5a3a4c730dbcf1dcad14a04561e6d1b8))
+
 ## [2.61.0-beta.5](https://github.com/open-sauced/app/compare/v2.61.0-beta.4...v2.61.0-beta.5) (2024-08-27)
 
 
