@@ -4,6 +4,7 @@
  * Example ok slugs:
  *   - opensauced
  *   - 123open-sauced123
+ *   - github-actions[bot]
  *
  * Example unallowed, escaped slugs:
  *   - open.sauced
@@ -12,7 +13,7 @@
  */
 
 function isValidUrlSlug(value: string): boolean {
-  const validPattern = /^[a-zA-Z0-9-_]+$/;
+  const validPattern = /^[a-zA-Z0-9-_\[\]]+$/;
 
   return validPattern.test(value);
 }
