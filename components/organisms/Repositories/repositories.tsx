@@ -16,6 +16,7 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import LimitSelect from "components/atoms/Select/limit-select";
 import Button from "components/shared/Button/button";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import InfoTooltip from "components/shared/InfoTooltip";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 
@@ -146,7 +147,10 @@ export default function Repositories({ repositories, showSearch = true, personal
               <TableTitle>OSSF Score</TableTitle>
             </div>
             <div className={clsx(classNames.cols.spam)}>
-              <TableTitle>Contributor Confidence</TableTitle>
+              <TableTitle className="inline-flex items-center">
+                Contributor Confidence
+                <InfoTooltip information="The percentage of stargazers and forkers that come back later on to a meaningful contribution." />
+              </TableTitle>
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
               <TableTitle>Contributors</TableTitle>

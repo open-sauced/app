@@ -23,6 +23,7 @@ import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
 import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
+import InfoTooltip from "components/shared/InfoTooltip";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
@@ -197,7 +198,10 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
 
           {/* Row: Contributor Confidence*/}
           <div className="flex items-center justify-between py-3 border-b">
-            <div>Contributor Confidence</div>
+            <div className="flex gap-2">
+              Contributor Confidence
+              <InfoTooltip information="The percentage of stargazers and forkers that come back later on to a meaningful contribution." />
+            </div>
             <div className="flex text-base gap-x-3">{Math.floor((contributorConfidence ?? 0) * 100)}%</div>
           </div>
 
