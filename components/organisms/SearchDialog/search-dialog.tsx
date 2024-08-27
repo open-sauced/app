@@ -257,13 +257,6 @@ const SearchLoading = () => (
   </div>
 );
 
-const SearchError = () => (
-  <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
-    <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
-    We couldn&apos;t find any users or repositories with that name
-  </Text>
-);
-
 const SearchResult = ({ result, cursor }: { result: GhUser[]; cursor: number }) => (
   <div className="w-full py-1 overflow-hidden text-gray-600">
     <Text className="block w-full py-1 px-4">Users</Text>
