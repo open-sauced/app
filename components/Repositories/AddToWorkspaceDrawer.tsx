@@ -78,7 +78,7 @@ export default function AddToWorkspaceDrawer({ repository, type = "repo" }: AddT
       trigger={
         <Button
           variant={type === "repo" ? "primary" : "dark"}
-          className="shrink-0 items-center gap-3 w-fit"
+          className="shrink-0 items-center gap-3 w-full"
           onClick={(event) => {
             if (user && type === "sbom") {
               event.preventDefault();

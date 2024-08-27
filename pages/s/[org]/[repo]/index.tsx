@@ -255,7 +255,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                           posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
                           setIsAddToWorkspaceModalOpen(true);
                         }}
-                        className="shrink-0 items-center gap-3 w-fit"
+                        className="shrink-0 items-center gap-3 w-full"
                       >
                         <MdWorkspaces />
                         Add to Workspace
