@@ -24,6 +24,9 @@ import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
 import InfoTooltip from "components/shared/InfoTooltip";
+import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
+import { DayRange } from "components/shared/DayRangePicker";
+import { LotteryFactorBadge } from "components/Repositories/LotteryFactorBadge";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
@@ -112,9 +115,14 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
   });
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPercent(totalPrs, mergedPrsCount || 0);
-  const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
   const prVelocityInDays = getRelativeDays(prVelocityCount || 0);
   const contributorData = getPullRequestsContributors(repositoryPullRequests);
+
+  const {
+    data: lotteryFactor,
+    error: lotteryFactorError,
+    isLoading: isLotteryFactorLoading,
+  } = useRepositoryLottoFactor({ repository: fullName.toLowerCase(), range: range as DayRange });
 
   const days = getPullRequestsHistogramToDays(repositoryPullRequestsHistogram, Number(range || "30"));
 
@@ -179,12 +187,15 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             {getActivity(totalPrs, false)}
           </div>
 
-          {/* Row: Pr velocity */}
+          {/* Row: Lottery Factor */}
           <div className="flex items-center justify-between py-3 border-b">
-            <div>Pr Velocity</div>
+            <div>Lottery Factor</div>
             <div className="flex text-base gap-x-3">
-              <div>{prVelocityInDays}</div>
-              {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
+              <LotteryFactorBadge
+                lotteryFactor={lotteryFactor}
+                isLoading={isLotteryFactorLoading}
+                error={lotteryFactorError}
+              />
             </div>
           </div>
 
@@ -252,10 +263,13 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           )}
         </div>
 
-        {/* Column: PR Velocity */}
+        {/* Column: Lottery Factor */}
         <div className={`${classNames.cols.prVelocity}`}>
-          <div>{prVelocityInDays}</div>
-          {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
+          <LotteryFactorBadge
+            lotteryFactor={lotteryFactor}
+            isLoading={isLotteryFactorLoading}
+            error={lotteryFactorError}
+          />
         </div>
 
         {/* Column: OSSF Scorecard */}

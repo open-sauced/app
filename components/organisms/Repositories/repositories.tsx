@@ -141,7 +141,7 @@ export default function Repositories({ repositories, showSearch = true, personal
               <TableTitle>PR Overview</TableTitle>
             </div>
             <div className={clsx(classNames.cols.prVelocity)}>
-              <TableTitle>PR Velocity</TableTitle>
+              <TableTitle>Lottery Factor</TableTitle>
             </div>
             <div className={clsx(classNames.cols.spam)}>
               <TableTitle>OSSF Score</TableTitle>
