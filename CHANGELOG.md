@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.10](https://github.com/open-sauced/app/compare/v2.61.0-beta.9...v2.61.0-beta.10) (2024-08-28)
+
+
+### 🍕 Features
+
+* implemented the split button component ([#4040](https://github.com/open-sauced/app/issues/4040)) ([a539f78](https://github.com/open-sauced/app/commit/a539f78022f6fb5c855ccf2041205332d65ea5a4))
+
 ## [2.61.0-beta.9](https://github.com/open-sauced/app/compare/v2.61.0-beta.8...v2.61.0-beta.9) (2024-08-28)
 
 
