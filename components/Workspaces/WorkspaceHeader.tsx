@@ -2,6 +2,8 @@ import { SquareFillIcon } from "@primer/octicons-react";
 import { FaEdit } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";
 import { usePostHog } from "posthog-js/react";
+import Link from "next/link";
+import { HiOutlineUsers } from "react-icons/hi2";
 import Button from "components/shared/Button/button";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { shortenUrl } from "lib/utils/shorten-url";
@@ -12,9 +14,11 @@ import { writeToClipboard } from "lib/utils/write-to-clipboard";
 interface WorkspaceHeaderProps {
   workspace: Workspace;
   children?: React.ReactNode;
+  title: string;
+  url: string;
 }
 
-export const WorkspaceHeader = ({ workspace, children }: WorkspaceHeaderProps) => {
+export const WorkspaceHeader = ({ workspace, children, title, url }: WorkspaceHeaderProps) => {
   const { toast } = useToast();
   const posthog = usePostHog();
   const { userId } = useSupabaseAuth();
@@ -47,6 +51,17 @@ export const WorkspaceHeader = ({ workspace, children }: WorkspaceHeaderProps) =
       </h1>
       <div className="flex gap-2 justify-end">
         {children}
+
+        <Link
+          href={`/workspaces/${workspace.id}/contributor-insights`}
+          className="my-auto gap-2 items-center shrink-0 place-self-end bg-orange-50 text-[#ed5f00]  font-inter font-semibold hover:bg-orange-100 text-[14px] px-4 py-2 rounded-md transition-colors duration-200"
+        >
+          <span className="flex gap-2 items-center">
+            <HiOutlineUsers />
+            Contributor insights
+          </span>
+        </Link>
+
         <Button
           variant="outline"
           onClick={copyUrlToClipboard}
