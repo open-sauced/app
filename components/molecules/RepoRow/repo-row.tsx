@@ -23,6 +23,10 @@ import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
 import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
+import InfoTooltip from "components/shared/InfoTooltip";
+import { useRepositoryLottoFactor } from "lib/hooks/api/useRepositoryLottoFactor";
+import { DayRange } from "components/shared/DayRangePicker";
+import { LotteryFactorBadge } from "components/Repositories/LotteryFactorBadge";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
@@ -91,6 +95,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
     spam_prs_count: spamPrsCount,
     pr_velocity_count: prVelocityCount,
     ossf_scorecard_total_score: ossfScorecardTotalScore,
+    contributor_confidence: contributorConfidence,
   } = repo;
   const ownerAvatar = getAvatarByUsername(fullName.split("/")[0]);
 
@@ -110,9 +115,14 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
   });
   const totalPrs = getTotalPrs(openPrsCount, mergedPrsCount, closedPrsCount, draftPrsCount);
   const prsMergedPercentage = getPercent(totalPrs, mergedPrsCount || 0);
-  const spamPrsPercentage = getPrsSpam(totalPrs, spamPrsCount || 0);
   const prVelocityInDays = getRelativeDays(prVelocityCount || 0);
   const contributorData = getPullRequestsContributors(repositoryPullRequests);
+
+  const {
+    data: lotteryFactor,
+    error: lotteryFactorError,
+    isLoading: isLotteryFactorLoading,
+  } = useRepositoryLottoFactor({ repository: fullName.toLowerCase(), range: range as DayRange });
 
   const days = getPullRequestsHistogramToDays(repositoryPullRequestsHistogram, Number(range || "30"));
 
@@ -177,12 +187,15 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             {getActivity(totalPrs, false)}
           </div>
 
-          {/* Row: Pr velocity */}
+          {/* Row: Lottery Factor */}
           <div className="flex items-center justify-between py-3 border-b">
-            <div>Pr Velocity</div>
+            <div>Lottery Factor</div>
             <div className="flex text-base gap-x-3">
-              <div>{prVelocityInDays}</div>
-              {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
+              <LotteryFactorBadge
+                lotteryFactor={lotteryFactor}
+                isLoading={isLotteryFactorLoading}
+                error={lotteryFactorError}
+              />
             </div>
           </div>
 
@@ -194,8 +207,16 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             </div>
           </div>
 
-          {/* Row: Contributors */}
+          {/* Row: Contributor Confidence*/}
+          <div className="flex items-center justify-between py-3 border-b">
+            <div className="flex gap-2">
+              Contributor Confidence
+              <InfoTooltip information="The percentage of stargazers and forkers that come back later on to a meaningful contribution." />
+            </div>
+            <div className="flex text-base gap-x-3">{Math.floor((contributorConfidence ?? 0) * 100)}%</div>
+          </div>
 
+          {/* Row: Contributors */}
           <div className="flex items-center justify-between py-3">
             <div>Contributors</div>
             <div className="flex items-center text-base">
@@ -242,16 +263,22 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
           )}
         </div>
 
-        {/* Column: PR Velocity */}
+        {/* Column: Lottery Factor */}
         <div className={`${classNames.cols.prVelocity}`}>
-          <div>{prVelocityInDays}</div>
-          {repo.id ? <Pill color="purple" text={`${prsMergedPercentage}%`} /> : ""}
+          <LotteryFactorBadge
+            lotteryFactor={lotteryFactor}
+            isLoading={isLotteryFactorLoading}
+            error={lotteryFactorError}
+          />
         </div>
 
         {/* Column: OSSF Scorecard */}
         <div className={`${classNames.cols.spam}`}>
           {ossfScorecardTotalScore ? `${ossfScorecardTotalScore}/10` : "-"}
         </div>
+
+        {/* Column: Contributor Confidence*/}
+        <div className={`${classNames.cols.spam}`}>{Math.floor((contributorConfidence ?? 0) * 100)}%</div>
 
         {/* Column: Contributors */}
         <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>

@@ -52,16 +52,17 @@ export default function ContributorConfidenceChart({
   };
 
   return (
-    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-fit items-center py-8`}>
+    <Card className={`${className ?? ""} flex flex-col gap-4 w-full h-fit items-center py-8 graph-to-image`}>
       <header className="flex items-center justify-between w-full px-4">
         <div className="flex items-center gap-2">
-          <FaUserPlus className="text-xl" />
+          <FaUserPlus className="text-xl contributor-confidence-logo" />
           <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Contributor Confidence</h3>
         </div>
         <a
           href="https://opensauced.pizza/docs/features/repo-pages/#insights-into-contributor-confidence"
           onClick={onLearnMoreClick}
           className="text-xs font-semibold text-sauced-orange xl:text-sm hover:underline"
+          data-html2canvas-ignore
         >
           Learn More
         </a>

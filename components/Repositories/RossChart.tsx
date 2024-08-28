@@ -45,20 +45,26 @@ export default function RossChart({ stats, isLoading, error, range, onFilterClic
   }, [stats]);
 
   const weeklyData = useMemo(() => {
-    return stats?.contributors.reverse().map((week) => {
-      return {
-        new: filterOutside ? week.new : 0,
-        recurring: filterRecurring ? week.recurring : 0,
-        internal: filterInternal ? week.internal : 0,
-        bucket: new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
-      };
-    });
+    return stats?.contributors
+      .slice()
+      .reverse()
+      .map((week) => {
+        return {
+          new: filterOutside ? week.new : 0,
+          recurring: filterRecurring ? week.recurring : 0,
+          internal: filterInternal ? week.internal : 0,
+          bucket: new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" }),
+        };
+      });
   }, [stats, filterOutside, filterRecurring, filterInternal]);
 
   const bucketTicks = useMemo(() => {
-    return stats?.contributors.reverse().map((week) => {
-      return new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" });
-    });
+    return stats?.contributors
+      .slice()
+      .reverse()
+      .map((week) => {
+        return new Date(week.bucket).toLocaleDateString(undefined, { month: "numeric", day: "numeric" });
+      });
   }, [stats]);
 
   const CONTRIBUTOR_COLORS: Record<string, string> = {
@@ -160,7 +166,7 @@ export default function RossChart({ stats, isLoading, error, range, onFilterClic
             !filterOutside && "opacity-60"
           } transition-all duration-300 hover:bg-slate-100 rounded-lg px-2 py-1`}
         >
-          <span className={`w-4 h-4 rounded-sm bg-[#60A5FA] inline-block`} />
+          <span data-copy-image-legend-square className={`w-4 h-4 rounded-sm bg-[#60A5FA] inline-block`} />
           Outside
         </button>
 
@@ -173,7 +179,7 @@ export default function RossChart({ stats, isLoading, error, range, onFilterClic
             !filterRecurring && "opacity-60"
           } transition-all duration-300 hover:bg-slate-100 rounded-lg px-2 py-1`}
         >
-          <span className={`w-4 h-4 rounded-sm bg-[#2563EB] inline-block`} />
+          <span data-copy-image-legend-square className={`w-4 h-4 rounded-sm bg-[#2563EB] inline-block`} />
           Recurring
         </button>
 
@@ -186,7 +192,7 @@ export default function RossChart({ stats, isLoading, error, range, onFilterClic
             !filterInternal && "opacity-60"
           } transition-all duration-300 hover:bg-slate-100 rounded-lg px-2 py-1`}
         >
-          <span className={`w-4 h-4 rounded-sm bg-[#1E3A8A] inline-block`} />
+          <span data-copy-image-legend-square className={`w-4 h-4 rounded-sm bg-[#1E3A8A] inline-block`} />
           Internal
         </button>
       </fieldset>

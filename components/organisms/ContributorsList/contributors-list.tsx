@@ -9,7 +9,7 @@ import { ToggleValue } from "components/atoms/LayoutToggle/layout-toggle";
 import ContributorCard from "../ContributorCard/contributor-card";
 
 interface ContributorsListProps {
-  contributors: DbPRContributor[];
+  contributors: DbUserContributor[];
   isLoading: boolean;
   meta: Meta;
   setPage: (page: number) => void;
@@ -18,7 +18,7 @@ interface ContributorsListProps {
 }
 
 interface ContributorCardListProps {
-  contributors: DbPRContributor[];
+  contributors: DbUserContributor[];
   topic: string;
   range: string;
   loggedIn: boolean;
@@ -30,7 +30,7 @@ const ContributorCardList = ({ contributors = [], topic, range, loggedIn }: Cont
       {contributors.map((contributor) => {
         return (
           <ContributorCard
-            key={contributor.author_login}
+            key={contributor.login}
             contributor={contributor}
             topic={topic}
             range={range}

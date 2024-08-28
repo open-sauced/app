@@ -5,6 +5,209 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.11](https://github.com/open-sauced/app/compare/v2.61.0-beta.10...v2.61.0-beta.11) (2024-08-28)
+
+
+### 🍕 Features
+
+* display lottery factor on Repository Table ([#4059](https://github.com/open-sauced/app/issues/4059)) ([48343e0](https://github.com/open-sauced/app/commit/48343e06c10dab7cac2098a4c44970072d4443f7))
+
+
+### 🐛 Bug Fixes
+
+* correct width issue caused by tooltip addition in SingleSelect ([#4058](https://github.com/open-sauced/app/issues/4058)) ([b6e1173](https://github.com/open-sauced/app/commit/b6e11737b79ee78da068c2860841f2a78d1c7dea))
+
+## [2.61.0-beta.10](https://github.com/open-sauced/app/compare/v2.61.0-beta.9...v2.61.0-beta.10) (2024-08-28)
+
+
+### 🍕 Features
+
+* implemented the split button component ([#4040](https://github.com/open-sauced/app/issues/4040)) ([a539f78](https://github.com/open-sauced/app/commit/a539f78022f6fb5c855ccf2041205332d65ea5a4))
+
+## [2.61.0-beta.9](https://github.com/open-sauced/app/compare/v2.61.0-beta.8...v2.61.0-beta.9) (2024-08-28)
+
+
+### 🐛 Bug Fixes
+
+* Revert "fix: now search dialog is always on top of other elements ([#4047](https://github.com/open-sauced/app/issues/4047))" ([#4054](https://github.com/open-sauced/app/issues/4054)) ([cd03a01](https://github.com/open-sauced/app/commit/cd03a01ebbf6e7495564ab3fb00e2d6f832cf129))
+
+## [2.61.0-beta.8](https://github.com/open-sauced/app/compare/v2.61.0-beta.7...v2.61.0-beta.8) (2024-08-28)
+
+
+### 🐛 Bug Fixes
+
+* repository page width overflow ([#4051](https://github.com/open-sauced/app/issues/4051)) ([b827d26](https://github.com/open-sauced/app/commit/b827d2632671818a55924179a2a32b74ce3cc92e))
+
+## [2.61.0-beta.7](https://github.com/open-sauced/app/compare/v2.61.0-beta.6...v2.61.0-beta.7) (2024-08-27)
+
+
+### 🐛 Bug Fixes
+
+* now search dialog is always on top of other elements ([#4047](https://github.com/open-sauced/app/issues/4047)) ([3b4101a](https://github.com/open-sauced/app/commit/3b4101a30927ac1fbd8ee83180e66cf7a566ca78))
+
+## [2.61.0-beta.6](https://github.com/open-sauced/app/compare/v2.61.0-beta.5...v2.61.0-beta.6) (2024-08-27)
+
+
+### 🍕 Features
+
+* add contributor confidence to repository table ([#4038](https://github.com/open-sauced/app/issues/4038)) ([6f510cb](https://github.com/open-sauced/app/commit/6f510cb4944feaa1d791caf1ee495d1ba4ec0b19))
+* now html2canvas-pro is dynamically imported only when needed and then cached ([#4044](https://github.com/open-sauced/app/issues/4044)) ([23e4d76](https://github.com/open-sauced/app/commit/23e4d761fd0579b4dec098fec09d3e492384e24e))
+
+
+### 🐛 Bug Fixes
+
+* now if loading user profile fails an error is thrown instead of 404ing ([#4043](https://github.com/open-sauced/app/issues/4043)) ([3527795](https://github.com/open-sauced/app/commit/35277950e2deaacefeff971d2a85d062b2d9b5e5))
+* update validation for GitHub username ([#4046](https://github.com/open-sauced/app/issues/4046)) ([8a77fac](https://github.com/open-sauced/app/commit/8a77face5a3a4c730dbcf1dcad14a04561e6d1b8))
+
+## [2.61.0-beta.5](https://github.com/open-sauced/app/compare/v2.61.0-beta.4...v2.61.0-beta.5) (2024-08-27)
+
+
+### 🐛 Bug Fixes
+
+* remove deprecated "add coupon" section from user settings page ([#4039](https://github.com/open-sauced/app/issues/4039)) ([0b61b77](https://github.com/open-sauced/app/commit/0b61b776929601bf74d97e359c9c3c9c43d171ed))
+
+## [2.61.0-beta.4](https://github.com/open-sauced/app/compare/v2.61.0-beta.3...v2.61.0-beta.4) (2024-08-26)
+
+
+### 🍕 Features
+
+* copy repo page `ForksChart` as image ([#4036](https://github.com/open-sauced/app/issues/4036)) ([d30beff](https://github.com/open-sauced/app/commit/d30beff29c3db2ac91645c48d6321a4dbbcc27f0))
+
+## [2.61.0-beta.3](https://github.com/open-sauced/app/compare/v2.61.0-beta.2...v2.61.0-beta.3) (2024-08-26)
+
+
+### 🍕 Features
+
+* copy repo page `StarsChart` as image  ([#4035](https://github.com/open-sauced/app/issues/4035)) ([933bb2c](https://github.com/open-sauced/app/commit/933bb2c086e3ba68cf4b49aa64a5c475b6b7389d))
+* copy repo page Issues chart as image ([#4026](https://github.com/open-sauced/app/issues/4026)) ([f9fad65](https://github.com/open-sauced/app/commit/f9fad657f77679344e5e93081e71b304a76342b3))
+* copy repo page PR chart as image ([#4027](https://github.com/open-sauced/app/issues/4027)) ([3541a37](https://github.com/open-sauced/app/commit/3541a373f532bb25379db8c9697d8729dc19c5a7))
+
+## [2.61.0-beta.2](https://github.com/open-sauced/app/compare/v2.61.0-beta.1...v2.61.0-beta.2) (2024-08-26)
+
+
+### 🍕 Features
+
+* refresh explore page to only loading repositories ([#4019](https://github.com/open-sauced/app/issues/4019)) ([88f5937](https://github.com/open-sauced/app/commit/88f5937b32b65c42f1bafe42d81ac9b6ec8dc6a9))
+
+## [2.61.0-beta.1](https://github.com/open-sauced/app/compare/v2.60.1-beta.2...v2.61.0-beta.1) (2024-08-23)
+
+
+### 🍕 Features
+
+* copy repo page Contributors chart as image ([#4025](https://github.com/open-sauced/app/issues/4025)) ([581497e](https://github.com/open-sauced/app/commit/581497e85de3e0f32e201d507181b20371e1c812))
+
+## [2.60.1-beta.2](https://github.com/open-sauced/app/compare/v2.60.1-beta.1...v2.60.1-beta.2) (2024-08-23)
+
+
+### 🐛 Bug Fixes
+
+* fixed typo for recommendations ([#4017](https://github.com/open-sauced/app/issues/4017)) ([2e4cbdb](https://github.com/open-sauced/app/commit/2e4cbdb4dbe1e16d22b6ce6656b95adc392c069e))
+
+## [2.60.1-beta.1](https://github.com/open-sauced/app/compare/v2.60.0...v2.60.1-beta.1) (2024-08-23)
+
+
+### 🐛 Bug Fixes
+
+* `RossChart` order changing on filter ([#4018](https://github.com/open-sauced/app/issues/4018)) ([64a04f5](https://github.com/open-sauced/app/commit/64a04f5d3a8fbfe4647f8c43c07eca13e7ea0ef9))
+
+## [2.60.0](https://github.com/open-sauced/app/compare/v2.59.0...v2.60.0) (2024-08-22)
+
+
+### 🐛 Bug Fixes
+
+* always show Add to Workspace button on repositories table ([#4003](https://github.com/open-sauced/app/issues/4003)) ([5954f32](https://github.com/open-sauced/app/commit/5954f321b1d1051b9ea022d7c9e762896609370b))
+* resolve incorrect redirect to 404 page on search fields ([#3959](https://github.com/open-sauced/app/issues/3959)) ([298161d](https://github.com/open-sauced/app/commit/298161dc7dd9973e1db05b80508c5b9bdcac7624))
+
+
+### 🍕 Features
+
+* copy OSSF Scorecard as image ([#4000](https://github.com/open-sauced/app/issues/4000)) ([690fb38](https://github.com/open-sauced/app/commit/690fb38381275b95b39efe266cad2e1bdcff44b9))
+* copy repo page YOLO Chart as image ([#4014](https://github.com/open-sauced/app/issues/4014)) ([376dbe2](https://github.com/open-sauced/app/commit/376dbe28a31f281fc90759c5c4eabd6960027844))
+* now you can copy the contributor confidence chart as an image ([#3966](https://github.com/open-sauced/app/issues/3966)) ([3291c6d](https://github.com/open-sauced/app/commit/3291c6d1f878f2693ccabb979a33011f6de7d77b))
+
+## [2.60.0-beta.4](https://github.com/open-sauced/app/compare/v2.60.0-beta.3...v2.60.0-beta.4) (2024-08-22)
+
+
+### 🍕 Features
+
+* copy repo page YOLO Chart as image ([#4014](https://github.com/open-sauced/app/issues/4014)) ([376dbe2](https://github.com/open-sauced/app/commit/376dbe28a31f281fc90759c5c4eabd6960027844))
+
+## [2.60.0-beta.3](https://github.com/open-sauced/app/compare/v2.60.0-beta.2...v2.60.0-beta.3) (2024-08-22)
+
+
+### 🍕 Features
+
+* now you can copy the contributor confidence chart as an image ([#3966](https://github.com/open-sauced/app/issues/3966)) ([3291c6d](https://github.com/open-sauced/app/commit/3291c6d1f878f2693ccabb979a33011f6de7d77b))
+
+
+### 🐛 Bug Fixes
+
+* resolve incorrect redirect to 404 page on search fields ([#3959](https://github.com/open-sauced/app/issues/3959)) ([298161d](https://github.com/open-sauced/app/commit/298161dc7dd9973e1db05b80508c5b9bdcac7624))
+
+## [2.60.0-beta.2](https://github.com/open-sauced/app/compare/v2.60.0-beta.1...v2.60.0-beta.2) (2024-08-22)
+
+
+### 🐛 Bug Fixes
+
+* always show Add to Workspace button on repositories table ([#4003](https://github.com/open-sauced/app/issues/4003)) ([5954f32](https://github.com/open-sauced/app/commit/5954f321b1d1051b9ea022d7c9e762896609370b))
+
+## [2.60.0-beta.1](https://github.com/open-sauced/app/compare/v2.59.0...v2.60.0-beta.1) (2024-08-21)
+
+
+### 🍕 Features
+
+* copy OSSF Scorecard as image ([#4000](https://github.com/open-sauced/app/issues/4000)) ([690fb38](https://github.com/open-sauced/app/commit/690fb38381275b95b39efe266cad2e1bdcff44b9))
+
+## [2.59.0](https://github.com/open-sauced/app/compare/v2.58.0...v2.59.0) (2024-08-21)
+
+
+### 🔁 Continuous Integration
+
+* improve stability of E2E tests ([#3983](https://github.com/open-sauced/app/issues/3983)) ([7668b06](https://github.com/open-sauced/app/commit/7668b06c89f7d776cefeca7f0cc5361479294f3b))
+
+
+### 🍕 Features
+
+* copy `LotteryFactorChart` as image ([#3987](https://github.com/open-sauced/app/issues/3987)) ([fa3255e](https://github.com/open-sauced/app/commit/fa3255e7246fe64bec2311eaa35bdc5763d1b9d5))
+* implement the CopyContainer component for copying it's contents as an image ([#3975](https://github.com/open-sauced/app/issues/3975)) ([cee5fa8](https://github.com/open-sauced/app/commit/cee5fa8d1c65b5f296a362de72b5f0b1111373d1))
+
+
+### 🐛 Bug Fixes
+
+* add tooltip for long titles ([#3969](https://github.com/open-sauced/app/issues/3969)) ([e3404df](https://github.com/open-sauced/app/commit/e3404dfb0301c0d1b0e6377b93af87d430615f34))
+* adjust workspace upgrade pricing modal ([#3995](https://github.com/open-sauced/app/issues/3995)) ([798041a](https://github.com/open-sauced/app/commit/798041a5b8d153957bf966e9df48f306dd693525))
+* make timezone optional for onboarding and user settings ([#3972](https://github.com/open-sauced/app/issues/3972)) ([f1795a3](https://github.com/open-sauced/app/commit/f1795a3320f88f8a840b82b22529170b760a6589))
+* reverted a file that accidentally went in cee5fa8d ([#3979](https://github.com/open-sauced/app/issues/3979)) ([d776a13](https://github.com/open-sauced/app/commit/d776a13e2d159d24ffd7d7424abb5d434f7306e4))
+* Searching for a user/repository name throws error and crashes page ([#3980](https://github.com/open-sauced/app/issues/3980)) ([73f1c2c](https://github.com/open-sauced/app/commit/73f1c2c43a0a1cf7017c2747ca358c04a4f7b87e))
+* update PostHog SDK to latest version (1.152.7) ([#3996](https://github.com/open-sauced/app/issues/3996)) ([a5b7f3d](https://github.com/open-sauced/app/commit/a5b7f3d2a140adf55a2272583c501a490ce9ca93))
+
+## [2.59.0-beta.7](https://github.com/open-sauced/app/compare/v2.59.0-beta.6...v2.59.0-beta.7) (2024-08-21)
+
+
+### 🐛 Bug Fixes
+
+* add tooltip for long titles ([#3969](https://github.com/open-sauced/app/issues/3969)) ([e3404df](https://github.com/open-sauced/app/commit/e3404dfb0301c0d1b0e6377b93af87d430615f34))
+
+## [2.59.0-beta.6](https://github.com/open-sauced/app/compare/v2.59.0-beta.5...v2.59.0-beta.6) (2024-08-20)
+
+
+### 🐛 Bug Fixes
+
+* adjust workspace upgrade pricing modal ([#3995](https://github.com/open-sauced/app/issues/3995)) ([798041a](https://github.com/open-sauced/app/commit/798041a5b8d153957bf966e9df48f306dd693525))
+* update PostHog SDK to latest version (1.152.7) ([#3996](https://github.com/open-sauced/app/issues/3996)) ([a5b7f3d](https://github.com/open-sauced/app/commit/a5b7f3d2a140adf55a2272583c501a490ce9ca93))
+
+
+### 🍕 Features
+
+* copy `LotteryFactorChart` as image ([#3987](https://github.com/open-sauced/app/issues/3987)) ([fa3255e](https://github.com/open-sauced/app/commit/fa3255e7246fe64bec2311eaa35bdc5763d1b9d5))
+
+## [2.59.0-beta.5](https://github.com/open-sauced/app/compare/v2.59.0-beta.4...v2.59.0-beta.5) (2024-08-20)
+
+
+### 🐛 Bug Fixes
+
+* Searching for a user/repository name throws error and crashes page ([#3980](https://github.com/open-sauced/app/issues/3980)) ([73f1c2c](https://github.com/open-sauced/app/commit/73f1c2c43a0a1cf7017c2747ca358c04a4f7b87e))
+
 ## [2.59.0-beta.4](https://github.com/open-sauced/app/compare/v2.59.0-beta.3...v2.59.0-beta.4) (2024-08-19)
 
 

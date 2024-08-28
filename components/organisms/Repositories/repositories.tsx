@@ -1,7 +1,8 @@
-import { ComponentProps, useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import clsx from "clsx";
+import { useRouter } from "next/router";
+import { ComponentProps, useEffect, useState } from "react";
 
+import { usePostHog } from "posthog-js/react";
 import TableTitle from "components/atoms/TableTitle/table-title";
 import Pagination from "components/molecules/Pagination/pagination";
 import PaginationResults from "components/molecules/PaginationResults/pagination-result";
@@ -12,9 +13,10 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { setQueryParams } from "lib/utils/query-params";
 
 import Checkbox from "components/atoms/Checkbox/checkbox";
-import Button from "components/shared/Button/button";
 import LimitSelect from "components/atoms/Select/limit-select";
+import Button from "components/shared/Button/button";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import InfoTooltip from "components/shared/InfoTooltip";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 
@@ -27,6 +29,7 @@ interface RepositoriesProps {
 export default function Repositories({ repositories, showSearch = true, personalWorkspaceId }: RepositoriesProps) {
   const { user, signIn } = useSupabaseAuth();
   const router = useRouter();
+  const posthog = usePostHog();
   const workspaceId = router.query.workspaceId as string;
   const { pageId, toolName, selectedFilter, userOrg, range = 30, limit = 10 } = router.query;
   const username = userOrg ? user?.user_metadata.user_name : undefined;
@@ -53,6 +56,11 @@ export default function Repositories({ repositories, showSearch = true, personal
   };
 
   const handleOnAddtoInsights = () => {
+    posthog.capture(`Explore Page: added repos to ${!workspaceId ? "a new" : "existing"} workspace`, {
+      workspaceId,
+      repos: selectedRepos.map((repo) => repo.full_name),
+    });
+
     if (!workspaceId) {
       router.push({
         pathname: `/workspaces/new`,
@@ -88,10 +96,10 @@ export default function Repositories({ repositories, showSearch = true, personal
 
   const handleOnSearch = (search?: string) => {
     if (selectedFilter && !search) {
-      return router.push(`/${topic}/${toolName}`);
+      return router.push(`/explore/topic/${topic}/${toolName}`);
     }
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
-      return router.push(`/${topic}/${toolName}/filter/${search}`);
+      return router.push(`/explore/topic/${topic}/${toolName}/filter/${search}`);
     }
   };
 
@@ -116,7 +124,7 @@ export default function Repositories({ repositories, showSearch = true, personal
               <TableTitle> Pr Overview </TableTitle>
             </div>
           </div>
-          <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
+          <div className="hidden gap-2 px-6 py-4 md:flex items-center bg-light-slate-3">
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
                 onCheckedChange={handleOnSelectAllChecked}
@@ -133,10 +141,16 @@ export default function Repositories({ repositories, showSearch = true, personal
               <TableTitle>PR Overview</TableTitle>
             </div>
             <div className={clsx(classNames.cols.prVelocity)}>
-              <TableTitle>PR Velocity</TableTitle>
+              <TableTitle>Lottery Factor</TableTitle>
             </div>
             <div className={clsx(classNames.cols.spam)}>
               <TableTitle>OSSF Score</TableTitle>
+            </div>
+            <div className={clsx(classNames.cols.spam)}>
+              <TableTitle className="inline-flex items-center">
+                Contributor Confidence
+                <InfoTooltip information="The percentage of stargazers and forkers that come back later on to a meaningful contribution." />
+              </TableTitle>
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
               <TableTitle>Contributors</TableTitle>
@@ -146,20 +160,12 @@ export default function Repositories({ repositories, showSearch = true, personal
             </div>
           </div>
 
-          {selectedRepos.length > 0 && (
-            <div
-              aria-hidden={selectedRepos.length === 0}
-              className={clsx(
-                selectedRepos.length > 0 ? "flex" : "hidden",
-                `justify-between p-3 px-6 items-center border-b-2 text-light-slate-11`
-              )}
-            >
-              <div>{selectedRepos.length} Repositories selected</div>
-              <Button onClick={handleOnAddtoInsights} variant="primary">
-                {workspaceId ? "Add to Insight Page" : "Add to Workspace"}
-              </Button>
-            </div>
-          )}
+          <div className={clsx(`flex justify-between p-3 px-6 items-center border-b-2 text-light-slate-11`)}>
+            {selectedRepos.length > 0 ? <div>{selectedRepos.length} Repositories selected</div> : <div></div>}
+            <Button disabled={selectedRepos.length === 0} onClick={handleOnAddtoInsights} variant="primary">
+              {workspaceId ? "Add to Insight Page" : "Add to Workspace"}
+            </Button>
+          </div>
 
           <RepositoriesTable
             topic={topic}

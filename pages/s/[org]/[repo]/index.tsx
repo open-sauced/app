@@ -17,6 +17,7 @@ import { shortenUrl } from "lib/utils/shorten-url";
 import { fetchApiData } from "helpers/fetchApiData";
 import { getAvatarByUsername } from "lib/utils/github";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import { setQueryParams } from "lib/utils/query-params";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 import { useRepoStats } from "lib/hooks/api/useRepoStats";
 import { useRepositoryRoss } from "lib/hooks/api/useRepositoryRoss";
@@ -31,8 +32,6 @@ import TabList from "components/TabList/tab-list";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
-import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 
 import PRChart from "components/Graphs/PRChart";
 import StarsChart from "components/Graphs/StarsChart";
@@ -43,8 +42,11 @@ import RossChart from "components/Repositories/RossChart";
 import YoloChart from "components/Repositories/YoloChart";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 import OssfChart from "components/Repositories/OssfChart";
-import { setQueryParams } from "lib/utils/query-params";
+import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
 import Tooltip from "components/atoms/Tooltip/tooltip";
+import { CopyContainer } from "components/shared/CopyContainer";
+import CopyImageBranding from "components/shared/CopyImageBranding";
+import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -223,7 +225,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
       <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <ClientOnly>
-            <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
+            <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-fit xl:w-full xl:max-w-8xl">
               <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
                 <header className="flex items-center gap-4">
                   <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
@@ -246,7 +248,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       <AddToWorkspaceDrawer type="sbom" repository={repoData.full_name} />
                     </>
                   ) : (
-                    <div className="grid gap-2 md:gap-1 w-fit">
+                    <div className="flex flex-col items-end gap-2 w-fit">
                       <Button
                         variant="primary"
                         onClick={() => {
@@ -294,7 +296,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
                             router.push(url);
                           }}
-                          className="shrink-0 items-center gap-3 w-full"
+                          className="shrink-0 items-center gap-3 w-fit"
                         >
                           <MdWorkspaces />
                           Workspace from SBOM
@@ -358,153 +360,341 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
                 <div className="lg:col-span-8 flex flex-col gap-4">
                   <div className="flex gap-4 h-full flex-col lg:flex-row">
-                    <ContributorConfidenceChart
-                      contributorConfidence={repoStats?.contributor_confidence}
-                      isError={isError}
-                      isLoading={isLoading}
-                      onLearnMoreClick={() =>
-                        posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Contributor Confidence chart", {
                           repository: repoData.full_name,
-                        })
-                      }
-                    />
-                    <OssfChart
-                      repository={repoData.full_name}
-                      totalScore={repoData.ossf_scorecard_total_score}
-                      dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
-                      maintainedScore={repoData.ossf_scorecard_maintained_score}
-                      fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
-                      isLoading={false}
-                      isError={!repoData.ossf_scorecard_total_score}
-                    />
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone(document, element) {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                          element.querySelector("ContributorConfidenceChart")?.classList.add("z-20");
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <ContributorConfidenceChart
+                        contributorConfidence={repoStats?.contributor_confidence}
+                        isError={isError}
+                        isLoading={isLoading}
+                        onLearnMoreClick={() =>
+                          posthog.capture("Repo Pages: clicked Contributor Confidence docs", {
+                            repository: repoData.full_name,
+                          })
+                        }
+                      />
+                    </CopyContainer>
+                    {!repoData.ossf_scorecard_total_score ? (
+                      <OssfChart
+                        repository={repoData.full_name}
+                        totalScore={repoData.ossf_scorecard_total_score}
+                        dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
+                        maintainedScore={repoData.ossf_scorecard_maintained_score}
+                        fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
+                        isLoading={false}
+                        isError={!repoData.ossf_scorecard_total_score}
+                      />
+                    ) : (
+                      <CopyContainer
+                        onCopyClick={() => {
+                          posthog.capture("Repo Pages: copied OSSF Scorecard", {
+                            repository: repoData.full_name,
+                          });
+                        }}
+                        options={{
+                          windowWidth: 1700,
+                          allowTaint: true,
+                          onclone: (document, element) => {
+                            element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                              el.classList.remove("hidden");
+                            });
+                          },
+                        }}
+                      >
+                        <CopyImageBranding repository={repoData.full_name} />
+                        <OssfChart
+                          repository={repoData.full_name}
+                          totalScore={repoData.ossf_scorecard_total_score}
+                          dependencyUpdateScore={repoData.ossf_scorecard_dependency_update_score}
+                          maintainedScore={repoData.ossf_scorecard_maintained_score}
+                          fuzzingScore={repoData.ossf_scorecard_fuzzing_score}
+                          isLoading={false}
+                          isError={!repoData.ossf_scorecard_total_score}
+                        />
+                      </CopyContainer>
+                    )}
                   </div>
 
-                  <RossChart
-                    stats={rossStats}
-                    range={range}
-                    isLoading={isRossDataLoading}
-                    error={rossError}
-                    onFilterClick={(category, value) =>
-                      posthog.capture(`Repo Data: toggled ROSS filter`, {
+                  <CopyContainer
+                    onCopyClick={() => {
+                      posthog.capture("Repo Pages: copied Contributors (ROSS) chart", {
                         repository: repoData.full_name,
-                        category,
-                        value,
-                      })
-                    }
-                    className="h-fit"
-                  />
+                      });
+                    }}
+                    options={{
+                      windowWidth: 1700,
+                      allowTaint: true,
+                      onclone(document, element) {
+                        element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                          el.classList.remove("hidden");
+                        });
+                        element.querySelectorAll("[data-copy-image-legend-square]").forEach((el) => {
+                          el.classList.replace("w-4", "w-5");
+                          el.classList.replace("h-4", "h-5");
+                        });
+                      },
+                    }}
+                  >
+                    <CopyImageBranding repository={repoData.full_name} />
+                    <RossChart
+                      stats={rossStats}
+                      range={range}
+                      isLoading={isRossDataLoading}
+                      error={rossError}
+                      onFilterClick={(category, value) =>
+                        posthog.capture(`Repo Data: toggled ROSS filter`, {
+                          repository: repoData.full_name,
+                          category,
+                          value,
+                        })
+                      }
+                      className="h-fit"
+                    />
+                  </CopyContainer>
                 </div>
 
                 <div className="lg:col-span-4 flex flex-col gap-4">
                   {lotteryState === "lottery" && (
-                    <LotteryFactorChart
-                      lotteryFactor={lotteryFactor}
-                      error={lotteryFactorError}
-                      range={range}
-                      isLoading={isLotteryFactorLoading}
-                      showHoverCards
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloBannerOnClick={
-                        uniqueYoloCoders.size > 0
-                          ? () => {
-                              setLotteryState("yolo");
-                              posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
-                            }
-                          : undefined
-                      }
-                      onYoloIconClick={() => {
-                        setLotteryState("yolo");
-                        posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Lottery Factor chart", {
+                          repository: repoData.full_name,
+                        });
                       }}
-                      onProfileClick={() => {
-                        posthog.capture(`Repo Pages: Lottery Factor user clicked`, { repository: repoData.full_name });
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                          element.querySelector("LotteryFactorChart")?.classList.add("z-20");
+                        },
                       }}
-                    />
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <LotteryFactorChart
+                        lotteryFactor={lotteryFactor}
+                        error={lotteryFactorError}
+                        range={range}
+                        isLoading={isLotteryFactorLoading}
+                        showHoverCards
+                        uniqueYoloCoders={uniqueYoloCoders}
+                        yoloBannerOnClick={
+                          uniqueYoloCoders.size > 0
+                            ? () => {
+                                setLotteryState("yolo");
+                                posthog.capture(`Repo Pages: YOLO banner clicked`, { repository: repoData.full_name });
+                              }
+                            : undefined
+                        }
+                        onYoloIconClick={() => {
+                          setLotteryState("yolo");
+                          posthog.capture(`Repo Pages: YOLO icon clicked`, { repository: repoData.full_name });
+                        }}
+                        onProfileClick={() => {
+                          posthog.capture(`Repo Pages: Lottery Factor user clicked`, {
+                            repository: repoData.full_name,
+                          });
+                        }}
+                      />
+                    </CopyContainer>
                   )}
                   {lotteryState === "yolo" && (
-                    <YoloChart
-                      yoloStats={yoloStats}
-                      uniqueYoloCoders={uniqueYoloCoders}
-                      yoloHideBots={yoloHideBots}
-                      setYoloHideBots={setYoloHideBots}
-                      repository={repoData.full_name}
-                      isLoading={isYoloStatsLoading}
-                      range={range}
-                      backButtonOnClick={() => setLotteryState("lottery")}
-                      onShaClick={() =>
-                        posthog.capture("Repo Pages: clicked SHA link", { repository: repoData.full_name })
-                      }
-                      onProfileClick={() =>
-                        posthog.capture("Repo Pages: clicked YOLO coder (YOLO Chart)", {
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Lottery Factor chart", {
                           repository: repoData.full_name,
-                        })
-                      }
-                      onHideBotsToggle={(checked) =>
-                        posthog.capture("Repo Pages: toggled YOLO hide bots", {
-                          repository: repoData.full_name,
-                          checked,
-                        })
-                      }
-                      showHoverCards
-                    />
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <YoloChart
+                        yoloStats={yoloStats}
+                        uniqueYoloCoders={uniqueYoloCoders}
+                        yoloHideBots={yoloHideBots}
+                        setYoloHideBots={setYoloHideBots}
+                        repository={repoData.full_name}
+                        isLoading={isYoloStatsLoading}
+                        range={range}
+                        backButtonOnClick={() => setLotteryState("lottery")}
+                        onShaClick={() =>
+                          posthog.capture("Repo Pages: clicked SHA link", { repository: repoData.full_name })
+                        }
+                        onProfileClick={() =>
+                          posthog.capture("Repo Pages: clicked YOLO coder (YOLO Chart)", {
+                            repository: repoData.full_name,
+                          })
+                        }
+                        onHideBotsToggle={(checked) =>
+                          posthog.capture("Repo Pages: toggled YOLO hide bots", {
+                            repository: repoData.full_name,
+                            checked,
+                          })
+                        }
+                        showHoverCards
+                      />
+                    </CopyContainer>
                   )}
                 </div>
               </section>
 
               <section className="flex flex-col gap-4">
                 <h2 className="text-lg font-semibold">Activity</h2>
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                  <IssuesChart
-                    stats={issueStats}
-                    range={range}
-                    velocity={repoStats?.issues_velocity_count ?? 0}
-                    syncId={syncId}
-                    isLoading={isIssueDataLoading}
-                    className="lg:col-span-6 h-fit"
-                  />
+                <div className="flex flex-col gap-4 lg:grid lg:grid-cols-12">
+                  <div className="block lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Issues chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone(document, element) {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <IssuesChart
+                        stats={issueStats}
+                        range={range}
+                        velocity={repoStats?.issues_velocity_count ?? 0}
+                        syncId={syncId}
+                        isLoading={isIssueDataLoading}
+                      />
+                    </CopyContainer>
+                  </div>
 
-                  <PRChart
-                    stats={prStats}
-                    range={range}
-                    velocity={repoStats?.pr_velocity_count ?? 0}
-                    syncId={syncId}
-                    isLoading={isPrDataLoading}
-                    className="lg:col-span-6 h-fit"
-                  />
+                  <div className="lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied PR chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <PRChart
+                        stats={prStats}
+                        range={range}
+                        velocity={repoStats?.pr_velocity_count ?? 0}
+                        syncId={syncId}
+                        isLoading={isPrDataLoading}
+                      />
+                    </CopyContainer>
+                  </div>
                 </div>
               </section>
 
               <section className="flex flex-col gap-4">
                 <h2 className="text-lg font-semibold">Engagement</h2>
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                  <StarsChart
-                    stats={starsData}
-                    total={repoData.stars}
-                    range={range}
-                    syncId={syncId}
-                    isLoading={isStarsDataLoading}
-                    onCategoryClick={(category) =>
-                      posthog.capture("Repo Pages: clicked Stars Chart category", {
-                        repository: repoData.full_name,
-                        category,
-                      })
-                    }
-                    className="lg:col-span-6 h-fit"
-                  />
-                  <ForksChart
-                    stats={forkStats}
-                    total={repoData.forks}
-                    range={range}
-                    syncId={syncId}
-                    isLoading={isForksDataLoading}
-                    onCategoryClick={(category) =>
-                      posthog.capture("Repo Pages: clicked Forks Chart category", {
-                        repository: repoData.full_name,
-                        category,
-                      })
-                    }
-                    className="lg:col-span-6 h-fit"
-                  />
+                  <div className="lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Stars chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <StarsChart
+                        stats={starsData}
+                        total={repoData.stars}
+                        range={range}
+                        syncId={syncId}
+                        isLoading={isStarsDataLoading}
+                        onCategoryClick={(category) =>
+                          posthog.capture("Repo Pages: clicked Stars Chart category", {
+                            repository: repoData.full_name,
+                            category,
+                          })
+                        }
+                        className="lg:col-span-6 h-fit"
+                      />
+                    </CopyContainer>
+                  </div>
+
+                  <div className="lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Forks chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <ForksChart
+                        stats={forkStats}
+                        total={repoData.forks}
+                        range={range}
+                        syncId={syncId}
+                        isLoading={isForksDataLoading}
+                        onCategoryClick={(category) =>
+                          posthog.capture("Repo Pages: clicked Forks Chart category", {
+                            repository: repoData.full_name,
+                            category,
+                          })
+                        }
+                      />
+                    </CopyContainer>
+                  </div>
                 </div>
               </section>
             </div>

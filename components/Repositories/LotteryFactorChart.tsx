@@ -6,7 +6,6 @@ import Link from "next/link";
 import * as HoverCard from "@radix-ui/react-hover-card";
 import { FaArrowRight, FaRegHandPeace } from "react-icons/fa6";
 import Card from "components/atoms/Card/card";
-import Pill from "components/atoms/Pill/pill";
 import { DayRange } from "components/shared/DayRangePicker";
 import StackedOwners from "components/Workspaces/StackedOwners";
 import InfoTooltip from "components/shared/InfoTooltip";
@@ -16,6 +15,7 @@ import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
+import { LotteryFactorBadge } from "./LotteryFactorBadge";
 
 type LotteryFactorChartProps = {
   lotteryFactor: RepositoryLottoFactor | undefined;
@@ -116,25 +116,7 @@ export default function LotteryFactorChart({
             <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Lottery Factor</h3>
             <InfoTooltip information="Identifies reliance on top contributors. Indicates potential project vulnerability if 2 or fewer create >50% of the pull requests." />
           </div>
-          {error ? null : isLoading || !lotteryFactor ? (
-            <SkeletonWrapper width={42} height={24} radius={999} />
-          ) : (
-            <Pill
-              text={lotteryFactor.all_lotto_factor.replace("-", " ") ?? ""}
-              color={
-                lotteryFactor.all_lotto_factor === "high"
-                  ? "red"
-                  : lotteryFactor.all_lotto_factor === "moderate"
-                  ? "yellow"
-                  : lotteryFactor.all_lotto_factor === "low"
-                  ? "green"
-                  : lotteryFactor.all_lotto_factor === "very-high"
-                  ? "purple"
-                  : "slate"
-              }
-              className="capitalize"
-            />
-          )}
+          <LotteryFactorBadge lotteryFactor={lotteryFactor} isLoading={isLoading} error={error} />
         </header>
       </section>
 

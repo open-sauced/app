@@ -30,9 +30,7 @@ const TableHeader = ({ title, metaInfo, entity, onSearch, layout, onLayoutToggle
 
   const updateSuggestionsDebounced = useDebounce(async () => {
     const req = await fetch(
-      `https://api.github.com/search/repositories?q=${encodeURIComponent(
-        `${searchTerm} topic:${router.query.pageId} in:name`
-      )}`,
+      `https://api.github.com/search/repositories?q=${encodeURIComponent(`${searchTerm} in:name`)}`,
       {
         ...(providerToken
           ? {

@@ -71,15 +71,16 @@ const SearchDialog = () => {
     async function startSearch() {
       setIsSearching(true);
       const userData = await searchUsers(debouncedSearchTerm, providerToken);
+
       if (userData) {
-        setUserSearchResult(userData);
-        setIsSearchError(!userData.data.length);
+        const data = userData?.data ?? [];
+        setUserSearchResult({ ...userData, data });
+        setIsSearchError(data.length === 0);
       }
       cursor !== -1 && setCursor(-1);
       setIsSearching(false);
     }
   }, [debouncedSearchTerm]);
-
   const renderUserSearchState = () => {
     if (searchTerm.length < 3) {
       return null;

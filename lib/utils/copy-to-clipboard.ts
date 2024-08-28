@@ -1,5 +1,9 @@
-import html2canvas, { Options } from "html2canvas";
+import { captureException } from "@sentry/nextjs";
+import type { Options } from "html2canvas-pro";
 import { shortenUrl } from "./shorten-url";
+
+type Html2CanvasSignature = (element: HTMLElement, options?: Partial<Options>) => Promise<HTMLCanvasElement>;
+let html2canvas: Html2CanvasSignature;
 
 export const copyToClipboard = async (content: string) => {
   try {
@@ -25,6 +29,7 @@ export async function copyImageToClipboard(imageUrl: string) {
     ]);
     return true;
   } catch (err) {
+    captureException(new Error("Failed to copy image to clipboard", { cause: err }));
     return false;
   }
 }
@@ -45,16 +50,25 @@ export async function copyNodeAsImage(node: HTMLElement | null, options?: Partia
   await navigator.clipboard.write([
     new ClipboardItem({
       "image/png": new Promise(async (resolve, reject) => {
-        html2canvas(node, options).then((canvas) => {
-          canvas.toBlob((blob) => {
-            if (!blob) {
-              reject("Failed to copy image to clipboard");
-              return;
-            }
+        try {
+          if (!html2canvas) {
+            html2canvas = (await import("html2canvas-pro")).default;
+          }
 
-            resolve(new Blob([blob], { type: "image/png" }));
-          }, "image/png");
-        });
+          html2canvas(node, options).then((canvas) => {
+            canvas.toBlob((blob) => {
+              if (!blob) {
+                reject("Failed to copy image to clipboard");
+                return;
+              }
+
+              resolve(new Blob([blob], { type: "image/png" }));
+            }, "image/png");
+          });
+        } catch (err) {
+          reject("Failed to copy image to clipboard");
+          captureException(new Error("Failed to copy image to clipboard", { cause: err }));
+        }
       }),
     }),
   ]);
