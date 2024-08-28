@@ -5,6 +5,18 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.11](https://github.com/open-sauced/app/compare/v2.61.0-beta.10...v2.61.0-beta.11) (2024-08-28)
+
+
+### 🍕 Features
+
+* display lottery factor on Repository Table ([#4059](https://github.com/open-sauced/app/issues/4059)) ([48343e0](https://github.com/open-sauced/app/commit/48343e06c10dab7cac2098a4c44970072d4443f7))
+
+
+### 🐛 Bug Fixes
+
+* correct width issue caused by tooltip addition in SingleSelect ([#4058](https://github.com/open-sauced/app/issues/4058)) ([b6e1173](https://github.com/open-sauced/app/commit/b6e11737b79ee78da068c2860841f2a78d1c7dea))
+
 ## [2.61.0-beta.10](https://github.com/open-sauced/app/compare/v2.61.0-beta.9...v2.61.0-beta.10) (2024-08-28)
 
 
