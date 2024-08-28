@@ -4,6 +4,7 @@ import { jsonLdScriptProps } from "react-schemaorg";
 import { Person } from "schema-dts";
 
 import { useRouter } from "next/router";
+import { captureException } from "@sentry/nextjs";
 import SEO from "layouts/SEO/SEO";
 
 import useContributorPullRequests from "lib/hooks/api/useContributorPullRequests";
@@ -118,7 +119,15 @@ export const getServerSideProps = async (context: UserSSRPropsContext) => {
   });
 
   if (!req.ok) {
-    return { notFound: true };
+    if (req.status === 404) {
+      return {
+        notFound: true,
+      };
+    }
+
+    const errorText = `Failed to load user profile: ${username}`;
+    captureException(new Error(errorText, { cause: req.statusText }));
+    throw new Error(errorText);
   }
 
   const userData = (await req.json()) as DbUser;
