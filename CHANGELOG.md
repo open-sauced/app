@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.8](https://github.com/open-sauced/app/compare/v2.61.0-beta.7...v2.61.0-beta.8) (2024-08-28)
+
+
+### 🐛 Bug Fixes
+
+* repository page width overflow ([#4051](https://github.com/open-sauced/app/issues/4051)) ([b827d26](https://github.com/open-sauced/app/commit/b827d2632671818a55924179a2a32b74ce3cc92e))
+
 ## [2.61.0-beta.7](https://github.com/open-sauced/app/compare/v2.61.0-beta.6...v2.61.0-beta.7) (2024-08-27)
 
 
