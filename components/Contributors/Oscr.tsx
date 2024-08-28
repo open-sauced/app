@@ -98,6 +98,7 @@ export const OscrInfoTooltip = () => {
           <a
             href="https://opensauced.pizza/docs/features/contributor-insights/#open-source-contributor-rating-oscr"
             className="underline"
+            target="_blank"
           >
             Learn more...
             <span className="sr-only"> about OSCR rating</span>
