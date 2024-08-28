@@ -5,25 +5,27 @@
 .github/workflows/development.yml @jpmcb @nickytonline
 .github/workflows/issue.yml @bdougie @zeucapua
 .github/workflows/playwright.yml @jpmcb @nickytonline
+.sauced.yaml @nickytonline
 .storybook/main.js @nickytonline @zeucapua
 CHANGELOG.md @zeucapua @brandonroberts @nickytonline
+CODEOWNERS @nickytonline
 components/Contributors/AddToContributorInsightDrawer.tsx @zeucapua @zeucapua @brandonroberts
-components/Contributors/AddToContributorInsightModal.tsx @zeucapua @brandonroberts @zeucapua
+components/Contributors/AddToContributorInsightModal.tsx @zeucapua @zeucapua @brandonroberts
 components/Contributors/Oscr.tsx @nickytonline @brandonroberts @zeucapua
 components/Contributors/OscrButton.stories.tsx @nickytonline @brandonroberts @zeucapua
 components/Contributors/OscrPill.stories.tsx @nickytonline @zeucapua @brandonroberts
 components/Contributors/OscrPill.tsx @nickytonline @zeucapua @brandonroberts
 components/Graphs/ContributionsTreemap/contributions-treemap.tsx @zeucapua @nickytonline
 components/Graphs/ContributorsChart.tsx @zeucapua @brandonroberts
-components/Graphs/ForksChart.tsx @zeucapua @zeucapua @nickytonline
-components/Graphs/IssuesChart.tsx @zeucapua @brandonroberts @nickytonline
+components/Graphs/ForksChart.tsx @zeucapua @jpmcb @zeucapua
+components/Graphs/IssuesChart.tsx @zeucapua @brandonroberts
 components/Graphs/PRChart.tsx @zeucapua @brandonroberts @jpmcb
-components/Graphs/RadarChart.stories.tsx @zeucapua @nickytonline @brandonroberts
+components/Graphs/RadarChart.stories.tsx @nickytonline @zeucapua @brandonroberts
 components/Graphs/RadarChart.tsx @nickytonline @zeucapua @brandonroberts
 components/Graphs/StarsChart.tsx @zeucapua @jpmcb @zeucapua
 components/Issues/IssueStateAuthorIcon.tsx @brandonroberts
 components/ListHeader/list-header.tsx @brandonroberts @nickytonline
-components/Profiles/IssueCommentsTable/issue-comments-table.tsx @brandonroberts @zeucapua @nickytonline
+components/Profiles/IssueCommentsTable/issue-comments-table.tsx @brandonroberts @nickytonline @zeucapua
 components/Profiles/contributors-sub-tab-list.tsx @brandonroberts
 components/PullRequests/PrStateAuthorIcon.tsx @brandonroberts
 components/Repositories/AddToWorkspaceDrawer.tsx @nickytonline @brandonroberts @zeucapua
@@ -47,10 +49,10 @@ components/StarSearch/StarSearchCompactHeader.tsx @zeucapua @nickytonline @brand
 components/StarSearch/StarSearchEmbed.tsx @zeucapua @nickytonline @brandonroberts
 components/StarSearch/StarSearchLoader.tsx @nickytonline
 components/StarSearch/StarSearchLogo.tsx @nickytonline @zeucapua
-components/StarSearch/StarSearchWidget.tsx @zeucapua @nickytonline @brandonroberts
+components/StarSearch/StarSearchWidget.tsx @nickytonline @zeucapua @brandonroberts
 components/StarSearch/SuggestedPrompts.tsx @zeucapua @nickytonline @brandonroberts
 components/StarSearch/Widgets/LotteryFactorWidget.tsx @nickytonline @jpmcb
-components/TabList/tab-list.tsx @zeucapua @brandonroberts
+components/TabList/tab-list.tsx @zeucapua @brandonroberts @jpmcb
 components/Tables/ContributorsGrid.tsx @zeucapua @brandonroberts @nickytonline
 components/Tables/ContributorsTable.tsx @zeucapua @zeucapua @brandonroberts
 components/Workspaces/InsightUpgradeModal.tsx @brandonroberts @nickytonline
@@ -69,11 +71,11 @@ components/Workspaces/WorkspacePullRequestsTable.tsx @zeucapua @nickytonline @ze
 components/Workspaces/WorkspaceWelcomeModal.tsx @nickytonline @zeucapua
 components/atoms/Avatar/avatar-hover-card.tsx @zeucapua @brandonroberts @nickytonline
 components/atoms/Card/card.tsx @nickytonline
-components/atoms/FilterCard/filterCard.stories.tsx @zeucapua @brandonroberts @jpmcb
-components/atoms/LayoutToggle/layout-toggle.tsx @brandonroberts @nickytonline @zeucapua
+components/atoms/FilterCard/filterCard.stories.tsx @zeucapua @jpmcb @brandonroberts
+components/atoms/LayoutToggle/layout-toggle.tsx @nickytonline @zeucapua @brandonroberts
 components/atoms/Pill/pill.tsx @zeucapua @nickytonline @brandonroberts
 components/atoms/Select/single-select.tsx @brandonroberts
-components/atoms/TextInput/text-input.tsx @zeucapua @brandonroberts @nickytonline
+components/atoms/TextInput/text-input.tsx @zeucapua @brandonroberts
 components/atoms/Toast/toast.tsx @zeucapua @nickytonline @brandonroberts
 components/atoms/ToggleGroup/toggle-group.stories.tsx @nickytonline @zeucapua @brandonroberts
 components/atoms/ToggleGroup/toggle-group.tsx @nickytonline @zeucapua @brandonroberts
@@ -93,36 +95,36 @@ components/molecules/ContributorListTableRow/contributor-list-table-row.stories.
 components/molecules/ContributorListTableRow/contributor-list-table-row.tsx @nickytonline @zeucapua @brandonroberts
 components/molecules/ContributorProfileHeader/contributor-profile-header.tsx @brandonroberts @zeucapua
 components/molecules/ContributorProfileInfo/contributor-profile-info.tsx @zeucapua @zeucapua @brandonroberts
-components/molecules/DevCard/dev-card.stories.tsx @zeucapua @brandonroberts
+components/molecules/DevCard/dev-card.stories.tsx @brandonroberts @zeucapua
 components/molecules/DevCard/dev-card.tsx @zeucapua @brandonroberts @nickytonline
 components/molecules/DevProfile/dev-profile.tsx @nickytonline @zeucapua @brandonroberts
 components/molecules/FilterHeader/filter-header.tsx @brandonroberts
 components/molecules/HighlightInput/highlight-input-form.tsx @zeucapua @brandonroberts @nickytonline
 components/molecules/HoverCardWrapper/hover-card-wrapper.tsx @nickytonline @zeucapua
 components/molecules/InsightHeader/insight-header.tsx @zeucapua @nickytonline @brandonroberts
-components/molecules/LatestPrTableRow/latest-pr-table-row.tsx @zeucapua @nickytonline @brandonroberts
-components/molecules/ListCard/list-card.tsx @jpmcb @nickytonline
-components/molecules/NewsletterForm/newsletter-form.stories.tsx @brandonroberts @nickytonline @jpmcb
+components/molecules/LatestPrTableRow/latest-pr-table-row.tsx @nickytonline @zeucapua @brandonroberts
+components/molecules/ListCard/list-card.tsx @jpmcb @zeucapua
+components/molecules/NewsletterForm/newsletter-form.stories.tsx @brandonroberts @jpmcb @zeucapua
 components/molecules/NewsletterForm/newsletter-form.tsx @brandonroberts @zeucapua @nickytonline
 components/molecules/NivoScatterChart/nivo-scatter-chart.tsx @zeucapua @brandonroberts @nickytonline
 components/molecules/PullRequestTable/pull-request-table.tsx @brandonroberts @nickytonline @zeucapua
 components/molecules/RepoRow/repo-row.tsx @zeucapua @brandonroberts @nickytonline
 components/molecules/TableHeader/table-header.tsx @brandonroberts
 components/molecules/TeamMembersConfig/team-members-config.tsx @zeucapua @jpmcb @nickytonline
-components/organisms/ContributorCard/contributor-card.stories.tsx @brandonroberts @jpmcb @nickytonline
+components/organisms/ContributorCard/contributor-card.stories.tsx @brandonroberts @jpmcb @zeucapua
 components/organisms/ContributorCard/contributor-card.tsx @nickytonline @zeucapua @brandonroberts
 components/organisms/ContributorProfilePage/contributor-profile-page.tsx @brandonroberts @nickytonline @zeucapua
 components/organisms/ContributorProfileTab/contributor-profile-tab.tsx @brandonroberts @nickytonline @zeucapua
 components/organisms/Contributors/contributors.tsx @zeucapua @brandonroberts @jpmcb
-components/organisms/ContributorsList/contributors-list.tsx @nickytonline @zeucapua @jpmcb
-components/organisms/ContributorsTable/contributors-table.tsx @nickytonline @zeucapua @brandonroberts
+components/organisms/ContributorsList/contributors-list.tsx @nickytonline @zeucapua @brandonroberts
+components/organisms/ContributorsTable/contributors-table.tsx @nickytonline @zeucapua @jpmcb
 components/organisms/Dashboard/dashboard.stories.tsx @brandonroberts
 components/organisms/Dashboard/dashboard.tsx @brandonroberts @zeucapua @jpmcb
 components/organisms/DevCardCarousel/dev-card-carousel.stories.tsx @zeucapua @brandonroberts
 components/organisms/DevCardCarousel/dev-card-carousel.test.tsx @brandonroberts @zeucapua
 components/organisms/DevCardCarousel/dev-card-carousel.tsx @zeucapua @brandonroberts
 components/organisms/DevCardCarousel/stubData.ts @zeucapua @brandonroberts
-components/organisms/DevCardWall/dev-card-wall.stories.tsx @brandonroberts @zeucapua
+components/organisms/DevCardWall/dev-card-wall.stories.tsx @zeucapua @brandonroberts
 components/organisms/DevCardWall/dev-card-wall.tsx @brandonroberts @zeucapua
 components/organisms/FollowersHighlightWrapper/following-highlight-wrapper.tsx @brandonroberts
 components/organisms/GitHubTeamSyncDialog/github-team-sync-dialog.tsx @brandonroberts @zeucapua
@@ -132,7 +134,7 @@ components/organisms/Repositories/repositories.tsx @brandonroberts @zeucapua @ze
 components/organisms/RepositoriesTable/repositories-table.tsx @zeucapua @brandonroberts @nickytonline
 components/organisms/SearchDialog/search-dialog.tsx @brandonroberts
 components/organisms/ToolList/nav.tsx @zeucapua @brandonroberts
-components/organisms/ToolsDisplay/tools-display.tsx @brandonroberts @zeucapua @jpmcb
+components/organisms/ToolsDisplay/tools-display.tsx @brandonroberts @zeucapua @zeucapua
 components/organisms/TopNav/top-nav.tsx @zeucapua @brandonroberts @nickytonline
 components/organisms/UserRepositoryRecommendations/user-repository-recommendations.tsx
 components/organisms/UserSettingsPage/coupon-form.tsx
@@ -143,7 +145,7 @@ components/shared/AppSidebar/sidebar-menu-item.tsx @nickytonline @zeucapua @bran
 components/shared/Carousel.stories.tsx @brandonroberts
 components/shared/CopyContainer.stories.tsx @nickytonline @brandonroberts
 components/shared/CopyContainer.tsx @brandonroberts @nickytonline @zeucapua
-components/shared/CopyImageBranding.tsx @brandonroberts @zeucapua
+components/shared/CopyImageBranding.tsx @zeucapua @brandonroberts
 components/shared/Drawer.tsx @nickytonline @zeucapua
 components/shared/InfoTooltip.tsx @zeucapua @zeucapua @brandonroberts
 components/shared/LanguagePill/LanguagePill.tsx @zeucapua @zeucapua @brandonroberts
@@ -157,15 +159,15 @@ e2e/explore-page.spec.ts @brandonroberts @nickytonline @zeucapua
 e2e/feed.spec.ts @zeucapua @brandonroberts
 e2e/fixtures/star-search/stream.txt @nickytonline
 e2e/fixtures/star-search/streamResponse.ts @nickytonline
-e2e/homepage.spec.ts => e2e/feed.spec.ts @brandonroberts @zeucapua @nickytonline
+e2e/homepage.spec.ts @brandonroberts @zeucapua @nickytonline
 e2e/repo-contributor-page.spec.ts @zeucapua @nickytonline @brandonroberts
-e2e/repo-page.spec.ts @brandonroberts @nickytonline @jpmcb
+e2e/repo-page.spec.ts @brandonroberts @nickytonline
 e2e/star-search.spec.ts @nickytonline @brandonroberts @zeucapua
 e2e/user-profile.spec.ts @nickytonline @brandonroberts @zeucapua
 e2e/workspace-activity.spec.ts @nickytonline @zeucapua
-e2e/workspace-contributor-insight.spec.ts @zeucapua @brandonroberts @nickytonline
+e2e/workspace-contributor-insight.spec.ts @brandonroberts @zeucapua @nickytonline
 e2e/workspace-dashboard.spec.ts @nickytonline @zeucapua
-img/icons/interests/swift.svg @zeucapua @nickytonline @brandonroberts
+img/icons/interests/swift.svg @zeucapua @nickytonline @jpmcb
 img/topic-thumbnails/swift.svg @zeucapua @nickytonline
 layouts/filter.tsx @zeucapua @brandonroberts @zeucapua
 layouts/hub-contributors.tsx @nickytonline
@@ -176,7 +178,7 @@ layouts/profile.tsx @nickytonline
 lib/hooks/api/useContributorIssueComments.ts @brandonroberts
 lib/hooks/api/useContributorList.ts @nickytonline @zeucapua @zeucapua
 lib/hooks/api/useContributors.ts @jpmcb @brandonroberts
-lib/hooks/api/useContributorsByProject.ts @brandonroberts @jpmcb
+lib/hooks/api/useContributorsByProject.ts @jpmcb @brandonroberts
 lib/hooks/api/useFetchMetricStats.ts @zeucapua @zeucapua @brandonroberts
 lib/hooks/api/useFetchUserDevStats.ts @zeucapua @brandonroberts
 lib/hooks/api/useGetStarSearchThreadHistory.ts @zeucapua @nickytonline @brandonroberts
@@ -208,7 +210,7 @@ lib/utils/query-params.ts @nickytonline @zeucapua
 lib/utils/recommendations.ts @nickytonline @zeucapua
 lib/utils/repo-page-utils.ts @zeucapua @zeucapua
 lib/utils/server/feature-flags.ts @nickytonline @zeucapua
-lib/utils/sorting.ts @zeucapua @brandonroberts @nickytonline
+lib/utils/sorting.ts @nickytonline @zeucapua @brandonroberts
 lib/utils/star-search-utils.ts @zeucapua @nickytonline @brandonroberts
 lib/utils/star-search.ts @nickytonline @zeucapua
 lib/utils/urls.ts @nickytonline
@@ -231,38 +233,38 @@ package.json @nickytonline @zeucapua @brandonroberts
 pages/404.tsx @zeucapua @brandonroberts @nickytonline
 pages/500.tsx @nickytonline
 pages/_app.tsx @nickytonline @zeucapua
-pages/_document.tsx @nickytonline @zeucapua
+pages/_document.tsx @nickytonline @zeucapua @brandonroberts
 pages/account-deleted.tsx @nickytonline
 pages/feed/index.tsx @brandonroberts @zeucapua @zeucapua
-pages/s/[org]/[repo]/contributors.tsx @zeucapua @brandonroberts @zeucapua
-pages/s/[org]/[repo]/index.tsx @zeucapua @brandonroberts @zeucapua
+pages/s/\[org\]/\[repo\]/contributors.tsx @zeucapua @brandonroberts @zeucapua
+pages/s/\[org\]/\[repo\]/index.tsx @zeucapua @brandonroberts @zeucapua
 pages/signin.tsx @nickytonline
 pages/signout.tsx @nickytonline
 pages/star-search/index.tsx @nickytonline @brandonroberts @zeucapua
 pages/start.tsx @brandonroberts @zeucapua @jpmcb
-pages/u/[username]/card.tsx @brandonroberts @zeucapua @nickytonline
-pages/u/[username]/index.tsx @zeucapua @brandonroberts @nickytonline
-pages/user/[username]/card.tsx @brandonroberts
-pages/user/[username]/card.tsx => pages/u/[username]/card.tsx @brandonroberts @nickytonline
-pages/user/[username]/index.tsx => pages/u/[username]/index.tsx @brandonroberts
+pages/u/\[username\]/card.tsx @brandonroberts @zeucapua @nickytonline
+pages/u/\[username\]/index.tsx @zeucapua @brandonroberts @nickytonline
+pages/user/\[username\]/card.tsx @brandonroberts
+pages/user/\[username\]/card.tsx @brandonroberts @nickytonline
+pages/user/\[username\]/index.tsx @brandonroberts
 pages/user/notifications.tsx @brandonroberts
-pages/workspaces/[workspaceId]/activity.tsx @zeucapua @nickytonline @brandonroberts
-pages/workspaces/[workspaceId]/contributor-insights/[listId]/activity.tsx @zeucapua @brandonroberts @nickytonline
-pages/workspaces/[workspaceId]/contributor-insights/[listId]/edit.tsx @nickytonline @zeucapua @brandonroberts
-pages/workspaces/[workspaceId]/contributor-insights/[listId]/highlights.tsx @zeucapua @brandonroberts @nickytonline
-pages/workspaces/[workspaceId]/contributor-insights/[listId]/overview.tsx @nickytonline @zeucapua @zeucapua
-pages/workspaces/[workspaceId]/contributor-insights/index.tsx @brandonroberts @zeucapua
-pages/workspaces/[workspaceId]/contributor-insights/new.tsx @brandonroberts @zeucapua
-pages/workspaces/[workspaceId]/contributors.tsx @zeucapua @brandonroberts @nickytonline
-pages/workspaces/[workspaceId]/index.tsx @zeucapua @nickytonline @brandonroberts
-pages/workspaces/[workspaceId]/issues.tsx @zeucapua @nickytonline @brandonroberts
-pages/workspaces/[workspaceId]/repository-insights/[insightId]/activity.tsx @zeucapua @brandonroberts @nickytonline
-pages/workspaces/[workspaceId]/repository-insights/[insightId]/contributors.tsx @zeucapua @brandonroberts @nickytonline
-pages/workspaces/[workspaceId]/repository-insights/[insightId]/dashboard.tsx @brandonroberts @zeucapua @nickytonline
-pages/workspaces/[workspaceId]/repository-insights/[insightId]/edit.tsx @brandonroberts @zeucapua @nickytonline
-pages/workspaces/[workspaceId]/repository-insights/index.tsx @nickytonline @zeucapua @brandonroberts
-pages/workspaces/[workspaceId]/repository-insights/new.tsx @zeucapua @brandonroberts
-pages/workspaces/[workspaceId]/settings.tsx @brandonroberts @zeucapua @nickytonline
+pages/workspaces/\[workspaceId\]/activity.tsx @zeucapua @nickytonline @brandonroberts
+pages/workspaces/\[workspaceId\]/contributor-insights/\[listId\]/activity.tsx @zeucapua @brandonroberts @nickytonline
+pages/workspaces/\[workspaceId\]/contributor-insights/\[listId\]/edit.tsx @nickytonline @zeucapua @brandonroberts
+pages/workspaces/\[workspaceId\]/contributor-insights/\[listId\]/highlights.tsx @zeucapua @brandonroberts @nickytonline
+pages/workspaces/\[workspaceId\]/contributor-insights/\[listId\]/overview.tsx @nickytonline @zeucapua @zeucapua
+pages/workspaces/\[workspaceId\]/contributor-insights/index.tsx @zeucapua @brandonroberts
+pages/workspaces/\[workspaceId\]/contributor-insights/new.tsx @brandonroberts @zeucapua
+pages/workspaces/\[workspaceId\]/contributors.tsx @zeucapua @brandonroberts @nickytonline
+pages/workspaces/\[workspaceId\]/index.tsx @zeucapua @nickytonline @brandonroberts
+pages/workspaces/\[workspaceId\]/issues.tsx @zeucapua @nickytonline @brandonroberts
+pages/workspaces/\[workspaceId\]/repository-insights/\[insightId\]/activity.tsx @zeucapua @brandonroberts @nickytonline
+pages/workspaces/\[workspaceId\]/repository-insights/\[insightId\]/contributors.tsx @zeucapua @brandonroberts @nickytonline
+pages/workspaces/\[workspaceId\]/repository-insights/\[insightId\]/dashboard.tsx @brandonroberts @zeucapua @nickytonline
+pages/workspaces/\[workspaceId\]/repository-insights/\[insightId\]/edit.tsx @brandonroberts @zeucapua @nickytonline
+pages/workspaces/\[workspaceId\]/repository-insights/index.tsx @nickytonline @zeucapua @brandonroberts
+pages/workspaces/\[workspaceId\]/repository-insights/new.tsx @zeucapua @brandonroberts
+pages/workspaces/\[workspaceId\]/settings.tsx @brandonroberts @zeucapua @nickytonline
 pages/workspaces/new.tsx @brandonroberts @nickytonline @zeucapua
 playwright.config.ts @brandonroberts @zeucapua @nickytonline
 public/__newsletter.html @brandonroberts @nickytonline
