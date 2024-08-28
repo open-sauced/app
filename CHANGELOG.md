@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.12](https://github.com/open-sauced/app/compare/v2.61.0-beta.11...v2.61.0-beta.12) (2024-08-28)
+
+
+### 🍕 Features
+
+* OSCR learn more link opens in a new tab now ([#4056](https://github.com/open-sauced/app/issues/4056)) ([b8b1a00](https://github.com/open-sauced/app/commit/b8b1a0094507f5830f0dc720f0edf8caac0fabf5))
+
 ## [2.61.0-beta.11](https://github.com/open-sauced/app/compare/v2.61.0-beta.10...v2.61.0-beta.11) (2024-08-28)
 
 
