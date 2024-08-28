@@ -43,10 +43,10 @@ import YoloChart from "components/Repositories/YoloChart";
 import LanguagePill, { getLanguageTopic } from "components/shared/LanguagePill/LanguagePill";
 import OssfChart from "components/Repositories/OssfChart";
 import LotteryFactorChart from "components/Repositories/LotteryFactorChart";
-import Tooltip from "components/atoms/Tooltip/tooltip";
 import { CopyContainer } from "components/shared/CopyContainer";
 import CopyImageBranding from "components/shared/CopyImageBranding";
 import { getRepositoryOgImage, RepositoryOgImage } from "components/Repositories/RepositoryOgImage";
+import { SplitButton } from "components/shared/SplitButton";
 
 const AddToWorkspaceModal = dynamic(() => import("components/Repositories/AddToWorkspaceModal"), {
   ssr: false,
@@ -248,36 +248,22 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       <AddToWorkspaceDrawer type="sbom" repository={repoData.full_name} />
                     </>
                   ) : (
-                    <div className="flex flex-col items-end gap-2 w-fit">
-                      <Button
-                        variant="primary"
-                        onClick={() => {
-                          posthog.capture("Repo Pages: clicked 'Add to Workspace'", { repository: repoData.full_name });
-                          setIsAddToWorkspaceModalOpen(true);
-                        }}
-                        className="shrink-0 items-center gap-3 w-full"
-                      >
-                        <MdWorkspaces />
-                        Add to Workspace
-                      </Button>
-                      <Tooltip
-                        content={
-                          <div className="grid gap-2">
-                            <p>Create a workspace from the software bill of materials (SBOM) for this repository</p>
-
-                            <a
-                              href="https://opensauced.pizza/docs/features/repo-pages/#create-a-workspace-from-sbom"
-                              className="underline"
-                              target="_blank"
-                            >
-                              Learn more...<span className="sr-only"> about SBOM</span>
-                            </a>
-                          </div>
-                        }
-                      >
-                        <Button
-                          variant="dark"
-                          onClick={() => {
+                    <SplitButton
+                      actions={[
+                        {
+                          icon: MdWorkspaces,
+                          label: "Add to Workspace",
+                          onClick: () => {
+                            posthog.capture("Repo Pages: clicked 'Add to Workspace'", {
+                              repository: repoData.full_name,
+                            });
+                            setIsAddToWorkspaceModalOpen(true);
+                          },
+                        },
+                        {
+                          icon: MdWorkspaces,
+                          label: "Create Workspace from SBOM",
+                          onClick: () => {
                             posthog.capture("Repo Pages: clicked 'Create Workspace from SBOM'", {
                               repository: repoData.full_name,
                             });
@@ -295,14 +281,10 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                             }
 
                             router.push(url);
-                          }}
-                          className="shrink-0 items-center gap-3 w-fit"
-                        >
-                          <MdWorkspaces />
-                          Workspace from SBOM
-                        </Button>
-                      </Tooltip>
-                    </div>
+                          },
+                        },
+                      ]}
+                    />
                   )}
                   <div className="flex gap-2 items-center">
                     <Button

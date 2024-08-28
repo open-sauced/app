@@ -8,7 +8,7 @@ import {
 } from "components/atoms/Dropdown/dropdown";
 import Button from "./Button/button";
 
-type Action = { label: string; onClick: () => void };
+type Action = { label: string; onClick: () => void; icon?: React.FC };
 type NonEmptyArray<T> = [T, ...T[]];
 
 type SplitButtonProps = {
@@ -20,7 +20,8 @@ export const SplitButton = ({ actions }: SplitButtonProps) => {
 
   return (
     <div className="inline-flex rounded-md shadow-sm">
-      <Button variant="primary" className="rounded-r-none" onClick={action.onClick}>
+      <Button variant="primary" className="flex gap-2 rounded-r-none" onClick={action.onClick}>
+        {action.icon && <action.icon />}
         {action.label}
       </Button>
       <DropdownMenu>
