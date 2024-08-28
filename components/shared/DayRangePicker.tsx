@@ -40,7 +40,7 @@ export const DayRangePicker = ({ onDayRangeChanged }: DayRangePickerProps) => {
   };
 
   return (
-    <label className="w-max font-semibold">
+    <label className="w-fit font-semibold">
       <span className="sr-only">Range:</span>
       <SingleSelect
         insetLabel="Range:"

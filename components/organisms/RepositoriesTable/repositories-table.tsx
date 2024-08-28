@@ -36,6 +36,7 @@ export interface RepositoriesRows {
   contributors?: ContributorsRows[];
   last30days?: Serie[];
   ossf_scorecard_total_score?: number;
+  contributor_confidence?: number;
 }
 
 interface RepositoriesTableProps {

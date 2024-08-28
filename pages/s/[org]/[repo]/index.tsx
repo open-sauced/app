@@ -225,7 +225,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
       <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <ClientOnly>
-            <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
+            <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-fit xl:w-full xl:max-w-8xl">
               <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
                 <header className="flex items-center gap-4">
                   <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
@@ -248,7 +248,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       <AddToWorkspaceDrawer type="sbom" repository={repoData.full_name} />
                     </>
                   ) : (
-                    <div className="grid gap-2 md:gap-1 w-fit">
+                    <div className="flex flex-col items-end gap-2 w-fit">
                       <Button
                         variant="primary"
                         onClick={() => {
@@ -296,7 +296,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
                             router.push(url);
                           }}
-                          className="shrink-0 items-center gap-3 w-full"
+                          className="shrink-0 items-center gap-3 w-fit"
                         >
                           <MdWorkspaces />
                           Workspace from SBOM
@@ -565,58 +565,136 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
               <section className="flex flex-col gap-4">
                 <h2 className="text-lg font-semibold">Activity</h2>
-                <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                  <IssuesChart
-                    stats={issueStats}
-                    range={range}
-                    velocity={repoStats?.issues_velocity_count ?? 0}
-                    syncId={syncId}
-                    isLoading={isIssueDataLoading}
-                    className="lg:col-span-6 h-fit"
-                  />
+                <div className="flex flex-col gap-4 lg:grid lg:grid-cols-12">
+                  <div className="block lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Issues chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone(document, element) {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <IssuesChart
+                        stats={issueStats}
+                        range={range}
+                        velocity={repoStats?.issues_velocity_count ?? 0}
+                        syncId={syncId}
+                        isLoading={isIssueDataLoading}
+                      />
+                    </CopyContainer>
+                  </div>
 
-                  <PRChart
-                    stats={prStats}
-                    range={range}
-                    velocity={repoStats?.pr_velocity_count ?? 0}
-                    syncId={syncId}
-                    isLoading={isPrDataLoading}
-                    className="lg:col-span-6 h-fit"
-                  />
+                  <div className="lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied PR chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <PRChart
+                        stats={prStats}
+                        range={range}
+                        velocity={repoStats?.pr_velocity_count ?? 0}
+                        syncId={syncId}
+                        isLoading={isPrDataLoading}
+                      />
+                    </CopyContainer>
+                  </div>
                 </div>
               </section>
 
               <section className="flex flex-col gap-4">
                 <h2 className="text-lg font-semibold">Engagement</h2>
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
-                  <StarsChart
-                    stats={starsData}
-                    total={repoData.stars}
-                    range={range}
-                    syncId={syncId}
-                    isLoading={isStarsDataLoading}
-                    onCategoryClick={(category) =>
-                      posthog.capture("Repo Pages: clicked Stars Chart category", {
-                        repository: repoData.full_name,
-                        category,
-                      })
-                    }
-                    className="lg:col-span-6 h-fit"
-                  />
-                  <ForksChart
-                    stats={forkStats}
-                    total={repoData.forks}
-                    range={range}
-                    syncId={syncId}
-                    isLoading={isForksDataLoading}
-                    onCategoryClick={(category) =>
-                      posthog.capture("Repo Pages: clicked Forks Chart category", {
-                        repository: repoData.full_name,
-                        category,
-                      })
-                    }
-                    className="lg:col-span-6 h-fit"
-                  />
+                  <div className="lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Stars chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <StarsChart
+                        stats={starsData}
+                        total={repoData.stars}
+                        range={range}
+                        syncId={syncId}
+                        isLoading={isStarsDataLoading}
+                        onCategoryClick={(category) =>
+                          posthog.capture("Repo Pages: clicked Stars Chart category", {
+                            repository: repoData.full_name,
+                            category,
+                          })
+                        }
+                        className="lg:col-span-6 h-fit"
+                      />
+                    </CopyContainer>
+                  </div>
+
+                  <div className="lg:col-span-6 h-fit">
+                    <CopyContainer
+                      onCopyClick={() => {
+                        posthog.capture("Repo Pages: copied Forks chart", {
+                          repository: repoData.full_name,
+                        });
+                      }}
+                      options={{
+                        windowWidth: 1700,
+                        allowTaint: true,
+                        onclone: (document, element) => {
+                          element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
+                            el.classList.remove("hidden");
+                          });
+                        },
+                      }}
+                    >
+                      <CopyImageBranding repository={repoData.full_name} />
+                      <ForksChart
+                        stats={forkStats}
+                        total={repoData.forks}
+                        range={range}
+                        syncId={syncId}
+                        isLoading={isForksDataLoading}
+                        onCategoryClick={(category) =>
+                          posthog.capture("Repo Pages: clicked Forks Chart category", {
+                            repository: repoData.full_name,
+                            category,
+                          })
+                        }
+                      />
+                    </CopyContainer>
+                  </div>
                 </div>
               </section>
             </div>
