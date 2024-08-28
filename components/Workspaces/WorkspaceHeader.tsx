@@ -14,11 +14,9 @@ import { writeToClipboard } from "lib/utils/write-to-clipboard";
 interface WorkspaceHeaderProps {
   workspace: Workspace;
   children?: React.ReactNode;
-  title: string;
-  url: string;
 }
 
-export const WorkspaceHeader = ({ workspace, children, title, url }: WorkspaceHeaderProps) => {
+export const WorkspaceHeader = ({ workspace, children }: WorkspaceHeaderProps) => {
   const { toast } = useToast();
   const posthog = usePostHog();
   const { userId } = useSupabaseAuth();
