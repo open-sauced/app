@@ -225,7 +225,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
       <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <ClientOnly>
-            <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-full xl:max-w-8xl">
+            <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-fit xl:w-full xl:max-w-8xl">
               <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
                 <header className="flex items-center gap-4">
                   <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
@@ -248,7 +248,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       <AddToWorkspaceDrawer type="sbom" repository={repoData.full_name} />
                     </>
                   ) : (
-                    <div className="grid gap-2 md:gap-1 w-fit">
+                    <div className="flex flex-col items-end gap-2 w-fit">
                       <Button
                         variant="primary"
                         onClick={() => {
@@ -296,7 +296,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
 
                             router.push(url);
                           }}
-                          className="shrink-0 items-center gap-3 w-full"
+                          className="shrink-0 items-center gap-3 w-fit"
                         >
                           <MdWorkspaces />
                           Workspace from SBOM

@@ -23,6 +23,7 @@ import useRepositoryPullRequests from "lib/hooks/api/useRepositoryPullRequests";
 import { getPullRequestsHistogramToDays } from "lib/utils/get-prs-to-days";
 import getPullRequestsContributors from "lib/utils/get-pr-contributors";
 import { usePullRequestsHistogram } from "lib/hooks/api/usePullRequestsHistogram";
+import InfoTooltip from "components/shared/InfoTooltip";
 import TableRepositoryName from "../TableRepositoryName/table-repository-name";
 import PullRequestOverview from "../PullRequestOverview/pull-request-overview";
 import StackedAvatar from "../StackedAvatar/stacked-avatar";
@@ -91,6 +92,7 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
     spam_prs_count: spamPrsCount,
     pr_velocity_count: prVelocityCount,
     ossf_scorecard_total_score: ossfScorecardTotalScore,
+    contributor_confidence: contributorConfidence,
   } = repo;
   const ownerAvatar = getAvatarByUsername(fullName.split("/")[0]);
 
@@ -194,8 +196,16 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             </div>
           </div>
 
-          {/* Row: Contributors */}
+          {/* Row: Contributor Confidence*/}
+          <div className="flex items-center justify-between py-3 border-b">
+            <div className="flex gap-2">
+              Contributor Confidence
+              <InfoTooltip information="The percentage of stargazers and forkers that come back later on to a meaningful contribution." />
+            </div>
+            <div className="flex text-base gap-x-3">{Math.floor((contributorConfidence ?? 0) * 100)}%</div>
+          </div>
 
+          {/* Row: Contributors */}
           <div className="flex items-center justify-between py-3">
             <div>Contributors</div>
             <div className="flex items-center text-base">
@@ -252,6 +262,9 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
         <div className={`${classNames.cols.spam}`}>
           {ossfScorecardTotalScore ? `${ossfScorecardTotalScore}/10` : "-"}
         </div>
+
+        {/* Column: Contributor Confidence*/}
+        <div className={`${classNames.cols.spam}`}>{Math.floor((contributorConfidence ?? 0) * 100)}%</div>
 
         {/* Column: Contributors */}
         <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>

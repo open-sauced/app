@@ -5,6 +5,41 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.8](https://github.com/open-sauced/app/compare/v2.61.0-beta.7...v2.61.0-beta.8) (2024-08-28)
+
+
+### 🐛 Bug Fixes
+
+* repository page width overflow ([#4051](https://github.com/open-sauced/app/issues/4051)) ([b827d26](https://github.com/open-sauced/app/commit/b827d2632671818a55924179a2a32b74ce3cc92e))
+
+## [2.61.0-beta.7](https://github.com/open-sauced/app/compare/v2.61.0-beta.6...v2.61.0-beta.7) (2024-08-27)
+
+
+### 🐛 Bug Fixes
+
+* now search dialog is always on top of other elements ([#4047](https://github.com/open-sauced/app/issues/4047)) ([3b4101a](https://github.com/open-sauced/app/commit/3b4101a30927ac1fbd8ee83180e66cf7a566ca78))
+
+## [2.61.0-beta.6](https://github.com/open-sauced/app/compare/v2.61.0-beta.5...v2.61.0-beta.6) (2024-08-27)
+
+
+### 🍕 Features
+
+* add contributor confidence to repository table ([#4038](https://github.com/open-sauced/app/issues/4038)) ([6f510cb](https://github.com/open-sauced/app/commit/6f510cb4944feaa1d791caf1ee495d1ba4ec0b19))
+* now html2canvas-pro is dynamically imported only when needed and then cached ([#4044](https://github.com/open-sauced/app/issues/4044)) ([23e4d76](https://github.com/open-sauced/app/commit/23e4d761fd0579b4dec098fec09d3e492384e24e))
+
+
+### 🐛 Bug Fixes
+
+* now if loading user profile fails an error is thrown instead of 404ing ([#4043](https://github.com/open-sauced/app/issues/4043)) ([3527795](https://github.com/open-sauced/app/commit/35277950e2deaacefeff971d2a85d062b2d9b5e5))
+* update validation for GitHub username ([#4046](https://github.com/open-sauced/app/issues/4046)) ([8a77fac](https://github.com/open-sauced/app/commit/8a77face5a3a4c730dbcf1dcad14a04561e6d1b8))
+
+## [2.61.0-beta.5](https://github.com/open-sauced/app/compare/v2.61.0-beta.4...v2.61.0-beta.5) (2024-08-27)
+
+
+### 🐛 Bug Fixes
+
+* remove deprecated "add coupon" section from user settings page ([#4039](https://github.com/open-sauced/app/issues/4039)) ([0b61b77](https://github.com/open-sauced/app/commit/0b61b776929601bf74d97e359c9c3c9c43d171ed))
+
 ## [2.61.0-beta.4](https://github.com/open-sauced/app/compare/v2.61.0-beta.3...v2.61.0-beta.4) (2024-08-26)
 
 
