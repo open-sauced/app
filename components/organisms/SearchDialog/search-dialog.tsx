@@ -15,7 +15,6 @@ import useDebounceTerm from "lib/hooks/useDebounceTerm";
 import useIsMacOS from "lib/hooks/useIsMacOS";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useSearchRepos } from "lib/hooks/useSearchRepos";
-import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
 
 const SearchDialog = () => {
   useLockBody();
@@ -27,7 +26,6 @@ const SearchDialog = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [isSearchError, setIsSearchError] = useState(false);
   const setOpenSearch = store((state) => state.setOpenSearch);
-  const openSearch = store((state) => state.openSearch);
   const debouncedSearchTerm = useDebounceTerm(searchTerm, 300);
   const {
     data: repoData,
@@ -138,56 +136,50 @@ const SearchDialog = () => {
   };
 
   return (
-    <Dialog open={openSearch} onOpenChange={setOpenSearch}>
-      <DialogContent
-        className="fixed top-2 lg:top-4 flex justify-center !pb-0 lg:!p-0 bg-transparent !w-full"
-        onPointerDownOutside={() => {
-          setOpenSearch(false);
-        }}
+    <div className="fixed left-0 top-0 z-auto p-5 w-full h-full flex justify-center bg-white/30">
+      <div className="absolute w-full h-full left-0 top-0 z-50 backdrop-blur-sm" onClick={() => setOpenSearch(false)} />
+      <div
+        className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-50 overflow-hidden"
+        onMouseMove={() => cursor !== -1 && setCursor(-1)}
       >
-        <div
-          className="mx-1 md:mx-2 flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-50 overflow-hidden"
-          onMouseMove={() => cursor !== -1 && setCursor(-1)}
-        >
-          <div className="flex w-full h-full items-center border-b p-2 pl-3">
-            {isSearching ? (
-              <div className="flex-none w-4 h-4 rounded-full border-2 border-light-slate-9 border-b-light-slate-5 border-r-light-slate-5 animate-spin" />
-            ) : (
-              <FaSearch className="text-light-slate-9" fontSize={16} />
-            )}
-            <input
-              autoFocus
-              className="w-full pl-2 text-sm font-semibold text-slate-700 focus:outline-none"
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-                isSearchError && setIsSearchError(false);
-              }}
-              onKeyDown={handleKeyboardCtrl}
-            />
-            <Text keyboard className="text-gray-600 !border-b !px-1">
-              {isMac ? "⌘K" : <span className="text-xs py-2 px-1">CTRL+K</span>}
-            </Text>
-          </div>
-          <div className="w-full h-full flex flex-col items-center">
-            {searchTerm.length < 3 ? (
-              <SearchInfo />
-            ) : isSearchError && !isSearching && (repoDataError || repoData.length === 0) ? (
-              <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
-                <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
-                We couldn&apos;t find any users or repositories with that name
-              </Text>
-            ) : (
-              <>
-                <section className="flex flex-col w-full">{renderUserSearchState()}</section>
-                <hr />
-                <section className="flex flex-col w-full">{renderRepoSearchState()}</section>
-              </>
-            )}
-          </div>
+        <div className="flex w-full h-full items-center border-b p-2 pl-3">
+          {isSearching ? (
+            <div className="flex-none w-4 h-4 rounded-full border-2 border-light-slate-9 border-b-light-slate-5 border-r-light-slate-5 animate-spin" />
+          ) : (
+            <FaSearch className="text-light-slate-9" fontSize={16} />
+          )}
+          <input
+            autoFocus
+            className="w-full pl-2 text-sm font-semibold text-slate-700 focus:outline-none"
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              isSearchError && setIsSearchError(false);
+            }}
+            onKeyDown={handleKeyboardCtrl}
+          />
+          <Text keyboard className="text-gray-600 !border-b !px-1">
+            {isMac ? "⌘K" : <span className="text-xs py-2 px-1">CTRL+K</span>}
+          </Text>
         </div>
-      </DialogContent>
-    </Dialog>
+        <div className="w-full h-full flex flex-col items-center">
+          {searchTerm.length < 3 ? (
+            <SearchInfo />
+          ) : isSearchError && !isSearching && (repoDataError || repoData.length === 0) ? (
+            <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
+              <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
+              We couldn&apos;t find any users or repositories with that name
+            </Text>
+          ) : (
+            <>
+              <section className="flex flex-col w-full">{renderUserSearchState()}</section>
+              <hr />
+              <section className="flex flex-col w-full">{renderRepoSearchState()}</section>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -243,6 +235,13 @@ const SearchLoading = () => (
       <div className="w-7/12 md:w-5/12 h-2.5 rounded-lg bg-light-slate-6" />
     </div>
   </div>
+);
+
+const SearchError = () => (
+  <Text className="block w-full py-1 px-4 text-sauced-orange !font-normal leading-6">
+    <HiOutlineExclamation className="text-sauced-orange inline-flex mr-2.5" fontSize={20} />
+    We couldn&apos;t find any users or repositories with that name
+  </Text>
 );
 
 const SearchResult = ({ result, cursor }: { result: GhUser[]; cursor: number }) => (
