@@ -158,7 +158,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                       <DropdownMenuTrigger title="Select type of new insight">
                         <PlusIcon
                           style={{ strokeWidth: "3px" }}
-                          className="w-5 h-5 p-0.5 text-semibold group-hover:bg-orange-100 rounded-md"
+                          className="w-5 text-gray-500 h-5 p-0.5 text-semibold group-hover:bg-orange-100 rounded-md"
                         />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent
