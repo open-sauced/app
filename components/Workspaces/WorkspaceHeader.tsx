@@ -47,7 +47,7 @@ export const WorkspaceHeader = ({ workspace, children }: WorkspaceHeaderProps) =
         </span>
         <Pill className="font-medium" text={workspace.is_public ? "Public" : "Private"} />
       </h1>
-      <div className="flex gap-2 justify-end">
+      <div className="flex gap-2 justify-end flex-wrap">
         {children}
 
         <Link
