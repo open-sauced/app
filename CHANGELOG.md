@@ -5,6 +5,19 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.15](https://github.com/open-sauced/app/compare/v2.61.0-beta.14...v2.61.0-beta.15) (2024-08-29)
+
+
+### 🍕 Features
+
+* Use powerful self hosted runner for playwright tests ([#4069](https://github.com/open-sauced/app/issues/4069)) ([28f493e](https://github.com/open-sauced/app/commit/28f493eb64a9a11e9e6133f455a335e59f8423fb))
+* Use self hosted GitHub actions runners ([#4064](https://github.com/open-sauced/app/issues/4064)) ([d62066d](https://github.com/open-sauced/app/commit/d62066d7cee683105ddce2cab1b5a3206c9f1805))
+
+
+### 🐛 Bug Fixes
+
+* Use correct github action yamls ([#4071](https://github.com/open-sauced/app/issues/4071)) ([9da2739](https://github.com/open-sauced/app/commit/9da27391f1c1b4ec1c9ba000a1036a8cc617a12c))
+
 ## [2.61.0-beta.14](https://github.com/open-sauced/app/compare/v2.61.0-beta.13...v2.61.0-beta.14) (2024-08-29)
 
 
