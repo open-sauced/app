@@ -5,6 +5,40 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.14](https://github.com/open-sauced/app/compare/v2.61.0-beta.13...v2.61.0-beta.14) (2024-08-29)
+
+
+### 🍕 Features
+
+* Add contributor's insight on the workspace. ([#4060](https://github.com/open-sauced/app/issues/4060)) ([7c4b60b](https://github.com/open-sauced/app/commit/7c4b60bab9e66e5376f88e6f8008f6afed3988ba))
+
+## [2.61.0-beta.13](https://github.com/open-sauced/app/compare/v2.61.0-beta.12...v2.61.0-beta.13) (2024-08-29)
+
+
+### 🐛 Bug Fixes
+
+* align OSCR pill with the username ([#4048](https://github.com/open-sauced/app/issues/4048)) ([0cc087d](https://github.com/open-sauced/app/commit/0cc087d71f97687437dc8b9b0c59c95c7c45f4cd))
+* **ossfchart.tsx:** remove z-index and move "I want this now!" button JSX below ResponsiveContainer ([#4066](https://github.com/open-sauced/app/issues/4066)) ([8a9066a](https://github.com/open-sauced/app/commit/8a9066ad18f2cb870558fc6e169a3f6dc4d9b4a0))
+
+## [2.61.0-beta.12](https://github.com/open-sauced/app/compare/v2.61.0-beta.11...v2.61.0-beta.12) (2024-08-28)
+
+
+### 🍕 Features
+
+* OSCR learn more link opens in a new tab now ([#4056](https://github.com/open-sauced/app/issues/4056)) ([b8b1a00](https://github.com/open-sauced/app/commit/b8b1a0094507f5830f0dc720f0edf8caac0fabf5))
+
+## [2.61.0-beta.11](https://github.com/open-sauced/app/compare/v2.61.0-beta.10...v2.61.0-beta.11) (2024-08-28)
+
+
+### 🍕 Features
+
+* display lottery factor on Repository Table ([#4059](https://github.com/open-sauced/app/issues/4059)) ([48343e0](https://github.com/open-sauced/app/commit/48343e06c10dab7cac2098a4c44970072d4443f7))
+
+
+### 🐛 Bug Fixes
+
+* correct width issue caused by tooltip addition in SingleSelect ([#4058](https://github.com/open-sauced/app/issues/4058)) ([b6e1173](https://github.com/open-sauced/app/commit/b6e11737b79ee78da068c2860841f2a78d1c7dea))
+
 ## [2.61.0-beta.10](https://github.com/open-sauced/app/compare/v2.61.0-beta.9...v2.61.0-beta.10) (2024-08-28)
 
 
