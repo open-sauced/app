@@ -10,6 +10,7 @@ on:
 jobs:
   setup:
     name: Set environment variables
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     outputs:
       DEPLOY_ENVIRONMENT: ${{ steps.env.outputs.DEPLOY_ENVIRONMENT }}
@@ -27,6 +28,7 @@ jobs:
 
   build:
     name: Build application
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: "☁️ checkout repository"
@@ -36,6 +38,7 @@ jobs:
         uses: actions/setup-node@v2.1.5
         with:
           node-version: 18
+          cache: "npm"
 
       - name: "🔧 install npm@latest"
         run: npm i -g npm@latest
@@ -61,6 +64,7 @@ jobs:
       - setup
       - test
       - build
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Generate token
@@ -93,6 +97,7 @@ jobs:
     name: Cleanup actions
     needs:
       - release
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: "♻️ remove build artifacts"
