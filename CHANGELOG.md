@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.13](https://github.com/open-sauced/app/compare/v2.61.0-beta.12...v2.61.0-beta.13) (2024-08-29)
+
+
+### 🐛 Bug Fixes
+
+* align OSCR pill with the username ([#4048](https://github.com/open-sauced/app/issues/4048)) ([0cc087d](https://github.com/open-sauced/app/commit/0cc087d71f97687437dc8b9b0c59c95c7c45f4cd))
+* **ossfchart.tsx:** remove z-index and move "I want this now!" button JSX below ResponsiveContainer ([#4066](https://github.com/open-sauced/app/issues/4066)) ([8a9066a](https://github.com/open-sauced/app/commit/8a9066ad18f2cb870558fc6e169a3f6dc4d9b4a0))
+
 ## [2.61.0-beta.12](https://github.com/open-sauced/app/compare/v2.61.0-beta.11...v2.61.0-beta.12) (2024-08-28)
 
 
