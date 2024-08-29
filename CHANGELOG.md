@@ -5,6 +5,43 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0](https://github.com/open-sauced/app/compare/v2.60.0...v2.61.0) (2024-08-29)
+
+
+### 🍕 Features
+
+* add contributor confidence to repository table ([#4038](https://github.com/open-sauced/app/issues/4038)) ([6f510cb](https://github.com/open-sauced/app/commit/6f510cb4944feaa1d791caf1ee495d1ba4ec0b19))
+* Add contributor's insight on the workspace. ([#4060](https://github.com/open-sauced/app/issues/4060)) ([7c4b60b](https://github.com/open-sauced/app/commit/7c4b60bab9e66e5376f88e6f8008f6afed3988ba))
+* copy repo page `ForksChart` as image ([#4036](https://github.com/open-sauced/app/issues/4036)) ([d30beff](https://github.com/open-sauced/app/commit/d30beff29c3db2ac91645c48d6321a4dbbcc27f0))
+* copy repo page `StarsChart` as image  ([#4035](https://github.com/open-sauced/app/issues/4035)) ([933bb2c](https://github.com/open-sauced/app/commit/933bb2c086e3ba68cf4b49aa64a5c475b6b7389d))
+* copy repo page Contributors chart as image ([#4025](https://github.com/open-sauced/app/issues/4025)) ([581497e](https://github.com/open-sauced/app/commit/581497e85de3e0f32e201d507181b20371e1c812))
+* copy repo page Issues chart as image ([#4026](https://github.com/open-sauced/app/issues/4026)) ([f9fad65](https://github.com/open-sauced/app/commit/f9fad657f77679344e5e93081e71b304a76342b3))
+* copy repo page PR chart as image ([#4027](https://github.com/open-sauced/app/issues/4027)) ([3541a37](https://github.com/open-sauced/app/commit/3541a373f532bb25379db8c9697d8729dc19c5a7))
+* display lottery factor on Repository Table ([#4059](https://github.com/open-sauced/app/issues/4059)) ([48343e0](https://github.com/open-sauced/app/commit/48343e06c10dab7cac2098a4c44970072d4443f7))
+* implemented the split button component ([#4040](https://github.com/open-sauced/app/issues/4040)) ([a539f78](https://github.com/open-sauced/app/commit/a539f78022f6fb5c855ccf2041205332d65ea5a4))
+* now html2canvas-pro is dynamically imported only when needed and then cached ([#4044](https://github.com/open-sauced/app/issues/4044)) ([23e4d76](https://github.com/open-sauced/app/commit/23e4d761fd0579b4dec098fec09d3e492384e24e))
+* OSCR learn more link opens in a new tab now ([#4056](https://github.com/open-sauced/app/issues/4056)) ([b8b1a00](https://github.com/open-sauced/app/commit/b8b1a0094507f5830f0dc720f0edf8caac0fabf5))
+* refresh explore page to only loading repositories ([#4019](https://github.com/open-sauced/app/issues/4019)) ([88f5937](https://github.com/open-sauced/app/commit/88f5937b32b65c42f1bafe42d81ac9b6ec8dc6a9))
+* Use powerful self hosted runner for playwright tests ([#4069](https://github.com/open-sauced/app/issues/4069)) ([28f493e](https://github.com/open-sauced/app/commit/28f493eb64a9a11e9e6133f455a335e59f8423fb))
+* Use self hosted GitHub actions runners ([#4064](https://github.com/open-sauced/app/issues/4064)) ([d62066d](https://github.com/open-sauced/app/commit/d62066d7cee683105ddce2cab1b5a3206c9f1805))
+
+
+### 🐛 Bug Fixes
+
+* `RossChart` order changing on filter ([#4018](https://github.com/open-sauced/app/issues/4018)) ([64a04f5](https://github.com/open-sauced/app/commit/64a04f5d3a8fbfe4647f8c43c07eca13e7ea0ef9))
+* align OSCR pill with the username ([#4048](https://github.com/open-sauced/app/issues/4048)) ([0cc087d](https://github.com/open-sauced/app/commit/0cc087d71f97687437dc8b9b0c59c95c7c45f4cd))
+* correct width issue caused by tooltip addition in SingleSelect ([#4058](https://github.com/open-sauced/app/issues/4058)) ([b6e1173](https://github.com/open-sauced/app/commit/b6e11737b79ee78da068c2860841f2a78d1c7dea))
+* fixed typo for recommendations ([#4017](https://github.com/open-sauced/app/issues/4017)) ([2e4cbdb](https://github.com/open-sauced/app/commit/2e4cbdb4dbe1e16d22b6ce6656b95adc392c069e))
+* now if loading user profile fails an error is thrown instead of 404ing ([#4043](https://github.com/open-sauced/app/issues/4043)) ([3527795](https://github.com/open-sauced/app/commit/35277950e2deaacefeff971d2a85d062b2d9b5e5))
+* now search dialog is always on top of other elements ([#4047](https://github.com/open-sauced/app/issues/4047)) ([3b4101a](https://github.com/open-sauced/app/commit/3b4101a30927ac1fbd8ee83180e66cf7a566ca78))
+* remove deprecated "add coupon" section from user settings page ([#4039](https://github.com/open-sauced/app/issues/4039)) ([0b61b77](https://github.com/open-sauced/app/commit/0b61b776929601bf74d97e359c9c3c9c43d171ed))
+* remove set width for repo pages charts ([#4068](https://github.com/open-sauced/app/issues/4068)) ([2dc9062](https://github.com/open-sauced/app/commit/2dc9062ebee2ed6d60c15437a5f2d29052607c9d))
+* **ossfchart.tsx:** remove z-index and move "I want this now!" button JSX below ResponsiveContainer ([#4066](https://github.com/open-sauced/app/issues/4066)) ([8a9066a](https://github.com/open-sauced/app/commit/8a9066ad18f2cb870558fc6e169a3f6dc4d9b4a0))
+* repository page width overflow ([#4051](https://github.com/open-sauced/app/issues/4051)) ([b827d26](https://github.com/open-sauced/app/commit/b827d2632671818a55924179a2a32b74ce3cc92e))
+* Revert "fix: now search dialog is always on top of other elements ([#4047](https://github.com/open-sauced/app/issues/4047))" ([#4054](https://github.com/open-sauced/app/issues/4054)) ([cd03a01](https://github.com/open-sauced/app/commit/cd03a01ebbf6e7495564ab3fb00e2d6f832cf129))
+* update validation for GitHub username ([#4046](https://github.com/open-sauced/app/issues/4046)) ([8a77fac](https://github.com/open-sauced/app/commit/8a77face5a3a4c730dbcf1dcad14a04561e6d1b8))
+* Use correct github action yamls ([#4071](https://github.com/open-sauced/app/issues/4071)) ([9da2739](https://github.com/open-sauced/app/commit/9da27391f1c1b4ec1c9ba000a1036a8cc617a12c))
+
 ## [2.61.0-beta.16](https://github.com/open-sauced/app/compare/v2.61.0-beta.15...v2.61.0-beta.16) (2024-08-29)
 
 
