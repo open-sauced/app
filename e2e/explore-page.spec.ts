@@ -1,47 +1,6 @@
-import { test, expect, Page } from "@playwright/test";
-
-type TabId = "Dashboard" | "Contributors" | "Activity";
-const TabSelectorNames: Record<TabId, string | RegExp> = {
-  Dashboard: "Dashboard",
-  // The contributors tab has a count which is unknown at the time the test runs as it's a dynamic value.
-  Contributors: /Contributors\s+\d+/,
-  Activity: "Activity",
-};
-
-async function checkExploreTabs(page: Page, selectedTabId: TabId) {
-  await expect(page.getByRole("link", { name: TabSelectorNames["Dashboard"], exact: true })).toBeVisible();
-  await expect(page.getByRole("link", { name: TabSelectorNames["Contributors"] })).toBeVisible();
-  await expect(page.getByRole("link", { name: TabSelectorNames["Activity"], exact: true })).toBeVisible();
-
-  await expect(
-    page.getByRole("tab", { name: TabSelectorNames[selectedTabId], exact: true, selected: true })
-  ).toBeVisible();
-}
+import { test, expect } from "@playwright/test";
 
 test("Loads explore dashboard page", async ({ page }) => {
   await page.goto("/explore/topic/javascript");
-  await checkExploreTabs(page, "Dashboard");
-  await expect(page.getByRole("complementary", { name: "pull request highlights", exact: true })).toBeVisible();
-});
-
-test("Loads explore contributors page", async ({ page }) => {
-  await page.goto("/explore/topic/javascript/contributors");
-  await checkExploreTabs(page, "Contributors");
-
-  // simple smoke test until we have actual tables.
-  await expect(page.getByRole("button", { name: "7d" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "30d" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "3m" })).toBeVisible();
-
-  await expect(page.getByRole("radio", { name: "Contributor list view" })).toBeVisible();
-  await expect(page.getByRole("radio", { name: "Contributor list view" })).toBeChecked();
-  await expect(page.getByRole("radio", { name: "Contributor grid view" })).toBeVisible();
-});
-
-test("Loads explore activity page", async ({ page }) => {
-  await page.goto("/explore/topic/javascript/activity");
-  await checkExploreTabs(page, "Activity");
-
-  // a smoke test to ensure the scatterplot is on the page
-  await expect(page.getByRole("heading", { name: "Contributor Distribution", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Connect with GitHub", exact: true })).toBeVisible();
 });

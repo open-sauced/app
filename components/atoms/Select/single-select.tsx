@@ -64,7 +64,7 @@ const SingleSelect = ({
         )}
       >
         <Tooltip content={current?.label ?? placeholder}>
-          <div className="flex items-center w-48">
+          <div className="flex items-center w-44 ">
             <p className="flex-grow text-start truncate">{current?.label ?? placeholder}</p>
           </div>
         </Tooltip>

@@ -16,6 +16,7 @@ import Checkbox from "components/atoms/Checkbox/checkbox";
 import LimitSelect from "components/atoms/Select/limit-select";
 import Button from "components/shared/Button/button";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
+import InfoTooltip from "components/shared/InfoTooltip";
 import RepositoriesTable, { classNames, RepositoriesRows } from "../RepositoriesTable/repositories-table";
 import RepoNotIndexed from "./repository-not-indexed";
 
@@ -95,7 +96,7 @@ export default function Repositories({ repositories, showSearch = true, personal
 
   const handleOnSearch = (search?: string) => {
     if (selectedFilter && !search) {
-       return router.push(`/explore/topic/${topic}/${toolName}`);
+      return router.push(`/explore/topic/${topic}/${toolName}`);
     }
     if (search && /^[a-zA-Z0-9\-\.]+\/[a-zA-Z0-9\-\.]+$/.test(search)) {
       return router.push(`/explore/topic/${topic}/${toolName}/filter/${search}`);
@@ -123,7 +124,7 @@ export default function Repositories({ repositories, showSearch = true, personal
               <TableTitle> Pr Overview </TableTitle>
             </div>
           </div>
-          <div className="hidden gap-2 px-6 py-4 md:flex bg-light-slate-3">
+          <div className="hidden gap-2 px-6 py-4 md:flex items-center bg-light-slate-3">
             <div className={clsx(classNames.cols.checkbox)}>
               <Checkbox
                 onCheckedChange={handleOnSelectAllChecked}
@@ -140,10 +141,16 @@ export default function Repositories({ repositories, showSearch = true, personal
               <TableTitle>PR Overview</TableTitle>
             </div>
             <div className={clsx(classNames.cols.prVelocity)}>
-              <TableTitle>PR Velocity</TableTitle>
+              <TableTitle>Lottery Factor</TableTitle>
             </div>
             <div className={clsx(classNames.cols.spam)}>
               <TableTitle>OSSF Score</TableTitle>
+            </div>
+            <div className={clsx(classNames.cols.spam)}>
+              <TableTitle className="inline-flex items-center">
+                Contributor Confidence
+                <InfoTooltip information="The percentage of stargazers and forkers that come back later on to a meaningful contribution." />
+              </TableTitle>
             </div>
             <div className={clsx(classNames.cols.contributors, "hidden xl:flex")}>
               <TableTitle>Contributors</TableTitle>

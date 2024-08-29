@@ -2,6 +2,7 @@
 # https://github.com/marketplace/actions/create-or-update-comment (https://github.com/peter-evans/create-or-update-comment)
 
 name: Automatic Comment
+
 on:
   issues:
     types: [opened]

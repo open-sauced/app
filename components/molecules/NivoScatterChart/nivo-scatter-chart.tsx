@@ -8,8 +8,9 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
-import { PrStatusFilter } from "components/organisms/Dashboard/dashboard";
 import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+
+export type PrStatusFilter = "open" | "closed" | "all";
 
 export interface ScatterChartDataItems {
   x: string | number;

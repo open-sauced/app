@@ -1,5 +1,4 @@
 name: "Assign issues with .take"
-
 on:
   issue_comment:
     types:

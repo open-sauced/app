@@ -66,7 +66,7 @@ const ContributorCard = ({
               <Avatar size={40} avatarURL={githubAvatar ? githubAvatar : undefined} />
             </Link>
             <div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-center">
                 <Link href={`/u/${username}`} as={`/u/${username}`}>
                   <Text className="!text-base !text-black">{username}</Text>
                 </Link>
