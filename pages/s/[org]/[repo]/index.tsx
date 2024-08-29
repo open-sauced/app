@@ -574,7 +574,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         });
                       }}
                       options={{
-                        windowWidth: 1700,
                         allowTaint: true,
                         onclone(document, element) {
                           element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
@@ -602,7 +601,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         });
                       }}
                       options={{
-                        windowWidth: 1700,
                         allowTaint: true,
                         onclone: (document, element) => {
                           element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
@@ -635,7 +633,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         });
                       }}
                       options={{
-                        windowWidth: 1700,
                         allowTaint: true,
                         onclone: (document, element) => {
                           element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
@@ -670,7 +667,6 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         });
                       }}
                       options={{
-                        windowWidth: 1700,
                         allowTaint: true,
                         onclone: (document, element) => {
                           element.querySelectorAll("[data-copy-image-branding]").forEach((el) => {
