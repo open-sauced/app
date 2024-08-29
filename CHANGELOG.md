@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.14](https://github.com/open-sauced/app/compare/v2.61.0-beta.13...v2.61.0-beta.14) (2024-08-29)
+
+
+### 🍕 Features
+
+* Add contributor's insight on the workspace. ([#4060](https://github.com/open-sauced/app/issues/4060)) ([7c4b60b](https://github.com/open-sauced/app/commit/7c4b60bab9e66e5376f88e6f8008f6afed3988ba))
+
 ## [2.61.0-beta.13](https://github.com/open-sauced/app/compare/v2.61.0-beta.12...v2.61.0-beta.13) (2024-08-29)
 
 
