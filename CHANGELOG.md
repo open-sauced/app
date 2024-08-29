@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.61.0-beta.16](https://github.com/open-sauced/app/compare/v2.61.0-beta.15...v2.61.0-beta.16) (2024-08-29)
+
+
+### 🐛 Bug Fixes
+
+* remove set width for repo pages charts ([#4068](https://github.com/open-sauced/app/issues/4068)) ([2dc9062](https://github.com/open-sauced/app/commit/2dc9062ebee2ed6d60c15437a5f2d29052607c9d))
+
 ## [2.61.0-beta.15](https://github.com/open-sauced/app/compare/v2.61.0-beta.14...v2.61.0-beta.15) (2024-08-29)
 
 
