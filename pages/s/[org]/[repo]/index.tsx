@@ -249,6 +249,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                     </>
                   ) : (
                     <SplitButton
+                      align="end"
                       actions={[
                         {
                           icon: MdWorkspaces,
