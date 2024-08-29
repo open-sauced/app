@@ -12,7 +12,6 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
     timeout-minutes: 10
     steps:
       - name: "☁️ checkout repository"

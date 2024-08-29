@@ -10,7 +10,6 @@ on:
 jobs:
   setup:
     name: Set environment variables
-    runs-on: self-hosted
     timeout-minutes: 10
     outputs:
       DEPLOY_ENVIRONMENT: ${{ steps.env.outputs.DEPLOY_ENVIRONMENT }}
@@ -28,7 +27,6 @@ jobs:
 
   build:
     name: Build application
-    runs-on: self-hosted
     timeout-minutes: 10
     steps:
       - name: "☁️ checkout repository"
@@ -63,7 +61,6 @@ jobs:
       - setup
       - test
       - build
-    runs-on: self-hosted
     timeout-minutes: 10
     steps:
       - name: Generate token
@@ -96,7 +93,6 @@ jobs:
     name: Cleanup actions
     needs:
       - release
-    runs-on: self-hosted
     timeout-minutes: 10
     steps:
       - name: "♻️ remove build artifacts"

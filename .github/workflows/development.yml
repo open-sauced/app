@@ -16,7 +16,6 @@ jobs:
 
   build:
     name: Build application
-    runs-on: self-hosted
     timeout-minutes: 10
     steps:
       - name: "☁️ checkout repository"
