@@ -121,13 +121,6 @@ export default function OssfChart({
         ) : (
           <section className="flex justify-between items-center w-full gap-2 lg:flex-col xl:flex-row h-fit max-h-24 lg:max-h-full xl:max-h-24">
             <div className="relative w-full !max-w-[14rem] lg:max-w-full lg:mx-auto h-full lg:max-h-24 xl:h-full">
-              {isError && (
-                <div className="absolute inset-0 z-50 flex items-center justify-center">
-                  <Button variant="primary" onClick={onRequestClick} className="!text-xs">
-                    I want this now!
-                  </Button>
-                </div>
-              )}
               <ResponsiveContainer width="100%" height={150} className={`${isError && "blur-[2.5px]"}`}>
                 <PieChart>
                   <Pie
@@ -146,6 +139,13 @@ export default function OssfChart({
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
+              {isError && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Button variant="primary" onClick={onRequestClick} className="!text-xs">
+                    I want this now!
+                  </Button>
+                </div>
+              )}
             </div>
             <section className="flex flex-col gap-1 lg:text-center xl:text-start">
               <h3 className="font-medium text-sm text-slate-700">{projectStatus}</h3>
