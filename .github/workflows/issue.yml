@@ -15,7 +15,7 @@ jobs:
       issues: write  # for peter-evans/create-or-update-comment to create or update comment
       pull-requests: write  # for peter-evans/create-or-update-comment to create or update comment
     name: Comment
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Automatic Comment
         uses: peter-evans/create-or-update-comment@v2
