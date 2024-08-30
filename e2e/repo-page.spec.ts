@@ -11,6 +11,9 @@ test("Loads a repository page", async ({ page }) => {
   await expect(rangePopup).toHaveAttribute("data-state", "closed");
 
   page.getByRole("button", { name: "Add to Workspace", exact: true }).click();
+  await page.getByLabel("splitbutton-trigger-add-to-workspace").click();
+  await page.getByRole("menuitem", { name: "Create Workspace from SBOM", exact: true }).click();
+  await page.getByRole("button", { name: "Create Workspace from SBOM", exact: true }).click();
   await expect(page.getByRole("button", { name: "Share", exact: true })).toBeVisible();
 
   // check for OG image
@@ -36,11 +39,8 @@ test.describe("large screen", () => {
     await page.goto("/s/open-sauced/app");
 
     await page.getByLabel("splitbutton-trigger-add-to-workspace").click();
-    await page.getByRole("button", { name: "Workspace from SBOM", exact: true }).click();
-    const dialog = page.getByRole("dialog", { name: "Add repository SBOM to Workspace", exact: true });
-    await expect(dialog).toBeVisible();
-
-    expect(dialog.getByRole("button", { name: "Connect with GitHub", exact: true })).toBeVisible();
+    await page.getByRole("menuitem", { name: "Create Workspace from SBOM", exact: true }).click();
+    await page.getByRole("button", { name: "Create Workspace from SBOM", exact: true }).click();
   });
 });
 

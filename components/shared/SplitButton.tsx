@@ -41,6 +41,7 @@ export const SplitButton = ({ actions, label, side, align, alignOffset }: SplitB
         <DropdownMenuContent side={side} align={align} alignOffset={alignOffset}>
           {actions.map((actionItem) => (
             <DropdownMenuItem
+              role="menuitem"
               key={actionItem.label}
               onClick={() => {
                 setAction(actionItem);
