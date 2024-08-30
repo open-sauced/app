@@ -13,12 +13,13 @@ type NonEmptyArray<T> = [T, ...T[]];
 
 type SplitButtonProps = {
   actions: NonEmptyArray<Action>;
+  label: string;
   side?: "top" | "right" | "left" | "bottom";
   align?: "start" | "center" | "end";
   alignOffset?: number;
 };
 
-export const SplitButton = ({ actions, side, align, alignOffset }: SplitButtonProps) => {
+export const SplitButton = ({ actions, label, side, align, alignOffset }: SplitButtonProps) => {
   const [action, setAction] = useState<Action>(actions[0]);
 
   return (
@@ -29,7 +30,11 @@ export const SplitButton = ({ actions, side, align, alignOffset }: SplitButtonPr
       </Button>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button variant="primary" className="px-2 rounded-l-none !border-l-white">
+          <Button
+            aria-label={`splitbutton-trigger-${label}`}
+            variant="primary"
+            className="px-2 rounded-l-none !border-l-white"
+          >
             <ChevronDownIcon className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
