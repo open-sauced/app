@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.62.0-beta.1](https://github.com/open-sauced/app/compare/v2.61.0...v2.62.0-beta.1) (2024-08-30)
+
+
+### 🍕 Features
+
+* use `SplitButton` for repo page Add Workspace buttons ([#4062](https://github.com/open-sauced/app/issues/4062)) ([6cf13e6](https://github.com/open-sauced/app/commit/6cf13e6bc1b550f595e24dbc2856fddd0ad3028c))
+
 ## [2.61.0](https://github.com/open-sauced/app/compare/v2.60.0...v2.61.0) (2024-08-29)
 
 
