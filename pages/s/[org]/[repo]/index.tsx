@@ -290,6 +290,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   )}
                   <div className="flex gap-2 items-center">
                     <Button
+                      aria-label="share"
                       variant="outline"
                       onClick={copyUrlToClipboard}
                       className="my-auto gap-2 items-center shrink-0 place-self-end"
