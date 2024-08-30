@@ -49,6 +49,7 @@ const SingleSelect = ({
   return (
     <DropdownMenu
       open={isOpen}
+      modal={false}
       onOpenChange={(open) => {
         setIsOpen(open);
         if (!open) {

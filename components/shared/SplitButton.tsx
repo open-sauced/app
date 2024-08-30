@@ -27,7 +27,7 @@ export const SplitButton = ({ actions, side, align, alignOffset }: SplitButtonPr
         {action.icon && <action.icon />}
         {action.label}
       </Button>
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant="primary" className="px-2 rounded-l-none !border-l-white">
             <ChevronDownIcon className="h-4 w-4" />
