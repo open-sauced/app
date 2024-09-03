@@ -12,8 +12,8 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
     timeout-minutes: 10
+    runs-on: ubuntu-latest
     steps:
       - name: "☁️ checkout repository"
         uses: actions/checkout@v2
@@ -22,6 +22,7 @@ jobs:
         uses: actions/setup-node@v2.1.5
         with:
           node-version: 18
+          cache: "npm"
 
       - name: "🔧 install npm@latest"
         run: npm i -g npm@latest
