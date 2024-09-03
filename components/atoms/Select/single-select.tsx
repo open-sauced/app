@@ -60,7 +60,7 @@ const SingleSelect = ({
       <DropdownMenuTrigger
         data-inset-label={insetLabel}
         className={clsx(
-          "flex w-full md:w-fit text-sm px-3 py-1.5 !border !border-slate-200 rounded-md bg-white data-[state=open]:border-orange-500 min-w-max",
+          "flex w-full justify-between md:w-fit text-sm px-3 py-1.5 !border !border-slate-200 rounded-md bg-white data-[state=open]:border-orange-500 min-w-max",
           insetLabel && `before:content-[attr(data-inset-label)] before:mr-1 before:font-normal before:text-slate-500`
         )}
       >
