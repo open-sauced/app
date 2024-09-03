@@ -22,14 +22,15 @@ const RecommendedRepoCard = ({ fullName, className }: RecommendedRepoCardProps):
   const { data: repositoryPullRequests, isError: pullError, meta } = useRepositoryPullRequests({ fullName });
   const contributorData = getPullRequestsContributors(repositoryPullRequests);
 
-  return (
+  return isError ? (
+    <></>
+  ) : (
     <div className={clsx("relative w-full flex flex-col gap-2 p-4  bg-white border rounded-2xl ", className)}>
       {isLoading && (
         <div className="flex items-center justify-center w-full h-36">
           <Spinner />
         </div>
       )}
-      {isError && <>An error occured loading ...</>}
       {data && (
         <>
           <div className="flex justify-between w-full">

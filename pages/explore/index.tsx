@@ -3,12 +3,12 @@ import Card from "components/atoms/Card/card";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
-import UserRepositoryRecommendations from "components/organisms/UserRepositoryRecommendations/user-repository-recommendations";
 import Button from "components/shared/Button/button";
-import useRepositories from "lib/hooks/api/useRepositories";
+import useFetchTrendingRepositories from "lib/hooks/useFetchTrendingRepositories";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
 
 export default function ExploreHomePage() {
   const { session } = useSession(true);
@@ -19,7 +19,19 @@ export default function ExploreHomePage() {
     data: trendingRepositories,
     isLoading: isTrendingLoading,
     isError: isTrendingError,
-  } = useRepositories([], 30, 10);
+  } = useFetchTrendingRepositories();
+
+  const {
+    data: recommendationsData,
+    isLoading: isRecommendationsLoading,
+    isError: isRecommendationsError,
+  } = useUserRepoRecommendations();
+
+  const recommendations = recommendationsData
+    ? Object.keys(recommendationsData)
+        .map((name) => recommendationsData[name])
+        .flat()
+    : [];
 
   return (
     <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
@@ -34,16 +46,27 @@ export default function ExploreHomePage() {
           <section className="flex flex-nowrap gap-4 overflow-x-scroll">
             {trendingRepositories &&
               trendingRepositories.map((repo) => (
-                <RecommendedRepoCard key={`repo_card_${repo.id}`} fullName={repo.full_name} className="min-w-[24rem]" />
+                <RecommendedRepoCard
+                  key={`repo_card_${repo.repo_name}_${repo.star_count}`}
+                  fullName={repo.repo_name}
+                  className="min-w-[24rem]"
+                />
               ))}
           </section>
         </section>
 
         <section className="flex flex-col gap-8">
           <Title>Recommended for You</Title>
-          <section className="grid grid-flow-col-dense gap-4 w-full max-w-screen lg:w-5xl overflow-x-scroll items-stretch">
+          <section className="flex flex-nowrap gap-4 overflow-x-scroll">
             {session ? (
-              <UserRepositoryRecommendations contributor={session} userInterests={user ? user.interests : ""} />
+              recommendations &&
+              recommendations.map((repo: DbRepo) => (
+                <RecommendedRepoCard
+                  key={`repo_card_${repo.full_name}`}
+                  fullName={repo.full_name ?? ""}
+                  className="min-w-[24rem]"
+                />
+              ))
             ) : (
               <Button
                 variant="primary"
@@ -51,7 +74,7 @@ export default function ExploreHomePage() {
                   signIn({ provider: "github" });
                 }}
               >
-                Hello
+                Connect with GitHub
               </Button>
             )}
           </section>
