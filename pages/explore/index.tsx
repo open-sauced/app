@@ -36,9 +36,20 @@ export default function ExploreHomePage() {
   return (
     <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
       <div className="px-4 py-8 lg:px-16 lg:py-12 flex flex-col gap-12 w-full lg:max-w-8xl">
-        <section className="flex flex-col items-center w-full gap-8">
-          <h1 className="text-4xl font-medium">Explore Open Source Repositories</h1>
-          <Search name="Explore repositories" className="h-12 w-full max-w-6xl" />
+        <section
+          className={`
+            relative flex flex-col items-center w-full gap-8 lg:px-8 lg:py-16
+            bg-[url('~/img/explore-page-header.png')] bg-center bg-cover rounded-2xl
+          `}
+        >
+          <h1 className="text-4xl font-medium text-white">
+            Explore
+            <span className="bg-gradient-to-r from-gradient-orange-one to-gradient-orange-two bg-clip-text text-transparent font-bold">
+              {" "}
+              Open Source
+            </span>
+          </h1>
+          <Search name="Explore repositories" className="h-12 w-full max-w-3xl" />
         </section>
 
         <section className="flex flex-col gap-8 ">
@@ -56,7 +67,10 @@ export default function ExploreHomePage() {
         </section>
 
         <section className="flex flex-col gap-8">
-          <Title>Recommended for You</Title>
+          <div className="flex flex-col gap-4">
+            <Title>Recommended for You</Title>
+            <p>Here are some repositories we think would be great for you. Click on one to start contributing!</p>
+          </div>
           <section className="flex flex-nowrap gap-4 overflow-x-scroll">
             {session ? (
               recommendations &&
