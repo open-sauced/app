@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.62.0-beta.2](https://github.com/open-sauced/app/compare/v2.62.0-beta.1...v2.62.0-beta.2) (2024-09-03)
+
+
+### 🐛 Bug Fixes
+
+* use custom error component with Sentry error reporting for 500s ([#4078](https://github.com/open-sauced/app/issues/4078)) ([c3fd10e](https://github.com/open-sauced/app/commit/c3fd10ecf93d614a6017e0cb7bcb23679f0e2eec))
+
 ## [2.62.0-beta.1](https://github.com/open-sauced/app/compare/v2.61.0...v2.62.0-beta.1) (2024-08-30)
 
 
