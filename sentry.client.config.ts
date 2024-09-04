@@ -24,7 +24,9 @@ Sentry.init({
 
   // You can remove this option if you're not planning to use the Sentry Session Replay feature:
   integrations: [
-    new SentryIntegrations.RewriteFrames(),
+    new SentryIntegrations.RewriteFrames({
+      root: process.cwd(),
+    }),
     new Sentry.Replay({
       // Additional Replay configuration goes in here, for example:
       maskAllText: true,
