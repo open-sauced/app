@@ -3,7 +3,6 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from "@sentry/nextjs";
-import * as SentryBrowser from "@sentry/browser";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -24,9 +23,9 @@ Sentry.init({
 
   // You can remove this option if you're not planning to use the Sentry Session Replay feature:
   integrations: [
-    SentryBrowser.rewriteFramesIntegration({
-      root: process.cwd(),
-    }),
+    // SentryBrowser.rewriteFramesIntegration({
+    //   root: process.cwd(),
+    // }),
     Sentry.replayIntegration({
       // Additional Replay configuration goes in here, for example:
       maskAllText: true,
