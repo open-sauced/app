@@ -4,6 +4,8 @@ import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 import Button from "components/shared/Button/button";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
+import { fetchApiData } from "helpers/fetchApiData";
 import useFetchTrendingRepositories from "lib/hooks/useFetchTrendingRepositories";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import useSession from "lib/hooks/useSession";
@@ -33,6 +35,11 @@ export default function ExploreHomePage() {
         .flat()
     : [];
 
+  const isRepoError = async (repoName: string) => {
+    const response = await fetchApiData({ path: `repo/${repoName}` });
+    return response.error;
+  };
+
   return (
     <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
       <div className="px-4 py-8 lg:px-16 lg:py-12 flex flex-col gap-12 w-full lg:max-w-8xl">
@@ -52,18 +59,26 @@ export default function ExploreHomePage() {
           <Search name="Explore repositories" className="h-12 w-full max-w-3xl" />
         </section>
 
-        <section className="flex flex-col gap-8 ">
+        <section className="flex flex-col gap-8">
           <Title>Trending repositories</Title>
-          <section className="flex flex-nowrap gap-4 overflow-x-scroll">
-            {trendingRepositories &&
-              trendingRepositories.map((repo) => (
-                <RecommendedRepoCard
-                  key={`repo_card_${repo.repo_name}_${repo.star_count}`}
-                  fullName={repo.repo_name}
-                  className="min-w-[24rem]"
-                />
-              ))}
-          </section>
+          <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8">
+            <CarouselContent className="justify-items-stretch pr-8">
+              {trendingRepositories &&
+                trendingRepositories.map(
+                  (repo) =>
+                    !isRepoError(repo.repo_name) && (
+                      <CarouselItem key={`repo_card_${repo.repo_name}`} className="!basis-1/3 min-w-[24rem] h-full">
+                        <RecommendedRepoCard fullName={repo.repo_name} />
+                      </CarouselItem>
+                    )
+                )}
+            </CarouselContent>
+
+            <div className="relative flex gap-4 self-end">
+              <CarouselPrevious className="relative !border !border-slate-300 !text-black !left-0 bg-white rounded-full w-8 h-8 pl-[0.425rem]" />
+              <CarouselNext className="relative !border !border-slate-300 !text-black !right-0 bg-white rounded-full w-8 h-8 pl-[0.425rem]" />
+            </div>
+          </Carousel>
         </section>
 
         <section className="flex flex-col gap-8">
@@ -71,27 +86,35 @@ export default function ExploreHomePage() {
             <Title>Recommended for You</Title>
             <p>Here are some repositories we think would be great for you. Click on one to start contributing!</p>
           </div>
-          <section className="flex flex-nowrap gap-4 overflow-x-scroll">
-            {session ? (
-              recommendations &&
-              recommendations.map((repo: DbRepo) => (
-                <RecommendedRepoCard
-                  key={`repo_card_${repo.full_name}`}
-                  fullName={repo.full_name ?? ""}
-                  className="min-w-[24rem]"
-                />
-              ))
-            ) : (
-              <Button
-                variant="primary"
-                onClick={() => {
-                  signIn({ provider: "github" });
-                }}
-              >
-                Connect with GitHub
-              </Button>
-            )}
-          </section>
+          {session ? (
+            <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8">
+              <CarouselContent className="justify-items-stretch pr-8">
+                {recommendations &&
+                  recommendations.map(
+                    (repo) =>
+                      !!isRepoError(repo.full_name) && (
+                        <CarouselItem key={`repo_card_${repo.full_name}`} className="!basis-1/3 min-w-[24rem] h-full">
+                          <RecommendedRepoCard fullName={repo.full_name} />
+                        </CarouselItem>
+                      )
+                  )}
+              </CarouselContent>
+
+              <div className="relative flex gap-4 self-end">
+                <CarouselPrevious className="relative !border !border-slate-300 !text-black !left-0 bg-white rounded-full w-8 h-8 pl-[0.425rem]" />
+                <CarouselNext className="relative !border !border-slate-300 !text-black !right-0 bg-white rounded-full w-8 h-8 pl-[0.425rem]" />
+              </div>
+            </Carousel>
+          ) : (
+            <Button
+              variant="primary"
+              onClick={() => {
+                signIn({ provider: "github" });
+              }}
+            >
+              Connect with GitHub
+            </Button>
+          )}
         </section>
 
         <section className="flex flex-col gap-8">
