@@ -81,7 +81,7 @@ jobs:
           token: ${{ steps.generate_token.outputs.token }}
 
       - name: "📂 download build artifacts"
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: build
           path: build
