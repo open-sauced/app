@@ -5,7 +5,6 @@ import Title from "components/atoms/Typography/title";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 import Button from "components/shared/Button/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
-import { fetchApiData } from "helpers/fetchApiData";
 import useFetchTrendingRepositories from "lib/hooks/useFetchTrendingRepositories";
 import { useFetchUser } from "lib/hooks/useFetchUser";
 import useSession from "lib/hooks/useSession";
@@ -35,11 +34,6 @@ export default function ExploreHomePage() {
         .flat()
     : [];
 
-  const isRepoError = async (repoName: string) => {
-    const response = await fetchApiData({ path: `repo/${repoName}` });
-    return response.error;
-  };
-
   return (
     <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
       <div className="px-4 py-8 lg:px-16 lg:py-12 flex flex-col gap-12 w-full lg:max-w-8xl">
@@ -64,19 +58,16 @@ export default function ExploreHomePage() {
           <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8">
             <CarouselContent className="justify-items-stretch pr-8">
               {trendingRepositories &&
-                trendingRepositories.map(
-                  (repo) =>
-                    !isRepoError(repo.repo_name) && (
-                      <CarouselItem key={`repo_card_${repo.repo_name}`} className="!basis-1/3 min-w-[24rem] h-full">
-                        <RecommendedRepoCard fullName={repo.repo_name} />
-                      </CarouselItem>
-                    )
-                )}
+                trendingRepositories.map((repo) => (
+                  <CarouselItem key={`repo_card_${repo.repo_name}`} className="!basis-1/3 min-w-[24rem] h-full">
+                    <RecommendedRepoCard fullName={repo.repo_name} />
+                  </CarouselItem>
+                ))}
             </CarouselContent>
 
             <div className="relative flex gap-4 self-end">
-              <CarouselPrevious className="relative !border !border-slate-300 !text-black !left-0 bg-white rounded-full w-8 h-8 pl-[0.425rem]" />
-              <CarouselNext className="relative !border !border-slate-300 !text-black !right-0 bg-white rounded-full w-8 h-8 pl-[0.425rem]" />
+              <CarouselPrevious className="relative !border !border-slate-300 !text-black !left-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
+              <CarouselNext className="relative !border !border-slate-300 !text-black !right-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
             </div>
           </Carousel>
         </section>
@@ -90,19 +81,16 @@ export default function ExploreHomePage() {
             <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8">
               <CarouselContent className="justify-items-stretch pr-8">
                 {recommendations &&
-                  recommendations.map(
-                    (repo) =>
-                      !!isRepoError(repo.full_name) && (
-                        <CarouselItem key={`repo_card_${repo.full_name}`} className="!basis-1/3 min-w-[24rem] h-full">
-                          <RecommendedRepoCard fullName={repo.full_name} />
-                        </CarouselItem>
-                      )
-                  )}
+                  recommendations.map((repo) => (
+                    <CarouselItem key={`repo_card_${repo.full_name}`} className="!basis-1/3 min-w-[24rem] h-full">
+                      <RecommendedRepoCard fullName={repo.full_name} />
+                    </CarouselItem>
+                  ))}
               </CarouselContent>
 
               <div className="relative flex gap-4 self-end">
-                <CarouselPrevious className="relative !border !border-slate-300 !text-black !left-0 bg-white rounded-full w-8 h-8 pl-[0.425rem]" />
-                <CarouselNext className="relative !border !border-slate-300 !text-black !right-0 bg-white rounded-full w-8 h-8 pl-[0.425rem]" />
+                <CarouselPrevious className="relative !border !border-slate-300 !text-black !left-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
+                <CarouselNext className="relative !border !border-slate-300 !text-black !right-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
               </div>
             </Carousel>
           ) : (
