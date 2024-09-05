@@ -14,7 +14,11 @@ export default function useFetchTrendingRepositories() {
   );
 
   return {
-    data: data ?? [],
+    data: data
+      ? data.filter(
+          (repo) => !repo.repo_name.toLowerCase().includes("-auto") || !repo.repo_name.toLowerCase().includes("crack")
+        )
+      : [],
     isLoading: !error && !data,
     isError: !!error,
   };
