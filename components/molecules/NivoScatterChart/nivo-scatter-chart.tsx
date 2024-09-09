@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-import { ResponsiveScatterPlot, ScatterPlotNodeProps } from "@nivo/scatterplot";
+import { ResponsiveScatterPlot, ScatterPlotNodeProps, ScatterPlotTooltipProps } from "@nivo/scatterplot";
 import { animated } from "@react-spring/web";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
@@ -8,7 +8,8 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
-import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
+import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
 
 export type PrStatusFilter = "open" | "closed" | "all";
 
@@ -57,7 +58,41 @@ const NivoScatterPlot = ({
   let functionTimeout: any;
 
   // Brought this in here to have access to repositories
+
+  const CustomTooltTip = (props: ScatterPlotTooltipProps<ScatterChartDataItems>) => {
+    return <HoverCardWrapper username={props.node.data.contributor} repositories={repositories!} />;
+  };
   const CustomNode = (props: ScatterPlotNodeProps<ScatterChartDataItems>) => {
+    const { node, onMouseEnter, onMouseMove, onMouseLeave, onClick } = props;
+
+    const handleMouseEnter = useCallback(
+      (event: any) => {
+        onMouseEnter?.(node, event);
+      },
+      [node, onMouseEnter]
+    );
+
+    const handleMouseMove = useCallback(
+      (event: any) => {
+        onMouseMove?.(node, event);
+      },
+      [node, onMouseMove]
+    );
+
+    const handleMouseLeave = useCallback(
+      (event: any) => {
+        onMouseLeave?.(node, event);
+      },
+      [node, onMouseLeave]
+    );
+
+    const handleClick = useCallback(
+      (event: any) => {
+        onClick?.(node, event);
+      },
+      [node, onClick]
+    );
+
     return (
       <animated.foreignObject
         className="cursor-pointer"
@@ -66,8 +101,12 @@ const NivoScatterPlot = ({
         r={props.style.size.to((size: number) => size / 2) as unknown as number}
         y={props.style.y.to((yVal: number) => yVal - 35 / 1) as unknown as number}
         x={props.style.x.to((xVal: number) => xVal - 35 / 2) as unknown as number}
+        onMouseEnter={handleMouseEnter}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
       >
-        <AvatarHoverCard contributor={props.node.data.contributor} repositories={repositories!} />
+        <Avatar contributor={props.node.data.contributor} />
       </animated.foreignObject>
     );
   };
@@ -193,6 +232,7 @@ const NivoScatterPlot = ({
               },
             },
           }}
+          tooltip={CustomTooltTip}
           isInteractive={true}
           axisLeft={{
             tickSize: 2,
