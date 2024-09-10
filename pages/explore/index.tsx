@@ -131,9 +131,26 @@ export default function ExploreHomePage() {
               <TbFileDescription />
               Learn how to use Workspaces for your project
             </a>
-            <Button variant="primary" className="w-fit">
-              Create your own Workspace
-            </Button>
+            {session ? (
+              <Button variant="primary" href="/workspaces/new" className="w-fit">
+                Create a new Workspace
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                onClick={() => {
+                  if (!session) {
+                    signIn({
+                      provider: "github",
+                      options: { redirectTo: new URL("/workspaces/new", window.location.origin).toString() },
+                    });
+                  }
+                }}
+                className="w-fit"
+              >
+                Log in to create Workspaces
+              </Button>
+            )}
           </div>
 
           <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8 w-full lg:basis-2/3">

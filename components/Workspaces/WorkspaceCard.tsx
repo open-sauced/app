@@ -30,7 +30,7 @@ export default function WorkspaceCard({ workspaceId }: { workspaceId: string }) 
       <Card className="flex flex-col gap-4 justify-between py-[1.25rem] w-full">
         {!(isLoading || isMembersLoading || isWorkspaceRepositoriesLoading) ? (
           <>
-            <span className="self-start flex flex-col gap-4">
+            <div className="self-start flex flex-col gap-4">
               <div className="flex gap-2 items-center">
                 <Image
                   src={getAvatarById((workspaceOwner?.user_id ?? 0).toString())}
@@ -48,7 +48,7 @@ export default function WorkspaceCard({ workspaceId }: { workspaceId: string }) 
                   {(workspace?.description.length ?? 0) > 0 ? workspace?.description : "No description given."}
                 </p>
               </section>
-            </span>
+            </div>
 
             <CardRepoList repoList={workspaceRepositories} limit={3} />
           </>
