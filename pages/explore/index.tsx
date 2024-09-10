@@ -1,5 +1,6 @@
+import { TbFileDescription } from "react-icons/tb";
+import WorkspaceCard from "components/Workspaces/WorkspaceCard";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import Card from "components/atoms/Card/card";
 import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
@@ -10,6 +11,12 @@ import { useFetchUser } from "lib/hooks/useFetchUser";
 import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
+
+export const FEATURED_WORKSPACES = [
+  "64c3859b-b4d3-4768-9c70-10278180bc2b",
+  "43c7d538-cce2-43d3-9cdb-a6af6cae27cd",
+  "286c8ba3-1b1e-4579-b7c5-bb9fd8329f1f",
+];
 
 export default function ExploreHomePage() {
   const { session } = useSession(true);
@@ -60,7 +67,7 @@ export default function ExploreHomePage() {
               {trendingRepositories &&
                 trendingRepositories.map((repo) => (
                   <CarouselItem key={`trending_${repo.repo_name}`} className="!basis-1/3 min-w-[24rem] h-full">
-                    <RecommendedRepoCard fullName={repo.repo_name} className="h-56 !basis-1/3 min-w-[24rem]" />
+                    <RecommendedRepoCard fullName={repo.repo_name} className="h-56" />
                   </CarouselItem>
                 ))}
             </CarouselContent>
@@ -75,7 +82,11 @@ export default function ExploreHomePage() {
         <section className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <Title>Recommended for You</Title>
-            <p>Here are some repositories we think would be great for you. Click on one to start contributing!</p>
+            <p>
+              {session
+                ? "Here are some repositories we think would be great for you. Click on one to start contributing!"
+                : "Log in to get personalized recommendations on repositories to contribute to!"}
+            </p>
           </div>
           {session ? (
             <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8">
@@ -99,17 +110,45 @@ export default function ExploreHomePage() {
               onClick={() => {
                 signIn({ provider: "github" });
               }}
+              className="w-fit"
             >
               Connect with GitHub
             </Button>
           )}
         </section>
 
-        <section className="flex flex-col gap-8">
-          <Title>Discover Workspaces</Title>
-          <Card>
-            <h1>Fair Source Companies</h1>
-          </Card>
+        <section className="flex flex-col lg:flex-row gap-8 w-full">
+          <div className="lg:basis-1/3 flex flex-col gap-4">
+            <Title>Discover Workspaces</Title>
+            <p>
+              Access insights into collections of repositories. Check out our top picks curated by the OpenSauced team!
+            </p>
+            <a
+              href="https://opensauced.pizza/docs/features/workspaces/"
+              target="_blank"
+              className="flex gap-2 items-center text-slate-500 text-sm hover:underline"
+            >
+              <TbFileDescription />
+              Learn how to use Workspaces for your project
+            </a>
+            <Button variant="primary" className="w-fit">
+              Create your own Workspace
+            </Button>
+          </div>
+
+          <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8 w-full lg:basis-2/3">
+            <CarouselContent className="justify-items-stretch pr-8">
+              {FEATURED_WORKSPACES.map((workspaceId) => (
+                <CarouselItem key={`workspace_card_{workspaceId}`} className="!basis-1/2 min-w-[24rem] h-full">
+                  <WorkspaceCard workspaceId={workspaceId} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="relative flex gap-4 self-end">
+              <CarouselPrevious className="relative !border !border-slate-300 !text-black !left-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
+              <CarouselNext className="relative !border !border-slate-300 !text-black !right-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
+            </div>
+          </Carousel>
         </section>
       </div>
     </WorkspaceLayout>
