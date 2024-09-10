@@ -5,6 +5,20 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.62.0](https://github.com/open-sauced/app/compare/v2.61.0...v2.62.0) (2024-09-10)
+
+
+### 🍕 Features
+
+* use `SplitButton` for repo page Add Workspace buttons ([#4062](https://github.com/open-sauced/app/issues/4062)) ([6cf13e6](https://github.com/open-sauced/app/commit/6cf13e6bc1b550f595e24dbc2856fddd0ad3028c))
+
+
+### 🐛 Bug Fixes
+
+* correct no insights message on contributor insights ([#4090](https://github.com/open-sauced/app/issues/4090)) ([49dfa03](https://github.com/open-sauced/app/commit/49dfa031bee3d8e5528c6c2da753524cc624be64))
+* fixed dropdown styling ([#4077](https://github.com/open-sauced/app/issues/4077)) ([4fa8b7f](https://github.com/open-sauced/app/commit/4fa8b7fd22b0c59dbcf5e573601bc686d9c1d1ee))
+* use custom error component with Sentry error reporting for 500s ([#4078](https://github.com/open-sauced/app/issues/4078)) ([c3fd10e](https://github.com/open-sauced/app/commit/c3fd10ecf93d614a6017e0cb7bcb23679f0e2eec))
+
 ## [2.62.0-beta.3](https://github.com/open-sauced/app/compare/v2.62.0-beta.2...v2.62.0-beta.3) (2024-09-10)
 
 
