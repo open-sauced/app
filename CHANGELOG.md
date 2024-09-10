@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.62.0-beta.3](https://github.com/open-sauced/app/compare/v2.62.0-beta.2...v2.62.0-beta.3) (2024-09-10)
+
+
+### 🐛 Bug Fixes
+
+* correct no insights message on contributor insights ([#4090](https://github.com/open-sauced/app/issues/4090)) ([49dfa03](https://github.com/open-sauced/app/commit/49dfa031bee3d8e5528c6c2da753524cc624be64))
+* fixed dropdown styling ([#4077](https://github.com/open-sauced/app/issues/4077)) ([4fa8b7f](https://github.com/open-sauced/app/commit/4fa8b7fd22b0c59dbcf5e573601bc686d9c1d1ee))
+
 ## [2.62.0-beta.2](https://github.com/open-sauced/app/compare/v2.62.0-beta.1...v2.62.0-beta.2) (2024-09-03)
 
 
