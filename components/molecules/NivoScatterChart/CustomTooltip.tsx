@@ -13,7 +13,7 @@ import CardProfile from "../CardProfile/card-profile";
 interface CustomTooltipProps {
   username: string;
   repositories?: number[];
-  id: number;
+  id?: number | null;
 }
 const CustomTooltTip = ({ username, repositories, id }: CustomTooltipProps) => {
   const loggedIn = Boolean(id);

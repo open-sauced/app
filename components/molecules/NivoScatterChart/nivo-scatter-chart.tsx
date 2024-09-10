@@ -234,7 +234,7 @@ const NivoScatterPlot = ({
             },
           }}
           tooltip={({ node }) => {
-            if (node && node.data && node.data.contributor && userId) {
+            if (node && node.data && node.data.contributor) {
               return <CustomTooltTip username={node.data.contributor} repositories={repositories!} id={userId} />;
             }
             return <div>No Contributor Found</div>;
