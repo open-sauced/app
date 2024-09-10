@@ -28,6 +28,9 @@ const interests = [
 module.exports = millionLint({
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
+  experimental: {
+    instrumentationHook: true,
+  },
   images: {
     remotePatterns: [
       {

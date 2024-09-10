@@ -70,7 +70,7 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal, 
         onInteractOutside={onCloseModal}
       >
         <Card heading={<h1 className="text-xl font-semibold">Add to workspace</h1>}>
-          <div className="flex flex-col gap-4 w-[32rem] h-full px-8 py-4">
+          <div className="flex flex-col gap-4 w-fit h-full px-8 py-4">
             {!user ? (
               <div className="flex flex-col gap-4 text-center">
                 <img

@@ -50,10 +50,11 @@ jobs:
         run: npm run build
 
       - name: "📂 production artifacts"
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: .next
+          include-hidden-files: true
 
   release:
     environment:
@@ -81,7 +82,7 @@ jobs:
           token: ${{ steps.generate_token.outputs.token }}
 
       - name: "📂 download build artifacts"
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: build

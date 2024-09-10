@@ -1,9 +1,14 @@
+import { NextPageContext } from "next";
 import Link from "next/link";
+import Error from "next/error";
+import * as Sentry from "@sentry/nextjs";
+
 import FullHeightContainer from "components/atoms/FullHeightContainer/full-height-container";
 import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
+
 import BubbleBG from "../img/bubble-bg.svg";
 
-export default function Custom500() {
+function Custom500() {
   return (
     <FullHeightContainer className="text-white">
       <div
@@ -28,3 +33,14 @@ export default function Custom500() {
     </FullHeightContainer>
   );
 }
+
+Custom500.getInitialProps = async (contextData: NextPageContext) => {
+  // In case this is running in a serverless function, await this in order to give Sentry
+  // time to send the error before the lambda exits
+  await Sentry.captureUnderscoreErrorException(contextData);
+
+  // This will contain the status code of the response
+  return Error.getInitialProps(contextData);
+};
+
+export default Custom500;
