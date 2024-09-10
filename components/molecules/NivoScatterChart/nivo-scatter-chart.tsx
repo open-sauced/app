@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
+import { useRouter } from "next/router";
 
-import { ResponsiveScatterPlot, ScatterPlotNodeProps, ScatterPlotTooltipProps } from "@nivo/scatterplot";
+import { ResponsiveScatterPlot, ScatterPlotNodeProps } from "@nivo/scatterplot";
 import { animated } from "@react-spring/web";
 
 import humanizeNumber from "lib/utils/humanizeNumber";
@@ -9,7 +10,8 @@ import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
 import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
-import HoverCardWrapper from "../HoverCardWrapper/hover-card-wrapper";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import CustomTooltTip from "./CustomTooltip";
 
 export type PrStatusFilter = "open" | "closed" | "all";
 
@@ -54,14 +56,13 @@ const NivoScatterPlot = ({
 }: ScatterPlotProps) => {
   const [showMembers, setShowMembers] = useState(false);
   const [isLogarithmic, setIsLogarithmic] = useState(true);
+  const { userId } = useSupabaseAuth();
 
   let functionTimeout: any;
 
   // Brought this in here to have access to repositories
-
-  const CustomTooltTip = (props: ScatterPlotTooltipProps<ScatterChartDataItems>) => {
-    return <HoverCardWrapper username={props.node.data.contributor} repositories={repositories!} />;
-  };
+  const router = useRouter();
+  const topic = router.query.pageId as string;
   const CustomNode = (props: ScatterPlotNodeProps<ScatterChartDataItems>) => {
     const { node, onMouseEnter, onMouseMove, onMouseLeave, onClick } = props;
 
@@ -232,7 +233,12 @@ const NivoScatterPlot = ({
               },
             },
           }}
-          tooltip={CustomTooltTip}
+          tooltip={({ node }) => {
+            if (node && node.data && node.data.contributor && userId) {
+              return <CustomTooltTip username={node.data.contributor} repositories={repositories!} id={userId} />;
+            }
+            return <div>No Contributor Found</div>;
+          }}
           isInteractive={true}
           axisLeft={{
             tickSize: 2,
