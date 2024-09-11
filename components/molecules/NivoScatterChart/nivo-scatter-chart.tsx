@@ -57,7 +57,11 @@ const NivoScatterPlot = ({
   const [showMembers, setShowMembers] = useState(false);
   const [isLogarithmic, setIsLogarithmic] = useState(true);
   const { userId } = useSupabaseAuth();
-
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [contributorName, setContributorName] = useState("");
   let functionTimeout: any;
 
   // Brought this in here to have access to repositories
@@ -68,6 +72,10 @@ const NivoScatterPlot = ({
 
     const handleMouseEnter = useCallback(
       (event: any) => {
+        setTooltipVisible(true);
+        setMouseX(event.clientX);
+        setMouseY(event.clientY);
+        setContributorName(node.data.contributor);
         onMouseEnter?.(node, event);
       },
       [node, onMouseEnter]
@@ -82,6 +90,10 @@ const NivoScatterPlot = ({
 
     const handleMouseLeave = useCallback(
       (event: any) => {
+        setTimeout(() => {
+          setTooltipVisible(false);
+        }, 500);
+
         onMouseLeave?.(node, event);
       },
       [node, onMouseLeave]
@@ -103,8 +115,9 @@ const NivoScatterPlot = ({
         y={props.style.y.to((yVal: number) => yVal - 35 / 1) as unknown as number}
         x={props.style.x.to((xVal: number) => xVal - 35 / 2) as unknown as number}
         onMouseEnter={handleMouseEnter}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        onMouseLeave={() => {
+          setTooltipVisible(false);
+        }}
         onClick={handleClick}
       >
         <Avatar contributor={props.node.data.contributor} />
@@ -158,7 +171,24 @@ const NivoScatterPlot = ({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between px-0 pt-3 md:flex-row md:px-7">
+      {(tooltipVisible || isHovered) && (
+        <div
+          style={{
+            position: "absolute",
+            marginTop: mouseY - 400,
+            marginLeft: mouseX - 100,
+            zIndex: 9999,
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <CustomTooltTip username={contributorName} repositories={repositories} id={userId} />
+        </div>
+      )}
+      <div
+        className="flex flex-col items-center justify-between px-0 pt-3 md:flex-row md:px-7"
+        onMouseLeave={() => setTooltipVisible(false)}
+      >
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
@@ -187,7 +217,7 @@ const NivoScatterPlot = ({
           <></>
         )}
         {/* replaced display flex to hidden on show/bots container */}
-        <div className="flex gap-2 mt-3 md:mt-0">
+        <div className="flex gap-2 mt-3 md:mt-0" onMouseLeave={() => setTooltipVisible(false)}>
           <div>
             <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           </div>
@@ -200,9 +230,8 @@ const NivoScatterPlot = ({
           </div>
         </div>
       </div>
-      <div className="h-[400px]">
+      <div className="h-[400px]" onMouseLeave={() => setTooltipVisible(false)}>
         <ResponsiveScatterPlot
-          // leaving this here for now so we don't see the default tooltip from nivo
           nodeSize={isMobile ? 25 : 35}
           data={isMobile ? filteredData : data}
           margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}
@@ -234,10 +263,12 @@ const NivoScatterPlot = ({
             },
           }}
           tooltip={({ node }) => {
-            if (node && node.data && node.data.contributor) {
-              return <CustomTooltTip username={node.data.contributor} repositories={repositories!} id={userId} />;
-            }
-            return <div>No Contributor Found</div>;
+            return null;
+          }}
+          onMouseLeave={() => {
+            setTimeout(() => {
+              setTooltipVisible(false);
+            }, 500);
           }}
           isInteractive={true}
           axisLeft={{
