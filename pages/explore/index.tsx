@@ -1,17 +1,17 @@
 import { TbFileDescription } from "react-icons/tb";
 import WorkspaceCard from "components/Workspaces/WorkspaceCard";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import Search from "components/atoms/Search/search";
 import Title from "components/atoms/Typography/title";
 import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
 import Button from "components/shared/Button/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
 import useFetchTrendingRepositories from "lib/hooks/useFetchTrendingRepositories";
-import { useFetchUser } from "lib/hooks/useFetchUser";
 import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
+import { SearchDialogTrigger } from "components/organisms/SearchDialog/search-dialog";
 
+// TODO: change to prod workspaces
 export const FEATURED_WORKSPACES = [
   "64c3859b-b4d3-4768-9c70-10278180bc2b",
   "43c7d538-cce2-43d3-9cdb-a6af6cae27cd",
@@ -19,9 +19,8 @@ export const FEATURED_WORKSPACES = [
 ];
 
 export default function ExploreHomePage() {
-  const { session } = useSession(true);
-  const { data: user } = useFetchUser(session ? session.user_name ?? "" : "");
   const { signIn } = useSupabaseAuth();
+  const { session } = useSession(true);
 
   const {
     data: trendingRepositories,
@@ -57,7 +56,7 @@ export default function ExploreHomePage() {
               Open Source
             </span>
           </h1>
-          <Search name="Explore repositories" className="h-12 w-full max-w-3xl" />
+          <SearchDialogTrigger className="!mx-auto !h-12 !w-full !max-w-3xl !items-center !place-items-center" />
         </section>
 
         <section className="flex flex-col gap-8">

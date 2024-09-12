@@ -183,7 +183,7 @@ const SearchDialog = () => {
   );
 };
 
-const SearchDialogTrigger = () => {
+const SearchDialogTrigger = ({ className }: { className?: string }) => {
   const setOpenSearch = store((state) => state.setOpenSearch);
   const isMac = useIsMacOS();
 
@@ -203,7 +203,7 @@ const SearchDialogTrigger = () => {
       <div
         className={`hidden sm:flex justify-between p-1 pl-3 h-fit ${
           isMac ? "w-56" : "w-64"
-        } ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden`}
+        } ${className} ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden`}
         onClick={() => setOpenSearch(true)}
       >
         <div className="flex items-center">
