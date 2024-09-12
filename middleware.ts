@@ -128,7 +128,7 @@ export async function middleware(req: NextRequest) {
   }
   redirectUrl.searchParams.set("redirectedFrom", req.nextUrl.pathname);
 
-  redirectUrl.pathname = "/explore/topic/typescript";
+  redirectUrl.pathname = "/explore";
   if (!req.nextUrl.searchParams.has("redirectedFrom")) {
     return NextResponse.redirect(redirectUrl);
   }
