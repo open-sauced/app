@@ -45,18 +45,21 @@ export default function ExploreHomePage() {
       <div className="px-4 py-8 lg:px-16 lg:py-12 flex flex-col gap-12 w-full lg:max-w-8xl">
         <section
           className={`
-            relative flex flex-col items-center w-full gap-8 lg:px-8 lg:py-24
+            relative flex flex-col items-center w-full gap-8 py-8 lg:px-8 lg:py-24
             bg-[url('~/img/explore-page-header.png')] bg-center bg-cover rounded-2xl
           `}
         >
-          <h1 className="text-4xl font-medium text-white">
+          <h1 className="text-2xl lg:text-4xl font-medium text-white">
             Explore
             <span className="bg-gradient-to-r from-gradient-orange-one to-gradient-orange-two bg-clip-text text-transparent font-bold">
               {" "}
               Open Source
             </span>
           </h1>
-          <SearchDialogTrigger className="!mx-auto !h-12 !w-full !max-w-3xl !items-center !place-items-center" />
+          <SearchDialogTrigger
+            hideSmallIcon
+            className="!mx-auto !flex !h-12 !w-full !max-w-[20rem] lg:!max-w-3xl !items-center !place-items-center"
+          />
         </section>
 
         <section className="flex flex-col gap-8">
@@ -65,7 +68,7 @@ export default function ExploreHomePage() {
             <CarouselContent className="justify-items-stretch pr-8">
               {trendingRepositories &&
                 trendingRepositories.map((repo) => (
-                  <CarouselItem key={`trending_${repo.repo_name}`} className="!basis-1/3 min-w-[24rem] h-full">
+                  <CarouselItem key={`trending_${repo.repo_name}`} className="lg:!basis-1/3 min-w-[24rem] h-full">
                     <RecommendedRepoCard fullName={repo.repo_name} className="h-56" />
                   </CarouselItem>
                 ))}
@@ -92,7 +95,10 @@ export default function ExploreHomePage() {
               <CarouselContent className="justify-items-stretch pr-8">
                 {recommendations &&
                   recommendations.map((repo) => (
-                    <CarouselItem key={`recommendation_${repo.full_name}`} className="!basis-1/3 min-w-[24rem] h-full">
+                    <CarouselItem
+                      key={`recommendation_${repo.full_name}`}
+                      className="lg:!basis-1/3 min-w-[24rem] h-full"
+                    >
                       <RecommendedRepoCard fullName={repo.full_name} className="h-56" />
                     </CarouselItem>
                   ))}
@@ -155,7 +161,7 @@ export default function ExploreHomePage() {
           <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8 w-full lg:basis-2/3">
             <CarouselContent className="justify-items-stretch pr-8">
               {FEATURED_WORKSPACES.map((workspaceId) => (
-                <CarouselItem key={`workspace_card_{workspaceId}`} className="!basis-1/2 min-w-[24rem] h-full">
+                <CarouselItem key={`workspace_card_{workspaceId}`} className="lg:!basis-1/2 min-w-[24rem] h-full">
                   <WorkspaceCard workspaceId={workspaceId} />
                 </CarouselItem>
               ))}

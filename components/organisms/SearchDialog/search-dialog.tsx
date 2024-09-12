@@ -183,7 +183,7 @@ const SearchDialog = () => {
   );
 };
 
-const SearchDialogTrigger = ({ className }: { className?: string }) => {
+const SearchDialogTrigger = ({ hideSmallIcon, className }: { hideSmallIcon?: boolean; className?: string }) => {
   const setOpenSearch = store((state) => state.setOpenSearch);
   const isMac = useIsMacOS();
 
@@ -214,9 +214,11 @@ const SearchDialogTrigger = ({ className }: { className?: string }) => {
           {isMac ? "⌘K" : <span className="text-xs px-1 py-2">CTRL+K</span>}
         </Text>
       </div>
-      <div className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>
-        <FaSearch className="text-light-slate-9 cursor-pointer" fontSize={16} />
-      </div>
+      {!hideSmallIcon && (
+        <div className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>
+          <FaSearch className="text-light-slate-9 cursor-pointer" fontSize={16} />
+        </div>
+      )}
     </>
   );
 };
