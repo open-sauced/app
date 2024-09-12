@@ -119,7 +119,7 @@ const ListsHub = ({ workspace }: { workspace: Workspace }) => {
             <div className="flex flex-col items-center justify-center w-full gap-4 ">
               {!isLoading && sessionToken ? (
                 <>
-                  <Title className="text-2xl">You currently have no repository insights</Title>
+                  <Title className="text-2xl">You currently have no contributor insights</Title>
                   <Button variant="primary" href={`/workspaces/${workspace.id}/contributor-insights/new`}>
                     Create a new contributor insight
                   </Button>
