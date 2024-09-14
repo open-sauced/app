@@ -6,7 +6,6 @@ import HeaderLogo from "components/molecules/HeaderLogo/header-logo";
 
 import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import { useFetchUser } from "lib/hooks/useFetchUser";
 import OnboardingButton from "components/molecules/OnboardingButton/onboarding-button";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
@@ -43,8 +42,6 @@ const TopNav = () => {
 
 const Nav = ({ className }: { className?: string }) => {
   const { user } = useSupabaseAuth();
-  const { data: gitHubUser } = useFetchUser(user?.user_metadata.user_name);
-  const userInterest = gitHubUser?.interests?.split(",")[0] || "javascript";
   const router = useRouter();
 
   const explorePageUrlPattern = /^(\/explore\/topic).*\/(dashboard|reports|contributors|activity).*/g;
@@ -66,10 +63,10 @@ const Nav = ({ className }: { className?: string }) => {
         ) : null}
         <li className="hidden lg:inline">
           <Link
+            href="/explore"
             className={`tracking-tight font-medium text-slate-700 text-sm hover:text-orange-500 transition-all ${getActiveStyle(
               explorePageUrlPattern.test(router.asPath)
             )}`}
-            href={`/explore/topic/${userInterest}`}
           >
             Explore
           </Link>
