@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.63.0-beta.1](https://github.com/open-sauced/app/compare/v2.62.0...v2.63.0-beta.1) (2024-09-14)
+
+
+### 🍕 Features
+
+* updated `/explore` page ([#4053](https://github.com/open-sauced/app/issues/4053)) ([37ee0f5](https://github.com/open-sauced/app/commit/37ee0f5f5d66c39bff5b99bf7036db8c14e4b48b))
+
 ## [2.62.0](https://github.com/open-sauced/app/compare/v2.61.0...v2.62.0) (2024-09-10)
 
 
