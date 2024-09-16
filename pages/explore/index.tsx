@@ -11,11 +11,13 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
 import { SearchDialogTrigger } from "components/organisms/SearchDialog/search-dialog";
 
-// TODO: change to prod workspaces
 export const FEATURED_WORKSPACES = [
-  "64c3859b-b4d3-4768-9c70-10278180bc2b",
-  "43c7d538-cce2-43d3-9cdb-a6af6cae27cd",
-  "286c8ba3-1b1e-4579-b7c5-bb9fd8329f1f",
+  "b355ecef-76a5-4451-972a-281e16ccf2e4", // Brandon's "Angular"
+  "0950814d-ed16-4201-add8-d17479cfdc1f", // Zeu's "OSS Companies"
+  "190972f6-caa8-4a90-a21d-2322259b90c7", // Bekah's "CNCF Top 30"
+  "4835f232-ec69-474d-9b88-b2b779015e08", // John's "Go Hotness"
+  "7b540a5d-a767-4f8f-8295-2eccf31ca568", // Brian's "Vite Ecosystem"
+  "380d1129-cd99-4958-83c7-f5d8c4f778af", // Nick's "Daishi's Greatest Hits"
 ];
 
 export default function ExploreHomePage() {
