@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.63.0-beta.2](https://github.com/open-sauced/app/compare/v2.63.0-beta.1...v2.63.0-beta.2) (2024-09-16)
+
+
+### 🐛 Bug Fixes
+
+* set workspaces for `/explore` "Discover Workspaces" section ([#4106](https://github.com/open-sauced/app/issues/4106)) ([41c7248](https://github.com/open-sauced/app/commit/41c72489df14b9ae563136c0cd50aae64185f92c))
+
 ## [2.63.0-beta.1](https://github.com/open-sauced/app/compare/v2.62.0...v2.63.0-beta.1) (2024-09-14)
 
 
