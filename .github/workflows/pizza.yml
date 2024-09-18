@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pizza Action
-        uses: open-sauced/pizza-action@v2.0.0
+        uses: open-sauced/pizza-action@v2.2.0
         with:
+          cli-version: "v2.2.0"
           commit-and-pr: "true"
+          pr-title: "chore: update repository codeowners"
