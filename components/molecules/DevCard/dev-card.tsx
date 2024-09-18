@@ -12,6 +12,7 @@ import { getRelativeDays } from "lib/utils/date-utils";
 import { getAvatarByUsername } from "lib/utils/github";
 import Pill from "components/atoms/Pill/pill";
 import { UserDevStats } from "pages/u/[username]/card";
+import { useHasMounted } from "lib/hooks/useHasMounted";
 import DevCardGradient from "../../../public/devcard-gradient.png";
 
 export type DevCardProps = {
@@ -26,8 +27,8 @@ export type DevCardProps = {
 
 export default function DevCard(props: DevCardProps) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
-  const [isLoading, setIsLoading] = useState(true); //used to solve hydartion error
   const isInteractive = props.isInteractive ?? true;
+  const isLoaded = useHasMounted();
 
   useEffect(() => {
     setIsFlipped(props.isFlipped ?? false);
@@ -38,13 +39,6 @@ export default function DevCard(props: DevCardProps) {
       setIsFlipped(props.isFlipped ?? false);
     }
   }, [props.isInteractive, props.isFlipped]);
-
-  // used to solve hydartion error
-  useEffect(() => {
-    if (!props.isLoading) {
-      setIsLoading(props.isLoading ?? false);
-    }
-  }, [props.isLoading]);
 
   function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     if (!isInteractive) {
@@ -91,7 +85,7 @@ export default function DevCard(props: DevCardProps) {
     },
   });
 
-  return isLoading ? (
+  return !isLoaded ? (
     <animated.div
       className={"grid rounded-3xl bg-white"}
       style={{
