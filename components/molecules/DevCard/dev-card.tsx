@@ -191,7 +191,7 @@ export default function DevCard(props: DevCardProps) {
                 className="absolute rounded-full border-[1.5px] border-gray-300 border-opacity-40 -left-1"
               />
               <p className="pl-10 truncate items-center">{props.devstats?.login}</p>
-              <p className="-pl-4 justfy-self-end text-sm flex gap-0.5">
+              <p className="-pl-4 justify-self-end items-center text-sm flex gap-0.5">
                 {Math.ceil(props.devstats?.oscr || 0)}
                 <span className="text-[0.7rem] text-gray-100 font-normal">/300</span>
               </p>
