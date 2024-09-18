@@ -28,7 +28,7 @@ export type DevCardProps = {
 export default function DevCard(props: DevCardProps) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
   const isInteractive = props.isInteractive ?? true;
-  const isLoaded = useHasMounted();
+  const hasMounted = useHasMounted();
 
   useEffect(() => {
     setIsFlipped(props.isFlipped ?? false);
@@ -85,7 +85,7 @@ export default function DevCard(props: DevCardProps) {
     },
   });
 
-  return !isLoaded ? (
+  return !hasMounted ? (
     <animated.div
       className={"grid rounded-3xl bg-white"}
       style={{
