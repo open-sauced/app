@@ -129,20 +129,11 @@ module.exports = millionLint({
           permanent: true,
         };
       }),
-      ...interests.map((interest) => {
-        return {
-          source: `/explore/topic/${interest}/:tool(dashboard|reports|contributors|activity)`,
-          destination: `/explore`,
-          permanent: true,
-        };
-      }),
-      ...interests.map((interest) => {
-        return {
-          source: `/explore/topic/${interest}`,
-          destination: `/explore`,
-          permanent: true,
-        };
-      }),
+      {
+        source: `/explore/topic/:slug*`,
+        destination: `/explore`,
+        permanent: true,
+      },
       ...interests.map((interest) => {
         return {
           source: `/${interest}`,
