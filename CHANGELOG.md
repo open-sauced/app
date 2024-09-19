@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.63.0-beta.3](https://github.com/open-sauced/app/compare/v2.63.0-beta.2...v2.63.0-beta.3) (2024-09-19)
+
+
+### 🐛 Bug Fixes
+
+* Prevent OSCR score from popping out of dev card with long usernames ([#4010](https://github.com/open-sauced/app/issues/4010)) ([b92f477](https://github.com/open-sauced/app/commit/b92f477d5691e5f1ffa4957c404bbfb090d220ec))
+
 ## [2.63.0-beta.2](https://github.com/open-sauced/app/compare/v2.63.0-beta.1...v2.63.0-beta.2) (2024-09-16)
 
 
