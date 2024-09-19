@@ -339,6 +339,7 @@ interface DbUser {
   readonly location: string;
   readonly display_local_time: boolean;
   readonly name: string;
+  readonly user_name?: string;
   readonly interests?: string;
   readonly receive_collaboration: boolean;
   readonly display_email: boolean;

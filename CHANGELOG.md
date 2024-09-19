@@ -5,6 +5,34 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.63.0-beta.4](https://github.com/open-sauced/app/compare/v2.63.0-beta.3...v2.63.0-beta.4) (2024-09-19)
+
+
+### 🐛 Bug Fixes
+
+* redirect all explore requests to the new explore page ([#4112](https://github.com/open-sauced/app/issues/4112)) ([182f091](https://github.com/open-sauced/app/commit/182f091abc393d5226102ba18aaa006e2ee12add))
+
+## [2.63.0-beta.3](https://github.com/open-sauced/app/compare/v2.63.0-beta.2...v2.63.0-beta.3) (2024-09-19)
+
+
+### 🐛 Bug Fixes
+
+* Prevent OSCR score from popping out of dev card with long usernames ([#4010](https://github.com/open-sauced/app/issues/4010)) ([b92f477](https://github.com/open-sauced/app/commit/b92f477d5691e5f1ffa4957c404bbfb090d220ec))
+
+## [2.63.0-beta.2](https://github.com/open-sauced/app/compare/v2.63.0-beta.1...v2.63.0-beta.2) (2024-09-16)
+
+
+### 🐛 Bug Fixes
+
+* set workspaces for `/explore` "Discover Workspaces" section ([#4106](https://github.com/open-sauced/app/issues/4106)) ([41c7248](https://github.com/open-sauced/app/commit/41c72489df14b9ae563136c0cd50aae64185f92c))
+
+## [2.63.0-beta.1](https://github.com/open-sauced/app/compare/v2.62.0...v2.63.0-beta.1) (2024-09-14)
+
+
+### 🍕 Features
+
+* updated `/explore` page ([#4053](https://github.com/open-sauced/app/issues/4053)) ([37ee0f5](https://github.com/open-sauced/app/commit/37ee0f5f5d66c39bff5b99bf7036db8c14e4b48b))
+
 ## [2.62.0](https://github.com/open-sauced/app/compare/v2.61.0...v2.62.0) (2024-09-10)
 
 
