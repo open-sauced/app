@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.63.0-beta.4](https://github.com/open-sauced/app/compare/v2.63.0-beta.3...v2.63.0-beta.4) (2024-09-19)
+
+
+### 🐛 Bug Fixes
+
+* redirect all explore requests to the new explore page ([#4112](https://github.com/open-sauced/app/issues/4112)) ([182f091](https://github.com/open-sauced/app/commit/182f091abc393d5226102ba18aaa006e2ee12add))
+
 ## [2.63.0-beta.3](https://github.com/open-sauced/app/compare/v2.63.0-beta.2...v2.63.0-beta.3) (2024-09-19)
 
 
