@@ -12,6 +12,7 @@ import { getRelativeDays } from "lib/utils/date-utils";
 import { getAvatarByUsername } from "lib/utils/github";
 import Pill from "components/atoms/Pill/pill";
 import { UserDevStats } from "pages/u/[username]/card";
+import { useHasMounted } from "lib/hooks/useHasMounted";
 import DevCardGradient from "../../../public/devcard-gradient.png";
 
 export type DevCardProps = {
@@ -27,6 +28,7 @@ export type DevCardProps = {
 export default function DevCard(props: DevCardProps) {
   const [isFlipped, setIsFlipped] = useState(props.isFlipped ?? false);
   const isInteractive = props.isInteractive ?? true;
+  const hasMounted = useHasMounted();
 
   useEffect(() => {
     setIsFlipped(props.isFlipped ?? false);
@@ -83,7 +85,7 @@ export default function DevCard(props: DevCardProps) {
     },
   });
 
-  return props.isLoading ? (
+  return !hasMounted ? (
     <animated.div
       className={"grid rounded-3xl bg-white"}
       style={{
@@ -152,7 +154,9 @@ export default function DevCard(props: DevCardProps) {
                 height={100}
                 className="rounded-full border-[1.5px] border-gray-300 border-opacity-40"
               />
-              <p>@{props.devstats?.login}</p>
+              <p className="break-words mx-auto whitespace-normal text-center max-w-[200px]">
+                @{props.devstats?.login}
+              </p>
             </div>
 
             {/** OSCR Score **/}
@@ -186,10 +190,10 @@ export default function DevCard(props: DevCardProps) {
                 height={50}
                 className="absolute rounded-full border-[1.5px] border-gray-300 border-opacity-40 -left-1"
               />
-              <p className="pl-10">{props.devstats?.login}</p>
-              <p className="-pl-4 justfy-self-end text-sm flex gap-0.5">
+              <p className="pl-10 truncate items-center">{props.devstats?.login}</p>
+              <p className="-pl-4 justify-self-end items-center text-sm flex gap-0.5">
                 {Math.ceil(props.devstats?.oscr || 0)}
-                <span className="text-[0.5rem] text-gray-100 font-normal">/300</span>
+                <span className="text-[0.7rem] text-gray-100 font-normal">/300</span>
               </p>
             </div>
 
