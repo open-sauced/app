@@ -125,7 +125,28 @@ module.exports = millionLint({
       ...interests.map((interest) => {
         return {
           source: `/${interest}/:tool(dashboard|reports|contributors|activity)`,
-          destination: `/explore/topic/${interest}/:tool`,
+          destination: `/explore`,
+          permanent: true,
+        };
+      }),
+      ...interests.map((interest) => {
+        return {
+          source: `/explore/topic/${interest}/:tool(dashboard|reports|contributors|activity)`,
+          destination: `/explore`,
+          permanent: true,
+        };
+      }),
+      ...interests.map((interest) => {
+        return {
+          source: `/explore/topic/${interest}`,
+          destination: `/explore`,
+          permanent: true,
+        };
+      }),
+      ...interests.map((interest) => {
+        return {
+          source: `/${interest}`,
+          destination: `/explore`,
           permanent: true,
         };
       }),
@@ -138,14 +159,6 @@ module.exports = millionLint({
         source: "/user/:user((?!settings|notifications$).*)",
         destination: "/u/:user",
         permanent: true,
-      },
-    ];
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/explore/topic/:topic",
-        destination: "/explore/topic/:topic/dashboard/filter/recent",
       },
     ];
   },
