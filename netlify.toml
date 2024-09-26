@@ -16,25 +16,31 @@ targetPort = 3001
 deno_import_map = "./netlify/edge-functions/deno.json"
 
 [[redirects]]
-  from = "https://insight.opensauced.pizza/*"
-  to = "https://insights.opensauced.pizza/:splat"
-  status = 301
-  force = true
+from = "https://insight.opensauced.pizza/*"
+to = "https://insights.opensauced.pizza/:splat"
+status = 301
+force = true
 
 [[redirects]]
-  from = "https://insights.opensauced.pizza/*"
-  to = "https://app.opensauced.pizza/:splat"
-  status = 301
-  force = true
+from = "https://insights.opensauced.pizza/*"
+to = "https://app.opensauced.pizza/:splat"
+status = 301
+force = true
 
 [[redirects]]
-  from = "https://beta.insights.opensauced.pizza/*"
-  to = "https://beta.app.opensauced.pizza/:splat"
-  status = 301
-  force = true
+from = "https://beta.insights.opensauced.pizza/*"
+to = "https://beta.app.opensauced.pizza/:splat"
+status = 301
+force = true
 
 [[redirects]]
-  from = "https://oscr.me/:username"
-  to = "https://app.opensauced.pizza/u/:username/card"
-  status = 301
-  force = true
+from = "https://oscr.me/:username"
+to = "https://app.opensauced.pizza/u/:username/card"
+status = 301
+force = true
+
+[[redirects]]
+from = "https://hot.opensauced.pizza/*"
+to = "https://app.opensauced.pizza/explore"
+status = 301
+force = true
