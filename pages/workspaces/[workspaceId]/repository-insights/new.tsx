@@ -72,7 +72,7 @@ const NewInsightPage = () => {
     if (error) {
       toast({ description: "An error has occurred. Try again.", variant: "danger" });
       setLoading(false);
-      return;
+      throw new Error(`Error creating a repository insight`, { cause: error });
     }
 
     toast({ description: "Insight created! Redirecting...", variant: "success" });

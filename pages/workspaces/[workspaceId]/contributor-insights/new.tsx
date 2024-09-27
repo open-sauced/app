@@ -116,7 +116,7 @@ export default function CreateContributorInsightPage({
     if (error) {
       toast({ description: "An error has occurred. Try again.", variant: "danger" });
       setLoading(false);
-      return;
+      throw new Error(`Error creating a contributor insight`, { cause: error });
     }
 
     toast({ description: "Insight created! Redirecting...", variant: "success" });
