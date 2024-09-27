@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { ComponentProps, useEffect, useState } from "react";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { captureException } from "@sentry/nextjs";
 import { fetchApiData } from "helpers/fetchApiData";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
@@ -116,7 +117,8 @@ export default function CreateContributorInsightPage({
     if (error) {
       toast({ description: "An error has occurred. Try again.", variant: "danger" });
       setLoading(false);
-      throw new Error(`Error creating a contributor insight`, { cause: error });
+      captureException(new Error(`Error creating a contributor insight`, { cause: error }));
+      return;
     }
 
     toast({ description: "Insight created! Redirecting...", variant: "success" });
