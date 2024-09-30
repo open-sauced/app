@@ -1,4 +1,5 @@
 import { TbFileDescription } from "react-icons/tb";
+import { useState } from "react";
 import WorkspaceCard from "components/Workspaces/WorkspaceCard";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Title from "components/atoms/Typography/title";
@@ -12,6 +13,8 @@ import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
 import { SearchDialogTrigger } from "components/organisms/SearchDialog/search-dialog";
 import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 import Text from "components/atoms/Typography/text";
+import { getInterestOptions } from "lib/utils/getInterestOptions";
+import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
 
 export const FEATURED_WORKSPACES = [
   "b355ecef-76a5-4451-972a-281e16ccf2e4", // Brandon's "Angular"
@@ -175,6 +178,9 @@ function RecommendationSection({
   session,
   loginOnClick,
 }: RecommendationSectionProps) {
+  const interestArray = getInterestOptions();
+  const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
+
   if (!session) {
     return (
       <Button variant="primary" onClick={loginOnClick} className="w-fit">
@@ -186,15 +192,26 @@ function RecommendationSection({
   } else if (!session.interests) {
     return (
       <div className="flex flex-col gap-4">
-        <Text type="warning">Add some interests to get recommended repositories to contribute to!</Text>
-        <Button href="/user/settings" variant="primary" className="w-fit">
-          Go to User Settings
+        <Text type="danger">Add some interests to get recommended repositories to contribute to!</Text>
+        <div className="flex flex-wrap gap-4">
+          {interestArray.map((topic, index) => (
+            <LanguageSwitch checked={selectedInterest.includes(topic)} onClick={() => {}} topic={topic} key={index} />
+          ))}
+        </div>
+        <Button
+          variant="default"
+          disabled={selectedInterest.length === 0}
+          onClick={() => {}}
+          className="w-max"
+          loading={false}
+        >
+          Update Interests
         </Button>
       </div>
     );
   } else if (isError) {
     return <Text type="danger">There has been an error. Try reloading the page!</Text>;
-  } else
+  } else {
     return (
       <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8">
         <CarouselContent className="justify-items-stretch pr-8">
@@ -212,4 +229,5 @@ function RecommendationSection({
         </div>
       </Carousel>
     );
+  }
 }
