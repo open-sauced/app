@@ -15,6 +15,8 @@ import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 import Text from "components/atoms/Typography/text";
 import { getInterestOptions } from "lib/utils/getInterestOptions";
 import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
+import { updateUser } from "lib/hooks/update-user";
+import { useToast } from "lib/hooks/useToast";
 
 export const FEATURED_WORKSPACES = [
   "b355ecef-76a5-4451-972a-281e16ccf2e4", // Brandon's "Angular"
@@ -39,6 +41,7 @@ export default function ExploreHomePage() {
     data: recommendationsData,
     isLoading: isRecommendationsLoading,
     isError: isRecommendationsError,
+    mutate: recommendationsMutate,
   } = useUserRepoRecommendations();
 
   const recommendations = recommendationsData
@@ -102,6 +105,7 @@ export default function ExploreHomePage() {
             isLoading={isRecommendationsLoading}
             isError={isRecommendationsError}
             session={session}
+            mutate={recommendationsMutate}
             loginOnClick={() => {
               signIn({ provider: "github" });
             }}
@@ -168,6 +172,7 @@ type RecommendationSectionProps = {
   isLoading: boolean;
   isError: boolean;
   session: DbUser | false;
+  mutate: () => void;
   loginOnClick?: () => void;
 };
 
@@ -176,10 +181,13 @@ function RecommendationSection({
   isLoading,
   isError,
   session,
+  mutate,
   loginOnClick,
 }: RecommendationSectionProps) {
   const interestArray = getInterestOptions();
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
+  const [updating, setUpdating] = useState(false);
+  const { toast } = useToast();
 
   if (!session) {
     return (
@@ -189,7 +197,9 @@ function RecommendationSection({
     );
   } else if (isLoading) {
     return <Spinner />;
-  } else if (!session.interests) {
+  } else if (isError) {
+    return <Text type="danger">There has been an error. Try reloading the page!</Text>;
+  } else if (session && !session.interests) {
     return (
       <div className="flex flex-col gap-4">
         <Text type="danger">Add some interests to get recommended repositories to contribute to!</Text>
@@ -210,25 +220,38 @@ function RecommendationSection({
           ))}
         </div>
         <Button
-          variant="default"
+          variant="primary"
           disabled={selectedInterest.length === 0}
-          onClick={() => {}}
-          className="w-max"
-          loading={false}
+          onClick={async () => {
+            setUpdating(true);
+            const data = await updateUser({
+              data: { interests: selectedInterest },
+              params: "interests",
+            });
+
+            if (data) {
+              mutate();
+              toast({ description: "Updated successfully", variant: "success" });
+            } else {
+              toast({ description: "An error occurred!", variant: "danger" });
+            }
+
+            setUpdating(false);
+          }}
+          className="w-fit"
+          loading={updating}
         >
           Update Interests
         </Button>
       </div>
     );
-  } else if (isError) {
-    return <Text type="danger">There has been an error. Try reloading the page!</Text>;
   } else {
     return (
       <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8">
         <CarouselContent className="justify-items-stretch pr-8">
           {recommendations &&
-            recommendations.map((repo) => (
-              <CarouselItem key={`recommendation_${repo.full_name}`} className="lg:!basis-1/3 min-w-[24rem] h-full">
+            recommendations.map((repo, index) => (
+              <CarouselItem key={`recommendation_${index}`} className="lg:!basis-1/3 min-w-[24rem] h-full">
                 <RecommendedRepoCard fullName={repo.full_name} className="h-56" />
               </CarouselItem>
             ))}
