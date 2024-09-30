@@ -195,7 +195,18 @@ function RecommendationSection({
         <Text type="danger">Add some interests to get recommended repositories to contribute to!</Text>
         <div className="flex flex-wrap gap-4">
           {interestArray.map((topic, index) => (
-            <LanguageSwitch checked={selectedInterest.includes(topic)} onClick={() => {}} topic={topic} key={index} />
+            <LanguageSwitch
+              checked={selectedInterest.includes(topic)}
+              onClick={() => {
+                if (selectedInterest.length > 0 && selectedInterest.includes(topic)) {
+                  setSelectedInterest((prev) => prev.filter((t) => topic !== t));
+                } else {
+                  setSelectedInterest((prev) => [...prev, topic]);
+                }
+              }}
+              topic={topic}
+              key={index}
+            />
           ))}
         </div>
         <Button
