@@ -10,6 +10,8 @@ import useSession from "lib/hooks/useSession";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
 import { SearchDialogTrigger } from "components/organisms/SearchDialog/search-dialog";
+import { Spinner } from "components/atoms/SpinLoader/spin-loader";
+import Text from "components/atoms/Typography/text";
 
 export const FEATURED_WORKSPACES = [
   "b355ecef-76a5-4451-972a-281e16ccf2e4", // Brandon's "Angular"
@@ -83,7 +85,7 @@ export default function ExploreHomePage() {
           </Carousel>
         </section>
 
-        <section className="flex flex-col gap-8">
+        <section className="flex flex-col gap-8 pb-8">
           <div className="flex flex-col gap-4">
             <Title>Recommended for You</Title>
             <p>
@@ -92,36 +94,15 @@ export default function ExploreHomePage() {
                 : "Log in to get personalized recommendations on repositories to contribute to!"}
             </p>
           </div>
-          {session ? (
-            <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8">
-              <CarouselContent className="justify-items-stretch pr-8">
-                {recommendations &&
-                  recommendations.map((repo) => (
-                    <CarouselItem
-                      key={`recommendation_${repo.full_name}`}
-                      className="lg:!basis-1/3 min-w-[24rem] h-full"
-                    >
-                      <RecommendedRepoCard fullName={repo.full_name} className="h-56" />
-                    </CarouselItem>
-                  ))}
-              </CarouselContent>
-
-              <div className="relative flex gap-4 self-end">
-                <CarouselPrevious className="relative !border !border-slate-300 !text-black !left-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
-                <CarouselNext className="relative !border !border-slate-300 !text-black !right-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
-              </div>
-            </Carousel>
-          ) : (
-            <Button
-              variant="primary"
-              onClick={() => {
-                signIn({ provider: "github" });
-              }}
-              className="w-fit"
-            >
-              Connect with GitHub
-            </Button>
-          )}
+          <RecommendationSection
+            recommendations={recommendations}
+            isLoading={isRecommendationsLoading}
+            isError={isRecommendationsError}
+            session={session}
+            loginOnClick={() => {
+              signIn({ provider: "github" });
+            }}
+          />
         </section>
 
         <section className="flex flex-col lg:flex-row gap-8 w-full">
@@ -177,4 +158,58 @@ export default function ExploreHomePage() {
       </div>
     </WorkspaceLayout>
   );
+}
+
+type RecommendationSectionProps = {
+  recommendations: DbRepo[];
+  isLoading: boolean;
+  isError: boolean;
+  session: DbUser | false;
+  loginOnClick?: () => void;
+};
+
+function RecommendationSection({
+  recommendations,
+  isLoading,
+  isError,
+  session,
+  loginOnClick,
+}: RecommendationSectionProps) {
+  if (!session) {
+    return (
+      <Button variant="primary" onClick={loginOnClick} className="w-fit">
+        Connect with GitHub
+      </Button>
+    );
+  } else if (isLoading) {
+    return <Spinner />;
+  } else if (!session.interests) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Text type="warning">Add some interests to get recommended repositories to contribute to!</Text>
+        <Button href="/user/settings" variant="primary" className="w-fit">
+          Go to User Settings
+        </Button>
+      </div>
+    );
+  } else if (isError) {
+    return <Text type="danger">There has been an error. Try reloading the page!</Text>;
+  } else
+    return (
+      <Carousel opts={{ slidesToScroll: "auto" }} className="flex flex-col gap-8">
+        <CarouselContent className="justify-items-stretch pr-8">
+          {recommendations &&
+            recommendations.map((repo) => (
+              <CarouselItem key={`recommendation_${repo.full_name}`} className="lg:!basis-1/3 min-w-[24rem] h-full">
+                <RecommendedRepoCard fullName={repo.full_name} className="h-56" />
+              </CarouselItem>
+            ))}
+        </CarouselContent>
+
+        <div className="relative flex gap-4 self-end">
+          <CarouselPrevious className="relative !border !border-slate-300 !text-black !left-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
+          <CarouselNext className="relative !border !border-slate-300 !text-black !right-0 bg-white rounded-full !w-8 h-8 pl-[0.425rem]" />
+        </div>
+      </Carousel>
+    );
 }
