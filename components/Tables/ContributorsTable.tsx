@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
 import Skeleton from "react-loading-skeleton";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
+import { HiOutlineDownload } from "react-icons/hi";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -36,6 +37,7 @@ import Card from "components/atoms/Card/card";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 import { OrderDirection } from "lib/utils/sorting";
+import { SplitButton } from "components/shared/SplitButton";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 const AddToContributorInsightModal = dynamic(() => import("components/Contributors/AddToContributorInsightModal"), {
@@ -279,6 +281,26 @@ export default function ContributorsTable<T extends Contributor>({
     state: { sorting, rowSelection: selectedContributors },
   });
 
+  function downloadData({ format }: { format: "json" | "csv" }) {
+    if (format === "json") {
+      const result: Record<string, any> = {};
+      table.getRowModel().rows.map((row) => {
+        result[row.id] = {
+          ...row.original,
+        };
+      });
+
+      const blob = new Blob([JSON.stringify(result)], {
+        type: "text/json",
+      });
+
+      const linkElem = document.createElement("a");
+      linkElem.href = window.URL.createObjectURL(blob);
+      linkElem.download = "contributors_data.json";
+      linkElem.click();
+    }
+  }
+
   return (
     <>
       {Object.keys(selectedContributors).length > 0 && (
@@ -301,6 +323,15 @@ export default function ContributorsTable<T extends Contributor>({
         </div>
       )}
       <Card className="!p-0">
+        <div className="w-full flex justify-end items-center p-4">
+          <SplitButton
+            label="Download Table Data"
+            actions={[
+              { label: "JSON", onClick: () => downloadData({ format: "json" }), icon: HiOutlineDownload },
+              { label: "CSV", onClick: () => downloadData({ format: "csv" }), icon: HiOutlineDownload },
+            ]}
+          />
+        </div>
         {isLoading && (
           <div className="flex flex-col w-full gap-4 px-4 my-8">
             <SkeletonWrapper count={4} height={32} />
@@ -384,7 +415,7 @@ export default function ContributorsTable<T extends Contributor>({
                       {row.getVisibleCells().map((cell) => (
                         <TableCell
                           key={cell.id}
-                          className={`w-fit max-w-lg ${row.getIsExpanded() && "text-orange-600 font-medium"}`}
+                          className={`w-fit max-w-xs ${row.getIsExpanded() && "text-orange-600 font-medium"}`}
                         >
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </TableCell>
