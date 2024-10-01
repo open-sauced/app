@@ -1,22 +1,24 @@
 import { TbFileDescription } from "react-icons/tb";
 import { useState } from "react";
-import WorkspaceCard from "components/Workspaces/WorkspaceCard";
-import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import Title from "components/atoms/Typography/title";
-import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
-import Button from "components/shared/Button/button";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
-import useFetchTrendingRepositories from "lib/hooks/useFetchTrendingRepositories";
-import useSession from "lib/hooks/useSession";
-import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
-import { SearchDialogTrigger } from "components/organisms/SearchDialog/search-dialog";
-import { Spinner } from "components/atoms/SpinLoader/spin-loader";
 import Text from "components/atoms/Typography/text";
-import { getInterestOptions } from "lib/utils/getInterestOptions";
+import Button from "components/shared/Button/button";
+import Title from "components/atoms/Typography/title";
+import WorkspaceCard from "components/Workspaces/WorkspaceCard";
+import { Spinner } from "components/atoms/SpinLoader/spin-loader";
+import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
-import { updateUser } from "lib/hooks/update-user";
+import { SearchDialogTrigger } from "components/organisms/SearchDialog/search-dialog";
+import RecommendedRepoCard from "components/molecules/RecommendedRepoCard/recommended-repo-card";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "components/shared/Carousel";
+
+import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
+import { updateUser } from "lib/hooks/update-user";
+import { useFetchUser } from "lib/hooks/useFetchUser";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import { getInterestOptions } from "lib/utils/getInterestOptions";
+import useUserRepoRecommendations from "lib/hooks/useUserRepoRecommendations";
+import useFetchTrendingRepositories from "lib/hooks/useFetchTrendingRepositories";
 
 export const FEATURED_WORKSPACES = [
   "b355ecef-76a5-4451-972a-281e16ccf2e4", // Brandon's "Angular"
@@ -105,7 +107,7 @@ export default function ExploreHomePage() {
             isLoading={isRecommendationsLoading}
             isError={isRecommendationsError}
             session={session}
-            mutate={recommendationsMutate}
+            recommendationsMutate={recommendationsMutate}
             loginOnClick={() => {
               signIn({ provider: "github" });
             }}
@@ -172,7 +174,7 @@ type RecommendationSectionProps = {
   isLoading: boolean;
   isError: boolean;
   session: DbUser | false;
-  mutate: () => void;
+  recommendationsMutate: () => void;
   loginOnClick?: () => void;
 };
 
@@ -181,13 +183,17 @@ function RecommendationSection({
   isLoading,
   isError,
   session,
-  mutate,
+  recommendationsMutate,
   loginOnClick,
 }: RecommendationSectionProps) {
   const interestArray = getInterestOptions();
   const [selectedInterest, setSelectedInterest] = useState<string[]>([]);
   const [updating, setUpdating] = useState(false);
   const { toast } = useToast();
+
+  const { data: user, mutate } = useFetchUser((session && session.user_name) || null, {
+    revalidateOnFocus: false,
+  });
 
   if (!session) {
     return (
@@ -199,7 +205,7 @@ function RecommendationSection({
     return <Spinner />;
   } else if (isError) {
     return <Text type="danger">There has been an error. Try reloading the page!</Text>;
-  } else if (session && !session.interests) {
+  } else if (user && !user.interests) {
     return (
       <div className="flex flex-col gap-4">
         <Text type="danger">Add some interests to get recommended repositories to contribute to!</Text>
@@ -221,7 +227,7 @@ function RecommendationSection({
         </div>
         <Button
           variant="primary"
-          disabled={selectedInterest.length === 0}
+          disabled={selectedInterest.length === 0 || updating}
           onClick={async () => {
             setUpdating(true);
             const data = await updateUser({
@@ -230,12 +236,12 @@ function RecommendationSection({
             });
 
             if (data) {
-              mutate();
               toast({ description: "Updated successfully", variant: "success" });
+              mutate();
+              recommendationsMutate();
             } else {
               toast({ description: "An error occurred!", variant: "danger" });
             }
-
             setUpdating(false);
           }}
           className="w-fit"
