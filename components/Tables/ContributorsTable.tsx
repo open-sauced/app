@@ -48,7 +48,7 @@ const AddToContributorInsightDrawer = dynamic(() => import("components/Contribut
   ssr: false,
 });
 
-type Contributor = DbRepoContributor | DbContributorInsightUser;
+type Contributor = DbRepoContributor & DbContributorInsightUser;
 
 type ContributorsTableProps<T> = {
   contributors: T[] | undefined;
@@ -284,18 +284,8 @@ export default function ContributorsTable<T extends Contributor>({
   function downloadData({ format }: { format: "json" | "csv" }) {
     const contributorsData: Record<string, any> = {};
     table.getRowModel().rows.map((row) => {
-      // @ts-ignore
-      const {
-        id,
-        updated_at,
-        created_at,
-        list_id,
-        avatar_url,
-        devstats_updated_at,
-        login: username,
-        ...data
-      } = row.original;
-      contributorsData[row.id] = { username, ...data };
+      const { id, updated_at, created_at, list_id, avatar_url, devstats_updated_at, ...data } = row.original;
+      contributorsData[row.id] = { ...data };
     });
 
     const linkElem = document.createElement("a");
