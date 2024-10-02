@@ -285,7 +285,16 @@ export default function ContributorsTable<T extends Contributor>({
     const contributorsData: Record<string, any> = {};
     table.getRowModel().rows.map((row) => {
       // @ts-ignore
-      const { id, created_at, list_id, avatar_url, devstats_updated_at, login: username, ...data } = row.original;
+      const {
+        id,
+        updated_at,
+        created_at,
+        list_id,
+        avatar_url,
+        devstats_updated_at,
+        login: username,
+        ...data
+      } = row.original;
       contributorsData[row.id] = { username, ...data };
     });
 
