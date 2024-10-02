@@ -282,23 +282,44 @@ export default function ContributorsTable<T extends Contributor>({
   });
 
   function downloadData({ format }: { format: "json" | "csv" }) {
-    if (format === "json") {
-      const result: Record<string, any> = {};
-      table.getRowModel().rows.map((row) => {
-        result[row.id] = {
-          ...row.original,
-        };
-      });
+    const contributorsData: Record<string, any> = {};
+    table.getRowModel().rows.map((row) => {
+      // @ts-ignore
+      const { id, created_at, list_id, avatar_url, devstats_updated_at, login: username, ...data } = row.original;
+      contributorsData[row.id] = { username, ...data };
+    });
 
-      const blob = new Blob([JSON.stringify(result)], {
+    const linkElem = document.createElement("a");
+
+    if (format === "json") {
+      const blob = new Blob([JSON.stringify(contributorsData)], {
         type: "text/json",
       });
-
-      const linkElem = document.createElement("a");
       linkElem.href = window.URL.createObjectURL(blob);
       linkElem.download = "contributors_data.json";
-      linkElem.click();
+    } else if (format === "csv") {
+      const headers = Object.keys(contributorsData[Object.keys(contributorsData)[0]]);
+      const usernames = Object.keys(contributorsData);
+      const result = [
+        headers.join(","),
+        usernames
+          .map((username) => {
+            const data = contributorsData[username] as Record<string, any>;
+            return Object.values(data).map((v) => {
+              if (String(v).includes(",")) {
+                return `"${v}"`;
+              }
+              return v;
+            });
+          })
+          .join("\n"),
+      ].join("\r\n");
+
+      linkElem.href = `data:text/csv;charset=utf-8,${encodeURI(result)}`;
+      linkElem.download = "contributors_data.csv";
     }
+
+    linkElem.click();
   }
 
   return (
