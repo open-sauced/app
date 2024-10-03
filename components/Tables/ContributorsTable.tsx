@@ -51,7 +51,7 @@ const AddToContributorInsightDrawer = dynamic(() => import("components/Contribut
 type Contributor = DbRepoContributor & DbContributorInsightUser;
 
 type ContributorsTableProps<T> = {
-  contributors: T[] | undefined;
+  contributors: Partial<T>[] | undefined;
   meta: Meta | null;
   isLoading: boolean;
   isError: boolean;
@@ -270,7 +270,7 @@ export default function ContributorsTable<T extends Contributor>({
       () => (isMobile ? mobileColumns({ isLoggedIn }) : defaultColumns({ repository, isLoggedIn })),
       [isMobile, isLoggedIn]
     ),
-    data: contributors ?? [],
+    data: (contributors as Contributor[]) ?? [],
     manualSorting: true,
     manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
