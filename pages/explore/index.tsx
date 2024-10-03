@@ -195,14 +195,14 @@ function RecommendationSection({
     revalidateOnFocus: false,
   });
 
-  if (!session) {
+  if (isLoading) {
+    return <Spinner />;
+  } else if (!session) {
     return (
       <Button variant="primary" onClick={loginOnClick} className="w-fit">
         Connect with GitHub
       </Button>
     );
-  } else if (isLoading) {
-    return <Spinner />;
   } else if (isError) {
     return <Text type="danger">There has been an error. Try reloading the page!</Text>;
   } else if (user && !user.interests) {
