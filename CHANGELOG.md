@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0-beta.1](https://github.com/open-sauced/app/compare/v2.63.1-beta.1...v2.64.0-beta.1) (2024-10-03)
+
+
+### 🍕 Features
+
+* download `ContributorsTable` data as JSON/CSV ([#4151](https://github.com/open-sauced/app/issues/4151)) ([d87b37e](https://github.com/open-sauced/app/commit/d87b37eed95e8a28062adfd49ccbf425abd5f852))
+
 ## [2.63.1-beta.1](https://github.com/open-sauced/app/compare/v2.63.0...v2.63.1-beta.1) (2024-09-30)
 
 
