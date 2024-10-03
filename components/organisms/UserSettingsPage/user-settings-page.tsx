@@ -336,11 +336,12 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
               </span>
             </div>
 
-            <div className="flex flex-col gap-2">
-              <label className="flex flex-col w-full gap-2">
+            <div id="upgrade" className="flex flex-col gap-2">
+              <label htmlFor="timezone-select" className="flex flex-col w-full gap-2">
                 Time zone
                 <Select onValueChange={(value) => setTimezone(value)} value={timezone}>
                   <SelectTrigger
+                    id="timezone-select"
                     selectIcon={
                       <div className="relative pr-4">
                         <RiArrowUpSLine size={16} className="absolute -top-3" />
@@ -397,9 +398,9 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
               Update Interests
             </Button>
           </div>
-          <div className="flex flex-col gap-6">
+          <fieldset className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <label className="text-2xl font-normal">Email Preferences</label>
+              <legend className="text-2xl font-normal">Email Preferences</legend>
               <Checkbox
                 onCheckedChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
                 checked={emailPreference.display_email}
@@ -432,8 +433,9 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
             >
               Update Preferences
             </Button>
-          </div>
+          </fieldset>
           {userInfo && (
+<<<<<<< HEAD
             <form
               name="delete-account"
               action="/api/delete-account"
@@ -466,6 +468,73 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                 }}
               />
             </form>
+=======
+            <>
+              <div>
+                {!coupon ? (
+                  <div className="flex flex-col order-first gap-6 md:order-last">
+                    <div className="flex flex-col gap-3">
+                      <label htmlFor="verify-account-button" className="text-2xl font-normal">
+                        Developer Pack
+                      </label>
+                      <div className="w-full sm:max-w-80">
+                        <Text>Verify your developer pack eligibilty to get an upgrade!</Text>
+                      </div>
+                    </div>
+                    <DeveloperPackForm
+                      id="verify-account-button"
+                      providerToken={providerToken}
+                      refreshUser={() => {
+                        mutate();
+                        setCoupon("verified");
+                      }}
+                    />
+                  </div>
+                ) : null}
+              </div>
+              <form
+                name="delete-account"
+                action="/api/delete-account"
+                method="POST"
+                className="flex flex-col order-first gap-6 md:order-last p-6 rounded-2xl bg-light-slate-4"
+                ref={deleteFormRef}
+                onSubmit={(e) => {
+                  setIsModalOpen(true);
+                  e.preventDefault();
+                }}
+              >
+                <div className="flex flex-col gap-3">
+                  <label htmlFor="delete-account-button" className="text-2xl font-normal">
+                    Delete Account
+                  </label>
+                  <div className="w-full md:w-96">
+                    <Text>
+                      Please note that account deletion is irreversible. Proceed only if you are certain about this
+                      action.
+                    </Text>
+                  </div>
+                </div>
+                <Button
+                  id="delete-account-button"
+                  type="submit"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  variant="destructive"
+                  className="w-max"
+                >
+                  Delete Account
+                </Button>
+                <DeleteAccountModal
+                  open={isModalOpen}
+                  setOpen={setIsModalOpen}
+                  onDelete={() => {
+                    setIsModalOpen(false);
+                    deleteFormRef.current?.submit();
+                  }}
+                />
+              </form>
+            </>
+>>>>>>> 027aeffd (fix: resolve a11y warnings for label-has-associated-control rule (#4126))
           )}
         </div>
       </div>

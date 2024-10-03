@@ -25,9 +25,10 @@ export const LimitPicker = ({ onLimitChanged }: LimitPickerProps) => {
   };
 
   return (
-    <label className="w-max font-semibold">
+    <label htmlFor="entries-per-page-select" className="w-max font-semibold">
       <span className="sr-only">Limit:</span>
       <SingleSelect
+        id="entries-per-page-select"
         insetLabel="Showing:"
         onValueChange={onDefaultLimitChanged}
         value={`${limit}`}

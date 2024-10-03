@@ -81,9 +81,10 @@ const AddContributorsHeader = ({
         </div>
       </div>
       <div className="flex flex-col w-full gap-2 md:flex-row">
-        <label className="flex w-full flex-col gap-4">
+        <label htmlFor="search-contributors" className="flex w-full flex-col gap-4">
           <span className="sr-only">Search for contributors to add to your list</span>
           <Search
+            id="search-contributors"
             placeholder={`Search for contributors to add to your list`}
             className="!w-full text-sm py-1.5"
             name={"contributors"}

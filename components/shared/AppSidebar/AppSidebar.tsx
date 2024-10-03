@@ -105,9 +105,10 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
         <>
           <nav aria-label="sidebar navigation" className="grid gap-4 mt-4 pr-4 pl-2">
             <div className="flex gap-2">
-              <label className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
+              <label htmlFor="workspace-dropdown" className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
                 <span className="sr-only">Workspace</span>
                 <SingleSelect
+                  id="workspace-dropdown"
                   isSearchable={!!user}
                   options={[
                     {
