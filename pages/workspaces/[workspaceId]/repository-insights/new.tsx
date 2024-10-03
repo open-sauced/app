@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { ComponentProps, useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { captureException } from "@sentry/nextjs";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { createRepositoryInsight } from "lib/utils/workspace-utils";
 
@@ -72,6 +73,7 @@ const NewInsightPage = () => {
     if (error) {
       toast({ description: "An error has occurred. Try again.", variant: "danger" });
       setLoading(false);
+      captureException(new Error(`Error creating a repository insight`, { cause: error }));
       return;
     }
 

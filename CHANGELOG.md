@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.63.1-beta.1](https://github.com/open-sauced/app/compare/v2.63.0...v2.63.1-beta.1) (2024-09-30)
+
+
+### 🐛 Bug Fixes
+
+* throw errors on insight creation failure ([#4145](https://github.com/open-sauced/app/issues/4145)) ([e3f8db3](https://github.com/open-sauced/app/commit/e3f8db353b691f39bf6f9920406f45815cd87717))
+
 ## [2.63.0](https://github.com/open-sauced/app/compare/v2.62.0...v2.63.0) (2024-09-19)
 
 
