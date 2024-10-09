@@ -14,7 +14,12 @@ const RadioCheck = ({ className, id, children, value, checked = false, onClick }
   return (
     <div
       onClick={onClick}
-      onKeyDown={(e) => e.key === "Enter" && onClick?.()}
+      onKeyDown={(e) => {
+        if (onClick && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          onClick();
+        }
+      }}
       tabIndex={0}
       role="button"
       className={
