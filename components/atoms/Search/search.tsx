@@ -149,10 +149,19 @@ const Search = ({
                 style={suggestionsStyle}
                 key={index}
                 data-suggestion={typeof suggestion === "string" ? suggestion : suggestion.key}
+                role="button"
                 onClick={(event) => {
                   const { suggestion } = (event.currentTarget as HTMLElement).dataset;
                   suggestion && handleOnSelect(suggestion);
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    const { suggestion } = (e.currentTarget as HTMLElement).dataset;
+                    suggestion && handleOnSelect(suggestion);
+                  }
+                }}
+                tabIndex={0}
               >
                 {typeof suggestion === "string" ? (
                   <span className="pl-5 text-sm md:mw-auto inline-block text-ellipsis truncate tracking-tighter">
