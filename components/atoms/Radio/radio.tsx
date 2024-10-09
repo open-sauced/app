@@ -16,6 +16,9 @@ const Radio = ({ className, withLabel, id, children, value, checked = false, onC
   return (
     <div
       onClick={onClick}
+      onKeyDown={(e) => e.key === "Enter" && onClick?.()}
+      tabIndex={0}
+      role="button"
       className={
         `${
           checked && "!bg-light-orange-3"
