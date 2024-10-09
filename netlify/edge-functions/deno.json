@@ -1,8 +1,0 @@
-{
-  "imports": {
-    "netlify:edge": "https://edge.netlify.com/v1/index.ts",
-    "react": "https://esm.sh/react@18.2.0",
-    "og_edge": "https://deno.land/x/og_edge@0.0.6/mod.ts",
-    "valibot": "https://deno.land/x/valibot@0.31.1/mod.ts"
-  }
-}
