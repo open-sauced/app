@@ -1,6 +1,10 @@
 [build.environment]
 NODE_VERSION = "18"
 
+[build]
+command = "echo 'deploying downtime page...'"
+publish = "public"
+
 [context.alpha]
 environment = { CHANNEL = "alpha" }
 
@@ -43,4 +47,22 @@ force = true
 from = "https://hot.opensauced.pizza/*"
 to = "https://app.opensauced.pizza/explore"
 status = 301
+force = true
+
+[[redirects]]
+from = "/"
+to = "/downtime.html"
+status = 200
+force = true
+
+[[redirects]]
+from = "/*"
+to = "/downtime.html"
+status = 302
+force = true
+
+[[redirects]]
+from = "/downtime.html"
+to = "/downtime.html"
+status = 302
 force = true

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>OpenSauced Pizza-CLI</title>
+  <style>
+    body {
+      margin: 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: black;
+      color: white;
+    }
+
+    .container {
+      display: grid;
+      place-content: center;
+      height: calc(100vh - 5.5rem);
+      overflow: hidden;
+      font-size: 1.5rem;
+    }
+
+    .doodles {
+      position: absolute;
+      display: none;
+
+      @media (min-width: 1280px) {
+        display: block;
+      }
+    }
+
+    .doodles--left {
+      top: 12rem;
+      left: 0;
+    }
+
+    .doodles--right {
+      top: 9rem;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="https://opensauced.pizza">
+    <img height="24" width="" 140" class="opensauced-logo"
+      src="https://opensauced.pizza/_next/static/media/brandLogo.4259030a.svg">
+  </a>
+  <div class="doodles doodles--left"><img alt="Doodles" loading="lazy" width="230" height="694" decoding="async"
+      data-nimg="1" style="color:transparent" src="https://opensauced.pizza/_next/static/media/stroke_l_4.6c7a61fa.svg">
+  </div>
+  <div class="doodles doodles--right"><img alt="Doodles" loading="lazy" width="303" height="620" decoding="async"
+      data-nimg="1" style="color:transparent" src="https://opensauced.pizza/_next/static/media/stroke_r_3.49fc05fd.svg">
+  </div>
+  <div class="container">
+    <h1 class="title">The pizza oven is down for maintenance</h1>
+    <p style="text-align: center;color: #ff5500">
+      We'll be back online as soon as possible. Thanks for your patience.
+    </p>
+  </div>
+</body>
+
+</html>
