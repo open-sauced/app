@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0-beta.2](https://github.com/open-sauced/app/compare/v2.64.0-beta.1...v2.64.0-beta.2) (2024-10-10)
+
+
+### 🐛 Bug Fixes
+
+* use a tags instead of link tags ([#4158](https://github.com/open-sauced/app/issues/4158)) ([7b48770](https://github.com/open-sauced/app/commit/7b48770212db47b72562f7fe16caa780b73c49a5))
+
 ## [2.64.0-beta.1](https://github.com/open-sauced/app/compare/v2.63.1-beta.1...v2.64.0-beta.1) (2024-10-03)
 
 
