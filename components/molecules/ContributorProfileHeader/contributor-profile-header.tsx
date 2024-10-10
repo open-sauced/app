@@ -156,14 +156,14 @@ const ContributorProfileHeader = ({
           />
 
           <Tooltip content="Get dev card">
-            <Link
+            <a
               href={cardPageUrl(username!)}
               className="absolute bottom-0 z-10 grid w-12 h-12 rounded-full shadow-xs place-content-center border-conic-gradient right-4"
             >
               <div className="grid overflow-hidden rounded-full w-11 h-11 place-content-center bg-black/80">
                 <Image priority alt="user profile cover image" className="w-6 h-[1.7rem] " src={PizzaGradient} />
               </div>
-            </Link>
+            </a>
           </Tooltip>
         </div>
         <div className="translate-y-[110px] md:hidden relative">
@@ -175,7 +175,7 @@ const ContributorProfileHeader = ({
             size={120}
             isCircle
           />
-          <Link
+          <a
             href={cardPageUrl(username!)}
             className="absolute bottom-0 z-10 grid rounded-full shadow-xs w-11 h-11 right-1 place-content-center border-conic-gradient"
             onClick={() => posthog.capture("DevCard clicked", { username })}
@@ -183,7 +183,7 @@ const ContributorProfileHeader = ({
             <div className="grid w-[2.5em] h-[2.5em] overflow-hidden rounded-full place-content-center bg-black/80">
               <Image priority alt="user profile cover image" className="w-5 h-5 " src={PizzaGradient} />
             </div>
-          </Link>
+          </a>
         </div>
         {isConnected ? (
           <div className="flex flex-col items-center gap-3 translate-y-24 md:translate-y-0 md:flex-row">
