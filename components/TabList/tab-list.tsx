@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useRouter } from "next/router";
 import Link from "next/link";
 import clsx from "clsx";
@@ -25,6 +24,7 @@ interface SubTabsListProps extends TabListProps {
 const TabList = ({ tabList, pageId, selectedTab }: TabListProps) => {
   const router = useRouter();
   const range = router.query.range ? Number(router.query.range) : 30;
+
   return (
     <nav
       role="tablist"
@@ -37,13 +37,14 @@ const TabList = ({ tabList, pageId, selectedTab }: TabListProps) => {
           role="tab"
           aria-selected={selectedTab === tab.name.toLowerCase() ? "true" : "false"}
           data-state={selectedTab === tab.name.toLowerCase() ? "active" : "inactive"}
-          tabIndex={-1}
+          tabIndex={0} // Added tabIndex for accessibility
           key={index}
-          className={`tool-list-item border-b-2 transition-all ease-in-out ${
+          className={clsx(
+            "tool-list-item border-b-2 transition-all ease-in-out",
             selectedTab === tab.name.toLowerCase()
               ? "border-orange-500"
               : "border-transparent hover:border-light-slate-8"
-          }`}
+          )}
         >
           <TabListItem
             tab={tab}
@@ -74,9 +75,15 @@ export const SubTabsList = ({ tabList, pageId, selectedTab, label, textSize, onS
             role="tab"
             aria-selected={isSelected ? "true" : "false"}
             data-state={isSelected ? "active" : "inactive"}
+            tabIndex={0} // Added tabIndex for accessibility
             key={index}
             className={clsx(isSelected && "bg-white shadow", "rounded py-1 px-2", !isSelected && "text-light-slate-11")}
             onClick={onSelect ? () => onSelect(tab) : undefined}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                onSelect?.(tab);
+              }
+            }} // Added keyboard interaction for Enter/Space keys
           >
             {onSelect ? tab.name : <Link href={`${pageId ? `${pageId}/` : ""}${tab.path}`}>{tab.name}</Link>}
           </div>
