@@ -754,14 +754,14 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                   }`}
                                 />
                               )}
-                              <p
-                                className="text-light-slate-11 truncate max-w-[14rem] xs:max-w-[16rem] text-xs xs:text-sm cursor-pointer hover:text-orange-600 transition"
+                              <button
+                                className="outline-none bg-none text-light-slate-11 truncate max-w-[14rem] xs:max-w-[16rem] text-xs xs:text-sm cursor-pointer hover:text-orange-600 transition"
                                 onClick={() => {
                                   window.open(suggestion.url, "_blank");
                                 }}
                               >
                                 {suggestion.title}
-                              </p>
+                              </button>
                             </div>
                             <Tooltip className="text-xs modal-tooltip" direction="top" content="Fill content">
                               <button
@@ -1024,13 +1024,13 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
       )}
 
       <Fab className="md:hidden">
-        <div
+        <button
           onClick={() => setIsFormOpenMobile(true)}
-          className="p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
+          className="outline-none p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
           id="mobile-highlight-create"
         >
           <RxPencil1 className="text-3xl" />
-        </div>
+        </button>
       </Fab>
     </>
   );
