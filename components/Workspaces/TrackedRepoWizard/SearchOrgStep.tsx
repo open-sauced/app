@@ -27,6 +27,7 @@ export const SearchOrgStep = ({ onSelectOrg, onSearch, orgs }: SearchOrgStepProp
       >
         <Search
           placeholder="Search your organizations"
+          labelText="Search your organizations"
           className="w-full"
           name="query"
           onChange={(event) => {

@@ -62,7 +62,13 @@ export const SearchedReposTable = ({
                   event.preventDefault;
                 }}
               >
-                <Search placeholder="Filter repositories" className="w-full" name="query" onChange={onFilter} />
+                <Search
+                  placeholder="Filter repositories"
+                  labelText="Filter repositories from the list"
+                  className="w-full"
+                  name="query"
+                  onChange={onFilter}
+                />
               </form>
             </TableHead>
           </TableRow>

@@ -581,6 +581,7 @@ const InsightPage = ({ edit, insight, pageRepos, workspaceId }: InsightPageProps
           <Search
             isLoading={createLoading}
             placeholder="Repository URL or Full Name (ex: open-sauced/open-sauced)"
+            labelText="Repository URL or Full Name (ex: open-sauced/open-sauced)"
             className="!w-full text-md text-gra"
             name={"query"}
             value={repoSearchTerm}

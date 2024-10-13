@@ -66,6 +66,7 @@ export const SearchByReposStep = ({
       >
         <Search
           placeholder="Search repositories"
+          labelText="Search repositories"
           className="w-full"
           isLoading={searchIsLoading}
           name="query"

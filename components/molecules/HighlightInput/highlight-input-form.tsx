@@ -815,6 +815,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           <Search
             isLoading={tagRepoSearchLoading}
             placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+            labelText="Search repository by full name (ex: open-sauced/open-sauced)"
             className="text-sm font-normal !w-full px-2"
             name={"query"}
             suggestions={repoTagSuggestions}

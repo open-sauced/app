@@ -62,6 +62,7 @@ const WorkspaceMembersConfig = ({
             value={username}
             onChange={(value) => handleChange(value)}
             placeholder="Enter username"
+            labelText="Enter full username"
             name="search"
             className="flex-1 text-base"
           />

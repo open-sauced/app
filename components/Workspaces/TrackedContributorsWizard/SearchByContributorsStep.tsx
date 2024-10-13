@@ -81,6 +81,7 @@ export const SearchByContributorsStep = ({
       >
         <Search
           placeholder="Search contributors"
+          labelText="Search contributors"
           className="w-full"
           isLoading={searchIsLoading}
           name="query"
