@@ -15,7 +15,7 @@ const InfoCard = ({ icon, title, description, handleClick }: FavoriteRepoCardPro
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === "enter") {
+        if (e.key === "Enter") {
           e.preventDefault();
           handleClick();
         }
