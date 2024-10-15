@@ -40,7 +40,7 @@ export default function DevCard(props: DevCardProps) {
     }
   }, [props.isInteractive, props.isFlipped]);
 
-  function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
+  function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>) {
     if (!isInteractive) {
       return;
     }
@@ -103,7 +103,15 @@ export default function DevCard(props: DevCardProps) {
         width: "245px",
         height: "348px",
       }}
+      tabIndex={0}
+      role="button"
       onClick={handleCardClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleCardClick(e);
+        }
+      }}
     >
       <Tilt
         tiltEnable={isInteractive}
