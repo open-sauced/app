@@ -10,7 +10,12 @@ const ToggleOption = ({ optionText, withIcon, checked, handleToggle }: ToogleOpt
   return (
     <div
       onClick={handleToggle}
-      onKeyDown={(e) => e.key === "Enter" && handleToggle()}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleToggle();
+        }
+      }}
       role="switch"
       aria-checked={checked}
       tabIndex={0}

@@ -59,6 +59,7 @@ const CardRepoList = ({
                   onClick={() => handleClick(repoOwner, repoName)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
+                      e.preventDefault();
                       handleClick(repoOwner, repoName);
                     }
                   }}
