@@ -10,6 +10,10 @@ const ToggleOption = ({ optionText, withIcon, checked, handleToggle }: ToogleOpt
   return (
     <div
       onClick={handleToggle}
+      onKeyDown={(e) => e.key === "Enter" && handleToggle()}
+      role="switch"
+      aria-checked={checked}
+      tabIndex={0}
       className="inline-flex cursor-pointer items-center gap-2 rounded-md px-2 py-0.5 border border-light-slate-6 bg-light-slate-1"
     >
       <ToggleSwitch ariaLabel={optionText} size="sm" handleToggle={handleToggle} name={optionText} checked={checked} />
