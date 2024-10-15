@@ -169,12 +169,12 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             )}
           </div>
           <div>
-            <div
+            <button
               onClick={() => setTableOpen(!tableOpen)}
               className="items-center justify-between w-6 h-6 p-1 border rounded-md"
             >
               {tableOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-            </div>
+            </button>
           </div>
         </div>
 
@@ -225,9 +225,9 @@ const RepoRow = ({ repo, topic, userPage, selected, handleOnSelectRepo }: RepoPr
             </div>
           </div>
 
-          <div onClick={() => setTableOpen(!tableOpen)} className="py-1 mt-3 text-center border rounded-lg">
+          <button onClick={() => setTableOpen(!tableOpen)} className="py-1 mt-3 text-center border rounded-lg">
             Hide details
-          </div>
+          </button>
         </div>
       </div>
       <div className={`${classNames.row} `}>
