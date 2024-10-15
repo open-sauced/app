@@ -137,6 +137,7 @@ export default function CardPage({ user }: { user: DbUser }) {
                       <iframe
                         className="h-screen max-h-full group-hover:blur-sm transition-all z-10 relative"
                         src={`/u/${username}`}
+                        title={`${username}'s OpenSauced profile`}
                         style={{
                           pointerEvents: "none",
                           aspectRatio: "1555 / 938",
@@ -170,7 +171,7 @@ function CopyButton({ username }: { username: string }) {
   const posthog = usePostHog();
 
   return (
-    <div
+    <button
       className="rounded-full w-10 h-10 bg-sauced-orange stroke-white cursor-pointer hover:opacity-80 transition-all
 flex items-center justify-center"
       onClick={async () => {
@@ -190,7 +191,7 @@ flex items-center justify-center"
       }}
     >
       {copying ? <Spinner className="w-6 h-8" /> : <FiCopy className="w-6 h-8 stroke-white" />}
-    </div>
+    </button>
   );
 }
 
