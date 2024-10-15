@@ -143,6 +143,7 @@ export default function CardPage({ user }: { user: DbUser }) {
                           border: "none",
                           gridArea: "1 / 1",
                         }}
+                        title={`${username}'s user profile`}
                       ></iframe>
                     </div>
                     <a className="absolute w-full h-full grid place-content-center z-20" href={`/u/${username}`}>
