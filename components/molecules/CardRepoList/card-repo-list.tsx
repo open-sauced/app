@@ -36,6 +36,15 @@ const CardRepoList = ({
   const sanitizedRepoList = [...new Map(repoList.map((item) => [item["repoName"], item])).values()];
   const [selectedRepo, setSelectedRepo] = useState<string>("");
 
+  const handleClick = (repoOwner: any, repoName: string) => {
+    if (!selectedRepo) {
+      onSelect(`${repoOwner}/${repoName}`);
+      setSelectedRepo(`${repoOwner}/${repoName}`);
+    } else {
+      onSelect("");
+      setSelectedRepo("");
+    }
+  };
   return (
     <div className="flex gap-1 items-center max-w[175px] truncate flex-wrap text-xs text-light-slate-9">
       {repoList.length > 0 ? (
@@ -46,15 +55,14 @@ const CardRepoList = ({
               return (
                 <div
                   key={`repo_${index}`}
-                  onClick={() => {
-                    if (!selectedRepo) {
-                      onSelect(`${repoOwner}/${repoName}`);
-                      setSelectedRepo(`${repoOwner}/${repoName}`);
-                    } else {
-                      onSelect("");
-                      setSelectedRepo("");
+                  role="button"
+                  onClick={() => handleClick(repoOwner, repoName)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleClick(repoOwner, repoName);
                     }
                   }}
+                  tabIndex={0}
                 >
                   {repoName && repoIcon ? (
                     <Tooltip content={`${repoOwner}/${repoName}`}>
@@ -91,7 +99,7 @@ const CardRepoList = ({
                   )}
                 </div>
               );
-            })}
+            })}{" "}
           <div>{repoTotal > limit ? `+${repoTotal - limit}` : null}</div>
         </>
       ) : (
