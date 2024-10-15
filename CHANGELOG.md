@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0-beta.3](https://github.com/open-sauced/app/compare/v2.64.0-beta.2...v2.64.0-beta.3) (2024-10-15)
+
+
+### 🐛 Bug Fixes
+
+* a11y rule "iframe-has-title" fails with a warning. ([#4162](https://github.com/open-sauced/app/issues/4162)) ([f15764a](https://github.com/open-sauced/app/commit/f15764a69d106da6909bca2096a1eb379cfa5020))
+
 ## [2.64.0-beta.2](https://github.com/open-sauced/app/compare/v2.64.0-beta.1...v2.64.0-beta.2) (2024-10-10)
 
 
