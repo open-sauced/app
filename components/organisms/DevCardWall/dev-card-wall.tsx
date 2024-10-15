@@ -272,8 +272,16 @@ export default function DevCardWall({ isLoading = false, usernames, initialCardI
     <div
       className="grid relative"
       ref={outsideClickRef}
+      tabIndex={0}
+      role="button"
       onClick={() => {
         setActiveCardIndex(null);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          setActiveCardIndex(null);
+        }
       }}
     >
       <div className="relative ml-20" ref={containerRef}>

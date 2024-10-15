@@ -137,7 +137,18 @@ const SearchDialog = () => {
 
   return (
     <div className="fixed left-0 top-0 z-auto p-5 w-full h-full flex justify-center bg-white/30">
-      <div className="absolute w-full h-full left-0 top-0 z-50 backdrop-blur-sm" onClick={() => setOpenSearch(false)} />
+      <div
+        className="absolute w-full h-full left-0 top-0 z-50 backdrop-blur-sm"
+        onClick={() => setOpenSearch(false)}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            setOpenSearch(false);
+          }
+        }}
+      />
       <div
         className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-50 overflow-hidden"
         onMouseMove={() => cursor !== -1 && setCursor(-1)}
@@ -149,7 +160,6 @@ const SearchDialog = () => {
             <FaSearch className="text-light-slate-9" fontSize={16} />
           )}
           <input
-            autoFocus
             className="w-full pl-2 text-sm font-semibold text-slate-700 focus:outline-none"
             value={searchTerm}
             onChange={(e) => {
@@ -200,7 +210,7 @@ const SearchDialogTrigger = ({ hideSmallIcon, className }: { hideSmallIcon?: boo
 
   return (
     <>
-      <div
+      <button
         className={`hidden sm:flex justify-between p-1 pl-3 h-fit ${
           isMac ? "w-56" : "w-64"
         } ${className} ml-auto bg-white border rounded-lg ring-light-slate-6 relative overflow-hidden`}
@@ -213,11 +223,11 @@ const SearchDialogTrigger = ({ hideSmallIcon, className }: { hideSmallIcon?: boo
         <Text keyboard className="text-gray-600 !border-b !px-1">
           {isMac ? "⌘K" : <span className="text-xs px-1 py-2">CTRL+K</span>}
         </Text>
-      </div>
+      </button>
       {!hideSmallIcon && (
-        <div className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>
+        <button className="flex sm:hidden p-1" onClick={() => setOpenSearch(true)}>
           <FaSearch className="text-light-slate-9 cursor-pointer" fontSize={16} />
-        </div>
+        </button>
       )}
     </>
   );

@@ -39,7 +39,7 @@ const ContributorFilterDropdown = () => {
 
   return (
     <div ref={ref} className="flex flex-col px-3 border rounded-lg shadow w-max">
-      <div
+      <button
         onClick={() => setOpen((prev) => !prev)}
         className="flex items-center justify-between text-sm font-normal cursor-pointer text-light-slate-9 w-44 "
       >
@@ -49,7 +49,7 @@ const ContributorFilterDropdown = () => {
           <BiChevronUp className="text-lg translate-y-1.5" />
           <BiChevronDown className="text-lg -translate-y-1.5" />
         </div>
-      </div>
+      </button>
 
       <div
         className={clsx(

@@ -77,7 +77,19 @@ const TextInput = ({
               {state === "valid" ? (
                 <CheckCircleFillIcon className="ml-1 text-light-orange-9" size={12} />
               ) : !!value ? (
-                <span title="Clear input" className="flex items-center ml-1" onClick={handleResetInput}>
+                <span
+                  title="Clear input"
+                  className="flex items-center ml-1"
+                  role="button"
+                  onClick={handleResetInput}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      handleResetInput();
+                    }
+                  }}
+                  tabIndex={0}
+                >
                   <XCircleFillIcon
                     className={clsx(state === "invalid" && errorMsg ? "text-light-red-11" : "", "cursor-pointer")}
                     size={12}

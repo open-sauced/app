@@ -21,7 +21,7 @@ const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: Highlights
       <p className="mb-2 text-sm font-normal text-light-slate-11">Click to filter the highlights</p>
       <div className="flex flex-col gap-2 pt-4 border-t">
         {repos.map(({ repoName, repoIcon, full_name }) => (
-          <div
+          <button
             onClick={() => handleClick(full_name)}
             key={full_name as string}
             className={`${
@@ -30,7 +30,7 @@ const HighlightsFilterCard = ({ repos, setSelected, selectedFilter }: Highlights
           >
             <Icon IconImage={repoIcon} className="rounded-[4px] overflow-hidden" />
             <span className="max-w-[45px] md:max-w-[100px] truncate text-xs ">{repoName}</span>
-          </div>
+          </button>
         ))}
       </div>
     </aside>
