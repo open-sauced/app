@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0-beta.5](https://github.com/open-sauced/app/compare/v2.64.0-beta.4...v2.64.0-beta.5) (2024-10-16)
+
+
+### 🍕 Features
+
+* removed payments and limits ([#4171](https://github.com/open-sauced/app/issues/4171)) ([898d889](https://github.com/open-sauced/app/commit/898d8895027e4a86ca02b6d79eb94c035750f7ab))
+
 ## [2.64.0-beta.4](https://github.com/open-sauced/app/compare/v2.64.0-beta.3...v2.64.0-beta.4) (2024-10-16)
 
 
