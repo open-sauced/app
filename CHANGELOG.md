@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0-beta.4](https://github.com/open-sauced/app/compare/v2.64.0-beta.3...v2.64.0-beta.4) (2024-10-16)
+
+
+### 🐛 Bug Fixes
+
+* a11y rule "no-noninteractive-element-interactions" ([#4163](https://github.com/open-sauced/app/issues/4163)) ([4d26abc](https://github.com/open-sauced/app/commit/4d26abc894978cfe18729df8a8fdb9782b005bd2))
+
 ## [2.64.0-beta.3](https://github.com/open-sauced/app/compare/v2.64.0-beta.2...v2.64.0-beta.3) (2024-10-15)
 
 
