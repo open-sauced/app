@@ -5,9 +5,9 @@ import { HiOutlineInformationCircle } from "react-icons/hi";
 export default function InfoTooltip({ information, icon }: { information: string; icon?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
 
-  const handleOpenChange = useCallback((isOpen: boolean) => {
+  const handleOpenChange = (isOpen: boolean) => {
     setOpen(isOpen);
-  }, []);
+  };
 
   return (
     <Tooltip open={open} onOpenChange={handleOpenChange}>
