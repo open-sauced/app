@@ -474,15 +474,12 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                 {!coupon ? (
                   <div className="flex flex-col order-first gap-6 md:order-last">
                     <div className="flex flex-col gap-3">
-                      <label htmlFor="verify-account-button" className="text-2xl font-normal">
-                        Developer Pack
-                      </label>
+                      <h2 className="text-2xl font-normal tracking-normal">Developer Pack</h2>
                       <div className="w-full sm:max-w-80">
                         <Text>Verify your developer pack eligibilty to get an upgrade!</Text>
                       </div>
                     </div>
                     <DeveloperPackForm
-                      id="verify-account-button"
                       providerToken={providerToken}
                       refreshUser={() => {
                         mutate();
@@ -504,9 +501,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                 }}
               >
                 <div className="flex flex-col gap-3">
-                  <label htmlFor="delete-account-button" className="text-2xl font-normal">
-                    Delete Account
-                  </label>
+                  <h2 className="text-2xl font-normal tracking-normal">Delete Account</h2>
                   <div className="w-full md:w-96">
                     <Text>
                       Please note that account deletion is irreversible. Proceed only if you are certain about this
@@ -514,14 +509,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                     </Text>
                   </div>
                 </div>
-                <Button
-                  id="delete-account-button"
-                  type="submit"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  variant="destructive"
-                  className="w-max"
-                >
+                <Button type="submit" rel="noopener noreferrer" target="_blank" variant="destructive" className="w-max">
                   Delete Account
                 </Button>
                 <DeleteAccountModal
