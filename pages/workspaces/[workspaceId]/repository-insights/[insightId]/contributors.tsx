@@ -2,16 +2,11 @@ import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
-import dynamic from "next/dynamic";
 import SEO from "layouts/SEO/SEO";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import HubPageLayout from "layouts/hub-page";
 import Contributors from "components/organisms/Contributors/contributors";
 import { fetchApiData } from "helpers/fetchApiData";
-import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
-
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface InsightPageProps {
   insight: DbUserInsight;
@@ -24,9 +19,6 @@ interface InsightPageProps {
 const HubPage = ({ insight, ogImage, workspaceId, owners, isOwner }: InsightPageProps) => {
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const [hydrated, setHydrated] = useState(false);
-  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   useEffect(() => {
     setHydrated(true);
@@ -53,25 +45,11 @@ const HubPage = ({ insight, ogImage, workspaceId, owners, isOwner }: InsightPage
         image={ogImage}
         twitterCard="summary_large_image"
       />
-      <WorkspaceLayout
-        workspaceId={workspaceId}
-        banner={
-          showBanner ? (
-            <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-          ) : null
-        }
-      >
+      <WorkspaceLayout workspaceId={workspaceId}>
         <div className="px-4 py-8 lg:px-16 lg:py-12">
-          <HubPageLayout page="contributors" owners={owners} overLimit={showBanner}>
+          <HubPageLayout page="contributors" owners={owners}>
             <Contributors repositories={repositories} title={insight.name} />
           </HubPageLayout>
-          <InsightUpgradeModal
-            workspaceId={workspaceId}
-            variant="all"
-            isOpen={isInsightUpgradeModalOpen}
-            onClose={() => setIsInsightUpgradeModalOpen(false)}
-            overLimit={repositories.length}
-          />
         </div>
       </WorkspaceLayout>
     </>

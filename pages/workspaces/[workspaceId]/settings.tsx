@@ -1,11 +1,9 @@
-import { FaRegCheckCircle } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { ComponentProps, useState } from "react";
 import dynamic from "next/dynamic";
 import { useEffectOnce } from "react-use";
-import { IoDiamond } from "react-icons/io5";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import Button from "components/shared/Button/button";
 import TextInput from "components/atoms/TextInput/text-input";
@@ -21,27 +19,22 @@ import {
   deleteTrackedRepos,
   deleteWorkspace,
   saveWorkspace,
-  upgradeWorkspace,
 } from "lib/utils/workspace-utils";
 import { WORKSPACE_UPDATED_EVENT } from "components/shared/AppSidebar/AppSidebar";
 import { WorkspacesTabList } from "components/Workspaces/WorkspacesTabList";
 import { deleteCookie, setCookie } from "lib/utils/server/cookies";
 import WorkspaceVisibilityModal from "components/Workspaces/WorkspaceVisibilityModal";
-import Card from "components/atoms/Card/card";
 import { WorkspaceHeader } from "components/Workspaces/WorkspaceHeader";
-import { getStripe } from "lib/utils/stripe-client";
 import WorkspaceMembersConfig from "components/Workspaces/WorkspaceMembersConfig/workspace-members-config";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { WORKSPACE_ID_COOKIE_NAME } from "lib/utils/caching";
 
 const DeleteWorkspaceModal = dynamic(() => import("components/Workspaces/DeleteWorkspaceModal"), { ssr: false });
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface WorkspaceSettingsProps {
   workspace: Workspace;
   canDeleteWorkspace: boolean;
-  overLimit: boolean;
 }
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
@@ -85,13 +78,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   return {
     props: {
       workspace: data,
-      overLimit: !!data.exceeds_upgrade_limits,
       canDeleteWorkspace: sessionData && workspaceId !== sessionData.personal_workspace_id,
     },
   };
 };
 
-const WorkspaceSettings = ({ workspace, canDeleteWorkspace, overLimit }: WorkspaceSettingsProps) => {
+const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsProps) => {
   const { sessionToken } = useSupabaseAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -100,7 +92,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace, overLimit }: Workspa
 
   const [isPublic, setIsPublic] = useState(workspace.is_public);
   const [isWorkspaceVisibilityModalOpen, setIsWorkspaceVisibilityModalOpen] = useState(false);
-  const [isWorkspaceUpgradeModalOpen, setIsWorkspaceUpgradeModalOpen] = useState(false);
 
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const {
@@ -188,18 +179,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace, overLimit }: Workspa
     setIsSaving(false);
   };
 
-  const upgradeThisWorkspace = async () => {
-    const { data, error } = await upgradeWorkspace({ workspaceId: workspace.id, sessionToken: sessionToken! });
-    if (error) {
-      toast({ description: "There's been an error", variant: "danger" });
-    }
-
-    if (data) {
-      const stripe = await getStripe();
-      stripe?.redirectToCheckout({ sessionId: data.sessionId as string });
-    }
-  };
-
   const changeVisibility = async () => {
     const { data, error } = await changeWorkspaceVisibility({
       workspaceId: workspace.id,
@@ -262,11 +241,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace, overLimit }: Workspa
             isLoading={isLoading}
             repositories={pendingTrackedRepos}
             onAddRepos={() => {
-              if (overLimit) {
-                setIsWorkspaceUpgradeModalOpen(true);
-                return;
-              }
-
               setTrackedReposModalOpen(true);
             }}
             onRemoveTrackedRepo={(event) => {
@@ -291,11 +265,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace, overLimit }: Workspa
           <ClientOnly>
             <WorkspaceMembersConfig
               onAddMember={async (username) => {
-                if (overLimit) {
-                  setIsWorkspaceUpgradeModalOpen(true);
-                  return null;
-                }
-
                 return await addMember(workspace.id, sessionToken, username);
               }}
               onUpdateMember={async (memberId, role) => await updateMember(workspace.id, sessionToken, memberId, role)}
@@ -306,65 +275,11 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace, overLimit }: Workspa
 
           <div className="flex flex-col py-8 gap-4">
             <h2 className="!font-medium">Change Workspace Visibility</h2>
-            <p className="text-sm text-slate-600">
-              This workspace is set to {isPublic ? "public" : "private"}.{" "}
-              {!workspace.payee_user_id && (
-                <span>
-                  Setting this to private is a <span className="font-bold">paid</span> feature. Upgrade your Workspace
-                  to unlock this feature.
-                </span>
-              )}
-            </p>
 
-            <Button
-              onClick={() => {
-                if (workspace.payee_user_id) {
-                  setIsWorkspaceVisibilityModalOpen(true);
-                } else {
-                  setIsWorkspaceUpgradeModalOpen(true);
-                }
-              }}
-              variant="primary"
-              className="w-fit"
-            >
+            <Button variant="primary" className="w-fit">
               Set to {isPublic ? "private" : "public"}
             </Button>
           </div>
-
-          {workspace.payee_user_id ? (
-            <section className="flex flex-col gap-4">
-              <div className="flex gap-4 items-center">
-                <h3 className="font-medium">Manage Subscription</h3>
-                <div className="flex gap-2 items-center text-white px-3 py-2 bg-gradient-to-l from-gradient-orange-one to-gradient-orange-two rounded-full">
-                  <p className="text-sm font-medium">PRO</p>
-                  <IoDiamond />
-                </div>
-              </div>
-              <p className="text-sm text-slate-600">
-                This Workspace is currently subscribed to the PRO Workspace plan.
-              </p>
-              <Button href={process.env.NEXT_PUBLIC_STRIPE_SUB_CANCEL_URL} variant="primary" className="w-fit">
-                Manage Subscription
-              </Button>
-            </section>
-          ) : (
-            <Card className="flex flex-col gap-4 px-6 pt-5 pb-6">
-              <h2 className="text-md font-medium">Upgrade your workspace</h2>
-              <div id="upgrade" className="flex gap-4">
-                <FaRegCheckCircle className="text-light-grass-8 w-6 h-6" />
-                <div className="flex flex-col gap-2">
-                  <h3 className="text-sm font-medium">Make your workspace private</h3>
-                  <p className="text-sm text-slate-500">
-                    While our free workspaces are exclusively public, upgrading to a Pro workspace gives you the power
-                    to choose between public or private settings for your projects.
-                  </p>
-                </div>
-              </div>
-              <Button variant="primary" className="w-fit mt-2" onClick={upgradeThisWorkspace}>
-                Upgrade Workspace
-              </Button>
-            </Card>
-          )}
 
           {canDeleteWorkspace && (
             <div className="flex flex-col p-6 rounded-2xl bg-light-slate-4">
@@ -433,13 +348,6 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace, overLimit }: Workspa
               }}
             />
           ) : null}
-
-          <InsightUpgradeModal
-            variant="all"
-            workspaceId={workspace.id}
-            isOpen={isWorkspaceUpgradeModalOpen}
-            onClose={() => setIsWorkspaceUpgradeModalOpen(false)}
-          />
         </div>
       </div>
     </WorkspaceLayout>

@@ -78,17 +78,6 @@ export async function saveWorkspace({
   return { data: { workspace: data, repos: repoData, contributors: contributorsData }, error };
 }
 
-export async function upgradeWorkspace({ workspaceId, sessionToken }: { workspaceId: string; sessionToken: string }) {
-  const { data, error } = await fetchApiData<{ sessionId: string }>({
-    path: `auth/checkout/workspaces/${workspaceId}/session`,
-    method: "POST",
-    body: {},
-    bearerToken: sessionToken,
-  });
-
-  return { data, error };
-}
-
 export async function changeWorkspaceVisibility({
   workspaceId,
   sessionToken,
