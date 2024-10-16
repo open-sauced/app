@@ -51,7 +51,6 @@ components/StarSearch/SuggestedPrompts.tsx @zeucapua @nickytonline @brandonrober
 components/TabList/tab-list.tsx @zeucapua @jpmcb @brandonroberts
 components/Tables/ContributorsGrid.tsx @zeucapua @brandonroberts @nickytonline
 components/Tables/ContributorsTable.tsx @zeucapua @zeucapua @brandonroberts
-components/Workspaces/InsightUpgradeModal.tsx @brandonroberts
 components/Workspaces/TrackedRepoWizard/PasteReposStep.tsx @brandonroberts @nickytonline @zeucapua
 components/Workspaces/TrackedReposTable.tsx @nickytonline @brandonroberts
 components/Workspaces/WorkspaceCard.tsx @brandonroberts @zeucapua
@@ -84,7 +83,6 @@ components/molecules/DevProfile/dev-profile.tsx @nickytonline @zeucapua @brandon
 components/molecules/FilterHeader/filter-header.tsx @brandonroberts
 components/molecules/HighlightInput/highlight-input-form.tsx @zeucapua
 components/molecules/HoverCardWrapper/hover-card-wrapper.tsx @nickytonline @zeucapua
-components/molecules/InsightHeader/insight-header.tsx @zeucapua @zeucapua @brandonroberts
 components/molecules/ListCard/list-card.tsx @nickytonline @brandonroberts
 components/molecules/NewsletterForm/newsletter-form.stories.tsx @brandonroberts @jpmcb @zeucapua
 components/molecules/NewsletterForm/newsletter-form.tsx @brandonroberts @zeucapua @nickytonline

@@ -337,7 +337,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
               </span>
             </div>
 
-            <div id="upgrade" className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
               <label className="flex flex-col w-full gap-2">
                 Time zone
                 <Select onValueChange={(value) => setTimezone(value)} value={timezone}>

@@ -2,17 +2,12 @@ import { useEffect, useState } from "react";
 import { GetServerSidePropsContext } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
-import dynamic from "next/dynamic";
 import SEO from "layouts/SEO/SEO";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import HubPageLayout from "layouts/hub-page";
 import { fetchApiData } from "helpers/fetchApiData";
-import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import useSession from "lib/hooks/useSession";
 import Repositories from "components/organisms/Repositories/repositories";
-
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface InsightPageProps {
   insight: DbUserInsight;
@@ -26,10 +21,6 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId, owners }: InsightPage
   const repositories = insight.repos.map((repo) => repo.repo_id);
   const [hydrated, setHydrated] = useState(false);
   const { session } = useSession(true);
-
-  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   useEffect(() => {
     setHydrated(true);
@@ -56,28 +47,14 @@ const HubPage = ({ insight, isOwner, ogImage, workspaceId, owners }: InsightPage
         image={ogImage}
         twitterCard="summary_large_image"
       />
-      <WorkspaceLayout
-        workspaceId={workspaceId}
-        banner={
-          showBanner ? (
-            <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-          ) : null
-        }
-      >
+      <WorkspaceLayout workspaceId={workspaceId}>
         <div className="px-4 py-8 lg:px-16 lg:py-12">
-          <HubPageLayout page="dashboard" owners={owners} overLimit={showBanner}>
+          <HubPageLayout page="dashboard" owners={owners}>
             <Repositories
               repositories={repositories}
               personalWorkspaceId={isOwner ? undefined : (session as DbUser)?.personal_workspace_id}
             />
           </HubPageLayout>
-          <InsightUpgradeModal
-            workspaceId={workspaceId}
-            variant="all"
-            isOpen={isInsightUpgradeModalOpen}
-            onClose={() => setIsInsightUpgradeModalOpen(false)}
-            overLimit={repositories.length}
-          />
         </div>
       </WorkspaceLayout>
     </>
