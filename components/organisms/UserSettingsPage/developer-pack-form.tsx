@@ -55,7 +55,7 @@ const DeveloperPackForm = ({ refreshUser, providerToken }: DeveloperPackFormProp
       <Button
         onClick={handeVerification}
         variant="primary"
-        className="px-4 py-2 w-max bg-light-slate-4 "
+        className="px-4 py-2 w-max bg-light-slate-4"
         disabled={updating}
       >
         Verify Account

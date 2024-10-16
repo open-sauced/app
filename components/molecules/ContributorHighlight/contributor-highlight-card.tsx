@@ -794,6 +794,7 @@ const ContributorHighlightCard = ({
                       <Search
                         isLoading={tagRepoSearchLoading}
                         placeholder="Repository Full Name (ex: open-sauced/open-sauced)"
+                        labelText="Search repository by full name (ex: open-sauced/open-sauced)"
                         className="!w-full text-md text-gra"
                         name={"query"}
                         suggestions={repoTagSuggestions}
