@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { useRouter } from "next/router";
 
 import { ResponsiveScatterPlot, ScatterPlotNodeProps } from "@nivo/scatterplot";
 import { animated } from "@react-spring/web";
@@ -8,7 +9,9 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 import ToggleOption from "components/atoms/ToggleOption/toggle-option";
 import Title from "components/atoms/Typography/title";
 import ToggleGroup from "components/atoms/ToggleGroup/toggle-group";
-import AvatarHoverCard from "components/atoms/Avatar/avatar-hover-card";
+import { Avatar } from "components/atoms/Avatar/avatar-hover-card";
+import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
+import CustomTooltTip from "./CustomTooltip";
 
 export type PrStatusFilter = "open" | "closed" | "all";
 
@@ -53,11 +56,56 @@ const NivoScatterPlot = ({
 }: ScatterPlotProps) => {
   const [showMembers, setShowMembers] = useState(false);
   const [isLogarithmic, setIsLogarithmic] = useState(true);
-
+  const { userId } = useSupabaseAuth();
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [mouseX, setMouseX] = useState(0);
+  const [mouseY, setMouseY] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [contributorName, setContributorName] = useState("");
   let functionTimeout: any;
 
   // Brought this in here to have access to repositories
+  const router = useRouter();
+  const topic = router.query.pageId as string;
   const CustomNode = (props: ScatterPlotNodeProps<ScatterChartDataItems>) => {
+    const { node, onMouseEnter, onMouseMove, onMouseLeave, onClick } = props;
+
+    const handleMouseEnter = useCallback(
+      (event: any) => {
+        setTooltipVisible(true);
+        setMouseX(event.clientX);
+        setMouseY(event.clientY);
+        setContributorName(node.data.contributor);
+        onMouseEnter?.(node, event);
+      },
+      [node, onMouseEnter]
+    );
+
+    const handleMouseMove = useCallback(
+      (event: any) => {
+        onMouseMove?.(node, event);
+      },
+      [node, onMouseMove]
+    );
+
+    const handleMouseLeave = useCallback(
+      (event: any) => {
+        setTimeout(() => {
+          setTooltipVisible(false);
+        }, 500);
+
+        onMouseLeave?.(node, event);
+      },
+      [node, onMouseLeave]
+    );
+
+    const handleClick = useCallback(
+      (event: any) => {
+        onClick?.(node, event);
+      },
+      [node, onClick]
+    );
+
     return (
       <animated.foreignObject
         className="cursor-pointer"
@@ -66,8 +114,13 @@ const NivoScatterPlot = ({
         r={props.style.size.to((size: number) => size / 2) as unknown as number}
         y={props.style.y.to((yVal: number) => yVal - 35 / 1) as unknown as number}
         x={props.style.x.to((xVal: number) => xVal - 35 / 2) as unknown as number}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={() => {
+          setTooltipVisible(false);
+        }}
+        onClick={handleClick}
       >
-        <AvatarHoverCard contributor={props.node.data.contributor} repositories={repositories!} />
+        <Avatar contributor={props.node.data.contributor} />
       </animated.foreignObject>
     );
   };
@@ -118,7 +171,24 @@ const NivoScatterPlot = ({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between px-0 pt-3 md:flex-row md:px-7">
+      {(tooltipVisible || isHovered) && (
+        <div
+          style={{
+            position: "absolute",
+            marginTop: mouseY - 400,
+            marginLeft: mouseX - 100,
+            zIndex: 9999,
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <CustomTooltTip username={contributorName} repositories={repositories} id={userId} />
+        </div>
+      )}
+      <div
+        className="flex flex-col items-center justify-between px-0 pt-3 md:flex-row md:px-7"
+        onMouseLeave={() => setTooltipVisible(false)}
+      >
         <Title level={4} className="!text-sm  !text-light-slate-12">
           {title}
         </Title>
@@ -147,7 +217,7 @@ const NivoScatterPlot = ({
           <></>
         )}
         {/* replaced display flex to hidden on show/bots container */}
-        <div className="flex gap-2 mt-3 md:mt-0">
+        <div className="flex gap-2 mt-3 md:mt-0" onMouseLeave={() => setTooltipVisible(false)}>
           <div>
             <ToggleOption handleToggle={handleShowBots} checked={showBots} optionText="Show Bots"></ToggleOption>
           </div>
@@ -160,9 +230,8 @@ const NivoScatterPlot = ({
           </div>
         </div>
       </div>
-      <div className="h-[400px]">
+      <div className="h-[400px]" onMouseLeave={() => setTooltipVisible(false)}>
         <ResponsiveScatterPlot
-          // leaving this here for now so we don't see the default tooltip from nivo
           nodeSize={isMobile ? 25 : 35}
           data={isMobile ? filteredData : data}
           margin={{ top: 30, right: isMobile ? 30 : 60, bottom: 70, left: isMobile ? 75 : 90 }}
@@ -192,6 +261,14 @@ const NivoScatterPlot = ({
                 strokeOpacity: 0.7,
               },
             },
+          }}
+          tooltip={({ node }) => {
+            return null;
+          }}
+          onMouseLeave={() => {
+            setTimeout(() => {
+              setTooltipVisible(false);
+            }, 500);
           }}
           isInteractive={true}
           axisLeft={{
