@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0-beta.6](https://github.com/open-sauced/app/compare/v2.64.0-beta.5...v2.64.0-beta.6) (2024-10-17)
+
+
+### 🐛 Bug Fixes
+
+* fixed changing workspaces visibility regression ([#4172](https://github.com/open-sauced/app/issues/4172)) ([ee12474](https://github.com/open-sauced/app/commit/ee124748bf8a5e77121d73fef7172bf8a09647da))
+
 ## [2.64.0-beta.5](https://github.com/open-sauced/app/compare/v2.64.0-beta.4...v2.64.0-beta.5) (2024-10-16)
 
 
