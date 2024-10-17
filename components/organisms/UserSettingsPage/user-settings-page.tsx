@@ -24,7 +24,6 @@ import { validateTwitterUsername } from "lib/utils/validate-twitter-username";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "components/molecules/Dialog/dialog";
 import { LanguageSwitch } from "components/shared/LanguageSwitch/language-switch";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
-import DeveloperPackForm from "./developer-pack-form";
 
 interface UserSettingsPageProps {
   user: User | null;
@@ -435,59 +434,38 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
             </Button>
           </div>
           {userInfo && (
-            <>
-              <div>
-                {!coupon ? (
-                  <div className="flex flex-col order-first gap-6 md:order-last">
-                    <div className="flex flex-col gap-3">
-                      <label className="text-2xl font-normal">Developer Pack</label>
-                      <div className="w-full sm:max-w-80">
-                        <Text>Verify your developer pack eligibilty to get an upgrade!</Text>
-                      </div>
-                    </div>
-                    <DeveloperPackForm
-                      providerToken={providerToken}
-                      refreshUser={() => {
-                        mutate();
-                        setCoupon("verified");
-                      }}
-                    />
-                  </div>
-                ) : null}
-              </div>
-              <form
-                name="delete-account"
-                action="/api/delete-account"
-                method="POST"
-                className="flex flex-col order-first gap-6 md:order-last p-6 rounded-2xl bg-light-slate-4"
-                ref={deleteFormRef}
-                onSubmit={(e) => {
-                  setIsModalOpen(true);
-                  e.preventDefault();
-                }}
-              >
-                <div className="flex flex-col gap-3">
-                  <label className="text-2xl font-normal">Delete Account</label>
-                  <div className="w-full md:w-96">
-                    <Text>
-                      Please note that account deletion is irreversible. Proceed only if you are certain about this
-                      action.
-                    </Text>
-                  </div>
+            <form
+              name="delete-account"
+              action="/api/delete-account"
+              method="POST"
+              className="flex flex-col order-first gap-6 md:order-last p-6 rounded-2xl bg-light-slate-4"
+              ref={deleteFormRef}
+              onSubmit={(e) => {
+                setIsModalOpen(true);
+                e.preventDefault();
+              }}
+            >
+              <div className="flex flex-col gap-3">
+                <label className="text-2xl font-normal">Delete Account</label>
+                <div className="w-full md:w-96">
+                  <Text>
+                    Please note that account deletion is irreversible. Proceed only if you are certain about this
+                    action.
+                  </Text>
                 </div>
-                <Button type="submit" rel="noopener noreferrer" target="_blank" variant="destructive" className="w-max">
-                  Delete Account
-                </Button>
-                <DeleteAccountModal
-                  open={isModalOpen}
-                  setOpen={setIsModalOpen}
-                  onDelete={() => {
-                    setIsModalOpen(false);
-                    deleteFormRef.current?.submit();
-                  }}
-                />
-              </form>
-            </>
+              </div>
+              <Button type="submit" rel="noopener noreferrer" target="_blank" variant="destructive" className="w-max">
+                Delete Account
+              </Button>
+              <DeleteAccountModal
+                open={isModalOpen}
+                setOpen={setIsModalOpen}
+                onDelete={() => {
+                  setIsModalOpen(false);
+                  deleteFormRef.current?.submit();
+                }}
+              />
+            </form>
           )}
         </div>
       </div>
