@@ -276,7 +276,13 @@ const WorkspaceSettings = ({ workspace, canDeleteWorkspace }: WorkspaceSettingsP
           <div className="flex flex-col py-8 gap-4">
             <h2 className="!font-medium">Change Workspace Visibility</h2>
 
-            <Button variant="primary" className="w-fit">
+            <Button
+              variant="primary"
+              className="w-fit"
+              onClick={() => {
+                setIsWorkspaceVisibilityModalOpen(true);
+              }}
+            >
               Set to {isPublic ? "private" : "public"}
             </Button>
           </div>
