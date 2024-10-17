@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0-beta.7](https://github.com/open-sauced/app/compare/v2.64.0-beta.6...v2.64.0-beta.7) (2024-10-17)
+
+
+### 🍕 Features
+
+* removed developer pack form from user settings page ([#4173](https://github.com/open-sauced/app/issues/4173)) ([da975d7](https://github.com/open-sauced/app/commit/da975d77bb00b5b9d8c3a3c930f0b5a1e6a1a625))
+
 ## [2.64.0-beta.6](https://github.com/open-sauced/app/compare/v2.64.0-beta.5...v2.64.0-beta.6) (2024-10-17)
 
 
