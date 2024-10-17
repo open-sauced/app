@@ -3,15 +3,15 @@ import { ValueType, NameType } from "recharts/types/component/DefaultTooltipCont
 
 import {
   ResponsiveContainer,
-  BarChart,
   LineChart,
   XAxis,
   YAxis,
-  Bar,
   Tooltip,
   type TooltipProps,
   Line,
   CartesianGrid,
+  AreaChart,
+  Area,
 } from "recharts";
 import { FaStar } from "react-icons/fa6";
 import { getHistoryStarsHistogramToDays, getDailyStarsHistogramToDays, getTicks } from "lib/utils/repo-page-utils";
@@ -52,7 +52,7 @@ export default function StarsChart({
     switch (category) {
       case "daily":
         return (
-          <BarChart data={dailyData} syncId={syncId} className="-left-5">
+          <AreaChart data={dailyData} syncId={syncId} className="-left-5">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
             <YAxis
               interval={1}
@@ -64,8 +64,14 @@ export default function StarsChart({
             />
             <Tooltip content={CustomTooltip} filterNull={false} />
             <CartesianGrid vertical={false} strokeDasharray="4" stroke="#E2E8F0" />
-            <Bar dataKey="star_count" fill="#FF5100" />
-          </BarChart>
+            <Area type="monotone" dataKey="star_count" stroke="#FF5100" fill="url(#colorStarCount)" fillOpacity={0.7} />
+            <defs>
+              <linearGradient id="colorStarCount" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#FF5100" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#FF5100" stopOpacity={0.2} />
+              </linearGradient>
+            </defs>
+          </AreaChart>
         );
       case "history":
         return (
