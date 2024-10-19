@@ -701,7 +701,6 @@ export function StarSearchChat({
               role="feed"
               aria-label="StarSearch conversation"
               aria-busy={isRunning}
-              aria-setsize={-1}
               className={clsx("w-full max-w-xl mx-auto lg:max-w-5xl pb-[210px] md:pb-[285px]")}
             >
               {chatMessagesToProcess.map((message, i, messages) => {
