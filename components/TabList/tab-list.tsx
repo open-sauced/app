@@ -74,7 +74,6 @@ export const SubTabsList = ({ tabList, pageId, selectedTab, label, textSize, onS
             role="tab"
             aria-selected={isSelected ? "true" : "false"}
             data-state={isSelected ? "active" : "inactive"}
-            tabIndex={0} // Added tabIndex for accessibility
             key={index}
             className={clsx(isSelected && "bg-white shadow", "rounded py-1 px-2", !isSelected && "text-light-slate-11")}
             onClick={onSelect ? () => onSelect(tab) : undefined}
