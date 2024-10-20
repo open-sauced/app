@@ -5,7 +5,7 @@ interface FabProps extends React.HTMLAttributes<HTMLButtonElement> {
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
   onClick?: () => void;
 }
-const Fab = ({ position, children, className }: FabProps) => {
+const Fab = ({ position, children, className, onClick }: FabProps) => {
   const getFabPositionStyles = () => {
     switch (position) {
       case "top-left":
@@ -21,7 +21,7 @@ const Fab = ({ position, children, className }: FabProps) => {
     }
   };
   return (
-    <button type="button" className={clsx("fixed", getFabPositionStyles(), className)}>
+    <button type="button" onClick={onClick} className={clsx("fixed", getFabPositionStyles(), className)}>
       {children}
     </button>
   );

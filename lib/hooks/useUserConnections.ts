@@ -34,17 +34,7 @@ const useUserConnections = () => {
       toast({ description: "Connection request Sent!", title: "Success", variant: "success" });
     } else {
       const response = await req?.json();
-      if (response.statusCode === 401) {
-        toast({
-          description: "You require upgraded access to use connections!",
-          title: "Not allowed",
-          variant: "danger",
-        });
-      } else {
-        toast({ description: response.message, title: "Error", variant: "danger" });
-      }
-      // eslint-disable-next-line no-console
-      console.log(response.message);
+      toast({ description: response.message, title: "Error", variant: "danger" });
     }
   }
 

@@ -6,10 +6,8 @@ import GitHubIcon from "img/icons/github-icon.svg";
 import Button from "components/shared/Button/button";
 import Icon from "components/atoms/Icon/icon";
 import Title from "components/atoms/Typography/title";
-import Text from "components/atoms/Typography/text";
 import ReportsHistory from "components/molecules/ReportsHistory/reports-history";
 import SelectReportsFilter from "components/molecules/SelectReportsFilter/select-reports-filter";
-import StripeCheckoutButton from "components/organisms/StripeCheckoutButton/stripe-checkout-button";
 
 import { Report } from "interfaces/report-type";
 
@@ -20,12 +18,11 @@ import getCurrentDate from "lib/utils/get-current-date";
 const USERDEVICESTORAGENAME = "reportState";
 
 interface ReportsProps {
-  hasReports?: boolean;
   waitlisted?: boolean;
   repositories?: number[];
 }
 
-const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
+const Reports = ({ repositories }: ReportsProps): JSX.Element => {
   const userDeviceState = localStorage.getItem(USERDEVICESTORAGENAME);
   const initialState = userDeviceState ? JSON.parse(userDeviceState as string) : [];
   const [reports, setReports] = useState<Report[]>(initialState);
@@ -64,28 +61,19 @@ const Reports = ({ hasReports, repositories }: ReportsProps): JSX.Element => {
         </Title>
         <hr className="border-light-slate-6 my-4" />
         {user ? (
-          hasReports ? (
-            <>
-              <SelectReportsFilter filterList={filterList} callback={handleFilterClick} />
+          <>
+            <SelectReportsFilter filterList={filterList} callback={handleFilterClick} />
 
-              {reports.length > 0 && (
-                <>
-                  <Title className=" relative mt-16" level={3}>
-                    Download History
-                  </Title>
-                  <hr className="border-light-slate-6 my-4" />
-                  <ReportsHistory reportList={reports} repositories={repositories} />
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <Text>Upgrade to a subscription to gain access to generate custom reports!</Text>
-              <p className="flex justify-center py-4 px-2">
-                <StripeCheckoutButton variant="primary" className="w-52 h-[38px] flex justify-center" />
-              </p>
-            </>
-          )
+            {reports.length > 0 && (
+              <>
+                <Title className=" relative mt-16" level={3}>
+                  Download History
+                </Title>
+                <hr className="border-light-slate-6 my-4" />
+                <ReportsHistory reportList={reports} repositories={repositories} />
+              </>
+            )}
+          </>
         ) : (
           <div className="flex justify-center py-4">
             <Button variant="primary" onClick={async () => await signIn({ provider: "github" })}>

@@ -13,12 +13,9 @@ import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { TrackedReposTable } from "components/Workspaces/TrackedReposTable";
 import Title from "components/atoms/Typography/title";
 import Text from "components/atoms/Typography/text";
-import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 
 const TrackedReposModal = dynamic(import("components/Workspaces/TrackedReposModal"));
 const DeleteInsightPageModal = dynamic(import("components/organisms/InsightPage/DeleteInsightPageModal"));
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const supabase = createPagesServerClient(context);
@@ -94,9 +91,6 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [trackedReposModalOpen, setTrackedReposModalOpen] = useState(false);
   const [trackedRepos, setTrackedRepos] = useState<Map<string, boolean>>(initialTrackedRepos);
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
-  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded;
 
   const updateInsight = async () => {
     setLoading(true);
@@ -143,11 +137,6 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
   return (
     <WorkspaceLayout
       workspaceId={workspaceId}
-      banner={
-        showBanner ? (
-          <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-        ) : null
-      }
       footer={
         <Button
           variant="primary"
@@ -182,10 +171,6 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
           disabled={loading}
           repositories={trackedRepos}
           onAddRepos={() => {
-            if (showBanner) {
-              setIsInsightUpgradeModalOpen(true);
-              return;
-            }
             setTrackedReposModalOpen(true);
           }}
           onRemoveTrackedRepo={(event) => {
@@ -254,15 +239,6 @@ export default function RepoInsightEditPage({ insight, workspaceId, isOwner, bea
           setOpen={() => setIsDeleteModalOpen(true)}
           onClose={() => setIsDeleteModalOpen(false)}
           onConfirm={deleteInsight}
-        />
-      ) : null}
-      {isOwner ? (
-        <InsightUpgradeModal
-          workspaceId={workspaceId}
-          variant="all"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={trackedRepos.size}
         />
       ) : null}
     </WorkspaceLayout>

@@ -1,5 +1,3 @@
-import dynamic from "next/dynamic";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { ErrorBoundary } from "react-error-boundary";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
@@ -13,14 +11,10 @@ import { fetchApiData, validateListPath } from "helpers/fetchApiData";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { useContributorsList } from "lib/hooks/api/useContributorList";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import ContributorsTable from "components/Tables/ContributorsTable";
 import { setQueryParams } from "lib/utils/query-params";
 import { OrderDirection } from "lib/utils/sorting";
-
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 interface ListsOverviewProps {
   list: DBList;
@@ -161,19 +155,8 @@ const ListsOverview = ({
   const allContributorCommits = allContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
   const prevAllContributorCommits = prevAllContributorStats?.reduce((acc, curr) => acc + curr.commits, 0) || 0;
 
-  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
-
   return (
-    <WorkspaceLayout
-      workspaceId={workspaceId}
-      banner={
-        showBanner ? (
-          <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-        ) : null
-      }
-    >
+    <WorkspaceLayout workspaceId={workspaceId}>
       <ListPageLayout
         list={list}
         workspaceId={workspaceId}
@@ -181,7 +164,6 @@ const ListsOverview = ({
         isOwner={isOwner}
         showRangeFilter={false}
         owners={owners}
-        overLimit={showBanner}
       >
         <div className="flex flex-col w-full gap-4 px-4 py-8 lg:px-16 lg:py-12">
           <ClientOnly>
@@ -249,14 +231,6 @@ const ListsOverview = ({
           </ClientOnly>
         </div>
       </ListPageLayout>
-
-      <InsightUpgradeModal
-        workspaceId={workspaceId}
-        variant="contributors"
-        isOpen={isInsightUpgradeModalOpen}
-        onClose={() => setIsInsightUpgradeModalOpen(false)}
-        overLimit={numberOfContributors}
-      />
     </WorkspaceLayout>
   );
 };
