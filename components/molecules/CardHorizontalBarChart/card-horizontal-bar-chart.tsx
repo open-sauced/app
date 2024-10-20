@@ -63,7 +63,6 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
                 onMouseOver={() => handleChangeDescriptText(languageName)}
                 onFocus={() => handleChangeDescriptText(languageName)}
                 onKeyDown={(e) => handleKeyDown(e, languageName)}
-                aria-label={`${languageName}: ${percentageUsed}%`}
                 className="h-2 transition-all duration-500 ease-in-out"
                 style={{
                   width: `${percentageUsed < 20 ? (percentageUsed / percentage) * 100 : percentageUsed}%`,
