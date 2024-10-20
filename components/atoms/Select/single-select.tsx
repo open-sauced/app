@@ -4,6 +4,7 @@ import { RiArrowDownSLine } from "react-icons/ri";
 import clsx from "clsx";
 
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { Command, CommandGroup, CommandInput, CommandItem } from "../Cmd/command";
 import Tooltip from "../Tooltip/tooltip";
 interface SingleSelectProps {
@@ -109,7 +110,17 @@ const SingleSelect = ({
                         }}
                         className="!z-50 !cursor-pointer flex justify-between min-w-[7rem] items-center !px-3 rounded-md truncate break-words w-full"
                       >
-                        {option.label}
+                        {option.value === "new" ? (
+                          <div className="flex">
+                            <PlusIcon
+                              style={{ strokeWidth: "3px" }}
+                              className="w-5 text-gray-500 h-5 p-0.5 -ml-1 text-semibold group-hover:bg-orange-100 rounded-md"
+                            />
+                            <span className="ml-1">{option.label}</span>
+                          </div>
+                        ) : (
+                          option.label
+                        )}
                       </CommandItem>
                     ))
                   : null}
