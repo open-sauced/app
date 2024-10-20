@@ -37,7 +37,6 @@ const TabList = ({ tabList, pageId, selectedTab }: TabListProps) => {
           role="tab"
           aria-selected={selectedTab === tab.name.toLowerCase() ? "true" : "false"}
           data-state={selectedTab === tab.name.toLowerCase() ? "active" : "inactive"}
-          tabIndex={0} // Added tabIndex for accessibility
           key={index}
           className={clsx(
             "tool-list-item border-b-2 transition-all ease-in-out",
