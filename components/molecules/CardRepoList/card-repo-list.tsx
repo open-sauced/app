@@ -89,7 +89,7 @@ const CardRepoList = ({
                   )}
                 </button>
               );
-            })}{" "}
+            })}
           <div>{repoTotal > limit ? `+${repoTotal - limit}` : null}</div>
         </>
       ) : (
