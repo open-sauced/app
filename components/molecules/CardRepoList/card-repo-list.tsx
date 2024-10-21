@@ -53,18 +53,7 @@ const CardRepoList = ({
             .filter((_, arrCount) => arrCount < limit)
             .map(({ repoOwner, repoName, repoIcon }, index) => {
               return (
-                <div
-                  key={`repo_${index}`}
-                  role="button"
-                  onClick={() => handleClick(repoOwner, repoName)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      handleClick(repoOwner, repoName);
-                    }
-                  }}
-                  tabIndex={0}
-                >
+                <button key={`repo_${index}`} onClick={() => handleClick(repoOwner, repoName)}>
                   {repoName && repoIcon ? (
                     <Tooltip content={`${repoOwner}/${repoName}`}>
                       <div
@@ -98,7 +87,7 @@ const CardRepoList = ({
                   ) : (
                     ""
                   )}
-                </div>
+                </button>
               );
             })}{" "}
           <div>{repoTotal > limit ? `+${repoTotal - limit}` : null}</div>
