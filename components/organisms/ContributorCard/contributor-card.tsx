@@ -102,7 +102,7 @@ const ContributorCard = ({
             </div>
           </div>
           <div className="flex flex-col items-end gap-2">
-            <CardHorizontalBarChart withDescription={false} languageList={languageList} />
+            <CardHorizontalBarChart languageList={languageList} />
             {!!isMaintainer && <Badge text="maintainer" />}
           </div>
         </div>

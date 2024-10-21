@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import Text from "components/atoms/Typography/text";
-import Tooltip from "components/atoms/Tooltip/tooltip";
 import colors from "../../../lib/utils/color.json";
 
 export interface AllSimpleColors {
@@ -19,21 +17,14 @@ export interface LanguageObject {
 
 interface CardHorizontalBarChartProps {
   languageList: LanguageObject[];
-  withDescription: boolean;
 }
 
 const languageToColor: AllSimpleColors = colors as AllSimpleColors;
 
-const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizontalBarChartProps): JSX.Element => {
+const CardHorizontalBarChart = ({ languageList }: CardHorizontalBarChartProps): JSX.Element => {
   const sortedLangArray = languageList.sort((a, b) => b.percentageUsed - a.percentageUsed);
   // used this state to calculate thte percentage of each language
   const [percentage, setPercentage] = useState<any>(0);
-
-  const [descriptText, setDescriptText] = useState(sortedLangArray[0]?.languageName || "javascript");
-
-  const handleChangeDescriptText = (descriptText: string) => {
-    setDescriptText(descriptText);
-  };
 
   useEffect(() => {
     if (sortedLangArray.length === 0) return;
@@ -54,7 +45,6 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
             index < 5 && (
               <div
                 key={index}
-                onMouseOver={() => handleChangeDescriptText(languageName)}
                 className="h-2 transition-all duration-500 ease-in-out"
                 style={{
                   width: `${percentageUsed < 20 ? (percentageUsed / percentage) * 100 : percentageUsed}%`,
@@ -67,21 +57,6 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
           );
         })}
       </div>
-      {withDescription && (
-        <div className="flex gap-2 w-32 items-baseline">
-          <div
-            className={"w-2 h-2 rounded-full"}
-            style={{
-              backgroundColor: languageToColor[descriptText]
-                ? (languageToColor[descriptText].color as string)
-                : NOTSUPPORTED,
-            }}
-          />
-          <Tooltip className="max-w-[100px]" content={descriptText}>
-            <Text className="!text-xs !truncate !font-semibold !text-light-slate-11">{descriptText}</Text>
-          </Tooltip>
-        </div>
-      )}
     </div>
   );
 };
