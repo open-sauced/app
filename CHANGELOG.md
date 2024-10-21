@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0-beta.8](https://github.com/open-sauced/app/compare/v2.64.0-beta.7...v2.64.0-beta.8) (2024-10-21)
+
+
+### 🐛 Bug Fixes
+
+* a11y rule "img-redundant-alt" fails with a warning ([#4176](https://github.com/open-sauced/app/issues/4176)) ([cc9cdf0](https://github.com/open-sauced/app/commit/cc9cdf0f162d576e5f23035f5a569e4e798ffe10))
+
 ## [2.64.0-beta.7](https://github.com/open-sauced/app/compare/v2.64.0-beta.6...v2.64.0-beta.7) (2024-10-17)
 
 
