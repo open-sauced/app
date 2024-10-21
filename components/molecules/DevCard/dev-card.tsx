@@ -97,21 +97,13 @@ export default function DevCard(props: DevCardProps) {
       <div style={{ ...faceStyle }} className="DevCard-card relative rounded-xl w-full h-full border border-gray-400" />
     </animated.div>
   ) : (
-    <div
+    <button
       className="DevCard select-none"
       style={{
         width: "245px",
         height: "348px",
       }}
-      tabIndex={0}
-      role="button"
       onClick={handleCardClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          handleCardClick(e);
-        }
-      }}
     >
       <Tilt
         tiltEnable={isInteractive}
@@ -246,7 +238,7 @@ export default function DevCard(props: DevCardProps) {
           </div>
         </div>
       </Tilt>
-    </div>
+    </button>
   );
 }
 
