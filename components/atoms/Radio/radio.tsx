@@ -14,16 +14,8 @@ interface RadioProps {
 
 const Radio = ({ className, withLabel, id, children, value, checked = false, onClick }: RadioProps): JSX.Element => {
   return (
-    <div
+    <button
       onClick={onClick}
-      onKeyDown={(e) => {
-        if (onClick && (e.key === "Enter" || e.key === " ")) {
-          e.preventDefault();
-          onClick();
-        }
-      }}
-      tabIndex={0}
-      role="button"
       className={
         `${
           checked && "!bg-light-orange-3"
@@ -57,7 +49,7 @@ const Radio = ({ className, withLabel, id, children, value, checked = false, onC
           </span>
         )}
       </label>
-    </div>
+    </button>
   );
 };
 
