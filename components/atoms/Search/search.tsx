@@ -140,7 +140,7 @@ const Search = ({
           <ScrollArea type="auto" className="h-60">
             {suggestionsLabel && suggestions.length > 0 ? <div className="pl-5 pt-4">{suggestionsLabel}</div> : null}
             {suggestions.map((suggestion, index) => (
-              <div
+              <button
                 className={clsx(
                   cursor === index && "_cursorActive bg-slate-100",
                   "px-4 py-2 hover:bg-light-slate-2",
@@ -149,19 +149,10 @@ const Search = ({
                 style={suggestionsStyle}
                 key={index}
                 data-suggestion={typeof suggestion === "string" ? suggestion : suggestion.key}
-                role="button"
                 onClick={(event) => {
                   const { suggestion } = (event.currentTarget as HTMLElement).dataset;
                   suggestion && handleOnSelect(suggestion);
                 }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    const { suggestion } = (e.currentTarget as HTMLElement).dataset;
-                    suggestion && handleOnSelect(suggestion);
-                  }
-                }}
-                tabIndex={0}
               >
                 {typeof suggestion === "string" ? (
                   <span className="pl-5 text-sm md:mw-auto inline-block text-ellipsis truncate tracking-tighter">
@@ -170,7 +161,7 @@ const Search = ({
                 ) : (
                   suggestion.node
                 )}
-              </div>
+              </button>
             ))}
           </ScrollArea>
         </div>
