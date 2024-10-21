@@ -8,17 +8,8 @@ interface ToogleOptionProps {
 }
 const ToggleOption = ({ optionText, withIcon, checked, handleToggle }: ToogleOptionProps): JSX.Element => {
   return (
-    <div
+    <button
       onClick={handleToggle}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          handleToggle();
-        }
-      }}
-      role="switch"
-      aria-checked={checked}
-      tabIndex={0}
       className="inline-flex cursor-pointer items-center gap-2 rounded-md px-2 py-0.5 border border-light-slate-6 bg-light-slate-1"
     >
       <ToggleSwitch ariaLabel={optionText} size="sm" handleToggle={handleToggle} name={optionText} checked={checked} />
@@ -29,7 +20,7 @@ const ToggleOption = ({ optionText, withIcon, checked, handleToggle }: ToogleOpt
           className="text-light-slate-9"
         />
       )}
-    </div>
+    </button>
   );
 };
 export default ToggleOption;
