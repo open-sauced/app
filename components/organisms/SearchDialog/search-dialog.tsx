@@ -137,17 +137,9 @@ const SearchDialog = () => {
 
   return (
     <div className="fixed left-0 top-0 z-auto p-5 w-full h-full flex justify-center bg-white/30">
-      <div
+      <button
         className="absolute w-full h-full left-0 top-0 z-50 backdrop-blur-sm"
         onClick={() => setOpenSearch(false)}
-        role="button"
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            setOpenSearch(false);
-          }
-        }}
       />
       <div
         className="flex flex-col w-full max-w-2xl h-fit max-h-full bg-white shadow-xl border transition rounded-lg ring-light-slate-6 relative z-50 overflow-hidden"
