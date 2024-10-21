@@ -11,26 +11,17 @@ interface IconProps {
 
 const SVGIcon: React.FC<IconProps> = ({ onClick, className, IconImage, size = 16 }) => {
   return (
-    <svg
-      className={clsx(`inline-flex`, className)}
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (onClick && (e.key === "Enter" || e.key === " ")) {
-          e.preventDefault();
-          onClick();
-        }
-      }}
-      tabIndex={0}
-      role="button"
-    >
-      <use
-        href={IconImage}
-        width={size}
-        height={size}
-        className="items-center justify-center"
-        style={{ stroke: "currentcolor", maxWidth: "100%", height: "auto" }}
-      />
-    </svg>
+    <button onClick={onClick}>
+      <svg className={clsx(`inline-flex`, className)}>
+        <use
+          href={IconImage}
+          width={size}
+          height={size}
+          className="items-center justify-center"
+          style={{ stroke: "currentcolor", maxWidth: "100%", height: "auto" }}
+        />
+      </svg>
+    </button>
   );
 };
 
