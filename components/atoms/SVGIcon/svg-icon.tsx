@@ -11,8 +11,8 @@ interface IconProps {
 
 const SVGIcon: React.FC<IconProps> = ({ onClick, className, IconImage, size = 16 }) => {
   return (
-    <button onClick={onClick}>
-      <svg className={clsx(`inline-flex`, className)}>
+    <button className={clsx(`inline-flex`, className)} onClick={onClick}>
+      <svg>
         <use
           href={IconImage}
           width={size}
