@@ -35,6 +35,12 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
     setDescriptText(descriptText);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent, languageName: string) => {
+    if (event.key === "Enter" || event.key === " ") {
+      handleChangeDescriptText(languageName);
+    }
+  };
+
   useEffect(() => {
     if (sortedLangArray.length === 0) return;
 
@@ -52,9 +58,11 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
         {sortedLangArray.map(({ languageName, percentageUsed }, index) => {
           return (
             index < 5 && (
-              <div
+              <button
                 key={index}
                 onMouseOver={() => handleChangeDescriptText(languageName)}
+                onFocus={() => handleChangeDescriptText(languageName)}
+                onKeyDown={(e) => handleKeyDown(e, languageName)}
                 className="h-2 transition-all duration-500 ease-in-out"
                 style={{
                   width: `${percentageUsed < 20 ? (percentageUsed / percentage) * 100 : percentageUsed}%`,
@@ -62,7 +70,9 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
                     ? (languageToColor[languageName].color as string)
                     : NOTSUPPORTED,
                 }}
-              />
+              >
+                <span className="sr-only">{`languageName ${percentageUsed}%`}</span>
+              </button>
             )
           );
         })}
