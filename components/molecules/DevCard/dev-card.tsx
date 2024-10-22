@@ -40,7 +40,7 @@ export default function DevCard(props: DevCardProps) {
     }
   }, [props.isInteractive, props.isFlipped]);
 
-  function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement>) {
+  function handleCardClick(event: React.MouseEvent<HTMLElement, MouseEvent>) {
     if (!isInteractive) {
       return;
     }
