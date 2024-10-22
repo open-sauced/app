@@ -4,7 +4,6 @@ import { RiArrowDownSLine } from "react-icons/ri";
 import clsx from "clsx";
 
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
-import { PlusIcon } from "@heroicons/react/24/outline";
 import { Command, CommandGroup, CommandInput, CommandItem } from "../Cmd/command";
 import Tooltip from "../Tooltip/tooltip";
 interface SingleSelectProps {
@@ -12,7 +11,7 @@ interface SingleSelectProps {
   onValueChange: (value: string) => void;
   placeholder?: string;
   inputPlaceholder?: string;
-  options: { label: string; value: string }[];
+  options: { label: string; value: string; icon?: React.ReactElement }[];
   position?: "popper" | "item-aligned";
   isSearchable?: boolean;
   insetLabel?: string;
@@ -91,38 +90,38 @@ const SingleSelect = ({
               )}
               <CommandGroup className="flex flex-col overflow-x-hidden overflow-y-scroll max-h-52">
                 {isOpen && options.length > 0
-                  ? options.map((option) => (
-                      <CommandItem
-                        key={option.value}
-                        onSelect={(value) => {
-                          setInputValue("");
-                          setIsOpen(false);
-                          onValueChange(option.value);
-                        }}
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          setIsOpen(false);
-                          onValueChange(option.value);
-                        }}
-                        onClick={() => {
-                          setIsOpen(false);
-                          onValueChange(option.value);
-                        }}
-                        className="!z-50 !cursor-pointer flex justify-between min-w-[7rem] items-center !px-3 rounded-md truncate break-words w-full"
-                      >
-                        {option.value === "new" ? (
-                          <div className="flex">
-                            <PlusIcon
-                              style={{ strokeWidth: "3px" }}
-                              className="w-5 text-gray-500 h-5 p-0.5 -ml-1 text-semibold group-hover:bg-orange-100 rounded-md"
-                            />
-                            <span className="ml-1">{option.label}</span>
-                          </div>
-                        ) : (
-                          option.label
-                        )}
-                      </CommandItem>
-                    ))
+                  ? options.map((option) => {
+                      const Icon = option.icon;
+                      return (
+                        <CommandItem
+                          key={option.value}
+                          onSelect={(value) => {
+                            setInputValue("");
+                            setIsOpen(false);
+                            onValueChange(option.value);
+                          }}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            setIsOpen(false);
+                            onValueChange(option.value);
+                          }}
+                          onClick={() => {
+                            setIsOpen(false);
+                            onValueChange(option.value);
+                          }}
+                          className="!z-50 !cursor-pointer flex justify-between min-w-[7rem] items-center !px-3 rounded-md truncate break-words w-full"
+                        >
+                          {Icon ? (
+                            <div className="flex items-center">
+                              {Icon}
+                              <span className="ml-1">{option.label}</span>
+                            </div>
+                          ) : (
+                            option.label
+                          )}
+                        </CommandItem>
+                      );
+                    })
                   : null}
               </CommandGroup>
             </Command>
