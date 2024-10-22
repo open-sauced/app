@@ -847,7 +847,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           className="fixed left-0 right-0 z-30 h-screen py-4 transition bg-white top-24 md:hidden"
         >
           <div className="flex items-center justify-between w-full px-2">
-            <button onClick={() => setIsFormOpenMobile(false)} type="button">
+            <button onClick={() => setIsFormOpenMobile(false)}>
               <IoClose className="text-2xl text-light-slate-10" />
             </button>
             <Button
