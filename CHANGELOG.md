@@ -5,6 +5,14 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0-beta.10](https://github.com/open-sauced/app/compare/v2.64.0-beta.9...v2.64.0-beta.10) (2024-10-22)
+
+
+### 🐛 Bug Fixes
+
+* Make the "create workspace" option more obvious ([#4177](https://github.com/open-sauced/app/issues/4177)) ([9d8ae39](https://github.com/open-sauced/app/commit/9d8ae39c77d8e9e45f40e3d64a381bb3eb66582b))
+* resolve a11y warnings for role-supports-aria-props rule ([#4174](https://github.com/open-sauced/app/issues/4174)) ([95e2099](https://github.com/open-sauced/app/commit/95e2099eb7890a3843a385a84aeb73019df15677))
+
 ## [2.64.0-beta.9](https://github.com/open-sauced/app/compare/v2.64.0-beta.8...v2.64.0-beta.9) (2024-10-21)
 
 
