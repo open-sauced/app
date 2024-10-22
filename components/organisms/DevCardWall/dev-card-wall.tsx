@@ -269,7 +269,7 @@ export default function DevCardWall({ isLoading = false, usernames, initialCardI
   });
 
   return (
-    <button
+    <div
       className="grid relative"
       ref={outsideClickRef}
       onClick={() => {
@@ -320,6 +320,6 @@ export default function DevCardWall({ isLoading = false, usernames, initialCardI
           ...nextButtonSpringStyle,
         }}
       ></animated.button>
-    </button>
+    </div>
   );
 }
