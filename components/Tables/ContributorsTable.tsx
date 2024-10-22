@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
 import Skeleton from "react-loading-skeleton";
 import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
+import { HiOutlineDownload } from "react-icons/hi";
 import Avatar from "components/atoms/Avatar/avatar";
 import { getAvatarByUsername } from "lib/utils/github";
 import HoverCardWrapper from "components/molecules/HoverCardWrapper/hover-card-wrapper";
@@ -36,6 +37,7 @@ import Card from "components/atoms/Card/card";
 import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { INITIAL_DEV_STATS_TIMESTAMP } from "lib/utils/devStats";
 import { OrderDirection } from "lib/utils/sorting";
+import { SplitButton } from "components/shared/SplitButton";
 import errorImage from "../../public/assets/images/lotto-factor-empty.png";
 
 const AddToContributorInsightModal = dynamic(() => import("components/Contributors/AddToContributorInsightModal"), {
@@ -46,10 +48,10 @@ const AddToContributorInsightDrawer = dynamic(() => import("components/Contribut
   ssr: false,
 });
 
-type Contributor = DbRepoContributor | DbContributorInsightUser;
+type Contributor = DbRepoContributor & DbContributorInsightUser;
 
 type ContributorsTableProps<T> = {
-  contributors: T[] | undefined;
+  contributors: Partial<T>[] | undefined;
   meta: Meta | null;
   isLoading: boolean;
   isError: boolean;
@@ -268,7 +270,7 @@ export default function ContributorsTable<T extends Contributor>({
       () => (isMobile ? mobileColumns({ isLoggedIn }) : defaultColumns({ repository, isLoggedIn })),
       [isMobile, isLoggedIn]
     ),
-    data: contributors ?? [],
+    data: (contributors as Contributor[]) ?? [],
     manualSorting: true,
     manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
@@ -278,6 +280,46 @@ export default function ContributorsTable<T extends Contributor>({
     getRowId: (row) => row.login,
     state: { sorting, rowSelection: selectedContributors },
   });
+
+  function downloadData({ format }: { format: "json" | "csv" }) {
+    const contributorsData: Record<string, any> = {};
+    table.getRowModel().rows.map((row) => {
+      const { id, updated_at, created_at, list_id, avatar_url, devstats_updated_at, ...data } = row.original;
+      contributorsData[row.id] = { ...data };
+    });
+
+    const linkElem = document.createElement("a");
+
+    if (format === "json") {
+      const blob = new Blob([JSON.stringify(contributorsData)], {
+        type: "text/json",
+      });
+      linkElem.href = window.URL.createObjectURL(blob);
+      linkElem.download = "contributors_data.json";
+    } else if (format === "csv") {
+      const headers = Object.keys(contributorsData[Object.keys(contributorsData)[0]]);
+      const usernames = Object.keys(contributorsData);
+      const result = [
+        headers.join(","),
+        usernames
+          .map((username) => {
+            const data = contributorsData[username] as Record<string, any>;
+            return Object.values(data).map((v) => {
+              if (String(v).includes(",")) {
+                return `"${v}"`;
+              }
+              return v;
+            });
+          })
+          .join("\n"),
+      ].join("\r\n");
+
+      linkElem.href = `data:text/csv;charset=utf-8,${encodeURI(result)}`;
+      linkElem.download = "contributors_data.csv";
+    }
+
+    linkElem.click();
+  }
 
   return (
     <>
@@ -301,6 +343,15 @@ export default function ContributorsTable<T extends Contributor>({
         </div>
       )}
       <Card className="!p-0">
+        <div className="w-full flex justify-end items-center p-4">
+          <SplitButton
+            label="Download Table Data"
+            actions={[
+              { label: "JSON", onClick: () => downloadData({ format: "json" }), icon: HiOutlineDownload },
+              { label: "CSV", onClick: () => downloadData({ format: "csv" }), icon: HiOutlineDownload },
+            ]}
+          />
+        </div>
         {isLoading && (
           <div className="flex flex-col w-full gap-4 px-4 my-8">
             <SkeletonWrapper count={4} height={32} />
@@ -384,7 +435,7 @@ export default function ContributorsTable<T extends Contributor>({
                       {row.getVisibleCells().map((cell) => (
                         <TableCell
                           key={cell.id}
-                          className={`w-fit max-w-lg ${row.getIsExpanded() && "text-orange-600 font-medium"}`}
+                          className={`w-fit max-w-xs ${row.getIsExpanded() && "text-orange-600 font-medium"}`}
                         >
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </TableCell>

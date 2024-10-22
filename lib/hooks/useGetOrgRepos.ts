@@ -2,7 +2,6 @@ import useSWR, { Fetcher } from "swr";
 import { useRouter } from "next/router";
 import { supabase } from "lib/utils/supabase";
 import { calcDaysFromToday } from "lib/utils/date-utils";
-import { useIsWorkspaceUpgraded } from "./api/useIsWorkspaceUpgraded";
 
 const baseUrl = "https://api.github.com";
 
@@ -32,13 +31,11 @@ const githubApiRepoFetcher: Fetcher = async (apiUrl: string) => {
     throw error;
   }
 
-  const requestUrl = new URL(apiUrl, baseUrl);
-  const upgraded = requestUrl.searchParams.get("upgraded");
   const linkHeader = res.headers.get("link");
 
   const responses = [res];
 
-  if (linkHeader && linkHeader.includes('rel="last"') && upgraded === "true") {
+  if (linkHeader && linkHeader.includes('rel="last"')) {
     // @ts-expect-error the regex group will exist as the link header is present as per https://docs.github.com/en/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28#using-link-headers
     const groups = /page=(?<lastPage>\d+)>;\s+rel="last"/.exec(linkHeader).groups as { lastPage: string };
 
@@ -74,13 +71,11 @@ export const useGetOrgRepos = ({ organization, limit = 100 }: { organization: st
   const router = useRouter();
   const workspaceId = router.query.workspaceId as string;
   const range = router.query.range as string;
-  const { data: exceededLimit } = useIsWorkspaceUpgraded({ workspaceId });
   const query = new URLSearchParams();
   query.set("per_page", `${limit}`);
   query.set("type", "public");
   query.set("sort", "pushed");
   query.set("direction", "desc");
-  query.set("upgraded", !exceededLimit ? "true" : "false");
 
   const endpointString = organization ? `orgs/${organization}/repos?${query}` : null;
 

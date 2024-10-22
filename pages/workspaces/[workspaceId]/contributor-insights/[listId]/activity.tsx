@@ -1,6 +1,5 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { NodeMouseEventHandler } from "@nivo/treemap";
@@ -20,11 +19,7 @@ import { FeatureFlagged } from "components/shared/feature-flagged";
 import { FeatureFlag, getAllFeatureFlags } from "lib/utils/server/feature-flags";
 import { OnToggleResizeEventType } from "components/Graphs/shared/graph-resizer";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-import { useIsWorkspaceUpgraded } from "lib/hooks/api/useIsWorkspaceUpgraded";
-import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { OptionKeys } from "components/atoms/Select/multi-select";
-
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 export interface ContributorListPageProps {
   list?: DBList;
@@ -249,9 +244,6 @@ const ListActivityPage = ({
   const treemapRef = useRef<HTMLSpanElement>(null);
   const mostActiveRef = useRef<HTMLSpanElement>(null);
   const graphResizerLookup = new Map();
-  const { data: isWorkspaceUpgraded } = useIsWorkspaceUpgraded({ workspaceId });
-  const showBanner = isOwner && !isWorkspaceUpgraded;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   if (treemapRef.current) {
     graphResizerLookup.set(treemapRef.current, true);
@@ -277,14 +269,7 @@ const ListActivityPage = ({
   }, [projectData]);
 
   return (
-    <WorkspaceLayout
-      workspaceId={workspaceId}
-      banner={
-        showBanner ? (
-          <WorkspaceBanner workspaceId={workspaceId} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-        ) : null
-      }
-    >
+    <WorkspaceLayout workspaceId={workspaceId}>
       <ListPageLayout
         list={list}
         workspaceId={workspaceId}
@@ -294,7 +279,6 @@ const ListActivityPage = ({
         repoFilter={true}
         repoFilterOptions={filterOptions}
         repoFilterSelect={setFilteredRepositories}
-        overLimit={showBanner}
       >
         {isError ? (
           <Error errorMessage="Unable to load list activity" />
@@ -326,13 +310,6 @@ const ListActivityPage = ({
           </div>
         )}
       </ListPageLayout>
-      <InsightUpgradeModal
-        workspaceId={workspaceId}
-        variant="all"
-        isOpen={isInsightUpgradeModalOpen}
-        onClose={() => setIsInsightUpgradeModalOpen(false)}
-        overLimit={numberOfContributors}
-      />
     </WorkspaceLayout>
   );
 };

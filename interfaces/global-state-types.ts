@@ -8,7 +8,6 @@ export interface GlobalStateInterface {
   sessionToken?: string | null;
   providerToken?: string | null;
   userId?: number | null;
-  hasReports?: boolean;
   openSearch?: boolean;
   dismissFeaturedInsights?: boolean;
 }

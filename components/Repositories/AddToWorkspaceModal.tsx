@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { BsGithub } from "react-icons/bs";
 import { usePostHog } from "posthog-js/react";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import Card from "components/atoms/Card/card";
 import SingleSelect from "components/atoms/Select/single-select";
 import { Dialog, DialogContent } from "components/molecules/Dialog/dialog";
@@ -114,7 +115,16 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal, 
                     ) : (
                       <SingleSelect
                         options={[
-                          { label: "Create new workspace...", value: "new" },
+                          {
+                            label: "Create new workspace...",
+                            value: "new",
+                            icon: (
+                              <PlusIcon
+                                style={{ strokeWidth: "3px" }}
+                                className="w-5 text-gray-500 h-5 p-0.5 -ml-1 text-semibold group-hover:bg-orange-100 rounded-md"
+                              />
+                            ),
+                          },
                           ...workspaces.map(({ id, name }) => ({
                             label: name,
                             value: id,
