@@ -1029,6 +1029,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           className="p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
           id="mobile-highlight-create"
         >
+          <span className="sr-only">Create a highlight</span>
           <RxPencil1 className="text-3xl" />
         </button>
       </Fab>

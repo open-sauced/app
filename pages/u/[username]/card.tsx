@@ -137,13 +137,13 @@ export default function CardPage({ user }: { user: DbUser }) {
                       <iframe
                         className="h-screen max-h-full group-hover:blur-sm transition-all z-10 relative"
                         src={`/u/${username}`}
-                        title={`${username}'s OpenSauced profile`}
                         style={{
                           pointerEvents: "none",
                           aspectRatio: "1555 / 938",
                           border: "none",
                           gridArea: "1 / 1",
                         }}
+                        title={`${username}'s user profile`}
                       ></iframe>
                     </div>
                     <a className="absolute w-full h-full grid place-content-center z-20" href={`/u/${username}`}>

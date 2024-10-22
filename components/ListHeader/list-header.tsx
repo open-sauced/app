@@ -2,8 +2,6 @@ import { FaEdit } from "react-icons/fa";
 import { FiCopy } from "react-icons/fi";
 import { usePostHog } from "posthog-js/react";
 
-import dynamic from "next/dynamic";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import Button from "components/shared/Button/button";
 import Title from "components/atoms/Typography/title";
@@ -16,8 +14,6 @@ import StackedOwners from "components/Workspaces/StackedOwners";
 import { shortenUrl } from "lib/utils/shorten-url";
 import { writeToClipboard } from "lib/utils/write-to-clipboard";
 
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
-
 interface ListHeaderProps {
   name: string;
   listId: string;
@@ -26,7 +22,6 @@ interface ListHeaderProps {
   isOwner: boolean;
   numberOfContributors: number;
   owners?: string[];
-  overLimit?: boolean;
 }
 
 const ListHeader = ({
@@ -37,12 +32,10 @@ const ListHeader = ({
   isOwner,
   numberOfContributors,
   owners,
-  overLimit,
 }: ListHeaderProps): JSX.Element => {
   const { toast } = useToast();
   const posthog = usePostHog();
   const router = useRouter();
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
 
   const handleCopyToClipboard = async () => {
     const url = new URL(window.location.href).toString();
@@ -90,11 +83,6 @@ const ListHeader = ({
           <Button
             variant="primary"
             onClick={() => {
-              if (overLimit) {
-                setIsInsightUpgradeModalOpen(true);
-                return;
-              }
-
               router.push(`/workspaces/${workspaceId}/contributor-insights/${listId}/edit`);
             }}
           >
@@ -102,15 +90,6 @@ const ListHeader = ({
           </Button>
         )}
       </div>
-      {workspaceId && (
-        <InsightUpgradeModal
-          workspaceId={workspaceId}
-          variant="all"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={0}
-        />
-      )}
     </div>
   );
 };

@@ -1,7 +1,6 @@
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
 import { fetchApiData } from "helpers/fetchApiData";
@@ -16,7 +15,6 @@ import { OptionKeys } from "components/atoms/Select/multi-select";
 import { useGetWorkspaceRepositories } from "lib/hooks/api/useGetWorkspaceRepositories";
 import { setQueryParams } from "lib/utils/query-params";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
-import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { OrderIssuesBy, useGetWorkspaceIssues } from "lib/hooks/api/useGetWorkspaceIssues";
 import { WorkspaceIssueTable } from "components/Workspaces/WorkspaceIssuesTable";
 import { SubTabsList } from "components/TabList/tab-list";
@@ -26,8 +24,6 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
 import { OrderDirection } from "lib/utils/sorting";
-
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -56,15 +52,14 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   setCookie({ response: context.res, name: WORKSPACE_ID_COOKIE_NAME, value: workspaceId });
 
-  return { props: { workspace: data, overLimit: !!data?.exceeds_upgrade_limits } };
+  return { props: { workspace: data } };
 };
 
 interface WorkspaceDashboardProps {
   workspace: Workspace;
-  overLimit: boolean;
 }
 
-const WorkspaceIssuesPage = ({ workspace, overLimit }: WorkspaceDashboardProps) => {
+const WorkspaceIssuesPage = ({ workspace }: WorkspaceDashboardProps) => {
   const { sessionToken, signIn, userId } = useSupabaseAuth();
   const {
     data: workspaceMembers = [],
@@ -110,20 +105,11 @@ const WorkspaceIssuesPage = ({ workspace, overLimit }: WorkspaceDashboardProps) 
     repoIds,
   });
 
-  const showBanner = isOwner && overLimit;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
-      <WorkspaceLayout
-        workspaceId={workspace.id}
-        banner={
-          showBanner ? (
-            <WorkspaceBanner workspaceId={workspace.id} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-          ) : null
-        }
-      >
+      <WorkspaceLayout workspaceId={workspace.id}>
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <WorkspaceHeader workspace={workspace} />
           <div className="grid sm:flex gap-4 pt-3">
@@ -160,13 +146,6 @@ const WorkspaceIssuesPage = ({ workspace, overLimit }: WorkspaceDashboardProps) 
               <WorkspaceIssueTable isLoading={isLoading} data={issues} meta={meta} />
             </ClientOnly>
           </div>
-          <InsightUpgradeModal
-            workspaceId={workspace.id}
-            variant="contributors"
-            isOpen={isInsightUpgradeModalOpen}
-            onClose={() => setIsInsightUpgradeModalOpen(false)}
-            overLimit={10}
-          />
         </div>
       </WorkspaceLayout>
       <ClientOnly>
