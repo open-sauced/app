@@ -83,7 +83,7 @@ const AuthSection: React.FC = ({}) => {
         <FiSettings className="group-hover:text-light-orange-10" />
         <Text className="group-hover:text-light-orange-10">Settings</Text>
       </Link>,
-      <span
+      <button
         onClick={async () => {
           const pageHref = window.location.href;
           const searchParams = new URLSearchParams(pageHref.substring(pageHref.indexOf("?")));
@@ -99,7 +99,7 @@ const AuthSection: React.FC = ({}) => {
       >
         <FiLogOut className="group-hover:text-light-orange-10" />
         <Text className="group-hover:text-light-orange-10">Disconnect</Text>
-      </span>,
+      </button>,
     ],
   };
   return (

@@ -9,7 +9,7 @@ export interface FavoriteRepoCardProps {
 
 const InfoCard = ({ icon, title, description, handleClick }: FavoriteRepoCardProps): JSX.Element => {
   return (
-    <div className="p-3 bg-white border-2 rounded-xl cursor-pointer" onClick={handleClick}>
+    <button className="p-3 bg-white border-2 rounded-xl cursor-pointer" onClick={handleClick}>
       <div className="flex items-center gap-2.5">
         {/* Avatar */}
         {icon === "github" && <FiGithub size={24} className="text-orange-200" />}
@@ -21,7 +21,7 @@ const InfoCard = ({ icon, title, description, handleClick }: FavoriteRepoCardPro
           <div className="text-sm text-gray-400 tracking-tight -mt-0.5">{description}</div>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 

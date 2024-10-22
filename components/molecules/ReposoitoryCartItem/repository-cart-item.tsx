@@ -24,12 +24,12 @@ const RepositoryCartItem = ({ avatar, orgName, repoName, totalPrs, handleRemoveI
         <span className="flex items-center">
           <BiGitPullRequest className="text-[15px]" /> {totalPrs}
         </span>
-        <span
+        <button
           onClick={() => handleRemoveItem()}
           className="w-[26px] cursor-pointer flex justify-center items-center h-6 border rounded"
         >
           <AiOutlineClose className="text-sm" />
-        </span>
+        </button>
       </div>
     </div>
   );

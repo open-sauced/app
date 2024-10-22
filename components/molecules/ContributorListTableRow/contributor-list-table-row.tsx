@@ -143,12 +143,12 @@ const ContributorListTableRow = ({
             </div>
           </div>
           <div>
-            <div
+            <button
               onClick={() => setTableOpen(!tableOpen)}
               className="items-center justify-between w-6 h-6 p-1 border rounded-md "
             >
               {tableOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-            </div>
+            </button>
           </div>
         </div>
 

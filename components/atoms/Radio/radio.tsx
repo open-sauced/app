@@ -14,12 +14,12 @@ interface RadioProps {
 
 const Radio = ({ className, withLabel, id, children, value, checked = false, onClick }: RadioProps): JSX.Element => {
   return (
-    <div
+    <button
       onClick={onClick}
       className={
         `${
           checked && "!bg-light-orange-3"
-        }  px-2 py-1.5 text-sm text-slate-600   group  rounded-md  hover:bg-light-orange-3 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition` +
+        }  w-full px-2 py-1.5 text-sm text-slate-600   group  rounded-md  hover:bg-light-orange-3 hover:text-slate-800 focus:outline-none focus-visible:border-orange-500 focus-visible:ring focus-visible:ring-orange-200 transition` +
         `${className}`
       }
     >
@@ -49,7 +49,7 @@ const Radio = ({ className, withLabel, id, children, value, checked = false, onC
           </span>
         )}
       </label>
-    </div>
+    </button>
   );
 };
 

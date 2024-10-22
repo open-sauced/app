@@ -63,13 +63,13 @@ const PillSelector: React.FC<PillSelectorProps> = ({
       <PillSelectorButton>
         {selected ? (
           <>
-            <div onClick={toggleFilter}>
+            <button onClick={toggleFilter}>
               {pillOptions.find((option) => option.toLowerCase().replaceAll(" ", "-") === selected)}
-            </div>
+            </button>
             <Icon IconImage={cancelIcon} onClick={handleCancelClick} />
           </>
         ) : (
-          <div onClick={toggleFilter}>Add Filter</div>
+          <button onClick={toggleFilter}>Add Filter</button>
         )}
       </PillSelectorButton>
 
