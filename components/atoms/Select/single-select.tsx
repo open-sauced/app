@@ -11,7 +11,7 @@ interface SingleSelectProps {
   onValueChange: (value: string) => void;
   placeholder?: string;
   inputPlaceholder?: string;
-  options: { label: string; value: string }[];
+  options: { label: string; value: string; icon?: React.ReactElement }[];
   position?: "popper" | "item-aligned";
   isSearchable?: boolean;
   insetLabel?: string;
@@ -90,28 +90,38 @@ const SingleSelect = ({
               )}
               <CommandGroup className="flex flex-col overflow-x-hidden overflow-y-scroll max-h-52">
                 {isOpen && options.length > 0
-                  ? options.map((option) => (
-                      <CommandItem
-                        key={option.value}
-                        onSelect={(value) => {
-                          setInputValue("");
-                          setIsOpen(false);
-                          onValueChange(option.value);
-                        }}
-                        onMouseDown={(e) => {
-                          e.preventDefault();
-                          setIsOpen(false);
-                          onValueChange(option.value);
-                        }}
-                        onClick={() => {
-                          setIsOpen(false);
-                          onValueChange(option.value);
-                        }}
-                        className="!z-50 !cursor-pointer flex justify-between min-w-[7rem] items-center !px-3 rounded-md truncate break-words w-full"
-                      >
-                        {option.label}
-                      </CommandItem>
-                    ))
+                  ? options.map((option) => {
+                      const Icon = option.icon;
+                      return (
+                        <CommandItem
+                          key={option.value}
+                          onSelect={(value) => {
+                            setInputValue("");
+                            setIsOpen(false);
+                            onValueChange(option.value);
+                          }}
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            setIsOpen(false);
+                            onValueChange(option.value);
+                          }}
+                          onClick={() => {
+                            setIsOpen(false);
+                            onValueChange(option.value);
+                          }}
+                          className="!z-50 !cursor-pointer flex justify-between min-w-[7rem] items-center !px-3 rounded-md truncate break-words w-full"
+                        >
+                          {Icon ? (
+                            <div className="flex items-center">
+                              {Icon}
+                              <span className="ml-1">{option.label}</span>
+                            </div>
+                          ) : (
+                            option.label
+                          )}
+                        </CommandItem>
+                      );
+                    })
                   : null}
               </CommandGroup>
             </Command>

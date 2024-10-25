@@ -5,6 +5,50 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.0](https://github.com/open-sauced/app/compare/v2.63.0...v2.64.0) (2024-10-22)
+
+
+### 🍕 Features
+
+* download `ContributorsTable` data as JSON/CSV ([#4151](https://github.com/open-sauced/app/issues/4151)) ([d87b37e](https://github.com/open-sauced/app/commit/d87b37eed95e8a28062adfd49ccbf425abd5f852))
+* removed developer pack form from user settings page ([#4173](https://github.com/open-sauced/app/issues/4173)) ([da975d7](https://github.com/open-sauced/app/commit/da975d77bb00b5b9d8c3a3c930f0b5a1e6a1a625))
+* removed payments and limits ([#4171](https://github.com/open-sauced/app/issues/4171)) ([898d889](https://github.com/open-sauced/app/commit/898d8895027e4a86ca02b6d79eb94c035750f7ab))
+
+
+### 🐛 Bug Fixes
+
+* a11y rule "iframe-has-title" fails with a warning. ([#4162](https://github.com/open-sauced/app/issues/4162)) ([f15764a](https://github.com/open-sauced/app/commit/f15764a69d106da6909bca2096a1eb379cfa5020))
+* a11y rule "img-redundant-alt" fails with a warning ([#4176](https://github.com/open-sauced/app/issues/4176)) ([cc9cdf0](https://github.com/open-sauced/app/commit/cc9cdf0f162d576e5f23035f5a569e4e798ffe10))
+* a11y rule "no-noninteractive-element-interactions" ([#4163](https://github.com/open-sauced/app/issues/4163)) ([4d26abc](https://github.com/open-sauced/app/commit/4d26abc894978cfe18729df8a8fdb9782b005bd2))
+* fixed changing workspaces visibility regression ([#4172](https://github.com/open-sauced/app/issues/4172)) ([ee12474](https://github.com/open-sauced/app/commit/ee124748bf8a5e77121d73fef7172bf8a09647da))
+* Make the "create workspace" option more obvious ([#4177](https://github.com/open-sauced/app/issues/4177)) ([9d8ae39](https://github.com/open-sauced/app/commit/9d8ae39c77d8e9e45f40e3d64a381bb3eb66582b))
+* removed unused code ([#4178](https://github.com/open-sauced/app/issues/4178)) ([d6fff39](https://github.com/open-sauced/app/commit/d6fff39fb9e851be5fb7a9ab4697a78cc2e86fbf))
+* resolve a11y warnings for role-supports-aria-props rule ([#4174](https://github.com/open-sauced/app/issues/4174)) ([95e2099](https://github.com/open-sauced/app/commit/95e2099eb7890a3843a385a84aeb73019df15677))
+* throw errors on insight creation failure ([#4145](https://github.com/open-sauced/app/issues/4145)) ([e3f8db3](https://github.com/open-sauced/app/commit/e3f8db353b691f39bf6f9920406f45815cd87717))
+* use a tags instead of link tags ([#4158](https://github.com/open-sauced/app/issues/4158)) ([7b48770](https://github.com/open-sauced/app/commit/7b48770212db47b72562f7fe16caa780b73c49a5))
+
+## [2.64.0-beta.10](https://github.com/open-sauced/app/compare/v2.64.0-beta.9...v2.64.0-beta.10) (2024-10-22)
+
+
+### 🐛 Bug Fixes
+
+* Make the "create workspace" option more obvious ([#4177](https://github.com/open-sauced/app/issues/4177)) ([9d8ae39](https://github.com/open-sauced/app/commit/9d8ae39c77d8e9e45f40e3d64a381bb3eb66582b))
+* resolve a11y warnings for role-supports-aria-props rule ([#4174](https://github.com/open-sauced/app/issues/4174)) ([95e2099](https://github.com/open-sauced/app/commit/95e2099eb7890a3843a385a84aeb73019df15677))
+
+## [2.64.0-beta.9](https://github.com/open-sauced/app/compare/v2.64.0-beta.8...v2.64.0-beta.9) (2024-10-21)
+
+
+### 🐛 Bug Fixes
+
+* removed unused code ([#4178](https://github.com/open-sauced/app/issues/4178)) ([d6fff39](https://github.com/open-sauced/app/commit/d6fff39fb9e851be5fb7a9ab4697a78cc2e86fbf))
+
+## [2.64.0-beta.8](https://github.com/open-sauced/app/compare/v2.64.0-beta.7...v2.64.0-beta.8) (2024-10-21)
+
+
+### 🐛 Bug Fixes
+
+* a11y rule "img-redundant-alt" fails with a warning ([#4176](https://github.com/open-sauced/app/issues/4176)) ([cc9cdf0](https://github.com/open-sauced/app/commit/cc9cdf0f162d576e5f23035f5a569e4e798ffe10))
+
 ## [2.64.0-beta.7](https://github.com/open-sauced/app/compare/v2.64.0-beta.6...v2.64.0-beta.7) (2024-10-17)
 
 
