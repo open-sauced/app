@@ -24,7 +24,6 @@ import TrackedRepositoryFilter from "components/Workspaces/TrackedRepositoryFilt
 import { OptionKeys } from "components/atoms/Select/multi-select";
 import { WorkspaceOgImage, getWorkspaceOgImage } from "components/Workspaces/WorkspaceOgImage";
 import { useHasMounted } from "lib/hooks/useHasMounted";
-import WorkspaceBanner from "components/Workspaces/WorkspaceBanner";
 import { StarSearchEmbed } from "components/StarSearch/StarSearchEmbed";
 import { useMediaQuery } from "lib/hooks/useMediaQuery";
 import { WORKSPACE_STARSEARCH_SUGGESTIONS } from "lib/utils/star-search";
@@ -33,7 +32,6 @@ import useSupabaseAuth from "lib/hooks/useSupabaseAuth";
 import { useWorkspaceMembers } from "lib/hooks/api/useWorkspaceMembers";
 
 const WorkspaceWelcomeModal = dynamic(() => import("components/Workspaces/WorkspaceWelcomeModal"));
-const InsightUpgradeModal = dynamic(() => import("components/Workspaces/InsightUpgradeModal"));
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const supabase = createPagesServerClient(context);
@@ -75,7 +73,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   return {
     props: {
       workspace: data,
-      overLimit: !!data?.exceeds_upgrade_limits,
       ogImage: `${ogImage.href}`,
     },
   };
@@ -84,10 +81,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 interface WorkspaceDashboardProps {
   workspace: Workspace;
   ogImage: string;
-  overLimit: boolean;
 }
 
-const WorkspaceDashboard = ({ workspace, ogImage, overLimit }: WorkspaceDashboardProps) => {
+const WorkspaceDashboard = ({ workspace, ogImage }: WorkspaceDashboardProps) => {
   const { sessionToken, signIn, userId } = useSupabaseAuth();
   const {
     data: workspaceMembers = [],
@@ -124,9 +120,6 @@ const WorkspaceDashboard = ({ workspace, ogImage, overLimit }: WorkspaceDashboar
     filteredRepositories.length > 0 ? filteredRepositories.map((repo) => repo.label) : []
   );
 
-  const showBanner = isOwner && overLimit;
-  const [isInsightUpgradeModalOpen, setIsInsightUpgradeModalOpen] = useState(false);
-
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
@@ -144,25 +137,13 @@ const WorkspaceDashboard = ({ workspace, ogImage, overLimit }: WorkspaceDashboar
   return (
     <>
       {workspace.is_public ? <WorkspaceOgImage workspace={workspace} ogImage={ogImage} /> : null}
-      <WorkspaceLayout
-        workspaceId={workspace.id}
-        banner={
-          showBanner ? (
-            <WorkspaceBanner workspaceId={workspace.id} openModal={() => setIsInsightUpgradeModalOpen(true)} />
-          ) : null
-        }
-      >
+      <WorkspaceLayout workspaceId={workspace.id}>
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <WorkspaceHeader workspace={workspace}>
             <Button
               variant="outline"
               className="my-auto gap-2 items-center shrink-0"
               onClick={() => {
-                if (overLimit) {
-                  setIsInsightUpgradeModalOpen(true);
-                  return;
-                }
-
                 router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
               }}
             >
@@ -213,11 +194,6 @@ const WorkspaceDashboard = ({ workspace, ogImage, overLimit }: WorkspaceDashboar
                 <Card className="bg-transparent">
                   <EmptyState
                     onAddRepos={() => {
-                      if (overLimit) {
-                        setIsInsightUpgradeModalOpen(true);
-                        return;
-                      }
-
                       router.push(`/workspaces/${workspace.id}/settings#load-wizard`);
                     }}
                   />
@@ -245,13 +221,6 @@ const WorkspaceDashboard = ({ workspace, ogImage, overLimit }: WorkspaceDashboar
           onClose={() => {
             setShowWelcome(false);
           }}
-        />
-        <InsightUpgradeModal
-          workspaceId={workspace.id}
-          variant="contributors"
-          isOpen={isInsightUpgradeModalOpen}
-          onClose={() => setIsInsightUpgradeModalOpen(false)}
-          overLimit={10}
         />
       </ClientOnly>
     </>

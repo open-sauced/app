@@ -20,7 +20,6 @@ const ListPageLayout = ({
   repoFilter = false,
   repoFilterOptions = [],
   repoFilterSelect = () => {},
-  overLimit,
 }: {
   children: React.ReactNode;
   list?: DBList;
@@ -32,7 +31,6 @@ const ListPageLayout = ({
   repoFilter?: boolean;
   repoFilterOptions?: OptionKeys[];
   repoFilterSelect?: (repo: OptionKeys[]) => void;
-  overLimit?: boolean;
 }) => {
   const router = useRouter();
   const { range } = router.query;
@@ -58,7 +56,6 @@ const ListPageLayout = ({
               workspaceId={workspaceId}
               isOwner={isOwner}
               owners={owners}
-              overLimit={overLimit}
             />
           )}
         </Header>

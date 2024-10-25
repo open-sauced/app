@@ -26,10 +26,7 @@ AllowNone.args = {
 CustomItems.args = {
   children: [
     <div key={1}>
-      Option 1 w\{" "}
-      <a href="#" target="_blank">
-        link
-      </a>
+      Option 1 w\ <span>span</span>
     </div>,
     <p key={2}>
       Option 2 w\ <strong>strong</strong>
