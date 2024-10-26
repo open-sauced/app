@@ -5,6 +5,13 @@
 
 > All notable changes to this project will be documented in this file
 
+## [2.64.1-beta.1](https://github.com/open-sauced/app/compare/v2.64.0...v2.64.1-beta.1) (2024-10-25)
+
+
+### 🐛 Bug Fixes
+
+* eslint warning "anchor-is-valid" ([#4181](https://github.com/open-sauced/app/issues/4181)) ([5b67103](https://github.com/open-sauced/app/commit/5b67103d6f53d7d4f2d5b290c19cd7052ff0a34f))
+
 ## [2.64.0](https://github.com/open-sauced/app/compare/v2.63.0...v2.64.0) (2024-10-22)
 
 
