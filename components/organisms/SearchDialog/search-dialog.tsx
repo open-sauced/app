@@ -1,7 +1,7 @@
 import Link from "next/link";
 import clsx from "clsx";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import { HiOutlineExclamation } from "react-icons/hi";
 import store from "lib/store";
@@ -34,8 +34,10 @@ const SearchDialog = () => {
   } = useSearchRepos(debouncedSearchTerm, 3, 5);
 
   const [userSearchResult, setUserSearchResult] = useState<{ data: GhUser[] }>();
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    searchInputRef.current?.focus();
     document.addEventListener("keydown", handleCloseSearch);
     function handleCloseSearch(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -152,6 +154,7 @@ const SearchDialog = () => {
             <FaSearch className="text-light-slate-9" fontSize={16} />
           )}
           <input
+            ref={searchInputRef}
             className="w-full pl-2 text-sm font-semibold text-slate-700 focus:outline-none"
             value={searchTerm}
             onChange={(e) => {
