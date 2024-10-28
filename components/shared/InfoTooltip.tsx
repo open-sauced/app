@@ -12,9 +12,7 @@ export default function InfoTooltip({ information, icon }: { information: string
   return (
     <Tooltip open={open} onOpenChange={handleOpenChange}>
       <TooltipTrigger asChild>
-        <button>
-          {icon ? icon : <HiOutlineInformationCircle className="text-slate-500" />}
-        </button>
+        <button>{icon ? icon : <HiOutlineInformationCircle className="text-slate-500" />}</button>
       </TooltipTrigger>
       <TooltipPortal>
         <TooltipContent

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Text from "components/atoms/Typography/text";
 import Tooltip from "components/atoms/Tooltip/tooltip";
 import colors from "../../../lib/utils/color.json";
@@ -26,53 +25,25 @@ const languageToColor: AllSimpleColors = colors as AllSimpleColors;
 
 const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizontalBarChartProps): JSX.Element => {
   const sortedLangArray = languageList.sort((a, b) => b.percentageUsed - a.percentageUsed);
-  // used this state to calculate thte percentage of each language
-  const [percentage, setPercentage] = useState<any>(0);
-
-  const [descriptText, setDescriptText] = useState(sortedLangArray[0]?.languageName || "javascript");
-
-  const handleChangeDescriptText = (descriptText: string) => {
-    setDescriptText(descriptText);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent, languageName: string) => {
-    if (event.key === "Enter" || event.key === " ") {
-      handleChangeDescriptText(languageName);
-    }
-  };
-
-  useEffect(() => {
-    if (sortedLangArray.length === 0) return;
-
-    const totalSumOfFirstFivePercentage = sortedLangArray
-      .slice(0, 4)
-      .map((lang) => lang.percentageUsed)
-      .reduce((prev: number, next: number) => prev + next); // need some help fixing this type error, used any to bypass 🙏
-    setPercentage(totalSumOfFirstFivePercentage);
-  }, [percentage, sortedLangArray]);
 
   return (
     <div className="flex flex-col gap-1 min-w-[120px]">
-      {/* Progress Bar */}
       <div className="flex items-center w-full justify-end rounded-full gap-0.5 overflow-hidden">
         {sortedLangArray.map(({ languageName, percentageUsed }, index) => {
           return (
             index < 5 && (
-              <button
+              <div
                 key={index}
-                onMouseOver={() => handleChangeDescriptText(languageName)}
-                onFocus={() => handleChangeDescriptText(languageName)}
-                onKeyDown={(e) => handleKeyDown(e, languageName)}
                 className="h-2 transition-all duration-500 ease-in-out"
                 style={{
-                  width: `${percentageUsed < 20 ? (percentageUsed / percentage) * 100 : percentageUsed}%`,
+                  width: `${percentageUsed}%`,
                   backgroundColor: languageToColor[languageName]
                     ? (languageToColor[languageName].color as string)
                     : NOTSUPPORTED,
                 }}
               >
-                <span className="sr-only">{`languageName ${percentageUsed}%`}</span>
-              </button>
+                <span className="sr-only">{`${languageName} ${percentageUsed}%`}</span>
+              </div>
             )
           );
         })}
@@ -82,13 +53,16 @@ const CardHorizontalBarChart = ({ languageList, withDescription }: CardHorizonta
           <div
             className={"w-2 h-2 rounded-full"}
             style={{
-              backgroundColor: languageToColor[descriptText]
-                ? (languageToColor[descriptText].color as string)
+              backgroundColor: languageToColor[sortedLangArray[0]?.languageName]
+                ? (languageToColor[sortedLangArray[0]?.languageName].color as string)
                 : NOTSUPPORTED,
             }}
           />
-          <Tooltip className="max-w-[100px]" content={descriptText}>
-            <Text className="!text-xs !truncate !font-semibold !text-light-slate-11">{descriptText}</Text>
+          {/* Always display the most-used language (first item in sorted array) instead of interactive language selection */}
+          <Tooltip className="max-w-[100px]" content={sortedLangArray[0]?.languageName}>
+            <Text className="!text-xs !truncate !font-semibold !text-light-slate-11">
+              {sortedLangArray[0]?.languageName}
+            </Text>
           </Tooltip>
         </div>
       )}

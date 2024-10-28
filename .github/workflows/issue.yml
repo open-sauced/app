@@ -12,8 +12,8 @@ permissions:
 jobs:
   comment:
     permissions:
-      issues: write  # for peter-evans/create-or-update-comment to create or update comment
-      pull-requests: write  # for peter-evans/create-or-update-comment to create or update comment
+      issues: write # for peter-evans/create-or-update-comment to create or update comment
+      pull-requests: write # for peter-evans/create-or-update-comment to create or update comment
     name: Comment
     runs-on: ubuntu-latest
     steps:
