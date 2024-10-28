@@ -15,7 +15,7 @@ interface SingleSelectProps {
   position?: "popper" | "item-aligned";
   isSearchable?: boolean;
   insetLabel?: string;
-  id?: string;
+  labelText: string;
 }
 
 const SingleSelect = ({
@@ -27,7 +27,7 @@ const SingleSelect = ({
   inputPlaceholder,
   isSearchable = false,
   insetLabel,
-  id,
+  labelText,
 }: SingleSelectProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
@@ -60,13 +60,13 @@ const SingleSelect = ({
       }}
     >
       <DropdownMenuTrigger
-        id={id}
         data-inset-label={insetLabel}
         className={clsx(
           "flex w-full justify-between md:w-fit text-sm px-3 py-1.5 !border !border-slate-200 rounded-md bg-white data-[state=open]:border-orange-500 min-w-max",
           insetLabel && `before:content-[attr(data-inset-label)] before:mr-1 before:font-normal before:text-slate-500`
         )}
       >
+        <span className="sr-only">{labelText}</span>
         <Tooltip content={current?.label ?? placeholder}>
           <div className="flex items-center w-44 ">
             <p className="flex-grow text-start truncate">{current?.label ?? placeholder}</p>

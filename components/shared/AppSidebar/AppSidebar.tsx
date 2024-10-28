@@ -105,10 +105,9 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
         <>
           <nav aria-label="sidebar navigation" className="grid gap-4 mt-4 pr-4 pl-2">
             <div className="flex gap-2">
-              <label htmlFor="workspace-dropdown" className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
-                <span className="sr-only">Workspace</span>
+              <div className="workspace-drop-down flex flex-col w-full gap-2 ml-2">
                 <SingleSelect
-                  id="workspace-dropdown"
+                  labelText="Select a workspace"
                   isSearchable={!!user}
                   options={[
                     {
@@ -147,7 +146,7 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                     router.push(`/workspaces/${value}`);
                   }}
                 />
-              </label>
+              </div>
               <button onClick={hideSidebar} className="hover:bg-slate-50 p-2 rounded-md">
                 <LuArrowLeftToLine className="w-4 h-4 text-gray-500" />
               </button>

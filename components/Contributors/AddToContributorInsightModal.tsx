@@ -136,6 +136,7 @@ export default function AddToContributorInsightModal({
                       })),
                     ]}
                     value={selectedInsight ?? "new"}
+                    labelText="Select a workspace"
                     placeholder="Select a workspace"
                     onValueChange={(value) => {
                       setSelectedInsight(value);
@@ -155,6 +156,7 @@ export default function AddToContributorInsightModal({
                         })),
                       ]}
                       value={workspaceId}
+                      labelText="Select a workspace"
                       placeholder="Select a workspace"
                       onValueChange={(value) => {
                         setWorkspaceId(value);

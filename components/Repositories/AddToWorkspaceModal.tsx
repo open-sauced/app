@@ -131,6 +131,7 @@ export default function AddToWorkspaceModal({ repository, isOpen, onCloseModal, 
                           })),
                         ]}
                         value={workspaceId ?? "new"}
+                        labelText="Select a workspace"
                         placeholder="Select a workspace"
                         onValueChange={(value) => {
                           setWorkspaceId(value);

@@ -40,15 +40,14 @@ export const DayRangePicker = ({ onDayRangeChanged }: DayRangePickerProps) => {
   };
 
   return (
-    <label htmlFor="day-range-select" className="w-fit font-semibold">
-      <span className="sr-only">Range:</span>
+    <div className="w-fit font-semibold">
       <SingleSelect
-        id="day-range-select"
+        labelText="Day range select"
         insetLabel="Range:"
         onValueChange={onDefaultDayRangeChanged}
         value={`${dayRange}`}
         options={dayRanges}
       />
-    </label>
+    </div>
   );
 };
