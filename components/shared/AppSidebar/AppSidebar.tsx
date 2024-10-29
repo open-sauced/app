@@ -110,7 +110,16 @@ export const AppSideBar = ({ workspaceId, hideSidebar, sidebarCollapsed }: AppSi
                 <SingleSelect
                   isSearchable={!!user}
                   options={[
-                    { label: "Create new workspace...", value: "new" },
+                    {
+                      label: "Create new workspace...",
+                      value: "new",
+                      icon: (
+                        <PlusIcon
+                          style={{ strokeWidth: "3px" }}
+                          className="w-5 text-gray-500 h-5 p-0.5 -ml-1 text-semibold group-hover:bg-orange-100 rounded-md"
+                        />
+                      ),
+                    },
                     ...workspaces.map(({ id, name }) => ({
                       label: name,
                       value: id,

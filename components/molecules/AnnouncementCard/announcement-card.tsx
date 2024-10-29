@@ -20,7 +20,7 @@ const AnnouncementCard = ({ title, description, bannerSrc, url, cta = "Learn mor
       <div className="w-full">
         <AspectRatio.Root ratio={1.85 / 1}>
           <picture>
-            <img src={bannerSrc} className="object-cover w-full h-full" alt={`${title} banner image`} />
+            <img src={bannerSrc} className="object-cover w-full h-full" alt={`${title} banner`} />
           </picture>
         </AspectRatio.Root>
       </div>
