@@ -435,7 +435,6 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
             </Button>
           </fieldset>
           {userInfo && (
-<<<<<<< HEAD
             <form
               name="delete-account"
               action="/api/delete-account"
@@ -468,61 +467,6 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
                 }}
               />
             </form>
-=======
-            <>
-              <div>
-                {!coupon ? (
-                  <div className="flex flex-col order-first gap-6 md:order-last">
-                    <div className="flex flex-col gap-3">
-                      <h2 className="text-2xl font-normal tracking-normal">Developer Pack</h2>
-                      <div className="w-full sm:max-w-80">
-                        <Text>Verify your developer pack eligibilty to get an upgrade!</Text>
-                      </div>
-                    </div>
-                    <DeveloperPackForm
-                      providerToken={providerToken}
-                      refreshUser={() => {
-                        mutate();
-                        setCoupon("verified");
-                      }}
-                    />
-                  </div>
-                ) : null}
-              </div>
-              <form
-                name="delete-account"
-                action="/api/delete-account"
-                method="POST"
-                className="flex flex-col order-first gap-6 md:order-last p-6 rounded-2xl bg-light-slate-4"
-                ref={deleteFormRef}
-                onSubmit={(e) => {
-                  setIsModalOpen(true);
-                  e.preventDefault();
-                }}
-              >
-                <div className="flex flex-col gap-3">
-                  <h2 className="text-2xl font-normal tracking-normal">Delete Account</h2>
-                  <div className="w-full md:w-96">
-                    <Text>
-                      Please note that account deletion is irreversible. Proceed only if you are certain about this
-                      action.
-                    </Text>
-                  </div>
-                </div>
-                <Button type="submit" rel="noopener noreferrer" target="_blank" variant="destructive" className="w-max">
-                  Delete Account
-                </Button>
-                <DeleteAccountModal
-                  open={isModalOpen}
-                  setOpen={setIsModalOpen}
-                  onDelete={() => {
-                    setIsModalOpen(false);
-                    deleteFormRef.current?.submit();
-                  }}
-                />
-              </form>
-            </>
->>>>>>> 027aeffd (fix: resolve a11y warnings for label-has-associated-control rule (#4126))
           )}
         </div>
       </div>
