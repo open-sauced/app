@@ -755,9 +755,10 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
                                 />
                               )}
                               <a
-                                href={suggestion.url}
+                                className="text-light-slate-11 truncate max-w-[14rem] xs:max-w-[16rem] text-xs xs:text-sm cursor-pointer hover:text-orange-600 transition"
                                 target="_blank"
-                                className="truncate max-w-[14rem] xs:max-w-[16rem] text-xs xs:text-sm"
+                                rel="noreferrer"
+                                href={suggestion.url}
                               >
                                 {suggestion.title}
                               </a>
@@ -846,7 +847,7 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
           className="fixed left-0 right-0 z-30 h-screen py-4 transition bg-white top-24 md:hidden"
         >
           <div className="flex items-center justify-between w-full px-2">
-            <button onClick={() => setIsFormOpenMobile(false)} type="button">
+            <button onClick={() => setIsFormOpenMobile(false)}>
               <IoClose className="text-2xl text-light-slate-10" />
             </button>
             <Button
@@ -1022,14 +1023,15 @@ const HighlightInputForm = ({ refreshCallback }: HighlightInputFormProps): JSX.E
         </form>
       )}
 
-      <Fab className="md:hidden" onClick={() => setIsFormOpenMobile(true)}>
-        <span
-          className="outline-none p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
+      <Fab className="md:hidden">
+        <button
+          onClick={() => setIsFormOpenMobile(true)}
+          className="p-3 mb-10 -mr-4 text-white rounded-full shadow-lg bg-light-orange-10"
           id="mobile-highlight-create"
         >
           <span className="sr-only">Create a highlight</span>
           <RxPencil1 className="text-3xl" />
-        </span>
+        </button>
       </Fab>
     </>
   );

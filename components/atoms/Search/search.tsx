@@ -119,7 +119,6 @@ const Search = ({
       <FaSearch className="text-light-slate-9" fontSize={16} onClick={handleOnSearch} />
       <input
         className="w-full pl-2 placeholder:text-sm focus:outline-none placeholder:text-slate-400 disabled:cursor-not-allowed"
-        autoFocus={autoFocus}
         placeholder={placeholder}
         name={name}
         value={search}
@@ -141,7 +140,7 @@ const Search = ({
           <ScrollArea type="auto" className="h-60">
             {suggestionsLabel && suggestions.length > 0 ? <div className="pl-5 pt-4">{suggestionsLabel}</div> : null}
             {suggestions.map((suggestion, index) => (
-              <div
+              <button
                 className={clsx(
                   cursor === index && "_cursorActive bg-slate-100",
                   "px-4 py-2 hover:bg-light-slate-2",
@@ -162,7 +161,7 @@ const Search = ({
                 ) : (
                   suggestion.node
                 )}
-              </div>
+              </button>
             ))}
           </ScrollArea>
         </div>
