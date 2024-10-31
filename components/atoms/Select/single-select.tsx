@@ -67,8 +67,8 @@ const SingleSelect = ({
         )}
       >
         <span className="sr-only">{labelText}</span>
-        <Tooltip content={current?.label ?? placeholder}>
-          <div className="flex items-center w-44 ">
+        <Tooltip content={current?.label ?? placeholder} aria-hidden="true">
+          <div className="flex items-center w-44" aria-hidden="true">
             <p className="flex-grow text-start truncate">{current?.label ?? placeholder}</p>
           </div>
         </Tooltip>
