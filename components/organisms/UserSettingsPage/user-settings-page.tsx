@@ -447,7 +447,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
               }}
             >
               <div className="flex flex-col gap-3">
-                <label className="text-2xl font-normal">Delete Account</label>
+                <h2 className="text-2xl font-normal">Delete Account</h2>
                 <div className="w-full md:w-96">
                   <Text>
                     Please note that account deletion is irreversible. Proceed only if you are certain about this
