@@ -36,6 +36,15 @@ const CardRepoList = ({
   const sanitizedRepoList = [...new Map(repoList.map((item) => [item["repoName"], item])).values()];
   const [selectedRepo, setSelectedRepo] = useState<string>("");
 
+  const handleClick = (repoOwner: any, repoName: string) => {
+    if (!selectedRepo) {
+      onSelect(`${repoOwner}/${repoName}`);
+      setSelectedRepo(`${repoOwner}/${repoName}`);
+    } else {
+      onSelect("");
+      setSelectedRepo("");
+    }
+  };
   return (
     <div className="flex gap-1 items-center max-w[175px] truncate flex-wrap text-xs text-light-slate-9">
       {repoList.length > 0 ? (
@@ -44,18 +53,7 @@ const CardRepoList = ({
             .filter((_, arrCount) => arrCount < limit)
             .map(({ repoOwner, repoName, repoIcon }, index) => {
               return (
-                <div
-                  key={`repo_${index}`}
-                  onClick={() => {
-                    if (!selectedRepo) {
-                      onSelect(`${repoOwner}/${repoName}`);
-                      setSelectedRepo(`${repoOwner}/${repoName}`);
-                    } else {
-                      onSelect("");
-                      setSelectedRepo("");
-                    }
-                  }}
-                >
+                <button key={`repo_${index}`} onClick={() => handleClick(repoOwner, repoName)}>
                   {repoName && repoIcon ? (
                     <Tooltip content={`${repoOwner}/${repoName}`}>
                       <div
@@ -89,7 +87,7 @@ const CardRepoList = ({
                   ) : (
                     ""
                   )}
-                </div>
+                </button>
               );
             })}
           <div>{repoTotal > limit ? `+${repoTotal - limit}` : null}</div>

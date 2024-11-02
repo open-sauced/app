@@ -8,7 +8,7 @@ interface ToogleOptionProps {
 }
 const ToggleOption = ({ optionText, withIcon, checked, handleToggle }: ToogleOptionProps): JSX.Element => {
   return (
-    <div
+    <button
       onClick={handleToggle}
       className="inline-flex cursor-pointer items-center gap-2 rounded-md px-2 py-0.5 border border-light-slate-6 bg-light-slate-1"
     >
@@ -20,7 +20,7 @@ const ToggleOption = ({ optionText, withIcon, checked, handleToggle }: ToogleOpt
           className="text-light-slate-9"
         />
       )}
-    </div>
+    </button>
   );
 };
 export default ToggleOption;

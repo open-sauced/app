@@ -543,7 +543,7 @@ const ContributorHighlightCard = ({
                   <DropdownMenuItem
                     className={`rounded-md ${loggedInUser?.user_metadata?.user_name === user && "hidden"}`}
                   >
-                    <div
+                    <button
                       onClick={isError ? follow : unFollow}
                       className="flex gap-2.5 py-1 items-center pl-3 pr-7 cursor-pointer"
                     >
@@ -551,17 +551,17 @@ const ContributorHighlightCard = ({
                       <span>
                         {!isError ? "Unfollow" : "Follow"} {user}
                       </span>
-                    </div>
+                    </button>
                   </DropdownMenuItem>
                 ) : (
                   <DropdownMenuItem className="rounded-md">
-                    <div
+                    <button
                       onClick={async () => signIn({ provider: "github" })}
                       className="flex gap-2.5 py-1  items-center pl-3 pr-7"
                     >
                       <FaUserPlus size={22} />
                       <span>Follow {user}</span>
-                    </div>
+                    </button>
                   </DropdownMenuItem>
                 )}
                 {loggedInUser && (
