@@ -134,13 +134,38 @@ const CarouselContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HT
     const { carouselRef, orientation } = useCarousel();
 
     return (
-      <div ref={carouselRef} className="overflow-hidden">
+      <>
         <div
-          ref={ref}
-          className={clsx("flex px-auto", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className)}
-          {...props}
-        />
-      </div>
+          ref={carouselRef}
+          className={clsx(
+            "overflow-hidden",
+            orientation === "horizontal" ? "overflow-x-auto" : "overflow-y-auto",
+            "no-scrollbar"
+          )}
+        >
+          <div
+            ref={ref}
+            className={clsx(
+              "flex px-auto",
+              orientation === "horizontal" ? "-ml-4 snap-x scroll-smooth" : "-mt-4 flex-col snap-y scroll-smooth",
+              className
+            )}
+            {...props}
+          />
+        </div>
+
+        <style>
+          {`
+            .no-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+            .no-scrollbar {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}
+        </style>
+      </>
     );
   }
 );
