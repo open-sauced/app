@@ -25,7 +25,7 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 type StarsChartProps = {
   stats: StatsType[] | undefined;
   total: number;
-  syncId: number;
+  syncId: string;
   range: DayRange;
   isLoading: boolean;
   onCategoryClick?: (category: string) => void;
@@ -88,35 +88,35 @@ export default function StarsChart({
 
   return (
     <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center !px-6 !py-8`}>
-      <section className="flex flex-col xl:flex-row w-full items-start xl:items-center gap-4 xl:justify-between px-2">
+      <section className="flex flex-col items-start w-full gap-4 px-2 xl:flex-row xl:items-center xl:justify-between">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
           <>
             <div className="flex flex-col gap-4">
-              <div className="flex gap-2 items-center w-fit">
+              <div className="flex items-center gap-2 w-fit">
                 <FaStar className="text-xl" />
-                <div className="flex gap-1 items-center">
+                <div className="flex items-center gap-1">
                   <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Stars</h3>
-                  <p className="text-sm xl:text-base w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+                  <p className="pl-2 text-sm font-medium xl:text-base w-fit text-slate-500">{range} days</p>
                 </div>
               </div>
               <aside className="flex gap-8">
                 <div>
                   <h3 className="text-xs xl:text-sm text-slate-500">Total</h3>
-                  <p className="font-semibold text-lg lg:text-xl">{humanizeNumber(total)}</p>
+                  <p className="text-lg font-semibold lg:text-xl">{humanizeNumber(total)}</p>
                 </div>
                 <div>
                   <h3 className="text-xs xl:text-sm text-slate-500">Over {range} days</h3>
-                  <p className="font-semibold text-lg lg:text-xl">{starsRangedTotal}</p>
+                  <p className="text-lg font-semibold lg:text-xl">{starsRangedTotal}</p>
                 </div>
                 <div>
                   <h3 className="text-xs xl:mtext-sm text-slate-500">Avg. per day</h3>
-                  <p className="font-semibold text-lg lg:text-xl">{humanizeNumber(averageOverRange)}</p>
+                  <p className="text-lg font-semibold lg:text-xl">{humanizeNumber(averageOverRange)}</p>
                 </div>
               </aside>
             </div>
-            <div className="flex gap-2 items-center lg:self-start">
+            <div className="flex items-center gap-2 lg:self-start">
               <Button
                 variant={category === "daily" ? "outline" : "default"}
                 onClick={() => {
@@ -149,13 +149,13 @@ export default function StarsChart({
 function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
   if (active && payload) {
     return (
-      <figcaption className="flex flex-col gap-1 bg-white px-4 py-2 rounded-lg border">
-        <section className="flex gap-2 items-center">
+      <figcaption className="flex flex-col gap-1 px-4 py-2 bg-white border rounded-lg">
+        <section className="flex items-center gap-2">
           <FaStar className="fill-sauced-orange" />
           <p>Stars: {payload[0]?.value}</p>
         </section>
 
-        <p className="text-light-slate-9 text-sm">{payload[0]?.payload.bucket}</p>
+        <p className="text-sm text-light-slate-9">{payload[0]?.payload.bucket}</p>
       </figcaption>
     );
   }
