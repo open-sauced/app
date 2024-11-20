@@ -22,13 +22,14 @@ import { humanizeNumber } from "netlify/og-image-utils";
 type PRChartProps = {
   stats: StatsType[] | undefined;
   velocity: number;
-  syncId: number;
+  // syncId: number;
   range: DayRange;
   isLoading: boolean;
   className?: string;
 };
 
-export default function PRChart({ stats, velocity, syncId, range = 30, isLoading, className }: PRChartProps) {
+// export default function PRChart({ stats, velocity, syncId, range = 30, isLoading, className }: PRChartProps) {
+export default function PRChart({ stats, velocity, range = 30, isLoading, className }: PRChartProps) {
   const dailyData = useMemo(() => getDailyPullRequestsHistogramToDays({ stats, range }), [stats, range]);
   const bucketTicks = useMemo(() => getTicks({ histogram: dailyData, range }), [dailyData, range]);
   const { openedRangedTotal, closedRangedTotal } = useMemo(
@@ -87,7 +88,8 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
         {isLoading ? (
           <SkeletonWrapper width={100} height={100} />
         ) : (
-          <LineChart data={dailyData} syncId={syncId} className="-left-6">
+          // <LineChart data={dailyData} syncId={syncId} className="-left-6">
+          <LineChart data={dailyData} className="-left-6">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
             <YAxis
               domain={["auto", "auto"]}

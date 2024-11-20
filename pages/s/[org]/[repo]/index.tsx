@@ -92,7 +92,7 @@ interface RepoPageProps {
 }
 
 export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
-  const syncId = repoData.id;
+  // const syncId = repoData.id;
   const router = useRouter();
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -572,7 +572,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         stats={issueStats}
                         range={range}
                         velocity={repoStats?.issues_velocity_count ?? 0}
-                        syncId={syncId}
+                        // syncId={syncId}
                         isLoading={isIssueDataLoading}
                       />
                     </CopyContainer>
@@ -599,7 +599,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         stats={prStats}
                         range={range}
                         velocity={repoStats?.pr_velocity_count ?? 0}
-                        syncId={syncId}
+                        // syncId={syncId}
                         isLoading={isPrDataLoading}
                       />
                     </CopyContainer>
@@ -631,7 +631,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         stats={starsData}
                         total={repoData.stars}
                         range={range}
-                        syncId={syncId}
+                        // syncId={syncId}
                         isLoading={isStarsDataLoading}
                         onCategoryClick={(category) =>
                           posthog.capture("Repo Pages: clicked Stars Chart category", {
@@ -665,7 +665,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         stats={forkStats}
                         total={repoData.forks}
                         range={range}
-                        syncId={syncId}
+                        // syncId={syncId}
                         isLoading={isForksDataLoading}
                         onCategoryClick={(category) =>
                           posthog.capture("Repo Pages: clicked Forks Chart category", {
