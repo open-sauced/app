@@ -25,7 +25,7 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 type StarsChartProps = {
   stats: StatsType[] | undefined;
   total: number;
-  syncId: number;
+  // syncId: number;
   range: DayRange;
   isLoading: boolean;
   onCategoryClick?: (category: string) => void;
@@ -35,7 +35,7 @@ type StarsChartProps = {
 export default function StarsChart({
   stats,
   total,
-  syncId,
+  // syncId,
   range = 30,
   isLoading,
   onCategoryClick,
@@ -52,7 +52,8 @@ export default function StarsChart({
     switch (category) {
       case "daily":
         return (
-          <BarChart data={dailyData} syncId={syncId} className="-left-5">
+          // <BarChart data={dailyData} syncId={syncId} className="-left-5">
+          <BarChart data={dailyData} className="-left-5">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
             <YAxis
               interval={1}
@@ -69,7 +70,8 @@ export default function StarsChart({
         );
       case "history":
         return (
-          <LineChart data={historyData} syncId={syncId} className="-left-5">
+          // <LineChart data={historyData} syncId={syncId} className="-left-5">
+          <LineChart data={historyData} className="-left-5">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
             <YAxis
               domain={["auto", "auto"]}

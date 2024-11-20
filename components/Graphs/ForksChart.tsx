@@ -25,7 +25,7 @@ import humanizeNumber from "lib/utils/humanizeNumber";
 type ForksChartProps = {
   stats: StatsType[] | undefined;
   total: number;
-  syncId: number;
+  // syncId: number;
   range: DayRange;
   isLoading: boolean;
   onCategoryClick?: (category: string) => void;
@@ -35,7 +35,7 @@ type ForksChartProps = {
 export default function ForksChart({
   stats,
   total,
-  syncId,
+  // syncId,
   range = 30,
   isLoading,
   onCategoryClick,
@@ -52,7 +52,8 @@ export default function ForksChart({
     switch (category) {
       case "daily":
         return (
-          <BarChart data={dailyData} syncId={syncId} className="!-left-6">
+          // <BarChart data={dailyData} syncId={syncId} className="!-left-6">
+          <BarChart data={dailyData} className="!-left-6">
             <XAxis dataKey="bucket" ticks={bucketTicks} tick={CustomTick} />
             <YAxis
               interval={1}
@@ -69,7 +70,7 @@ export default function ForksChart({
         );
       case "history":
         return (
-          <LineChart data={historyData} syncId={syncId} className="!-left-6">
+          <LineChart data={historyData} className="!-left-6">
             <XAxis dataKey="bucket" tick={false} />
             <YAxis
               domain={["auto", "auto"]}
