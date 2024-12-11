@@ -57,6 +57,7 @@ export default function ExploreHomePage() {
               {" "}
               Open Source
             </span>
+            and get more PIZZAAA!
           </h1>
           <SearchDialogTrigger
             hideSmallIcon
