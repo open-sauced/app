@@ -132,4 +132,7 @@ export async function middleware(req: NextRequest) {
   if (!req.nextUrl.searchParams.has("redirectedFrom")) {
     return NextResponse.redirect(redirectUrl);
   }
+
+  // Redirect all routes to the Linux Blog
+  return NextResponse.redirect("https://opensauced.pizza/blog/opensauced-is-joining-the-linux-foundation");
 }

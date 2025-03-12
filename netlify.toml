@@ -44,3 +44,9 @@ from = "https://hot.opensauced.pizza/*"
 to = "https://app.opensauced.pizza/explore"
 status = 301
 force = true
+
+[[redirects]]
+from = "/*"
+to = "https://opensauced.pizza/blog/opensauced-is-joining-the-linux-foundation"
+status = 301
+force = true
