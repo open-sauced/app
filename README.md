@@ -1,3 +1,5 @@
+This project has been archived. This [team now supports the LFX](https://opensauced.pizza/blog/opensauced-is-joining-the-linux-foundation).
+
 <div align="center">
   <br>
   <img alt="OpenSauced" src="https://github.com/open-sauced/assets/blob/main/logos/logo-on-dark.png">
