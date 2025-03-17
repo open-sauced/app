@@ -11,6 +11,7 @@ import { usePostHog } from "posthog-js/react";
 import { GetServerSidePropsContext } from "next";
 
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
 import useSession from "lib/hooks/useSession";
 import { useToast } from "lib/hooks/useToast";
 import { shortenUrl } from "lib/utils/shorten-url";
@@ -32,7 +33,6 @@ import TabList from "components/TabList/tab-list";
 import ClientOnly from "components/atoms/ClientOnly/client-only";
 import { DayRangePicker } from "components/shared/DayRangePicker";
 import { WorkspaceLayout } from "components/Workspaces/WorkspaceLayout";
-
 import PRChart from "components/Graphs/PRChart";
 import StarsChart from "components/Graphs/StarsChart";
 import ForksChart from "components/Graphs/ForksChart";
@@ -93,6 +93,12 @@ interface RepoPageProps {
 
 export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
   const syncId = repoData.id;
+
+  const issuesChartSyncId = uuidv4();
+  const prChartSyncId = uuidv4();
+  const startsChartSyncId = uuidv4();
+  const forksChartSyncId = uuidv4();
+
   const router = useRouter();
   const { toast } = useToast();
   const posthog = usePostHog();
@@ -225,23 +231,23 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
       <WorkspaceLayout workspaceId={session ? session.personal_workspace_id : "new"}>
         <div className="px-4 py-8 lg:px-16 lg:py-12">
           <ClientOnly>
-            <section className="px-2 pt-2 md:py-4 md:px-4 flex flex-col gap-2 md:gap-4 lg:gap-8 w-fit xl:w-full xl:max-w-8xl">
-              <div className="flex flex-col lg:flex-row w-full justify-between items-center gap-4">
+            <section className="flex flex-col gap-2 px-2 pt-2 md:py-4 md:px-4 md:gap-4 lg:gap-8 w-fit xl:w-full xl:max-w-8xl">
+              <div className="flex flex-col items-center justify-between w-full gap-4 lg:flex-row">
                 <header className="flex items-center gap-4">
                   <Avatar size={96} avatarURL={avatarUrl} className="min-w-[96px]" />
                   <div className="flex flex-col gap-2">
                     <a
                       href={`https://github.com/${repoData.full_name}`}
                       target="_blank"
-                      className="group hover:underline underline-offset-2 text-xl md:text-3xl font-bold flex gap-2 items-center"
+                      className="flex items-center gap-2 text-xl font-bold group hover:underline underline-offset-2 md:text-3xl"
                     >
                       <h1>{repoData.full_name}</h1>
-                      <HiOutlineExternalLink className="group-hover:text-sauced-orange text-lg lg:text-xl" />
+                      <HiOutlineExternalLink className="text-lg group-hover:text-sauced-orange lg:text-xl" />
                     </a>
                     <p>{repoData.description}</p>
                   </div>
                 </header>
-                <div className="self-end flex flex-col gap-2 items-end">
+                <div className="flex flex-col items-end self-end gap-2">
                   {isMobile ? (
                     <>
                       <AddToWorkspaceDrawer repository={repoData.full_name} />
@@ -288,12 +294,12 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                       ]}
                     />
                   )}
-                  <div className="flex gap-2 items-center">
+                  <div className="flex items-center gap-2">
                     <Button
                       aria-label="share"
                       variant="outline"
                       onClick={copyUrlToClipboard}
-                      className="my-auto gap-2 items-center shrink-0 place-self-end"
+                      className="items-center gap-2 my-auto shrink-0 place-self-end"
                     >
                       <FiCopy />
                       Share
@@ -336,15 +342,15 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
             </section>
           </ClientOnly>
 
-          <div className="border-b mb-4">
+          <div className="mb-4 border-b">
             <TabList tabList={tabList} selectedTab={"overview"} pageId={`/s/${repoData.full_name}`} />
           </div>
 
           <ClientOnly>
             <div className="flex flex-col gap-8">
               <section className="flex flex-col gap-4 lg:grid lg:grid-cols-12 lg:max-h-[50rem]">
-                <div className="lg:col-span-8 flex flex-col gap-4">
-                  <div className="flex gap-4 h-full flex-col lg:flex-row">
+                <div className="flex flex-col gap-4 lg:col-span-8">
+                  <div className="flex flex-col h-full gap-4 lg:flex-row">
                     <CopyContainer
                       onCopyClick={() => {
                         posthog.capture("Repo Pages: copied Contributor Confidence chart", {
@@ -453,7 +459,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                   </CopyContainer>
                 </div>
 
-                <div className="lg:col-span-4 flex flex-col gap-4">
+                <div className="flex flex-col gap-4 lg:col-span-4">
                   {lotteryState === "lottery" && (
                     <CopyContainer
                       onCopyClick={() => {
@@ -572,7 +578,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         stats={issueStats}
                         range={range}
                         velocity={repoStats?.issues_velocity_count ?? 0}
-                        syncId={syncId}
+                        syncId={issuesChartSyncId}
                         isLoading={isIssueDataLoading}
                       />
                     </CopyContainer>
@@ -599,7 +605,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         stats={prStats}
                         range={range}
                         velocity={repoStats?.pr_velocity_count ?? 0}
-                        syncId={syncId}
+                        syncId={prChartSyncId}
                         isLoading={isPrDataLoading}
                       />
                     </CopyContainer>
@@ -631,7 +637,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         stats={starsData}
                         total={repoData.stars}
                         range={range}
-                        syncId={syncId}
+                        syncId={startsChartSyncId}
                         isLoading={isStarsDataLoading}
                         onCategoryClick={(category) =>
                           posthog.capture("Repo Pages: clicked Stars Chart category", {
@@ -665,7 +671,7 @@ export default function RepoPage({ repoData, ogImageUrl }: RepoPageProps) {
                         stats={forkStats}
                         total={repoData.forks}
                         range={range}
-                        syncId={syncId}
+                        syncId={forksChartSyncId}
                         isLoading={isForksDataLoading}
                         onCategoryClick={(category) =>
                           posthog.capture("Repo Pages: clicked Forks Chart category", {

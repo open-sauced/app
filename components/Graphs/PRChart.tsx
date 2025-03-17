@@ -22,7 +22,7 @@ import { humanizeNumber } from "netlify/og-image-utils";
 type PRChartProps = {
   stats: StatsType[] | undefined;
   velocity: number;
-  syncId: number;
+  syncId: string;
   range: DayRange;
   isLoading: boolean;
   className?: string;
@@ -47,15 +47,15 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
 
   return (
     <Card className={`${className ?? ""} flex flex-col gap-8 w-full h-full items-center !px-6 !py-8`}>
-      <section className="flex flex-col lg:flex-row w-full items-start gap-4 lg:justify-between px-2">
+      <section className="flex flex-col items-start w-full gap-4 px-2 lg:flex-row lg:justify-between">
         {isLoading ? (
           <SkeletonWrapper width={100} height={24} />
         ) : (
-          <div className="flex flex-col gap-4 w-full items-start justify-between px-2">
-            <div className="flex gap-1 items-center w-fit">
+          <div className="flex flex-col items-start justify-between w-full gap-4 px-2">
+            <div className="flex items-center gap-1 w-fit">
               <BiGitPullRequest className="text-xl" />
-              <h3 className="text-sm xl:text-lg font-semibold text-slate-800">Pull Requests</h3>
-              <p className="text-sm xl:text-lg w-fit pl-2 text-slate-500 font-medium">{range} days</p>
+              <h3 className="text-sm font-semibold xl:text-lg text-slate-800">Pull Requests</h3>
+              <p className="pl-2 text-sm font-medium xl:text-lg w-fit text-slate-500">{range} days</p>
             </div>
             <aside className="flex gap-4">
               <div>
@@ -63,18 +63,18 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
                   Opened
                   <span className={`w-2 h-2 rounded-full bg-[#16a34a] mx-1 inline-block`}></span>
                 </h3>
-                <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(openedRangedTotal)}</p>
+                <p className="text-xl font-semibold xl:text-2xl">{humanizeNumber(openedRangedTotal)}</p>
               </div>
               <div>
                 <h3 className="text-xs xl:text-sm !font-medium text-slate-500">
                   Merged
                   <span className={`w-2 h-2 rounded-full bg-[#9333ea] mx-1 inline-block`}></span>
                 </h3>
-                <p className="font-semibold text-xl xl:text-2xl">{humanizeNumber(closedRangedTotal)}</p>
+                <p className="text-xl font-semibold xl:text-2xl">{humanizeNumber(closedRangedTotal)}</p>
               </div>
               <div>
                 <h3 className="text-xs xl:text-sm !font-medium text-slate-500">Velocity</h3>
-                <p className="font-semibold text-xl xl:text-2xl">
+                <p className="text-xl font-semibold xl:text-2xl">
                   {humanizeNumber(velocity)}
                   <span className="text-lg xl:text-xl text-slate-500 pl-0.5">d</span>
                 </p>
@@ -110,25 +110,25 @@ export default function PRChart({ stats, velocity, syncId, range = 30, isLoading
 function CustomTooltip({ active, payload }: TooltipProps<ValueType, NameType>) {
   if (active && payload) {
     return (
-      <figcaption className="flex flex-col gap-1 text-sm bg-white px-4 py-3 rounded-lg border w-fit">
-        <section className="flex gap-2 font-medium text-slate-500 items-center text-xs w-fit">
+      <figcaption className="flex flex-col gap-1 px-4 py-3 text-sm bg-white border rounded-lg w-fit">
+        <section className="flex items-center gap-2 text-xs font-medium text-slate-500 w-fit">
           <BiGitPullRequest className="fill-slate-500" />
           <p>Pull Requests</p>
           <p>{payload[0]?.payload.bucket}</p>
         </section>
         <section className="flex justify-between">
-          <p className="flex gap-2 items-center px-1 text-slate-500">
+          <p className="flex items-center gap-2 px-1 text-slate-500">
             <span className={`w-2 h-2 rounded-full bg-[#16a34a] inline-block`}></span>
             Opened:
           </p>
-          <p className="font-medium pl-2">{payload[0]?.value}</p>
+          <p className="pl-2 font-medium">{payload[0]?.value}</p>
         </section>
         <section className="flex justify-between">
-          <p className="flex gap-2 items-center px-1 text-slate-500">
+          <p className="flex items-center gap-2 px-1 text-slate-500">
             <span className={`w-2 h-2 rounded-full bg-[#9333ea] inline-block`}></span>
             Merged:
           </p>
-          <p className="font-medium pl-2">{payload[1]?.value}</p>
+          <p className="pl-2 font-medium">{payload[1]?.value}</p>
         </section>
       </figcaption>
     );
