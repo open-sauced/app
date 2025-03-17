@@ -43,7 +43,13 @@ export const SearchedContributorsTable = ({
                   event.preventDefault;
                 }}
               >
-                <Search placeholder="Filter contributors" className="w-full" name="query" onChange={onFilter} />
+                <Search
+                  placeholder="Filter contributors"
+                  labelText="Filter contributors from the list"
+                  className="w-full"
+                  name="query"
+                  onChange={onFilter}
+                />
               </form>
             </TableHead>
           </TableRow>

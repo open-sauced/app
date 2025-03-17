@@ -15,6 +15,7 @@ interface SingleSelectProps {
   position?: "popper" | "item-aligned";
   isSearchable?: boolean;
   insetLabel?: string;
+  labelText: string;
 }
 
 const SingleSelect = ({
@@ -26,6 +27,7 @@ const SingleSelect = ({
   inputPlaceholder,
   isSearchable = false,
   insetLabel,
+  labelText,
 }: SingleSelectProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState("");
@@ -64,8 +66,9 @@ const SingleSelect = ({
           insetLabel && `before:content-[attr(data-inset-label)] before:mr-1 before:font-normal before:text-slate-500`
         )}
       >
-        <Tooltip content={current?.label ?? placeholder}>
-          <div className="flex items-center w-44 ">
+        <span className="sr-only">{labelText}</span>
+        <Tooltip content={current?.label ?? placeholder} aria-hidden="true">
+          <div className="flex items-center w-44" aria-hidden="true">
             <p className="flex-grow text-start truncate">{current?.label ?? placeholder}</p>
           </div>
         </Tooltip>

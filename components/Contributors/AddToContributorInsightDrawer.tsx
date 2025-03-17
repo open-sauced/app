@@ -135,6 +135,7 @@ export default function AddToContributorInsightDrawer({
                 })),
               ]}
               value={selectedInsight ?? "new"}
+              labelText="Select a workspace"
               placeholder="Select a workspace"
               onValueChange={(value) => {
                 setSelectedInsight(value);
@@ -154,6 +155,7 @@ export default function AddToContributorInsightDrawer({
                   })),
                 ]}
                 value={workspaceId}
+                labelText="Select a workspace"
                 placeholder="Select a workspace"
                 onValueChange={(value) => {
                   setWorkspaceId(value);

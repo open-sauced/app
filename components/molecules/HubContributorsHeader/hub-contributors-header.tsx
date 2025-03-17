@@ -91,6 +91,7 @@ const HubContributorsHeader = ({
         <div className="flex w-full">
           <Search
             placeholder={`Search for contributors to add to your list`}
+            labelText="Search for contributors to add to your list"
             className="!w-full text-sm py-1.5"
             name={"contributors"}
             onChange={(value) => setContributorSearch(value)}

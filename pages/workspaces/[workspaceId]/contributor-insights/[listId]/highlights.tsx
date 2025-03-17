@@ -177,6 +177,7 @@ const Highlights = ({ list, workspaceId, numberOfContributors, isOwner, highligh
                 }}
                 isDisabled={data.length === 0 && !contributor}
                 placeholder="Search contributors"
+                labelText="Search contributors"
                 className="!w-full"
                 name="helo"
               />

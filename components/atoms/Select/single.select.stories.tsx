@@ -38,6 +38,7 @@ const baseProps: ComponentProps<typeof SingleSelect> = {
     // eslint-disable-next-line no-console
     console.log(value);
   },
+  labelText: "Accessible label",
 };
 
 export const Default: Story = {

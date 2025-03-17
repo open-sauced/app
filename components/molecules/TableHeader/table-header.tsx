@@ -88,6 +88,7 @@ const TableHeader = ({ title, metaInfo, entity, onSearch, layout, onLayoutToggle
         {onSearch ? (
           <Search
             placeholder={`Search ${title}`}
+            labelText={`Search ${title}`}
             className="max-w-full text-sm py-1.5"
             name={"query"}
             onSearch={onSearch}

@@ -336,11 +336,12 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
               </span>
             </div>
 
-            <div className="flex flex-col gap-2">
-              <label className="flex flex-col w-full gap-2">
+            <div id="upgrade" className="flex flex-col gap-2">
+              <label htmlFor="timezone-select" className="flex flex-col w-full gap-2">
                 Time zone
                 <Select onValueChange={(value) => setTimezone(value)} value={timezone}>
                   <SelectTrigger
+                    id="timezone-select"
                     selectIcon={
                       <div className="relative pr-4">
                         <RiArrowUpSLine size={16} className="absolute -top-3" />
@@ -397,9 +398,9 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
               Update Interests
             </Button>
           </div>
-          <div className="flex flex-col gap-6">
+          <fieldset className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-              <label className="text-2xl font-normal">Email Preferences</label>
+              <legend className="text-2xl font-normal">Email Preferences</legend>
               <Checkbox
                 onCheckedChange={() => setEmailPreference((prev) => ({ ...prev, display_email: !prev.display_email }))}
                 checked={emailPreference.display_email}
@@ -432,7 +433,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
             >
               Update Preferences
             </Button>
-          </div>
+          </fieldset>
           {userInfo && (
             <form
               name="delete-account"
@@ -446,7 +447,7 @@ const UserSettingsPage = ({ user }: UserSettingsPageProps) => {
               }}
             >
               <div className="flex flex-col gap-3">
-                <label className="text-2xl font-normal">Delete Account</label>
+                <h2 className="text-2xl font-normal">Delete Account</h2>
                 <div className="w-full md:w-96">
                   <Text>
                     Please note that account deletion is irreversible. Proceed only if you are certain about this

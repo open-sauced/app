@@ -68,6 +68,7 @@ const TeamMembersConfig = ({
           value={email}
           onChange={(value) => handleChange(value)}
           placeholder="Enter email address"
+          labelText="Enter email address"
           name="search"
           className="flex-1 text-base"
         />

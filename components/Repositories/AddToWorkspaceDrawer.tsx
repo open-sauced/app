@@ -137,6 +137,7 @@ export default function AddToWorkspaceDrawer({ repository, type = "repo" }: AddT
               ]}
               position="popper"
               value={workspaceId ?? "new"}
+              labelText="Select a workspace"
               placeholder="Select a workspace"
               onValueChange={(value) => {
                 setWorkspaceId(value);
